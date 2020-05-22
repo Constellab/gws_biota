@@ -1,0 +1,10 @@
+peewee
+starlette
+uvicorn
+aiofiles
+jinja2
+requests
+itsdangerous
+awesome-slugify
+PyMySQL
+mysqlclient
