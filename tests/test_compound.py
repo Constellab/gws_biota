@@ -2,9 +2,8 @@ import sys
 import os
 import unittest
 
-import asyncio
 
-from peewee import CharField, ForeignKeyField
+from peewee import CharField
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
