@@ -12,8 +12,9 @@ from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
+from hello.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
 from peewee import CharField
+
 ############################################################################################
 #
 #                                        TestCompound

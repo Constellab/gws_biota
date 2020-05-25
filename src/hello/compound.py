@@ -1,4 +1,4 @@
-from entity import Entity
+from hello.entity import Entity
 from gws.prism.controller import Controller
 
 
