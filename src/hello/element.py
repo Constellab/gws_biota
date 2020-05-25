@@ -16,7 +16,7 @@ class Element(Resource):
     GO_id = 'Test'
     SBO_id = 'Test'
     _table_name = 'element'
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     

@@ -41,7 +41,8 @@ class TestCompound(unittest.TestCase):
         json_vm = CompoundJSONViewModel(compound_test)
 
         html_vm.save()
-        #htmltext = html_vm.render(params)
+        params = {'Color':'red'}
+        htmltext = html_vm.render(params)
 
         Controller.save_all()
         
@@ -55,9 +56,9 @@ class TestCompound(unittest.TestCase):
 
         Controller.is_query_params = True
         client = TestClient(app)
-
+        
         # Test update_view => html
-        params = ''
+        params = ""
         response = client.get(Controller.build_url(
             action = 'view', 
             uri_name = html_vm.uri_name,
@@ -73,9 +74,10 @@ class TestCompound(unittest.TestCase):
             action = 'view', 
             uri_name = json_vm.uri_name,
             uri_id = json_vm.uri_id,
-            params = html_vm.template
+            params = params
         ))
 
         self.assertEqual(response.status_code, 200)
         print(response.content)
+        
         print(htmltext)

@@ -8,7 +8,7 @@ from hello.element import Element
 
 class Entity(Element):
     _table_name = 'entity'
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
