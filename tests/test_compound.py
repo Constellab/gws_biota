@@ -25,7 +25,6 @@ class TestCompound(unittest.TestCase):
     def setUpClass(cls):
         Compound.drop_table()
         Compound.create_table()
-        Compound.create(name = 'Test0', data = {'ID':9347})
    
     @classmethod
     def tearDownClass(cls):
@@ -33,20 +32,7 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-
-        compound_test = Compound.get(Compound.name == 'Test0')
-        compound_test.save()
-        compound_test1 = Compound.create(name = 'Test1', data = {'ID': 9231})
-        compound_test1.save()
-        self.assertEqual(compound_test.data['ID'], 9347)
-        
-        html_vm = CompoundHTMLViewModel(compound_test)
-        json_vm = CompoundJSONViewModel(compound_test)
-
-        html_vm.save()
-        params = {'Color':'red'}
-        htmltext = html_vm.render(params)
-        filetext = compound_test1.OpenFile('test')
+        Compound.create_table_from_csv_file(self, 'table_test.csv')
 
         Controller.save_all()
         
@@ -61,6 +47,7 @@ class TestCompound(unittest.TestCase):
         Controller.is_query_params = True
         client = TestClient(app)
         
+        """
         # Test update_view => html
         params = ""
         response = client.get(Controller.build_url(
@@ -83,6 +70,4 @@ class TestCompound(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         print(response.content)
-        
-        print(htmltext)
-        print(filetext)
+        """

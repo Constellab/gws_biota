@@ -20,5 +20,11 @@ class Element(Resource):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
+    def set_GO(self, GO):
+        self.GO_id = GO
+
+    def set_SBO(self, SBO):
+        self.SBO_id = SBO
+        
     class Meta:
         table_name = 'element'
