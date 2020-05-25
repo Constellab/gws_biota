@@ -1,6 +1,8 @@
 from hello.entity import Entity
 from gws.prism.controller import Controller
-
+from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
+from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
+from peewee import CharField
 
 ####################################################################################
 #
@@ -9,7 +11,7 @@ from gws.prism.controller import Controller
 ####################################################################################
 
 class Compound(Entity):
-     name = CharField(null=True)
+    name = CharField(null=True)
     pass
 
 class CompoundHTMLViewModel(ResourceViewModel):

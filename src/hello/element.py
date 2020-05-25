@@ -2,7 +2,7 @@ import unittest #not sure if necessary
 import copy #not sure if necessary
 from gws.prism.app import App
 from gws.prism.model import Process
-from gws.prism.model import Resource
+from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
 from peewee import IntegerField
 
@@ -13,8 +13,8 @@ from peewee import IntegerField
 ####################################################################################
 
 class Element(Resource):
-    GO_id = IntegerField(primary_key=True)
-    SBO_id = IntegerField(primary_key=True)
+    GO_id = 'Test'
+    SBO_id = 'Test'
     _table_name = 'element'
 
     def __init__(self, *args, **kwargs):

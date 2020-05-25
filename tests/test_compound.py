@@ -41,9 +41,10 @@ class TestCompound(unittest.TestCase):
         json_vm = CompoundJSONViewModel(compound_test)
 
         html_vm.save()
-        htmltext = html_vm.render(params)
+        #htmltext = html_vm.render(params)
 
         Controller.save_all()
+        
         async def app(scope, receive, send):
             assert scope['type'] == 'http'
             request = Request(scope, receive)
@@ -56,7 +57,7 @@ class TestCompound(unittest.TestCase):
         client = TestClient(app)
 
         # Test update_view => html
-        params = html_vm.template
+        params = ''
         response = client.get(Controller.build_url(
             action = 'view', 
             uri_name = html_vm.uri_name,
