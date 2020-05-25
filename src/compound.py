@@ -1,6 +1,4 @@
-from gws.settings import Settings
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Resource, ResourceViewModel
+from entity import Entity
 from gws.prism.controller import Controller
 
 
@@ -10,8 +8,8 @@ from gws.prism.controller import Controller
 #
 ####################################################################################
 
-
-class Compound(Resource):
+class Compound(Entity):
+     name = CharField(null=True)
     pass
 
 class CompoundHTMLViewModel(ResourceViewModel):
