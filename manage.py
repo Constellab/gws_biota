@@ -10,12 +10,14 @@ import os
 import unittest
 import argparse
 import uvicorn
-
+from pathlib import Path
 # load prism and current module
 __cdir__ = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(__cdir__,"./"))                        # -> load hello tests
 sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load hello module
+sys.path.append(os.path.join(__cdir__,"./databases_input"))         # -> load databases_input folder
 sys.path.append(os.path.join(__cdir__,"../../prod/gws-py/src"))     # -> load gws module
+
 
 # set settings
 from gws.settings import Settings

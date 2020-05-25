@@ -25,16 +25,19 @@ class TestCompound(unittest.TestCase):
     def setUpClass(cls):
         Compound.drop_table()
         Compound.create_table()
-        Compound.create(name = 'Test1', data = {'ID':9347})
+        Compound.create(name = 'Test0', data = {'ID':9347})
    
     @classmethod
     def tearDownClass(cls):
+        #Compound.drop_table()
         pass
 
     def test_db_object(self):
 
-        compound_test = Compound.get(Compound.name == 'Test1')
+        compound_test = Compound.get(Compound.name == 'Test0')
         compound_test.save()
+        compound_test1 = Compound.create(name = 'Test1', data = {'ID': 9231})
+        compound_test1.save()
         self.assertEqual(compound_test.data['ID'], 9347)
         
         html_vm = CompoundHTMLViewModel(compound_test)
@@ -43,6 +46,7 @@ class TestCompound(unittest.TestCase):
         html_vm.save()
         params = {'Color':'red'}
         htmltext = html_vm.render(params)
+        filetext = compound_test1.OpenFile('test')
 
         Controller.save_all()
         
@@ -81,3 +85,4 @@ class TestCompound(unittest.TestCase):
         print(response.content)
         
         print(htmltext)
+        print(filetext)
