@@ -1,5 +1,5 @@
 #
-# Core GWS manage module
+# Core GENA manage module
 # This software is the exclusive property of Gencovery SAS. 
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
@@ -18,7 +18,7 @@ sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load he
 sys.path.append(os.path.join(__cdir__,"../../prod/gws-py/src"))     # -> load gws module
 
 # set settings
-
+from gws.settings import Settings
 Settings.add_statics({
     '/static/hello'   : os.path.join(__cdir__, './src/static/hello')
 })
