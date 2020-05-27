@@ -2,7 +2,7 @@ from gws.settings import Settings
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.controller import Controller
-
+from hello.relation import Relation
 
 ####################################################################################
 #
@@ -11,22 +11,14 @@ from gws.prism.controller import Controller
 ####################################################################################
 
 
-class Reaction(Resource):
-    pass
+class Reaction(relation):
+    COUMPOUND_list = CharField(null=True, index=True)
+    direction = CharField(null=True, index=True)
+    _table_name = 'reaction'
 
-class ReactionHTMLViewModel(ResourceViewModel):
-    template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
+    def get_coumpound(self):
+        pass
 
-class ReactionJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id":"{{view_model.model.data.ID}}"}')
 
-Reaction.register_view_models([
-    ReactionHTMLViewModel, 
-    ReactionJSONViewModel
-])
-
-Controller.register_models([
-    Reaction,
-    ReactionHTMLViewModel,
-    ReactionJSONViewModel
-])
+class Meta
+    table_name = 'reaction'

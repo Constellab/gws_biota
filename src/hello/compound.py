@@ -3,10 +3,8 @@ from hello.entity import Entity
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
-from peewee import CharField
-#from tables import table_test as TAB
+from peewee import CharField, Model, chunked
 
-import csv
 ####################################################################################
 #
 # Compound class
@@ -16,38 +14,85 @@ import csv
 path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
 
 class Compound(Entity):
+    COMPOUND_ID = CharField(null=True, index=True)
+    SOURCE = CharField(null=True, index=True)
+    SOURCE_ACCESSION = CharField(null=True, index=True)
+    _table_name = 'compound'
+
+    def set_compound_id(self, id):
+        self.COMPOUND_ID = id
+
+    def set_source(self, source):
+        self.SOURCE = source
     
-    def create_table_from_csv_file(self, file):
-        with open(path_test + '\\' + file) as csv_file:
-            csv_reader = csv.reader(csv_file)
+    def set_source_accession(self, source_accession):
+        self.SOURCE_ACCESSION = source_accession
+
+    def create_table_from_file(self, file):
+        with open(path_test + '\\' + file) as fh:
             line_count = 0
             list_compound = []
-            for rows in csv_reader:
-                if (line_count == 0):
-                    infos_table = rows[0].split('\t')
+            for line in fh.readlines():
+                if(line_count < 1):
+                    infos_table = line.split('\t')
                     line_count +=1
                 else:
                     list_row = []
-                    list_row = rows[0].split('\t')
+                    list_row = line.split('\t')
                     dict_compound = {}
 
                     if(len(list_row) == len(infos_table)):
                         for i in range(0, len(infos_table)):
-                            dict_compound[infos_table[i]] = list_row[i] 
-
-                    else:   
+                             dict_compound[infos_table[i]] = list_row[i]
+                    else:
                         for i in range(0, len(list_row)):
-                            dict_compound[infos_table[i]] = list_row[i]
-
+                           dict_compound[infos_table[i]] = list_row[i] 
+                    
                     list_compound.append(dict_compound)
                     line_count += 1
+            compounds = [Compound(data = dict_) for dict_ in list_compound]
+            
+            for comp in compounds:
+                #list_test.append(comp.data['SOURCE'])
+                comp.set_source(comp.data['SOURCE'])
+                comp.set_source_accession(comp.data['CHEBI_ACCESSION'])
 
-                    #Creation of compound 
-                    Compound.create(data = dict_compound)
 
+            """
+            with DbManager.db.atomic():
+                Compound.bulk_create(compounds, batch_size=100)
+            
+            with DbManager.db.atomic():
+                #Compound.bulk_create(list_comp, batch_size = 100)
+                for batch in chunked(compounds, 100):
+                    #print(batch)
+                    for comp in batch:
+                        Controller.register_models(comp) 
+            """
             status = 'test ok'
-        return(status, list_compound)
+        return(status)
+    
+    def create_table_from_dict(self, file, infos = list):
+        with open(path_test + '\\' + file) as fh:
+            line_count = 0
+            list_compound = []
+            infos_table = infos
 
+            for line in fh.readlines():
+                list_row = []
+                list_row = line.split('\t')
+                dict_compound = {}
+                if(len(list_row) == len(infos_table)):
+                    for i in range(0, len(infos_table)):
+                            dict_compound[infos_table[i]] = list_row[i]
+                else:
+                    for i in range(0, len(list_row)):
+                        dict_compound[infos_table[i]] = list_row[i] 
+                
+                list_compound.append(dict_compound)
+                line_count += 1
+            compounds = [Compound(data = dict_) for dict_ in list_compound]
+    
 
 class CompoundHTMLViewModel(ResourceViewModel):
     template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
@@ -65,6 +110,7 @@ Controller.register_models([
     CompoundHTMLViewModel,
     CompoundJSONViewModel
 ])
+
 
 class Meta:
     table_name = 'compound'

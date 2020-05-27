@@ -12,7 +12,7 @@ from starlette.testclient import TestClient
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from hello.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
-from peewee import CharField
+from peewee import CharField, chunked
 
 ############################################################################################
 #
@@ -22,6 +22,7 @@ from peewee import CharField
 
 class TestCompound(unittest.TestCase):
     @classmethod
+    
     def setUpClass(cls):
         Compound.drop_table()
         Compound.create_table()
@@ -32,10 +33,10 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        Compound.create_table_from_csv_file(self, 'table_test.csv')
+        list_comp = Compound.create_table_from_file(self, 'compounds.tsv')
 
         Controller.save_all()
-        
+
         async def app(scope, receive, send):
             assert scope['type'] == 'http'
             request = Request(scope, receive)
@@ -71,3 +72,4 @@ class TestCompound(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         print(response.content)
         """
+        print(list_comp)
