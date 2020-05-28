@@ -11,22 +11,25 @@ from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from hello.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
 from peewee import CharField, chunked
 
+from chebs.obo_parser import create_ontology_from_file, obo_parser_from_ontology
+from hello.chebi_ontology import Chebi_Ontology
+from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 
 ############################################################################################
 #
-#                                        TestCompound
+#                                        TestChebiOntology
 #                                         
 ############################################################################################
+path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
 
 class TestCompound(unittest.TestCase):
     @classmethod
     
     def setUpClass(cls):
-        Compound.drop_table()
-        Compound.create_table()
+        Chebi_Ontology.drop_table()
+        Chebi_Ontology.create_table()
    
     @classmethod
     def tearDownClass(cls):
@@ -34,10 +37,9 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = Compound.create_table_from_file(self, 'compounds.tsv')
-        Compound.insert_compound_id(list_comp, 'ID')
-        Compound.insert_source(list_comp, 'SOURCE')
-        Compound.insert_source_accession(list_comp, 'CHEBI_ACCESSION')
+        onto = create_ontology_from_file(path = path_test, file = 'chebi_test.obo')
+        list_chebs = obo_parser_from_ontology(onto)
+        test = Chebi_Ontology.create_chebis(self, list_chebs)
 
         Controller.save_all()
 
@@ -51,29 +53,6 @@ class TestCompound(unittest.TestCase):
 
         Controller.is_query_params = True
         client = TestClient(app)
-        
-        """
-        # Test update_view => html
-        params = ""
-        response = client.get(Controller.build_url(
-            action = 'view', 
-            uri_name = html_vm.uri_name,
-            uri_id = html_vm.uri_id,
-            params = params
-        ))
-
-        self.assertEqual(response.status_code, 200)
-        print(response.content)
-
-
-        response = client.get(Controller.build_url(
-            action = 'view', 
-            uri_name = json_vm.uri_name,
-            uri_id = json_vm.uri_id,
-            params = params
-        ))
-
-        self.assertEqual(response.status_code, 200)
-        print(response.content)
-        """
-        #print(list_comp)
+        for dict_ in list_chebs:
+            print(dict_)
+            print('\n')

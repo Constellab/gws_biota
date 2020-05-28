@@ -51,17 +51,17 @@ class Compound(Entity):
                     list_compound.append(dict_compound)
                     line_count += 1
             compounds = [Compound(data = dict_) for dict_ in list_compound]
-            
-            for comp in compounds:
-                #list_test.append(comp.data['SOURCE'])
-                comp.set_source(comp.data['SOURCE'])
-                comp.set_source_accession(comp.data['CHEBI_ACCESSION'])
-
-
             """
             with DbManager.db.atomic():
-                Compound.bulk_create(compounds, batch_size=100)
+                #Compound.bulk_create(compounds, batch_size=100)
+                #Controller.register_models(compounds)
+                #for batch in chunked(list_compound, 100):
+                    #Compound.insert_many(batch).execute()
+                for idx in range(0, len(list_compound), 100):
+                    compounds = [Compound(data = dict__) for dict__ in list_compound[idx:idx+100]]
+            """
             
+            """
             with DbManager.db.atomic():
                 #Compound.bulk_create(list_comp, batch_size = 100)
                 for batch in chunked(compounds, 100):
@@ -70,7 +70,7 @@ class Compound(Entity):
                         Controller.register_models(comp) 
             """
             status = 'test ok'
-        return(status)
+        return(compounds)
     
     def create_table_from_dict(self, file, infos = list):
         with open(path_test + '\\' + file) as fh:
@@ -93,13 +93,25 @@ class Compound(Entity):
                 line_count += 1
             compounds = [Compound(data = dict_) for dict_ in list_compound]
     
+    def insert_compound_id(list__, key):
+        for comp in list__:
+            comp.set_compound_id(comp.data[key])
+
+    def insert_source(list__, key):
+        for comp in list__:
+            comp.set_source(comp.data[key])
+    
+    def insert_source_accession(list__, key):
+        for comp in list__:
+            comp.set_source_accession(comp.data[key])
+
 
 class CompoundHTMLViewModel(ResourceViewModel):
     template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
 
 class CompoundJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{"id":"{{view_model.model.data.ID}}"}')
-
+"""
 Compound.register_view_models([
     CompoundHTMLViewModel, 
     CompoundJSONViewModel
@@ -109,7 +121,7 @@ Controller.register_models([
     Compound,
     CompoundHTMLViewModel,
     CompoundJSONViewModel
-])
+])"""
 
 
 class Meta:
