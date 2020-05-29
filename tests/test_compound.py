@@ -36,8 +36,15 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = csv_parser_from_file(path, 'compounds.tsv')
+        list_comp = csv_parser_from_file(path, 'compounds_lite.csv')
         Compound.create_compounds(self, list_comp)
+
+        list_chemical = csv_parser_from_file(path, 'chemical_data.tsv')
+        stat = Compound.get_chemical(self, list_chemical)
+
+        structures = csv_parser_from_file(path, 'structures.csv')
+        #comp = Compound.get(Compound.name == 'eugenol')
+        #Compound.save(self)
 
         Controller.save_all()
 
@@ -76,4 +83,4 @@ class TestCompound(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         print(response.content)
         """
-        #print(list_comp)
+        print(structures)
