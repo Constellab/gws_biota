@@ -12,6 +12,7 @@ from starlette.testclient import TestClient
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from hello.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
+from chebs.csv_parser import csv_parser_from_file, csv_parser_from_list
 from peewee import CharField, chunked
 
 
@@ -20,6 +21,7 @@ from peewee import CharField, chunked
 #                                        TestCompound
 #                                         
 ############################################################################################
+path = os.path.realpath('./databases_input') #Set the path where we can find input data
 
 class TestCompound(unittest.TestCase):
     @classmethod
@@ -34,10 +36,8 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = Compound.create_table_from_file(self, 'compounds.tsv')
-        Compound.insert_compound_id(list_comp, 'ID')
-        Compound.insert_source(list_comp, 'SOURCE')
-        Compound.insert_source_accession(list_comp, 'CHEBI_ACCESSION')
+        list_comp = csv_parser_from_file(path, 'compounds.tsv')
+        Compound.create_compounds(self, list_comp)
 
         Controller.save_all()
 

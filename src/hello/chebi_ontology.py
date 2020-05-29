@@ -18,7 +18,7 @@ class Chebi_Ontology(Ontology):
     chebi_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     definition = CharField(null=True, index=True)
-    xrefs = CharField(null=True, index=True)
+    #xrefs = CharField(null=True, index=True)
     _table_name = 'chebi_ontology'
 
     def set_chebi_id(self, id):
@@ -30,17 +30,28 @@ class Chebi_Ontology(Ontology):
     def set_definition(self, def_):
         self.definition = def_
     
-    def set_xrefs(self, xrefs_):
-        self.xrefs = xrefs_ 
+    #def set_xrefs(self, xrefs_):
+        #self.xrefs = xrefs_ 
+
+    def insert_chebi_id(list__, key):
+        for chebs in list__:
+            chebs.set_chebi_id(chebs.data[key])
+
+    def insert_name(list__, key):
+        for chebs in list__:
+            chebs.set_name(chebs.data[key])
+
+    def insert_defintion(list__, key):
+        for chebs in list__:
+            chebs.set_definition(chebs.data[key])
 
     def create_chebis(self, list_chebi):
         #for dict_ in list_chebi:
             #chebis = [Chebi_Ontology(data = dict_)]
         chebis = [Chebi_Ontology(data = dict_) for dict_ in list_chebi]
-        #for chebs in chebis:
-            #chebs.set_chebi_id = chebs['id']
-            #chebs.set_name = chebs['name']
-            #chebs.set_definition = chebs['definition']
+        Chebi_Ontology.insert_chebi_id(chebis, "id")
+        Chebi_Ontology.insert_name(chebis, "name")
+        Chebi_Ontology.insert_defintion(chebis, "definition")
         status = 'test ok'
         return(status)
 
