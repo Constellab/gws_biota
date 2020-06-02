@@ -19,18 +19,26 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
-from compound import Reaction, ReactionHTMLViewModel, ReactionJSONViewModel
+from rhea.reaction_parser import parser_reaction_from_file
+from hello.reaction import Reaction
+from peewee import CharField, chunked
 
+path = os.path.realpath('./databases_input')
 class TestCompound(unittest.TestCase):
-    Reaction.drop_table()
-    Reaction.create_table()
+    @classmethod
+    def setUpClass(cls):
+        Reaction.drop_table()
+        Reaction.create_table()
+   
+    @classmethod
+    def tearDownClass(cls):
+        #Compound.drop_table()
+        pass
     
     def test_db_object(self):
-        reaction_test = Reaction()
-        reaction_test.data["ID"] = 9347
+        list_react = parser_reaction_from_file(path, 'rhea-kegg.reaction')
+        Reaction.create_reactions(self, list_react)
 
-        html_vm = ReactiondHTMLViewModel(reaction_test)
-        json_vm = ReactiondJSONViewModel(reaction_test)
 
         Controller.save_all()
         async def app(scope, receive, send):
@@ -43,27 +51,3 @@ class TestCompound(unittest.TestCase):
 
         Controller.is_query_params = True
         client = TestClient(app)
-
-        # Test update_view => html
-        params = ""
-        response = client.get(Controller.build_url(
-            action = 'view', 
-            uri_name = html_vm.uri_name,
-            uri_id = html_vm.uri_id,
-            params = params
-        ))
-
-        self.assertEqual(response.status_code, 200)
-        print(response.content)
-
-
-        response = client.get(Controller.build_url(
-            action = 'view', 
-            uri_name = json_vm.uri_name,
-            uri_id = json_vm.uri_id,
-            params = params
-        ))
-
-        self.assertEqual(response.status_code, 200)
-        print(response.content)
-        print(html_vm.data)

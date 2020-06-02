@@ -17,6 +17,7 @@ sys.path.append(os.path.join(__cdir__,"./"))                        # -> load he
 sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load hello module
 sys.path.append(os.path.join(__cdir__,"./databases_input"))         # -> load databases_input folder
 sys.path.append(os.path.join(__cdir__,"../chebi-py/src"))           # -> load chebi module
+sys.path.append(os.path.join(__cdir__,"../rhea-py/src"))            # -> load rhea module
 sys.path.append(os.path.join(__cdir__,"../../prod/gws-py/src"))     # -> load gws module
 
 

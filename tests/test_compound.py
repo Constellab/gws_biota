@@ -25,7 +25,6 @@ path = os.path.realpath('./databases_input') #Set the path where we can find inp
 
 class TestCompound(unittest.TestCase):
     @classmethod
-    
     def setUpClass(cls):
         Compound.drop_table()
         Compound.create_table()
@@ -36,13 +35,13 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = csv_parser_from_file(path, 'compounds_lite.csv')
+        list_comp = csv_parser_from_file(path, 'compounds.tsv')
         Compound.create_compounds(self, list_comp)
 
         list_chemical = csv_parser_from_file(path, 'chemical_data.tsv')
         stat = Compound.get_chemical(self, list_chemical)
 
-        structures = csv_parser_from_file(path, 'structures.csv')
+        #structures = csv_parser_from_file(path, 'structures.csv')
         #comp = Compound.get(Compound.name == 'eugenol')
         #Compound.save(self)
 
@@ -83,4 +82,4 @@ class TestCompound(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         print(response.content)
         """
-        print(structures)
+        #print(structures)

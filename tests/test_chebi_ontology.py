@@ -53,6 +53,6 @@ class TestCompound(unittest.TestCase):
 
         Controller.is_query_params = True
         client = TestClient(app)
-        for dict_ in list_chebs:
-            print(dict_)
-            print('\n')
+        #for dict_ in list_chebs:
+            #print(dict_)
+            #print('\n')
