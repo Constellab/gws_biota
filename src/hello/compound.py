@@ -58,7 +58,6 @@ class Compound(Entity):
         for comp in list__:
             comp.set_charge(comp.data[key])
     
-
     def create_compounds(self, list_compound):
         compounds = [Compound(data = dict_) for dict_ in list_compound]
         Compound.insert_source_accession(compounds, 'CHEBI_ACCESSION')
@@ -68,26 +67,25 @@ class Compound(Entity):
     
     def get_chemical(self, list_chemical):
         for data_ in list_chemical:
-            line_count = 0
             if(data_['TYPE'] == 'FORMULA'):
-                if(line_count <10):
-                    status = data_['CHEMICAL_DATA\n']
-                    line_count += 1
-                Compound.update({Compound.formula: data_['CHEMICAL_DATA\n']}).where(Compound.source_accession == 'CHEBI:' + data_['COMPOUND_ID']).execute()
-                """
-                if(line_count < 1):
-                    comp = Compound.get(Compound.name == "eugenol" )
-                    comp.set_formula(data_['CHEMICAL_DATA\n'])
-                    line_count +=1
-                """
-            """
-            if('MASS' in data.keys()):
+                comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['COMPOUND_ID'])
+                comp.set_formula(data_['CHEMICAL_DATA\n'])
+                #print('ok')
+
+            elif(data_['TYPE'] == 'MASS'):
+                comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['COMPOUND_ID'])
+                comp.set_mass(data_['CHEMICAL_DATA\n'])
+                #print('ok')
                 
-            if('CHARGE' in data.keys())
-            """
-            status = 'ok'
+            elif(data_['TYPE'] == 'CHARGE'):
+                comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['COMPOUND_ID'])
+                comp.set_charge(data_['CHEMICAL_DATA\n'])
+                #print('ok')
+        comp.save()
+        status = 'ok'
         return(status)
 
+    #def is_in_compound(chebi_accession__):
     
 class CompoundHTMLViewModel(ResourceViewModel):
     template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
@@ -104,8 +102,8 @@ Controller.register_models([
     Compound,
     CompoundHTMLViewModel,
     CompoundJSONViewModel
-])"""
-
+])
+"""
 
 class Meta:
     table_name = 'compound'

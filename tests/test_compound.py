@@ -37,15 +37,19 @@ class TestCompound(unittest.TestCase):
     def test_db_object(self):
         list_comp = csv_parser_from_file(path, 'compounds.tsv')
         Compound.create_compounds(self, list_comp)
+        Controller.save_all()
 
         list_chemical = csv_parser_from_file(path, 'chemical_data.tsv')
         stat = Compound.get_chemical(self, list_chemical)
+        
 
         #structures = csv_parser_from_file(path, 'structures.csv')
-        #comp = Compound.get(Compound.name == 'eugenol')
+        comp = Compound.get(Compound.source_accession == 'CHEBI:18357')
+        print(comp.name)
+        #comp.save()
         #Compound.save(self)
-
         Controller.save_all()
+        
 
         async def app(scope, receive, send):
             assert scope['type'] == 'http'
@@ -82,4 +86,6 @@ class TestCompound(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         print(response.content)
         """
-        #print(structures)
+        #for i in range(0,10):
+            #print(list_chemical[i])
+        

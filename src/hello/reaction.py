@@ -18,7 +18,6 @@ class Reaction(Relation):
     reagents = CharField(null=True, index=True)
     products = CharField(null=True, index=True)
     enzymes = CharField(null=True, index=True)
-    definition = CharField(null=True, index=True)
     _table_name = 'reaction'
 
     #setter function
@@ -37,47 +36,24 @@ class Reaction(Relation):
     def set_enzymes(self, enzymes__):
         self.enzymes = enzymes__
 
-    def set_definition(self, definition__):
-        self.definition = definition__
-
-    #insert function
-    def insert_source_accession(list__, key):
-        for react in list__:
-            react.set_source_accession(react.data[key])
-
-    def insert_direction(list__):
-        for react in list__:
-             react.set_direction(react.data['DIRECTION'])
-
-    def insert_reagents(list__, key):
-        for react in list__:
-            react.set_reagents(react.data[key])
-    
-    def insert_products(list__, key):
-        for react in list__:
-            react.set_products(react.data[key])
-
-    def insert_enzymes(list__, key):
-        for react in list__:
-            react.set_enzymes(react.data[key])
-    
-    def insert_definition(list__, key):
-        for react in list__:
-            react.set_definition(react.data[key])
+    #def set_definition(self, definition__):
+        #self.definition = definition__
 
     def create_reactions(self, list_reaction):
         reactions = [Reaction(data = dict) for dict in list_reaction]
-        #Reaction.insert_source_accession(reactions, "ENTRY")
-        #Reaction.insert_direction(reactions)
-        #Reaction.insert_reagents(reactions, 'REAGENTS')
-        #Reaction.insert_products(reactions, 'PRODUCTS')
-        #Reaction.insert_enzymes(reactions, 'ENZYME')
-        #Reaction.insert_definition(reactions, 'DEFINITION')
+        for react in reactions:
+            if('ENTRY' in react.data.keys()):
+                react.set_source_accession(react.data['ENTRY'])
+            if('DIRECTION' in react.data.keys()):
+                react.set_direction(react.data['DIRECTION'])
+            if('REAGENTS' in react.data.keys()):
+                react.set_reagents(react.data['REAGENTS'])
+            if('PRODUCTS' in react.data.keys()):
+                react.set_products(react.data['PRODUCTS'])
+            if('ENZYME' in react.data.keys()):
+                react.set_enzymes(react.data['ENZYME'])
         status = 'ok'
-        return(status)
-
-    def get_coumpound(self):
-        pass
+        return(reactions)
 
 class Meta:
     table_name = 'reaction'
