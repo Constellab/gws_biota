@@ -8,3 +8,4 @@ itsdangerous
 awesome-slugify
 PyMySQL
 mysqlclient
+pronto

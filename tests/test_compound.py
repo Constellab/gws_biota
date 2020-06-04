@@ -44,8 +44,8 @@ class TestCompound(unittest.TestCase):
         
 
         #structures = csv_parser_from_file(path, 'structures.csv')
-        comp = Compound.get(Compound.source_accession == 'CHEBI:18357')
-        print(comp.name)
+        #comp = Compound.get(Compound.source_accession == 'CHEBI:18357')
+        #print(comp.name)
         #comp.save()
         #Compound.save(self)
         Controller.save_all()
