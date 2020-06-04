@@ -65,5 +65,5 @@ class GO(Ontology):
         return(status)
 
 
-class Meta():
-    table_name = 'GO'
+    class Meta():
+        table_name = 'GO'

@@ -15,7 +15,7 @@ from peewee import CharField, Model, chunked
 class Reaction(Relation):
     source_accession = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
-    reagents = CharField(null=True, index=True)
+    substrates = CharField(null=True, index=True)
     products = CharField(null=True, index=True)
     enzymes = CharField(null=True, index=True)
     _table_name = 'reaction'
@@ -27,8 +27,8 @@ class Reaction(Relation):
     def set_direction(self, direction__):
         self.direction = direction__
 
-    def set_reagents(self, reagents__):
-        self.reagents = reagents__
+    def set_substrates(self, substrates__):
+        self.substrates = substrates__
     
     def set_products(self, products__):
         self.products = products__
@@ -46,8 +46,8 @@ class Reaction(Relation):
                 react.set_source_accession(react.data['ENTRY'])
             if('DIRECTION' in react.data.keys()):
                 react.set_direction(react.data['DIRECTION'])
-            if('REAGENTS' in react.data.keys()):
-                react.set_reagents(react.data['REAGENTS'])
+            if('SUBSTRATES' in react.data.keys()):
+                react.set_substrates(react.data['SUBSTRATES'])
             if('PRODUCTS' in react.data.keys()):
                 react.set_products(react.data['PRODUCTS'])
             if('ENZYME' in react.data.keys()):
@@ -55,5 +55,5 @@ class Reaction(Relation):
         status = 'ok'
         return(reactions)
 
-class Meta:
-    table_name = 'reaction'
+    class Meta:
+        table_name = 'reaction'

@@ -15,18 +15,21 @@ from pathlib import Path
 __cdir__ = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(__cdir__,"./"))                        # -> load hello tests
 sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load hello module
-sys.path.append(os.path.join(__cdir__,"./databases_input"))         # -> load databases_input folder
+#sys.path.append(os.path.join(__cdir__,"./databases_input"))         # -> load databases_input folder
 sys.path.append(os.path.join(__cdir__,"../chebi-py/src"))           # -> load chebi module
 sys.path.append(os.path.join(__cdir__,"../rhea-py/src"))            # -> load rhea module
 sys.path.append(os.path.join(__cdir__,"../ontology-py/src"))        # -> load onto module
 sys.path.append(os.path.join(__cdir__,"../../prod/gws-py/src"))     # -> load gws module
 
+databases_input = os.path.join(__cdir__,"./databases_input")
 
 # set settings
 from gws.settings import Settings
 Settings.add_statics({
     '/static/hello'   : os.path.join(__cdir__, './src/static/hello')
 })
+
+databases_input = os.path.join(__cdir__,"./databases_input")
 
 Settings.init(dict(
     app_dir         = __cdir__,
@@ -38,6 +41,10 @@ Settings.init(dict(
 ))
 
 #Création d'un nouveau paramètres 
+settings = Settings.retrieve()
+settings.set_data("gena_db_path", databases_input)
+
+
 
 from gws.prism.manage import manage
 

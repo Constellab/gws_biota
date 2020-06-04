@@ -22,8 +22,10 @@ from gws.prism.controller import Controller
 from rhea.reaction_parser import parser_reaction_from_file
 from hello.reaction import Reaction
 from peewee import CharField, chunked
+from manage import settings
 
 path = os.path.realpath('./databases_input')
+path_ = settings.get_data("gena_db_path")
 class TestCompound(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -36,7 +38,7 @@ class TestCompound(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        list_react = parser_reaction_from_file(path, 'rhea-kegg.reaction')
+        list_react = parser_reaction_from_file(path_, 'rhea-kegg.reaction')
         Reaction.create_reactions(self, list_react)
 
 

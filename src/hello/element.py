@@ -13,14 +13,14 @@ from peewee import IntegerField, DateField, DateTimeField, CharField, ForeignKey
 ####################################################################################
 
 class Element(Resource):
-    go_id = CharField(null=True, index=True)
+    #go_id = CharField(null=True, index=True)
     _table_name = 'element'
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
-    def set_go(self, go):
-        self.go_id = go
+    #def set_go(self, go):
+        #self.go_id = go
         
     class Meta:
         table_name = 'element'

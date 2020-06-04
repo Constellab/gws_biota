@@ -13,6 +13,8 @@ from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from hello.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
 from chebs.csv_parser import csv_parser_from_file, csv_parser_from_list
+from rhea.compound_parser import parser_compound_from_file
+from manage import settings
 from peewee import CharField, chunked
 
 
@@ -21,8 +23,8 @@ from peewee import CharField, chunked
 #                                        TestCompound
 #                                         
 ############################################################################################
-path = os.path.realpath('./databases_input') #Set the path where we can find input data
-
+#path = os.path.realpath('./databases_input') #Set the path where we can find input data
+path = settings.get_data("gena_db_path")
 class TestCompound(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -39,8 +41,8 @@ class TestCompound(unittest.TestCase):
         Compound.create_compounds(self, list_comp)
         Controller.save_all()
 
-        list_chemical = csv_parser_from_file(path, 'chemical_data.tsv')
-        stat = Compound.get_chemical(self, list_chemical)
+        #list_chemical = csv_parser_from_file(path, 'chemical_data.tsv')
+        #Compound.get_chemicals(self, list_chemical)
         
 
         #structures = csv_parser_from_file(path, 'structures.csv')
@@ -48,7 +50,9 @@ class TestCompound(unittest.TestCase):
         #print(comp.name)
         #comp.save()
         #Compound.save(self)
-        Controller.save_all()
+        #list_compound_reactions = parser_compound_from_file(path, 'rhea-kegg.compound')
+        #Compound.get_reactions(self, list_compound_reactions)
+        #Controller.save_all()
         
 
         async def app(scope, receive, send):
