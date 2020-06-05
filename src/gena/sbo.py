@@ -1,4 +1,4 @@
-from hello.ontology import Ontology
+from gena.ontology import Ontology
 
 ####################################################################################
 #
@@ -10,6 +10,5 @@ class SBO(Ontology):
     _table_name = 'SBO'
     pass
 
-
-class Meta():
-    table_name = 'SBO'
+    class Meta():
+        table_name = 'SBO'

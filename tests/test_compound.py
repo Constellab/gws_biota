@@ -11,9 +11,9 @@ from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from hello.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
-from chebs.csv_parser import csv_parser_from_file, csv_parser_from_list
-from rhea.compound_parser import parser_compound_from_file
+from gena.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
+from chebi.csv_parser import parse_csv_from_file, parse_csv_from_list
+from rhea.compound_parser import parse_compound_from_file
 from manage import settings
 from peewee import CharField, chunked
 
@@ -25,6 +25,7 @@ from peewee import CharField, chunked
 ############################################################################################
 #path = os.path.realpath('./databases_input') #Set the path where we can find input data
 path = settings.get_data("gena_db_path")
+
 class TestCompound(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -37,22 +38,21 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = csv_parser_from_file(path, 'compounds.tsv')
+        list_comp = parse_csv_from_file(path, 'compounds.tsv')
         Compound.create_compounds(self, list_comp)
         Controller.save_all()
 
-        #list_chemical = csv_parser_from_file(path, 'chemical_data.tsv')
-        #Compound.get_chemicals(self, list_chemical)
+        list_chemical = parse_csv_from_file(path, 'chemical_data.tsv')
+        Compound.get_chemicals(self, list_chemical)
         
-
-        #structures = csv_parser_from_file(path, 'structures.csv')
+        #structures = parse_csv_from_file(path, 'structures.csv')
         #comp = Compound.get(Compound.source_accession == 'CHEBI:18357')
         #print(comp.name)
         #comp.save()
         #Compound.save(self)
-        #list_compound_reactions = parser_compound_from_file(path, 'rhea-kegg.compound')
-        #Compound.get_reactions(self, list_compound_reactions)
-        #Controller.save_all()
+        list_compound_reactions = parse_compound_from_file(path, 'rhea-kegg.compound')
+        Compound.get_reactions(self, list_compound_reactions)
+        Controller.save_all()
         
 
         async def app(scope, receive, send):

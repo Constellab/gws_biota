@@ -6,20 +6,17 @@ from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbMana
 from gws.prism.controller import Controller
 from peewee import IntegerField, DateField, DateTimeField, CharField, ForeignKeyField
 
-
 ####################################################################################
 #
-# Organism class
+# Element class
 #
 ####################################################################################
 
-
-class Organism(Resouce):
-    _table_name = 'organism'
-
+class Element(Resource):
+    _table_name = 'element'
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-
-class Meta():
-    table_name = 'Organism'
+        
+    class Meta:
+        table_name = 'element'

@@ -2,8 +2,7 @@ import sys
 import os
 import unittest
 
-from hello.ontology import Ontology
-from chebs.obo_parser import create_ontology_from_file, obo_parser_from_ontology
+from gena.ontology import Ontology
 from peewee import CharField, Model, chunked
 from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 
@@ -20,6 +19,9 @@ class Chebi_Ontology(Ontology):
     definition = CharField(null=True, index=True)
     #xrefs = CharField(null=True, index=True)
     _table_name = 'chebi_ontology'
+
+    class Meta():
+        table_name = 'chebi_ontology'
 
     def set_chebi_id(self, id):
         self.chebi_id = id
@@ -54,6 +56,3 @@ class Chebi_Ontology(Ontology):
         Chebi_Ontology.insert_defintion(chebis, "definition")
         status = 'test ok'
         return(status)
-
-class Meta():
-    table_name = 'chebi_ontology'

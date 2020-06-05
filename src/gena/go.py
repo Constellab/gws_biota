@@ -1,11 +1,10 @@
 import os, sys
-from hello.entity import Entity
+from gena.entity import Entity
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from peewee import CharField, Model, chunked
-from hello.ontology import Ontology
-from onto.go_parser import create_ontology_from_file, obo_parser_from_ontology
+from gena.ontology import Ontology
 from peewee import CharField, chunked
 from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 

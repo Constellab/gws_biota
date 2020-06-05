@@ -1,4 +1,4 @@
-from hello.element import Element
+from gena.element import Element
 
 ####################################################################################
 #

@@ -2,7 +2,7 @@ from gws.settings import Settings
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.controller import Controller
-from hello.relation import Relation
+from gena.relation import Relation
 from peewee import CharField, Model, chunked
 
 ####################################################################################
@@ -36,22 +36,19 @@ class Reaction(Relation):
     def set_enzymes(self, enzymes__):
         self.enzymes = enzymes__
 
-    #def set_definition(self, definition__):
-        #self.definition = definition__
-
     def create_reactions(self, list_reaction):
         reactions = [Reaction(data = dict) for dict in list_reaction]
         for react in reactions:
-            if('ENTRY' in react.data.keys()):
-                react.set_source_accession(react.data['ENTRY'])
-            if('DIRECTION' in react.data.keys()):
-                react.set_direction(react.data['DIRECTION'])
-            if('SUBSTRATES' in react.data.keys()):
-                react.set_substrates(react.data['SUBSTRATES'])
-            if('PRODUCTS' in react.data.keys()):
-                react.set_products(react.data['PRODUCTS'])
-            if('ENZYME' in react.data.keys()):
-                react.set_enzymes(react.data['ENZYME'])
+            if('entry' in react.data.keys()):
+                react.set_source_accession(react.data['entry'])
+            if('direction' in react.data.keys()):
+                react.set_direction(react.data['direction'])
+            if('substrates' in react.data.keys()):
+                react.set_substrates(react.data['substrates'])
+            if('products' in react.data.keys()):
+                react.set_products(react.data['products'])
+            if('enzyme' in react.data.keys()):
+                react.set_enzymes(react.data['enzyme'])
         status = 'ok'
         return(reactions)
 

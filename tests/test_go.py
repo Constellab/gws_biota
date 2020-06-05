@@ -10,20 +10,19 @@ from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from hello.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
-from onto.go_parser import create_ontology_from_file, obo_parser_from_ontology
-from hello.go import GO
+from onto.go_parser import create_ontology_from_file, parse_obo_from_ontology
+from gena.go import GO
 from peewee import CharField, chunked
 from manage import settings
 from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
+
 ############################################################################################
 #
 #                                        TestGO
 #                                         
 ############################################################################################
 
-path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
-path_ = settings.get_data("gena_db_path")
+path = settings.get_data("gena_db_path")
 class TestCompound(unittest.TestCase):
     @classmethod
     
@@ -37,8 +36,8 @@ class TestCompound(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        onto = create_ontology_from_file(path_, "go.obo")
-        list_go = obo_parser_from_ontology(onto)
+        onto = create_ontology_from_file(path, "go.obo")
+        list_go = parse_obo_from_ontology(onto)
         test = GO.create_go(self, list_go)
 
         Controller.save_all()

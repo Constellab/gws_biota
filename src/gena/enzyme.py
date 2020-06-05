@@ -1,44 +1,39 @@
 import os, sys
-from hello.entity import Entity
+from gena.protein import Protein 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from peewee import CharField, Model, chunked
 
-
 ####################################################################################
 #
-# Gene class
+# Enzyme class
 #
 ####################################################################################
 
 path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
 
-class Gene(Entity):
-    KO = CharField(null=True, index=True)
-    _table_name = 'gene'
-
-    def set_KO(self, ko):
-        self.KO = ko
+class Enzyme(Protein):
+    _table_name = 'enzyme'
     pass
 
-class GeneHTMLViewModel(ResourceViewModel):
+    class Meta():
+        table_name = 'enzyme'
+
+class EnzymeHTMLViewModel(ResourceViewModel):
     template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
 
-class GeneJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate("ID: {{view_model.model.data.ID}}")
+class EnzymeJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"id":"{{view_model.model.data.ID}}"}')
 
-Gene.register_view_models([
-    GeneHTMLViewModel, 
-    GeneJSONViewModel
+Enzyme.register_view_models([
+    EnzymeHTMLViewModel, 
+    EnzymeJSONViewModel
 ])
 
 Controller.register_models([
-    Gene,
-    GeneHTMLViewModel,
-    GeneJSONViewModel
+    Enzyme,
+    EnzymeHTMLViewModel,
+    EnzymeJSONViewModel
 ])
-
-class Meta():
-    table_name = 'gene'
 

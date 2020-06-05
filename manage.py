@@ -44,8 +44,6 @@ Settings.init(dict(
 settings = Settings.retrieve()
 settings.set_data("gena_db_path", databases_input)
 
-
-
 from gws.prism.manage import manage
 
 if __name__ == "__main__":

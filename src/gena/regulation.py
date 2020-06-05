@@ -1,4 +1,4 @@
-from hello.organism import Organism
+from gena.organism import Organism
 
 
 ####################################################################################
@@ -13,6 +13,5 @@ class Regulation(Organism):
     _table_name = 'regulation'
     pass
 
-
-class Meta():
-    table_name = 'regulation'
+    class Meta():
+        table_name = 'regulation'

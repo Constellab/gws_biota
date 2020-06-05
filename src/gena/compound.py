@@ -1,5 +1,5 @@
 import os, sys
-from hello.entity import Entity
+from gena.entity import Entity
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
@@ -10,8 +10,6 @@ from peewee import CharField, FloatField, Model, chunked
 # Compound class
 #
 ####################################################################################
-
-path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
 
 class Compound(Entity):
     name = CharField(null=True, index=True)
@@ -81,30 +79,28 @@ class Compound(Entity):
             if(data_['type'] == 'FORMULA'):
                 comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['compound_id'])
                 comp.set_formula(data_['chemical_data'])
-                #print('ok')
 
             elif(data_['type'] == 'MASS'):
                 comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['compound_id'])
                 comp.set_mass(float(data_['chemical_data']))
-                #print('ok')
                 
             elif(data_['type'] == 'CHARGE'):
                 comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['compound_id'])
                 comp.set_charge(float(data_['chemical_data']))
-                #print('ok')
-        comp.save()
+
+        #comp.save()
         status = 'ok'
         return(status)
    
     def get_reactions(self, list_reaction):
         for dict_ in list_reaction:
             #print(dict_["ENTRY"])
-            if ("ENTRY" in dict_.keys()):
-                comp = Compound.get(Compound.source_accession == dict_["ENTRY"])
-                comp.set_reactions(dict_['REACTION'])
-            if ("REACTION" in dict_.keys()):
-                comp.set_reactions(dict_['REACTION'])
-        comp.save()
+            if ("entry" in dict_.keys()):
+                comp = Compound.get(Compound.source_accession == dict_["entry"])
+                comp.set_reactions(dict_['reaction'])
+            if ("reaction" in dict_.keys()):
+                comp.set_reactions(dict_['reaction'])
+        #comp.save()
         status = 'ok'
         return(status)
 

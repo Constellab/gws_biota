@@ -1,26 +1,28 @@
 import unittest #not sure if necessary
 import copy #not sure if necessary
+import sys
+import os
+import unittest
+
 from gws.prism.app import App
 from gws.prism.model import Process
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
 from peewee import IntegerField, DateField, DateTimeField, CharField, ForeignKeyField
 
+from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
+
 ####################################################################################
 #
-# Element class
+# Ontology class
 #
 ####################################################################################
 
-class Element(Resource):
-    #go_id = CharField(null=True, index=True)
-    _table_name = 'element'
-    
+class Ontology(Resource):
+    _table_name = 'ontology'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-    
-    #def set_go(self, go):
-        #self.go_id = go
-        
-    class Meta:
-        table_name = 'element'
+
+    class Meta():
+        table_name = 'ontology'

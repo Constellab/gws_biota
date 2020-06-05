@@ -13,8 +13,8 @@ from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from peewee import CharField, chunked
 
-from chebs.obo_parser import create_ontology_from_file, obo_parser_from_ontology
-from hello.chebi_ontology import Chebi_Ontology
+from chebi.obo_parser import create_ontology_from_file, parse_onto_from_ontology
+from gena.chebi_ontology import Chebi_Ontology
 from manage import settings
 from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 
@@ -23,8 +23,9 @@ from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, Li
 #                                        TestChebiOntology
 #                                         
 ############################################################################################
-path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
-path_ = settings.get_data("gena_db_path")
+
+path = settings.get_data("gena_db_path")
+
 class TestCompound(unittest.TestCase):
     @classmethod
     
@@ -38,8 +39,8 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        onto = create_ontology_from_file(path = path_, file = 'chebi.obo')
-        list_chebs = obo_parser_from_ontology(onto)
+        onto = create_ontology_from_file(path, 'chebi.obo')
+        list_chebs = parse_onto_from_ontology(onto)
         test = Chebi_Ontology.create_chebis(self, list_chebs)
 
         Controller.save_all()
