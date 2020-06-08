@@ -36,7 +36,6 @@ class GO(Ontology):
         self.definition = def__
     
     #insert functions
-
     def insert_go_id(list__, key):
         for go in list__:
             go.set_go_id(go.data[key])

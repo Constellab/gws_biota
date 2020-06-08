@@ -21,7 +21,7 @@ class Compound(Entity):
     _table_name = 'compound'
 
     class Meta:
-        table_name = 'compound'
+        table_name = 'Compounds'
 
     #setter functions
     def set_name(self, name__):
@@ -88,19 +88,14 @@ class Compound(Entity):
                 comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['compound_id'])
                 comp.set_charge(float(data_['chemical_data']))
 
-        #comp.save()
         status = 'ok'
         return(status)
    
     def get_reactions(self, list_reaction):
         for dict_ in list_reaction:
-            #print(dict_["ENTRY"])
             if ("entry" in dict_.keys()):
                 comp = Compound.get(Compound.source_accession == dict_["entry"])
                 comp.set_reactions(dict_['reaction'])
-            if ("reaction" in dict_.keys()):
-                comp.set_reactions(dict_['reaction'])
-        #comp.save()
         status = 'ok'
         return(status)
 

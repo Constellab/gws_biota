@@ -19,6 +19,7 @@ sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load he
 sys.path.append(os.path.join(__cdir__,"../chebi-py/src"))           # -> load chebi module
 sys.path.append(os.path.join(__cdir__,"../rhea-py/src"))            # -> load rhea module
 sys.path.append(os.path.join(__cdir__,"../ontology-py/src"))        # -> load onto module
+sys.path.append(os.path.join(__cdir__,"../brenda-py/src"))          # -> load brenda module
 sys.path.append(os.path.join(__cdir__,"../../prod/gws-py/src"))     # -> load gws module
 
 databases_input = os.path.join(__cdir__,"./databases_input")

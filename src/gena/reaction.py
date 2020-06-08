@@ -4,6 +4,8 @@ from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.controller import Controller
 from gena.relation import Relation
 from peewee import CharField, Model, chunked
+from manage import settings
+from playhouse.sqlite_ext import JSONField
 
 ####################################################################################
 #
@@ -11,13 +13,19 @@ from peewee import CharField, Model, chunked
 #
 ####################################################################################
 
+path = settings.get_data("gena_db_path")
 
 class Reaction(Relation):
     source_accession = CharField(null=True, index=True)
+    master_id = CharField(null=True, index=True)
+    external_database_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
     substrates = CharField(null=True, index=True)
     products = CharField(null=True, index=True)
     enzymes = CharField(null=True, index=True)
+    master_id = CharField(null=True, index=True)
+    external_database_id = CharField(null=True, index=True)
+    #json = JSONField(null = True, default={})
     _table_name = 'reaction'
 
     #setter function
@@ -35,14 +43,21 @@ class Reaction(Relation):
     
     def set_enzymes(self, enzymes__):
         self.enzymes = enzymes__
+    
+    def set_master_id(self, master_id_):
+        self.master_id = master_id_
+
+    def set_external_database_id(self, ext_id_):
+        self.external_database_id = ext_id_
+    
+    def set_json(self, json_):
+        self.json = json_
 
     def create_reactions(self, list_reaction):
         reactions = [Reaction(data = dict) for dict in list_reaction]
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
-            if('direction' in react.data.keys()):
-                react.set_direction(react.data['direction'])
             if('substrates' in react.data.keys()):
                 react.set_substrates(react.data['substrates'])
             if('products' in react.data.keys()):
@@ -52,5 +67,33 @@ class Reaction(Relation):
         status = 'ok'
         return(reactions)
 
+    def get_direction(list_reaction_direction):
+        list_test = []
+        for dict_ in list_reaction_direction:
+            if('rhea_id' in dict_.keys()):
+                try:
+                    rea = Reaction.get(Reaction.source_accession == 'RHEA:' + dict_['rhea_id'])
+                    if(rea.direction == None): #not sure if necessary
+                        #print('ok')
+                        rea.set_direction(dict_['direction'])
+                        rea.set_master_id(dict_['master_id'])
+                        rea.set_external_database_id(dict_['id'])
+                except:
+                    print('can not find the reaction RHEA:' + dict_['rhea_id'])
+        status = 'ok'
+        return(status)
+    """
+    def test_json(self, list_react):
+        dict_reactions_test = {}
+        dict_reactions_test['CHEBI:133894'] =  1
+        dict_reactions_test['CHEBI:15378'] =  5
+        dict_reactions_test['CHEBI:58223'] =  5
+        for reactions in list_react:
+            print(type(reactions.json))
+            #reactions.json.set(dict_reactions_test, as_json = True)
+            print(reactions.json)
+        #self.json.set(dict_reactions_test, as_json = True)
+        return(dict_reactions_test)
+    """
     class Meta:
-        table_name = 'reaction'
+        table_name = 'Reactions'

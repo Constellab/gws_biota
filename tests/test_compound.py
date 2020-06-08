@@ -90,6 +90,4 @@ class TestCompound(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         print(response.content)
         """
-        #for i in range(0,10):
-            #print(list_chemical[i])
         

@@ -2,6 +2,7 @@ import sys
 import os
 import unittest
 
+
 from peewee import CharField
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from starlette.requests import Request
@@ -10,39 +11,46 @@ from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from onto.go_parser import create_ontology_from_file, parse_obo_from_ontology
-from onto.sbo_parser import create_ontology_from_owl, parse_terms_from_ontology
-from gena.go import GO
-from gena.sbo import SBO
-from peewee import CharField, chunked
 from manage import settings
-from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
+from peewee import CharField, chunked
+from brenda.brenda_parser import create_brenda, parse_all_proteins_for_all_ecs
+from gena.enzyme import Enzyme
+
+import logging
+from collections import OrderedDict
+from brendapy import BrendaParser, BrendaProtein
+from brendapy.taxonomy import Taxonomy
+
+from brendapy import utils
+from brendapy.taxonomy import Taxonomy
+from brendapy.tissues import BTO
+from brendapy.substances import CHEBI
+
 
 ############################################################################################
 #
-#                                        TestGO
+#                                        TestEnzymes
 #                                         
 ############################################################################################
 
 path = settings.get_data("gena_db_path")
 
-class TestGO(unittest.TestCase):
+class TestEnzyme(unittest.TestCase):
     @classmethod
-    
     def setUpClass(cls):
-        GO.drop_table()
-        GO.create_table()
+        Enzyme.drop_table()
+        Enzyme.create_table()
    
     @classmethod
     def tearDownClass(cls):
-        #GO.drop_table()
+        #Enzyme.drop_table()
         pass
-    
+
     def test_db_object(self):
-        onto_go = create_ontology_from_file(path, "go.obo")
-        list_go = parse_obo_from_ontology(onto_go)
-        test_go = GO.create_go(self, list_go)
-        
+        file = "brenda_download.txt"
+        brenda = create_brenda(path,file)
+        list_ = parse_all_proteins_for_all_ecs()
+        Enzyme.create_enzymes(self, list_)
         Controller.save_all()
 
         async def app(scope, receive, send):

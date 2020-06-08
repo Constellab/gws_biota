@@ -10,9 +10,7 @@ from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from onto.go_parser import create_ontology_from_file, parse_obo_from_ontology
 from onto.sbo_parser import create_ontology_from_owl, parse_terms_from_ontology
-from gena.go import GO
 from gena.sbo import SBO
 from peewee import CharField, chunked
 from manage import settings
@@ -26,12 +24,12 @@ from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, Li
 
 path = settings.get_data("gena_db_path")
 
-class TestGO(unittest.TestCase):
+class TestSBO(unittest.TestCase):
     @classmethod
     
     def setUpClass(cls):
-        GO.drop_table()
-        GO.create_table()
+        SBO.drop_table()
+        SBO.create_table()
    
     @classmethod
     def tearDownClass(cls):
@@ -39,10 +37,10 @@ class TestGO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        onto_go = create_ontology_from_file(path, "go.obo")
-        list_go = parse_obo_from_ontology(onto_go)
-        test_go = GO.create_go(self, list_go)
-        
+        onto_sbo = create_ontology_from_owl(path, "SBO_OWL.owl")
+        list_sbo = parse_terms_from_ontology(onto_sbo)
+        test_sbo = SBO.create_sbo(self, list_sbo)
+
         Controller.save_all()
 
         async def app(scope, receive, send):

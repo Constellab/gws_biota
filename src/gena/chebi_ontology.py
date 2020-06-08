@@ -21,7 +21,7 @@ class Chebi_Ontology(Ontology):
     _table_name = 'chebi_ontology'
 
     class Meta():
-        table_name = 'chebi_ontology'
+        table_name = 'Chebi Ontology'
 
     def set_chebi_id(self, id):
         self.chebi_id = id
@@ -48,8 +48,6 @@ class Chebi_Ontology(Ontology):
             chebs.set_definition(chebs.data[key])
 
     def create_chebis(self, list_chebi):
-        #for dict_ in list_chebi:
-            #chebis = [Chebi_Ontology(data = dict_)]
         chebis = [Chebi_Ontology(data = dict_) for dict_ in list_chebi]
         Chebi_Ontology.insert_chebi_id(chebis, "id")
         Chebi_Ontology.insert_name(chebis, "name")
