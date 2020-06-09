@@ -21,7 +21,7 @@ class Compound(Entity):
     _table_name = 'compound'
 
     class Meta:
-        table_name = 'Compounds'
+        table_name = 'compounds'
 
     #setter functions
     def set_name(self, name__):
@@ -66,35 +66,38 @@ class Compound(Entity):
     def insert_reactions(list__, key):
         for comp in list__:
             comp.set_reactions(comp.data[key])
-    
-    def create_compounds(self, list_compound):
-        compounds = [Compound(data = dict_) for dict_ in list_compound]
-        Compound.insert_source_accession(compounds, 'chebi_accession')
-        Compound.insert_name(compounds, 'name')
+
+    @classmethod
+    def create_compounds(cls, list_compound):
+        compounds = [cls(data = dict_) for dict_ in list_compound]
+        cls.insert_source_accession(compounds, 'chebi_accession')
+        cls.insert_name(compounds, 'name')
         status = 'ok'
         return(compounds)
     
-    def get_chemicals(self, list_chemical):
+    @classmethod
+    def set_chemicals(cls, list_chemical):
         for data_ in list_chemical:
             if(data_['type'] == 'FORMULA'):
-                comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['compound_id'])
+                comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
                 comp.set_formula(data_['chemical_data'])
 
             elif(data_['type'] == 'MASS'):
-                comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['compound_id'])
+                comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
                 comp.set_mass(float(data_['chemical_data']))
                 
             elif(data_['type'] == 'CHARGE'):
-                comp = Compound.get(Compound.source_accession == 'CHEBI:' + data_['compound_id'])
+                comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
                 comp.set_charge(float(data_['chemical_data']))
 
         status = 'ok'
         return(status)
    
-    def get_reactions(self, list_reaction):
+    @classmethod
+    def set_reactions(cls, list_reaction):
         for dict_ in list_reaction:
             if ("entry" in dict_.keys()):
-                comp = Compound.get(Compound.source_accession == dict_["entry"])
+                comp = cls.get(cls.source_accession == dict_["entry"])
                 comp.set_reactions(dict_['reaction'])
         status = 'ok'
         return(status)

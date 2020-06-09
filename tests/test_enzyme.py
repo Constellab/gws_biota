@@ -13,7 +13,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from manage import settings
 from peewee import CharField, chunked
-from brenda.brenda_parser import create_brenda, parse_all_proteins_for_all_ecs
+from brenda.brenda import Brenda
 from gena.enzyme import Enzyme
 
 import logging
@@ -48,9 +48,11 @@ class TestEnzyme(unittest.TestCase):
 
     def test_db_object(self):
         file = "brenda_download.txt"
-        brenda = create_brenda(path,file)
-        list_ = parse_all_proteins_for_all_ecs()
-        Enzyme.create_enzymes(self, list_)
+        brenda = Brenda.create_brenda(path,file)
+        list_ = Brenda.parse_all_proteins_for_all_ecs(brenda)
+        print(list_[15].AC)
+        print(list_[35].KM)
+        #Enzyme.create_enzymes(list_)
         Controller.save_all()
 
         async def app(scope, receive, send):

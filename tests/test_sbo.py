@@ -10,7 +10,7 @@ from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from onto.sbo_parser import create_ontology_from_owl, parse_terms_from_ontology
+from onto.ontology import Onto
 from gena.sbo import SBO
 from peewee import CharField, chunked
 from manage import settings
@@ -37,9 +37,9 @@ class TestSBO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        onto_sbo = create_ontology_from_owl(path, "SBO_OWL.owl")
-        list_sbo = parse_terms_from_ontology(onto_sbo)
-        test_sbo = SBO.create_sbo(self, list_sbo)
+        onto_sbo = Onto.create_ontology_from_owl(path, "SBO_OWL.owl")
+        list_sbo = Onto.parse_terms_from_ontology(onto_sbo)
+        test_sbo = SBO.create_sbo(list_sbo)
 
         Controller.save_all()
 

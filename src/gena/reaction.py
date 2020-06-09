@@ -24,9 +24,10 @@ class Reaction(Relation):
     products = CharField(null=True, index=True)
     enzymes = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
-    external_database_id = CharField(null=True, index=True)
+    biocyc_id = CharField(null=True, index=True)
+    kegg_id = CharField(null=True, index=True)
     #json = JSONField(null = True, default={})
-    _table_name = 'reaction'
+    _table_name = 'reactions'
 
     #setter function
     def set_source_accession(self, source__):
@@ -47,14 +48,18 @@ class Reaction(Relation):
     def set_master_id(self, master_id_):
         self.master_id = master_id_
 
-    def set_external_database_id(self, ext_id_):
-        self.external_database_id = ext_id_
+    def set_biocyc_id(self, ext_id_):
+        self.biocyc_id = ext_id_
+    
+    def set_kegg_id(self, _kegg_id_):
+        self._kegg_id = _kegg_id_
     
     def set_json(self, json_):
         self.json = json_
 
-    def create_reactions(self, list_reaction):
-        reactions = [Reaction(data = dict) for dict in list_reaction]
+    @classmethod
+    def create_reactions(cls, list_reaction):
+        reactions = [cls(data = dict) for dict in list_reaction]
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
@@ -77,9 +82,9 @@ class Reaction(Relation):
                         #print('ok')
                         rea.set_direction(dict_['direction'])
                         rea.set_master_id(dict_['master_id'])
-                        rea.set_external_database_id(dict_['id'])
+                        rea.set_biocyc_id(dict_['id'])
                 except:
-                    print('can not find the reaction RHEA:' + dict_['rhea_id'])
+                    print('can not find the reaction RHEA:' + str(dict_['rhea_id']))
         status = 'ok'
         return(status)
     """
@@ -96,4 +101,4 @@ class Reaction(Relation):
         return(dict_reactions_test)
     """
     class Meta:
-        table_name = 'Reactions'
+        table_name = 'reactions'

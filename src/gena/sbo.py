@@ -17,7 +17,7 @@ from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, Li
 class SBO(Ontology):
     sbo_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
-    _table_name = 'SBO'
+    _table_name = 'sbo'
     
     #setters
     def set_sbo_id(self, id):
@@ -36,14 +36,15 @@ class SBO(Ontology):
             sbo.set_name(sbo.data[key])
 
     #create sbo
-    def create_sbo(self, list_sbo_):
-        sbos = [SBO(data = dict_) for dict_ in list_sbo_]
-        SBO.insert_sbo_id(sbos,"id")
-        SBO.insert_name(sbos, "name")
+    @classmethod
+    def create_sbo(cls, list_sbo_):
+        sbos = [cls(data = dict_) for dict_ in list_sbo_]
+        cls.insert_sbo_id(sbos,"id")
+        cls.insert_name(sbos, "name")
         #GO.insert_namespace(gos, "namespace")
         #GO.insert_definition(gos, "definition")
         status = 'ok'
         return(status)
 
     class Meta():
-        table_name = 'SBO'
+        table_name = 'sbo'

@@ -19,7 +19,7 @@ class GO(Ontology):
     name = CharField(null=True, index=True)
     namespace = CharField(null=True, index=True)
     definition = CharField(null=True, index=True)
-    _table_name = 'GO'
+    _table_name = 'go'
     pass
 
     #setters
@@ -53,15 +53,15 @@ class GO(Ontology):
             go.set_definition(go.data[key])
 
     #create go
-    def create_go(self, list_go_):
-        gos = [GO(data = dict_) for dict_ in list_go_]
-        GO.insert_go_id(gos,"id")
-        GO.insert_name(gos, "name")
-        GO.insert_namespace(gos, "namespace")
-        GO.insert_definition(gos, "definition")
+    @classmethod
+    def create_go(cls, list_go_):
+        gos = [cls(data = dict_) for dict_ in list_go_]
+        cls.insert_go_id(gos,"id")
+        cls.insert_name(gos, "name")
+        cls.insert_namespace(gos, "namespace")
+        cls.insert_definition(gos, "definition")
         status = 'ok'
         return(status)
 
-
     class Meta():
-        table_name = 'GO'
+        table_name = 'go'

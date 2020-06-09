@@ -12,8 +12,8 @@ from starlette.testclient import TestClient
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gena.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
-from chebi.csv_parser import parse_csv_from_file, parse_csv_from_list
-from rhea.compound_parser import parse_compound_from_file
+from chebi.chebi import Chebi
+from rhea.rhea import Rhea
 from manage import settings
 from peewee import CharField, chunked
 
@@ -38,20 +38,20 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = parse_csv_from_file(path, 'compounds.tsv')
-        Compound.create_compounds(self, list_comp)
+        list_comp = Chebi.parse_csv_from_file(path, 'compounds.tsv')
+        Compound.create_compounds(list_comp)
         Controller.save_all()
 
-        list_chemical = parse_csv_from_file(path, 'chemical_data.tsv')
-        Compound.get_chemicals(self, list_chemical)
+        list_chemical = Chebi.parse_csv_from_file(path, 'chemical_data_test.tsv')
+        Compound.set_chemicals(list_chemical)
         
         #structures = parse_csv_from_file(path, 'structures.csv')
         #comp = Compound.get(Compound.source_accession == 'CHEBI:18357')
         #print(comp.name)
         #comp.save()
         #Compound.save(self)
-        list_compound_reactions = parse_compound_from_file(path, 'rhea-kegg.compound')
-        Compound.get_reactions(self, list_compound_reactions)
+        list_compound_reactions = Rhea.parse_compound_from_file(path, 'rhea-kegg-test.compound')
+        Compound.set_reactions(list_compound_reactions)
         Controller.save_all()
         
 

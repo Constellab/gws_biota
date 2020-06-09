@@ -26,7 +26,7 @@ class Enzyme(Protein):
     pass
 
     class Meta():
-        table_name = 'Enzymes'
+        table_name = 'enzymes'
 
     #setter functions
     def set_protein_id(self, id__):
@@ -64,8 +64,9 @@ class Enzyme(Protein):
     def insert_uniprot_id(list__, key):
         for comp in list__:
             comp.set_uniprot_id(comp.data[key])
-
-    def create_enzymes(self, list_proteins):
+            
+    @classmethod
+    def create_enzymes(cls, list_proteins):
         list_dict = []
         for p in list_proteins:
             dict_enz = {}
@@ -74,18 +75,19 @@ class Enzyme(Protein):
             dict_enz['taxonomy'] = p.taxonomy
             dict_enz['organism'] = p.organism
             dict_enz['uniprot'] = p.uniprot
+            dict_p['AC'] = p.AC
+            dict_p['KM'] = p.KM
+            dict_p['TO'] = p.TO
             list_dict.append(dict_enz)
-        enzymes = [Enzyme(data = dict_) for dict_ in list_dict]
-        Enzyme.insert_protein_id(enzymes, 'protein_id')
-        Enzyme.insert_ec(enzymes, 'ec')
-        Enzyme.insert_taxonomy(enzymes, 'taxonomy')
-        Enzyme.insert_organism(enzymes, 'organism')
-        Enzyme.insert_uniprot_id(enzymes, 'uniprot')
+        enzymes = [cls(data = dict_) for dict_ in list_dict]
+        cls.insert_protein_id(enzymes, 'protein_id')
+        cls.insert_ec(enzymes, 'ec')
+        cls.insert_taxonomy(enzymes, 'taxonomy')
+        cls.insert_organism(enzymes, 'organism')
+        cls.insert_uniprot_id(enzymes, 'uniprot')
         status = 'ok'
         return(status)
     
-    
-
 class EnzymeHTMLViewModel(ResourceViewModel):
     template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
 

@@ -13,7 +13,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from peewee import CharField, chunked
 
-from chebi.obo_parser import create_ontology_from_file, parse_onto_from_ontology
+from chebi.chebi import Chebi
 from gena.chebi_ontology import Chebi_Ontology
 from manage import settings
 from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
@@ -39,9 +39,9 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        onto = create_ontology_from_file(path, 'chebi.obo')
-        list_chebs = parse_onto_from_ontology(onto)
-        test = Chebi_Ontology.create_chebis(self, list_chebs)
+        onto = Chebi.create_ontology_from_file(path, 'chebi.obo')
+        list_chebs = Chebi.parse_onto_from_ontology(onto)
+        test = Chebi_Ontology.create_chebis(list_chebs)
 
         Controller.save_all()
 

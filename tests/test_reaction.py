@@ -17,8 +17,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 from gws.prism.controller import Controller
-from rhea.reaction_parser import parse_reaction_from_file
-from rhea.csv_parser import parse_csv_from_file
+from rhea.rhea import Rhea
 from gena.reaction import Reaction
 from peewee import CharField, chunked
 from manage import settings
@@ -37,16 +36,16 @@ class TestReaction(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        list_react = parse_reaction_from_file(path, 'rhea-kegg.reaction')
-        Reaction.create_reactions(self, list_react)
+        list_react = Rhea.parse_reaction_from_file(path, 'rhea-kegg.reaction')
+        Reaction.create_reactions(list_react)
         #test_dict = Reaction.test_json(self, r)
         Controller.save_all()
 
-        list_kegg_react = parse_csv_from_file(path, 'rhea2kegg_reaction.tsv')
-        list_ec_react = parse_csv_from_file(path, 'rhea2ec.tsv')
-        list_ecocyc_react = parse_csv_from_file(path, 'rhea2ecocyc.tsv')
-        list_macie_react = parse_csv_from_file(path, 'rhea2macie.tsv')
-        list_metacyc_react = parse_csv_from_file(path, 'rhea2metacyc.tsv')
+        list_kegg_react = Rhea.parse_csv_from_file(path, 'rhea2kegg_reaction.tsv')
+        list_ec_react = Rhea.parse_csv_from_file(path, 'rhea2ec.tsv')
+        list_ecocyc_react = Rhea.parse_csv_from_file(path, 'rhea2ecocyc.tsv')
+        list_macie_react = Rhea.parse_csv_from_file(path, 'rhea2macie.tsv')
+        list_metacyc_react = Rhea.parse_csv_from_file(path, 'rhea2metacyc.tsv')
         Reaction.get_direction(list_kegg_react)
         Reaction.get_direction(list_ec_react)
         Reaction.get_direction(list_ecocyc_react)

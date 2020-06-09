@@ -21,7 +21,7 @@ class Organism(Resouce):
         super().__init__(*args, **kwargs)
 
     class Meta():
-        table_name = 'Organism'
+        table_name = 'organism'
 
 
 

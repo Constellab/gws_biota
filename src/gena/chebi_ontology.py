@@ -21,16 +21,13 @@ class Chebi_Ontology(Ontology):
     _table_name = 'chebi_ontology'
 
     class Meta():
-        table_name = 'Chebi Ontology'
+        table_name = 'chebi_ontology'
 
     def set_chebi_id(self, id):
         self.chebi_id = id
     
     def set_name(self, name):
         self.name = name
-    
-    def set_definition(self, def_):
-        self.definition = def_
     
     #def set_xrefs(self, xrefs_):
         #self.xrefs = xrefs_ 
@@ -43,14 +40,11 @@ class Chebi_Ontology(Ontology):
         for chebs in list__:
             chebs.set_name(chebs.data[key])
 
-    def insert_defintion(list__, key):
-        for chebs in list__:
-            chebs.set_definition(chebs.data[key])
 
-    def create_chebis(self, list_chebi):
-        chebis = [Chebi_Ontology(data = dict_) for dict_ in list_chebi]
-        Chebi_Ontology.insert_chebi_id(chebis, "id")
-        Chebi_Ontology.insert_name(chebis, "name")
-        Chebi_Ontology.insert_defintion(chebis, "definition")
+    @classmethod
+    def create_chebis(cls, list_chebi):
+        chebis = [cls(data = dict_) for dict_ in list_chebi]
+        cls.insert_chebi_id(chebis, "id")
+        cls.insert_name(chebis, "name")
         status = 'test ok'
         return(status)
