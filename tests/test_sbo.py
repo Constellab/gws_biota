@@ -37,7 +37,7 @@ class TestSBO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        onto_sbo = Onto.create_ontology_from_owl(path, "SBO_OWL.owl")
+        onto_sbo = Onto.create_ontology_from_owl(path, "SBO_OWL_test.owl")
         list_sbo = Onto.parse_terms_from_ontology(onto_sbo)
         test_sbo = SBO.create_sbo(list_sbo)
 

@@ -9,4 +9,3 @@ awesome-slugify
 PyMySQL
 mysqlclient
 pronto
-brendapy

@@ -38,7 +38,7 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = Chebi.parse_csv_from_file(path, 'compounds.tsv')
+        list_comp = Chebi.parse_csv_from_file(path, 'compounds_test.tsv')
         Compound.create_compounds(list_comp)
         Controller.save_all()
 

@@ -1,0 +1,366 @@
+ID	 1.14.13.214 (transferred to EC 1.14.14.132)
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+RECOMMENDED_NAME
+RN	(-)-4'-demethyl-deoxypodophyllotoxin 4-hydroxylase
+
+
+SYSTEMATIC_NAME
+SN	
+
+
+///
+ID	1.13.11.38
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+PROTEIN
+PR	#1# Pseudomonas sp.   <6>
+PR	#2# Nocardioides sp.   <1,3>
+PR	#3# Gram-negative coccus   <2>
+PR	#4# Nocardioides sp. O24721 UniProt <5>
+PR	#5# Pseudaminobacter salicylatoxidans   <4,8>
+PR	#6# Pseudarthrobacter phenanthrenivorans B0BK98 UniProt <7>
+PR	#7# Pseudarthrobacter phenanthrenivorans B0BK99 UniProt <7>
+
+RECOMMENDED_NAME
+RN	1-hydroxy-2-naphthoate 1,2-dioxygenase
+
+
+SYSTEMATIC_NAME
+SN	1-hydroxy-2-naphthoate:oxygen 1,2-oxidoreductase (decyclizing)
+
+
+SYNONYMS
+SY	 oxygenase, 1-hydroxy-2-naphthoate di-
+SY	 1-hydroxy-2-naphthoate-degrading enzyme
+SY	#1# 1-HNDO <6>
+SY	#1,6,7# 1-hydroxy-2-naphthoic acid dioxygenase <6,7>
+SY	#5# 1-hydroxy-2-naphthoate 1,2-dioxygenase <8>
+SY	#5# 1H2NDO <8>
+SY	#6# Diox1 (#6# gene name <7>) <7>
+SY	#6,7# 1-H2NA dioxygenase <7>
+SY	#6,7# 1-hydroxy-2-naphthoate dioxygenase <7>
+SY	#6,7# Sphe3 1-H2NA dioxygenase <7>
+SY	#7# Diox2 (#7# gene name <7>) <7>
+
+REACTION
+RE	1-hydroxy-2-naphthoate + O2 = (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate
+
+REACTION_TYPE
+RT	redox reaction
+RT	oxidation
+RT	reduction
+
+SOURCE_TISSUE
+ST	#1,4# culture condition:phenanthrene-grown cell <5,6>
+ST	#6,7# more (#6,7# strain Sphe3 grows on 2-carboxybenzaldehyde,
+	protocatechuate, and phthalate as sole carbon sources, all
+	intermediates of phenanthrene degradation via the phthalate pathway,
+	whereas no growth is observed on salicylic acid <7>) <7>
+
+NATURAL_SUBSTRATE_PRODUCT
+NSP	#1# more = ? (#1# 1-hydroxy-2-naphthoic acid dioxygenase shows no
+	activity with gentisic acid, salicylic acid and other hydroxynaphthoic
+	acids <6>; #1# Pseudomonas sp. strain PPD can metabolize phenanthrene
+	as the sole source of carbon and energy via the phthalic acid route
+	<6>) {} <6>
+NSP	#1# 1-hydroxy-2-naphthoic acid + O2 = 2-carboxybenzylpyruvic acid <6>
+NSP	#2,4# 1-hydroxy-2-naphthoate + O2 =
+	(3E)-4-(2-carboxyphenyl)-2-oxobut-3-enoate (#2# enzyme is involved in
+	degradation of phenanthrene <1>; #4# the enzyme is involved in
+	degradation of phenanthrene <5>) |#4# i.e.
+	trans-2-carboxybenzalpyruvate <5>| <1,5>
+NSP	#5,6,7# 1-hydroxy-2-naphthoate + O2 =
+	(3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate <7,8>
+
+SUBSTRATE_PRODUCT
+SP	#1# 1-hydroxy-2-naphthoic acid + O2 = 2-carboxybenzylpyruvic acid <6>
+SP	#1,4,6,7# more = ? (#4# no activity with: gentisate,
+	3-hydroxyanthranilate, 2-hydroxy-1-naphthoate, 3-hydroxy-2-naphthoate,
+	salicylate, m-hydroxybenzoate, p-hydroxybenzoate, and protocatechuate
+	<5>; #1# 1-hydroxy-2-naphthoic acid dioxygenase shows no activity with
+	gentisic acid, salicylic acid and other hydroxynaphthoic acids <6>; #1#
+	Pseudomonas sp. strain PPD can metabolize phenanthrene as the sole
+	source of carbon and energy via the phthalic acid route <6>; #6,7# no
+	activity with 3-hydroxy-2-naphthoic acid <7>) {} <5,6,7>
+SP	#2,3,4# 1-hydroxy-2-naphthoate + O2 =
+	(3E)-4-(2-carboxyphenyl)-2-oxobut-3-enoate (#2# enzyme is involved in
+	degradation of phenanthrene <1>; #4# the enzyme is involved in
+	degradation of phenanthrene <5>) |#4# i.e.
+	trans-2-carboxybenzalpyruvate <5>; #2# i.e.
+	trans-2-carboxybenzalpyruvate. The structure of the ring cleavage
+	product is determined upon separation by high-performance liquid
+	chromatography at pH 2.5 by using nuclear magnetic resonance and mass
+	spectroscopic techniques <3>| <1,2,3,5>
+SP	#5# 1-hydroxy-2-naphthoate + O2 = ? (#5# gentisate 1,2-dioxygenase with
+	an extraordinary substrate range. Relative activities with salicylate,
+	5-aminosalicylate, 1-hydroxy-2-naphthoate, and gentisate with both
+	preparations are about 1:10:40:120 <4>) <4>
+SP	#5,6,7# 1-hydroxy-2-naphthoate + O2 =
+	(3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate <7,8>
+
+TURNOVER_NUMBER
+TN	#1# 70.4 {2-Hydroxy-1-naphthoic acid}  <6>
+TN	#2,4# 114 {1-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
+TN	#5# 2.2 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
+	specified in the publication, mutant L38Q <8>) <8>
+TN	#5# 17 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not specified
+	in the publication, mutant M46V <8>) <8>
+TN	#5# 44 {1-hydroxy-2-naphthoate}  <4>
+TN	#5# 4.6 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
+	specified in the publication, mutant W104Y <8>) <8>
+TN	#5# 24 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not specified
+	in the publication, wild-type enzyme <8>) <8>
+TN	#5# 3.31 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
+	specified in the publication, mutant A85H <8>) <8>
+
+KM_VALUE
+KM	#1# 0.0135 {2-Hydroxy-1-naphthoic acid}  <6>
+KM	#2,4# 0.01 {1-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
+KM	#5# 0.14 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
+	specified in the publication, wild-type enzyme <8>) <8>
+KM	#5# 0.08 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
+	specified in the publication, mutant A85H <8>; #5# pH 8.0, temperature
+	not specified in the publication, mutant L38Q <8>) <8>
+KM	#5# 0.046 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
+	specified in the publication, mutant M46V <8>) <8>
+KM	#5# 0.144 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
+	specified in the publication, mutant W104Y <8>) <8>
+KM	#5# 0.134 {1-hydroxy-2-naphthoate}  <4>
+KM	#6,7# -999 {more}  (#6,7# Michaelis-Menten kinetics <7>) <7>
+
+PH_OPTIMUM
+PHO	#1,2,4# 7.5 <1,5,6>
+PHO	#5# 8 (#5# assay at <8>) <8>
+PHO	#6,7# 8.5 <7>
+
+PH_RANGE
+PHR	#1# 6-9 <6>
+
+SPECIFIC_ACTIVITY
+SA	#1# 29.0 (#1# anion-exchange chromatography <6>) <6>
+SA	#1# 11.2 (#1# heat treatment (60°C) <6>) <6>
+SA	#1# 53.0 (#1# 3-H2NA-affinity chromatography <6>) <6>
+SA	#1# 4.9 (#1# cell-free extract <6>) <6>
+SA	#1# 61.5 (#1# after all purification steps from Pseudomonas sp. PPD
+	cells grown on phenanthrene <6>) <6>
+SA	#2# 1567.0 <3>
+SA	#2,4# 180.0 (#4# purified enzyme <5>) <1,5>
+SA	#4# 8.4 (#4# enzyme in extract of strain KP7 <5>) <5>
+
+TEMPERATURE_OPTIMUM
+TO	#4,6,7# 40 <5,7>
+
+INHIBITORS
+IN	#1# 1-hydroxy-2-naphthoic acid (#1# substrate inhibition <6>) <6>
+IN	#1# 3-Hydroxy-2-naphthoic acid (#1# competitive inhibition <6>) <6>
+IN	#2# 1,10-phenanthroline <1>
+IN	#2,4# 3-hydroxy-2-naphthoate (#4# competitive <5>) <1,5>
+IN	#3# Fe3+ <2>
+IN	#4# more (#4# no inhibition when the concentration of the substrate
+	1-hydroxy-2-napthoate is 0.01 mM and that of the tested compounds is
+	0.1 or 1 mM: gentisate, 3-hydroxyanthranilate, 2-hydroxy-1-naphthoate,
+	salicylate, m-hydroxybenzoate, p-hydroxybenzoate, and protocatechuate
+	<5>) <5>
+IN	#4,6,7# o-phenanthroline (#4# 0.1 mM, reactivation by incubating with
+	FeSO4 and ascorbic acid <5>; #6,7# inhibits at 0.01 mM, addition of 0.1
+	mM FeSO4 restores the enzyme activity <7>) <5,7>
+
+KI_VALUE
+KI	#1# 0.024 {3-Hydroxy-2-naphthoic acid}  (#1# competitive inhibition
+	<6>) <6>
+KI	#1# 0.116 {1-hydroxy-2-naphthoic acid}  (#1# substrate inhibition <6>)
+	<6>
+KI	#2,4# 0.022 {3-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
+
+METALS_IONS
+ME	#1,3,4,5,6,7# Fe2+ (#3# activation <2>; #4# enzyme contains 1.15 mol of
+	Fe(II)/mol of the subunit. Fe2+ is required for the enzyme to exhibit
+	activity <5>; #5# salicylate 1,2-dioxygenase is an iron (II) class III
+	ring cleaving dioxygenase <8>; #6,7# Sphe3 1-H2NA dioxygenase is
+	iron-dependent <7>) <2,5,6,7,8>
+ME	#2# Iron (#2# contains 1.15 mol of iron per mol of enzyme <1>) <1>
+
+MOLECULAR_WEIGHT
+MW	#1# 160000 (#1# Sephacryl S-200-HR gel-filtration chromatography;
+	SDS-PAGE under denaturing conditions, homotetramer, subunit molecular
+	mass of about 39000 <6>) <6>
+MW	#1# 39000 (#1# SDS-PAGE under denaturing conditions, 4 * 39000 <6>) <6>
+MW	#2,4# 270000 (#2,4# gel filtration <1,5>) <1,5>
+MW	#2,4,5,6,7# 45000 (#2,4# 6 * 45000, SDS-PAGE <1,5>; #5# 4 * 45000,
+	SDS-PAGE <4>; #6# x * 42000, recombinant Diox1, x * 45000, native
+	enzyme, SDS-PAGE <7>; #7# x * 42000, recombinant Diox2, x * 45000,
+	native enzyme, SDS-PAGE <7>) <1,4,5,7>
+MW	#5# 185000 (#5# gel filtration <4>) <4>
+MW	#6,7# 42000 (#6# x * 42000, recombinant Diox1, x * 45000, native
+	enzyme, SDS-PAGE <7>; #7# x * 42000, recombinant Diox2, x * 45000,
+	native enzyme, SDS-PAGE <7>) <7>
+MW	#6,7# 180000 (#6,7# gel filtration <7>) <7>
+
+SUBUNITS
+SU	#1,5# tetramer (#5# 4 * 45000, SDS-PAGE <4>; #1# SDS-PAGE under
+	denaturing conditions, 4 * 39000 <6>) <4,6>
+SU	#2,4# hexamer (#2,4# 6 * 45000, SDS-PAGE <1,5>) <1,5>
+SU	#6,7# ? (#6# x * 42000, recombinant Diox1, x * 45000, native enzyme,
+	SDS-PAGE <7>; #7# x * 42000, recombinant Diox2, x * 45000, native
+	enzyme, SDS-PAGE <7>) <7>
+
+ENGINEERING
+EN	#5# more (#5# generation of a 1-hydroxy-2-naphthoate 1,2-dioxygenase by
+	single point mutation M46V of salicylate 1,2-dioxygenase, rational
+	design of mutants, structure comparisons, overview <8>) <8>
+EN	#5# A85H (#5# site-directed mutagenesis, the salicylate 1,2-dioxygenase
+	variant shows higher catalytic efficiencies toward
+	1-hydroxy-2-naphthoate than the wild-type enzyme and no more activity
+	with gentisate. substitution of Ala85 with a histidine residue caused
+	significant changes in the orientation of the loop containing this
+	residue which is involved in the active site closing upon substrate
+	binding. In SDO A85H this specific loop shifts away from the active
+	site and thus opens the cavity favoring the binding of bulkier
+	substrates. Since this loop also interacts with the N-terminal residues
+	of the vicinal subunit, the structure and packing of the holoenzyme
+	might be also affected. <8>) <8>
+EN	#5# W104Y (#5# site-directed mutagenesis, the salicylate
+	1,2-dioxygenase variant shows increased catalytic efficiencies toward
+	1-hydroxy-2-naphthoate compared to gentisate and to the wild-type
+	enzyme. W104Y SDO mutant exhibits reduced reaction rates for all
+	substrates <8>) <8>
+EN	#5# L38Q (#5# site-directed mutagenesis, the salicylate 1,2-dioxygenase
+	variant shows higher catalytic efficiencies toward
+	1-hydroxy-2-naphthoate compared to gentisate than the wild-type enzyme
+	<8>) <8>
+
+CLONED
+CL	#4# (expression in Escherichia coli) <5>
+CL	#5# (expression of His-tagged wild-type and mutant enzymes in
+	Escherichia coli strain BL21 (DE3)) <8>
+CL	#6# (gene diox1, gene diox1 is found on an indigenous Sphe3 plasmid,
+	DNA and amino acid sequence determination and analysis, genetic
+	organization, sequence comparisons and phylogenetic tree. The relative
+	RNA transcription level of the chromosomal (diox2) gene is
+	significantly higher than that of its plasmid (diox1) homol,
+	overexpression in Escherichia coli) <7>
+CL	#7# (gene diox2, diox2 is located on the chromosome, DNA and amino acid
+	sequence determination and analysis, genetic organization, sequence
+	comparisons and phylogenetic tree. The relative RNA transcription level
+	of the chromosomal (diox2) gene is significantly higher than that of
+	its plasmid (diox1) homol, overexpression in Escherichia coli) <7>
+
+CRYSTALLIZATION
+CR	#5# (mutant A85H and W104Y variants and mutant W104Y with gentiate,
+	sitting drop vapor diffusion method, 4°C, mixing of 0.001 ml of protein
+	solution with 0.0008 ml of crystallization solution containing 8%
+	PEG10000 and 0.1 M Tris-HCl pH 8.0, with 0.0002 ml of a 0.1 M calcium
+	chloride solution, crystals quality is also improved using seeding
+	techniques, X-ray diffraction structure determination and analysis at
+	2.5-2.7 A resolution) <8>
+
+PURIFICATION
+PU	#1# (to homogeneity using a 3-hydroxy-2-naphthoic acid
+	(3-H2NA)-affinity matrix, DEAE-anion-exchange chromatography) <6>
+PU	#2# <1,3>
+PU	#3# (strain B156, isolated from soil and able to grow on phenanthrene
+	as sole source of carbon and energy, partial purification) <2>
+PU	#4# <5>
+PU	#5# <4>
+PU	#5# (recombinant His-tagged wild-type and mutant enzymes from
+	Escherichia coli strain BL21 (DE3) by nickel affinity chromatography)
+	<8>
+PU	#6# (native enzyme by anion exchange and hydrophobic interaction
+	chromatography, and gel filtration) <7>
+PU	#7# (native enzyme by anion exchange and hydrophobic interaction
+	chromatography, and gel filtration) <7>
+
+GENERAL_STABILITY
+GS	#1# (the enzyme is very unstable in the cell-free extract and requires
+	Fe(II) (0.1 mM), DTT (2 mM) and ethanol (10%) for stability) <6>
+GS	#3# (no stabilization by ethanol, acetone or glycerol up to 10% v/v) <2>
+
+STORAGE_STABILITY
+SS	#6,7# (4°C, purified enzyme, 1 mM DTT, 48 h, stable) <7>
+
+TEMPERATURE_STABILITY
+TS	#1# 60 (#1# heat stability for 20 min at 60°C <6>) <6>
+TS	#3# 0 (#3# 24 h, 90% loss of activity <2>) <2>
+
+REFERENCE
+RF	<1> Iwabuchi, T.; Harayama, S.: Biochemical and genetic
+	characterization of 2-carboxybenzaldehyde dehydrogenase, an enzyme
+	involved in phenanthrene degradation by Nocardioides sp. strain KP7. J.
+	Bacteriol. (1997) 179, 6488-6494. {Pubmed:9335300} (c)
+RF	<2> Barnsley, E.A.: Phthalate pathway of phenanthrene metabolism:
+	formation of 2-carboxybenzalpyruvate. J. Bacteriol. (1983) 154,
+	113-117. {Pubmed:6833175} (c)
+RF	<3> Adachi, K.; Iwabuchi, T.; Sano, H.; Harayama, S.: Structure of the
+	ring cleavage product of 1-hydroxy-2-naphthoate, an intermediate of the
+	phenanthrene-degradative pathway of Nocardioides sp. strain KP7. J.
+	Bacteriol. (1999) 181, 757-763. {Pubmed:9922237}
+RF	<4> Hintner, J.P.; Lechner, C.; Riegert, U.; Kuhm, A.E.; Storm, T.;
+	Reemtsma, T.; Stolz, A.: Direct ring fission of salicylate by a
+	salicylate 1,2-dioxygenase activity from Pseudaminobacter
+	salicylatoxidans. J. Bacteriol. (2001) 183, 6936-6942. {Pubmed:11698383}
+RF	<5> Iwabuchi, T.; Harayama, S.: Biochemical and molecular
+	characterization of 1-hydroxy-2-naphthoate dioxygenase from
+	Nocardioides sp. KP7. J. Biol. Chem. (1998) 273, 8332-8336.
+	{Pubmed:9525941}
+RF	<6> Deveryshetty, J.; Phale, P.S.: Biodegradation of phenanthrene by
+	Pseudomonas sp. strain PPD: purification and characterization of
+	1-hydroxy-2-naphthoic acid dioxygenase. Microbiology (2009) 155,
+	3083-3091. {Pubmed:19574301}
+RF	<7> Vandera, E.; Kavakiotis, K.; Kallimanis, A.; Kyrpides, N.C.;
+	Drainas, C.; Koukkou, A.I.: Heterologous expression and
+	characterization of two 1-hydroxy-2-naphthoic acid dioxygenases from
+	Arthrobacter phenanthrenivorans. Appl. Environ. Microbiol. (2012) 78,
+	621-627. {Pubmed:22101055}
+RF	<8> Ferraroni, M.; Steimer, L.; Matera, I.; Buerger, S.; Scozzafava,
+	A.; Stolz, A.; Briganti, F.: The generation of a 1-hydroxy-2-naphthoate
+	1,2-dioxygenase by single point mutations of salicylate 1,2-dioxygenase
+	- rational design of mutants and the crystal structures of the A85H and
+	W104Y variants. J. Struct. Biol. (2012) 180, 563-571. {Pubmed:22960182}
+
+KI_VALUE
+KI	#1# 0.024 {3-Hydroxy-2-naphthoic acid}  (#1# competitive inhibition
+	<6>) <6>
+KI	#1# 0.116 {1-hydroxy-2-naphthoic acid}  (#1# substrate inhibition <6>)
+	<6>
+KI	#2,4# 0.022 {3-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
+
+KI_VALUE
+KI	#1# 0.024 {3-Hydroxy-2-naphthoic acid}  (#1# competitive inhibition
+	<6>) <6>
+KI	#1# 0.116 {1-hydroxy-2-naphthoic acid}  (#1# substrate inhibition <6>)
+	<6>
+KI	#2,4# 0.022 {3-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
+
+KCAT_KM_VALUE
+KKM	#1# 5185 <6>
+KKM	#5# 32 (#5# pH 8.0, temperature not specified in the publication,
+	mutant W104Y <8>) <8>
+KKM	#5# 171 (#5# pH 8.0, temperature not specified in the publication,
+	wild-type enzyme <8>) <8>
+KKM	#5# 27.5 (#5# pH 8.0, temperature not specified in the publication,
+	mutant L38Q <8>) <8>
+KKM	#5# 369.6 (#5# pH 8.0, temperature not specified in the publication,
+	mutant M46V <8>) <8>
+KKM	#5# 41.4 (#5# pH 8.0, temperature not specified in the publication,
+	mutant A85H <8>) <8>
+
+EXPRESSION
+EXP	#6,7# up (#6# gene diox1 is induced by the presence of phenanthrene
+	used as a sole carbon and energy source <7>; #7# gene diox2 is induced
+	by the presence of phenanthrene used as a sole carbon and energy source
+	<7>) <7>
+EXP	#6,7# down (#6# gene diox1 is subject to carbon catabolite repression
+	<7>; #7# gene diox2 is subject to carbon catabolite repression <7>) <7>
+
+///

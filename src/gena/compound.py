@@ -79,17 +79,25 @@ class Compound(Entity):
     def set_chemicals(cls, list_chemical):
         for data_ in list_chemical:
             if(data_['type'] == 'FORMULA'):
-                comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
-                comp.set_formula(data_['chemical_data'])
+                try:
+                    comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
+                    comp.set_formula(data_['chemical_data'])
+                except:
+                    print('can not find the compound CHEBI:' + str(data_['compound_id']))
 
             elif(data_['type'] == 'MASS'):
-                comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
-                comp.set_mass(float(data_['chemical_data']))
+                try:
+                    comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
+                    comp.set_mass(float(data_['chemical_data']))
+                except:
+                    print('can not find the compound CHEBI:' + str(data_['compound_id']))
                 
             elif(data_['type'] == 'CHARGE'):
-                comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
-                comp.set_charge(float(data_['chemical_data']))
-
+                try:
+                    comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
+                    comp.set_charge(float(data_['chemical_data']))
+                except:
+                    print('can not find the compound CHEBI:' + str(data_['compound_id']))
         status = 'ok'
         return(status)
    
@@ -97,8 +105,11 @@ class Compound(Entity):
     def set_reactions(cls, list_reaction):
         for dict_ in list_reaction:
             if ("entry" in dict_.keys()):
-                comp = cls.get(cls.source_accession == dict_["entry"])
-                comp.set_reactions(dict_['reaction'])
+                try:
+                    comp = cls.get(cls.source_accession == dict_["entry"])
+                    comp.set_reactions(dict_['reaction'])
+                except:
+                    print('can not find the compound CHEBI:' + str(dict_["entry"]))
         status = 'ok'
         return(status)
 

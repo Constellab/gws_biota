@@ -47,12 +47,12 @@ class TestEnzyme(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        file = "brenda_download.txt"
-        brenda = Brenda.create_brenda(path,file)
-        list_ = Brenda.parse_all_proteins_for_all_ecs(brenda)
-        print(list_[15].AC)
-        print(list_[35].KM)
-        #Enzyme.create_enzymes(list_)
+        file = "brenda_test.txt"
+        brenda = Brenda(os.path.join(path, file))
+        list_ = brenda.parse_all_proteins_for_all_ecs()
+        print(list_)
+        #print(list_[35].KM)
+        Enzyme.create_enzymes(list_)
         Controller.save_all()
 
         async def app(scope, receive, send):

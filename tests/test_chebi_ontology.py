@@ -39,7 +39,7 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        onto = Chebi.create_ontology_from_file(path, 'chebi.obo')
+        onto = Chebi.create_ontology_from_file(path, 'chebi_test.obo')
         list_chebs = Chebi.parse_onto_from_ontology(onto)
         test = Chebi_Ontology.create_chebis(list_chebs)
 

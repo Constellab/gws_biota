@@ -75,9 +75,9 @@ class Enzyme(Protein):
             dict_enz['taxonomy'] = p.taxonomy
             dict_enz['organism'] = p.organism
             dict_enz['uniprot'] = p.uniprot
-            dict_p['AC'] = p.AC
-            dict_p['KM'] = p.KM
-            dict_p['TO'] = p.TO
+            dict_enz['AC'] = p.AC
+            dict_enz['KM'] = p.KM
+            dict_enz['TO'] = p.TO
             list_dict.append(dict_enz)
         enzymes = [cls(data = dict_) for dict_ in list_dict]
         cls.insert_protein_id(enzymes, 'protein_id')

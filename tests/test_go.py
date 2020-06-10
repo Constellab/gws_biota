@@ -38,10 +38,15 @@ class TestGO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        onto_go = Onto.create_ontology_from_file(path, "go.obo")
+        ### Test GO class ###
+        onto_go = Onto.create_ontology_from_file(path, "go_test.obo")
         list_go = Onto.parse_obo_from_ontology(onto_go)
         test_go = GO.create_go(list_go)
-        
+
+        self.assertEqual(len(list_go), 9)
+        self.assertEqual(list_go[0]['id'], 'GO:0000001')
+        self.assertEqual(list_go[8]['name'], 'trans-hexaprenyltranstransferase activity')
+
         Controller.save_all()
 
         async def app(scope, receive, send):

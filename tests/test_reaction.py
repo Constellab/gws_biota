@@ -36,21 +36,21 @@ class TestReaction(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        list_react = Rhea.parse_reaction_from_file(path, 'rhea-kegg.reaction')
+        list_react = Rhea.parse_reaction_from_file(path, 'rhea-kegg-test.reaction')
         Reaction.create_reactions(list_react)
         #test_dict = Reaction.test_json(self, r)
         Controller.save_all()
 
-        list_kegg_react = Rhea.parse_csv_from_file(path, 'rhea2kegg_reaction.tsv')
-        list_ec_react = Rhea.parse_csv_from_file(path, 'rhea2ec.tsv')
-        list_ecocyc_react = Rhea.parse_csv_from_file(path, 'rhea2ecocyc.tsv')
-        list_macie_react = Rhea.parse_csv_from_file(path, 'rhea2macie.tsv')
-        list_metacyc_react = Rhea.parse_csv_from_file(path, 'rhea2metacyc.tsv')
+        list_kegg_react = Rhea.parse_csv_from_file(path, 'rhea2kegg_reaction_test.tsv')
+        list_ec_react = Rhea.parse_csv_from_file(path, 'rhea2ec-test.tsv')
+        list_ecocyc_react = Rhea.parse_csv_from_file(path, 'rhea2ecocyc-test.tsv')
+        list_macie_react = Rhea.parse_csv_from_file(path, 'rhea2macie_test.tsv')
+        #list_metacyc_react = Rhea.parse_csv_from_file(path, 'rhea2metacyc.tsv')
         Reaction.get_direction(list_kegg_react)
         Reaction.get_direction(list_ec_react)
         Reaction.get_direction(list_ecocyc_react)
         Reaction.get_direction(list_macie_react)
-        Reaction.get_direction(list_metacyc_react)
+        #Reaction.get_direction(list_metacyc_react)
 
         Controller.save_all()
         async def app(scope, receive, send):
