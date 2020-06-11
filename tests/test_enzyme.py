@@ -51,7 +51,7 @@ class TestEnzyme(unittest.TestCase):
         brenda = Brenda(os.path.join(path, file))
         list_ = brenda.parse_all_proteins_for_all_ecs()
         print(list_)
-        #print(list_[35].KM)
+        #print(list_[2].PH_OPTIMUM)
         Enzyme.create_enzymes(list_)
         Controller.save_all()
 

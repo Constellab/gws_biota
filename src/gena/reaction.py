@@ -3,7 +3,7 @@ from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemp
 from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.controller import Controller
 from gena.relation import Relation
-from peewee import CharField, Model, chunked
+from peewee import CharField, Model, chunked, ManyToManyField
 from manage import settings
 from playhouse.sqlite_ext import JSONField
 
@@ -18,15 +18,17 @@ path = settings.get_data("gena_db_path")
 class Reaction(Relation):
     source_accession = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
-    external_database_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
-    substrates = CharField(null=True, index=True)
-    products = CharField(null=True, index=True)
+    #substrates = CharField(null=True, index=True)
+    #products = CharField(null=True, index=True)
     enzymes = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     biocyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
-    #json = JSONField(null = True, default={})
+
+    #substrates = ManyToManyField(Compound, backref='is_substrate_of')
+    #products = ManyToManyField(Compound, backref='is_product_of')
+
     _table_name = 'reactions'
 
     #setter function
@@ -37,7 +39,8 @@ class Reaction(Relation):
         self.direction = direction__
 
     def set_substrates(self, substrates__):
-        self.substrates = substrates__
+        #comps = Compound.select(Compound.id == )
+        self.substrates = substrates__ 
     
     def set_products(self, products__):
         self.products = products__
@@ -51,11 +54,9 @@ class Reaction(Relation):
     def set_biocyc_id(self, ext_id_):
         self.biocyc_id = ext_id_
     
-    def set_kegg_id(self, _kegg_id_):
-        self._kegg_id = _kegg_id_
-    
-    def set_json(self, json_):
-        self.json = json_
+    def set_kegg_id(self, kegg_id):
+        self.kegg_id = kegg_id
+
 
     @classmethod
     def create_reactions(cls, list_reaction):
@@ -72,21 +73,55 @@ class Reaction(Relation):
         status = 'ok'
         return(reactions)
 
-    def get_direction(list_reaction_direction):
-        list_test = []
-        for dict_ in list_reaction_direction:
-            if('rhea_id' in dict_.keys()):
-                try:
-                    rea = Reaction.get(Reaction.source_accession == 'RHEA:' + dict_['rhea_id'])
-                    if(rea.direction == None): #not sure if necessary
-                        #print('ok')
-                        rea.set_direction(dict_['direction'])
-                        rea.set_master_id(dict_['master_id'])
-                        rea.set_biocyc_id(dict_['id'])
-                except:
-                    print('can not find the reaction RHEA:' + str(dict_['rhea_id']))
+    @classmethod
+    def set_direction_from_list(cls, list_direction, direction):
+        for i in range(0, len(list_direction)):
+            try:
+                rea = cls.get(cls.source_accession == 'RHEA:' + list_direction[i])
+                if(rea.direction == None):
+                    rea.set_direction(direction)
+            except:
+                print('can not find the reaction RHEA:' + list_direction[i])
         status = 'ok'
         return(status)
+    
+    @classmethod
+    def get_master_and_id(cls, list_reaction_infos):
+        for dict__ in list_reaction_infos:
+            try:
+              rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
+              rea.set_master_id(dict__['master_id'])
+              rea.set_biocyc_id(dict__['id'])
+            except:
+                print('can not find the reaction RHEA:' + dict__['rhea_id'])
+        status = 'ok'
+        return(status)
+
+    @classmethod
+    def get_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
+        for dict__ in list_reaction_infos:
+            try:
+              rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
+              rea.set_master_id(dict__['master_id'])
+              rea.set_kegg_id(dict__['id'])
+            except:
+                print('can not find the reaction RHEA:' + dict__['rhea_id'])
+        status = 'ok'
+        return(status)
+
+    @classmethod
+    def get_master_and_id_from_rhea2ec(cls, list_reaction_infos):
+        for dict__ in list_reaction_infos:
+            try:
+              rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
+              rea.set_master_id(dict__['master_id'])
+            except:
+                print('can not find the reaction RHEA:' + dict__['rhea_id'])
+        status = 'ok'
+        return(status)
+
+
+
     """
     def test_json(self, list_react):
         dict_reactions_test = {}

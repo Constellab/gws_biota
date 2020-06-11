@@ -199,4 +199,3 @@ ENTRY       RHEA:10040
 DEFINITION  adenosine 3',5'-bisphosphate + H2O = AMP + phosphate
 EQUATION    CHEBI:58343 + CHEBI:15377 = CHEBI:456215 + CHEBI:43474
 ENZYME      3.1.3.7
-///
