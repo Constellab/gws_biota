@@ -33,7 +33,7 @@ from brendapy.substances import CHEBI
 #                                         
 ############################################################################################
 
-path = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("gena_db_path")
 
 class TestEnzyme(unittest.TestCase):
     @classmethod
@@ -47,21 +47,16 @@ class TestEnzyme(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        file = "brenda_test.txt"
-        brenda = Brenda(os.path.join(path, file))
-        list_ = brenda.parse_all_proteins_for_all_ecs()
-        print(list_)
-        #print(list_[2].PH_OPTIMUM)
-        Enzyme.create_enzymes(list_)
+        files = dict(
+            brenda_file = "brenda_download.txt"
+        )
+
+        files_test = dict(
+            brenda_file = "brenda_test.txt"
+        )
+
+        #brenda = Brenda(os.path.join(input_db_dir, file))
+        #list_ = brenda.parse_all_protein_to_dict()
+        Enzyme.create_enzymes_from_dict(input_db_dir, **files_test)
+
         Controller.save_all()
-
-        async def app(scope, receive, send):
-            assert scope['type'] == 'http'
-            request = Request(scope, receive)
-            vm = await Controller.action(request)
-            html = vm.render()
-            response = HTMLResponse(html)
-            await response(scope, receive, send)
-
-        Controller.is_query_params = True
-        client = TestClient(app)

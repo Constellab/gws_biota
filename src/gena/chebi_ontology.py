@@ -4,6 +4,7 @@ import unittest
 
 from gena.ontology import Ontology
 from peewee import CharField, Model, chunked
+from chebi.chebi import Chebi
 from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 
 ####################################################################################
@@ -16,7 +17,7 @@ path_test = os.path.realpath('./databases_input') #Set the path where we can fin
 class Chebi_Ontology(Ontology):
     chebi_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
-    definition = CharField(null=True, index=True)
+    #definition = CharField(null=True, index=True)
     #xrefs = CharField(null=True, index=True)
     _table_name = 'chebi_ontology'
 
@@ -42,7 +43,9 @@ class Chebi_Ontology(Ontology):
 
 
     @classmethod
-    def create_chebis(cls, list_chebi):
+    def create_chebis(cls, input_db_dir, **files):
+        onto = Chebi.create_ontology_from_file(input_db_dir, files['chebi_data'])
+        list_chebi = Chebi.parse_onto_from_ontology(onto)
         chebis = [cls(data = dict_) for dict_ in list_chebi]
         cls.insert_chebi_id(chebis, "id")
         cls.insert_name(chebis, "name")

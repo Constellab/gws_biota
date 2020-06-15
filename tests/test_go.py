@@ -23,7 +23,7 @@ from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, Li
 #                                         
 ############################################################################################
 
-path = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("gena_db_path")
 
 class TestGO(unittest.TestCase):
     @classmethod
@@ -39,14 +39,23 @@ class TestGO(unittest.TestCase):
     
     def test_db_object(self):
         ### Test GO class ###
-        onto_go = Onto.create_ontology_from_file(path, "go_test.obo")
-        list_go = Onto.parse_obo_from_ontology(onto_go)
-        test_go = GO.create_go(list_go)
 
+        files = dict(
+            go_data = "go.obo",
+        )
+
+
+        files_test = dict(
+            go_data = "go_test.obo",
+        )
+
+        GO.create_go(input_db_dir, **files_test)
+
+        """
         self.assertEqual(len(list_go), 9)
         self.assertEqual(list_go[0]['id'], 'GO:0000001')
         self.assertEqual(list_go[8]['name'], 'trans-hexaprenyltranstransferase activity')
-
+        """
         Controller.save_all()
 
         async def app(scope, receive, send):

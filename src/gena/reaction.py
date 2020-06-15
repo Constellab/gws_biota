@@ -3,8 +3,11 @@ from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemp
 from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.controller import Controller
 from gena.relation import Relation
-from peewee import CharField, Model, chunked, ManyToManyField
+from gena.compound import Compound
+from rhea.rhea import Rhea
+from peewee import CharField, ForeignKeyField, Model, chunked, ManyToManyField
 from manage import settings
+from gws.prism.controller import Controller
 from playhouse.sqlite_ext import JSONField
 
 ####################################################################################
@@ -19,15 +22,12 @@ class Reaction(Relation):
     source_accession = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
-    #substrates = CharField(null=True, index=True)
-    #products = CharField(null=True, index=True)
     enzymes = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     biocyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
-
-    #substrates = ManyToManyField(Compound, backref='is_substrate_of')
-    #products = ManyToManyField(Compound, backref='is_product_of')
+    substrates = ManyToManyField(Compound, backref='is_substrate_of')
+    products = ManyToManyField(Compound, backref='is_product_of')
 
     _table_name = 'reactions'
 
@@ -38,9 +38,11 @@ class Reaction(Relation):
     def set_direction(self, direction__):
         self.direction = direction__
 
-    def set_substrates(self, substrates__):
-        #comps = Compound.select(Compound.id == )
-        self.substrates = substrates__ 
+    def set_substrates(self):
+        #for chebi_accession in self.data['substrates']:
+        comps = Compound.get(Compound.source_accession == str(self.data['substrates'][0]))
+        #comps = Compound.select().where(Compound.source_accession in self.data['substrates'])
+        self.substrates = comps 
     
     def set_products(self, products__):
         self.products = products__
@@ -57,24 +59,54 @@ class Reaction(Relation):
     def set_kegg_id(self, kegg_id):
         self.kegg_id = kegg_id
 
+    @classmethod
+    def create_reactions_from_files(cls, input_db_dir, **files):
+        list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
+        cls.__create_reactions(list_react)
+        Controller.save_all()
+
+        list_directions = Rhea.parse_csv_from_file(input_db_dir, files['rhea_direction_file'])
+        list_master, list_LR, list_RL, list_BI = Rhea.get_columns_from_lines(list_directions)
+        cls.__set_direction_from_list(list_master, 'UN')
+        cls.__set_direction_from_list(list_LR, 'LR')
+        cls.__set_direction_from_list(list_RL, 'RL')
+        cls.__set_direction_from_list(list_BI, 'BI')
+        Controller.save_all()
+
+        list_ecocyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2ecocyc_file'])
+        list_metacyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2metacyc_file'])
+        list_macie_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2macie_file'])
+
+        cls.__get_master_and_id(list_ecocyc_react)
+        cls.__get_master_and_id(list_metacyc_react)
+        cls.__get_master_and_id(list_macie_react)
+        
+        list_kegg_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2kegg_reaction_file'])
+        list_ec_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2ec_file'])
+
+        cls.__get_master_and_id_from_rhea2kegg(list_kegg_react)
+        cls.__get_master_and_id_from_rhea2ec(list_ec_react)
+
+        Controller.save_all()
 
     @classmethod
-    def create_reactions(cls, list_reaction):
+    def __create_reactions(cls, list_reaction):
         reactions = [cls(data = dict) for dict in list_reaction]
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
-            if('substrates' in react.data.keys()):
-                react.set_substrates(react.data['substrates'])
-            if('products' in react.data.keys()):
-                react.set_products(react.data['products'])
+            #if('substrates' in react.data.keys()):
+                #react.set_substrates(react.data['substrates'])
+            #if('products' in react.data.keys()):
+                #react.set_products(react.data['products'])
             if('enzyme' in react.data.keys()):
                 react.set_enzymes(react.data['enzyme'])
+            #react.set_substrates()
         status = 'ok'
         return(reactions)
 
     @classmethod
-    def set_direction_from_list(cls, list_direction, direction):
+    def __set_direction_from_list(cls, list_direction, direction):
         for i in range(0, len(list_direction)):
             try:
                 rea = cls.get(cls.source_accession == 'RHEA:' + list_direction[i])
@@ -86,7 +118,7 @@ class Reaction(Relation):
         return(status)
     
     @classmethod
-    def get_master_and_id(cls, list_reaction_infos):
+    def __get_master_and_id(cls, list_reaction_infos):
         for dict__ in list_reaction_infos:
             try:
               rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
@@ -98,7 +130,7 @@ class Reaction(Relation):
         return(status)
 
     @classmethod
-    def get_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
+    def __get_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
         for dict__ in list_reaction_infos:
             try:
               rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
@@ -110,7 +142,7 @@ class Reaction(Relation):
         return(status)
 
     @classmethod
-    def get_master_and_id_from_rhea2ec(cls, list_reaction_infos):
+    def __get_master_and_id_from_rhea2ec(cls, list_reaction_infos):
         for dict__ in list_reaction_infos:
             try:
               rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
@@ -120,20 +152,6 @@ class Reaction(Relation):
         status = 'ok'
         return(status)
 
-
-
-    """
-    def test_json(self, list_react):
-        dict_reactions_test = {}
-        dict_reactions_test['CHEBI:133894'] =  1
-        dict_reactions_test['CHEBI:15378'] =  5
-        dict_reactions_test['CHEBI:58223'] =  5
-        for reactions in list_react:
-            print(type(reactions.json))
-            #reactions.json.set(dict_reactions_test, as_json = True)
-            print(reactions.json)
-        #self.json.set(dict_reactions_test, as_json = True)
-        return(dict_reactions_test)
-    """
     class Meta:
         table_name = 'reactions'
+

@@ -11,6 +11,7 @@ from starlette.testclient import TestClient
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gena.taxonomy import Taxonomy
+from taxo.taxonomy import Taxo
 from peewee import CharField, chunked
 from manage import settings
 
@@ -21,7 +22,7 @@ from manage import settings
 ############################################################################################
 
 
-path = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("gena_db_path")
 
 class TestGO(unittest.TestCase):
     @classmethod
@@ -36,5 +37,6 @@ class TestGO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        print('ok')
+        Taxonomy.create_taxons_from_list()
         Controller.save_all()
+        #self.assertEqual(list_taxons[0]['tax_id'], 579138)

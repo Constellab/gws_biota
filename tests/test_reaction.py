@@ -19,23 +19,21 @@ from starlette.testclient import TestClient
 from gws.prism.controller import Controller
 from rhea.rhea import Rhea
 from gena.reaction import Reaction
-from peewee import CharField, chunked
+#from gena.reaction import reactions_compounds_through
+from gena.compound import Compound
+from peewee import CharField, ForeignKeyField, chunked
 from manage import settings
 
-path = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("gena_db_path")
+#SubstrateReaction = Reaction.substrates.get_through_model()
 
 class TestReaction(unittest.TestCase):
-
-    def setUp(cls):
-        Reaction.drop_table()
-        Reaction.create_table()
-        pass
-
 
     @classmethod
     def setUpClass(cls):
         Reaction.drop_table()
         Reaction.create_table()
+        #SubstrateReaction.create_table()
    
     @classmethod
     def tearDownClass(cls):
@@ -43,35 +41,24 @@ class TestReaction(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        list_react = Rhea.parse_reaction_from_file(path, 'rhea-kegg-test.reaction')
-        Reaction.create_reactions(list_react)
-        #test_dict = Reaction.test_json(self, r)
-        Controller.save_all()
+        files = dict(
+            rhea_kegg_reaction_file =  'rhea-kegg.reaction',
+            rhea_direction_file = 'rhea-directions.tsv',
+            rhea2ecocyc_file = 'rhea2ecocyc.tsv',
+            rhea2metacyc_file = 'rhea2metacyc.tsv',
+            rhea2macie_file = 'rhea2macie.tsv',
+            rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
+            rhea2ec_file = 'rhea2ec.tsv'
+        )
 
-        list_directions = Rhea.parse_csv_from_file(path, 'rhea-directions-test.tsv')
-        list_master, list_LR, list_RL, list_BI = Rhea.get_columns_from_lines(list_directions)
+        files_test = dict(
+            rhea_kegg_reaction_file =  'rhea-kegg-test.reaction',
+            rhea_direction_file = 'rhea-directions-test.tsv',
+            rhea2ecocyc_file = 'rhea2ecocyc-test.tsv',
+            rhea2metacyc_file = 'rhea2metacyc-test.tsv',
+            rhea2macie_file = 'rhea2macie_test.tsv',
+            rhea2kegg_reaction_file = 'rhea2kegg_reaction_test.tsv',
+            rhea2ec_file = 'rhea2ec-test.tsv'
+        )
 
-        Reaction.set_direction_from_list(list_master, 'UN')
-        Reaction.set_direction_from_list(list_LR, 'LR')
-        Reaction.set_direction_from_list(list_RL, 'RL')
-        Reaction.set_direction_from_list(list_BI, 'BI')
-        Controller.save_all()
-
-        list_ecocyc_react = Rhea.parse_csv_from_file(path, 'rhea2ecocyc-test.tsv')
-        list_macie_react = Rhea.parse_csv_from_file(path, 'rhea2macie_test.tsv')
-        list_metacyc_react = Rhea.parse_csv_from_file(path, 'rhea2metacyc-test.tsv')
-
-        Reaction.get_master_and_id(list_ecocyc_react)
-        Reaction.get_master_and_id(list_macie_react)
-        Reaction.get_master_and_id(list_metacyc_react)
-
-        Controller.save_all()
-
-
-        list_kegg_react = Rhea.parse_csv_from_file(path, 'rhea2kegg_reaction_test.tsv')
-        list_ec_react = Rhea.parse_csv_from_file(path, 'rhea2ec-test.tsv')
-
-        Reaction.get_master_and_id_from_rhea2kegg(list_kegg_react)
-        Reaction.get_master_and_id_from_rhea2ec(list_ec_react)
-        
-        Controller.save_all()
+        Reaction.create_reactions_from_files(input_db_dir, **files_test)

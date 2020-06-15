@@ -24,7 +24,7 @@ from peewee import CharField, chunked
 #                                         
 ############################################################################################
 #path = os.path.realpath('./databases_input') #Set the path where we can find input data
-path = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("gena_db_path")
 
 class TestCompound(unittest.TestCase):
     @classmethod
@@ -38,56 +38,43 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        list_comp = Chebi.parse_csv_from_file(path, 'compounds_test.tsv')
+        files = dict(
+            chebi_compound_file = "compounds.tsv",
+            chebi_chemical_data_file =  "chemical_data.tsv",
+            rhea_kegg_compound_file =  "rhea-kegg.compound"
+        )
+
+        files_test = dict(
+            chebi_compound_file = "compounds_test.tsv",
+            chebi_chemical_data_file =  "chemical_data_test.tsv",
+            rhea_kegg_compound_file =  "rhea-kegg-test.compound"
+        )
+
+        Compound.create_compounds_from_files(input_db_dir, **files_test)
+        Controller.save_all()
+
+        ## Atomics tests for compounds' functions ##
+        """
+        list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
         Compound.create_compounds(list_comp)
+        #self.assertEqual(len(list_comp), 299)
+        self.assertEqual(list_comp[0]['chebi_accession'], 'CHEBI:9437')
+        self.assertEqual(list_comp[8]['name'], 'salicyluric acid')
+
         Controller.save_all()
 
-        list_chemical = Chebi.parse_csv_from_file(path, 'chemical_data_test.tsv')
+        list_chemical = Chebi.parse_csv_from_file(input_db_dir, files['chebi_chemical_data_file'])
         Compound.set_chemicals(list_chemical)
+        #self.assertEqual(list_chemical[0],{'id': '1', 'compound_id': '18357', 'source': 'KEGG COMPOUND', 'type': 'FORMULA', 'chemical_data': 'C8H11NO3'})
         
-        #structures = parse_csv_from_file(path, 'structures.csv')
-        #comp = Compound.get(Compound.source_accession == 'CHEBI:18357')
-        #print(comp.name)
-        #comp.save()
-        #Compound.save(self)
-        list_compound_reactions = Rhea.parse_compound_from_file(path, 'rhea-kegg-test.compound')
-        Compound.set_reactions(list_compound_reactions)
+        list_compound_reactions = Rhea.parse_compound_from_file(input_db_dir, files['rhea_kegg_compound_file'])
+        Compound.set_reactions_from_list(list_compound_reactions)
+        self.assertEqual(list_compound_reactions[0]['reaction'],['32539', '32540', '32541', '32542'])
+        print(list_comp[0]['chebi_accession'])
+        print(type(list_comp[0]['chebi_accession']))
         Controller.save_all()
-        
-
-        async def app(scope, receive, send):
-            assert scope['type'] == 'http'
-            request = Request(scope, receive)
-            vm = await Controller.action(request)
-            html = vm.render()
-            response = HTMLResponse(html)
-            await response(scope, receive, send)
-
-        Controller.is_query_params = True
-        client = TestClient(app)
-        
         """
-        # Test update_view => html
-        params = ""
-        response = client.get(Controller.build_url(
-            action = 'view', 
-            uri_name = html_vm.uri_name,
-            uri_id = html_vm.uri_id,
-            params = params
-        ))
-
-        self.assertEqual(response.status_code, 200)
-        print(response.content)
-
-
-        response = client.get(Controller.build_url(
-            action = 'view', 
-            uri_name = json_vm.uri_name,
-            uri_id = json_vm.uri_id,
-            params = params
-        ))
-
-        self.assertEqual(response.status_code, 200)
-        print(response.content)
-        """
+        
+        
+        
         

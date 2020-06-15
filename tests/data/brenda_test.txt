@@ -364,3 +364,295 @@ EXP	#6,7# down (#6# gene diox1 is subject to carbon catabolite repression
 	<7>; #7# gene diox2 is subject to carbon catabolite repression <7>) <7>
 
 ///
+ID	1.1.3.30
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+PROTEIN
+PR	#1# Bacillus megaterium   <10,11>
+PR	#2# Pseudomonas sp.   <1,2,3,10>
+PR	#3# Streptomyces venezuelae   <10>
+PR	#4# no activity in Alcaligenes faecalis   <10>
+PR	#5# Penicillium sp.   <10>
+PR	#6# Microbacterium barkeri   <10>
+PR	#7# no activity in Pseudomonas sp.   <2>
+PR	#8# Sphingomonas sp.   <7,10>
+PR	#9# Brevundimonas vesicularis   <4,10>
+PR	#10# Paenibacillus amylolyticus   <10>
+PR	#11# Geotrichum sp.   <10>
+PR	#12# Sphingopyxis sp.   <5,9,10>
+PR	#13# Sphingomonas sp. Q588Z1 SwissProt <6>
+PR	#14# no activity in Rhodococcus erythropolis   <7>
+PR	#15# Sphingopyxis sp. Q588Z1 SwissProt <8>
+
+RECOMMENDED_NAME
+RN	polyvinyl-alcohol oxidase
+
+
+SYSTEMATIC_NAME
+SN	polyvinyl-alcohol:oxygen oxidoreductase
+
+
+SYNONYMS
+SY	 dehydrogenase, polyvinyl alcohol
+SY	#1# polyvinyl alcohol dehydrogenase <11>
+SY	#1,13,15# PVADH <6,8,11>
+SY	#1,2,3,5,6,8,9,10,11,12,14# PVA oxidase <5,7,10>
+SY	#13# periplasmic poly(vinyl alcohol) dehydrogenase <6>
+SY	#13,15# PVA dehydrogenase <6,8>
+
+REACTION
+RE	polyvinyl alcohol + O2 = oxidized polyvinyl alcohol + H2O2
+
+REACTION_TYPE
+RT	redox reaction
+RT	oxidation
+RT	reduction
+
+SOURCE_TISSUE
+ST	#1,2,12# more (#12# the organism grows on polyvinyl alcohol, n-butanol,
+	n-pentanol, n-hexanol, n-heptanol, n-tridecanol, n-tetradecanol, and
+	n-hexadecanol as sole carbon source, but not on aromatic and alkane
+	compounds <5>; #1# strain BX1 grows on PVA as a mixed culture with
+	another strain PN19. Strain BX1 has PVA oxidase activity but has no
+	PQQ-dependent PVA-DH and the mixed culture accumulates depolymerized
+	PVA in the culture supernatant <10>; #2# the enzyme is induced by
+	polyvinyl alcohol in strain O3, but is constitutive in strain VM15C
+	<10>) <5,10>
+ST	#2# culture supernatant <1,2,3>
+
+LOCALIZATION
+LO	#2,12,13,15# periplasm (#2# membrane-bound amount depending on growth
+	rate, 50% of enzyme activity is localized on cytoplasmic membrane <1>;
+	#12# extracellular or cell-associated enzyme activity undetectable in
+	strain 113P3 <9>) <1,2,3,6,8,9>
+LO	#2,3# extracellular (#2# amount depending on growth rate <1,2,3>; #3#
+	the enzyme is excreted <10>) <1,2,3,10>
+LO	#8# more (#8# activity associated with cells of co-isolated degrader
+	strain Rhodococcus erythropolis <7>) <7>
+
+NATURAL_SUBSTRATE_PRODUCT
+NSP	#1,2,3,5,6,8,9,10,11,12,15# polyvinyl alcohol + O2 = oxidized polyvinyl
+	alcohol + H2O2 (#12# the enzyme is involved in polyvinyl
+	alcohol-degradation <5>) <1,2,3,4,5,8,9,10,11>
+
+SUBSTRATE_PRODUCT
+SP	#1,2,3,5,6,8,9,10,11,12,13,15# polyvinyl alcohol + O2 = oxidized
+	polyvinyl alcohol + H2O2 (#12# the enzyme is involved in polyvinyl
+	alcohol-degradation <5>; #13# substrate PVA117 <6>; #12#
+	fluorescein-labelled and unlabelled polyvinyl alcohol, degradation
+	after uptake into the periplasm, associated with ultrastructural
+	changes of cell surface <9>; #15# pva operon characterized <8>; #8#
+	symbiotic biodegradation of polyvinyl alcohol, measured by hydrogen
+	peroxide production <7>) <1,2,3,4,5,6,7,8,9,10,11>
+SP	#13# more = ? (#13# no activity with primary nor secondary alcohols
+	<6>) {} <6>
+SP	#13# 1,3-butanediol + O2 = ? (#13# low activity <6>) <6>
+SP	#13# 2,4-pentanediol + O2 = ? (#13# low activity <6>) <6>
+SP	#13# cyclohexanediol + O2 = ? (#13# low activity <6>) <6>
+SP	#13# polypropylene glycol + O2 = ? <6>
+SP	#13# pyrroloquinoline quinone + O2 = ? (#13# low activity <6>) <6>
+SP	#2,9# 2-propanol + O2 = acetone + H2O2 (#9# 3.5% of activity with
+	polyvinyl alcohol <4>; #2# 4.9% of activity with polyvinyl alcohol <3>)
+	<3,4>
+SP	#2,9# 2-pentanol + O2 = 2-pentanone + H2O2 (#9# 36.3% of activity with
+	polyvinyl alcohol <4>; #2# 58% of activity with polyvinyl alcohol <3>)
+	<3,4>
+SP	#2,9# 2-hexanol + O2 = 2-hexanone + H2O2 (#9# 65.4% of activity with
+	polyvinyl alcohol <4>; #2# 101% of activity with polyvinyl alcohol <3>)
+	<3,4>
+SP	#2,9# 4-heptanol + O2 = 4-heptanone + H2O2 (#9# 75.1% of activity with
+	polyvinyl alcohol <4>; #2# 91% of activity with polyvinyl alcohol <3>)
+	<3,4>
+SP	#2,9# 2,5-hexanediol + O2 = 2,5-hexanedione + H2O2 (#2# 4.9% of
+	activity with polyvinyl alcohol <3>; #9# 3.8% of activity with
+	polyvinyl alcohol <4>) <3,4>
+SP	#9# 4-decanol + O2 = 4-decanone + H2O2 (#9# 100% of activity with
+	polyvinyl alcohol <4>) <4>
+SP	#9# 1,3-butanediol + O2 = 1,3-butanedione + H2O2 (#9# 3.8% of activity
+	with polyvinyl alcohol <4>) <4>
+SP	#9# cyclohexanol + O2 = cyclohexanal + H2O2 (#9# 41.8% of activity with
+	polyvinyl alcohol <4>) <4>
+SP	#9# benzyl alcohol + O2 = benzaldehyde + H2O2 (#9# 13.7% of activity
+	with polyvinyl alcohol <4>) <4>
+SP	#9# 2-butanol + O2 = 2-butanone + H2O2 (#9# 47.3% of activity with
+	polyvinyl alcohol <4>) <4>
+SP	#9# 3-butanol + O2 = 3-butanone + H2O2 (#9# 14.6% of activity with
+	polyvinyl alcohol <4>) <4>
+SP	#9# 3-hexanol + O2 = 3-hexanone + H2O2 (#9# 47.3% of activity with
+	polyvinyl alcohol <4>) <4>
+SP	#9# 3-heptanol + O2 = 3-heptanone + H2O2 (#9# 68.8% of activity with
+	polyvinyl alcohol <4>) <4>
+SP	#9# 2,4-pentanediol + O2 = 2,4-pentanedione + H2O2 (#9# 19.3% of
+	activity with polyvinyl alcohol <4>) <4>
+
+PH_OPTIMUM
+PHO	#1# 7.5 <11>
+PHO	#12# 7.2 (#12# assay at <5>; #12# activity assay at <9>) <5,9>
+PHO	#13# 7.2-7.4 (#13# dependent on buffer system, recombinant enzyme <6>)
+	<6>
+PHO	#9# 10 <4>
+
+PH_RANGE
+PHR	#9# 7-11 (#9# almost constant activity in this range <4>) <4>
+
+SPECIFIC_ACTIVITY
+SA	#12,15# -999.0 (#12# degradation of polyvinyl alcohol measured by
+	iodometry, polyvinyl alcohol oxidase assay, ultrastructural change on
+	the cell surface in polyvinyl alcohol-containing media shown by
+	Scanning electron microscopy, binding studies of fluorescein-labelled
+	polyvinyl alcohol onto the cell surface, induction of structural
+	surface changes by polyvinyl alcohol identifed <9>; #15# upstream and
+	downstream regions of pva operon sequenced, transcript start and operon
+	size, location on megaplasmid and constitutive expression shown,
+	periplasmic enzyme activities from cells grown in polyvinyl alcohol
+	medium and glucose medium compared, increased expression by addition of
+	polyvinyl alcohol <8>) <8,9>
+SA	#13# 18.0 (#13# purified recombinant enzyme, substrate PVA117 <6>) <6>
+SA	#2# 1.68 (#2# polyvinyl alcohol <3>) <3>
+SA	#8# 0.0018 (#8# in association with the co-isolated Rhodococcus
+	erythropolis strain, isolate able to degrade 500 mg of polyvinyl
+	alcohol per litre in 2 weeks, no activity on 2-butanol,
+	2,4-pentanediol, 2-hexanol, 2-heptanol detected <7>) <7>
+SA	#9# 0.7 <4>
+
+TEMPERATURE_OPTIMUM
+TO	#1# 35 <11>
+TO	#13# 37 (#13# recombinant enzyme <6>) <6>
+TO	#2,12# 30 (#2# assay at <3>; #12# activity assay at <9>) <3,9>
+TO	#9# 40 <4>
+
+TEMPERATURE_RANGE
+TR	#9# 35-45 <4>
+
+COFACTOR
+CF	#2# more (#2# no requirement for pyrroloquinoline quinone (PQQ) as does
+	the PQQ-dependent PVA dehydrogenase <2,3>) <2,3>
+
+ACTIVATING_COMPOUND
+AC	#2,3,9# more (#3,9# the enzyme is induced by polyvinyl alcohol <10>;
+	#2# the enzyme is induced by polyvinyl alcohol in strain O3, but is
+	constitutive in strain VM15C <10>) <10>
+AC	#8,12,13# pyrroloquinoline quinone (#13# absolutely required for
+	activity, one mole of PQQ is bound to one mole of apoenzyme <6>; #8#
+	essential for polyvinyl alcohol degradation, another yet unknown growth
+	factor supplied by co-isolated Rhodococcus erythropolis strain <7>;
+	#12# i.e. PQQ, supplemented with polyvinyl alcohol medium at 1 mg/l
+	<9>) <6,7,9>
+
+INHIBITORS
+IN	#9# Thiourea (#9# 1 mM, 20% inhibition <4>) <4>
+IN	#9# Fe2+ (#9# 1 mM, 88% inhibition <4>) <4>
+IN	#9# EDTA (#9# 1 mM, 23% inhibition <4>) <4>
+IN	#9# Hg2+ (#9# 1 mM, 93% inhibition <4>) <4>
+IN	#9# Sn2+ (#9# 1 mM, 89% inhibition <4>) <4>
+
+METALS_IONS
+ME	#13# Mg2+ (#13# activates, the activation by Mg2+ is less than 80% of
+	the activation by Ca2+ <6>) <6>
+ME	#13# Ca2+ (#13# high activation <6>) <6>
+ME	#9# Fe2+ (#9# 1 mol iron/mol enzyme <4>) <4>
+
+MOLECULAR_WEIGHT
+MW	#1# 134300 (#1# gel filtration <11>) <11>
+MW	#13# 68000 (#13# recombinant enzyme, gel filtration <6>) <6>
+MW	#2# 31000 (#2# gel filtration <3>) <3>
+MW	#9# 75000 (#9# gel filtration <4>) <4>
+MW	#9# 85000 (#9# 1 * 85000, SDS-PAGE <4>) <4>
+
+SUBUNITS
+SU	#13# More (#13# the enzyme possesses a conserved superbarrel domain SD,
+	probable PQQ-binding amino acids in the SD and a hem-binding domain HBD
+	<6>) <6>
+SU	#9,13# monomer (#9# 1 * 85000, SDS-PAGE <4>; #13# 1 * 68000,
+	recombinant enzyme, SDS-PAGE <6>) <4,6>
+
+CLONED
+CL	#13# (gene pvadh, DNA and amino acid sequence determination and
+	analysis, sequence comparison, expression of His6-tagged enzyme in
+	Escherichia coli) <6>
+CL	#15# (expressed in Escherichia coli, pCR-XL-TOPO vector) <8>
+
+PURIFICATION
+PU	#1# (ammonium sulfate precipitation and Q-Sepharose column
+	chromatography) <11>
+PU	#2# <1,2,3>
+PU	#2# (native enzyme from strain O3) <10>
+PU	#9# (Q-Sepharose, AF blue Toyopearl, Q-Sepharose) <4>
+PU	#9# (native enzyme from strain PD) <10>
+PU	#13# (recombinant His6-tagged enzyme from Escherichia coli 44fold to
+	homogeneity) <6>
+
+PH_STABILITY
+PHS	#9# 6-10 (#9# stable for at least 24 h at 30°C <4>) <4>
+
+STORAGE_STABILITY
+SS	#13# (4°C, purified recombinant enzyme, 20 mM Tris/HCl buffer, pH 8.0,
+	stable for more than a month) <6>
+
+TEMPERATURE_STABILITY
+TS	#9# 45 (#9# stable for 30 min, complete loss of activity after 30 min
+	at 60°C <4>) <4>
+
+REFERENCE
+RF	<1> Shimao, M.; Nishimura, Y.; Kato, N.; Sakazawa, C.: Localization of
+	polyvinyl alcohol oxidase produced by a bacterial symbiont, Pseudomonas
+	sp. strain VM15C. Appl. Environ. Microbiol. (1985) 49, 8-10.
+	{Pubmed:16346711}
+RF	<2> Shimao, M.; Onishi, S.; Kato, N.; Sakazawa, C.: Pyrroloquinoline
+	quinone-dependent cytochrome reduction in polyvinyl alcohol-degrading
+	Pseudomonas sp. strain VM15C. Appl. Environ. Microbiol. (1989) 55,
+	275-278. {Pubmed:16347841}
+RF	<3> Shimao, M.; Ninomiyaaa, K.; Kuno, O.; Kato, N.; Sakazawa, C.:
+	Existence of a novel enzyme, pyrroloquinoline quinone-dependent
+	polyvinyl alcohol dehydrogenase, in a bacterial symbiont, Pseudomonas
+	sp. strain VM15C. Appl. Environ. Microbiol. (1986) 51, 268-275.
+	{Pubmed:3513704}
+RF	<4> Kawagoshi, Y.; Fujita, M.: Purification and properties of polyvinyl
+	alcohol oxidase with broad substrate range obtained from Pseudomonas
+	vesicularis var. povalolyticus PH. World J. Microbiol. Biotechnol.
+	(1997) 13, 273-277. {Pubmed:}
+RF	<5> Yamatsu, A.; Matsumi, R.; Atomi, H.; Imanaka, T.: Isolation and
+	characterization of a novel poly(vinyl alcohol)-degrading bacterium,
+	Sphingopyxis sp. PVA3. Appl. Microbiol. Biotechnol. (2006) 72, 804-811.
+	{Pubmed:16583228}
+RF	<6> Hirota-Mamoto, R.; Nagai, R.; Tachibana, S.; Yasuda, M.; Tani, A.;
+	Kimbara, K.; Kawai, F.: Cloning and expression of the gene for
+	periplasmic poly(vinyl alcohol) dehydrogenase from Sphingomonas sp.
+	strain 113P3, a novel-type quinohaemoprotein alcohol dehydrogenase.
+	Microbiology (2006) 152, 1941-1949. {Pubmed:16804170}
+RF	<7> Vaclavkova, T.; Ruzicka, J.; Julinova, M.; Vicha, R.; Koutny, M.:
+	Novel aspects of symbiotic (polyvinyl alcohol) biodegradation. Appl.
+	Microbiol. Biotechnol. (2007) 76, 911-917. {Pubmed:17594087}
+RF	<8> Hu, X.; Mamoto, R.; Fujioka, Y.; Tani, A.; Kimbara, K.; Kawai, F.:
+	The pva operon is located on the megaplasmid of Sphingopyxis sp. strain
+	113P3 and is constitutively expressed, although expression is enhanced
+	by PVA. Appl. Microbiol. Biotechnol. (2008) 78, 685-693.
+	{Pubmed:18214469}
+RF	<9> Hu, X.; Mamoto, R.; Shimomura, Y.; Kimbara, K.; Kawai, F.: Cell
+	surface structure enhancing uptake of polyvinyl alcohol (PVA) is
+	induced by PVA in the PVA-utilizing Sphingopyxis sp. strain 113P3.
+	Arch. Microbiol. (2007) 188, 235-241. {Pubmed:17453173}
+RF	<10> Kawai, F.; Hu, X.: Biochemistry of microbial polyvinyl alcohol
+	degradation. Appl. Microbiol. Biotechnol. (2009) 84, 227-237.
+	{Pubmed:19590867}
+RF	<11> Li, M.; Du, G.: Purification and enzymatic properties of polyvinyl
+	alcohol dehydrogenase. Chin. J. Proc. Engin. (2014) 14, 1015-1019.
+	{Pubmed:}
+
+ACTIVATING_COMPOUND
+AC	#2,3,9# more (#3,9# the enzyme is induced by polyvinyl alcohol <10>;
+	#2# the enzyme is induced by polyvinyl alcohol in strain O3, but is
+	constitutive in strain VM15C <10>) <10>
+AC	#8,12,13# pyrroloquinoline quinone (#13# absolutely required for
+	activity, one mole of PQQ is bound to one mole of apoenzyme <6>; #8#
+	essential for polyvinyl alcohol degradation, another yet unknown growth
+	factor supplied by co-isolated Rhodococcus erythropolis strain <7>;
+	#12# i.e. PQQ, supplemented with polyvinyl alcohol medium at 1 mg/l
+	<9>) <6,7,9>
+
+///

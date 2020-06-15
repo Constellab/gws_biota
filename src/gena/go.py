@@ -5,6 +5,7 @@ from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemp
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from peewee import CharField, Model, chunked
 from gena.ontology import Ontology
+from onto.ontology import Onto
 from peewee import CharField, chunked
 from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 
@@ -54,8 +55,10 @@ class GO(Ontology):
 
     #create go
     @classmethod
-    def create_go(cls, list_go_):
-        gos = [cls(data = dict_) for dict_ in list_go_]
+    def create_go(cls, input_db_dir, **files):
+        onto_go = Onto.create_ontology_from_file(input_db_dir, files["go_data"])
+        list_go = Onto.parse_obo_from_ontology(onto_go)
+        gos = [cls(data = dict_) for dict_ in list_go]
         cls.insert_go_id(gos,"id")
         cls.insert_name(gos, "name")
         cls.insert_namespace(gos, "namespace")

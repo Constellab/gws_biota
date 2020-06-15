@@ -21,6 +21,7 @@ sys.path.append(os.path.join(__cdir__,"../chebi-py/src"))           # -> load ch
 sys.path.append(os.path.join(__cdir__,"../rhea-py/src"))            # -> load rhea module
 sys.path.append(os.path.join(__cdir__,"../ontology-py/src"))        # -> load onto module
 sys.path.append(os.path.join(__cdir__,"../brenda-py/src"))          # -> load brenda module
+sys.path.append(os.path.join(__cdir__,"../taxonomy-py/src"))          # -> load brenda module
 sys.path.append(os.path.join(__cdir__,"../../prod/gws-py/src"))     # -> load gws module
 sys.path.append(os.path.join(__cdir__,"../../pkgs/brenda-py"))      # -> load brendapy package 
 

@@ -8,6 +8,17 @@ from collections import OrderedDict
 from brendapy import BrendaParser, BrendaProtein
 from brendapy.taxonomy import Taxonomy
 
+from brenda.brenda import Brenda
+import logging
+from collections import OrderedDict
+from brendapy import BrendaParser, BrendaProtein
+from brendapy.taxonomy import Taxonomy
+
+from brendapy import utils
+from brendapy.taxonomy import Taxonomy
+from brendapy.tissues import BTO
+from brendapy.substances import CHEBI
+
 ####################################################################################
 #
 # Enzyme class
@@ -17,7 +28,6 @@ from brendapy.taxonomy import Taxonomy
 path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
 
 class Enzyme(Protein):
-    protein_id = CharField(null=True, index=True)
     ec = CharField(null=True, index=True)
     organism = CharField(null=True, index=True)
     taxonomy = CharField(null=True, index=True)
@@ -29,9 +39,6 @@ class Enzyme(Protein):
         table_name = 'enzymes'
 
     #setter functions
-    def set_protein_id(self, id__):
-        self.protein_id = id__
-
     def set_ec(self, ec__):
         self.ec = ec__
     
@@ -66,11 +73,10 @@ class Enzyme(Protein):
             comp.set_uniprot_id(comp.data[key])
             
     @classmethod
-    def create_enzymes(cls, list_proteins):
+    def create_enzymes_from_brenda_proteins(cls, list_proteins):
         list_dict = []
         for p in list_proteins:
             dict_enz = {}
-            dict_enz['protein_id'] = p.protein_id
             dict_enz['ec'] = p.ec
             dict_enz['taxonomy'] = p.taxonomy
             dict_enz['organism'] = p.organism
@@ -80,7 +86,31 @@ class Enzyme(Protein):
             dict_enz['TO'] = p.TO
             list_dict.append(dict_enz)
         enzymes = [cls(data = dict_) for dict_ in list_dict]
-        cls.insert_protein_id(enzymes, 'protein_id')
+        cls.insert_ec(enzymes, 'ec')
+        cls.insert_taxonomy(enzymes, 'taxonomy')
+        cls.insert_organism(enzymes, 'organism')
+        cls.insert_uniprot_id(enzymes, 'uniprot')
+        status = 'ok'
+        return(status)
+
+    @classmethod
+    def create_enzymes_from_dict(cls, input_db_dir, **files):
+        brenda = Brenda(os.path.join(input_db_dir, files['brenda_file']))
+        list_proteins = brenda.parse_all_protein_to_dict()
+        list_dict = []
+        list_chemical_info = ['in','lo','me','mw','nsp','pho','phr','phs','pm','to','tr','ts']
+        for d in list_proteins:
+            dict_enz = {}
+            dict_enz['ec'] = d['ec']
+            dict_enz['taxonomy'] = d['taxonomy']
+            dict_enz['organism'] = d['organism']
+            dict_enz['uniprot'] = d['uniprot']
+            dict_enz['name'] = d['name']
+            for info in list_chemical_info:
+                if(info in d.keys()):
+                    dict_enz[info]= d[info]
+            list_dict.append(dict_enz)
+        enzymes = [cls(data = dict_) for dict_ in list_dict]
         cls.insert_ec(enzymes, 'ec')
         cls.insert_taxonomy(enzymes, 'taxonomy')
         cls.insert_organism(enzymes, 'organism')

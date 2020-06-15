@@ -24,7 +24,7 @@ from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, Li
 #                                         
 ############################################################################################
 
-path = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("gena_db_path")
 
 class TestCompound(unittest.TestCase):
     @classmethod
@@ -39,10 +39,15 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        onto = Chebi.create_ontology_from_file(path, 'chebi_test.obo')
-        list_chebs = Chebi.parse_onto_from_ontology(onto)
-        test = Chebi_Ontology.create_chebis(list_chebs)
+        files = dict(
+            chebi_data = "chebi.obo",
+        )
 
+        files_test = dict(
+            chebi_data = "chebi_test.obo",
+        )
+
+        Chebi_Ontology.create_chebis(input_db_dir, **files_test)
         Controller.save_all()
 
         async def app(scope, receive, send):
@@ -55,6 +60,3 @@ class TestCompound(unittest.TestCase):
 
         Controller.is_query_params = True
         client = TestClient(app)
-        #for dict_ in list_chebs:
-            #print(dict_)
-            #print('\n')

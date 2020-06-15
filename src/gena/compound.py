@@ -1,9 +1,14 @@
 import os, sys
 from gena.entity import Entity
+from gena.relation import Relation
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
-from peewee import CharField, FloatField, Model, chunked
+from peewee import CharField, FloatField, ForeignKeyField, Model, chunked
+
+from chebi.chebi import Chebi
+from rhea.rhea import Rhea
+from gws.prism.controller import Controller
 
 ####################################################################################
 #
@@ -38,7 +43,7 @@ class Compound(Entity):
     
     def set_charge(self, charge__):
         self.charge = charge__
-    
+
     def set_reactions(self, reactions__):
         self.reactions = reactions__
 
@@ -68,6 +73,18 @@ class Compound(Entity):
             comp.set_reactions(comp.data[key])
 
     @classmethod
+    def create_compounds_from_files(cls, input_db_dir, **files):
+        list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
+        cls.create_compounds(list_comp)
+        Controller.save_all()
+
+        list_chemical = Chebi.parse_csv_from_file(input_db_dir, files['chebi_chemical_data_file'])
+        cls.set_chemicals(list_chemical)
+
+        list_compound_reactions = Rhea.parse_compound_from_file(input_db_dir, files['rhea_kegg_compound_file'])
+        cls.set_reactions_from_list(list_compound_reactions)
+
+    @classmethod
     def create_compounds(cls, list_compound):
         compounds = [cls(data = dict_) for dict_ in list_compound]
         cls.insert_source_accession(compounds, 'chebi_accession')
@@ -83,33 +100,33 @@ class Compound(Entity):
                     comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
                     comp.set_formula(data_['chemical_data'])
                 except:
-                    print('can not find the compound CHEBI:' + str(data_['compound_id']))
+                    print('can not find the compound CHEBI:' + str(data_['compound_id'] + ' to set formula'))
 
             elif(data_['type'] == 'MASS'):
                 try:
                     comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
                     comp.set_mass(float(data_['chemical_data']))
                 except:
-                    print('can not find the compound CHEBI:' + str(data_['compound_id']))
+                    print('can not find the compound CHEBI:' + str(data_['compound_id'] + ' to set mass'))
                 
             elif(data_['type'] == 'CHARGE'):
                 try:
                     comp = cls.get(cls.source_accession == 'CHEBI:' + data_['compound_id'])
                     comp.set_charge(float(data_['chemical_data']))
                 except:
-                    print('can not find the compound CHEBI:' + str(data_['compound_id']))
+                    print('can not find the compound CHEBI:' + str(data_['compound_id']) + ' to set charge')
         status = 'ok'
         return(status)
    
     @classmethod
-    def set_reactions(cls, list_reaction):
+    def set_reactions_from_list(cls, list_reaction):
         for dict_ in list_reaction:
-            if ("entry" in dict_.keys()):
+            if ('entry' in dict_.keys()):
                 try:
                     comp = cls.get(cls.source_accession == dict_["entry"])
                     comp.set_reactions(dict_['reaction'])
                 except:
-                    print('can not find the compound CHEBI:' + str(dict_["entry"]))
+                    print('can not find the compound ' + str(dict_["entry"]) + ' to set reactions')
         status = 'ok'
         return(status)
 
@@ -119,6 +136,7 @@ class CompoundHTMLViewModel(ResourceViewModel):
 
 class CompoundJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{"id":"{{view_model.model.data.ID}}"}')
+
 """
 Compound.register_view_models([
     CompoundHTMLViewModel, 
