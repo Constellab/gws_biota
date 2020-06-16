@@ -50,11 +50,11 @@ class TestCompound(unittest.TestCase):
             rhea_kegg_compound_file =  "rhea-kegg-test.compound"
         )
 
-        Compound.create_compounds_from_files(input_db_dir, **files_test)
-        Controller.save_all()
+        #Compound.create_compounds_from_files(input_db_dir, **files_test)
+        #Controller.save_all()
 
         ## Atomics tests for compounds' functions ##
-        """
+        
         list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
         Compound.create_compounds(list_comp)
         #self.assertEqual(len(list_comp), 299)
@@ -62,7 +62,7 @@ class TestCompound(unittest.TestCase):
         self.assertEqual(list_comp[8]['name'], 'salicyluric acid')
 
         Controller.save_all()
-
+        """
         list_chemical = Chebi.parse_csv_from_file(input_db_dir, files['chebi_chemical_data_file'])
         Compound.set_chemicals(list_chemical)
         #self.assertEqual(list_chemical[0],{'id': '1', 'compound_id': '18357', 'source': 'KEGG COMPOUND', 'type': 'FORMULA', 'chemical_data': 'C8H11NO3'})

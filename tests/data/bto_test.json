@@ -1,0 +1,166 @@
+{
+    "tissues, cell types and enzyme sources": {
+      "key": "BTO_0000000",
+      "label": "tissues, cell types and enzyme sources",
+      "ancestors": [
+        "BTO_0000000"
+      ]
+    },
+    "culture condition:-induced cell": {
+      "key": "BTO_0000001",
+      "label": "culture condition:-induced cell",
+      "ancestors": [
+        "BTO_0000001",
+        "BTO_0000216"
+      ]
+    },
+    "culture condition": {
+      "key": "BTO_0000216",
+      "label": "culture condition",
+      "ancestors": [
+        "BTO_0000216"
+      ]
+    },
+    "culture condition:1,4-dichlorobenzene-grown cell": {
+      "key": "BTO_0000002",
+      "label": "culture condition:1,4-dichlorobenzene-grown cell",
+      "ancestors": [
+        "BTO_0000002",
+        "BTO_0001479",
+        "BTO_0000216"
+      ]
+    },
+    "culture condition:-grown cell": {
+      "key": "BTO_0001479",
+      "label": "culture condition:-grown cell",
+      "ancestors": [
+        "BTO_0001479",
+        "BTO_0000216"
+      ]
+    },
+    "intestinal cell line": {
+      "key": "BTO_0000003",
+      "label": "intestinal cell line",
+      "ancestors": [
+        "BTO_0000003"
+      ]
+    },
+    "intestine": {
+      "key": "BTO_0000648",
+      "label": "intestine",
+      "ancestors": [
+        "BTO_0000648"
+      ],
+      "synonyms": [
+        "bowel"
+      ]
+    },
+    "culture condition:2,5-dihydroxybenzoate-grown cell": {
+      "key": "BTO_0000004",
+      "label": "culture condition:2,5-dihydroxybenzoate-grown cell",
+      "ancestors": [
+        "BTO_0000004",
+        "BTO_0001479",
+        "BTO_0000216"
+      ]
+    },
+    "culture condition:2-aminobenzenesulfonate-grown cell": {
+      "key": "BTO_0000005",
+      "label": "culture condition:2-aminobenzenesulfonate-grown cell",
+      "ancestors": [
+        "BTO_0000005",
+        "BTO_0001479",
+        "BTO_0000216"
+      ]
+    },
+    "osteoblastoma cell": {
+      "key": "BTO_0000006",
+      "label": "osteoblastoma cell",
+      "ancestors": [
+        "BTO_0000006",
+        "BTO_0000372"
+      ]
+    },
+    "bone cancer cell": {
+      "key": "BTO_0000372",
+      "label": "bone cancer cell",
+      "ancestors": [
+        "BTO_0000372"
+      ],
+      "synonyms": [
+        "bone tumor cell"
+      ]
+    },
+    "osteoblast": {
+      "key": "BTO_0001593",
+      "label": "osteoblast",
+      "ancestors": [
+        "BTO_0001593",
+        "BTO_0002050"
+      ]
+    },
+    "HEK-293 cell": {
+      "key": "BTO_0000007",
+      "label": "HEK-293 cell",
+      "ancestors": [
+        "BTO_0000007",
+        "BTO_0000067",
+        "BTO_0002733",
+        "BTO_0000669"
+      ],
+      "synonyms": [
+        "293 cell",
+        "A-293 cell",
+        "A293 cell",
+        "HEK cell",
+        "HEK293 cell",
+        "human embryonal kidney cell",
+        "human embryonic kidney cell"
+      ]
+    },
+    "kidney cell line": {
+      "key": "BTO_0000067",
+      "label": "kidney cell line",
+      "ancestors": [
+        "BTO_0000067"
+      ],
+      "synonyms": [
+        "renal cell line"
+      ]
+    },
+    "embryonic kidney cell line": {
+      "key": "BTO_0002733",
+      "label": "embryonic kidney cell line",
+      "ancestors": [
+        "BTO_0002733",
+        "BTO_0000669"
+      ]
+    },
+    "culture condition:3-chlorobenzoate-grown cell": {
+      "key": "BTO_0000008",
+      "label": "culture condition:3-chlorobenzoate-grown cell",
+      "ancestors": [
+        "BTO_0000008",
+        "BTO_0001479",
+        "BTO_0000216"
+      ]
+    },
+    "culture condition:3-hydroxybenzoate-grown cell": {
+      "key": "BTO_0000009",
+      "label": "culture condition:3-hydroxybenzoate-grown cell",
+      "ancestors": [
+        "BTO_0000009",
+        "BTO_0001479",
+        "BTO_0000216"
+      ]
+    },
+    "culture condition:3-methylcrotonoyl-CoA-grown cell": {
+      "key": "BTO_0000010",
+      "label": "culture condition:3-methylcrotonoyl-CoA-grown cell",
+      "ancestors": [
+        "BTO_0000010",
+        "BTO_0001479",
+        "BTO_0000216"
+      ]
+    }
+}

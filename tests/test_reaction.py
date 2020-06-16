@@ -19,13 +19,13 @@ from starlette.testclient import TestClient
 from gws.prism.controller import Controller
 from rhea.rhea import Rhea
 from gena.reaction import Reaction
-#from gena.reaction import reactions_compounds_through
 from gena.compound import Compound
 from peewee import CharField, ForeignKeyField, chunked
 from manage import settings
 
 input_db_dir = settings.get_data("gena_db_path")
-#SubstrateReaction = Reaction.substrates.get_through_model()
+substrate_reaction = Reaction.substrates.get_through_model()
+product_reaction = Reaction.products.get_through_model()
 
 class TestReaction(unittest.TestCase):
 
@@ -33,11 +33,17 @@ class TestReaction(unittest.TestCase):
     def setUpClass(cls):
         Reaction.drop_table()
         Reaction.create_table()
-        #SubstrateReaction.create_table()
+        #reactions_compounds_through.drop_table()
+        substrate_reaction.drop_table()
+        product_reaction.drop_table()
+        substrate_reaction.create_table()
+        product_reaction.create_table()
+        
+        
    
     @classmethod
     def tearDownClass(cls):
-        #Compound.drop_table()
+        #Reaction.drop_table()
         pass
     
     def test_db_object(self):

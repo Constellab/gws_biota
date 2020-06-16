@@ -49,7 +49,7 @@ Settings.init(dict(
 
 #Création d'un nouveau paramètres 
 settings = Settings.retrieve()
-settings.set_data("gena_db_path", databases_test)
+settings.set_data("gena_db_path", databases_input)
 
 from gws.prism.manage import manage
 

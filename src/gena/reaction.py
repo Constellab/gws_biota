@@ -5,9 +5,11 @@ from gws.prism.controller import Controller
 from gena.relation import Relation
 from gena.compound import Compound
 from rhea.rhea import Rhea
-from peewee import CharField, ForeignKeyField, Model, chunked, ManyToManyField
+from peewee import CharField, ForeignKeyField, Model, chunked, ManyToManyField, DeferredThroughModel
+from peewee import Model as PWModel
 from manage import settings
 from gws.prism.controller import Controller
+from gws.prism.model import DbManager
 from playhouse.sqlite_ext import JSONField
 
 ####################################################################################
@@ -18,6 +20,9 @@ from playhouse.sqlite_ext import JSONField
 
 path = settings.get_data("gena_db_path")
 
+ReactionSubstrateDeferred = DeferredThroughModel()
+ReactionProductDeferred = DeferredThroughModel()
+
 class Reaction(Relation):
     source_accession = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
@@ -26,8 +31,8 @@ class Reaction(Relation):
     master_id = CharField(null=True, index=True)
     biocyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
-    substrates = ManyToManyField(Compound, backref='is_substrate_of')
-    products = ManyToManyField(Compound, backref='is_product_of')
+    substrates = ManyToManyField(Compound, backref='is_substrate_of', through_model = ReactionSubstrateDeferred)
+    products = ManyToManyField(Compound, backref='is_product_of', through_model = ReactionProductDeferred)
 
     _table_name = 'reactions'
 
@@ -39,13 +44,14 @@ class Reaction(Relation):
         self.direction = direction__
 
     def set_substrates(self):
-        #for chebi_accession in self.data['substrates']:
-        comps = Compound.get(Compound.source_accession == str(self.data['substrates'][0]))
-        #comps = Compound.select().where(Compound.source_accession in self.data['substrates'])
-        self.substrates = comps 
+        for i in range(0,len(self.data['substrates'])):
+            comps = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
+            self.substrates.add(comps)
     
-    def set_products(self, products__):
-        self.products = products__
+    def set_products(self):
+        for i in range(0,len(self.data['products'])):
+            comps = Compound.get(Compound.source_accession == str(self.data['products'][i]))
+            self.products.add(comps)
     
     def set_enzymes(self, enzymes__):
         self.enzymes = enzymes__
@@ -95,13 +101,11 @@ class Reaction(Relation):
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
-            #if('substrates' in react.data.keys()):
-                #react.set_substrates(react.data['substrates'])
-            #if('products' in react.data.keys()):
-                #react.set_products(react.data['products'])
             if('enzyme' in react.data.keys()):
                 react.set_enzymes(react.data['enzyme'])
-            #react.set_substrates()
+            react.save()
+            react.set_substrates()
+            react.set_products()
         status = 'ok'
         return(reactions)
 
@@ -155,3 +159,22 @@ class Reaction(Relation):
     class Meta:
         table_name = 'reactions'
 
+
+class ReactionSubstrate(PWModel):
+    compound = ForeignKeyField(Compound)
+    reaction = ForeignKeyField(Reaction)
+    class Meta:
+        table_name = 'reactions_subsrates'
+        database = DbManager.db
+
+
+class ReactionProduct(PWModel):
+    compound = ForeignKeyField(Compound)
+    reaction = ForeignKeyField(Reaction)
+    class Meta:
+        table_name = 'reactions_products'
+        database = DbManager.db
+    
+
+ReactionSubstrateDeferred.set_model(ReactionSubstrate)
+ReactionProductDeferred.set_model(ReactionProduct)
