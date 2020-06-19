@@ -1,21 +1,4 @@
-ID	 1.14.13.214 (transferred to EC 1.14.14.132)
-********************************************************************************
-*                                                                              *
-* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
-* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
-*                                                                              *
-********************************************************************************
-
-RECOMMENDED_NAME
-RN	(-)-4'-demethyl-deoxypodophyllotoxin 4-hydroxylase
-
-
-SYSTEMATIC_NAME
-SN	
-
-
-///
-ID	1.13.11.38
+ID	1.4.3.7
 ********************************************************************************
 *                                                                              *
 * Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
@@ -24,347 +7,139 @@ ID	1.13.11.38
 ********************************************************************************
 
 PROTEIN
-PR	#1# Pseudomonas sp.   <6>
-PR	#2# Nocardioides sp.   <1,3>
-PR	#3# Gram-negative coccus   <2>
-PR	#4# Nocardioides sp. O24721 UniProt <5>
-PR	#5# Pseudaminobacter salicylatoxidans   <4,8>
-PR	#6# Pseudarthrobacter phenanthrenivorans B0BK98 UniProt <7>
-PR	#7# Pseudarthrobacter phenanthrenivorans B0BK99 UniProt <7>
+PR	#1# Candida boidinii   <1>
+PR	#2# Octopus vulgaris   <3>
+PR	#3# Faxonius limosus   (#3# class A TEM-2 enzyme Escherichia coli <2>)
+	<2>
 
 RECOMMENDED_NAME
-RN	1-hydroxy-2-naphthoate 1,2-dioxygenase
+RN	D-glutamate oxidase
 
 
 SYSTEMATIC_NAME
-SN	1-hydroxy-2-naphthoate:oxygen 1,2-oxidoreductase (decyclizing)
+SN	D-glutamate:oxygen oxidoreductase (deaminating)
 
 
 SYNONYMS
-SY	 oxygenase, 1-hydroxy-2-naphthoate di-
-SY	 1-hydroxy-2-naphthoate-degrading enzyme
-SY	#1# 1-HNDO <6>
-SY	#1,6,7# 1-hydroxy-2-naphthoic acid dioxygenase <6,7>
-SY	#5# 1-hydroxy-2-naphthoate 1,2-dioxygenase <8>
-SY	#5# 1H2NDO <8>
-SY	#6# Diox1 (#6# gene name <7>) <7>
-SY	#6,7# 1-H2NA dioxygenase <7>
-SY	#6,7# 1-hydroxy-2-naphthoate dioxygenase <7>
-SY	#6,7# Sphe3 1-H2NA dioxygenase <7>
-SY	#7# Diox2 (#7# gene name <7>) <7>
+SY	 D-glutamic oxidase
+SY	 D-glutamic acid oxidase
 
 REACTION
-RE	1-hydroxy-2-naphthoate + O2 = (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate
+RE	D-glutamate + H2O + O2 = 2-oxoglutarate + NH3 + H2O2
 
 REACTION_TYPE
 RT	redox reaction
 RT	oxidation
 RT	reduction
+RT	oxidative deamination
 
 SOURCE_TISSUE
-ST	#1,4# culture condition:phenanthrene-grown cell <5,6>
-ST	#6,7# more (#6,7# strain Sphe3 grows on 2-carboxybenzaldehyde,
-	protocatechuate, and phthalate as sole carbon sources, all
-	intermediates of phenanthrene degradation via the phthalate pathway,
-	whereas no growth is observed on salicylic acid <7>) <7>
+ST	#1# cell culture <1>
+ST	#2# hepatopancreas <3>
+ST	#3# antennal gland <2>
 
 NATURAL_SUBSTRATE_PRODUCT
-NSP	#1# more = ? (#1# 1-hydroxy-2-naphthoic acid dioxygenase shows no
-	activity with gentisic acid, salicylic acid and other hydroxynaphthoic
-	acids <6>; #1# Pseudomonas sp. strain PPD can metabolize phenanthrene
-	as the sole source of carbon and energy via the phthalic acid route
-	<6>) {} <6>
-NSP	#1# 1-hydroxy-2-naphthoic acid + O2 = 2-carboxybenzylpyruvic acid <6>
-NSP	#2,4# 1-hydroxy-2-naphthoate + O2 =
-	(3E)-4-(2-carboxyphenyl)-2-oxobut-3-enoate (#2# enzyme is involved in
-	degradation of phenanthrene <1>; #4# the enzyme is involved in
-	degradation of phenanthrene <5>) |#4# i.e.
-	trans-2-carboxybenzalpyruvate <5>| <1,5>
-NSP	#5,6,7# 1-hydroxy-2-naphthoate + O2 =
-	(3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate <7,8>
+NSP	#1,2,3# D-aspartate + H2O + O2 = oxaloacetate + NH3 + H2O2 (#2# 70%
+	higher activity with pure oxygen than in air <3>; #3# 20% higher
+	activity with pure oxygen than in air <2>; #1,2# poorer substrate than
+	D-glutamate <1,3>) <1,2,3>
+NSP	#1,2,3# D-glutamate + H2O + O2 = 2-oxoglutarate + NH3 + H2O2 (#3#
+	highly specific, no deamination of other D-amino acids found, 30%
+	higher activity with pure oxygen than in air <2>; #1,2# better
+	substrate than D-aspartate <1,3>; #2# highly specific, 70% higher
+	activity with pure oxygen than in air <3>) <1,2,3>
 
 SUBSTRATE_PRODUCT
-SP	#1# 1-hydroxy-2-naphthoic acid + O2 = 2-carboxybenzylpyruvic acid <6>
-SP	#1,4,6,7# more = ? (#4# no activity with: gentisate,
-	3-hydroxyanthranilate, 2-hydroxy-1-naphthoate, 3-hydroxy-2-naphthoate,
-	salicylate, m-hydroxybenzoate, p-hydroxybenzoate, and protocatechuate
-	<5>; #1# 1-hydroxy-2-naphthoic acid dioxygenase shows no activity with
-	gentisic acid, salicylic acid and other hydroxynaphthoic acids <6>; #1#
-	Pseudomonas sp. strain PPD can metabolize phenanthrene as the sole
-	source of carbon and energy via the phthalic acid route <6>; #6,7# no
-	activity with 3-hydroxy-2-naphthoic acid <7>) {} <5,6,7>
-SP	#2,3,4# 1-hydroxy-2-naphthoate + O2 =
-	(3E)-4-(2-carboxyphenyl)-2-oxobut-3-enoate (#2# enzyme is involved in
-	degradation of phenanthrene <1>; #4# the enzyme is involved in
-	degradation of phenanthrene <5>) |#4# i.e.
-	trans-2-carboxybenzalpyruvate <5>; #2# i.e.
-	trans-2-carboxybenzalpyruvate. The structure of the ring cleavage
-	product is determined upon separation by high-performance liquid
-	chromatography at pH 2.5 by using nuclear magnetic resonance and mass
-	spectroscopic techniques <3>| <1,2,3,5>
-SP	#5# 1-hydroxy-2-naphthoate + O2 = ? (#5# gentisate 1,2-dioxygenase with
-	an extraordinary substrate range. Relative activities with salicylate,
-	5-aminosalicylate, 1-hydroxy-2-naphthoate, and gentisate with both
-	preparations are about 1:10:40:120 <4>) <4>
-SP	#5,6,7# 1-hydroxy-2-naphthoate + O2 =
-	(3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate <7,8>
-
-TURNOVER_NUMBER
-TN	#1# 70.4 {2-Hydroxy-1-naphthoic acid}  <6>
-TN	#2,4# 114 {1-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
-TN	#5# 2.2 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
-	specified in the publication, mutant L38Q <8>) <8>
-TN	#5# 17 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not specified
-	in the publication, mutant M46V <8>) <8>
-TN	#5# 44 {1-hydroxy-2-naphthoate}  <4>
-TN	#5# 4.6 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
-	specified in the publication, mutant W104Y <8>) <8>
-TN	#5# 24 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not specified
-	in the publication, wild-type enzyme <8>) <8>
-TN	#5# 3.31 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
-	specified in the publication, mutant A85H <8>) <8>
+SP	#1# N-methyl-D-aspartate + H2O + O2 = oxaloacetate + methylamine + H2O2
+	(#1# much poorer substrate than D-glutamate or D-aspartate <1>) <1>
+SP	#1,2,3# D-aspartate + H2O + O2 = oxaloacetate + NH3 + H2O2 (#2# 70%
+	higher activity with pure oxygen than in air <3>; #3# 20% higher
+	activity with pure oxygen than in air <2>; #1,2# poorer substrate than
+	D-glutamate <1,3>) <1,2,3>
+SP	#1,2,3# D-glutamate + H2O + O2 = 2-oxoglutarate + NH3 + H2O2 (#3#
+	highly specific, no deamination of other D-amino acids found, 30%
+	higher activity with pure oxygen than in air <2>; #1,2# better
+	substrate than D-aspartate <1,3>; #2# highly specific, 70% higher
+	activity with pure oxygen than in air <3>) <1,2,3>
 
 KM_VALUE
-KM	#1# 0.0135 {2-Hydroxy-1-naphthoic acid}  <6>
-KM	#2,4# 0.01 {1-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
-KM	#5# 0.14 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
-	specified in the publication, wild-type enzyme <8>) <8>
-KM	#5# 0.08 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
-	specified in the publication, mutant A85H <8>; #5# pH 8.0, temperature
-	not specified in the publication, mutant L38Q <8>) <8>
-KM	#5# 0.046 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
-	specified in the publication, mutant M46V <8>) <8>
-KM	#5# 0.144 {1-hydroxy-2-naphthoate}  (#5# pH 8.0, temperature not
-	specified in the publication, mutant W104Y <8>) <8>
-KM	#5# 0.134 {1-hydroxy-2-naphthoate}  <4>
-KM	#6,7# -999 {more}  (#6,7# Michaelis-Menten kinetics <7>) <7>
+KM	#2# 8 {D-glutamate}  <3>
+KM	#2# 4.5 {D-Aspartate}  <3>
+KM	#3# 5.4 {D-Aspartate}  <2>
+KM	#3# 15.2 {D-glutamate}  <2>
 
 PH_OPTIMUM
-PHO	#1,2,4# 7.5 <1,5,6>
-PHO	#5# 8 (#5# assay at <8>) <8>
-PHO	#6,7# 8.5 <7>
-
-PH_RANGE
-PHR	#1# 6-9 <6>
+PHO	#1# 7 <1>
+PHO	#2# 8.1-8.3 <3>
+PHO	#3# 9 (#3# with D-glutamate <2>) <2>
 
 SPECIFIC_ACTIVITY
-SA	#1# 29.0 (#1# anion-exchange chromatography <6>) <6>
-SA	#1# 11.2 (#1# heat treatment (60°C) <6>) <6>
-SA	#1# 53.0 (#1# 3-H2NA-affinity chromatography <6>) <6>
-SA	#1# 4.9 (#1# cell-free extract <6>) <6>
-SA	#1# 61.5 (#1# after all purification steps from Pseudomonas sp. PPD
-	cells grown on phenanthrene <6>) <6>
-SA	#2# 1567.0 <3>
-SA	#2,4# 180.0 (#4# purified enzyme <5>) <1,5>
-SA	#4# 8.4 (#4# enzyme in extract of strain KP7 <5>) <5>
+SA	#3# 0.23 <2>
 
 TEMPERATURE_OPTIMUM
-TO	#4,6,7# 40 <5,7>
+TO	#1# 37 <1>
+
+COFACTOR
+CF	#1,2# FAD (#1,2# cannot be replaced by FMN <1,3>) <1,3>
+
+ACTIVATING_COMPOUND
+AC	#2# ethanol (#2# 2fold activation in the presence of ethanol <3>) <3>
 
 INHIBITORS
-IN	#1# 1-hydroxy-2-naphthoic acid (#1# substrate inhibition <6>) <6>
-IN	#1# 3-Hydroxy-2-naphthoic acid (#1# competitive inhibition <6>) <6>
-IN	#2# 1,10-phenanthroline <1>
-IN	#2,4# 3-hydroxy-2-naphthoate (#4# competitive <5>) <1,5>
-IN	#3# Fe3+ <2>
-IN	#4# more (#4# no inhibition when the concentration of the substrate
-	1-hydroxy-2-napthoate is 0.01 mM and that of the tested compounds is
-	0.1 or 1 mM: gentisate, 3-hydroxyanthranilate, 2-hydroxy-1-naphthoate,
-	salicylate, m-hydroxybenzoate, p-hydroxybenzoate, and protocatechuate
-	<5>) <5>
-IN	#4,6,7# o-phenanthroline (#4# 0.1 mM, reactivation by incubating with
-	FeSO4 and ascorbic acid <5>; #6,7# inhibits at 0.01 mM, addition of 0.1
-	mM FeSO4 restores the enzyme activity <7>) <5,7>
-
-KI_VALUE
-KI	#1# 0.024 {3-Hydroxy-2-naphthoic acid}  (#1# competitive inhibition
-	<6>) <6>
-KI	#1# 0.116 {1-hydroxy-2-naphthoic acid}  (#1# substrate inhibition <6>)
-	<6>
-KI	#2,4# 0.022 {3-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
-
-METALS_IONS
-ME	#1,3,4,5,6,7# Fe2+ (#3# activation <2>; #4# enzyme contains 1.15 mol of
-	Fe(II)/mol of the subunit. Fe2+ is required for the enzyme to exhibit
-	activity <5>; #5# salicylate 1,2-dioxygenase is an iron (II) class III
-	ring cleaving dioxygenase <8>; #6,7# Sphe3 1-H2NA dioxygenase is
-	iron-dependent <7>) <2,5,6,7,8>
-ME	#2# Iron (#2# contains 1.15 mol of iron per mol of enzyme <1>) <1>
+IN	#1# Glutarate (#1# competitive inhibitor <1>) <1>
+IN	#1# D-malate (#1# competitive inhibitor <1>) <1>
+IN	#1# m-tartrate (#1# competitive inhibitor <1>) <1>
+IN	#2# iodoacetate (#2# 68% inhibition at 0.1 mM <3>) <3>
+IN	#2# urethane (#2# 31% inhibition at 10 mM <3>) <3>
+IN	#2# o-Iodosobenzoate (#2# 32% inhibition at 0.1 mM <3>) <3>
+IN	#2,3# Veronal (#3# strong inhibition <2>; #2# 60% inhibition at 8 mM
+	<3>) <2,3>
+IN	#2,3# p-chloromercuribenzoate (#3# 95% inhibition at 0.1 mM <2>; #2#
+	74% inhibition at 0.01 mM <3>) <2,3>
+IN	#3# L-glutamate (#3# slight inhibition at 100 mM <2>) <2>
+IN	#3# L-aspartate (#3# slight inhibition at 100 mM <2>) <2>
+IN	#3# succinate (#3# slight inhibition at 1 mM <2>) <2>
+IN	#3# iodoacetamide (#3# 64% inhibition at 1 mM <2>) <2>
 
 MOLECULAR_WEIGHT
-MW	#1# 160000 (#1# Sephacryl S-200-HR gel-filtration chromatography;
-	SDS-PAGE under denaturing conditions, homotetramer, subunit molecular
-	mass of about 39000 <6>) <6>
-MW	#1# 39000 (#1# SDS-PAGE under denaturing conditions, 4 * 39000 <6>) <6>
-MW	#2,4# 270000 (#2,4# gel filtration <1,5>) <1,5>
-MW	#2,4,5,6,7# 45000 (#2,4# 6 * 45000, SDS-PAGE <1,5>; #5# 4 * 45000,
-	SDS-PAGE <4>; #6# x * 42000, recombinant Diox1, x * 45000, native
-	enzyme, SDS-PAGE <7>; #7# x * 42000, recombinant Diox2, x * 45000,
-	native enzyme, SDS-PAGE <7>) <1,4,5,7>
-MW	#5# 185000 (#5# gel filtration <4>) <4>
-MW	#6,7# 42000 (#6# x * 42000, recombinant Diox1, x * 45000, native
-	enzyme, SDS-PAGE <7>; #7# x * 42000, recombinant Diox2, x * 45000,
-	native enzyme, SDS-PAGE <7>) <7>
-MW	#6,7# 180000 (#6,7# gel filtration <7>) <7>
+MW	#1# 43000 (#1# gel filtration <1>) <1>
+MW	#1# 45000 (#1# 1 * 45000, SDS-PAGE <1>) <1>
 
 SUBUNITS
-SU	#1,5# tetramer (#5# 4 * 45000, SDS-PAGE <4>; #1# SDS-PAGE under
-	denaturing conditions, 4 * 39000 <6>) <4,6>
-SU	#2,4# hexamer (#2,4# 6 * 45000, SDS-PAGE <1,5>) <1,5>
-SU	#6,7# ? (#6# x * 42000, recombinant Diox1, x * 45000, native enzyme,
-	SDS-PAGE <7>; #7# x * 42000, recombinant Diox2, x * 45000, native
-	enzyme, SDS-PAGE <7>) <7>
-
-ENGINEERING
-EN	#5# more (#5# generation of a 1-hydroxy-2-naphthoate 1,2-dioxygenase by
-	single point mutation M46V of salicylate 1,2-dioxygenase, rational
-	design of mutants, structure comparisons, overview <8>) <8>
-EN	#5# A85H (#5# site-directed mutagenesis, the salicylate 1,2-dioxygenase
-	variant shows higher catalytic efficiencies toward
-	1-hydroxy-2-naphthoate than the wild-type enzyme and no more activity
-	with gentisate. substitution of Ala85 with a histidine residue caused
-	significant changes in the orientation of the loop containing this
-	residue which is involved in the active site closing upon substrate
-	binding. In SDO A85H this specific loop shifts away from the active
-	site and thus opens the cavity favoring the binding of bulkier
-	substrates. Since this loop also interacts with the N-terminal residues
-	of the vicinal subunit, the structure and packing of the holoenzyme
-	might be also affected. <8>) <8>
-EN	#5# W104Y (#5# site-directed mutagenesis, the salicylate
-	1,2-dioxygenase variant shows increased catalytic efficiencies toward
-	1-hydroxy-2-naphthoate compared to gentisate and to the wild-type
-	enzyme. W104Y SDO mutant exhibits reduced reaction rates for all
-	substrates <8>) <8>
-EN	#5# L38Q (#5# site-directed mutagenesis, the salicylate 1,2-dioxygenase
-	variant shows higher catalytic efficiencies toward
-	1-hydroxy-2-naphthoate compared to gentisate than the wild-type enzyme
-	<8>) <8>
-
-CLONED
-CL	#4# (expression in Escherichia coli) <5>
-CL	#5# (expression of His-tagged wild-type and mutant enzymes in
-	Escherichia coli strain BL21 (DE3)) <8>
-CL	#6# (gene diox1, gene diox1 is found on an indigenous Sphe3 plasmid,
-	DNA and amino acid sequence determination and analysis, genetic
-	organization, sequence comparisons and phylogenetic tree. The relative
-	RNA transcription level of the chromosomal (diox2) gene is
-	significantly higher than that of its plasmid (diox1) homol,
-	overexpression in Escherichia coli) <7>
-CL	#7# (gene diox2, diox2 is located on the chromosome, DNA and amino acid
-	sequence determination and analysis, genetic organization, sequence
-	comparisons and phylogenetic tree. The relative RNA transcription level
-	of the chromosomal (diox2) gene is significantly higher than that of
-	its plasmid (diox1) homol, overexpression in Escherichia coli) <7>
-
-CRYSTALLIZATION
-CR	#5# (mutant A85H and W104Y variants and mutant W104Y with gentiate,
-	sitting drop vapor diffusion method, 4°C, mixing of 0.001 ml of protein
-	solution with 0.0008 ml of crystallization solution containing 8%
-	PEG10000 and 0.1 M Tris-HCl pH 8.0, with 0.0002 ml of a 0.1 M calcium
-	chloride solution, crystals quality is also improved using seeding
-	techniques, X-ray diffraction structure determination and analysis at
-	2.5-2.7 A resolution) <8>
+SU	#1# monomer (#1# 1 * 45000, SDS-PAGE <1>) <1>
 
 PURIFICATION
-PU	#1# (to homogeneity using a 3-hydroxy-2-naphthoic acid
-	(3-H2NA)-affinity matrix, DEAE-anion-exchange chromatography) <6>
-PU	#2# <1,3>
-PU	#3# (strain B156, isolated from soil and able to grow on phenanthrene
-	as sole source of carbon and energy, partial purification) <2>
-PU	#4# <5>
-PU	#5# <4>
-PU	#5# (recombinant His-tagged wild-type and mutant enzymes from
-	Escherichia coli strain BL21 (DE3) by nickel affinity chromatography)
-	<8>
-PU	#6# (native enzyme by anion exchange and hydrophobic interaction
-	chromatography, and gel filtration) <7>
-PU	#7# (native enzyme by anion exchange and hydrophobic interaction
-	chromatography, and gel filtration) <7>
+PU	#1# (to homogeneity) <1>
+PU	#2# (to homogeneity, precipitation techniques, calcium phosphate gel
+	treatment) <3>
+PU	#3# (partial) <2>
 
 GENERAL_STABILITY
-GS	#1# (the enzyme is very unstable in the cell-free extract and requires
-	Fe(II) (0.1 mM), DTT (2 mM) and ethanol (10%) for stability) <6>
-GS	#3# (no stabilization by ethanol, acetone or glycerol up to 10% v/v) <2>
+GS	#3# (very stable) <2>
 
 STORAGE_STABILITY
-SS	#6,7# (4°C, purified enzyme, 1 mM DTT, 48 h, stable) <7>
+SS	#3# (-30°C, no loss of activity for several months) <2>
 
 TEMPERATURE_STABILITY
-TS	#1# 60 (#1# heat stability for 20 min at 60°C <6>) <6>
-TS	#3# 0 (#3# 24 h, 90% loss of activity <2>) <2>
+TS	#3# 21 (#3# stable for more than 5 h <2>) <2>
 
 REFERENCE
-RF	<1> Iwabuchi, T.; Harayama, S.: Biochemical and genetic
-	characterization of 2-carboxybenzaldehyde dehydrogenase, an enzyme
-	involved in phenanthrene degradation by Nocardioides sp. strain KP7. J.
-	Bacteriol. (1997) 179, 6488-6494. {Pubmed:9335300} (c)
-RF	<2> Barnsley, E.A.: Phthalate pathway of phenanthrene metabolism:
-	formation of 2-carboxybenzalpyruvate. J. Bacteriol. (1983) 154,
-	113-117. {Pubmed:6833175} (c)
-RF	<3> Adachi, K.; Iwabuchi, T.; Sano, H.; Harayama, S.: Structure of the
-	ring cleavage product of 1-hydroxy-2-naphthoate, an intermediate of the
-	phenanthrene-degradative pathway of Nocardioides sp. strain KP7. J.
-	Bacteriol. (1999) 181, 757-763. {Pubmed:9922237}
-RF	<4> Hintner, J.P.; Lechner, C.; Riegert, U.; Kuhm, A.E.; Storm, T.;
-	Reemtsma, T.; Stolz, A.: Direct ring fission of salicylate by a
-	salicylate 1,2-dioxygenase activity from Pseudaminobacter
-	salicylatoxidans. J. Bacteriol. (2001) 183, 6936-6942. {Pubmed:11698383}
-RF	<5> Iwabuchi, T.; Harayama, S.: Biochemical and molecular
-	characterization of 1-hydroxy-2-naphthoate dioxygenase from
-	Nocardioides sp. KP7. J. Biol. Chem. (1998) 273, 8332-8336.
-	{Pubmed:9525941}
-RF	<6> Deveryshetty, J.; Phale, P.S.: Biodegradation of phenanthrene by
-	Pseudomonas sp. strain PPD: purification and characterization of
-	1-hydroxy-2-naphthoic acid dioxygenase. Microbiology (2009) 155,
-	3083-3091. {Pubmed:19574301}
-RF	<7> Vandera, E.; Kavakiotis, K.; Kallimanis, A.; Kyrpides, N.C.;
-	Drainas, C.; Koukkou, A.I.: Heterologous expression and
-	characterization of two 1-hydroxy-2-naphthoic acid dioxygenases from
-	Arthrobacter phenanthrenivorans. Appl. Environ. Microbiol. (2012) 78,
-	621-627. {Pubmed:22101055}
-RF	<8> Ferraroni, M.; Steimer, L.; Matera, I.; Buerger, S.; Scozzafava,
-	A.; Stolz, A.; Briganti, F.: The generation of a 1-hydroxy-2-naphthoate
-	1,2-dioxygenase by single point mutations of salicylate 1,2-dioxygenase
-	- rational design of mutants and the crystal structures of the A85H and
-	W104Y variants. J. Struct. Biol. (2012) 180, 563-571. {Pubmed:22960182}
+RF	<1> Fukunaga, S.; Yno, S.; Takahashi, M.; Taguchi, S.; Kera, Y.; Odani,
+	S.; Yamada, R.H.: Purification and properties of D-glutamate oxidase
+	from Candida boidinii 2201. J. Ferment. Bioeng. (1998) 85, 579-583.
+	{Pubmed:4387700} (c)
+RF	<2> Urich, K.: D-Glutamtoxydase aus der Antennendruse des Flusskrebses
+	Orconectes limosus: Reinigung und Charakterisierung. Z. Naturforsch. B
+	(1968) 23, 1508-1511. {Pubmed:} (c)
+RF	<3> Rocca, E.; Ghiretti, F.: Purification and properties of D-glutamic
+	acid oxidase from Octopus vulgaris Lam.. Arch. Biochem. Biophys. (1958)
+	77, 336-349. {Pubmed:13583997} (c)
 
-KI_VALUE
-KI	#1# 0.024 {3-Hydroxy-2-naphthoic acid}  (#1# competitive inhibition
-	<6>) <6>
-KI	#1# 0.116 {1-hydroxy-2-naphthoic acid}  (#1# substrate inhibition <6>)
-	<6>
-KI	#2,4# 0.022 {3-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
-
-KI_VALUE
-KI	#1# 0.024 {3-Hydroxy-2-naphthoic acid}  (#1# competitive inhibition
-	<6>) <6>
-KI	#1# 0.116 {1-hydroxy-2-naphthoic acid}  (#1# substrate inhibition <6>)
-	<6>
-KI	#2,4# 0.022 {3-hydroxy-2-naphthoate}  (#4# pH 7.5, 25°C <5>) <1,5>
-
-KCAT_KM_VALUE
-KKM	#1# 5185 <6>
-KKM	#5# 32 (#5# pH 8.0, temperature not specified in the publication,
-	mutant W104Y <8>) <8>
-KKM	#5# 171 (#5# pH 8.0, temperature not specified in the publication,
-	wild-type enzyme <8>) <8>
-KKM	#5# 27.5 (#5# pH 8.0, temperature not specified in the publication,
-	mutant L38Q <8>) <8>
-KKM	#5# 369.6 (#5# pH 8.0, temperature not specified in the publication,
-	mutant M46V <8>) <8>
-KKM	#5# 41.4 (#5# pH 8.0, temperature not specified in the publication,
-	mutant A85H <8>) <8>
-
-EXPRESSION
-EXP	#6,7# up (#6# gene diox1 is induced by the presence of phenanthrene
-	used as a sole carbon and energy source <7>; #7# gene diox2 is induced
-	by the presence of phenanthrene used as a sole carbon and energy source
-	<7>) <7>
-EXP	#6,7# down (#6# gene diox1 is subject to carbon catabolite repression
-	<7>; #7# gene diox2 is subject to carbon catabolite repression <7>) <7>
+ACTIVATING_COMPOUND
+AC	#2# ethanol (#2# 2fold activation in the presence of ethanol <3>) <3>
 
 ///
-ID	1.1.3.30
+ID	1.4.3.15
 ********************************************************************************
 *                                                                              *
 * Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
@@ -373,286 +148,242 @@ ID	1.1.3.30
 ********************************************************************************
 
 PROTEIN
-PR	#1# Bacillus megaterium   <10,11>
-PR	#2# Pseudomonas sp.   <1,2,3,10>
-PR	#3# Streptomyces venezuelae   <10>
-PR	#4# no activity in Alcaligenes faecalis   <10>
-PR	#5# Penicillium sp.   <10>
-PR	#6# Microbacterium barkeri   <10>
-PR	#7# no activity in Pseudomonas sp.   <2>
-PR	#8# Sphingomonas sp.   <7,10>
-PR	#9# Brevundimonas vesicularis   <4,10>
-PR	#10# Paenibacillus amylolyticus   <10>
-PR	#11# Geotrichum sp.   <10>
-PR	#12# Sphingopyxis sp.   <5,9,10>
-PR	#13# Sphingomonas sp. Q588Z1 SwissProt <6>
-PR	#14# no activity in Rhodococcus erythropolis   <7>
-PR	#15# Sphingopyxis sp. Q588Z1 SwissProt <8>
+PR	#1# Neurospora crassa   <2>
+PR	#2# Vanrija humicola   <3>
+PR	#3# Aspergillus ustus   <1>
 
 RECOMMENDED_NAME
-RN	polyvinyl-alcohol oxidase
+RN	D-glutamate(D-aspartate) oxidase
 
 
 SYSTEMATIC_NAME
-SN	polyvinyl-alcohol:oxygen oxidoreductase
+SN	D-glutamate(D-aspartate):oxygen oxidoreductase (deaminating)
 
 
 SYNONYMS
-SY	 dehydrogenase, polyvinyl alcohol
-SY	#1# polyvinyl alcohol dehydrogenase <11>
-SY	#1,13,15# PVADH <6,8,11>
-SY	#1,2,3,5,6,8,9,10,11,12,14# PVA oxidase <5,7,10>
-SY	#13# periplasmic poly(vinyl alcohol) dehydrogenase <6>
-SY	#13,15# PVA dehydrogenase <6,8>
+SY	 D-glutamic-aspartic oxidase
+SY	 D-monoaminodicarboxylic acid oxidase
+SY	#2# ChDASPO <3>
 
 REACTION
-RE	polyvinyl alcohol + O2 = oxidized polyvinyl alcohol + H2O2
+RE	D-aspartate + H2O + O2 = oxaloacetate + NH3 + H2O2
+RE	D-glutamate + H2O + O2 = 2-oxoglutarate + NH3 + H2O2
 
 REACTION_TYPE
 RT	redox reaction
 RT	oxidation
 RT	reduction
+RT	oxidative deamination
 
 SOURCE_TISSUE
-ST	#1,2,12# more (#12# the organism grows on polyvinyl alcohol, n-butanol,
-	n-pentanol, n-hexanol, n-heptanol, n-tridecanol, n-tetradecanol, and
-	n-hexadecanol as sole carbon source, but not on aromatic and alkane
-	compounds <5>; #1# strain BX1 grows on PVA as a mixed culture with
-	another strain PN19. Strain BX1 has PVA oxidase activity but has no
-	PQQ-dependent PVA-DH and the mixed culture accumulates depolymerized
-	PVA in the culture supernatant <10>; #2# the enzyme is induced by
-	polyvinyl alcohol in strain O3, but is constitutive in strain VM15C
-	<10>) <5,10>
-ST	#2# culture supernatant <1,2,3>
-
-LOCALIZATION
-LO	#2,12,13,15# periplasm (#2# membrane-bound amount depending on growth
-	rate, 50% of enzyme activity is localized on cytoplasmic membrane <1>;
-	#12# extracellular or cell-associated enzyme activity undetectable in
-	strain 113P3 <9>) <1,2,3,6,8,9>
-LO	#2,3# extracellular (#2# amount depending on growth rate <1,2,3>; #3#
-	the enzyme is excreted <10>) <1,2,3,10>
-LO	#8# more (#8# activity associated with cells of co-isolated degrader
-	strain Rhodococcus erythropolis <7>) <7>
+ST	#3# mycelium <1>
 
 NATURAL_SUBSTRATE_PRODUCT
-NSP	#1,2,3,5,6,8,9,10,11,12,15# polyvinyl alcohol + O2 = oxidized polyvinyl
-	alcohol + H2O2 (#12# the enzyme is involved in polyvinyl
-	alcohol-degradation <5>) <1,2,3,4,5,8,9,10,11>
+NSP	#2,3# D-glutamic acid + H2O + O2 = 2-oxoglutarate + NH3 + H2O2 (#2#
+	enzyme is also involved in the detoxification of D-glutamate, although
+	enzyme induction by this amino acid is very limited <3>) <1,3>
+NSP	#2,3# D-aspartic acid + H2O + O2 = oxaloacetate + NH3 + H2O2 (#2# DASPO
+	plays an essential role in the assimilation of D-aspartate and acts as
+	a detoxifying agent for D-aspartate <3>) <1,3>
 
 SUBSTRATE_PRODUCT
-SP	#1,2,3,5,6,8,9,10,11,12,13,15# polyvinyl alcohol + O2 = oxidized
-	polyvinyl alcohol + H2O2 (#12# the enzyme is involved in polyvinyl
-	alcohol-degradation <5>; #13# substrate PVA117 <6>; #12#
-	fluorescein-labelled and unlabelled polyvinyl alcohol, degradation
-	after uptake into the periplasm, associated with ultrastructural
-	changes of cell surface <9>; #15# pva operon characterized <8>; #8#
-	symbiotic biodegradation of polyvinyl alcohol, measured by hydrogen
-	peroxide production <7>) <1,2,3,4,5,6,7,8,9,10,11>
-SP	#13# more = ? (#13# no activity with primary nor secondary alcohols
-	<6>) {} <6>
-SP	#13# 1,3-butanediol + O2 = ? (#13# low activity <6>) <6>
-SP	#13# 2,4-pentanediol + O2 = ? (#13# low activity <6>) <6>
-SP	#13# cyclohexanediol + O2 = ? (#13# low activity <6>) <6>
-SP	#13# polypropylene glycol + O2 = ? <6>
-SP	#13# pyrroloquinoline quinone + O2 = ? (#13# low activity <6>) <6>
-SP	#2,9# 2-propanol + O2 = acetone + H2O2 (#9# 3.5% of activity with
-	polyvinyl alcohol <4>; #2# 4.9% of activity with polyvinyl alcohol <3>)
-	<3,4>
-SP	#2,9# 2-pentanol + O2 = 2-pentanone + H2O2 (#9# 36.3% of activity with
-	polyvinyl alcohol <4>; #2# 58% of activity with polyvinyl alcohol <3>)
-	<3,4>
-SP	#2,9# 2-hexanol + O2 = 2-hexanone + H2O2 (#9# 65.4% of activity with
-	polyvinyl alcohol <4>; #2# 101% of activity with polyvinyl alcohol <3>)
-	<3,4>
-SP	#2,9# 4-heptanol + O2 = 4-heptanone + H2O2 (#9# 75.1% of activity with
-	polyvinyl alcohol <4>; #2# 91% of activity with polyvinyl alcohol <3>)
-	<3,4>
-SP	#2,9# 2,5-hexanediol + O2 = 2,5-hexanedione + H2O2 (#2# 4.9% of
-	activity with polyvinyl alcohol <3>; #9# 3.8% of activity with
-	polyvinyl alcohol <4>) <3,4>
-SP	#9# 4-decanol + O2 = 4-decanone + H2O2 (#9# 100% of activity with
-	polyvinyl alcohol <4>) <4>
-SP	#9# 1,3-butanediol + O2 = 1,3-butanedione + H2O2 (#9# 3.8% of activity
-	with polyvinyl alcohol <4>) <4>
-SP	#9# cyclohexanol + O2 = cyclohexanal + H2O2 (#9# 41.8% of activity with
-	polyvinyl alcohol <4>) <4>
-SP	#9# benzyl alcohol + O2 = benzaldehyde + H2O2 (#9# 13.7% of activity
-	with polyvinyl alcohol <4>) <4>
-SP	#9# 2-butanol + O2 = 2-butanone + H2O2 (#9# 47.3% of activity with
-	polyvinyl alcohol <4>) <4>
-SP	#9# 3-butanol + O2 = 3-butanone + H2O2 (#9# 14.6% of activity with
-	polyvinyl alcohol <4>) <4>
-SP	#9# 3-hexanol + O2 = 3-hexanone + H2O2 (#9# 47.3% of activity with
-	polyvinyl alcohol <4>) <4>
-SP	#9# 3-heptanol + O2 = 3-heptanone + H2O2 (#9# 68.8% of activity with
-	polyvinyl alcohol <4>) <4>
-SP	#9# 2,4-pentanediol + O2 = 2,4-pentanedione + H2O2 (#9# 19.3% of
-	activity with polyvinyl alcohol <4>) <4>
+SP	#1,2,3# D-glutamic acid + H2O + O2 = 2-oxoglutarate + NH3 + H2O2 (#3#
+	D-glutamate and D-aspartate are oxidized at the same rate <1>; #2#
+	enzyme is also involved in the detoxification of D-glutamate, although
+	enzyme induction by this amino acid is very limited <3>) <1,2,3>
+SP	#1,2,3# D-aspartic acid + H2O + O2 = oxaloacetate + NH3 + H2O2 (#3#
+	D-glutamate and D-aspartate are oxidized at the same rate <1>; #2#
+	DASPO plays an essential role in the assimilation of D-aspartate and
+	acts as a detoxifying agent for D-aspartate <3>) <1,2,3>
+SP	#3# more = ? (#3# DL-alpha-aminoadipic acid not deaminated,
+	alpha-aminomalonic acid not deaminated, possible acceptors: oxygen,
+	ferricyanide, 2,6-dichlorophenol-indophenol and methylene blue <1>) {}
+	<1>
 
-PH_OPTIMUM
-PHO	#1# 7.5 <11>
-PHO	#12# 7.2 (#12# assay at <5>; #12# activity assay at <9>) <5,9>
-PHO	#13# 7.2-7.4 (#13# dependent on buffer system, recombinant enzyme <6>)
-	<6>
-PHO	#9# 10 <4>
-
-PH_RANGE
-PHR	#9# 7-11 (#9# almost constant activity in this range <4>) <4>
-
-SPECIFIC_ACTIVITY
-SA	#12,15# -999.0 (#12# degradation of polyvinyl alcohol measured by
-	iodometry, polyvinyl alcohol oxidase assay, ultrastructural change on
-	the cell surface in polyvinyl alcohol-containing media shown by
-	Scanning electron microscopy, binding studies of fluorescein-labelled
-	polyvinyl alcohol onto the cell surface, induction of structural
-	surface changes by polyvinyl alcohol identifed <9>; #15# upstream and
-	downstream regions of pva operon sequenced, transcript start and operon
-	size, location on megaplasmid and constitutive expression shown,
-	periplasmic enzyme activities from cells grown in polyvinyl alcohol
-	medium and glucose medium compared, increased expression by addition of
-	polyvinyl alcohol <8>) <8,9>
-SA	#13# 18.0 (#13# purified recombinant enzyme, substrate PVA117 <6>) <6>
-SA	#2# 1.68 (#2# polyvinyl alcohol <3>) <3>
-SA	#8# 0.0018 (#8# in association with the co-isolated Rhodococcus
-	erythropolis strain, isolate able to degrade 500 mg of polyvinyl
-	alcohol per litre in 2 weeks, no activity on 2-butanol,
-	2,4-pentanediol, 2-hexanol, 2-heptanol detected <7>) <7>
-SA	#9# 0.7 <4>
+TURNOVER_NUMBER
+TN	#3# 0.0833 {D-glutamate}  <1>
 
 TEMPERATURE_OPTIMUM
-TO	#1# 35 <11>
-TO	#13# 37 (#13# recombinant enzyme <6>) <6>
-TO	#2,12# 30 (#2# assay at <3>; #12# activity assay at <9>) <3,9>
-TO	#9# 40 <4>
-
-TEMPERATURE_RANGE
-TR	#9# 35-45 <4>
+TO	#3# 30 (#3# assay at <1>) <1>
 
 COFACTOR
-CF	#2# more (#2# no requirement for pyrroloquinoline quinone (PQQ) as does
-	the PQQ-dependent PVA dehydrogenase <2,3>) <2,3>
-
-ACTIVATING_COMPOUND
-AC	#2,3,9# more (#3,9# the enzyme is induced by polyvinyl alcohol <10>;
-	#2# the enzyme is induced by polyvinyl alcohol in strain O3, but is
-	constitutive in strain VM15C <10>) <10>
-AC	#8,12,13# pyrroloquinoline quinone (#13# absolutely required for
-	activity, one mole of PQQ is bound to one mole of apoenzyme <6>; #8#
-	essential for polyvinyl alcohol degradation, another yet unknown growth
-	factor supplied by co-isolated Rhodococcus erythropolis strain <7>;
-	#12# i.e. PQQ, supplemented with polyvinyl alcohol medium at 1 mg/l
-	<9>) <6,7,9>
+CF	#3# FAD (#3# flavoprotein <1>) <1>
 
 INHIBITORS
-IN	#9# Thiourea (#9# 1 mM, 20% inhibition <4>) <4>
-IN	#9# Fe2+ (#9# 1 mM, 88% inhibition <4>) <4>
-IN	#9# EDTA (#9# 1 mM, 23% inhibition <4>) <4>
-IN	#9# Hg2+ (#9# 1 mM, 93% inhibition <4>) <4>
-IN	#9# Sn2+ (#9# 1 mM, 89% inhibition <4>) <4>
-
-METALS_IONS
-ME	#13# Mg2+ (#13# activates, the activation by Mg2+ is less than 80% of
-	the activation by Ca2+ <6>) <6>
-ME	#13# Ca2+ (#13# high activation <6>) <6>
-ME	#9# Fe2+ (#9# 1 mol iron/mol enzyme <4>) <4>
-
-MOLECULAR_WEIGHT
-MW	#1# 134300 (#1# gel filtration <11>) <11>
-MW	#13# 68000 (#13# recombinant enzyme, gel filtration <6>) <6>
-MW	#2# 31000 (#2# gel filtration <3>) <3>
-MW	#9# 75000 (#9# gel filtration <4>) <4>
-MW	#9# 85000 (#9# 1 * 85000, SDS-PAGE <4>) <4>
-
-SUBUNITS
-SU	#13# More (#13# the enzyme possesses a conserved superbarrel domain SD,
-	probable PQQ-binding amino acids in the SD and a hem-binding domain HBD
-	<6>) <6>
-SU	#9,13# monomer (#9# 1 * 85000, SDS-PAGE <4>; #13# 1 * 68000,
-	recombinant enzyme, SDS-PAGE <6>) <4,6>
-
-CLONED
-CL	#13# (gene pvadh, DNA and amino acid sequence determination and
-	analysis, sequence comparison, expression of His6-tagged enzyme in
-	Escherichia coli) <6>
-CL	#15# (expressed in Escherichia coli, pCR-XL-TOPO vector) <8>
+IN	#3# KCN (#3# remarkable inhibition at 1 mM, inhibition is only slight
+	with 2,6-dichlorophenol-indophenol electron acceptor but higher when
+	indophenol is used <1>) <1>
+IN	#3# FMN (#3# competes with FAD <1>) <1>
 
 PURIFICATION
-PU	#1# (ammonium sulfate precipitation and Q-Sepharose column
-	chromatography) <11>
-PU	#2# <1,2,3>
-PU	#2# (native enzyme from strain O3) <10>
-PU	#9# (Q-Sepharose, AF blue Toyopearl, Q-Sepharose) <4>
-PU	#9# (native enzyme from strain PD) <10>
-PU	#13# (recombinant His6-tagged enzyme from Escherichia coli 44fold to
-	homogeneity) <6>
+PU	#3# (90% pure) <1>
 
-PH_STABILITY
-PHS	#9# 6-10 (#9# stable for at least 24 h at 30°C <4>) <4>
+GENERAL_STABILITY
+GS	#3# (very labile when FAD is removed from the enzyme) <1>
 
 STORAGE_STABILITY
-SS	#13# (4°C, purified recombinant enzyme, 20 mM Tris/HCl buffer, pH 8.0,
-	stable for more than a month) <6>
-
-TEMPERATURE_STABILITY
-TS	#9# 45 (#9# stable for 30 min, complete loss of activity after 30 min
-	at 60°C <4>) <4>
+SS	#3# (-20°C, several months) <1>
 
 REFERENCE
-RF	<1> Shimao, M.; Nishimura, Y.; Kato, N.; Sakazawa, C.: Localization of
-	polyvinyl alcohol oxidase produced by a bacterial symbiont, Pseudomonas
-	sp. strain VM15C. Appl. Environ. Microbiol. (1985) 49, 8-10.
-	{Pubmed:16346711}
-RF	<2> Shimao, M.; Onishi, S.; Kato, N.; Sakazawa, C.: Pyrroloquinoline
-	quinone-dependent cytochrome reduction in polyvinyl alcohol-degrading
-	Pseudomonas sp. strain VM15C. Appl. Environ. Microbiol. (1989) 55,
-	275-278. {Pubmed:16347841}
-RF	<3> Shimao, M.; Ninomiyaaa, K.; Kuno, O.; Kato, N.; Sakazawa, C.:
-	Existence of a novel enzyme, pyrroloquinoline quinone-dependent
-	polyvinyl alcohol dehydrogenase, in a bacterial symbiont, Pseudomonas
-	sp. strain VM15C. Appl. Environ. Microbiol. (1986) 51, 268-275.
-	{Pubmed:3513704}
-RF	<4> Kawagoshi, Y.; Fujita, M.: Purification and properties of polyvinyl
-	alcohol oxidase with broad substrate range obtained from Pseudomonas
-	vesicularis var. povalolyticus PH. World J. Microbiol. Biotechnol.
-	(1997) 13, 273-277. {Pubmed:}
-RF	<5> Yamatsu, A.; Matsumi, R.; Atomi, H.; Imanaka, T.: Isolation and
-	characterization of a novel poly(vinyl alcohol)-degrading bacterium,
-	Sphingopyxis sp. PVA3. Appl. Microbiol. Biotechnol. (2006) 72, 804-811.
-	{Pubmed:16583228}
-RF	<6> Hirota-Mamoto, R.; Nagai, R.; Tachibana, S.; Yasuda, M.; Tani, A.;
-	Kimbara, K.; Kawai, F.: Cloning and expression of the gene for
-	periplasmic poly(vinyl alcohol) dehydrogenase from Sphingomonas sp.
-	strain 113P3, a novel-type quinohaemoprotein alcohol dehydrogenase.
-	Microbiology (2006) 152, 1941-1949. {Pubmed:16804170}
-RF	<7> Vaclavkova, T.; Ruzicka, J.; Julinova, M.; Vicha, R.; Koutny, M.:
-	Novel aspects of symbiotic (polyvinyl alcohol) biodegradation. Appl.
-	Microbiol. Biotechnol. (2007) 76, 911-917. {Pubmed:17594087}
-RF	<8> Hu, X.; Mamoto, R.; Fujioka, Y.; Tani, A.; Kimbara, K.; Kawai, F.:
-	The pva operon is located on the megaplasmid of Sphingopyxis sp. strain
-	113P3 and is constitutively expressed, although expression is enhanced
-	by PVA. Appl. Microbiol. Biotechnol. (2008) 78, 685-693.
-	{Pubmed:18214469}
-RF	<9> Hu, X.; Mamoto, R.; Shimomura, Y.; Kimbara, K.; Kawai, F.: Cell
-	surface structure enhancing uptake of polyvinyl alcohol (PVA) is
-	induced by PVA in the PVA-utilizing Sphingopyxis sp. strain 113P3.
-	Arch. Microbiol. (2007) 188, 235-241. {Pubmed:17453173}
-RF	<10> Kawai, F.; Hu, X.: Biochemistry of microbial polyvinyl alcohol
-	degradation. Appl. Microbiol. Biotechnol. (2009) 84, 227-237.
-	{Pubmed:19590867}
-RF	<11> Li, M.; Du, G.: Purification and enzymatic properties of polyvinyl
-	alcohol dehydrogenase. Chin. J. Proc. Engin. (2014) 14, 1015-1019.
-	{Pubmed:}
+RF	<1> Mitzushima, S: Studies on the metabolism of D-amino acid in
+	microorganisms. Part 4. On the nature of the purified
+	D-glutamic-aspartic oxidase of Aspergillus ustus. J. Gen. Appl.
+	Microbiol. (1957) 3, 233-239. {Pubmed:}
+RF	<2> Onishi, E.; Macleod, H.; Horowitz, N.H.: Mutants of Neurospora
+	deficient in D-amio-acid oxidase. J. Biol. Chem. (1962) 237, 138-142.
+	{Pubmed:14481396}
+RF	<3> Takahashi, S.; Kakuichi, T.; Fujii, K.; Kera, Y.; Yamada, R.:
+	Physiological role of D-aspartate oxidase in the assimilation and
+	detoxification of D-aspartate in the yeast Cryptococcus humicola. Yeast
+	(2005) 22, 1203-1212. {Pubmed:16278929}
 
-ACTIVATING_COMPOUND
-AC	#2,3,9# more (#3,9# the enzyme is induced by polyvinyl alcohol <10>;
-	#2# the enzyme is induced by polyvinyl alcohol in strain O3, but is
-	constitutive in strain VM15C <10>) <10>
-AC	#8,12,13# pyrroloquinoline quinone (#13# absolutely required for
-	activity, one mole of PQQ is bound to one mole of apoenzyme <6>; #8#
-	essential for polyvinyl alcohol degradation, another yet unknown growth
-	factor supplied by co-isolated Rhodococcus erythropolis strain <7>;
-	#12# i.e. PQQ, supplemented with polyvinyl alcohol medium at 1 mg/l
-	<9>) <6,7,9>
+///
+ID	3.5.1.43
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+PROTEIN
+PR	#1# Bacillus circulans   <1,2,3,4,5,6>
+
+RECOMMENDED_NAME
+RN	peptidyl-glutaminase
+
+
+SYSTEMATIC_NAME
+SN	peptidyl-L-glutamine amidohydrolase
+
+
+SYNONYMS
+SY	 PGase
+SY	 peptidoglutaminase I
+SY	 peptidoglutaminase
+
+REACTION
+RE	alpha-N-peptidyl-L-glutamine + H2O = alpha-N-peptidyl-L-glutamate + NH3
+
+REACTION_TYPE
+RT	hydrolysis of amide bond
+
+NATURAL_SUBSTRATE_PRODUCT
+NSP	#1# more = ? (#1# enzyme catalyzes the hydrolysis of gamma-amide of
+	glutamine whose alpha-amino and/or alpha-carboxyl group participates in
+	peptide bond formation <2>) {} <2>
+
+SUBSTRATE_PRODUCT
+SP	#1# more = ? (#1# enzyme catalyzes the hydrolysis of gamma-amide of
+	glutamine whose alpha-amino and/or alpha-carboxyl group participates in
+	peptide bond formation <2>) {} <2>
+SP	#1# L-Gln + H2O = L-Glu + NH3 <1,3,5>
+SP	#1# benzyloxycarbonyl-L-Gln + H2O = benzyloxycarbonyl-L-Glu + NH3
+	<1,3,4,5>
+SP	#1# benzyloxycarbonyl-D-Gln + H2O = benzyloxycarbonyl-D-Glu + NH3 <1,3>
+SP	#1# N-acetyl-L-Gln + H2O = N-acetyl-L-Glu + NH3 <1,3,5>
+SP	#1# L-Tyr-L-Gln + H2O = L-Tyr-L-Glu + NH3 <1,3,5>
+SP	#1# L-Pro-L-Gln + H2O = L-Pro-L-Glu + NH3 <1,3,5>
+SP	#1# Gly-L-Gln + H2O = Gly-L-Glu + NH3 <1,3,5>
+SP	#1# L-Leu-Gly-L-Gln + H2O = L-Leu-Gly-L-Glu + NH3 <1,3,5>
+SP	#1# L-Pro-L-Leu-Gly-L-Gln + H2O = L-Pro-L-Leu-Gly-L-Glu + NH3 (#1#
+	peptidoglutaminase I <1>) <1,3>
+SP	#1# Gly-L-Pro-L-Leu-Gly-L-Gln + H2O = Gly-L-Pro-L-Leu-Gly-L-Glu + NH3
+	(#1# peptidoglutaminase I <1>) <1,3>
+SP	#1# L-Gln-Gly + H2O + H2O = L-Glu-Gly + NH3 (#1# peptidoglutaminase II
+	<1,3>) <1,3,5>
+SP	#1# benzyloxycarbonyl-L-Gln-L-Pro + H2O = benzyloxycarbonyl-L-Glu-L-Pro
+	+ NH3 (#1# peptidoglutaminase II <1,3>) <1,3>
+SP	#1# tert-amyloxycarbonyl-L-Gln-Pro + H2O =
+	tert-amyloxycarbonyl-L-Glu-L-Leu-Gly + NH3 (#1# peptidoglutaminase II
+	<1,3>) <1,3>
+SP	#1# tert-amyloxycarbonyl-L-Gln-L-Leu-Gly + H2O =
+	tert-amyloxycarbonyl-L-Glu-L-Leu-Gly + NH3 <1,3>
+SP	#1# benzyloxycarbonyl-L-Gln-Gly + H2O = benzyloxycarbonyl-L-Glu-Gly +
+	NH3 (#1# peptidoglutaminase II <1,3>) <1,3>
+SP	#1# benzyloxycarbonyl-L-Gln-Gly methyl ester + H2O =
+	benzyloxycarbonyl-L-Glu-Gly methyl ester + NH3 (#1# peptidoglutaminase
+	II <1,3>) <1,3>
+SP	#1# L-Phe-L-Gln-Gly + H2O = L-Phe-L-Glu-Gly + NH3 <1,3>
+SP	#1# L-Ser-L-Gln-Gly + H2O = L-Ser-L-Glu-Gly + NH3 <1,3>
+SP	#1# L-Lys-L-Gln-Gly + H2O = L-Lys-L-Glu-Gly + NH3 <1,3>
+SP	#1# L-His-L-Ser-L-Gln-Gly-L-Thr-L-Phe-L-Thr + H2O =
+	L-His-L-Ser-L-Glu-Gly-L-Thr-L-Phe-L-Thr + NH3 <1,3>
+SP	#1# L-Ile-L-Gln-L-Asn-L-CysH-L-Pro-L-Leu-Gly-acetate + H2O =
+	L-Ile-L-Glu-L-Asn-L-CysH-L-Pro-L-Leu-Gly-acetate + NH3 <1,3>
+SP	#1# phthaloyl-DL-Gln + H2O = ? <5>
+
+KM_VALUE
+KM	#1# 0.1 {N-acetyl-L-Gln}  <1,3>
+KM	#1# 0.16 {L-Tyr-L-Gln}  <1,3>
+KM	#1# 0.21 {benzyloxycarbonyl-L-Gln-L-Pro}  <1,3>
+KM	#1# 0.11 {benzyloxycarbonyl-L-Gln}  <1,3>
+KM	#1# 0.12 {tert-amyloxycarbonyl-L-Gln-L-Pro}  <1,3>
+KM	#1# 0.19 {L-Pro-L-Gln}  <1,3>
+KM	#1# 0.33 {Gly-L-Gln}  <1,3>
+KM	#1# 0.35 {Leu-Gly-L-Gln}  <1,3>
+KM	#1# 5 {L-Gln}  <1,3>
+KM	#1# 23.3 {Leu-Gly-L-Gln}  <1,3>
+KM	#1# 1.57 {benzyloxycarbonyl-D-Gln}  <1,3>
+
+PH_OPTIMUM
+PHO	#1# 8 (#1# hydrolysis of benzyloxycarbonyl-L-Gln <3>) <3>
+PHO	#1# 7.5 <5>
+
+SPECIFIC_ACTIVITY
+SA	#1# 303.0 <1,4>
+SA	#1# 65.5 <5>
+SA	#1# 205.3 <6>
+
+TEMPERATURE_OPTIMUM
+TO	#1# 55 (#1# hydrolysis of benzyloxycarbonyl-L-Gln <3>) <3>
+
+INHIBITORS
+IN	#1# Cu2+ <5>
+IN	#1# Hg2+ (#1# HgCl2 <3>) <3,5>
+IN	#1# N-bromosuccinimide <3>
+IN	#1# AgNO3 <3>
+IN	#1# sodium lauryl sulfate <3>
+
+MOLECULAR_WEIGHT
+MW	#1# 90000 (#1# gel filtration <4>) <4,6>
+MW	#1# 89000 (#1# equilibrium sedimentation <2>) <2>
+MW	#1# 42000 (#1# 2 * 42000, peptidoglutaminase I, SDS-PAGE <1>) <1>
+
+POSTTRANSLATIONAL_MODIFICATION
+PM	#1# no modification (#1# no carbohydrate detected <2>) <2>
+
+SUBUNITS
+SU	#1# dimer (#1# 2 * 42000, peptidoglutaminase I, SDS-PAGE <1>) <1>
+
+PURIFICATION
+PU	#1# <1,4,5,6>
+
+PH_STABILITY
+PHS	#1# 5-12.5 (#1# 40°C, 1 h, stable <3>; #1# 1°C, 22 h, stable <3>) <3>
+
+TEMPERATURE_STABILITY
+TS	#1# 55 (#1# 10 min, complete inactivation <3>) <3>
+TS	#1# 40 (#1# 10 min, stable up to <3>) <3>
+
+REFERENCE
+RF	<1> Kikuchi, M.; Sakaguchi, K.: Peptidoglutaminase (Bacillus
+	circulans). Methods Enzymol. (1976) 45B, 485-492. {Pubmed:1012012} (c)
+RF	<2> Kikuchi, M.; Sakaguchi, K.: Chemical and physical properties of
+	peptidoglutaminase I and II from Bacillus circulans. Biochim. Biophys.
+	Acta (1976) 427, 285-294. {Pubmed:816382} (c)
+RF	<3> Kikuchi, M.; Sakaguchi, K.: Some enzymatic properties and substrate
+	specificities of peptidoglutaminase-I and II. Agric. Biol. Chem. (1973)
+	37, 1813-1821. {Pubmed:} (c)
+RF	<4> Kikuchi, M.; Sakaguchi, K.: Peptidoglutaminase-I and II: Isolation
+	in homogeneous form. Agric. Biol. Chem. (1973) 37, 827-835. {Pubmed:}
+	(c)
+RF	<5> Kikuchi, M.; Hayashida, H.; Nakano, E.; Sakaguchi, K.:
+	Peptidoglutaminase. Enzymes for selective deamidation of gamma-amide of
+	peptide-bound glutamine. Biochemistry (1971) 10, 1222-1229.
+	{Pubmed:4928623} (c)
+RF	<6> Hamada, J.S.: High performance liquid chromatography of Bacillus
+	circulans peptidoglutaminase for laboratory and industrial uses. J.
+	Chromatogr. A (1995) 702, 163-172. {Pubmed:} (c)
 
 ///

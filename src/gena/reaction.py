@@ -1,16 +1,16 @@
 from gws.settings import Settings
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Resource, ResourceViewModel
+from gws.prism.model import Resource, ResourceViewModel, DbManager
 from gws.prism.controller import Controller
+
+from manage import settings
 from gena.relation import Relation
 from gena.compound import Compound
+from gena.enzyme import Enzyme
 from rhea.rhea import Rhea
+
 from peewee import CharField, ForeignKeyField, Model, chunked, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
-from manage import settings
-from gws.prism.controller import Controller
-from gws.prism.model import DbManager
-from playhouse.sqlite_ext import JSONField
 
 ####################################################################################
 #
@@ -18,53 +18,54 @@ from playhouse.sqlite_ext import JSONField
 #
 ####################################################################################
 
-path = settings.get_data("gena_db_path")
-
 ReactionSubstrateDeferred = DeferredThroughModel()
 ReactionProductDeferred = DeferredThroughModel()
+ReactionEnzymeDeferred = DeferredThroughModel()
 
 class Reaction(Relation):
     source_accession = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
-    enzymes = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     biocyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
     substrates = ManyToManyField(Compound, backref='is_substrate_of', through_model = ReactionSubstrateDeferred)
     products = ManyToManyField(Compound, backref='is_product_of', through_model = ReactionProductDeferred)
-
+    enzymes = ManyToManyField(Enzyme, backref='is_enzyme_of', through_model = ReactionEnzymeDeferred)
     _table_name = 'reactions'
 
-    #setter function
-    def set_source_accession(self, source__):
-        self.source_accession = source__
+    #Setters
+    def set_biocyc_id(self, ext_id_):
+        self.biocyc_id = ext_id_
 
     def set_direction(self, direction__):
         self.direction = direction__
+
+    def set_enzymes(self):
+        for i in range(0,len(self.data['enzyme'])):
+            enzym = Enzyme.get(Enzyme.ec == str(self.data['enzyme'][i]))
+            self.enzymes.add(enzym)
+
+    def set_kegg_id(self, kegg_id):
+        self.kegg_id = kegg_id
+    
+    def set_master_id(self, master_id_):
+        self.master_id = master_id_
+    
+    def set_products(self):
+        for i in range(0,len(self.data['products'])):
+            comps = Compound.get(Compound.source_accession == str(self.data['products'][i]))
+            self.products.add(comps)
+
+    def set_source_accession(self, source__):
+        self.source_accession = source__
 
     def set_substrates(self):
         for i in range(0,len(self.data['substrates'])):
             comps = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
             self.substrates.add(comps)
     
-    def set_products(self):
-        for i in range(0,len(self.data['products'])):
-            comps = Compound.get(Compound.source_accession == str(self.data['products'][i]))
-            self.products.add(comps)
-    
-    def set_enzymes(self, enzymes__):
-        self.enzymes = enzymes__
-    
-    def set_master_id(self, master_id_):
-        self.master_id = master_id_
-
-    def set_biocyc_id(self, ext_id_):
-        self.biocyc_id = ext_id_
-    
-    def set_kegg_id(self, kegg_id):
-        self.kegg_id = kegg_id
-
+    #Creation
     @classmethod
     def create_reactions_from_files(cls, input_db_dir, **files):
         list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
@@ -101,26 +102,14 @@ class Reaction(Relation):
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
-            if('enzyme' in react.data.keys()):
-                react.set_enzymes(react.data['enzyme'])
             react.save()
             react.set_substrates()
             react.set_products()
+            if('enzyme' in react.data.keys()):
+                react.set_enzymes()
         status = 'ok'
         return(reactions)
 
-    @classmethod
-    def __set_direction_from_list(cls, list_direction, direction):
-        for i in range(0, len(list_direction)):
-            try:
-                rea = cls.get(cls.source_accession == 'RHEA:' + list_direction[i])
-                if(rea.direction == None):
-                    rea.set_direction(direction)
-            except:
-                print('can not find the reaction RHEA:' + list_direction[i])
-        status = 'ok'
-        return(status)
-    
     @classmethod
     def __get_master_and_id(cls, list_reaction_infos):
         for dict__ in list_reaction_infos:
@@ -156,6 +145,18 @@ class Reaction(Relation):
         status = 'ok'
         return(status)
 
+    @classmethod
+    def __set_direction_from_list(cls, list_direction, direction):
+        for i in range(0, len(list_direction)):
+            try:
+                rea = cls.get(cls.source_accession == 'RHEA:' + list_direction[i])
+                if(rea.direction == None):
+                    rea.set_direction(direction)
+            except:
+                print('can not find the reaction RHEA:' + list_direction[i])
+        status = 'ok'
+        return(status)
+
     class Meta:
         table_name = 'reactions'
 
@@ -174,7 +175,15 @@ class ReactionProduct(PWModel):
     class Meta:
         table_name = 'reactions_products'
         database = DbManager.db
+
+class ReactionEnzyme(PWModel):
+    enzyme = ForeignKeyField(Enzyme)
+    reaction = ForeignKeyField(Reaction)
+    class Meta:
+        table_name = 'reactions_enzymes'
+        database = DbManager.db
     
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)
+ReactionEnzymeDeferred.set_model(ReactionEnzyme)

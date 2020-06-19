@@ -23,7 +23,10 @@ class GO(Ontology):
     _table_name = 'go'
     pass
 
-    #setters
+    #Setters
+    def set_definition(self, def__):
+        self.definition = def__
+
     def set_go_id(self, id):
         self.go_id = id
 
@@ -33,10 +36,11 @@ class GO(Ontology):
     def set_namespace(self, namespace__):
         self.namespace = namespace__
     
-    def set_definition(self, def__):
-        self.definition = def__
-    
-    #insert functions
+    #Inserts
+    def insert_definition(list__, key):
+        for go in list__:
+            go.set_definition(go.data[key])
+
     def insert_go_id(list__, key):
         for go in list__:
             go.set_go_id(go.data[key])
@@ -49,10 +53,6 @@ class GO(Ontology):
         for go in list__:
             go.set_namespace(go.data[key])
 
-    def insert_definition(list__, key):
-        for go in list__:
-            go.set_definition(go.data[key])
-
     #create go
     @classmethod
     def create_go(cls, input_db_dir, **files):
@@ -63,8 +63,7 @@ class GO(Ontology):
         cls.insert_name(gos, "name")
         cls.insert_namespace(gos, "namespace")
         cls.insert_definition(gos, "definition")
-        status = 'ok'
-        return(status)
+        return(list_go)
 
     class Meta():
         table_name = 'go'

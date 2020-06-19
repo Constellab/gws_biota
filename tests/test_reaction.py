@@ -1,31 +1,32 @@
+import sys
+import os
 import unittest
 import copy
+import asyncio
+
 from gws.prism.app import App
 from gws.prism.model import Process
 from gws.prism.model import Resource
 from gws.prism.controller import Controller
 
-import sys
-import os
-import unittest
-
-import asyncio
-
-from peewee import CharField, ForeignKeyField
+from peewee import CharField, ForeignKeyField, chunked
 from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from gws.prism.controller import Controller
-from rhea.rhea import Rhea
 from gena.reaction import Reaction
-from gena.compound import Compound
-from peewee import CharField, ForeignKeyField, chunked
 from manage import settings
+
+############################################################################################
+#
+#                                        TestReaction
+#
+############################################################################################
 
 input_db_dir = settings.get_data("gena_db_path")
 substrate_reaction = Reaction.substrates.get_through_model()
 product_reaction = Reaction.products.get_through_model()
+enzyme_reaction = Reaction.enzymes.get_through_model()
 
 class TestReaction(unittest.TestCase):
 
@@ -36,8 +37,10 @@ class TestReaction(unittest.TestCase):
         #reactions_compounds_through.drop_table()
         substrate_reaction.drop_table()
         product_reaction.drop_table()
+        enzyme_reaction.drop_table()
         substrate_reaction.create_table()
         product_reaction.create_table()
+        enzyme_reaction.create_table()
         
         
    
@@ -58,7 +61,7 @@ class TestReaction(unittest.TestCase):
         )
 
         files_test = dict(
-            rhea_kegg_reaction_file =  'rhea-kegg-test.reaction',
+            rhea_kegg_reaction_file =  'rhea-kegg_test.reaction',
             rhea_direction_file = 'rhea-directions-test.tsv',
             rhea2ecocyc_file = 'rhea2ecocyc-test.tsv',
             rhea2metacyc_file = 'rhea2metacyc-test.tsv',
@@ -68,3 +71,5 @@ class TestReaction(unittest.TestCase):
         )
 
         Reaction.create_reactions_from_files(input_db_dir, **files_test)
+        self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10022').biocyc_id, 'RXN3O-127')
+        self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10031').kegg_id, 'R00279')

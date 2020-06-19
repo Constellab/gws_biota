@@ -22,13 +22,12 @@ class Compound(Entity):
     formula = CharField(null=True, index=True)
     mass = FloatField(null=True, index=True)
     charge = FloatField(null=True, index=True)
-    reactions = CharField(null=True, index=True)
     _table_name = 'compound'
 
     class Meta:
         table_name = 'compounds'
 
-    #setter functions
+    #Setters
     def set_name(self, name__):
         self.name = name__
     
@@ -44,10 +43,8 @@ class Compound(Entity):
     def set_charge(self, charge__):
         self.charge = charge__
 
-    def set_reactions(self, reactions__):
-        self.reactions = reactions__
 
-    #insert function
+    #Inserts
     def insert_name(list__, key):
         for comp in list__:
             comp.set_name(comp.data[key])
@@ -68,10 +65,7 @@ class Compound(Entity):
         for comp in list__:
             comp.set_charge(comp.data[key])
 
-    def insert_reactions(list__, key):
-        for comp in list__:
-            comp.set_reactions(comp.data[key])
-
+    #Creation
     @classmethod
     def create_compounds_from_files(cls, input_db_dir, **files):
         list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
@@ -80,9 +74,7 @@ class Compound(Entity):
 
         list_chemical = Chebi.parse_csv_from_file(input_db_dir, files['chebi_chemical_data_file'])
         cls.set_chemicals(list_chemical)
-
-        list_compound_reactions = Rhea.parse_compound_from_file(input_db_dir, files['rhea_kegg_compound_file'])
-        cls.set_reactions_from_list(list_compound_reactions)
+        return(list_comp)
 
     @classmethod
     def create_compounds(cls, list_compound):
