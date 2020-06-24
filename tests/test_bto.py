@@ -21,16 +21,13 @@ from manage import settings
 #                                         
 ############################################################################################
 input_db_dir = settings.get_data("gena_db_path")
-#bto_ancestors = BTO.ancestors.get_through_model()
-
+ 
 class TestBTO(unittest.TestCase):
     @classmethod
     
     def setUpClass(cls):
         BTO.drop_table()
         BTO.create_table()
-        #bto_ancestors.drop_table()
-        #bto_ancestors.create_table()
 
    
     @classmethod

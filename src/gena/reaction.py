@@ -43,9 +43,12 @@ class Reaction(Relation):
 
     def set_enzymes(self):
         for i in range(0,len(self.data['enzyme'])):
-            enzym = Enzyme.get(Enzyme.ec == str(self.data['enzyme'][i]))
-            self.enzymes.add(enzym)
-
+            try:
+                enzym = Enzyme.get(Enzyme.ec == str(self.data['enzyme'][i]))
+                self.enzymes.add(enzym)
+            except:
+                print("ec not found")
+            
     def set_kegg_id(self, kegg_id):
         self.kegg_id = kegg_id
     
@@ -93,7 +96,6 @@ class Reaction(Relation):
 
         cls.__get_master_and_id_from_rhea2kegg(list_kegg_react)
         cls.__get_master_and_id_from_rhea2ec(list_ec_react)
-
         Controller.save_all()
 
     @classmethod
@@ -102,13 +104,30 @@ class Reaction(Relation):
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
-            react.save()
+            Controller.save_all()
             react.set_substrates()
             react.set_products()
             if('enzyme' in react.data.keys()):
                 react.set_enzymes()
         status = 'ok'
         return(reactions)
+    
+ 
+    @classmethod
+    def create_table(cls, *args, **model):
+        super().create_table()
+        model['substrate_reaction'].create_table()
+        model['product_reaction'].create_table()
+        model['enzyme_reaction'].create_table()
+
+
+    @classmethod
+    def drop_table(cls, *args, **model):
+        model['substrate_reaction'].drop_table()
+        model['product_reaction'].drop_table()
+        model['enzyme_reaction'].drop_table()
+        super().drop_table()    
+
 
     @classmethod
     def __get_master_and_id(cls, list_reaction_infos):

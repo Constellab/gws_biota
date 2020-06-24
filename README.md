@@ -1,6 +1,6 @@
 # Title 
 
-Description
+Biota is the main python module to load all databases used by the Gencovery technology. Biota doesn't work alone and use different module to parse and load databases, as 
 
 # License
 

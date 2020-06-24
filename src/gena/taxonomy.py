@@ -38,10 +38,9 @@ class Taxonomy(Resource):
     def set_ancestor(self):
         if('ancestor' in self.data.keys()):
             try: 
-                #parent = Taxonomy.get(Taxonomy.tax_id == self.data['ancestor'])
+                parent = Taxonomy.get(Taxonomy.tax_id == self.data['ancestor'])
                 #print(Taxonomy.get(Taxonomy.tax_id == self.data['ancestor']))
-                self.ancestor = self.data['ancestor']
-                #print()
+                self.ancestor = parent
             except:
                 print("could not find the parent of: " + str(self.data['tax_id']))
         self.save()     
@@ -74,6 +73,17 @@ class Taxonomy(Resource):
         Controller.save_all()
         cls.__set_taxons_ancestors(taxons)
         return(list_taxons)
+
+    @classmethod
+    def create_taxons_from_dict(cls):
+        dict_taxons = Taxo.get_all_taxonomy()
+        taxons = [cls(data = dict_taxons[d]) for d in dict_taxons]
+        cls.insert_tax_id(taxons, 'tax_id')
+        cls.insert_name(taxons, 'name')
+        cls.insert_rank(taxons, 'rank')
+        Controller.save_all()
+        cls.__set_taxons_ancestors(taxons)
+        return(dict_taxons)
     
     @classmethod
     def __set_taxons_ancestors(cls, list_taxons):

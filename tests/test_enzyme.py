@@ -22,12 +22,15 @@ from gena.enzyme import Enzyme
 ############################################################################################
 
 input_db_dir = settings.get_data("gena_db_path")
+enzyme_bto = Enzyme.bto.get_through_model()
 
 class TestEnzyme(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         Enzyme.drop_table()
         Enzyme.create_table()
+        enzyme_bto.drop_table()
+        enzyme_bto.create_table()
    
     @classmethod
     def tearDownClass(cls):

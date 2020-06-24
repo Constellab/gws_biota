@@ -8,7 +8,8 @@ from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 
-from peewee import CharField, Model, chunked, ForeignKeyField, ManyToManyField
+from peewee import CharField, Model, chunked, ForeignKeyField, ManyToManyField, DeferredThroughModel
+from peewee import Model as PWModel
 
 import logging
 from collections import OrderedDict
@@ -23,12 +24,13 @@ from brendapy.substances import CHEBI
 # Enzyme class
 #
 ####################################################################################
+EnzymeBTODeffered = DeferredThroughModel()
 
 class Enzyme(Protein):
     ec = CharField(null=True, index=True)
     organism = CharField(null=True, index=True)
     taxonomy = ForeignKeyField(Tax, backref = 'taxonomy', null = True)
-    tissue_id = ForeignKeyField(BT, backref='blood tissue taxonomy', null = True)
+    bto = ManyToManyField(BT, backref='blood tissue taxonomy', through_model = EnzymeBTODeffered)
     uniprot_id = CharField(null=True, index=True)
     _table_name = 'enzyme'
 
@@ -47,13 +49,13 @@ class Enzyme(Protein):
             except:
                 print("did not found the tax_id: " + str(self.data['taxonomy']))
     
-    def set_tissue(self):
-        if('st' in self.data.keys()):
-            try:
-                bto = BT.get(BT.bto_id == self.data['st'])
-                self.tissue_id = bto
-            except:
-                print("did not found the bto_id:" + self.data['st'])
+    def set_tissues(self):
+       for i in range(0,len(self.data['st'])):
+           try:
+               tissue = BT.get(BT.bto_id == self.data['st'][i])
+               self.bto.add(tissue)
+           except:
+               print("BTO not found")
     
     def set_uniprot_id(self, uniprot_id__):
         self.uniprot_id = uniprot_id__
@@ -85,7 +87,8 @@ class Enzyme(Protein):
         brenda = Brenda(os.path.join(input_db_dir, files['brenda_file']))
         list_proteins = brenda.parse_all_protein_to_dict()
         list_dict = []
-        list_chemical_info = ['in','lo','me','mw','nsp','pho','phr','phs','pm','to','tr','ts', 'st']
+        list_chemical_info = ['ac','cf','cr','en','exp','gs','ic50','in','lo','me','mw','nsp','os','oss',
+        'pho','phr','phs','pi','pm','refs','sn','sy','su','to','tr','ts','tn','st','kkm','ki','km']
         for d in list_proteins:
             dict_enz = {}
             dict_enz['ec'] = d['ec']
@@ -101,20 +104,33 @@ class Enzyme(Protein):
         cls.insert_ec(enzymes, 'ec')
         cls.insert_organism(enzymes, 'organism')
         cls.insert_uniprot_id(enzymes, 'uniprot')
+        Controller.save_all()
         for enz in enzymes:
-            #enz.save()
-            enz.set_taxonomy()
-            enz.set_tissue()
+            #enz.set_taxonomy()
+            if('st' in enz.data.keys()):
+                enz.set_tissues()
+            #enz.set_tissue()
         return(list_dict)
     
     class Meta():
         table_name = 'enzymes'
+    
+class EnzymeBTO(PWModel):
+    enzyme = ForeignKeyField(Enzyme)
+    bto = ForeignKeyField(BT)
+    class Meta:
+        table_name = 'enzymes_btos'
+        database = DbManager.db
     
 class EnzymeHTMLViewModel(ResourceViewModel):
     template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
 
 class EnzymeJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{"id":"{{view_model.model.data.ID}}"}')
+
+
+EnzymeBTODeffered.set_model(EnzymeBTO)
+
 """
 Enzyme.register_view_models([
     EnzymeHTMLViewModel, 

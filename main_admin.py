@@ -6,10 +6,9 @@ import asyncio
 
 #import from gws
 from gws.prism.app import App
-from gws.prism.model import Process
-from gws.prism.model import Resource
+from gws.prism.model import Process, Resource
 from gws.prism.controller import Controller
-from gws.prism.controller import Controller
+
 
 #import from pewee
 from peewee import CharField, ForeignKeyField, chunked
@@ -43,9 +42,26 @@ from taxonomy.taxo import Taxo
 #                                        class main_admin
 #                                         
 ############################################################################################
-
-
 input_db_dir = settings.get_data("gena_db_path")
-substrate_reaction = Reaction.substrates.get_through_model()
-product_reaction = Reaction.products.get_through_model()
-enzyme_reaction = Reaction.enzymes.get_through_model()
+
+files = dict(
+            go_data = "go.obo",
+            sbo_data = "SBO_OBO.obo",
+            chebi_data = "chebi.obo",
+            bto_json_data = "bto.json",
+            chebi_compound_file = "compounds.tsv",
+            chebi_chemical_data_file =  "chemical_data.tsv",
+            brenda_file = "brenda_download.txt",
+            rhea_kegg_reaction_file =  'rhea-kegg.reaction',
+            rhea_direction_file = 'rhea-directions.tsv',
+            rhea2ecocyc_file = 'rhea2ecocyc.tsv',
+            rhea2metacyc_file = 'rhea2metacyc.tsv',
+            rhea2macie_file = 'rhea2macie.tsv',
+            rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
+            rhea2ec_file = 'rhea2ec.tsv'
+        )
+
+Controller.reset(GO)
+GO.create_go(input_db_dir, **files)
+Controller.register_models([GO])
+Controller.save_all()

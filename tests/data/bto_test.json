@@ -154,6 +154,20 @@
         "BTO_0000216"
       ]
     },
+    "osteogenic cell": {
+      "key": "BTO_0002050",
+      "label": "osteogenic cell",
+      "ancestors": [
+        "BTO_0002050"
+      ]
+    },
+    "embryonic cell line": {
+      "key": "BTO_0000669",
+      "label": "embryonic cell line",
+      "ancestors": [
+        "BTO_0000669"
+      ]
+    },
     "culture condition:3-methylcrotonoyl-CoA-grown cell": {
       "key": "BTO_0000010",
       "label": "culture condition:3-methylcrotonoyl-CoA-grown cell",

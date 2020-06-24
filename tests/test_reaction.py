@@ -24,24 +24,21 @@ from manage import settings
 ############################################################################################
 
 input_db_dir = settings.get_data("gena_db_path")
-substrate_reaction = Reaction.substrates.get_through_model()
-product_reaction = Reaction.products.get_through_model()
-enzyme_reaction = Reaction.enzymes.get_through_model()
+
+
+
+files_model = dict(
+    substrate_reaction = Reaction.substrates.get_through_model(),
+    product_reaction = Reaction.products.get_through_model(),
+    enzyme_reaction = Reaction.enzymes.get_through_model()
+    )
 
 class TestReaction(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Reaction.drop_table()
-        Reaction.create_table()
-        #reactions_compounds_through.drop_table()
-        substrate_reaction.drop_table()
-        product_reaction.drop_table()
-        enzyme_reaction.drop_table()
-        substrate_reaction.create_table()
-        product_reaction.create_table()
-        enzyme_reaction.create_table()
-        
+        Reaction.drop_table(**files_model)
+        Reaction.create_table(**files_model)
         
    
     @classmethod
