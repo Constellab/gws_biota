@@ -2,7 +2,7 @@ import sys
 import os
 import unittest
 
-from gena.ontology import Ontology
+from biota.ontology import Ontology
 from peewee import CharField, Model, chunked
 from chebi.chebi import Chebi
 

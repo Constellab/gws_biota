@@ -19,16 +19,16 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-#import from gena
+#import from biota
 from manage import settings
-from gena.compound import Compound
-from gena.reaction import Reaction
-from gena.enzyme import Enzyme
-from gena.go import GO
-from gena.sbo import SBO
-from gena.chebi_ontology import chebi_ontology
-from gena.taxonomy import Taxonomy
-from gena.bto import BTO
+from biota.compound import Compound
+from biota.reaction import Reaction
+from biota.enzyme import Enzyme
+from biota.go import GO
+from biota.sbo import SBO
+from biota.chebi_ontology import chebi_ontology
+from biota.taxonomy import Taxonomy
+from biota.bto import BTO
 
 #import external module 
 from rhea.rhea import Rhea
@@ -42,7 +42,7 @@ from taxonomy.taxo import Taxo
 #                                        class main_admin
 #                                         
 ############################################################################################
-input_db_dir = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("biota_db_path")
 
 files = dict(
             go_data = "go.obo",

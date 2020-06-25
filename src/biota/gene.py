@@ -1,5 +1,5 @@
 import os, sys
-from gena.entity import Entity
+from biota.entity import Entity
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
 from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager

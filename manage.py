@@ -1,5 +1,5 @@
 #
-# Core GENA manage module
+# Core biota manage module
 # This software is the exclusive property of Gencovery SAS. 
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
@@ -14,8 +14,8 @@ from pathlib import Path
 
 # load prism and current module
 __cdir__ = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(__cdir__,"./"))                        # -> load hello tests
-sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load hello module
+sys.path.append(os.path.join(__cdir__,"./"))                        # -> load tests
+sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load biota module
 #sys.path.append(os.path.join(__cdir__,"./databases_input"))        # -> load databases_input folder
 sys.path.append(os.path.join(__cdir__,"../chebi-py/src"))           # -> load chebi module
 sys.path.append(os.path.join(__cdir__,"../rhea-py/src"))            # -> load rhea module
@@ -50,7 +50,7 @@ Settings.init(dict(
 
 #Création d'un nouveau paramètres 
 settings = Settings.retrieve()
-settings.set_data("gena_db_path", databases_test)
+settings.set_data("biota_db_path", databases_test)
 
 from gws.prism.manage import manage
 

@@ -4,9 +4,9 @@ from gws.prism.model import Resource, ResourceViewModel, DbManager
 from gws.prism.controller import Controller
 
 from manage import settings
-from gena.relation import Relation
-from gena.compound import Compound
-from gena.enzyme import Enzyme
+from biota.relation import Relation
+from biota.compound import Compound
+from biota.enzyme import Enzyme
 from rhea.rhea import Rhea
 
 from peewee import CharField, ForeignKeyField, Model, chunked, ManyToManyField, DeferredThroughModel

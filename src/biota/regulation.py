@@ -1,4 +1,4 @@
-from gena.organism import Organism
+from biota.organism import Organism
 
 
 ####################################################################################

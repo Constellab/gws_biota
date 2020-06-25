@@ -1,7 +1,7 @@
 import os, sys
-from gena.protein import Protein 
-from gena.taxonomy import Taxonomy as Tax
-from gena.bto import BTO as BT
+from biota.protein import Protein 
+from biota.taxonomy import Taxonomy as Tax
+from biota.bto import BTO as BT
 from brenda.brenda import Brenda
 
 from gws.prism.controller import Controller

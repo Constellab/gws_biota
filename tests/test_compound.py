@@ -13,7 +13,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 
-from gena.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
+from biota.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -22,7 +22,7 @@ from manage import settings
 #                                         
 ############################################################################################
 #path = os.path.realpath('./databases_input') #Set the path where we can find input data
-input_db_dir = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("biota_db_path")
 
 class TestCompound(unittest.TestCase):
     @classmethod

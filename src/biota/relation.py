@@ -1,4 +1,4 @@
-from gena.element import Element
+from biota.element import Element
 
 ####################################################################################
 #

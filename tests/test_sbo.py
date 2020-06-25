@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from gena.sbo import SBO
+from biota.sbo import SBO
 from manage import settings
 
 ############################################################################################
@@ -20,7 +20,7 @@ from manage import settings
 #                                         
 ############################################################################################
 
-input_db_dir = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("biota_db_path")
 
 class TestSBO(unittest.TestCase):
     @classmethod

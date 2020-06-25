@@ -13,7 +13,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 from manage import settings
-from gena.enzyme import Enzyme
+from biota.enzyme import Enzyme
 
 ############################################################################################
 #
@@ -21,7 +21,7 @@ from gena.enzyme import Enzyme
 #                                         
 ############################################################################################
 
-input_db_dir = settings.get_data("gena_db_path")
+input_db_dir = settings.get_data("biota_db_path")
 enzyme_bto = Enzyme.bto.get_through_model()
 
 class TestEnzyme(unittest.TestCase):
