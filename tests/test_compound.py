@@ -13,7 +13,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 
-from biota.compound import Compound, CompoundHTMLViewModel, CompoundJSONViewModel
+from biota.compound import Compound, CompoundJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -52,6 +52,8 @@ class TestCompound(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
-        
-        
-        
+        comp1 = Compound.get(Compound.source_accession == 'CHEBI:58321')
+        comp1_view_model = CompoundJSONViewModel(comp1)
+        Controller.save_all()
+        view = comp1_view_model.render()
+        self.assertEqual(view, '{"source_accession": CHEBI:58321, "name": L-allysine zwitterion, "formula": None , "mass": None , "charge": None }')

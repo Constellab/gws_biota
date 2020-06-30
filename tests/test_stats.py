@@ -15,7 +15,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 from manage import settings
-from biota.enzyme import Enzyme, EnzymeStatistics, process_statistics
+from biota.enzyme import Enzyme, EnzymeStatistics, process_statistics, EnzymeStatisticsJSONViewModel
 import re
 
 ############################################################################################
@@ -52,3 +52,11 @@ class TestProcess(unittest.TestCase):
         self.assertEqual(s1.output['EnzymeStatistics'].data['total_number_of_enzyme'], 7)
         self.assertEqual(s1.output['EnzymeStatistics'].data['number_of_references'], 7)
         self.assertEqual(s1.output['EnzymeStatistics'].data['number_of_organisms'], 7)
+        
+        enzymestat1_view_model = EnzymeStatisticsJSONViewModel(s1.output['EnzymeStatistics'])
+        view = enzymestat1_view_model.render()
+        print(len(view))
+        print(view)
+        #for i in range(0, 10):
+            #print(view[i])
+        #self.assertEqual(view[10], 7)

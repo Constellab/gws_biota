@@ -13,7 +13,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 from manage import settings
-from biota.enzyme import Enzyme
+from biota.enzyme import Enzyme, EnzymeJSONViewModel
 
 ############################################################################################
 #
@@ -50,3 +50,7 @@ class TestEnzyme(unittest.TestCase):
         Enzyme.get(Enzyme.ec == '1.4.3.7')
         self.assertEqual(Enzyme.get(Enzyme.ec == '1.4.3.7').organism, 'Candida boidinii')
         self.assertEqual(Enzyme.get(Enzyme.ec == '3.5.1.43').organism, 'Bacillus circulans')
+        enz1 = Enzyme.get(Enzyme.ec == '3.5.1.43')
+        enz1_view_model = EnzymeJSONViewModel(enz1)
+        view = enz1_view_model.render()
+        self.assertEqual(view, '{"ec": 3.5.1.43, "organism": Bacillus circulans, "taxonomy": None, "bto": [], "uniprot_id": None }')

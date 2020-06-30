@@ -122,25 +122,9 @@ class Compound(Entity):
         status = 'ok'
         return(status)
 
-
-class CompoundHTMLViewModel(ResourceViewModel):
-    template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
-
 class CompoundJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id":"{{view_model.model.data.ID}}"}')
+    template = JSONViewTemplate('{"source_accession": {{view_model.model.source_accession}}, "name": {{view_model.model.name}}, "formula": {{view_model.model.formula}} , "mass": {{view_model.model.mass}} , "charge": {{view_model.model.charge}} }')
 
-"""
-Compound.register_view_models([
-    CompoundHTMLViewModel, 
-    CompoundJSONViewModel
-])
-
-Controller.register_models([
-    Compound,
-    CompoundHTMLViewModel,
-    CompoundJSONViewModel
-])
-"""
 
 
 

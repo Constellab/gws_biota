@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.taxonomy import Taxonomy
+from biota.taxonomy import Taxonomy, TaxonomyJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -37,4 +37,8 @@ class TestGO(unittest.TestCase):
     def test_db_object(self):
         dict_taxons = Taxonomy.create_taxons_from_dict()
         Controller.save_all()
-        #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 579138).name, "Zymomonas mobilis subsp. pomaceae ATCC 29192")
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
+        tax1 = Taxonomy.get(Taxonomy.tax_id == 41297)
+        tax1_view_model = TaxonomyJSONViewModel(tax1)
+        view = tax1_view_model.render()
+        self.assertEqual(view, '{"tax_id": 41297 , "name": Sphingomonadaceae, "rank": family , "ancestors": [] }')

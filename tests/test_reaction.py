@@ -14,7 +14,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.reaction import Reaction
+from biota.reaction import Reaction, ReactionJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -70,3 +70,7 @@ class TestReaction(unittest.TestCase):
         Reaction.create_reactions_from_files(input_db_dir, **files_test)
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10022').biocyc_id, 'RXN3O-127')
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10031').kegg_id, 'R00279')
+        rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
+        rea1_view_model = ReactionJSONViewModel(rea1)
+        view = rea1_view_model.render()
+        self.assertEqual(view, '{"source_accession": RHEA:10031 , "direction": BI, "master_id": 10028 , "biocyc_id": None, "kegg_id": R00279 }')

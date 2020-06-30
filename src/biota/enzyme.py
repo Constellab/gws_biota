@@ -7,7 +7,7 @@ from brenda.brenda import Brenda
 
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Process, Model, ViewModel,ResourceViewModel, Resource, DbManager
+from gws.prism.model import Process, Model, ViewModel, ResourceViewModel, Resource, DbManager
 
 from peewee import CharField, Model, chunked, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import IntegerField, FloatField
@@ -124,12 +124,9 @@ class EnzymeBTO(PWModel):
     class Meta:
         table_name = 'enzymes_btos'
         database = DbManager.db
-    
-class EnzymeHTMLViewModel(ResourceViewModel):
-    template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
 
 class EnzymeJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id":"{{view_model.model.data.ID}}"}')
+    template = JSONViewTemplate('{"ec": {{view_model.model.ec}}, "organism": {{view_model.model.organism}}, "taxonomy": {{view_model.model.taxonomy}}, "bto": [], "uniprot_id": {{view_model.model.uniprot_id}} }')
 
 
 class EnzymeStatistics(Resource):
@@ -228,7 +225,9 @@ class EnzymeStatistics(Resource):
     def set_uniprots_referenced(self, uniprots):
         self.data['uniprots_referenced'] = uniprots
 
-
+class EnzymeStatisticsJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{{view_model.model.data}}')
+        
 class process_statistics(Process):
     input_specs = {'EnzymeStatistics': EnzymeStatistics}
     output_specs = {'EnzymeStatistics': EnzymeStatistics}
@@ -260,7 +259,6 @@ class process_statistics(Process):
                 group = Enzyme.select().where(Enzyme.data['ec_group'] == str(i))
                 dict_size_ec_group[i] = len(group)
                 dict_group = {}
-                print('Extract organisms by ec_group')
                 for enzyme in group:
 
                     if(enzyme.organism not in dict_group.keys()):
@@ -268,19 +266,16 @@ class process_statistics(Process):
                     else:
                         dict_group[enzyme.organism] += 1
 
-                    print('Extract organisms in all the table')
                     if(enzyme.organism not in dict_organisms.keys()):
                         dict_organisms[enzyme.organism] = 1
                     else:
                         dict_organisms[enzyme.organism] += 1
 
-                    print('Extract number of enzymes classes')
                     if(enzyme.ec not in dict_enzymes_classes.keys()):
                         dict_enzymes_classes[enzyme.ec] =1
                     else:
                         dict_enzymes_classes[enzyme.ec] += 1
 
-                    print('Extract number of references in the table')
                     if ('refs' in enzyme.data.keys()):
                         for j in range(0, len(enzyme.data['refs'])):
                             if(enzyme.data['refs'][j] not in dict_references.keys()):
@@ -288,7 +283,6 @@ class process_statistics(Process):
                             else:
                                 dict_references[enzyme.data['refs'][j]] += 1
 
-                    print('Extract number of uniprot ids referenced')
                     if(enzyme.uniprot_id):
                         uniprot_id_number += 1
 
@@ -350,13 +344,11 @@ class process_statistics(Process):
                 dict_size_ec_group[i] = len(group)
                 dict_proportion_ec_group[i] = ''
                 for enzyme in group:
-                    print('Extraction of the number of enzymes classes')
                     if(enzyme.ec not in dict_enzymes_classes.keys()):
                         dict_enzymes_classes[enzyme.ec] =1
                     else:
                         dict_enzymes_classes[enzyme.ec] += 1
                     
-                    print('Extraction of the number of references for the organism')
                     if ('refs' in enzyme.data.keys()):
                         for j in range(0, len(enzyme.data['refs'])):
                             if(enzyme.data['refs'][j] not in dict_references.keys()):
@@ -364,11 +356,9 @@ class process_statistics(Process):
                             else:
                                 dict_references[enzyme.data['refs'][j]] += 1
 
-                    print('Extraction of the number of uniprot ids referenced for the organism')
                     if(enzyme.uniprot_id):
                         uniprot_id_number += 1
                     
-                    print('Extraction of ec groups for the organism')
                     if(proportion):
                         dict_proportion_ec_group[i] = str(dict_size_ec_group[i]*100/len(enzymes_organism)) + ' %'
             

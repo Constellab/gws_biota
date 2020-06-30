@@ -3,6 +3,8 @@ import os
 import unittest
 
 from biota.ontology import Ontology
+from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
+from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
 from peewee import CharField, Model, chunked
 from chebi.chebi import Chebi
 
@@ -46,3 +48,6 @@ class Chebi_Ontology(Ontology):
 
     class Meta():
         table_name = 'chebi_ontology'
+
+class ChebiOntologyJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"chebi_id": {{view_model.model.chebi_id}} , "name": {{view_model.model.name}}, "definition": {{view_model.model.data.definition}} }')

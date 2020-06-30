@@ -10,7 +10,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.chebi_ontology import Chebi_Ontology
+from biota.chebi_ontology import Chebi_Ontology, ChebiOntologyJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -45,3 +45,7 @@ class TestCompound(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:17051').name, 'fluoride')
+        chebi1 = Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:24431')
+        chebi1_view_model = ChebiOntologyJSONViewModel(chebi1)
+        view = chebi1_view_model.render()
+        self.assertEqual(view, '{"chebi_id": CHEBI:24431 , "name": chemical entity, "definition": A chemical entity is a physical entity of interest in chemistry including molecular entities, parts thereof, and chemical substances. }')
