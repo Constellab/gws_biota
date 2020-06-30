@@ -19,7 +19,7 @@ class Chebi_Ontology(Ontology):
     name = CharField(null=True, index=True)
     #definition = CharField(null=True, index=True)
     #xrefs = CharField(null=True, index=True)
-    _table_name = 'chebi_ontology'
+    _table_name = 'chebiOntology'
 
     #Setters
     def set_chebi_id(self, id):
@@ -47,7 +47,7 @@ class Chebi_Ontology(Ontology):
         return(list_chebi)
 
     class Meta():
-        table_name = 'chebi_ontology'
+        table_name = 'chebiOntology'
 
 class ChebiOntologyJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{"chebi_id": {{view_model.model.chebi_id}} , "name": {{view_model.model.name}}, "definition": {{view_model.model.data.definition}} }')

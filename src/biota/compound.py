@@ -8,7 +8,6 @@ from peewee import CharField, FloatField, ForeignKeyField, Model, chunked
 
 from chebi.chebi import Chebi
 from rhea.rhea import Rhea
-from gws.prism.controller import Controller
 
 ####################################################################################
 #

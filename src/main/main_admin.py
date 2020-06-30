@@ -26,7 +26,7 @@ from biota.reaction import Reaction
 from biota.enzyme import Enzyme
 from biota.go import GO
 from biota.sbo import SBO
-from biota.chebi_ontology import chebi_ontology
+from biota.chebiOntology import chebiOntology
 from biota.taxonomy import Taxonomy
 from biota.bto import BTO
 

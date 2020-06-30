@@ -21,7 +21,7 @@ from manage import settings
 #                                        TestCompound
 #                                         
 ############################################################################################
-#path = os.path.realpath('./databases_input') #Set the path where we can find input data
+
 input_db_dir = settings.get_data("biota_db_path")
 
 class TestCompound(unittest.TestCase):
