@@ -39,7 +39,7 @@ class TestEnzyme(unittest.TestCase):
 
     def test_db_object(self):
         files = dict(
-            brenda_file = "brenda_download.txt"
+            brenda_file = "brenda_download_20200504.txt"
         )
 
         files_test = dict(

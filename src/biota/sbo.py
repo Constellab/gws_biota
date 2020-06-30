@@ -59,3 +59,6 @@ class SBO(Ontology):
 
     class Meta():
         table_name = 'sbo'
+
+class SBOJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"id": {{view_model.model.sbo_id}} , "name": {{view_model.model.name}}, "definition": {{view_model.model.definition}} }')

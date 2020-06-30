@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.go import GO
+from biota.go import GO, GOJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -27,7 +27,9 @@ class TestGO(unittest.TestCase):
     
     def setUpClass(cls):
         GO.drop_table()
+        GOJSONViewModel.drop_table()
         GO.create_table()
+        pass
    
     @classmethod
     def tearDownClass(cls):
@@ -47,3 +49,8 @@ class TestGO(unittest.TestCase):
         GO.create_go(input_db_dir, **files_test)
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
+        go1 = GO.get(GO.go_id == 'GO:0000001')
+        go1_view_model = GOJSONViewModel(go1)
+        Controller.save_all()
+        view = go1_view_model.render()
+        self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')

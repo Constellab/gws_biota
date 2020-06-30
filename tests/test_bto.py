@@ -12,7 +12,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 
-from biota.bto import BTO
+from biota.bto import BTO, BTOJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -48,6 +48,11 @@ class TestBTO(unittest.TestCase):
 
         BTO.create_bto(input_db_dir, **files_test)
         Controller.save_all()
-        self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000' ).label, 'tissues, cell types and enzyme sources')
-        
+        self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
+        bto1 = BTO.get(BTO.bto_id == 'BTO_0000000')
+        bto1_view_model = BTOJSONViewModel(bto1)
+        Controller.save_all()
+        view = bto1_view_model.render()
+        print(view)
+        #self.assertEqual(view, )
         

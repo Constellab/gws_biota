@@ -2,7 +2,7 @@ import os, sys
 from biota.entity import Entity
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
+from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
 from peewee import CharField, Model, chunked
 from biota.ontology import Ontology
 from onto.ontology import Onto
@@ -55,8 +55,8 @@ class GO(Ontology):
 
     #create go
     @classmethod
-    def create_go(cls, input_db_dir, **files):
-        onto_go = Onto.create_ontology_from_file(input_db_dir, files["go_data"])
+    def create_go(cls, input_db_dir, **files_test):
+        onto_go = Onto.create_ontology_from_file(input_db_dir, files_test["go_data"])
         list_go = Onto.parse_obo_from_ontology(onto_go)
         gos = [cls(data = dict_) for dict_ in list_go]
         cls.insert_go_id(gos,"id")
@@ -67,3 +67,6 @@ class GO(Ontology):
 
     class Meta():
         table_name = 'go'
+
+class GOJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}}, "namespace": {{view_model.model.namespace}} , "definition": {{view_model.model.definition}} }')
