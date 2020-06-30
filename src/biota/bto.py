@@ -107,8 +107,6 @@ class BTO(Ontology):
             if len(val) != 0:
                 for v in val:
                     vals.append(v)
-        for i in range(0, 10):
-            print(vals[i])
         BTOAncestor.insert_many(vals).execute()
         return(list_bto)
   
@@ -124,3 +122,6 @@ class BTOAncestor(PWModel):
         indexes = (
             (('bto', 'ancestor'), True),
         )
+
+class BTOJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"id": BTO_0000000 , "label": tissues, cell types and enzyme sources, "ancestors":[] }')
