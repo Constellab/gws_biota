@@ -21,14 +21,14 @@ from starlette.testclient import TestClient
 
 #import from biota
 from manage import settings
-from biota.compound import Compound
-from biota.reaction import Reaction
-from biota.enzyme import Enzyme
 from biota.go import GO, GOJSONViewModel
 from biota.sbo import SBO, SBOJSONViewModel
-from biota.chebiOntology import ChebiOntology
-from biota.taxonomy import Taxonomy
 from biota.bto import BTO, BTOJSONViewModel
+from biota.chebiOntology import ChebiOntology, ChebiOntologyJSONViewModel
+from biota.taxonomy import Taxonomy
+from biota.compound import Compound
+from biota.enzyme import Enzyme
+from biota.reaction import Reaction
 
 #import external module 
 from rhea.rhea import Rhea
@@ -54,20 +54,23 @@ class TestMain(unittest.TestCase):
         GO.drop_table()
         SBO.drop_table()
         BTO.drop_table()
+        Chebi_Ontology.drop_table()
         GOJSONViewModel.drop_table()
         GO.create_table()
         SBO.create_table()
         BTO.create_table()
+        Chebi_Ontology.create_table()
         pass
    
     @classmethod
     def tearDownClass(cls):
         #GO.drop_table()
         #SBO.drop_table()
+        #BTO.drop_table()
+        #ChebiOntology.drop_table()
         pass
     
     def test_db_object(self):
-        ### Test GO class ###
         files = dict(
             go_data = "go.obo",
             sbo_data = "SBO_OBO.obo",
@@ -125,3 +128,13 @@ class TestMain(unittest.TestCase):
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
 
         # ------------- Create ChebiOntology ------------- #
+        Chebi_Ontology.create_chebis(input_db_dir, **files)
+        Controller.save_all()
+        self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:24431').name, "chemical entity")
+        self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:17051').name, 'fluoride')
+        chebi1 = Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:24431')
+        chebi1_view_model = ChebiOntologyJSONViewModel(chebi1)
+        view = chebi1_view_model.render()
+        self.assertEqual(view, '{"chebi_id": CHEBI:24431 , "name": chemical entity, "definition": A chemical entity is a physical entity of interest in chemistry including molecular entities, parts thereof, and chemical substances. }')
+        duration  = default_timer() - duration
+        print("chebiOntology has been loaded in " + str(duration) + " sec")
