@@ -28,7 +28,7 @@ from biota.go import GO, GOJSONViewModel
 from biota.sbo import SBO, SBOJSONViewModel
 from biota.chebiOntology import ChebiOntology
 from biota.taxonomy import Taxonomy
-from biota.bto import BTO
+from biota.bto import BTO, BTOJSONViewModel
 
 #import external module 
 from rhea.rhea import Rhea
@@ -36,6 +36,9 @@ from brenda.brenda import Brenda
 from onto.ontology import Onto
 from chebi.chebi import Chebi
 from taxo.taxonomy import Taxo
+
+#import Timer
+from timeit import default_timer
 
 ############################################################################################
 #
@@ -81,6 +84,9 @@ class TestMain(unittest.TestCase):
             rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
             rhea2ec_file = 'rhea2ec.tsv'
         )
+
+        start = default_timer()
+
         # ------------- Create GO ------------- #
         GO.create_go(input_db_dir, **files)
         Controller.save_all()
@@ -90,7 +96,8 @@ class TestMain(unittest.TestCase):
         Controller.save_all()
         view = go1_view_model.render()
         self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
-        print("go, go_ancestors and gojsonviewmodel have been loaded")
+        duration  = default_timer() - start
+        print("go, go_ancestors and gojsonviewmodel have been loaded in " + str(duration) + " sec")
 
         # ------------- Create SBO ------------- #
         SBO.create_sbo(input_db_dir, **files)
@@ -103,7 +110,8 @@ class TestMain(unittest.TestCase):
         Controller.save_all()
         view = sbo1_view_model.render()
         self.assertEqual(view, '{"id": SBO:0000000 , "name": systems biology representation, "definition": Representation of an entity used in a systems biology knowledge reconstruction, such as a model, pathway, network. }')
-        print("sbo, sbo_ancestors and ressourceviewmodel have been loaded")
+        duration  = default_timer() - duration
+        print("sbo, sbo_ancestors and ressourceviewmodel have been loaded in " + str(duration) +  " sec")
 
         # ------------- Create BTO ------------- #
         BTO.create_bto(input_db_dir, **files)
@@ -113,4 +121,7 @@ class TestMain(unittest.TestCase):
         bto1_view_model = BTOJSONViewModel(bto1)
         Controller.save_all()
         view = bto1_view_model.render()
-        print("bto and bto_ancestors have been loaded")
+        duration  = default_timer() - duration
+        print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
+
+        # ------------- Create ChebiOntology ------------- #
