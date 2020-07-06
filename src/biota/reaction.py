@@ -36,7 +36,11 @@ class Reaction(Relation):
 
     #Setters
     def set_biocyc_ids(self, ext_id_):
-        self.biocyc_ids = ext_id_
+        try:
+            self.biocyc_ids.append(ext_id_)
+        except:
+            self.biocyc_ids = []
+            self.biocyc_ids.append(ext_id_)
 
     def set_direction(self, direction__):
         self.direction = direction__
@@ -98,6 +102,7 @@ class Reaction(Relation):
 
         cls.__get_master_and_id_from_rhea2kegg(list_kegg_react)
         cls.__get_master_and_id_from_rhea2ec(list_ec_react)
+        cls.__get_id_from_rhea2reactome(list_reactome_react)
         
         Controller.save_all()
 
@@ -129,8 +134,18 @@ class Reaction(Relation):
         model['substrate_reaction'].drop_table()
         model['product_reaction'].drop_table()
         model['enzyme_reaction'].drop_table()
-        super().drop_table()    
+        super().drop_table()
 
+    @classmethod
+    def __get_id_from_rhea2reactome(cls, list_reaction_infos):
+        for dict__ in list_reaction_infos:
+            try:
+                rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])
+                rea.set_biocyc_ids(dict__['id'])
+            except:
+                print('can not find the reaction RHEA:' + dict__['rhea_id'])
+        status = 'ok'
+        return(status)
 
     @classmethod
     def __get_master_and_id(cls, list_reaction_infos):

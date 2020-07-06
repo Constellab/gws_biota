@@ -25,7 +25,7 @@ from biota.go import GO, GOJSONViewModel
 from biota.sbo import SBO, SBOJSONViewModel
 from biota.bto import BTO, BTOJSONViewModel
 from biota.chebiOntology import ChebiOntology, ChebiOntologyJSONViewModel
-from biota.taxonomy import Taxonomy
+from biota.taxonomy import Taxonomy, TaxonomyJSONViewModel
 from biota.compound import Compound
 from biota.enzyme import Enzyme
 from biota.reaction import Reaction
@@ -54,11 +54,13 @@ class TestMain(unittest.TestCase):
         GO.drop_table()
         SBO.drop_table()
         BTO.drop_table()
+        Taxonomy.drop_table()
         ChebiOntology.drop_table()
         GOJSONViewModel.drop_table()
         GO.create_table()
         SBO.create_table()
         BTO.create_table()
+        Taxonomy.create_table()
         ChebiOntology.create_table()
         pass
    
@@ -138,3 +140,12 @@ class TestMain(unittest.TestCase):
         self.assertEqual(view, '{"chebi_id": CHEBI:24431 , "name": chemical entity, "definition": A chemical entity is a physical entity of interest in chemistry including molecular entities, parts thereof, and chemical substances. }')
         duration  = default_timer() - duration
         print("chebiOntology has been loaded in " + str(duration) + " sec")
+
+        # ------------- Create Taxonomy ------------- #
+        dict_taxons = Taxonomy.create_taxons_from_dict()
+        Controller.save_all()
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
+        tax1 = Taxonomy.get(Taxonomy.tax_id == 41297)
+        tax1_view_model = TaxonomyJSONViewModel(tax1)
+        view = tax1_view_model.render()
+        self.assertEqual(view, '{"tax_id": 41297 , "name": Sphingomonadaceae, "rank": family , "ancestors": [] }')

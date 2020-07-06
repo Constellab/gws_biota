@@ -43,3 +43,7 @@ ENTRY       RHEA:10032
 DEFINITION  [protein]-C-terminal-L-glutamine + H2O = [protein]-C-terminal-L-glutamate + NH4(+)
 EQUATION    CHEBI:88115 + CHEBI:15377 = CHEBI:78525 + CHEBI:28938
 ENZYME      3.5.1.43
+///
+ENTRY       RHEA:10041
+DEFINITION  adenosine 3',5'-bisphosphate + H2O => AMP + phosphate
+EQUATION    CHEBI:58343 + CHEBI:15377 => CHEBI:456215 + CHEBI:43474

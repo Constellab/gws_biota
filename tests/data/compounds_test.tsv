@@ -17,3 +17,6 @@ ID	STATUS	CHEBI_ACCESSION	SOURCE	PARENT_ID	NAME
 28938	C	CHEBI:28938	ChEBI	null	ammonium
 88115	C	CHEBI:88115	SUBMITTER	null	N(2)-L-glutamino(1-) group
 78525	C	CHEBI:78525	SUBMITTER	null	L-glutamo(2-) group
+58343	C	CHEBI:58343	Rhea	null	adenosine 3',5'-bismonophosphate(4-)
+456215	C	CHEBI:456215	ChEMBL	null	adenosine 5'-monophosphate(2-)
+43474	C	CHEBI:43474	ChEBI	null	hydrogenphosphate
