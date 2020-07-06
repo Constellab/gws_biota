@@ -50,9 +50,11 @@ class TestMain(unittest.TestCase):
     def setUpClass(cls):
         GO.drop_table()
         SBO.drop_table()
+        BTO.drop_table()
         GOJSONViewModel.drop_table()
         GO.create_table()
         SBO.create_table()
+        BTO.create_table()
         pass
    
     @classmethod
