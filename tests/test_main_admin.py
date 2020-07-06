@@ -54,12 +54,12 @@ class TestMain(unittest.TestCase):
         GO.drop_table()
         SBO.drop_table()
         BTO.drop_table()
-        Chebi_Ontology.drop_table()
+        ChebiOntology.drop_table()
         GOJSONViewModel.drop_table()
         GO.create_table()
         SBO.create_table()
         BTO.create_table()
-        Chebi_Ontology.create_table()
+        ChebiOntology.create_table()
         pass
    
     @classmethod
@@ -128,7 +128,7 @@ class TestMain(unittest.TestCase):
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
 
         # ------------- Create ChebiOntology ------------- #
-        Chebi_Ontology.create_chebis(input_db_dir, **files)
+        ChebiOntology.create_chebis(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:17051').name, 'fluoride')

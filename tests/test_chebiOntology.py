@@ -24,8 +24,8 @@ input_db_dir = settings.get_data("biota_db_path")
 class TestCompound(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        Chebi_Ontology.drop_table()
-        Chebi_Ontology.create_table()
+        ChebiOntology.drop_table()
+        ChebiOntology.create_table()
    
     @classmethod
     def tearDownClass(cls):
@@ -41,11 +41,11 @@ class TestCompound(unittest.TestCase):
             chebi_data = "chebi_test.obo",
         )
         
-        Chebi_Ontology.create_chebis(input_db_dir, **files_test)
+        ChebiOntology.create_chebis(input_db_dir, **files_test)
         Controller.save_all()
-        self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:24431').name, "chemical entity")
-        self.assertEqual(Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:17051').name, 'fluoride')
-        chebi1 = Chebi_Ontology.get(Chebi_Ontology.chebi_id == 'CHEBI:24431')
+        self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
+        self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
+        chebi1 = ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431')
         chebi1_view_model = ChebiOntologyJSONViewModel(chebi1)
         view = chebi1_view_model.render()
         self.assertEqual(view, '{"chebi_id": CHEBI:24431 , "name": chemical entity, "definition": A chemical entity is a physical entity of interest in chemistry including molecular entities, parts thereof, and chemical substances. }')
