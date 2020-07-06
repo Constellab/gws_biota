@@ -25,7 +25,7 @@ from biota.compound import Compound
 from biota.reaction import Reaction
 from biota.enzyme import Enzyme
 from biota.go import GO, GOJSONViewModel
-from biota.sbo import SBO
+from biota.sbo import SBO, SBOJSONViewModel
 from biota.chebiOntology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.bto import BTO
@@ -49,13 +49,16 @@ class TestMain(unittest.TestCase):
     
     def setUpClass(cls):
         GO.drop_table()
+        SBO.drop_table()
         GOJSONViewModel.drop_table()
         GO.create_table()
+        SBO.create_table()
         pass
    
     @classmethod
     def tearDownClass(cls):
         #GO.drop_table()
+        #SBO.drop_table()
         pass
     
     def test_db_object(self):
@@ -76,7 +79,7 @@ class TestMain(unittest.TestCase):
             rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
             rhea2ec_file = 'rhea2ec.tsv'
         )
-
+        # ------------- Create GO ------------- #
         GO.create_go(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
@@ -85,3 +88,27 @@ class TestMain(unittest.TestCase):
         Controller.save_all()
         view = go1_view_model.render()
         self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
+        print("go, go_ancestors and gojsonviewmodel have been loaded")
+
+        # ------------- Create SBO ------------- #
+        SBO.create_sbo(input_db_dir, **files)
+        Controller.save_all()
+        self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
+        self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
+
+        sbo1 = SBO.get(SBO.sbo_id == 'SBO:0000000')
+        sbo1_view_model = SBOJSONViewModel(sbo1)
+        Controller.save_all()
+        view = sbo1_view_model.render()
+        self.assertEqual(view, '{"id": SBO:0000000 , "name": systems biology representation, "definition": Representation of an entity used in a systems biology knowledge reconstruction, such as a model, pathway, network. }')
+        print("sbo, sbo_ancestors and ressourceviewmodel have been loaded")
+
+        # ------------- Create BTO ------------- #
+        BTO.create_bto(input_db_dir, **files)
+        Controller.save_all()
+        self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
+        bto1 = BTO.get(BTO.bto_id == 'BTO_0000000')
+        bto1_view_model = BTOJSONViewModel(bto1)
+        Controller.save_all()
+        view = bto1_view_model.render()
+        print("bto and bto_ancestors have been loaded")
