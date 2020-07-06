@@ -71,6 +71,11 @@ class TestReaction(unittest.TestCase):
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10022').biocyc_id, 'RXN3O-127')
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10031').kegg_id, 'R00279')
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
-        rea1_view_model = ReactionJSONViewModel(rea1)
-        view = rea1_view_model.render()
-        self.assertEqual(view, '{"source_accession": RHEA:10031 , "direction": BI, "master_id": 10028 , "biocyc_id": None, "kegg_id": R00279 }')
+        q = rea1.substrates
+        for i in range(0, len(q)):
+            print(q[i].data)
+        
+        #rea1_view_model = ReactionJSONViewModel(rea1)
+        #view = rea1_view_model.render()
+        #print(view)
+        #self.assertEqual(view, '{"source_accession": RHEA:10031 , "direction": BI, "master_id": 10028 , "biocyc_id": None, "kegg_id": R00279 }')

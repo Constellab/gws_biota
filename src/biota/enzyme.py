@@ -126,7 +126,7 @@ class EnzymeBTO(PWModel):
         database = DbManager.db
 
 class EnzymeJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"ec": {{view_model.model.ec}}, "organism": {{view_model.model.organism}}, "taxonomy": {{view_model.model.taxonomy}}, "bto": [], "uniprot_id": {{view_model.model.uniprot_id}} }')
+    template = JSONViewTemplate('{"ec": {{view_model.model.ec}}, "organism": {{view_model.model.organism}}, "taxonomy": {{view_model.model.taxonomy}}, "bto": {{view_model.model.bto}}, "uniprot_id": {{view_model.model.uniprot_id}} }')
 
 
 class EnzymeStatistics(Resource):
@@ -243,8 +243,8 @@ class process_statistics(Process):
             dict_proportion_ec_group = {}
             dict_references = {}
             dict_size_ec_group = {}
-            list_infos = ['ac','cf','cr','en','exp','gs','ic50','in','lo','me','mw','nsp','os','oss',
-        'pho','phr','phs','pi','pm','sn','sy','su','to','tr','ts','st','kkm','ki','km','tn']
+            list_infos = ['ac','cf','cl','cr','en','exp','gi','gs','ic50','in','lo','me','mw','nsp','os','oss',
+        'pho','phr','phs','pi','pm','pu','ren','sa','sn','sy','su','to','tr','ts','st','kkm','ki','km','tn']
             proportions_params = {}
             uniprot_id_number = 0
         

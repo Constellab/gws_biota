@@ -118,3 +118,78 @@ def: "Catalysis of the reaction: all-trans-hexaprenyl diphosphate + isopentenyl 
 xref: KEGG_REACTION:R05612
 xref: RHEA:20836
 is_a: GO:0016765 ! transferase activity, transferring alkyl or aryl (other than methyl) groups
+
+[Term]
+id: GO:0005385
+name: zinc ion transmembrane transporter activity
+namespace: molecular_function
+def: "Enables the transfer of zinc (Zn) ions from one side of a membrane to the other." [GOC:dgf]
+synonym: "cobalt, zinc uptake permease activity" RELATED []
+synonym: "zinc, cadmium uptake permease activity" RELATED []
+synonym: "zinc, cadmium, cobalt, nickel, lead-efflux ATPase activity" RELATED []
+synonym: "zinc, iron permease activity" NARROW []
+xref: Reactome:R-HSA-435366 "ZnT1 mediates the efflux of zinc from the cell"
+xref: Reactome:R-HSA-435375 "ZnT2 facilitates zinc vesicular sequestration"
+xref: Reactome:R-HSA-437084 "ZnT3 transports zinc into synaptic vesicles"
+xref: Reactome:R-HSA-437085 "ZnT5 transports zinc into secretory granules in pancreatic beta cells"
+xref: Reactome:R-HSA-437129 "ZnT7 transports zinc into the golgi apparatus"
+xref: Reactome:R-HSA-437136 "SLC30A8 transports Zn2+ from cytosol to secretory granule"
+xref: Reactome:R-HSA-437139 "ZnT6 transports zinc into the golgi apparatus"
+xref: Reactome:R-HSA-442317 "ZIP6 and ZIP14 mediate zinc influx into cells"
+xref: Reactome:R-HSA-442345 "hZIP10 mediates zinc influx into cells"
+xref: Reactome:R-HSA-442387 "ZIP8 mediates zinc influx into cells"
+xref: Reactome:R-HSA-442393 "ZIP7 mediates zinc efflux from the endoplasmic reticulum"
+xref: Reactome:R-HSA-442405 "hZIP5 mediates zinc uptake by cells"
+xref: Reactome:R-HSA-442422 "SLC39A1-4 transports Zn2+ from extracellular region to cytosol"
+xref: Reactome:R-HSA-5654125 "Defective SLC39A4 does not transport Zn2+ from extracellular region to cytosol"
+xref: RHEA:29351
+is_a: GO:0046915 ! transition metal ion transmembrane transporter activity
+is_a: GO:0072509 ! divalent inorganic cation transmembrane transporter activity
+relationship: part_of GO:0071577 ! zinc ion transmembrane transport
+
+[Term]
+id: GO:0046915
+name: transition metal ion transmembrane transporter activity
+namespace: molecular_function
+def: "Enables the transfer of transition metal ions from one side of a membrane to the other. A transition metal is an element whose atom has an incomplete d-subshell of extranuclear electrons, or which gives rise to a cation or cations with an incomplete d-subshell. Transition metals often have more than one valency state. Biologically relevant transition metals include vanadium, manganese, iron, copper, cobalt, nickel, molybdenum and silver." [ISBN:0198506732]
+is_a: GO:0046873 ! metal ion transmembrane transporter activity
+relationship: part_of GO:0000041 ! transition metal ion transport
+
+[Term]
+id: GO:0072509
+name: divalent inorganic cation transmembrane transporter activity
+namespace: molecular_function
+def: "Enables the transfer of inorganic cations with a valency of two from one side of a membrane to the other. Inorganic cations are atoms or small molecules with a positive charge that do not contain carbon in covalent linkage." [GOC:mah]
+is_a: GO:0022890 ! inorganic cation transmembrane transporter activity
+relationship: part_of GO:0072511 ! divalent inorganic cation transport
+created_by: mah
+creation_date: 2010-12-16T04:01:36Z
+
+[Term]
+id: GO:0046873
+name: metal ion transmembrane transporter activity
+namespace: molecular_function
+def: "Enables the transfer of metal ions from one side of a membrane to the other." [GOC:ai]
+synonym: "heavy metal ion porter activity" NARROW []
+synonym: "heavy metal ion transporter activity" NARROW []
+synonym: "heavy metal ion:hydrogen symporter activity" NARROW []
+synonym: "heavy metal-exporting ATPase activity" NARROW []
+synonym: "high affinity metal ion uptake transporter activity" NARROW []
+synonym: "low affinity metal ion uptake transporter activity" NARROW []
+is_a: GO:0022890 ! inorganic cation transmembrane transporter activity
+relationship: part_of GO:0030001 ! metal ion transport
+
+[Term]
+id: GO:0022890
+name: inorganic cation transmembrane transporter activity
+namespace: molecular_function
+alt_id: GO:0015082
+def: "Enables the transfer of inorganic cations from one side of a membrane to the other. Inorganic cations are atoms or small molecules with a positive charge that do not contain carbon in covalent linkage." [GOC:ai, GOC:mtg_transport, ISBN:0815340729]
+synonym: "di-, tri-valent inorganic cation transmembrane transporter activity" NARROW [GOC:mah]
+is_a: GO:0008324 ! cation transmembrane transporter activity
+is_a: GO:0015318 ! inorganic molecular entity transmembrane transporter activity
+
+
+
+
+

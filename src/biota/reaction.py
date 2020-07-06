@@ -203,7 +203,7 @@ class ReactionEnzyme(PWModel):
         database = DbManager.db
 
 class ReactionJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"source_accession": {{view_model.model.source_accession}} , "direction": {{view_model.model.direction}}, "master_id": {{view_model.model.master_id}} , "biocyc_id": {{view_model.model.biocyc_id}}, "kegg_id": {{view_model.model.kegg_id}} }')
+    template = JSONViewTemplate('{"source_accession": {{view_model.model.source_accession}} , "direction": {{view_model.model.direction}}, "master_id": {{view_model.model.master_id}} , "biocyc_id": {{view_model.model.biocyc_id}}, "kegg_id": {{view_model.model.kegg_id}}, "enzyme": {{view_model.model.enzyme}}  }')
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)
