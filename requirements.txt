@@ -6,4 +6,6 @@ jinja2
 requests
 itsdangerous
 awesome-slugify
-pronto
+pronto==2.1.0
+numpy
+ujson
