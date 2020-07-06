@@ -14,7 +14,7 @@ from chebi.chebi import Chebi
 #
 ####################################################################################
  
-class Chebi_Ontology(Ontology):
+class ChebiOntology(Ontology):
     chebi_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     #definition = CharField(null=True, index=True)

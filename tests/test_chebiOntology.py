@@ -10,7 +10,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.chebiOntology import Chebi_Ontology, ChebiOntologyJSONViewModel
+from biota.chebiOntology import ChebiOntology, ChebiOntologyJSONViewModel
 from manage import settings
 
 ############################################################################################

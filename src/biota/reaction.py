@@ -27,7 +27,7 @@ class Reaction(Relation):
     master_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
-    biocyc_id = CharField(null=True, index=True)
+    biocyc_ids = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
     substrates = ManyToManyField(Compound, backref='is_substrate_of', through_model = ReactionSubstrateDeferred)
     products = ManyToManyField(Compound, backref='is_product_of', through_model = ReactionProductDeferred)
@@ -35,8 +35,9 @@ class Reaction(Relation):
     _table_name = 'reactions'
 
     #Setters
-    def set_biocyc_id(self, ext_id_):
-        self.biocyc_id = ext_id_
+    def set_biocyc_ids(self, ext_id_):
+        if(self.biocyc_ids == null):
+            self.biocyc_ids = ext_id_
 
     def set_direction(self, direction__):
         self.direction = direction__
@@ -86,6 +87,7 @@ class Reaction(Relation):
         list_ecocyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2ecocyc_file'])
         list_metacyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2metacyc_file'])
         list_macie_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2macie_file'])
+        
 
         cls.__get_master_and_id(list_ecocyc_react)
         cls.__get_master_and_id(list_metacyc_react)
@@ -93,9 +95,11 @@ class Reaction(Relation):
         
         list_kegg_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2kegg_reaction_file'])
         list_ec_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2ec_file'])
+        list_reactome_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2reactome_file'])
 
         cls.__get_master_and_id_from_rhea2kegg(list_kegg_react)
         cls.__get_master_and_id_from_rhea2ec(list_ec_react)
+        
         Controller.save_all()
 
     @classmethod
@@ -135,7 +139,7 @@ class Reaction(Relation):
             try:
               rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
               rea.set_master_id(dict__['master_id'])
-              rea.set_biocyc_id(dict__['id'])
+              rea.set_biocyc_ids(dict__['id'])
             except:
                 print('can not find the reaction RHEA:' + dict__['rhea_id'])
         status = 'ok'
@@ -203,7 +207,7 @@ class ReactionEnzyme(PWModel):
         database = DbManager.db
 
 class ReactionJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"source_accession": {{view_model.model.source_accession}} , "direction": {{view_model.model.direction}}, "master_id": {{view_model.model.master_id}} , "biocyc_id": {{view_model.model.biocyc_id}}, "kegg_id": {{view_model.model.kegg_id}}, "enzyme": {{view_model.model.enzyme}}  }')
+    template = JSONViewTemplate('{"source_accession": {{view_model.model.source_accession}} , "direction": {{view_model.model.direction}}, "master_id": {{view_model.model.master_id}} , "biocyc_ids": {{view_model.model.biocyc_ids}}, "kegg_id": {{view_model.model.kegg_id}}, "enzyme": {{view_model.model.enzyme}}  }')
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)

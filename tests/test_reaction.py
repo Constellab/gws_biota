@@ -54,7 +54,8 @@ class TestReaction(unittest.TestCase):
             rhea2metacyc_file = 'rhea2metacyc.tsv',
             rhea2macie_file = 'rhea2macie.tsv',
             rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
-            rhea2ec_file = 'rhea2ec.tsv'
+            rhea2ec_file = 'rhea2ec.tsv',
+            rhea2reactome_file = 'rhea2reactome.tsv'
         )
 
         files_test = dict(
@@ -64,7 +65,8 @@ class TestReaction(unittest.TestCase):
             rhea2metacyc_file = 'rhea2metacyc-test.tsv',
             rhea2macie_file = 'rhea2macie_test.tsv',
             rhea2kegg_reaction_file = 'rhea2kegg_reaction_test.tsv',
-            rhea2ec_file = 'rhea2ec-test.tsv'
+            rhea2ec_file = 'rhea2ec-test.tsv',
+            rhea2reactome_file = 'rhea2reactome_test.tsv'
         )
 
         Reaction.create_reactions_from_files(input_db_dir, **files_test)

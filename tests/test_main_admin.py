@@ -26,40 +26,23 @@ from biota.reaction import Reaction
 from biota.enzyme import Enzyme
 from biota.go import GO, GOJSONViewModel
 from biota.sbo import SBO
-from biota.chebiOntology import chebiOntology
+from biota.chebiOntology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.bto import BTO
 
 #import external module 
 from rhea.rhea import Rhea
-from brenda.brenda import brenda
+from brenda.brenda import Brenda
 from onto.ontology import Onto
 from chebi.chebi import Chebi
-from taxonomy.taxo import Taxo
+from taxo.taxonomy import Taxo
 
 ############################################################################################
 #
-#                                        class main_admin
+#                                        class test_main_admin
 #                                         
 ############################################################################################
-input_db_dir = settings.get_data("biota_db_path")
-
-files = dict(
-            go_data = "go.obo",
-            sbo_data = "SBO_OBO.obo",
-            chebi_data = "chebi.obo",
-            bto_json_data = "bto.json",
-            chebi_compound_file = "compounds.tsv",
-            chebi_chemical_data_file =  "chemical_data.tsv",
-            brenda_file = "brenda_download.txt",
-            rhea_kegg_reaction_file =  'rhea-kegg.reaction',
-            rhea_direction_file = 'rhea-directions.tsv',
-            rhea2ecocyc_file = 'rhea2ecocyc.tsv',
-            rhea2metacyc_file = 'rhea2metacyc.tsv',
-            rhea2macie_file = 'rhea2macie.tsv',
-            rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
-            rhea2ec_file = 'rhea2ec.tsv'
-        )
+input_db_dir = settings.get_data("biota_db_input_path")
 
 class TestMain(unittest.TestCase):
     @classmethod
