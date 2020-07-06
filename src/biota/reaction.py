@@ -36,8 +36,7 @@ class Reaction(Relation):
 
     #Setters
     def set_biocyc_ids(self, ext_id_):
-        if(self.biocyc_ids == null):
-            self.biocyc_ids = ext_id_
+        self.biocyc_ids = ext_id_
 
     def set_direction(self, direction__):
         self.direction = direction__
