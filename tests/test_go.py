@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.go import GO, GOJSONViewModel, GOViewer
+from biota.go import GO, GOJSONViewModel #, GOViewer
 from manage import settings
 
 ############################################################################################
