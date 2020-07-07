@@ -2,7 +2,7 @@ import os, sys
 from biota.entity import Entity
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
+from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, Process, DbManager
 from peewee import CharField, Model, chunked, ForeignKeyField, ManyToManyField, DeferredThroughModel, DeferredForeignKey
 from peewee import Model as PWModel
 from biota.ontology import Ontology
@@ -107,5 +107,16 @@ class GOAncestor(PWModel):
             (('go', 'ancestor'), True),
         )
 
-class GOJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}}, "namespace": {{view_model.model.namespace}} , "definition": {{view_model.model.definition}} }')
+
+class GOJSONViewModel(view_type, ResourceViewModel):
+    if (view_type == 'standard'):
+        template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}}, "namespace": {{view_model.model.namespace}} , "definition": {{view_model.model.definition}} }')
+    else:
+        template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "mode": Premium }')
+
+class GOViewer(Process):
+    input_specs = {'GO': GO}
+    output_specs = {'GOJSONView': GOJSONViewModel}
+    async def task(self, params={}):
+        se = GOJSONViewModel(params['view_type'], self.input_specs['GO'])
+        self.output_specs['GOJSONView'] = se

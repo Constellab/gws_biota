@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.go import GO, GOJSONViewModel
+from biota.go import GO, GOJSONViewModel, GOViewer
 from manage import settings
 
 ############################################################################################
@@ -50,7 +50,13 @@ class TestGO(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         go1 = GO.get(GO.go_id == 'GO:0000001')
-        go1_view_model = GOJSONViewModel(go1)
-        Controller.save_all()
-        view = go1_view_model.render()
-        self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
+        p1 = GOViewer()
+        p1.input['GO'] = go1
+        params = {'view_type': 'standard'}
+        p1.run(params)
+        view = s1.output['GOJSONView'].render()
+        #go1 = GO.get(GO.go_id == 'GO:0000001')
+        #go1_view_model = GOJSONViewModel(go1)
+        #Controller.save_all()
+        #view = go1_view_model.render()
+        #self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
