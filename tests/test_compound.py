@@ -54,6 +54,5 @@ class TestCompound(unittest.TestCase):
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
         comp1 = Compound.get(Compound.source_accession == 'CHEBI:58321')
         comp1_view_model = CompoundJSONViewModel(comp1)
-        Controller.save_all()
         view = comp1_view_model.render()
         self.assertEqual(view, '{"source_accession": CHEBI:58321, "name": L-allysine zwitterion, "formula": None , "mass": None , "charge": None }')

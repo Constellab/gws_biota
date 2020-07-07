@@ -52,13 +52,20 @@ class Enzyme(Protein):
                 print("did not found the tax_id: " + str(self.data['taxonomy']))
     
     def set_tissues(self):
-       for i in range(0,len(self.data['st'])):
-           try:
-               tissue = BT.get(BT.bto_id == self.data['st'][i])
-               self.bto.add(tissue)
-           except:
-               print("BTO not found")
-    
+        if(type(self.data['st']) == list):
+            for i in range(0,len(self.data['st'])):
+                try:
+                    tissue = BT.get(BT.bto_id == self.data['st'][i])
+                    self.bto.add(tissue)
+                except:
+                    print("BTO not found")
+        else:
+            try:
+                tissue = BT.get(BT.bto_id == self.data['st'])
+                self.bto.add(tissue)
+            except:
+                print("BTO not found")
+
     def set_uniprot_id(self, uniprot_id__):
         self.uniprot_id = uniprot_id__
 
@@ -109,10 +116,9 @@ class Enzyme(Protein):
         cls.insert_uniprot_id(enzymes, 'uniprot')
         Controller.save_all()
         for enz in enzymes:
-            #enz.set_taxonomy()
+            enz.set_taxonomy()
             if('st' in enz.data.keys()):
                 enz.set_tissues()
-            #enz.set_tissue()
         return(list_dict)
     
     class Meta():

@@ -14,6 +14,7 @@ from starlette.testclient import TestClient
 
 from manage import settings
 from biota.enzyme import Enzyme, EnzymeJSONViewModel
+from biota.bto import BTO
 
 ############################################################################################
 #
@@ -47,11 +48,8 @@ class TestEnzyme(unittest.TestCase):
         )
         Enzyme.create_enzymes_from_dict(input_db_dir, **files_test)
         Controller.save_all()
-        #Enzyme.get(Enzyme.ec == '1.4.3.7')
-        #self.assertEqual(Enzyme.get(Enzyme.ec == '1.4.3.7').organism, 'Candida boidinii')
-        #self.assertEqual(Enzyme.get(Enzyme.ec == '3.5.1.43').organism, 'Bacillus circulans')
-        #enz1 = Enzyme.get(Enzyme.ec == '3.5.1.43')
-        #enz1_view_model = EnzymeJSONViewModel(enz1)
-        #view = enz1_view_model.render()
-        #print(view)
-        #self.assertEqual(view, '{"ec": 3.5.1.43, "organism": Bacillus circulans, "taxonomy": None, "bto": [], "uniprot_id": None }')
+        self.assertEqual(Enzyme.get(Enzyme.ec == '1.4.3.7').organism, 'Candida boidinii')
+        self.assertEqual(Enzyme.get(Enzyme.ec == '3.5.1.43').organism, 'Bacillus circulans')
+        enz1 = Enzyme.get(Enzyme.ec == '3.5.1.43')
+        enz1_view_model = EnzymeJSONViewModel(enz1)
+        view = enz1_view_model.render()

@@ -21,7 +21,7 @@ from manage import settings
 
 input_db_dir = settings.get_data("biota_db_path")
 
-class TestCompound(unittest.TestCase):
+class TestChebiOntology(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         ChebiOntology.drop_table()

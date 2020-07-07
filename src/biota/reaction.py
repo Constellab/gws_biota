@@ -7,6 +7,7 @@ from manage import settings
 from biota.relation import Relation
 from biota.compound import Compound
 from biota.enzyme import Enzyme
+from biota.go import GO
 from rhea.rhea import Rhea
 
 from peewee import CharField, ForeignKeyField, Model, chunked, ManyToManyField, DeferredThroughModel
@@ -105,6 +106,8 @@ class Reaction(Relation):
         cls.__get_master_and_id_from_rhea2kegg(list_kegg_react)
         cls.__get_master_and_id_from_rhea2ec(list_ec_react)
         cls.__get_id_from_rhea2reactome(list_reactome_react)
+
+        #cls.__get_go_from_GO(list_react)
         
         Controller.save_all()
 
@@ -122,7 +125,6 @@ class Reaction(Relation):
         status = 'ok'
         return(reactions)
     
- 
     @classmethod
     def create_table(cls, *args, **model):
         super().create_table()
@@ -137,6 +139,16 @@ class Reaction(Relation):
         model['product_reaction'].drop_table()
         model['enzyme_reaction'].drop_table()
         super().drop_table()
+    
+    @classmethod
+    def __get_go_from_GO(cls, list_react):
+        for react in list_react:
+            try:
+                query = GO.select().where(GO.go_id == 'GO:0000121')
+                for go in query:
+                    print(go.data['rhea_id'])
+            except:
+                print('FAIL')
 
     @classmethod
     def __get_id_from_rhea2reactome(cls, list_reaction_infos):

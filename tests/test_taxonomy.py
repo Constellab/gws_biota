@@ -36,7 +36,7 @@ class TestGO(unittest.TestCase):
     
     def test_db_object(self):
         Taxonomy.create_taxons_from_dict(['Homininae', 'Archaea'])
-        Controller.save_all()
+        #Controller.save_all()
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
         #tax1 = Taxonomy.get(Taxonomy.tax_id == 41297)
         #tax1_view_model = TaxonomyJSONViewModel(tax1)
