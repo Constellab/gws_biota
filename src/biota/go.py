@@ -107,17 +107,8 @@ class GOAncestor(PWModel):
             (('go', 'ancestor'), True),
         )
 
-"""
-class GOJSONViewModel(view_type, ResourceViewModel):
-    if (view_type == 'standard'):
-        template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}}, "namespace": {{view_model.model.namespace}} , "definition": {{view_model.model.definition}} }')
-    else:
-        template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "mode": Premium }')
-
-class GOViewer(Process):
-    input_specs = {'GO': GO}
-    output_specs = {'GOJSONView': GOJSONViewModel}
-    async def task(self, params={}):
-        se = GOJSONViewModel(params['view_type'], self.input_specs['GO'])
-        self.output_specs['GOJSONView'] = se
-"""
+class GOJSONStandardViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}} }')
+    
+class GOJSONPremiumViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}}, "namespace": {{view_model.model.namespace}} , "definition": {{view_model.model.definition}} }')

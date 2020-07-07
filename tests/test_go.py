@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.go import GO #, GOJSONViewModel , GOViewer
+from biota.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
 from manage import settings
 
 ############################################################################################
@@ -27,8 +27,9 @@ class TestGO(unittest.TestCase):
     
     def setUpClass(cls):
         GO.drop_table()
-        #GOJSONViewModel.drop_table()
+        GOJSONStandardViewModel.drop_table()
         GO.create_table()
+        GOJSONStandardViewModel.create_table()
         pass
    
     @classmethod
@@ -50,15 +51,10 @@ class TestGO(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         go1 = GO.get(GO.go_id == 'GO:0000001')
-        """
-        p1 = GOViewer()
-        p1.input['GO'] = go1
-        params = {'view_type': 'standard'}
-        p1.run(params)
-        view = s1.output['GOJSONView'].render()
-        #go1 = GO.get(GO.go_id == 'GO:0000001')
-        #go1_view_model = GOJSONViewModel(go1)
-        #Controller.save_all()
-        #view = go1_view_model.render()
+        go1_view_model = GOJSONStandardViewModel(go1)
+        view1 = go1_view_model.render()
+        print(view1)
+        go2_view_model = GOJSONPremiumViewModel(go1)
+        view2 = go2_view_model.render()
+        print(view2)
         #self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
-        """

@@ -21,7 +21,7 @@ from starlette.testclient import TestClient
 
 #import from biota
 from manage import settings
-from biota.go import GO, GOJSONViewModel
+from biota.go import GO, GOJSONStandardViewModel
 from biota.sbo import SBO, SBOJSONViewModel
 from biota.bto import BTO, BTOJSONViewModel
 from biota.chebiOntology import ChebiOntology, ChebiOntologyJSONViewModel
@@ -60,7 +60,6 @@ class TestMain(unittest.TestCase):
     def setUpClass(cls):
         # --- drops --- #
         GO.drop_table()
-        GOJSONViewModel.drop_table()
         SBO.drop_table()
         BTO.drop_table()
         ChebiOntology.drop_table()
@@ -71,7 +70,6 @@ class TestMain(unittest.TestCase):
         Reaction.drop_table(**files_model)
         # --- creations --- #
         GO.create_table()
-        GOJSONViewModel.create_table()
         SBO.create_table()
         BTO.create_table()
         ChebiOntology.create_table()
@@ -114,10 +112,6 @@ class TestMain(unittest.TestCase):
         GO.create_go(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
-        go1 = GO.get(GO.go_id == 'GO:0000001')
-        go1_view_model = GOJSONViewModel(go1)
-        view = go1_view_model.render()
-        self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
         duration  = default_timer() - start
         print("go, go_ancestors and gojsonviewmodel have been loaded in " + str(duration) + " sec")
 
