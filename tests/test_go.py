@@ -50,6 +50,7 @@ class TestGO(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         go1 = GO.get(GO.go_id == 'GO:0000001')
+        """
         p1 = GOViewer()
         p1.input['GO'] = go1
         params = {'view_type': 'standard'}
