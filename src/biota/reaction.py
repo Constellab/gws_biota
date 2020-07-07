@@ -36,12 +36,13 @@ class Reaction(Relation):
 
     #Setters
     def set_biocyc_ids(self, ext_id_):
+        if(type(self.biocyc_ids) == list):
+            print(self.biocyc_ids)
         try:
             self.biocyc_ids.append(ext_id_)
         except:
             self.biocyc_ids = []
             self.biocyc_ids.append(ext_id_)
-            self.biocyc_ids.append('RXN-TEST-REACTION')
 
     def set_direction(self, direction__):
         self.direction = direction__

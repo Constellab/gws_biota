@@ -142,7 +142,7 @@ class TestMain(unittest.TestCase):
         print("chebiOntology has been loaded in " + str(duration) + " sec")
 
         # ------------- Create Taxonomy ------------- #
-        dict_taxons = Taxonomy.create_taxons_from_dict()
+        Taxonomy.create_taxons_from_dict(['Archaea', 'Bacteria'])
         Controller.save_all()
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
         #tax1 = Taxonomy.get(Taxonomy.tax_id == 41297)

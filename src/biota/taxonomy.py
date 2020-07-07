@@ -76,15 +76,19 @@ class Taxonomy(Resource):
         return(list_taxons)
 
     @classmethod
-    def create_taxons_from_dict(cls):
-        dict_taxons = Taxo.get_all_taxonomy()
-        taxons = [cls(data = dict_taxons[d]) for d in dict_taxons]
-        cls.insert_tax_id(taxons, 'tax_id')
-        cls.insert_name(taxons, 'name')
-        cls.insert_rank(taxons, 'rank')
-        Controller.save_all()
-        cls.__set_taxons_ancestors(taxons)
-        return(dict_taxons)
+    def create_taxons_from_dict(cls, list_superkingdom):
+        for superkingdom in list_superkingdom:
+            dict_taxons = Taxo.get_all_taxonomy(superkingdom)
+            taxons = [cls(data = dict_taxons[d]) for d in dict_taxons]
+            cls.insert_tax_id(taxons, 'tax_id')
+            cls.insert_name(taxons, 'name')
+            cls.insert_rank(taxons, 'rank')
+            Controller.save_all()
+            cls.__set_taxons_ancestors(taxons)
+            Controller.save_all()
+            print('The superkingdom ' + superkingdom + ' has been correctly loaded')
+        status = 'ok'
+        return(status)
     
     @classmethod
     def __set_taxons_ancestors(cls, list_taxons):
