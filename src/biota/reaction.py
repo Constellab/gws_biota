@@ -41,6 +41,7 @@ class Reaction(Relation):
         except:
             self.biocyc_ids = []
             self.biocyc_ids.append(ext_id_)
+            self.biocyc_ids.append('RXN-TEST-REACTION')
 
     def set_direction(self, direction__):
         self.direction = direction__
