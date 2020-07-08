@@ -18,9 +18,6 @@ from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, Li
 class BTO(Ontology):
     bto_id = CharField(null=True, index=True)
     label = CharField(null=True, index=True)
-    #ancestors = CharField(null=True, index=True)
-    #ancestors = ManyToManyField('self', backref='is_ancestor_of', through_model = BTOAncestorsDeferred)
-    #ancestors = DeferredForeignKey('BTOAncestor', backref='is_ancestor_of', through_model = BTOAncestorsDeferred)
 
     _table_name = 'bto'
 
@@ -62,8 +59,6 @@ class BTO(Ontology):
             if (self.data['ancestors'][i] != self.bto_id):
                 val = {'bto': self.id, 'ancestor': BTO.get(BTO.bto_id == self.data['ancestors'][i]).id }
                 vals.append(val)
-            #an = BTO.get(BTO.bto_id == self.data['ancestors'][i])
-            #self.ancestors =  ManyToManyField(BTO, backref='is_ancestor_of', through_model = BTOAncestorsDeferred)
         BTOAncestor.insert_many(vals).execute()
 
     #Inserts
@@ -96,10 +91,7 @@ class BTO(Ontology):
         btos = [cls(data = dict_) for dict_ in list_bto]
         cls.insert_bto_id(btos,"id")
         cls.insert_label(btos, "label")
-        #cls.def_ancestors(btos)
         Controller.save_all()
-        #for bt in btos:
-        #    bt.set_ancestors()
 
         vals = []
         for bt in btos:
@@ -123,5 +115,26 @@ class BTOAncestor(PWModel):
             (('bto', 'ancestor'), True),
         )
 
-class BTOJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id": BTO_0000000 , "label": tissues, cell types and enzyme sources, "ancestors":[] }')
+class BTOJSONStandardViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.bto_id}}, 
+            "label": {{view_model.model.label}},
+            }
+        """)
+
+class BTOJSONPremiumViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.bto_id}}, 
+            "label": {{view_model.model.label}},
+            "ancestors" : {{view_model.display_ancestors()}},
+            }
+        """)
+    
+    def display_ancestors(self):
+        q = BTOAncestor.select().where(BTOAncestor.bto == self.model.id)
+        list_ancestors = []
+        for i in range(0, len(q)):
+            list_ancestors.append(q[i].ancestor.bto_id)
+        return(list_ancestors)

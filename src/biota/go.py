@@ -108,7 +108,27 @@ class GOAncestor(PWModel):
         )
 
 class GOJSONStandardViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}} }')
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.go_id}},
+            "name": {{view_model.model.name}}
+            }
+        """)
     
 class GOJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id": {{view_model.model.go_id}} , "name": {{view_model.model.name}}, "namespace": {{view_model.model.namespace}} , "definition": {{view_model.model.definition}} }')
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.go_id}},
+            "name": {{view_model.model.name}},
+            "namespace": {{view_model.model.namespace}},
+            "definition": {{view_model.model.definition}},
+            "ancestors": {{view_model.display_ancestors()}}
+            }
+        """)
+
+    def display_ancestors(self):
+        q = GOAncestor.select().where(GOAncestor.go == self.model.id)
+        list_ancestors = []
+        for i in range(0, len(q)):
+            list_ancestors.append(q[i].ancestor.go_id)
+        return(list_ancestors)

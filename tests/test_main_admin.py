@@ -21,14 +21,14 @@ from starlette.testclient import TestClient
 
 #import from biota
 from manage import settings
-from biota.go import GO, GOJSONStandardViewModel
-from biota.sbo import SBO, SBOJSONViewModel
-from biota.bto import BTO, BTOJSONViewModel
-from biota.chebiOntology import ChebiOntology, ChebiOntologyJSONViewModel
-from biota.taxonomy import Taxonomy, TaxonomyJSONViewModel
-from biota.compound import Compound, CompoundJSONViewModel
-from biota.enzyme import Enzyme, EnzymeJSONViewModel
-from biota.reaction import Reaction, ReactionJSONViewModel
+from biota.go import go
+from biota.sbo import SBO
+from biota.bto import BTO
+from biota.chebiOntology import ChebiOntology
+from biota.taxonomy import Taxonomy
+from biota.compound import Compound
+from biota.enzyme import Enzyme
+from biota.reaction import Reaction
 
 #import external module 
 from rhea.rhea import Rhea
@@ -120,11 +120,7 @@ class TestMain(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
-
-        sbo1 = SBO.get(SBO.sbo_id == 'SBO:0000000')
-        sbo1_view_model = SBOJSONViewModel(sbo1)
-        view = sbo1_view_model.render()
-        self.assertEqual(view, '{"id": SBO:0000000 , "name": systems biology representation, "definition": Representation of an entity used in a systems biology knowledge reconstruction, such as a model, pathway, network. }')
+        
         duration  = default_timer() - duration
         print("sbo, sbo_ancestors and ressourceviewmodel have been loaded in " + str(duration) +  " sec")
 
@@ -132,9 +128,6 @@ class TestMain(unittest.TestCase):
         BTO.create_bto(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
-        bto1 = BTO.get(BTO.bto_id == 'BTO_0000000')
-        bto1_view_model = BTOJSONViewModel(bto1)
-        view = bto1_view_model.render()
         duration  = default_timer() - duration
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
 
@@ -143,34 +136,19 @@ class TestMain(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
-        chebi1 = ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431')
-        chebi1_view_model = ChebiOntologyJSONViewModel(chebi1)
-        view = chebi1_view_model.render()
-        self.assertEqual(view, '{"chebi_id": CHEBI:24431 , "name": chemical entity, "definition": A chemical entity is a physical entity of interest in chemistry including molecular entities, parts thereof, and chemical substances. }')
         duration  = default_timer() - duration
         print("chebiOntology has been loaded in " + str(duration) + " sec")
 
         # ------------- Create Taxonomy ------------- #
-        #Taxonomy.create_taxons_from_dict(['Eukaryota','Archaea', 'Bacteria'])
-        #duration  = default_timer() - duration
-        #print("taxonomy has been loaded in " + str(duration) + " sec")
-        #Controller.save_all()
-        #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
-        #tax1 = Taxonomy.get(Taxonomy.tax_id == 41297)
-        #tax1_view_model = TaxonomyJSONViewModel(tax1)
-        #view = tax1_view_model.render()
-        #self.assertEqual(view, '{"tax_id": 41297 , "name": Sphingomonadaceae, "rank": family , "ancestors": [] }')
+        Taxonomy.create_taxons_from_dict(['Eukaryota','Archaea','Bacteria','Viruses'])
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
+        duration  = default_timer() - duration
+        print("taxonomy has been loaded in " + str(duration) + " sec")
 
         # ------------- Create Compound ------------- #
         Compound.create_compounds_from_files(input_db_dir, **files)
         Controller.save_all()
-        #self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
-        #self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
-        comp1 = Compound.get(Compound.source_accession == 'CHEBI:58321')
-        comp1_view_model = CompoundJSONViewModel(comp1)
-        view = comp1_view_model.render()
-        #self.assertEqual(view, '{"source_accession": CHEBI:58321, "name": L-allysine zwitterion, "formula": None , "mass": None , "charge": None }')
-
+        self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         duration  = default_timer() - duration
         print("compound has been loaded in " + str(duration) + " sec")
 
