@@ -13,7 +13,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 
-from biota.compound import Compound, CompoundJSONViewModel
+from biota.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
 from manage import settings
 
 ############################################################################################
@@ -52,7 +52,34 @@ class TestCompound(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
+        
+        # --------- Testing views --------- #
         comp1 = Compound.get(Compound.source_accession == 'CHEBI:58321')
-        comp1_view_model = CompoundJSONViewModel(comp1)
-        view = comp1_view_model.render()
-        self.assertEqual(view, '{"source_accession": CHEBI:58321, "name": L-allysine zwitterion, "formula": None , "mass": None , "charge": None }')
+        
+        comp1_standard_view_model = CompoundJSONStandardViewModel(comp1)
+        comp1_premium_view_model = CompoundJSONPremiumViewModel(comp1)
+        
+        view2 = comp1_premium_view_model.render()
+        view1 = comp1_standard_view_model.render()
+
+        self.assertEqual(view1,"""
+            {
+            "id": CHEBI:58321,
+            "name": L-allysine zwitterion,
+            }
+        """)
+
+        self.assertEqual(view2,"""
+            {
+            "id": CHEBI:58321,
+            "name": L-allysine zwitterion,
+            "source": Rhea,
+            "formula": None,
+            "mass": None,
+            "charge": None,
+            "definition": ,
+            "status": C,
+            "created by": ,
+            "star": 
+            }
+        """)

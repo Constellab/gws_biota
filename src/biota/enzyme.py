@@ -131,8 +131,44 @@ class EnzymeBTO(PWModel):
         table_name = 'enzymes_btos'
         database = DbManager.db
 
-class EnzymeJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"ec": {{view_model.model.ec}}, "organism": {{view_model.model.organism}}, "taxonomy": {{view_model.model.taxonomy}}, "bto": {{view_model.model.bto}}, "uniprot_id": {{view_model.model.uniprot_id}} }')
+class EnzymeJSONStandardViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "ec": {{view_model.model.ec}},
+            "organism": {{view_model.model.organism}},
+            "name": {{view_model.model.data["name"]}},
+            "taxonomy" : {{view_model.model.taxonomy}},
+            "uniprot id": {{view_model.model.uniprot_id}}
+            }
+        """)
+
+class EnzymeJSONPremiumViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "ec": {{view_model.model.ec}},
+            "organism": {{view_model.model.organism}},
+            "name": {{view_model.model.data["name"]}},
+            "taxonomy" : {{view_model.model.taxonomy}},
+            "uniprot id": {{view_model.model.uniprot_id}},
+            "bto ids": {{view_model.display_btos()}}
+            "informative entries": {{view_model.display_entries()}}
+            }
+        """)
+    
+    def display_btos(self):
+        q = EnzymeBTO.select().where(EnzymeBTO.enzyme == self.model.id)
+        list_btos = []
+        for i in range(0,len(q)):
+            list_btos.append(q[i].bto.bto_id)
+        return list_btos
+    
+    def display_entries(self):
+        dict_entries = {}
+        list_avoid = ["ec", "taxonomy", "name","organism", "uniprot", "st"]
+        for key in self.model.data.keys():
+            if(key not in list_avoid):
+                dict_entries[key] = self.model.data[key]
+        return dict_entries
 
 
 class EnzymeStatistics(Resource):
@@ -233,7 +269,7 @@ class EnzymeStatistics(Resource):
 
 class EnzymeStatisticsJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{{view_model.model.data}}')
-        
+ 
 class process_statistics(Process):
     input_specs = {'EnzymeStatistics': EnzymeStatistics}
     output_specs = {'EnzymeStatistics': EnzymeStatistics}

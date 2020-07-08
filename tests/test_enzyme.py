@@ -13,7 +13,7 @@ from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
 from manage import settings
-from biota.enzyme import Enzyme, EnzymeJSONViewModel
+from biota.enzyme import Enzyme, EnzymeJSONStandardViewModel, EnzymeJSONPremiumViewModel
 from biota.bto import BTO
 
 ############################################################################################
@@ -50,6 +50,35 @@ class TestEnzyme(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(Enzyme.get(Enzyme.ec == '1.4.3.7').organism, 'Candida boidinii')
         self.assertEqual(Enzyme.get(Enzyme.ec == '3.5.1.43').organism, 'Bacillus circulans')
+        
+        # --------- Testing views --------- #
         enz1 = Enzyme.get(Enzyme.ec == '3.5.1.43')
-        enz1_view_model = EnzymeJSONViewModel(enz1)
-        view = enz1_view_model.render()
+        enz2 = Enzyme.get(Enzyme.organism == 'Neurospora crassa')
+        enz1_standard_view_model = EnzymeJSONStandardViewModel(enz1)
+        enz1_premium_view_model = EnzymeJSONPremiumViewModel(enz2)
+
+
+        view1 = enz1_standard_view_model.render()
+        view2 = enz1_premium_view_model.render()
+        
+        self.assertEqual(view1,"""
+            {
+            "ec": 3.5.1.43,
+            "organism": Bacillus circulans,
+            "name": peptidyl-glutaminase,
+            "taxonomy" : None,
+            "uniprot id": None
+            }
+        """)
+
+        self.assertEqual(view2,"""
+            {
+            "ec": 1.4.3.15,
+            "organism": Neurospora crassa,
+            "name": D-glutamate(D-aspartate) oxidase,
+            "taxonomy" : None,
+            "uniprot id": None,
+            "bto ids": []
+            "informative entries": {'ec_group': '1', 'refs': [14481396, 16278929], 'sn': 'D-glutamate(D-aspartate):oxygen oxidoreductase (deaminating)'}
+            }
+        """)

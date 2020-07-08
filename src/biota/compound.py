@@ -121,8 +121,29 @@ class Compound(Entity):
         status = 'ok'
         return(status)
 
-class CompoundJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"source_accession": {{view_model.model.source_accession}}, "name": {{view_model.model.name}}, "formula": {{view_model.model.formula}} , "mass": {{view_model.model.mass}} , "charge": {{view_model.model.charge}} }')
+class CompoundJSONStandardViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.source_accession}},
+            "name": {{view_model.model.name}},
+            }
+        """)
+
+class CompoundJSONPremiumViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.source_accession}},
+            "name": {{view_model.model.name}},
+            "source": {{view_model.model.data["source"]}},
+            "formula": {{view_model.model.formula}},
+            "mass": {{view_model.model.mass}},
+            "charge": {{view_model.model.charge}},
+            "definition": {{view_model.model.data["definition"]}},
+            "status": {{view_model.model.data["status"]}},
+            "created by": {{view_model.model.data["created_by"]}},
+            "star": {{view_model.model.data["star"]}}
+            }
+        """)
 
 
 
