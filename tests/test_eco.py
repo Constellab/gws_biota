@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.eco import ECO, ECOJSONViewModel
+from biota.eco import ECO, ECOJSONStandardViewModel, ECOJSONPremiumViewModel
 from manage import settings
 
 ############################################################################################
@@ -28,7 +28,6 @@ class TestECO(unittest.TestCase):
     
     def setUpClass(cls):
         ECO.drop_table()
-        ECOJSONViewModel.drop_table()
         ECO.create_table()
         pass
    
@@ -49,9 +48,28 @@ class TestECO(unittest.TestCase):
 
         ECO.create_eco(input_db_dir, **files_test)
         Controller.save_all()
-        #self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
-        #go1 = GO.get(GO.go_id == 'GO:0000001')
-        #go1_view_model = GOJSONViewModel(go1)
-        #Controller.save_all()
-        #view = go1_view_model.render()
-        #self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
+        
+        # --------- Testing views --------- #
+        eco1 = ECO.get(ECO.eco_id == 'ECO:0000002')
+        
+        eco1_standard_view_model = ECOJSONStandardViewModel(eco1)
+        eco1_premium_view_model = ECOJSONPremiumViewModel(eco1)
+
+        view1 = eco1_standard_view_model.render()
+        view2 = eco1_premium_view_model.render()
+
+        self.assertEqual(view1,"""
+            {
+            "id": ECO:0000002,
+            "name": direct assay evidence,
+            }
+        """)
+
+        self.assertEqual(view2,"""
+            {
+            "id": ECO:0000002,
+            "name": direct assay evidence,
+            "ancestors": ['ECO:0000006']
+            }
+        """)

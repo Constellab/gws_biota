@@ -98,5 +98,28 @@ class ECOAncestor(PWModel):
             (('eco', 'ancestor'), True),
         )
 
-class ECOJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id": {{view_model.model.eco_id}} , "name": {{view_model.model.name}}, "definition": {{view_model.model.definition}} }')
+class ECOJSONStandardViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.eco_id}},
+            "name": {{view_model.model.name}},
+            }
+        """)
+
+class ECOJSONPremiumViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.eco_id}},
+            "name": {{view_model.model.name}},
+            "ancestors": {{view_model.display_ancestors()}}
+            }
+        """)
+
+    def display_ancestors(self):
+        q = ECOAncestor.select().where(ECOAncestor.eco == self.model.id)
+        list_ancestors = []
+        for i in range(0, len(q)):
+            list_ancestors.append(q[i].ancestor.eco_id)
+        return list_ancestors
+
+    

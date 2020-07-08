@@ -27,9 +27,7 @@ class TestGO(unittest.TestCase):
     
     def setUpClass(cls):
         GO.drop_table()
-        GOJSONStandardViewModel.drop_table()
         GO.create_table()
-        GOJSONStandardViewModel.create_table()
         pass
    
     @classmethod
