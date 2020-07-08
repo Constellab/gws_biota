@@ -49,5 +49,20 @@ class ChebiOntology(Ontology):
     class Meta():
         table_name = 'chebi_ontology'
 
-class ChebiOntologyJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"chebi_id": {{view_model.model.chebi_id}} , "name": {{view_model.model.name}}, "definition": {{view_model.model.data.definition}} }')
+class ChebiOntologyStandardJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.chebi_id}},
+            "label": {{view_model.model.name}},
+            }
+        """)
+
+class ChebiOntologyPremiumJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.chebi_id}},
+            "label": {{view_model.model.name}},
+            "definition": {{view_model.model.data["definition"]}},
+            "alternative_id": {{view_model.model.data["alt_id"]}}
+            }
+        """)
