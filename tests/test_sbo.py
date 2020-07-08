@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.sbo import SBO, SBOJSONViewModel
+from biota.sbo import SBO, SBOStandardJSONViewModel, SBOPremiumJSONViewModel
 from manage import settings
 
 ############################################################################################
@@ -47,9 +47,26 @@ class TestSBO(unittest.TestCase):
         Controller.save_all()
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
-
-        sbo1 = SBO.get(SBO.sbo_id == 'SBO:0000000')
-        sbo1_view_model = SBOJSONViewModel(sbo1)
-        Controller.save_all()
-        view = sbo1_view_model.render()
-        self.assertEqual(view, '{"id": SBO:0000000 , "name": systems biology representation, "definition": Representation of an entity used in a systems biology knowledge reconstruction, such as a model, pathway, network. }')
+        
+        # --------- Testing views --------- #
+        sbo1 = SBO.get(SBO.sbo_id == 'SBO:0000004')
+        sbo1_standard_view_model = SBOStandardJSONViewModel(sbo1)
+        sbo1_premium_view_model = SBOPremiumJSONViewModel(sbo1)
+        view1 = sbo1_standard_view_model.render()
+        view2 = sbo1_premium_view_model.render()
+        print(view1)
+        print(view2)
+        self.assertEqual(view1,"""
+            {
+            "id": SBO:0000004,
+            "name": modelling framework
+            }
+        """)
+        self.assertEqual(view2,"""
+            {
+            "id": SBO:0000004,
+            "name": modelling framework,
+            "definition": Set of assumptions that underlay a mathematical description.,
+            "ancestors": ['SBO:0000000']
+            }
+        """)

@@ -101,5 +101,26 @@ class SBOAncestor(PWModel):
             (('sbo', 'ancestor'), True),
         )
 
-class SBOJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id": {{view_model.model.sbo_id}} , "name": {{view_model.model.name}}, "definition": {{view_model.model.definition}} }')
+class SBOStandardJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.sbo_id}},
+            "name": {{view_model.model.name}}
+            }
+        """)
+class SBOPremiumJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.sbo_id}},
+            "name": {{view_model.model.name}},
+            "definition": {{view_model.model.definition}},
+            "ancestors": {{view_model.display_ancestors()}}
+            }
+        """)
+    
+    def display_ancestors(self):
+        q = SBOAncestor.select().where(SBOAncestor.sbo == self.model.id)
+        list_ancestors = []
+        for i in range(0, len(q)):
+            list_ancestors.append(q[i].ancestor.sbo_id)
+        return list_ancestors
