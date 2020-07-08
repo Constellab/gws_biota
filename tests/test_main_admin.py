@@ -21,7 +21,7 @@ from starlette.testclient import TestClient
 
 #import from biota
 from manage import settings
-from biota.go import go
+from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
 from biota.chebiOntology import ChebiOntology
@@ -107,7 +107,7 @@ class TestMain(unittest.TestCase):
         )
 
         start = default_timer()
-
+        """
         # ------------- Create GO ------------- #
         GO.create_go(input_db_dir, **files)
         Controller.save_all()
@@ -138,13 +138,15 @@ class TestMain(unittest.TestCase):
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
         print("chebiOntology has been loaded in " + str(duration) + " sec")
+        """
 
         # ------------- Create Taxonomy ------------- #
-        Taxonomy.create_taxons_from_dict(['Eukaryota','Archaea','Bacteria','Viruses'])
-        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
+        Taxonomy.create_taxons_from_dict(['Archaea','Eukaryota','Bacteria','Viruses'])
+        #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
         duration  = default_timer() - duration
         print("taxonomy has been loaded in " + str(duration) + " sec")
 
+        """
         # ------------- Create Compound ------------- #
         Compound.create_compounds_from_files(input_db_dir, **files)
         Controller.save_all()
@@ -162,3 +164,4 @@ class TestMain(unittest.TestCase):
         Reaction.create_reactions_from_files(input_db_dir, **files)
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
         print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
+        """
