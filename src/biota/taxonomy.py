@@ -98,5 +98,20 @@ class Taxonomy(Resource):
     class Meta():
         table_name = 'taxonomy'
 
-class TaxonomyJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"tax_id": {{view_model.model.tax_id}} , "name": {{view_model.model.name}}, "rank": {{view_model.model.rank}} , "ancestors": [] }')
+class TaxonomyJSONStandardViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.tax_id}},
+            "name": {{view_model.model.name}},
+            }
+        """)
+
+class TaxonomyJSONPremiumViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.tax_id}},
+            "name": {{view_model.model.name}},
+            "rank": {{view_model.model.rank}},
+            "ancestor": {{view_model.model.ancestor.tax_id}},
+            }
+        """)

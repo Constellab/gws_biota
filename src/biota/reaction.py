@@ -234,8 +234,51 @@ class ReactionEnzyme(PWModel):
         table_name = 'reactions_enzymes'
         database = DbManager.db
 
-class ReactionJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"source_accession": {{view_model.model.source_accession}} , "direction": {{view_model.model.direction}}, "master_id": {{view_model.model.master_id}} , "biocyc_ids": {{view_model.model.biocyc_ids}}, "kegg_id": {{view_model.model.kegg_id}}, "enzyme": {{view_model.model.enzyme}}  }')
+class ReactionJSONStandardViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.source_accession}},
+            "definition": {{view_model.model.data['definition']}},
+            }
+        """)
+
+class ReactionJSONPremiumViewModel(ResourceViewModel):
+    template = JSONViewTemplate("""
+            {
+            "id": {{view_model.model.source_accession}},
+            "definition": {{view_model.model.data['definition']}},
+            "equation": {{view_model.model.data['source_equation']}},
+            "master_id": {{view_model.model.master_id}},
+            "direction" : {{view_model.model.direction}},
+            "enzymes": {{view_model.display_enzymes()}},
+            "substrates": {{view_model.display_substrates()}},
+            "products": {{view_model.display_products()}}
+            }
+        """)
+
+    def display_enzymes(self):
+        q = self.model.enzymes
+        list_enzymes = []
+        for i in range(0, len(q)):
+            list_enzymes.append(q[i].ec)
+        if (len(list_enzymes) == 0):
+            list_enzymes = None
+        return(list_enzymes)
+    
+    def display_substrates(self):
+        q = self.model.substrates
+        list_substrates = []
+        for i in range(0, len(q)):
+            list_substrates.append(q[i].source_accession)
+        return(list_substrates)
+    
+    def display_products(self):
+        q = self.model.products
+        list_products = []
+        for i in range(0, len(q)):
+            list_products.append(q[i].source_accession)
+        return(list_products)
+        
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)

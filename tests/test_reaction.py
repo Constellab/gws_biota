@@ -14,7 +14,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, HTMLResponse
 from starlette.testclient import TestClient
 
-from biota.reaction import Reaction, ReactionJSONViewModel
+from biota.reaction import Reaction, ReactionJSONStandardViewModel, ReactionJSONPremiumViewModel
 from manage import settings
 
 ############################################################################################
@@ -70,14 +70,34 @@ class TestReaction(unittest.TestCase):
         )
 
         Reaction.create_reactions_from_files(input_db_dir, **files_test)
-        #self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10022').biocyc_ids, ['RXN3O-127'])
-        #self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10031').kegg_id, 'R00279')
-        rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
-        q = rea1.substrates
-        for i in range(0, len(q)):
-            print(q[i].data)
+        self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10022').master_id, '10020')
+        self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10031').kegg_id, 'R00279')
         
-        rea1_view_model = ReactionJSONViewModel(rea1)
-        view = rea1_view_model.render()
-        #print(view)
-        #self.assertEqual(view, '{"source_accession": RHEA:10031 , "direction": BI, "master_id": 10028 , "biocyc_id": None, "kegg_id": R00279 }')
+        # --------- Testing views --------- #
+        rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
+        
+        rea1_standard_view_model = ReactionJSONStandardViewModel(rea1)
+        rea1_premium_view_model = ReactionJSONPremiumViewModel(rea1)
+        
+        view1 = rea1_standard_view_model.render()
+        view2 = rea1_premium_view_model.render()
+
+        self.assertEqual(view1,"""
+            {
+            "id": RHEA:10031,
+            "definition": D-glutamate + H2O + O2 <=> 2-oxoglutarate + H2O2 + NH4(+),
+            }
+        """)
+        
+        self.assertEqual(view2,"""
+            {
+            "id": RHEA:10031,
+            "definition": D-glutamate + H2O + O2 <=> 2-oxoglutarate + H2O2 + NH4(+),
+            "equation": CHEBI:29986 + CHEBI:15377 + CHEBI:15379 <=> CHEBI:16810 + CHEBI:16240 + CHEBI:28938,
+            "master_id": 10028,
+            "direction" : BI,
+            "enzymes": None,
+            "substrates": ['CHEBI:29986', 'CHEBI:15377', 'CHEBI:15379'],
+            "products": ['CHEBI:16810', 'CHEBI:16240', 'CHEBI:28938']
+            }
+        """)
