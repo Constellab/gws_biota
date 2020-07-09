@@ -42,9 +42,10 @@ from timeit import default_timer
 
 ############################################################################################
 #
-#                                        class test_main_admin
+#                                        class test_main_reaction
 #                                         
-############################################################################################
+###########################################################################################
+
 input_db_dir = settings.get_data("biota_db_input_path")
 enzyme_bto = Enzyme.bto.get_through_model()
 
@@ -59,21 +60,14 @@ class TestMain(unittest.TestCase):
     
     def setUpClass(cls):
         # --- drops --- #
-        GO.drop_table()
-        SBO.drop_table()
         BTO.drop_table()
         ChebiOntology.drop_table()
-        Taxonomy.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
         enzyme_bto.drop_table()
         Reaction.drop_table(**files_model)
         # --- creations --- #
-        GO.create_table()
-        SBO.create_table()
         BTO.create_table()
-        ChebiOntology.create_table()
-        Taxonomy.create_table()
         Compound.create_table()
         Enzyme.create_table()
         enzyme_bto.create_table()
@@ -107,31 +101,14 @@ class TestMain(unittest.TestCase):
         )
 
         start = default_timer()
-        """
-        # ------------- Create GO ------------- #
-        GO.create_go(input_db_dir, **files)
-        Controller.save_all()
-        self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
-        duration  = default_timer() - start
-        print("go, go_ancestors and gojsonviewmodel have been loaded in " + str(duration) + " sec")
 
-        # ------------- Create SBO ------------- #
-        SBO.create_sbo(input_db_dir, **files)
-        Controller.save_all()
-        self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
-        self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
-        
-        duration  = default_timer() - duration
-        print("sbo, sbo_ancestors and ressourceviewmodel have been loaded in " + str(duration) +  " sec")
-        """
         # ------------- Create BTO ------------- #
         BTO.create_bto(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         duration  = default_timer() - start
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
-        
-        """
+
         # ------------- Create ChebiOntology ------------- #
         ChebiOntology.create_chebis(input_db_dir, **files)
         Controller.save_all()
@@ -139,15 +116,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
         print("chebiOntology has been loaded in " + str(duration) + " sec")
-        
 
-        # ------------- Create Taxonomy ------------- #
-        Taxonomy.create_taxons_from_dict(['Eukaryota'])
-        #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
-        duration  = default_timer() - duration
-        print("taxonomy has been loaded in " + str(duration) + " sec")
-        """
-        
         # ------------- Create Compound ------------- #
         Compound.create_compounds_from_files(input_db_dir, **files)
         Controller.save_all()

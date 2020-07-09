@@ -24,11 +24,9 @@ from manage import settings
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
+from biota.eco import ECO
 from biota.chebiOntology import ChebiOntology
-from biota.taxonomy import Taxonomy
-from biota.compound import Compound
-from biota.enzyme import Enzyme
-from biota.reaction import Reaction
+
 
 #import external module 
 from rhea.rhea import Rhea
@@ -42,18 +40,10 @@ from timeit import default_timer
 
 ############################################################################################
 #
-#                                        class test_main_admin
+#                                        class test_main_ontology
 #                                         
 ############################################################################################
 input_db_dir = settings.get_data("biota_db_input_path")
-enzyme_bto = Enzyme.bto.get_through_model()
-
-files_model = dict(
-    substrate_reaction = Reaction.substrates.get_through_model(),
-    product_reaction = Reaction.products.get_through_model(),
-    enzyme_reaction = Reaction.enzymes.get_through_model()
-    )
-
 class TestMain(unittest.TestCase):
     @classmethod
     
@@ -62,22 +52,14 @@ class TestMain(unittest.TestCase):
         GO.drop_table()
         SBO.drop_table()
         BTO.drop_table()
+        ECO.drop_table()
         ChebiOntology.drop_table()
-        Taxonomy.drop_table()
-        Compound.drop_table()
-        Enzyme.drop_table()
-        enzyme_bto.drop_table()
-        Reaction.drop_table(**files_model)
         # --- creations --- #
         GO.create_table()
         SBO.create_table()
         BTO.create_table()
+        ECO.create_table()
         ChebiOntology.create_table()
-        Taxonomy.create_table()
-        Compound.create_table()
-        Enzyme.create_table()
-        enzyme_bto.create_table()
-        Reaction.create_table(**files_model)
         pass
    
     @classmethod
@@ -94,6 +76,7 @@ class TestMain(unittest.TestCase):
             sbo_data = "SBO_OBO.obo",
             chebi_data = "chebi.obo",
             bto_json_data = "bto.json",
+            eco_data = 'eco.obo',
             chebi_compound_file = "compounds.tsv",
             chebi_chemical_data_file =  "chemical_data.tsv",
             brenda_file = "brenda_download_20200504.txt",
@@ -107,7 +90,7 @@ class TestMain(unittest.TestCase):
         )
 
         start = default_timer()
-        """
+        
         # ------------- Create GO ------------- #
         GO.create_go(input_db_dir, **files)
         Controller.save_all()
@@ -123,15 +106,21 @@ class TestMain(unittest.TestCase):
         
         duration  = default_timer() - duration
         print("sbo, sbo_ancestors and ressourceviewmodel have been loaded in " + str(duration) +  " sec")
-        """
+        
         # ------------- Create BTO ------------- #
         BTO.create_bto(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
-        duration  = default_timer() - start
+        duration  = default_timer() - duration
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
         
-        """
+        # ------------- Create ECO ------------- #
+        ECO.create_eco(input_db_dir, **files)
+        Controller.save_all()
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
+        duration  = default_timer() - duration
+        print("eco and eco_ancestors have been loaded in " + str(duration) + " sec")
+        
         # ------------- Create ChebiOntology ------------- #
         ChebiOntology.create_chebis(input_db_dir, **files)
         Controller.save_all()
@@ -139,29 +128,3 @@ class TestMain(unittest.TestCase):
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
         print("chebiOntology has been loaded in " + str(duration) + " sec")
-        
-
-        # ------------- Create Taxonomy ------------- #
-        Taxonomy.create_taxons_from_dict(['Eukaryota'])
-        #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
-        duration  = default_timer() - duration
-        print("taxonomy has been loaded in " + str(duration) + " sec")
-        """
-        
-        # ------------- Create Compound ------------- #
-        Compound.create_compounds_from_files(input_db_dir, **files)
-        Controller.save_all()
-        self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
-        duration  = default_timer() - duration
-        print("compound has been loaded in " + str(duration) + " sec")
-
-        # ------------- Create Enzyme ------------- #
-        Enzyme.create_enzymes_from_dict(input_db_dir, **files)
-        Controller.save_all()
-        duration  = default_timer() - duration
-        print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
-
-        # ------------- Create Reactions ------------- #
-        Reaction.create_reactions_from_files(input_db_dir, **files)
-        rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
-        print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
