@@ -94,7 +94,6 @@ class Reaction(Relation):
         list_metacyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2metacyc_file'])
         list_macie_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2macie_file'])
         
-
         cls.__get_master_and_id(list_ecocyc_react)
         cls.__get_master_and_id(list_metacyc_react)
         cls.__get_master_and_id(list_macie_react)

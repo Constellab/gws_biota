@@ -141,12 +141,14 @@ class TestMain(unittest.TestCase):
         duration  = default_timer() - duration
         print("chebiOntology has been loaded in " + str(duration) + " sec")
 
+        """
         # ------------- Create Taxonomy ------------- #
         Taxonomy.create_taxons_from_dict(['Eukaryota'])
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
         duration  = default_timer() - duration
         print("taxonomy has been loaded in " + str(duration) + " sec")
-
+        """
+        
         # ------------- Create Compound ------------- #
         Compound.create_compounds_from_files(input_db_dir, **files)
         Controller.save_all()
