@@ -36,13 +36,6 @@ class TestEnzymeAnnotation(unittest.TestCase):
         
 
     def test_db_object(self):
-        files = dict(
-            chebi_data = "chebi.obo",
-        )
-
-        files_test = dict(
-            chebi_data = "chebi_test.obo",
-        )
         
         EnzymeAnnotation.create_annotation()
         self.assertEqual(EnzymeAnnotation.get(EnzymeAnnotation.go_term_id == 6176).reference, 'PMID:21873635')

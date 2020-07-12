@@ -28,6 +28,7 @@ from biota.chebiOntology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.compound import Compound
 from biota.enzyme import Enzyme
+from biota.enzymeAnnotation import EnzymeAnnotation
 from biota.reaction import Reaction
 
 #import external module 
@@ -66,6 +67,7 @@ class TestMain(unittest.TestCase):
         Taxonomy.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
+        EnzymeAnnotation.drop_table()
         enzyme_bto.drop_table()
         Reaction.drop_table(**files_model)
         # --- creations --- #
@@ -76,6 +78,7 @@ class TestMain(unittest.TestCase):
         Taxonomy.create_table()
         Compound.create_table()
         Enzyme.create_table()
+        EnzymeAnnotation.create_table()
         enzyme_bto.create_table()
         Reaction.create_table(**files_model)
         pass
@@ -107,7 +110,6 @@ class TestMain(unittest.TestCase):
         )
 
         start = default_timer()
-        """
         # ------------- Create GO ------------- #
         GO.create_go(input_db_dir, **files)
         Controller.save_all()
@@ -123,15 +125,14 @@ class TestMain(unittest.TestCase):
         
         duration  = default_timer() - duration
         print("sbo, sbo_ancestors and ressourceviewmodel have been loaded in " + str(duration) +  " sec")
-        """
+
         # ------------- Create BTO ------------- #
         BTO.create_bto(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
-        duration  = default_timer() - start
+        duration  = default_timer() - duration
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
-        
-        """
+         
         # ------------- Create ChebiOntology ------------- #
         ChebiOntology.create_chebis(input_db_dir, **files)
         Controller.save_all()
@@ -139,15 +140,13 @@ class TestMain(unittest.TestCase):
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
         print("chebiOntology has been loaded in " + str(duration) + " sec")
-        
 
         # ------------- Create Taxonomy ------------- #
         Taxonomy.create_taxons_from_dict(['Eukaryota'])
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 41297).name, "Sphingomonadaceae")
         duration  = default_timer() - duration
         print("taxonomy has been loaded in " + str(duration) + " sec")
-        """
-        
+
         # ------------- Create Compound ------------- #
         Compound.create_compounds_from_files(input_db_dir, **files)
         Controller.save_all()
@@ -161,7 +160,14 @@ class TestMain(unittest.TestCase):
         duration  = default_timer() - duration
         print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
 
+        # ------------- Create EnzymeAnnotation ------------- #
+        EnzymeAnnotation.create_annotation()
+        duration  = default_timer() - duration
+        print("enzymeAnnotation has been loaded in " + str(duration) + " sec")
+        
+        """
         # ------------- Create Reactions ------------- #
         Reaction.create_reactions_from_files(input_db_dir, **files)
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
         print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
+        """
