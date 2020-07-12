@@ -387,3 +387,280 @@ RF	<6> Hamada, J.S.: High performance liquid chromatography of Bacillus
 	Chromatogr. A (1995) 702, 163-172. {Pubmed:} (c)
 
 ///
+ID	1.1.1.114
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+PROTEIN
+PR	#1# Klebsiella aerogenes   <3>
+PR	#2# Micrococcus sp.   <1,2>
+
+RECOMMENDED_NAME
+RN	apiose 1-reductase
+
+
+SYSTEMATIC_NAME
+SN	D-apiitol:NAD+ 1-oxidoreductase
+
+
+SYNONYMS
+SY	 D-apiose reductase
+SY	 D-apiitol reductase
+
+REACTION
+RE	D-apiitol + NAD+ = D-apiose + NADH + H+
+
+REACTION_TYPE
+RT	redox reaction
+RT	oxidation
+RT	reduction
+
+NATURAL_SUBSTRATE_PRODUCT
+NSP	#2# D-apiitol + NAD+ = D-apiose + NADH {} <1>
+NSP	#2# D-apiitol + NAD+ = D-apiose + NADH {r} <1>
+
+SUBSTRATE_PRODUCT
+SP	#1# D-ribulose + NADH = D-ribitol + NAD+ (#1# 8.5% activity of D-apiose
+	reduction, 5.5% of D-apiitol oxidation <3>) {r} <3>
+SP	#1# D-erythrose + NADH = meso-erythritol + NAD+ (#1# 1.5% activity of
+	D-apiose reduction, 1% of D-apiitol oxidation <3>) {r} <3>
+SP	#1# D-mannitol + NAD+ = D-mannose + NADH + H+ (#1# 1% activity of
+	D-apiitol oxidation <3>) <3>
+SP	#1,2# D-apiitol + NAD+ = D-apiose + NADH {} <1,2,3>
+SP	#1,2# D-apiitol + NAD+ = D-apiose + NADH {r} <1,2,3>
+SP	#2# meso-erythritol + NAD+ = D-erythrose + NADH (#2# 13% activity of
+	D-apiitol oxidation <1>) {} <1,2>
+SP	#2# meso-erythritol + NAD+ = D-erythrose + NADH (#2# 13% activity of
+	D-apiitol oxidation <1>) {ir} <1,2>
+SP	#2# myo-inositol + NAD+ = keto-inositol + NADH (#2# 38% activity of
+	D-apiitol oxidation <1>) {} <1,2>
+SP	#2# myo-inositol + NAD+ = keto-inositol + NADH (#2# 38% activity of
+	D-apiitol oxidation <1>) <1,2>
+
+KM_VALUE
+KM	#1# 20 {D-apiose}  (#1# enzyme activity in crude extracts <3>) <3>
+KM	#1# 10 {D-apiitol}  (#1# enzyme activity in crude extracts <3>) <3>
+KM	#2# 0.015 {NADH}  <1,2>
+KM	#2# 0.35 {NAD+}  <1,2>
+KM	#2# 11.6 {D-apiitol}  <1,2>
+KM	#2# 71.4 {D-apiose}  <1,2>
+
+PH_OPTIMUM
+PHO	#1# 10.5 (#1# oxidation of D-apiitol, enzyme activity in crude extracts
+	<3>) <3>
+PHO	#1,2# 7.5 (#2# reduction of D-apiose <1>; #1# reduction of D-apiose,
+	enzyme activity in crude extracts <3>) <1,3>
+PHO	#2# 10 (#2# oxidation of D-apiitol <1>) <1>
+
+SPECIFIC_ACTIVITY
+SA	#2# 0.102 <1,2>
+
+COFACTOR
+CF	#1,2# NAD+ <1,2,3>
+
+INHIBITORS
+IN	#2# NADH (#2# 0.1 mM <1>) <1>
+
+MOLECULAR_WEIGHT
+MW	#2# 110000 (#2# sucrose density centrifugation, gel filtration <2>) <2>
+MW	#2# 115000 (#2# sucrose density centrifugation, gel filtration <1>) <1>
+
+PURIFICATION
+PU	#2# <2>
+PU	#2# (streptomycin sulfate, calcium phosphate gel, ethanol
+	precipitation, DEAE-cellulose, Sephadex G-200) <1>
+
+STORAGE_STABILITY
+SS	#2# (-20°C, several weeks, no loss of activity) <1>
+
+REFERENCE
+RF	<1> Chandrsekaran, E.V.; Davila, M.; Mendicino, J.: D-Apiitol
+	dehydrogenase from bacteria. Methods Enzymol. (1982) 89, 228-232.
+	{Pubmed:}
+RF	<2> Hanna, R.; Picken, M.; Mendicino, J.: Purification of a specific
+	D-Apiitol dehydrogenase from a Micrococcus isolated from the surface of
+	germinating parsley seeds. Biochim. Biophys. Acta (1973) 315, 259-271.
+	{Pubmed:}
+RF	<3> Neal, D.L.; Kindel, P.K.: D-Apiose reductase from Aerobacter
+	aerogenes. J. Bacteriol. (1970) 101, 910-915. {Pubmed:4314545}
+
+///
+ID	1.1.1.117
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+PROTEIN
+PR	#1# Rattus norvegicus   <5>
+PR	#2# Pseudomonas sp.   <2,3,4>
+PR	#3# Candida albicans   <1>
+PR	#4# Saccharomyces cerevisiae P38115 UniProt <6>
+
+RECOMMENDED_NAME
+RN	D-arabinose 1-dehydrogenase [NAD(P)+]
+
+
+SYSTEMATIC_NAME
+SN	D-arabinose:NAD(P)+ 1-oxidoreductase
+
+
+SYNONYMS
+SY	 dehydrogenase, D-arabinose (nicotinamide adenine dinucleotide
+	(phosphate))
+SY	#4# D-arabinose dehydrogenase <6>
+SY	#4# ARA1 <6>
+
+REACTION
+RE	D-arabinose + NAD(P)+ = D-arabinono-1,4-lactone + NAD(P)H + H+
+
+REACTION_TYPE
+RT	redox reaction
+RT	oxidation
+RT	reduction
+
+SOURCE_TISSUE
+ST	#1# liver <5>
+
+LOCALIZATION
+LO	#1,2,3# cytoplasm <1,2,3,4,5>
+
+NATURAL_SUBSTRATE_PRODUCT
+NSP	#1,2,3# D-arabinose + NAD(P)+ = D-arabino-1,4-lactone + NAD(P)H (#2#
+	specific for sugars of the optical configuration of L-galactose <3>)
+	<1,2,3,4,5>
+NSP	#4# D-arabinose + NADP+ = D-arabinono-1,4-lactone + NADPH + H+ <6>
+
+SUBSTRATE_PRODUCT
+SP	#1,2,3# D-arabinose + NAD(P)+ = D-arabino-1,4-lactone + NAD(P)H (#2#
+	alpha-anomer preferred <3>; #2# specific for sugars of the optical
+	configuration of L-galactose <3>) <1,2,3,4,5>
+SP	#2# L-colitose + NAD(P)+ = 3,6-dideoxy-L-galactono-1,5-lactone +
+	NAD(P)H (#2# i.e. 3,6-dideoxy-L-galactose <3>) <3>
+SP	#2,3# L-galactose + NADP+ = L-galactono-1,4-lactone + NADPH + H+ (#2#
+	beta-anomer preferred <3>) <1,3>
+SP	#2,3# L-fucose + NADP+ = 6-deoxy-L-galactono-1,4-lactone + NADPH + H+
+	(#2# i.e. 6-deoxy-L-galactose <3>) <1,3>
+SP	#3# L-xylose + NADP+ = L-xylono-1,4-lactone + NADPH <1>
+SP	#4# D-arabinose + NADP+ = D-arabinono-1,4-lactone + NADPH + H+ <6>
+
+KM_VALUE
+KM	#1# 0.000061 {NADP+}  <5>
+KM	#1# 53 {D-arabinose}  <5>
+KM	#2# 2.2 {NADP+}  <4>
+KM	#2# 0.82 {D-arabinose}  <3>
+KM	#2# 2.3 {NADP+}  <3>
+KM	#2# 22 {NAD+}  <3>
+KM	#3# 60 {D-arabinose}  <1>
+KM	#3# 0.0446 {NADP+}  <1>
+KM	#3# 37.1 {L-Xylose}  <1>
+KM	#3# 91.3 {L-galactose}  <1>
+KM	#3# 29.9 {D-arabinose}  <1>
+KM	#3# 28.9 {L-fucose}  <1>
+
+PH_OPTIMUM
+PHO	#1# 9.4 <5>
+PHO	#2# 8-8.5 <3>
+PHO	#3# 8 <1>
+
+PH_RANGE
+PHR	#2# 7.3-9.2 (#2# about 80% of maximal activity at pH 7.3 and 9.2 <3>)
+	<3>
+
+SPECIFIC_ACTIVITY
+SA	#2# 1350.0 <2>
+
+TEMPERATURE_OPTIMUM
+TO	#2# 23 (#2# assay at <3>) <3>
+TO	#2# 24 (#2# assay at <2>) <2>
+TO	#3# 30 <1>
+
+COFACTOR
+CF	#1,2,3# NADP+ (#2# NADP+ and NAD+ equally effective <2>) <1,2,3,4,5>
+CF	#2# NAD+ (#2# NADP+ and NAD+ equally effective <2>; #2# the affinity
+	for NADP+ is considerably higher <3>) <2,3,4>
+CF	#4# NADPH <6>
+
+INHIBITORS
+IN	#3# Mg2+ <1>
+IN	#3# Mn2+ <1>
+IN	#3# Zn2+ <1>
+IN	#3# Cu2+ <1>
+IN	#3# Fe2+ <1>
+IN	#3# Hg2+ <1>
+IN	#3# NADPH (#3# competitive to NADP+ <1>) <1>
+
+MOLECULAR_WEIGHT
+MW	#2# 50000 (#2# gel filtration <4>) <4>
+MW	#2# 20000 (#2# x * 20000, sedimentation analysis in 4.2 M guanidinium
+	chloride, presence of subunits of unequal size might be possible <4>)
+	<4>
+MW	#2# 104000 (#2# sedimentation analysis in EDTA/phosphate buffer <4>) <4>
+MW	#3# 41000 (#3# gel filtration <1>) <1>
+MW	#3# 42000 (#3# 1 * 42000, SDS-PAGE <1>) <1>
+
+SUBUNITS
+SU	#2# ? (#2# x * 20000, sedimentation analysis in 4.2 M guanidinium
+	chloride, presence of subunits of unequal size might be possible <4>)
+	<4>
+SU	#3# monomer (#3# 1 * 42000, SDS-PAGE <1>) <1>
+SU	#4# homodimer (#4# x-ray crystallography <6>) <6>
+
+CLONED
+CL	#4# (expressed in Escherichia coli BL21(DE3) cells) <6>
+
+CRYSTALLIZATION
+CR	#4# (apo and NADPH-complexed enzyme forms, hanging drop vapor diffusion
+	method, using 25% (w/v) polyethylene glycol 3350, 0.1 M HEPES pH 7.5)
+	<6>
+
+PURIFICATION
+PU	#1# <5>
+PU	#2# <2,3,4>
+PU	#3# <1>
+PU	#4# (Ni-NTA column chromatography and Superdex 200 gel filtration) <6>
+
+STORAGE_STABILITY
+SS	#2# (frozen, purified enzyme stable for many months) <2>
+SS	#2# (lyophilized, purified enzyme stable for many months) <2>
+SS	#2# (-20°C, acetone-dried cells retain full activity for extended
+	periods of time) <2>
+SS	#2# (4°C, stable as ammonium sulfate precipitate) <2>
+
+TEMPERATURE_STABILITY
+TS	#2# 50 (#2# after 10 min 90% of maximal activity retained <2>) <2>
+TS	#2# 58 (#2# half-life of 20 s is increased to 80 s in presence of
+	cofactor, in both cases biphasic inactivation curve <4>) <4>
+
+REFERENCE
+RF	<1> Kim, S.T.; Huh, W.K.; Kim, J.Y.; Hwang, S.W.; Kang, S.O.:
+	D-Arabinose dehydrogenase and biosynthesis of erythroascorbic acid in
+	Candida albicans. Biochim. Biophys. Acta (1996) 1297, 1-8.
+	{Pubmed:8841374} (c)
+RF	<2> Cline, A.L.; Hu, A.S.L.: The isolation of three sugar
+	dehydrogenases from a pseudomonad. J. Biol. Chem. (1965) 240,
+	4488-4492. {Pubmed:5845847} (c)
+RF	<3> Cline, A.L.; Hu, A.S.L.: Enzymatic characterization and comparison
+	of three sugar dehydrogenases from a pseudomonad. J. Biol. Chem. (1965)
+	240, 4493-4497. {Pubmed:5845848} (c)
+RF	<4> Cline, A.L.; Hu, A.S.L.: Some physical properties of three sugar
+	dehydrogenases from a pseudomonad. J. Biol. Chem. (1965) 240,
+	4498-4502. {Pubmed:5845849}
+RF	<5> Metzger, R.P.; Wick, A.N.: Partial purification of rat liver
+	D-arabinose dehydrogenase. Biochem. Biophys. Res. Commun. (1967) 26,
+	742-747. {Pubmed:4382190}
+RF	<6> Hu, X.Q.; Guo, P.C.; Ma, J.D.; Li, W.F.: Structures of
+	Saccharomyces cerevisiae D-arabinose dehydrogenase Ara1 and its complex
+	with NADPH: implications for cofactor-assisted substrate recognition.
+	Acta Crystallogr. Sect. F (2013) 69, 1190-1195. {Pubmed:24192347}
+
+KI_VALUE
+KI	#3# 0.0786 {NADPH}  <1>
+
+///

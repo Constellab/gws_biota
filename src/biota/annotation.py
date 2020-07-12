@@ -14,9 +14,10 @@ from peewee import IntegerField, DateField, DateTimeField, CharField, ForeignKey
 
 class Annotation(Resource):
     _table_name = 'annotation'
+    pass
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-    class Meta:
+    class Meta():
         table_name = 'annotation'

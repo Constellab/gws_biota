@@ -17,6 +17,7 @@ __cdir__ = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(__cdir__,"./"))                        # -> load tests
 sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load biota module
 #sys.path.append(os.path.join(__cdir__,"./databases_input"))        # -> load databases_input folder
+sys.path.append(os.path.join(__cdir__,"../annotation-py/src"))      # -> load annotation module
 sys.path.append(os.path.join(__cdir__,"../chebi-py/src"))           # -> load chebi module
 sys.path.append(os.path.join(__cdir__,"../rhea-py/src"))            # -> load rhea module
 sys.path.append(os.path.join(__cdir__,"../ontology-py/src"))        # -> load onto module
