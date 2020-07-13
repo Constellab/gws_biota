@@ -93,8 +93,11 @@ class EnzymeAnnotation(Annotation):
         q = Enzyme.select().where(Enzyme.data['uniprot'] != 'null')
         for enzyme in q:
             list_ann = QuickGOAnnotation.get_tsv_file_from_uniprot_id(str(enzyme.uniprot_id))
-            for element in list_ann:
-                list_annotation.append(element)
+            try:
+                for element in list_ann:
+                    list_annotation.append(element)
+            except:
+                print('list empty')
         annnotations = [cls(data = d) for d in list_annotation]
         cls.insert_gene_product_id(annnotations, 'gene product id')
         cls.insert_reference(annnotations, 'reference')
