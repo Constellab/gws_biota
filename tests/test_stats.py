@@ -3,20 +3,7 @@ import os
 import unittest
 import asyncio
 
-
-from peewee import CharField, chunked
-from gws.prism.model import Model, Process, ViewModel,ResourceViewModel, Resource, DbManager
-from gws.prism.controller import Controller
-from gws.prism.app import App
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
-from manage import settings
-from biota.enzyme import Enzyme, EnzymeStatistics, process_statistics, EnzymeStatisticsJSONViewModel
-import re
+from biota.enzyme import EnzymeStatistics, EnzymeStatisticsProcess, EnzymeStatisticsJSONViewModel
 
 ############################################################################################
 #
@@ -30,13 +17,13 @@ class TestProcess(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         EnzymeStatistics.drop_table()
-        process_statistics.drop_table()
+        EnzymeStatisticsProcess.drop_table()
         pass
 
     @classmethod
     def tearDownClass(cls):
         EnzymeStatistics.drop_table()
-        process_statistics.drop_table()
+        EnzymeStatisticsProcess.drop_table()
         pass
 
     def test_process(self):
@@ -44,7 +31,7 @@ class TestProcess(unittest.TestCase):
 
     async def _process(self):
         stats = EnzymeStatistics()
-        s1 = process_statistics()
+        s1 = EnzymeStatisticsProcess()
         s1.input['EnzymeStatistics'] = stats
         params = {'global_informations': True, 'organism': "Octopus vulgaris"}
         await s1.run(params)

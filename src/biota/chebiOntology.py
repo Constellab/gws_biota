@@ -1,11 +1,7 @@
-import sys
-import os
-import unittest
-
 from biota.ontology import Ontology
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
-from peewee import CharField, Model, chunked
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import ResourceViewModel
+from peewee import CharField
 from chebi.chebi import Chebi
 
 ####################################################################################
@@ -29,11 +25,13 @@ class ChebiOntology(Ontology):
         self.name = name
     
     #Inserts
-    def insert_chebi_id(list__, key):
+    @classmethod
+    def insert_chebi_id(cls, list__, key):
         for chebs in list__:
             chebs.set_chebi_id(chebs.data[key])
 
-    def insert_name(list__, key):
+    @classmethod
+    def insert_name(cls, list__, key):
         for chebs in list__:
             chebs.set_name(chebs.data[key])
 

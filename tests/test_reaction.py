@@ -4,28 +4,16 @@ import unittest
 import copy
 import asyncio
 
-from gws.prism.app import App
-from gws.prism.model import Process
-from gws.prism.model import Resource
-from gws.prism.controller import Controller
-
-from peewee import CharField, ForeignKeyField, chunked
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
+from gws.settings import Settings
 from biota.reaction import Reaction, ReactionJSONStandardViewModel, ReactionJSONPremiumViewModel
-from manage import settings
 
 ############################################################################################
 #
 #                                        TestReaction
 #
 ############################################################################################
-
-input_db_dir = settings.get_data("biota_db_path")
-
-
+settings = Settings.retrieve()
+test_data_path = settings.get_data("biota_test_data_path")
 
 files_model = dict(
     substrate_reaction = Reaction.substrates.get_through_model(),
@@ -69,7 +57,7 @@ class TestReaction(unittest.TestCase):
             rhea2reactome_file = 'rhea2reactome_test.tsv'
         )
 
-        Reaction.create_reactions_from_files(input_db_dir, **files_test)
+        Reaction.create_reactions_from_files(test_data_path, **files_test)
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10022').master_id, '10020')
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10031').kegg_id, 'R00279')
         

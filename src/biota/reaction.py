@@ -1,16 +1,14 @@
-from gws.settings import Settings
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Resource, ViewModel, ResourceViewModel, DbManager
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import ResourceViewModel, DbManager
 from gws.prism.controller import Controller
 
-from manage import settings
 from biota.relation import Relation
 from biota.compound import Compound
 from biota.enzyme import Enzyme
 from biota.go import GO
 from rhea.rhea import Rhea
 
-from peewee import CharField, ForeignKeyField, Model, chunked, ManyToManyField, DeferredThroughModel
+from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
 
 ####################################################################################

@@ -1,13 +1,10 @@
-import os, sys
-from biota.entity import Entity
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
-from peewee import CharField, ForeignKeyField, chunked, ManyToManyField, DeferredThroughModel, DeferredForeignKey
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import ResourceViewModel, DbManager
+from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 from biota.ontology import Ontology
 from onto.ontology import Onto
-from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 
 ####################################################################################
 #
@@ -62,15 +59,18 @@ class BTO(Ontology):
         BTOAncestor.insert_many(vals).execute()
 
     #Inserts
-    def insert_bto_id(list__, key):
+    @classmethod
+    def insert_bto_id(cls,list__, key):
         for bto in list__:
             bto.set_bto_id(bto.data[key]) 
 
-    def insert_label(list__, key):
+    @classmethod
+    def insert_label(cls,list__, key):
         for bto in list__:
             bto.set_label(bto.data[key]) 
 
-    def insert_ancestors(list__, key):
+    @classmethod
+    def insert_ancestors(cls,list__, key):
         for bto in list__:
             bto.set_ancestors(bto.data[key])
 

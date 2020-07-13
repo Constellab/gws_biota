@@ -42,7 +42,7 @@ from taxonomy.taxo import Taxo
 #                                        class main_admin
 #                                         
 ############################################################################################
-input_db_dir = settings.get_data("biota_db_path")
+test_data_path = settings.get_data("biota_test_data_path")
 
 files = dict(
             go_data = "go.obo",
@@ -94,7 +94,7 @@ class TestMain(unittest.TestCase):
             rhea2ec_file = 'rhea2ec.tsv'
         )
 
-        GO.create_go(input_db_dir, **files)
+        GO.create_go(test_data_path, **files)
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         go1 = GO.get(GO.go_id == 'GO:0000001')

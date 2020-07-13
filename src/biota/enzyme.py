@@ -1,25 +1,17 @@
-import os, sys
-import asyncio
+import os
 from biota.protein import Protein 
-from biota.taxonomy import Taxonomy as Tax
-from biota.bto import BTO as BT
+from biota.taxonomy import Taxonomy as BiotaTaxo
+from biota.bto import BTO as BiotaBTO
 from brenda.brenda import Brenda
 
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Process, Model, ViewModel, ResourceViewModel, Resource, DbManager
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import Process, ResourceViewModel, Resource, DbManager
 
-from peewee import CharField, Model, chunked, ForeignKeyField, ManyToManyField, DeferredThroughModel
-from peewee import IntegerField, FloatField
+from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
 
-import logging
-from collections import OrderedDict
-from brendapy import BrendaParser, BrendaProtein
-from brendapy import utils
-from brendapy.taxonomy import Taxonomy
 from brendapy.tissues import BTO
-from brendapy.substances import CHEBI
 
 ####################################################################################
 #
@@ -31,8 +23,8 @@ EnzymeBTODeffered = DeferredThroughModel()
 class Enzyme(Protein):
     ec = CharField(null=True, index=True)
     organism = CharField(null=True, index=True)
-    taxonomy = ForeignKeyField(Tax, backref = 'taxonomy', null = True)
-    bto = ManyToManyField(BT, backref='blood tissue taxonomy', through_model = EnzymeBTODeffered)
+    taxonomy = ForeignKeyField(BiotaTaxo, backref = 'taxonomy', null = True)
+    bto = ManyToManyField(BiotaBTO, backref='blood tissue taxonomy', through_model = EnzymeBTODeffered)
     uniprot_id = CharField(null=True, index=True)
     _table_name = 'enzyme'
 
@@ -46,7 +38,7 @@ class Enzyme(Protein):
     def set_taxonomy(self):
         if(self.data['taxonomy'] != None):
             try:
-                tax = Tax.get(Tax.tax_id == str(self.data['taxonomy']))
+                tax = BiotaTaxo.get(BiotaTaxo.tax_id == str(self.data['taxonomy']))
                 self.taxonomy = tax
             except:
                 print("did not found the tax_id: " + str(self.data['taxonomy']))
@@ -55,13 +47,13 @@ class Enzyme(Protein):
         if(type(self.data['st']) == list):
             for i in range(0,len(self.data['st'])):
                 try:
-                    tissue = BT.get(BT.bto_id == self.data['st'][i])
+                    tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'][i])
                     self.bto.add(tissue)
                 except:
                     print("BTO not found")
         else:
             try:
-                tissue = BT.get(BT.bto_id == self.data['st'])
+                tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'])
                 self.bto.add(tissue)
             except:
                 print("BTO not found")
@@ -70,15 +62,18 @@ class Enzyme(Protein):
         self.uniprot_id = uniprot_id__
 
     #Inserts
-    def insert_protein_id(list__, key):
+    @classmethod
+    def insert_protein_id(cls, list__, key):
         for comp in list__:
             comp.set_protein_id(comp.data[key])
 
-    def insert_ec(list__, key):
+    @classmethod
+    def insert_ec(cls, list__, key):
         for comp in list__:
             comp.set_ec(comp.data[key])
 
-    def insert_organism(list__, key):
+    @classmethod
+    def insert_organism(cls, list__, key):
         for comp in list__:
             comp.set_organism(comp.data[key])
     """
@@ -86,8 +81,8 @@ class Enzyme(Protein):
         for comp in list__:
             comp.set_taxonomy(comp.data[key])
     """
-
-    def insert_uniprot_id(list__, key):
+    @classmethod
+    def insert_uniprot_id(cls, list__, key):
         for comp in list__:
             comp.set_uniprot_id(comp.data[key])
             
@@ -126,7 +121,7 @@ class Enzyme(Protein):
     
 class EnzymeBTO(PWModel):
     enzyme = ForeignKeyField(Enzyme)
-    bto = ForeignKeyField(BT)
+    bto = ForeignKeyField(BiotaBTO)
     class Meta:
         table_name = 'enzymes_btos'
         database = DbManager.db
@@ -270,7 +265,7 @@ class EnzymeStatistics(Resource):
 class EnzymeStatisticsJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{{view_model.model.data}}')
  
-class process_statistics(Process):
+class EnzymeStatisticsProcess(Process):
     input_specs = {'EnzymeStatistics': EnzymeStatistics}
     output_specs = {'EnzymeStatistics': EnzymeStatistics}
     async def task(self, params={}): 
@@ -434,4 +429,4 @@ class process_statistics(Process):
         self.output['EnzymeStatistics'] = se
 
 EnzymeBTODeffered.set_model(EnzymeBTO)
-Controller.register_models([EnzymeStatistics, process_statistics])
+Controller.register_models([EnzymeStatistics, EnzymeStatisticsProcess])

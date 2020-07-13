@@ -1,14 +1,8 @@
-import sys
-import os
-import unittest
-
 from biota.annotation import Annotation
 from biota.go import GO
 from biota.eco import ECO
 from biota.taxonomy import Taxonomy
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
-from peewee import CharField, Model, chunked, ForeignKeyField
+from peewee import CharField, ForeignKeyField
 
 ####################################################################################
 #
@@ -39,15 +33,18 @@ class EnzymeAnnotation(Annotation):
         table_name = 'enzyme_annotations'
     
     #Inserts
-    def insert_gene_id(list__, key):
+    @classmethod
+    def insert_gene_id(cls, list__, key):
         for annotations in list__:
             annotations.set_gene_id(annotations.data[key])
 
-    def insert_reference(list__, key):
+    @classmethod
+    def insert_reference(cls, list__, key):
         for annotations in list__:
             annotations.set_reference(annotations.data[key])
     
-    def insert_assignment(list__, key):
+    @classmethod
+    def insert_assignment(cls, list__, key):
         for annotations in list__:
             annotations.set_assigned_by(annotations.data[key])
     

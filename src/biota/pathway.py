@@ -1,10 +1,6 @@
-import os, sys
-from biota.entity import Entity
-from biota.relation import Relation
-from gws.prism.controller import Controller
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from peewee import CharField, FloatField, ForeignKeyField, Model, chunked
+from gws.prism.model import Resource, ResourceViewModel
+from gws.prism.view import JSONViewTemplate
+from peewee import CharField
 
 ####################################################################################
 #

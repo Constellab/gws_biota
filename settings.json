@@ -1,0 +1,32 @@
+{
+    "name": "biota",
+    "biota_db_dir"  : "./",
+    "biota_db_name" : "biota_db.sqlite3",
+    "biota_input_db_path": "../../extern/databases/",
+    "biota_test_data_path": "./tests/data",
+    "dependencies"  : {
+        "gws"       : "../gws-py",
+        "rhea"      : "../rhea-py",
+        "ontology"  : "../ontology-py",
+        "taxonomy"  : "../taxonomy-py",
+        "chebi"     : "../chebi-py",
+        "brenda"    : "../brenda-py"
+    },
+    "statics"       : {
+        "/static/pub-biota"   : "./public/static"
+    },
+    "app":{
+        "title": "Biota",
+        "scripts": [
+        ],
+        "modules": [
+            "/static/pub-biota/index.js"
+        ],
+        "styles": [
+            "/static/gws/g3/all.css"
+        ],
+        "left_buttons":[
+            { "name": "biotadb", "icon": "fas fa-database", "onclick": "window.gws.biotadb" }
+        ]
+    }
+}

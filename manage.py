@@ -1,59 +1,99 @@
-#
-# Core biota manage module
+# LICENSE
 # This software is the exclusive property of Gencovery SAS. 
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
-#
 
 import sys
 import os
+import json
 import unittest
 import argparse
 import uvicorn
-from pathlib import Path
+import collections.abc
 
-# load prism and current module
 __cdir__ = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(__cdir__,"./"))                        # -> load tests
-sys.path.append(os.path.join(__cdir__,"./src"))                     # -> load biota module
-#sys.path.append(os.path.join(__cdir__,"./databases_input"))        # -> load databases_input folder
-sys.path.append(os.path.join(__cdir__,"../chebi-py/src"))           # -> load chebi module
-sys.path.append(os.path.join(__cdir__,"../rhea-py/src"))            # -> load rhea module
-sys.path.append(os.path.join(__cdir__,"../ontology-py/src"))        # -> load onto module
-sys.path.append(os.path.join(__cdir__,"../brenda-py/src"))          # -> load brenda module
-sys.path.append(os.path.join(__cdir__,"../taxonomy-py/src"))        # -> load taxonomy module
-sys.path.append(os.path.join(__cdir__,"../../prod/gws-py/src"))     # -> load gws module
-sys.path.append(os.path.join(__cdir__,"../../pkgs/brenda-py"))      # -> load brendapy package
-sys.path.append(os.path.join(__cdir__,"../../pkgs/ete3-py"))        # -> load ete3-py package 
 
-databases_input = os.path.join(__cdir__,"./databases_input")
-databases_test = os.path.join(__cdir__,"./tests/data")
+def read_module_name():
+    module_name = None
+    with open(os.path.join(__cdir__,"settings.json")) as f:
+        try:
+            settings = json.load(f)
+        except:
+            raise Exception("Error while parsing the settings JSON file. Please check file setting file.")
 
+    module_name = settings.get("name",None)
+    if module_name is None:
+        raise Exception("The module name is required. Please check file setting file.")
+    
+    return module_name
 
-# set settings
-from gws.settings import Settings
-Settings.add_statics({
-    '/static/hello'   : os.path.join(__cdir__, './src/static/hello')
-})
+def update_json(d, u):
+    for k, v in u.items():
+        if isinstance(v, collections.abc.Mapping):
+            d[k] = update_json(d.get(k, {}), v)
+        else:
+            d[k] = v
+    return d
 
-databases_input = os.path.join(__cdir__,"./databases_input")
-databases_test = os.path.join(__cdir__,"./tests/data")
+def parse_settings(module_cwd: str = None, module_name:str = None, module_setting_file:str = "settings.json"):
+    if module_cwd is None:
+        raise Exception("Paremeter module_cwd is required")
+    
+    if module_name is None:
+        raise Exception("Paremeter module_name is required")
 
-Settings.init(dict(
-    app_dir         = __cdir__,
-    app_host        = 'localhost',
-    app_port        = 3000,
-    db_dir          = __cdir__,
-    db_name         = 'db.sqlite3',     # ':memory:'
-    is_test         = False,
-))
+    if not os.path.exists(module_setting_file):
+        raise Exception("The setting file of module '"+module_name+"' is not found. Please check that file '"+module_setting_file+"'.")
+    
+    sys.path.append(os.path.join(module_cwd,"./"))         # -> load current module tests
+    sys.path.append(os.path.join(module_cwd,"./src"))      # -> load current module sources
 
-#Création d'un nouveau paramètres 
-settings = Settings.retrieve()
-settings.set_data("biota_db_path", databases_test)
-settings.set_data("biota_db_input_path", databases_input)
+    with open(module_setting_file) as f:
+        try:
+            settings = json.load(f)
+        except:
+            raise Exception("Error while parsing the settings JSON file. Please check file.")
+    
+    if settings["dependencies"].get(module_name, None) is None:
+        settings["dependencies"][module_name] = "./"
 
-from gws.prism.manage import manage
+    # recursive load of dependencies
+    for dep_name in settings["dependencies"]:
+        if dep_name == ":external:":
+            for dep_urls in settings["dependencies"][dep_name]:
+                sys.path.append(os.path.join(module_cwd,dep_urls))    # -> load module sources
+        else:
+            dep_path = settings["dependencies"][dep_name]
+            dep_cwd = os.path.join(module_cwd,dep_path)
+            dep_setting_file = os.path.join(dep_cwd,"./settings.json")
+
+            sys.path.append(dep_cwd)            # -> load module tests
+            sys.path.append(os.path.join(dep_cwd,"./src"))    # -> load module sources
+
+            if not dep_name == module_name:
+                new_settings = parse_settings(module_cwd=dep_cwd, module_name=dep_name, module_setting_file=dep_setting_file)
+                settings = update_json(new_settings, settings)
+
+    return settings
 
 if __name__ == "__main__":
-    manage()
+    settings = {
+        "app_dir"       : "./",
+        "app_host"      : "localhost",
+        "app_port"      : 3000,
+        "db_dir"        : "./",
+        "db_name"       : "db.sqlite3",
+        "is_test"       : False,
+        "dependencies"  : {},
+        "static_dirs"       : {},
+        "__cwd__"       : __cdir__
+    }
+
+    module_name = read_module_name()
+    settings = update_json(settings, parse_settings(module_cwd=__cdir__, module_name=module_name, module_setting_file="./settings.json"))
+    
+    from gws.settings import Settings
+    Settings.init(settings)    
+
+    from gws import runner
+    runner.run()

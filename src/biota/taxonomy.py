@@ -1,15 +1,9 @@
-import sys
-import os
 
-from gws.prism.app import App
-from gws.prism.model import Process
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import ResourceViewModel, Resource
 from gws.prism.controller import Controller
 from taxo.taxonomy import Taxo
-from peewee import IntegerField, DateField, DateTimeField, CharField, ForeignKeyField
-
-from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
+from peewee import CharField, ForeignKeyField
 
 ####################################################################################
 #
@@ -47,19 +41,23 @@ class Taxonomy(Resource):
         self.save()     
 
     #Inserts
-    def insert_tax_id(list__, key):
+    @classmethod
+    def insert_tax_id(cls, list__, key):
         for tax in list__:
             tax.set_tax_id(tax.data[key])
 
-    def insert_name(list__, key):
+    @classmethod
+    def insert_name(cls, list__, key):
         for tax in list__:
             tax.set_name(tax.data[key])
 
-    def insert_rank(list__, key):
+    @classmethod
+    def insert_rank(cls, list__, key):
         for tax in list__:
             tax.set_rank(tax.data[key])
     
-    def insert_ancestor(list__, key):
+    @classmethod
+    def insert_ancestor(cls, list__, key):
         for tax in list__:
             tax.set_ancestor(tax.data[key])
 

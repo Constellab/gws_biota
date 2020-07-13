@@ -1,9 +1,8 @@
-import os, sys
 from biota.entity import Entity
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
-from peewee import CharField, Model, chunked
+from gws.prism.view import HTMLViewTemplate, JSONViewTemplate
+from gws.prism.model import ResourceViewModel
+from peewee import CharField
 
 
 ####################################################################################
@@ -11,8 +10,6 @@ from peewee import CharField, Model, chunked
 # Gene class
 #
 ####################################################################################
-
-path_test = os.path.realpath('./databases_input') #Set the path where we can find input data
 
 class Gene(Entity):
     KO = CharField(null=True, index=True)
