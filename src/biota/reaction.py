@@ -80,7 +80,6 @@ class Reaction(Relation):
     def create_reactions_from_files(cls, input_db_dir, **files):
         list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
         cls.__create_reactions(list_react)
-        Controller.save_all()
 
         list_directions = Rhea.parse_csv_from_file(input_db_dir, files['rhea_direction_file'])
         list_master, list_LR, list_RL, list_BI = Rhea.get_columns_from_lines(list_directions)
@@ -116,12 +115,16 @@ class Reaction(Relation):
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
-            Controller.save_all()
+        Controller.save_all()
+
+        for react in reactions:
             react.set_substrates()
             react.set_products()
             if('enzyme' in react.data.keys()):
                 react.set_enzymes()
         status = 'ok'
+        
+        Controller.save_all()
         return(reactions)
     
     @classmethod

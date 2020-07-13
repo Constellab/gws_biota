@@ -132,7 +132,14 @@ class TestMain(unittest.TestCase):
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         duration  = default_timer() - duration
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
-         
+
+        # ------------- Create ECO ------------- #
+        ECO.create_eco(input_db_dir, **files)
+        Controller.save_all()
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
+        duration  = default_timer() - duration
+        print("eco and eco_ancestors have been loaded in " + str(duration) + " sec")
+
         # ------------- Create ChebiOntology ------------- #
         ChebiOntology.create_chebis(input_db_dir, **files)
         Controller.save_all()
