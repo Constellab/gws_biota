@@ -73,6 +73,7 @@ class TestMain(unittest.TestCase):
         files = dict(
             go_data = "go.obo",
             sbo_data = "sbo.obo",
+            eco_data = "eco.obo",
             chebi_data = "chebi.obo",
             bto_json_data = "bto.json",
             chebi_compound_file = "compounds.tsv",

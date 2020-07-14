@@ -84,6 +84,7 @@ class TestMain(unittest.TestCase):
         files = dict(
             go_data = "go.obo",
             sbo_data = "sbo.obo",
+            eco_data = "eco.obo",
             chebi_data = "chebi.obo",
             bto_json_data = "bto.json",
             brenda_file = "brenda_download.txt",
@@ -102,7 +103,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create GO ------------- #
         go_input_db_dir = settings.get_data("go_input_db_dir")
         GO.create_go(go_input_db_dir, **files)
-        Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         duration  = default_timer() - start
         print("go, go_ancestors and gojsonviewmodel have been loaded in " + str(duration) + " sec")
@@ -110,7 +110,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create SBO ------------- #
         sbo_input_db_dir = settings.get_data("sbo_input_db_dir")
         SBO.create_sbo(sbo_input_db_dir, **files)
-        Controller.save_all()
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
         
@@ -120,7 +119,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create BTO ------------- #
         bto_input_db_dir = settings.get_data("bto_input_db_dir")
         BTO.create_bto(bto_input_db_dir, **files)
-        Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         duration  = default_timer() - duration
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
@@ -135,7 +133,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create ChebiOntology ------------- #
         chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
         ChebiOntology.create_chebis(chebi_input_db_dir, **files)
-        Controller.save_all()
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
@@ -159,7 +156,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create Enzyme ------------- #
         brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir")
         Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
-        Controller.save_all()
         duration  = default_timer() - duration
         print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
         
