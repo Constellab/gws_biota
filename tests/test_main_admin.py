@@ -24,6 +24,7 @@ from manage import settings
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
+from biota.eco import ECO
 from biota.chebiOntology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.compound import Compound
