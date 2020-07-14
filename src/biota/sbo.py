@@ -67,8 +67,8 @@ class SBO(Ontology):
     #create sbo
     @classmethod
     def create_sbo(cls, input_db_dir, **files):
-        Onto.correction_of_SBO_OBO_file(input_db_dir, files["sbo_data"], 'SBO_out_test.obo')
-        ontology = Onto.create_ontology_from_owl(input_db_dir, 'SBO_out_test.obo')
+        Onto.correction_of_sbo_file(input_db_dir, files["sbo_data"], 'sbo_test.obo')
+        ontology = Onto.create_ontology_from_owl(input_db_dir, 'sbo_test.obo')
         list_sbo = Onto.parse_sbo_terms_from_ontology(ontology)
 
         sbos = [cls(data = dict_) for dict_ in list_sbo]
