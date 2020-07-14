@@ -97,7 +97,8 @@ class TestMain(unittest.TestCase):
             rhea2metacyc_file = 'rhea2metacyc.tsv',
             rhea2macie_file = 'rhea2macie.tsv',
             rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
-            rhea2ec_file = 'rhea2ec.tsv'
+            rhea2ec_file = 'rhea2ec.tsv',
+            rhea2reactome_file = 'rhea2reactome.tsv'
         )
 
         start = default_timer()
@@ -133,4 +134,5 @@ class TestMain(unittest.TestCase):
         # ------------- Create Reactions ------------- #
         Reaction.create_reactions_from_files(input_db_dir, **files)
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
+        duration  = default_timer() - duration
         print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
