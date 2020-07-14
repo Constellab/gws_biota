@@ -28,11 +28,11 @@ class TestSBO(unittest.TestCase):
     
     def test_db_object(self):
         files = dict(
-            sbo_data = "SBO_OBO.obo",
+            sbo_data = "sbo.obo",
         )
 
         files_test = dict(
-            sbo_data = "SBO_OBO_test.obo",
+            sbo_data = "sbo_test.obo",
         )
     
         SBO.create_sbo(test_data_path, **files_test)
