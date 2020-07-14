@@ -2,25 +2,17 @@ import sys
 import os
 import unittest
 
-from peewee import CharField, chunked
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
+from gws.settings import Settings
 from biota.sbo import SBO, SBOStandardJSONViewModel, SBOPremiumJSONViewModel
-from manage import settings
 
 ############################################################################################
 #
 #                                        TestGO
 #                                         
 ############################################################################################
-
-input_db_dir = settings.get_data("biota_db_path")
+settings = Settings.retrieve()
+test_data_path = settings.get_data("biota_test_data_dir")
 
 class TestSBO(unittest.TestCase):
     @classmethod
@@ -43,7 +35,7 @@ class TestSBO(unittest.TestCase):
             sbo_data = "SBO_OBO_test.obo",
         )
     
-        SBO.create_sbo(input_db_dir, **files_test)
+        SBO.create_sbo(test_data_path, **files_test)
         Controller.save_all()
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')

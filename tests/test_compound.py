@@ -2,27 +2,17 @@ import sys
 import os
 import unittest
 
-
-from peewee import CharField, chunked
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
-
+from gws.settings import Settings
 from biota.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
-from manage import settings
 
 ############################################################################################
 #
 #                                        TestCompound
 #                                         
 ############################################################################################
-
-input_db_dir = settings.get_data("biota_db_path")
+settings = Settings.retrieve()
+test_data_path = settings.get_data("biota_test_data_dir")
 
 class TestCompound(unittest.TestCase):
     @classmethod
@@ -48,7 +38,7 @@ class TestCompound(unittest.TestCase):
             #rhea_kegg_compound_file =  "rhea-kegg-test.compound"
         )
 
-        Compound.create_compounds_from_files(input_db_dir, **files_test)
+        Compound.create_compounds_from_files(test_data_path, **files_test)
         Controller.save_all()
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')

@@ -1,5 +1,5 @@
 from biota.element import Element
-from peewee import CharField, FloatField, Model, chunked
+from peewee import CharField
 
 ####################################################################################
 #

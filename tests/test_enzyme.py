@@ -3,16 +3,8 @@ import os
 import unittest
 
 
-from peewee import CharField, chunked
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
-from manage import settings
+from gws.settings import Settings
 from biota.enzyme import Enzyme, EnzymeJSONStandardViewModel, EnzymeJSONPremiumViewModel
 from biota.bto import BTO
 
@@ -21,8 +13,8 @@ from biota.bto import BTO
 #                                        TestEnzymes
 #                                         
 ############################################################################################
-
-input_db_dir = settings.get_data("biota_db_path")
+settings = Settings.retrieve()
+test_data_path = settings.get_data("biota_test_data_dir")
 enzyme_bto = Enzyme.bto.get_through_model()
 
 class TestEnzyme(unittest.TestCase):
@@ -39,14 +31,11 @@ class TestEnzyme(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        files = dict(
-            brenda_file = "brenda_download_20200504.txt"
-        )
-
         files_test = dict(
             brenda_file = "brenda_test.txt"
         )
-        Enzyme.create_enzymes_from_dict(input_db_dir, **files_test)
+
+        Enzyme.create_enzymes_from_dict(test_data_path, **files_test)
         Controller.save_all()
         self.assertEqual(Enzyme.get(Enzyme.ec == '1.4.3.7').organism, 'Candida boidinii')
         self.assertEqual(Enzyme.get(Enzyme.ec == '3.5.1.43').organism, 'Bacillus circulans')

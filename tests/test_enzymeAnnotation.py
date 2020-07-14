@@ -1,26 +1,17 @@
-import sys
-import os
 import unittest
 
-from peewee import CharField, chunked
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
+from gws.settings import Settings
 
 from biota.enzymeAnnotation import EnzymeAnnotation, EnzymeAnnotationJSONStandardViewModel, EnzymeAnnotationJSONPremiumViewModel
-from manage import settings
 
 ############################################################################################
 #
 #                                        Test Enzyme Annotation
 #                                         
 ############################################################################################
-
-input_db_dir = settings.get_data("biota_db_path")
-
+settings = Settings.retrieve()
+test_data_path = settings.get_data("biota_test_data_dir")
 
 class TestEnzymeAnnotation(unittest.TestCase):
     

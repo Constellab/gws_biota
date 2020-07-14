@@ -5,22 +5,10 @@ import copy
 import asyncio
 
 #import from gws
-from gws.prism.app import App
-from gws.prism.model import Process, Resource
 from gws.prism.controller import Controller
 
-
-#import from pewee
-from peewee import CharField, ForeignKeyField, chunked
-from peewee import CharField, ForeignKeyField, chunked
-
-#import from starlette
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
 #import from biota
-from manage import settings
+from gws.settings import Settings
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
@@ -43,7 +31,7 @@ from timeit import default_timer
 #                                        class test_main_ontology
 #                                         
 ############################################################################################
-input_db_dir = settings.get_data("biota_db_input_path")
+settings = Settings.retrieve()
 class TestMain(unittest.TestCase):
     @classmethod
     
@@ -73,7 +61,7 @@ class TestMain(unittest.TestCase):
     def test_db_object(self):
         files = dict(
             go_data = "go.obo",
-            sbo_data = "SBO_OBO.obo",
+            sbo_data = "sbo.obo",
             chebi_data = "chebi.obo",
             bto_json_data = "bto.json",
             eco_data = 'eco.obo',
@@ -92,14 +80,16 @@ class TestMain(unittest.TestCase):
         start = default_timer()
         
         # ------------- Create GO ------------- #
-        GO.create_go(input_db_dir, **files)
+        go_input_db_dir = settings.get_data("go_input_db_dir")
+        GO.create_go(go_input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         duration  = default_timer() - start
         print("go, go_ancestors and gojsonviewmodel have been loaded in " + str(duration) + " sec")
 
         # ------------- Create SBO ------------- #
-        SBO.create_sbo(input_db_dir, **files)
+        sbo_input_db_dir = settings.get_data("sbo_input_db_dir")
+        SBO.create_sbo(sbo_input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
@@ -108,21 +98,24 @@ class TestMain(unittest.TestCase):
         print("sbo, sbo_ancestors and ressourceviewmodel have been loaded in " + str(duration) +  " sec")
         
         # ------------- Create BTO ------------- #
-        BTO.create_bto(input_db_dir, **files)
+        bto_input_db_dir = settings.get_data("bto_input_db_dir")
+        BTO.create_bto(bto_input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         duration  = default_timer() - duration
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
         
         # ------------- Create ECO ------------- #
-        ECO.create_eco(input_db_dir, **files)
+        eco_input_db_dir = settings.get_data("eco_input_db_dir")
+        ECO.create_eco(eco_input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
         duration  = default_timer() - duration
         print("eco and eco_ancestors have been loaded in " + str(duration) + " sec")
         
         # ------------- Create ChebiOntology ------------- #
-        ChebiOntology.create_chebis(input_db_dir, **files)
+        chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
+        ChebiOntology.create_chebis(chebi_input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')

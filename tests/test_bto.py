@@ -2,25 +2,18 @@ import sys
 import os
 import unittest
 
-from peewee import CharField, chunked
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
+from gws.settings import Settings
+from biota.bto import BTO, BTOJSONStandardViewModel, BTOJSONPremiumViewModel
 
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
-
-from biota.bto import BTO, BTOAncestor, BTOJSONStandardViewModel, BTOJSONPremiumViewModel
-from manage import settings
 
 ############################################################################################
 #
 #                                        TestBTO
 #                                         
 ############################################################################################
-input_db_dir = settings.get_data("biota_db_path")
+settings = Settings.retrieve()
+test_data_path = settings.get_data("biota_test_data_dir")
  
 class TestBTO(unittest.TestCase):
     @classmethod
@@ -46,7 +39,7 @@ class TestBTO(unittest.TestCase):
             bto_json_data = "bto_test.json",
         )
 
-        BTO.create_bto(input_db_dir, **files_test)
+        BTO.create_bto(test_data_path, **files_test)
         Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         # --------- Testing views --------- #

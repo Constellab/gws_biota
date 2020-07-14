@@ -42,7 +42,7 @@ from taxonomy.taxo import Taxo
 #                                        class main_admin
 #                                         
 ############################################################################################
-input_db_dir = settings.get_data("biota_db_path")
+test_data_path = settings.get_data("biota_test_data_dir")
 
 files = dict(
             go_data = "go.obo",
@@ -78,23 +78,23 @@ class TestMain(unittest.TestCase):
     def test_db_object(self):
         ### Test GO class ###
         files = dict(
-            go_data = "go.obo",
-            sbo_data = "SBO_OBO.obo",
-            chebi_data = "chebi.obo",
-            bto_json_data = "bto.json",
-            chebi_compound_file = "compounds.tsv",
-            chebi_chemical_data_file =  "chemical_data.tsv",
-            brenda_file = "brenda_download.txt",
-            rhea_kegg_reaction_file =  'rhea-kegg.reaction',
-            rhea_direction_file = 'rhea-directions.tsv',
-            rhea2ecocyc_file = 'rhea2ecocyc.tsv',
-            rhea2metacyc_file = 'rhea2metacyc.tsv',
-            rhea2macie_file = 'rhea2macie.tsv',
-            rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
-            rhea2ec_file = 'rhea2ec.tsv'
+            go_data = "./go/go.obo",
+            sbo_data = "./sbo/sbo.obo",
+            chebi_data = "./chebi/chebi.obo",
+            bto_json_data = "./brenda/bto/bto.json",
+            brenda_file = "brenda_download_20200504.txt",
+            chebi_compound_file = "./chebi/flat_files/compounds.tsv",
+            chebi_chemical_data_file = "./chebi/flat_files/chemical_data.tsv",
+            rhea_kegg_reaction_file = './rhea/tsv/rhea-kegg.reaction',
+            rhea_direction_file = './rhea/tsv/rhea-directions.tsv',
+            rhea2ecocyc_file = './rhea/tsv/rhea2ecocyc.tsv',
+            rhea2metacyc_file = './rhea/tsv/rhea2metacyc.tsv',
+            rhea2macie_file = './rhea/tsv/rhea2macie.tsv',
+            rhea2kegg_reaction_file = './rhea/tsv/rhea2kegg_reaction.tsv',
+            rhea2ec_file = './rhea/tsv/rhea2ec.tsv'
         )
 
-        GO.create_go(input_db_dir, **files)
+        GO.create_go(test_data_path, **files)
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         go1 = GO.get(GO.go_id == 'GO:0000001')

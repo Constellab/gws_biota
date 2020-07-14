@@ -1,13 +1,11 @@
 import os, sys
 from biota.entity import Entity
-from biota.relation import Relation
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
-from peewee import CharField, FloatField, ForeignKeyField, Model, chunked
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import ResourceViewModel
+from peewee import CharField, FloatField
 
 from chebi.chebi import Chebi
-from rhea.rhea import Rhea
 
 ####################################################################################
 #
@@ -44,23 +42,28 @@ class Compound(Entity):
 
 
     #Inserts
-    def insert_name(list__, key):
+    @classmethod
+    def insert_name(cls, list__, key):
         for comp in list__:
             comp.set_name(comp.data[key])
 
-    def insert_source_accession(list__, key):
+    @classmethod
+    def insert_source_accession(cls, list__, key):
         for comp in list__:
             comp.set_source_accession(comp.data[key])
 
-    def insert_formula(list__, key):
+    @classmethod
+    def insert_formula(cls, list__, key):
         for comp in list__:
             comp.set_formula(key)
     
-    def insert_mass(list__, key):
+    @classmethod
+    def insert_mass(cls, list__, key):
         for comp in list__:
             comp.set_mass(comp.data[key])
 
-    def insert_charge(list__, key):
+    @classmethod
+    def insert_charge(cls, list__, key):
         for comp in list__:
             comp.set_charge(comp.data[key])
 

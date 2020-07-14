@@ -1,13 +1,10 @@
-import os, sys
-from biota.entity import Entity
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
-from peewee import CharField, Model, chunked, ForeignKeyField, ManyToManyField, DeferredThroughModel, DeferredForeignKey
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import Model, ResourceViewModel, DbManager
+from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 from biota.ontology import Ontology
 from onto.ontology import Onto
-from pronto import Ontology as Ont, Xref, SynonymType, Subset, PropertyValue, LiteralPropertyValue
 
 ####################################################################################
 #
@@ -41,15 +38,18 @@ class ECO(Ontology):
         return(vals)
     
     #Inserts
-    def insert_definition(list__, key):
+    @classmethod
+    def insert_definition(cls, list__, key):
         for eco in list__:
             eco.set_definition(eco.data[key])
 
-    def insert_eco_id(list__, key):
+    @classmethod
+    def insert_eco_id(cls, list__, key):
         for eco in list__:
             eco.set_eco_id(eco.data[key])
 
-    def insert_name(list__, key):
+    @classmethod
+    def insert_name(cls, list__, key):
         for eco in list__:
             eco.set_name(eco.data[key])
     

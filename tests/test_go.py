@@ -2,25 +2,17 @@ import sys
 import os
 import unittest
 
-from peewee import CharField, chunked
-from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
 from gws.prism.controller import Controller
-
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
+from gws.settings import Settings
 from biota.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
-from manage import settings
 
 ############################################################################################
 #
 #                                        TestGO
 #                                         
 ############################################################################################
-
-input_db_dir = settings.get_data("biota_db_path")
+settings = Settings.retrieve()
+test_data_path = settings.get_data("biota_test_data_dir")
 
 class TestGO(unittest.TestCase):
     @classmethod
@@ -45,7 +37,7 @@ class TestGO(unittest.TestCase):
             go_data = "go_test.obo",
         )
 
-        GO.create_go(input_db_dir, **files_test)
+        GO.create_go(test_data_path, **files_test)
         Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         # --------- Testing views --------- #

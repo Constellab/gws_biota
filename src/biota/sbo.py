@@ -1,13 +1,10 @@
-import os, sys
-from biota.entity import Entity
 from gws.prism.controller import Controller
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel,ResourceViewModel, Resource, DbManager
-from peewee import CharField, Model, chunked, ForeignKeyField, ManyToManyField, DeferredThroughModel, DeferredForeignKey
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import ResourceViewModel, DbManager
+from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 from onto.ontology import Onto
 from biota.ontology import Ontology
-from peewee import CharField, chunked
 
 ####################################################################################
 #
@@ -40,15 +37,18 @@ class SBO(Ontology):
         return(vals)
     
     #Inserts
-    def insert_definition(list__, key):
+    @classmethod
+    def insert_definition(cls, list__, key):
         for sbo in list__:
             sbo.set_definition(sbo.data[key])
     
-    def insert_name(list__, key):
+    @classmethod
+    def insert_name(cls, list__, key):
         for sbo in list__:
             sbo.set_name(sbo.data[key])
 
-    def insert_sbo_id(list__, key):
+    @classmethod
+    def insert_sbo_id(cls, list__, key):
         for sbo in list__:
             sbo.set_sbo_id(sbo.data[key])    
     
@@ -67,8 +67,8 @@ class SBO(Ontology):
     #create sbo
     @classmethod
     def create_sbo(cls, input_db_dir, **files):
-        Onto.correction_of_SBO_OBO_file(input_db_dir, files["sbo_data"], 'SBO_out_test.obo')
-        ontology = Onto.create_ontology_from_owl(input_db_dir, 'SBO_out_test.obo')
+        Onto.correction_of_sbo_obo_file(input_db_dir, files["sbo_data"], 'sbo_out_test.obo')
+        ontology = Onto.create_ontology_from_owl(input_db_dir, 'sbo_out_test.obo')
         list_sbo = Onto.parse_sbo_terms_from_ontology(ontology)
 
         sbos = [cls(data = dict_) for dict_ in list_sbo]

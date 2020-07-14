@@ -7,10 +7,10 @@ from biota.element import Element
 ####################################################################################
 
 class Relation(Element):
-    _table_name = 'relations'
+    _table_name = 'relation'
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
     class Meta:
-        table_name = 'relations'
+        table_name = 'relation'

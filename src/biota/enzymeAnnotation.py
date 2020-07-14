@@ -1,19 +1,14 @@
-import sys
-import os
-import unittest
+from gws.prism.model import ResourceViewModel
+from gws.prism.controller import Controller
+from gws.prism.view import JSONViewTemplate
 
 from biota.annotation import Annotation
 from biota.go import GO
 from biota.eco import ECO
 from biota.enzyme import Enzyme
 from biota.taxonomy import Taxonomy
-from annotation.annotation import QuickGOAnnotation
-from biota.annotation import Annotation
-from gws.prism.app import App
-from gws.prism.view import HTMLViewTemplate, JSONViewTemplate, PlainTextViewTemplate
-from gws.prism.model import Model, ViewModel, ResourceViewModel, Resource, DbManager
-from gws.prism.controller import Controller
-from peewee import IntegerField, DateField, DateTimeField, CharField, ForeignKeyField
+from quickgo.quickgo import QuickGOAnnotation
+from peewee import CharField, ForeignKeyField
 
 ####################################################################################
 #
@@ -71,19 +66,23 @@ class EnzymeAnnotation(Annotation):
                 print("could not find the taxonomy term: " + str(self.data['taxon id']))
 
     #Inserts
-    def insert_gene_product_id(list__, key):
+    @classmethod
+    def insert_gene_product_id(cls, list__, key):
         for element in list__:
             element.set_gene_product_id(element.data[key])
     
-    def insert_ec_id(list__, key):
+    @classmethod
+    def insert_ec_id(cls, list__, key):
         for element in list__:
             element.set_ec_id(element.data[key])
 
-    def insert_reference(list__, key):
+    @classmethod
+    def insert_reference(cls, list__, key):
         for element in list__:
             element.set_reference(element.data[key])
     
-    def insert_assignment(list__, key):
+    @classmethod
+    def insert_assignment(cls, list__, key):
         for element in list__:
             element.set_assigned_by(element.data[key])
     
@@ -91,6 +90,7 @@ class EnzymeAnnotation(Annotation):
     def create_annotation(cls):
         list_annotation = []
         q = Enzyme.select().where(Enzyme.data['uniprot'] != 'null')
+        
         for enzyme in q:
             list_ann = QuickGOAnnotation.get_tsv_file_from_uniprot_id(str(enzyme.uniprot_id))
             try:
@@ -98,14 +98,18 @@ class EnzymeAnnotation(Annotation):
                     list_annotation.append(element)
             except:
                 print('list empty')
-        annnotations = [cls(data = d) for d in list_annotation]
-        cls.insert_gene_product_id(annnotations, 'gene product id')
-        cls.insert_reference(annnotations, 'reference')
-        cls.insert_assignment(annnotations, 'assigned by')
+        
+        annotations = [cls(data = d) for d in list_annotation]
+
+        cls.insert_gene_product_id(annotations, 'gene product id')
+        cls.insert_reference(annotations, 'reference')
+        cls.insert_assignment(annotations, 'assigned by')
         Controller.save_all()
-        for annotation in annnotations:
+
+        for annotation in annotations:
             annotation.set_go_term()
             annotation.set_evidence()
+        
         Controller.save_all()
 
 class EnzymeAnnotationJSONStandardViewModel(ResourceViewModel):

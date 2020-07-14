@@ -5,22 +5,10 @@ import copy
 import asyncio
 
 #import from gws
-from gws.prism.app import App
-from gws.prism.model import Process, Resource
 from gws.prism.controller import Controller
 
-
-#import from pewee
-from peewee import CharField, ForeignKeyField, chunked
-from peewee import CharField, ForeignKeyField, chunked
-
-#import from starlette
-from starlette.requests import Request
-from starlette.responses import JSONResponse, HTMLResponse
-from starlette.testclient import TestClient
-
 #import from biota
-from manage import settings
+from gws.settings import Settings
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
@@ -45,8 +33,7 @@ from timeit import default_timer
 #                                        class test_main_reaction
 #                                         
 ###########################################################################################
-
-input_db_dir = settings.get_data("biota_db_input_path")
+settings = Settings.retrieve()
 enzyme_bto = Enzyme.bto.get_through_model()
 
 files_model = dict(
@@ -85,7 +72,7 @@ class TestMain(unittest.TestCase):
     def test_db_object(self):
         files = dict(
             go_data = "go.obo",
-            sbo_data = "SBO_OBO.obo",
+            sbo_data = "sbo.obo",
             chebi_data = "chebi.obo",
             bto_json_data = "bto.json",
             chebi_compound_file = "compounds.tsv",
@@ -103,13 +90,15 @@ class TestMain(unittest.TestCase):
         start = default_timer()
 
         # ------------- Create BTO ------------- #
-        BTO.create_bto(input_db_dir, **files)
+        bto_input_db_dir = settings.get_data("bto_input_db_dir")
+        BTO.create_bto(bto_input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         duration  = default_timer() - start
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
 
         # ------------- Create ChebiOntology ------------- #
+        chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
         ChebiOntology.create_chebis(input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
@@ -118,19 +107,22 @@ class TestMain(unittest.TestCase):
         print("chebiOntology has been loaded in " + str(duration) + " sec")
 
         # ------------- Create Compound ------------- #
-        Compound.create_compounds_from_files(input_db_dir, **files)
+        chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
+        Compound.create_compounds_from_files(chebi_input_db_dir, **files)
         Controller.save_all()
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         duration  = default_timer() - duration
         print("compound has been loaded in " + str(duration) + " sec")
 
         # ------------- Create Enzyme ------------- #
-        Enzyme.create_enzymes_from_dict(input_db_dir, **files)
+        brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir")
+        Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
         Controller.save_all()
         duration  = default_timer() - duration
         print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
 
         # ------------- Create Reactions ------------- #
-        Reaction.create_reactions_from_files(input_db_dir, **files)
+        rhea_input_db_dir = settings.get_data("rhea_input_db_dir")
+        Reaction.create_reactions_from_files(rhea_input_db_dir, **files)
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
         print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
