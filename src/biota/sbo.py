@@ -75,7 +75,7 @@ class SBO(Ontology):
         cls.insert_sbo_id(sbos,"id")
         cls.insert_name(sbos, "name")
         cls.insert_definition(sbos, "definition")
-        Controller.save_all()
+        cls.save_all()
 
         vals = []
         for sbo in sbos:

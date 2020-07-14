@@ -91,7 +91,7 @@ class BTO(Ontology):
         btos = [cls(data = dict_) for dict_ in list_bto]
         cls.insert_bto_id(btos,"id")
         cls.insert_label(btos, "label")
-        Controller.save_all()
+        cls.save_all()
 
         vals = []
         for bt in btos:

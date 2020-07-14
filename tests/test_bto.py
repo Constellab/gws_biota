@@ -40,7 +40,6 @@ class TestBTO(unittest.TestCase):
         )
 
         BTO.create_bto(test_data_path, **files_test)
-        Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         # --------- Testing views --------- #
         bto1 = BTO.get(BTO.bto_id == 'BTO_0000002')

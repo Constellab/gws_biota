@@ -93,15 +93,13 @@ class TestMain(unittest.TestCase):
         # ------------- Create BTO ------------- #
         bto_input_db_dir = settings.get_data("bto_input_db_dir")
         BTO.create_bto(bto_input_db_dir, **files)
-        Controller.save_all()
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         duration  = default_timer() - start
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
 
         # ------------- Create ChebiOntology ------------- #
         chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
-        ChebiOntology.create_chebis(input_db_dir, **files)
-        Controller.save_all()
+        ChebiOntology.create_chebis(chebi_input_db_dir, **files)
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
@@ -110,7 +108,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create Compound ------------- #
         chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
         Compound.create_compounds_from_files(chebi_input_db_dir, **files)
-        Controller.save_all()
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         duration  = default_timer() - duration
         print("compound has been loaded in " + str(duration) + " sec")
@@ -118,7 +115,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create Enzyme ------------- #
         brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir")
         Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
-        Controller.save_all()
         duration  = default_timer() - duration
         print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
 

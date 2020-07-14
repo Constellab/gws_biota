@@ -39,7 +39,6 @@ class TestECO(unittest.TestCase):
         )
 
         ECO.create_eco(test_data_path, **files_test)
-        Controller.save_all()
         self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
         
         # --------- Testing views --------- #

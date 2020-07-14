@@ -38,7 +38,6 @@ class TestGO(unittest.TestCase):
         )
 
         GO.create_go(test_data_path, **files_test)
-        Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         # --------- Testing views --------- #
         go1 = GO.get(GO.go_id == 'GO:0000006')

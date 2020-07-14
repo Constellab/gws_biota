@@ -27,16 +27,11 @@ class TestSBO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        files = dict(
-            sbo_data = "sbo.obo",
-        )
-
         files_test = dict(
             sbo_data = "sbo_test.obo",
         )
     
         SBO.create_sbo(test_data_path, **files_test)
-        Controller.save_all()
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
         

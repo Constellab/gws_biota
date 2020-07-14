@@ -72,10 +72,12 @@ class Compound(Entity):
     def create_compounds_from_files(cls, input_db_dir, **files):
         list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
         cls.create_compounds(list_comp)
-        Controller.save_all()
+        cls.save_all()
 
         list_chemical = Chebi.parse_csv_from_file(input_db_dir, files['chebi_chemical_data_file'])
         cls.set_chemicals(list_chemical)
+        cls.save_all()
+
         return(list_comp)
 
     @classmethod
@@ -83,7 +85,6 @@ class Compound(Entity):
         compounds = [cls(data = dict_) for dict_ in list_compound]
         cls.insert_source_accession(compounds, 'chebi_accession')
         cls.insert_name(compounds, 'name')
-        status = 'ok'
         return(compounds)
     
     @classmethod

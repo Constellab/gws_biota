@@ -73,7 +73,7 @@ class ECO(Ontology):
         cls.insert_eco_id(ecos,"id")
         cls.insert_name(ecos, "name")
         cls.insert_definition(ecos, "definition")
-        Controller.save_all()
+        cls.save_all()
 
         vals = []
         for eco in ecos:

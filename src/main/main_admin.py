@@ -95,10 +95,9 @@ class TestMain(unittest.TestCase):
         )
 
         GO.create_go(test_data_path, **files)
-        Controller.save_all()
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
         go1 = GO.get(GO.go_id == 'GO:0000001')
         go1_view_model = GOJSONViewModel(go1)
-        Controller.save_all()
+        GOJSONViewModel.save_all()
         view = go1_view_model.render()
         self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')

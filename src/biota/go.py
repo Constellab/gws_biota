@@ -83,7 +83,7 @@ class GO(Ontology):
         cls.insert_name(gos, "name")
         cls.insert_namespace(gos, "namespace")
         cls.insert_definition(gos, "definition")
-        Controller.save_all()
+        cls.save_all()
 
         vals = []
         for go in gos:

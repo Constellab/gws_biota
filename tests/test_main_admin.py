@@ -126,8 +126,8 @@ class TestMain(unittest.TestCase):
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
 
         # ------------- Create ECO ------------- #
-        ECO.create_eco(input_db_dir, **files)
-        Controller.save_all()
+        eco_input_db_dir = settings.get_data("eco_input_db_dir")
+        ECO.create_eco(eco_input_db_dir, **files)
         self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
         duration  = default_timer() - duration
         print("eco and eco_ancestors have been loaded in " + str(duration) + " sec")
@@ -152,7 +152,6 @@ class TestMain(unittest.TestCase):
         # ------------- Create Compound ------------- #
         chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
         Compound.create_compounds_from_files(chebi_input_db_dir, **files)
-        Controller.save_all()
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         duration  = default_timer() - duration
         print("compound has been loaded in " + str(duration) + " sec")

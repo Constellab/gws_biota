@@ -85,7 +85,7 @@ class Reaction(Relation):
         cls.__set_direction_from_list(list_LR, 'LR')
         cls.__set_direction_from_list(list_RL, 'RL')
         cls.__set_direction_from_list(list_BI, 'BI')
-        Controller.save_all()
+        cls.save_all()
 
         list_ecocyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2ecocyc_file'])
         list_metacyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2metacyc_file'])
@@ -105,7 +105,7 @@ class Reaction(Relation):
 
         #cls.__get_go_from_GO(list_react)
         
-        Controller.save_all()
+        cls.save_all()
 
     @classmethod
     def __create_reactions(cls, list_reaction):
@@ -113,16 +113,16 @@ class Reaction(Relation):
         for react in reactions:
             if('entry' in react.data.keys()):
                 react.set_source_accession(react.data['entry'])
-        Controller.save_all()
+        
+        cls.save_all()
 
         for react in reactions:
             react.set_substrates()
             react.set_products()
             if('enzyme' in react.data.keys()):
                 react.set_enzymes()
-        status = 'ok'
         
-        Controller.save_all()
+        cls.save_all()
         return(reactions)
     
     @classmethod

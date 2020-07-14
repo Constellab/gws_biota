@@ -109,11 +109,15 @@ class Enzyme(Protein):
         cls.insert_ec(enzymes, 'ec')
         cls.insert_organism(enzymes, 'organism')
         cls.insert_uniprot_id(enzymes, 'uniprot')
-        Controller.save_all()
+        cls.save_all()
+
         for enz in enzymes:
             enz.set_taxonomy()
             if('st' in enz.data.keys()):
                 enz.set_tissues()
+        
+        cls.save_all()
+        
         return(list_dict)
     
     class Meta():

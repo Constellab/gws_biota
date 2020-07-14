@@ -30,7 +30,7 @@ class Taxonomy(Resource):
     def set_rank(self, rank__):
         self.rank = rank__
     
-    def set_ancestor(self):
+    def set_ancestor(self, save=True):
         if('ancestor' in self.data.keys()):
             try: 
                 parent = Taxonomy.get(Taxonomy.tax_id == self.data['ancestor'])
@@ -38,7 +38,8 @@ class Taxonomy(Resource):
                 self.ancestor = parent
             except:
                 print("could not find the parent of: " + str(self.data['tax_id']))
-        self.save()     
+        if save:
+            self.save()     
 
     #Inserts
     @classmethod
@@ -59,7 +60,8 @@ class Taxonomy(Resource):
     @classmethod
     def insert_ancestor(cls, list__, key):
         for tax in list__:
-            tax.set_ancestor(tax.data[key])
+            tax.set_ancestor(tax.data[key], save=False)
+        cls.save_all()
 
     #Creation
     @classmethod
@@ -69,8 +71,10 @@ class Taxonomy(Resource):
         cls.insert_tax_id(taxons, 'tax_id')
         cls.insert_name(taxons, 'name')
         cls.insert_rank(taxons, 'rank')
-        Controller.save_all()
+        cls.save_all()
+
         cls.__set_taxons_ancestors(taxons)
+        cls.save_all()
         return(list_taxons)
 
     @classmethod
@@ -81,10 +85,12 @@ class Taxonomy(Resource):
             cls.insert_tax_id(taxons, 'tax_id')
             cls.insert_name(taxons, 'name')
             cls.insert_rank(taxons, 'rank')
-            Controller.save_all()
+            cls.save_all()
+
             cls.__set_taxons_ancestors(taxons)
-            Controller.save_all()
+            cls.save_all()
             print('The superkingdom ' + superkingdom + ' has been correctly loaded')
+        
         status = 'ok'
         return(status)
     
