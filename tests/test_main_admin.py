@@ -168,15 +168,15 @@ class TestMain(unittest.TestCase):
         Controller.save_all()
         duration  = default_timer() - duration
         print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
-
+        
+        """
         # ------------- Create EnzymeAnnotation ------------- #
         EnzymeAnnotation.create_annotation()
         duration  = default_timer() - duration
         print("enzymeAnnotation has been loaded in " + str(duration) + " sec")
-        
         """
         # ------------- Create Reactions ------------- #
         Reaction.create_reactions_from_files(input_db_dir, **files)
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
         print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
-        """
+        
