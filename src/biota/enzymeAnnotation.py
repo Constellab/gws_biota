@@ -96,6 +96,7 @@ class EnzymeAnnotation(Annotation):
             try:
                 for element in list_ann:
                     list_annotation.append(element)
+                print('Results for ' + enzyme.uniprot_id + ' have been collected successfully')
             except:
                 print('list empty')
         

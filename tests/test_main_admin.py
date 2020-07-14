@@ -12,6 +12,7 @@ from gws.settings import Settings
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
+from biota.eco import ECO
 from biota.chebiOntology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.compound import Compound
@@ -123,7 +124,14 @@ class TestMain(unittest.TestCase):
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         duration  = default_timer() - duration
         print("bto and bto_ancestors have been loaded in " + str(duration) + " sec")
-         
+
+        # ------------- Create ECO ------------- #
+        ECO.create_eco(input_db_dir, **files)
+        Controller.save_all()
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
+        duration  = default_timer() - duration
+        print("eco and eco_ancestors have been loaded in " + str(duration) + " sec")
+
         # ------------- Create ChebiOntology ------------- #
         chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
         ChebiOntology.create_chebis(chebi_input_db_dir, **files)
@@ -155,15 +163,15 @@ class TestMain(unittest.TestCase):
         Controller.save_all()
         duration  = default_timer() - duration
         print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
-
+        
+        """
         # ------------- Create EnzymeAnnotation ------------- #
         EnzymeAnnotation.create_annotation()
         duration  = default_timer() - duration
         print("enzymeAnnotation has been loaded in " + str(duration) + " sec")
-        
         """
         # ------------- Create Reactions ------------- #
         Reaction.create_reactions_from_files(input_db_dir, **files)
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
         print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
-        """
+        
