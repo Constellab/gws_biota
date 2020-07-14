@@ -76,14 +76,25 @@ class ECO(Ontology):
         cls.save_all()
 
         vals = []
-        for eco in ecos:
-            if ('ancestors' in eco.data.keys()):
-                val = eco.__get_ancestors_query()
-                if len(val) != 0:
-                    for v in val:
-                        vals.append(v)
-        ECOAncestor.insert_many(vals).execute()
-        return(list_eco)
+        bulk_size = 100
+
+        with DbManager.db.atomic() as transaction:
+            try:
+                for eco in ecos:
+                    if 'ancestors' in eco.data.keys():
+                        val = eco.__get_ancestors_query()
+                        if len(val) != 0:
+                            for v in val:
+                                vals.append(v)
+                                if len(vals) == bulk_size:
+                                    ECOAncestor.insert_many(vals).execute()
+                                    vals = []
+                            
+                            if len(vals) != 0:
+                                ECOAncestor.insert_many(vals).execute()
+
+            except:
+                transaction.rollback()
 
     class Meta():
         table_name = 'eco'

@@ -10,7 +10,7 @@
         "taxonomy"      : "../taxonomy-py",
         "chebi"         : "../chebi-py",
         "brenda"        : "../brenda-py",
-        "annotation"    : "../quickgo-py"
+        "quickgo"    : "../quickgo-py"
     },
     "statics"       : {
         "/static/pub-biota"   : "./public/static"

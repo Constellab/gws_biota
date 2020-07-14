@@ -86,14 +86,27 @@ class GO(Ontology):
         cls.save_all()
 
         vals = []
-        for go in gos:
-            if ('ancestors' in go.data.keys()):
-                val = go.__get_ancestors_query()
-                if len(val) != 0:
-                    for v in val:
-                        vals.append(v)
-        GOAncestor.insert_many(vals).execute()
-        return(list_go)
+        bulk_size = 100
+
+        with DbManager.db.atomic() as transaction:
+            try:
+                for go in gos:
+                    if 'ancestors' in go.data.keys():
+                        val = go.__get_ancestors_query()
+                        if len(val) != 0:
+                            for v in val:
+                                vals.append(v)
+                                if len(vals) == bulk_size:
+                                    print("---------")
+                                    print(len(vals))
+                                    GOAncestor.insert_many(vals).execute()
+                                    vals = []
+                            
+                            if len(vals) != 0:
+                                GOAncestor.insert_many(vals).execute()
+
+            except:
+                transaction.rollback()
 
     class Meta():
         table_name = 'go'

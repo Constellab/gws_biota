@@ -52,11 +52,23 @@ class BTO(Ontology):
 
     def set_ancestors(self):
         vals = []
-        for i in range(0,len(self.data['ancestors'])):
-            if (self.data['ancestors'][i] != self.bto_id):
-                val = {'bto': self.id, 'ancestor': BTO.get(BTO.bto_id == self.data['ancestors'][i]).id }
-                vals.append(val)
-        BTOAncestor.insert_many(vals).execute()
+        bulk_size = 100
+
+        with DbManager.db.atomic() as transaction:
+            try:
+                for i in range(0,len(self.data['ancestors'])):
+                    if (self.data['ancestors'][i] != self.bto_id):
+                        val = {'bto': self.id, 'ancestor': BTO.get(BTO.bto_id == self.data['ancestors'][i]).id }
+                        vals.append(val)
+                        if len(vals) == bulk_size:
+                            BTOAncestor.insert_many(vals).execute()
+                            vals = []
+                
+                if len(vals) != 0:
+                    BTOAncestor.insert_many(vals).execute()
+
+            except:
+                transaction.rollback()
 
     #Inserts
     @classmethod
@@ -94,13 +106,24 @@ class BTO(Ontology):
         cls.save_all()
 
         vals = []
-        for bt in btos:
-            val = bt.__get_ancestors_query()
-            if len(val) != 0:
-                for v in val:
-                    vals.append(v)
-        BTOAncestor.insert_many(vals).execute()
-        return(list_bto)
+        bulk_size = 100
+
+        with DbManager.db.atomic() as transaction:
+            try:
+                for bt in btos:
+                    val = bt.__get_ancestors_query()
+                    if len(val) != 0:
+                        for v in val:
+                            vals.append(v)
+                            if len(vals) == bulk_size:
+                                BTOAncestor.insert_many(vals).execute()
+                                vals = []
+                        
+                        if len(vals) != 0:
+                            BTOAncestor.insert_many(vals).execute()
+
+            except:
+                transaction.rollback()
   
     class Meta():
         table_name = 'bto'

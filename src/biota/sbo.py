@@ -78,15 +78,25 @@ class SBO(Ontology):
         cls.save_all()
 
         vals = []
-        for sbo in sbos:
-            if ('ancestors' in sbo.data.keys()):
-                val = sbo.__get_ancestors_query()
-                if len(val) != 0:
-                    for v in val:
-                        vals.append(v)
-        SBOAncestor.insert_many(vals).execute()
+        bulk_size = 100
 
-        return(list_sbo)
+        with DbManager.db.atomic() as transaction:
+            try:
+                for sbo in sbos:
+                    if 'ancestors' in sbo.data.keys():
+                        val = sbo.__get_ancestors_query()
+                        if len(val) != 0:
+                            for v in val:
+                                vals.append(v)
+                                if len(vals) == bulk_size:
+                                    SBOAncestor.insert_many(vals).execute()
+                                    vals = []
+                            
+                            if len(vals) != 0:
+                                SBOAncestor.insert_many(vals).execute()
+
+            except:
+                transaction.rollback()
 
     class Meta():
         table_name = 'sbo'
