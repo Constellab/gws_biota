@@ -17,8 +17,8 @@ class SBO(Ontology):
     name = CharField(null=True, index=True)
     definition = CharField(null=True, index=True)
     _table_name = 'sbo'
-    
-    #Setters
+
+    # setters
     def set_definition(self, def__):
         self.definition = def__
 
@@ -36,7 +36,7 @@ class SBO(Ontology):
                 vals.append(val)
         return(vals)
     
-    #Inserts
+    # inserts
     @classmethod
     def insert_definition(cls, list__, key):
         for sbo in list__:
@@ -52,7 +52,7 @@ class SBO(Ontology):
         for sbo in list__:
             sbo.set_sbo_id(sbo.data[key])    
     
-    #Create and drop methods
+    # create and drop table methods
     @classmethod
     def create_table(cls, *arg, **kwargs):
         super().create_table(*arg, **kwargs)
@@ -64,7 +64,7 @@ class SBO(Ontology):
         super().drop_table(*arg, **kwargs)
 
 
-    #create sbo
+    # create sbo
     @classmethod
     def create_sbo(cls, input_db_dir, **files):
         Onto.correction_of_sbo_file(input_db_dir, files["sbo_data"], 'sbo_out_test.obo')
@@ -94,6 +94,7 @@ class SBO(Ontology):
                             
                             if len(vals) != 0:
                                 SBOAncestor.insert_many(vals).execute()
+                                vals = []
 
             except:
                 transaction.rollback()

@@ -28,7 +28,7 @@ class Enzyme(Protein):
     uniprot_id = CharField(null=True, index=True)
     _table_name = 'enzyme'
 
-    #Setters
+    # setters
     def set_ec(self, ec__):
         self.ec = ec__
     
@@ -61,7 +61,7 @@ class Enzyme(Protein):
     def set_uniprot_id(self, uniprot_id__):
         self.uniprot_id = uniprot_id__
 
-    #Inserts
+    # inserts
     @classmethod
     def insert_protein_id(cls, list__, key):
         for comp in list__:

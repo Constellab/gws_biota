@@ -8,7 +8,7 @@ from biota.element import Element
 
 class Relation(Element):
     _table_name = 'relation'
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     

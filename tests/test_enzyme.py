@@ -36,7 +36,6 @@ class TestEnzyme(unittest.TestCase):
         )
 
         Enzyme.create_enzymes_from_dict(test_data_path, **files_test)
-        Controller.save_all()
         self.assertEqual(Enzyme.get(Enzyme.ec == '1.4.3.7').organism, 'Candida boidinii')
         self.assertEqual(Enzyme.get(Enzyme.ec == '3.5.1.43').organism, 'Bacillus circulans')
         

@@ -39,7 +39,6 @@ class TestCompound(unittest.TestCase):
         )
 
         Compound.create_compounds_from_files(test_data_path, **files_test)
-        Controller.save_all()
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
         

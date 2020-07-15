@@ -41,8 +41,6 @@ class TestSBO(unittest.TestCase):
         sbo1_premium_view_model = SBOPremiumJSONViewModel(sbo1)
         view1 = sbo1_standard_view_model.render()
         view2 = sbo1_premium_view_model.render()
-        print(view1)
-        print(view2)
         self.assertEqual(view1,"""
             {
             "id": SBO:0000004,

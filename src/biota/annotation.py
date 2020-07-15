@@ -8,8 +8,7 @@ from gws.prism.model import Resource
 
 class Annotation(Resource):
     _table_name = 'annotation'
-    pass
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         

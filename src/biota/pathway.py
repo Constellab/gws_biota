@@ -13,12 +13,9 @@ class Pathway(Resource):
     name = CharField(null=True, index=True)
     compartments = CharField(null=True, index=True)
     version = CharField(null=True, index=True)
-    _table_name = 'pathways'
+    _table_name = 'pathway'
 
-    class Meta():
-        table_name = 'pathways'
-
-    # ------ Setters ------ #
+    # setters
     def set_path_id(self, id):
         self.path_id = id
 
@@ -31,5 +28,8 @@ class Pathway(Resource):
     def ser_version(self, version):
         self.version = version
 
+    class Meta():
+        table_name = 'pathway'
+        
 class PathwayJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{"id": {{view_model.model.path_id}}, "name": {{view_model.model.name}},"compartments": {{view_model.model.compartments}}, "version": {{view_model.model.compartments}} }') 

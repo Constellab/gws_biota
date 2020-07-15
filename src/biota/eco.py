@@ -17,9 +17,8 @@ class ECO(Ontology):
     name = CharField(null=True, index=True)
     definition = CharField(null=True, index=True)
     _table_name = 'eco'
-    pass
 
-    #Setters
+    # setters
     def set_definition(self, def__):
         self.definition = def__
 
@@ -37,7 +36,7 @@ class ECO(Ontology):
                 vals.append(val)
         return(vals)
     
-    #Inserts
+    # inserts
     @classmethod
     def insert_definition(cls, list__, key):
         for eco in list__:
@@ -53,7 +52,7 @@ class ECO(Ontology):
         for eco in list__:
             eco.set_name(eco.data[key])
     
-    # Create and drop methods
+    # create and drop table methods
     @classmethod
     def create_table(cls, *arg, **kwargs):
         super().create_table(*arg, **kwargs)
@@ -64,7 +63,7 @@ class ECO(Ontology):
         ECOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
     
-    #create eco
+    # create eco
     @classmethod
     def create_eco(cls, input_db_dir, **files_test):
         onto_eco = Onto.create_ontology_from_obo(input_db_dir, files_test["eco_data"])
@@ -92,6 +91,7 @@ class ECO(Ontology):
                             
                             if len(vals) != 0:
                                 ECOAncestor.insert_many(vals).execute()
+                                vals = []
 
             except:
                 transaction.rollback()

@@ -9,7 +9,6 @@ from biota.organism import Organism
 
 class Regulation(Organism):
     _table_name = 'regulation'
-    pass
 
     class Meta():
         table_name = 'regulation'

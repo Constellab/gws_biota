@@ -24,11 +24,9 @@ class EnzymeAnnotation(Annotation):
     reference = CharField(null=True, index=True)
     taxonomy = ForeignKeyField(Taxonomy, backref='taxonomy_associated', null = True)
     assigned_by = CharField(null=True, index=True)
-    
-    class Meta():
-        table_name = 'enzyme_annotations'
+    _table_name = 'enzyme_annotation'
 
-    #Setters
+    # setters
     def set_gene_product_id(self, gene):
         self.gene_product_id = gene
     
@@ -65,7 +63,7 @@ class EnzymeAnnotation(Annotation):
             except:
                 print("could not find the taxonomy term: " + str(self.data['taxon id']))
 
-    #Inserts
+    # inserts
     @classmethod
     def insert_gene_product_id(cls, list__, key):
         for element in list__:
@@ -112,6 +110,9 @@ class EnzymeAnnotation(Annotation):
             annotation.set_evidence()
         
         cls.save_all()
+
+        class Meta():
+            table_name = 'enzyme_annotation'
 
 class EnzymeAnnotationJSONStandardViewModel(ResourceViewModel):
     template = JSONViewTemplate("""

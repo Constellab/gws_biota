@@ -13,6 +13,6 @@ class Protein(Entity):
         super().__init__(*args, **kwargs)
 
     class Meta():
-        table_name = 'proteins'
+        table_name = 'protein'
 
 

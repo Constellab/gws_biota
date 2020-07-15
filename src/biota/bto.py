@@ -15,9 +15,7 @@ from onto.ontology import Onto
 class BTO(Ontology):
     bto_id = CharField(null=True, index=True)
     label = CharField(null=True, index=True)
-
     _table_name = 'bto'
-
 
     @property
     def ancestors(self):
@@ -34,8 +32,7 @@ class BTO(Ontology):
         Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
         Q.execute()
 
-
-    #Setters
+    # setters
     def set_bto_id(self, id):
         self.bto_id = id
 
@@ -70,7 +67,7 @@ class BTO(Ontology):
             except:
                 transaction.rollback()
 
-    #Inserts
+    # inserts
     @classmethod
     def insert_bto_id(cls,list__, key):
         for bto in list__:
@@ -96,7 +93,7 @@ class BTO(Ontology):
         BTOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
 
-    #create bto
+    # create bto
     @classmethod
     def create_bto(cls, input_db_dir, **files):
         list_bto = Onto.parse_bto_from_json(input_db_dir, files['bto_json_data'])
@@ -121,6 +118,7 @@ class BTO(Ontology):
                         
                         if len(vals) != 0:
                             BTOAncestor.insert_many(vals).execute()
+                            vals = []
 
             except:
                 transaction.rollback()

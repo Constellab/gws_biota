@@ -13,18 +13,16 @@ from chebi.chebi import Chebi
 class ChebiOntology(Ontology):
     chebi_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
-    #definition = CharField(null=True, index=True)
-    #xrefs = CharField(null=True, index=True)
     _table_name = 'chebi_ontology'
 
-    #Setters
+    # setters
     def set_chebi_id(self, id):
         self.chebi_id = id
     
     def set_name(self, name):
         self.name = name
     
-    #Inserts
+    # inserts
     @classmethod
     def insert_chebi_id(cls, list__, key):
         for chebs in list__:

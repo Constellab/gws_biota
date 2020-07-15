@@ -18,9 +18,8 @@ class GO(Ontology):
     namespace = CharField(null=True, index=True)
     definition = CharField(null=True, index=True)
     _table_name = 'go'
-    pass
 
-    #Setters
+    # setters
     def set_definition(self, def__):
         self.definition = def__
 
@@ -41,7 +40,7 @@ class GO(Ontology):
                 vals.append(val)
         return(vals)
     
-    #Inserts
+    # inserts
     @classmethod
     def insert_definition(cls, list__, key):
         for go in list__:
@@ -62,7 +61,7 @@ class GO(Ontology):
         for go in list__:
             go.set_namespace(go.data[key])
 
-    # Create and drop methods
+    #  reate and drop table methods
     @classmethod
     def create_table(cls, *arg, **kwargs):
         super().create_table(*arg, **kwargs)
@@ -73,7 +72,7 @@ class GO(Ontology):
         GOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
 
-    #create go
+    # create go
     @classmethod
     def create_go(cls, input_db_dir, **files_test):
         onto_go = Onto.create_ontology_from_obo(input_db_dir, files_test["go_data"])
@@ -104,6 +103,7 @@ class GO(Ontology):
                             
                             if len(vals) != 0:
                                 GOAncestor.insert_many(vals).execute()
+                                vals = []
 
             except:
                 transaction.rollback()

@@ -33,7 +33,7 @@ class Reaction(Relation):
     enzymes = ManyToManyField(Enzyme, backref='is_enzyme_of', through_model = ReactionEnzymeDeferred)
     _table_name = 'reactions'
 
-    #Setters
+    # setters
     def set_biocyc_ids(self, ext_id_):
         if(type(self.biocyc_ids) == list):
             print(self.biocyc_ids)
@@ -73,7 +73,7 @@ class Reaction(Relation):
             comps = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
             self.substrates.add(comps)
     
-    #Creation
+    # create
     @classmethod
     def create_reactions_from_files(cls, input_db_dir, **files):
         list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
@@ -209,7 +209,7 @@ class Reaction(Relation):
         return(status)
 
     class Meta:
-        table_name = 'reactions'
+        table_name = 'reaction'
 
 
 class ReactionSubstrate(PWModel):

@@ -16,11 +16,11 @@ class Taxonomy(Resource):
     rank = CharField(null=True, index=True)
     ancestor = ForeignKeyField('self', backref='is_child_of', null = True)
     _table_name = 'taxonomy'
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    #Setters
+    # setters
     def set_tax_id(self, tax_id__):
         self.tax_id = tax_id__
     
@@ -41,7 +41,7 @@ class Taxonomy(Resource):
         if save:
             self.save()     
 
-    #Inserts
+    # inserts
     @classmethod
     def insert_tax_id(cls, list__, key):
         for tax in list__:
@@ -63,7 +63,7 @@ class Taxonomy(Resource):
             tax.set_ancestor(tax.data[key], save=False)
         cls.save_all()
 
-    #Creation
+    # create
     @classmethod
     def create_taxons_from_list(cls, organism):
         list_taxons = Taxo.parse_taxonomy_from_ncbi(organism)

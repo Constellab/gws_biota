@@ -21,10 +21,7 @@ class Compound(Entity):
     charge = FloatField(null=True, index=True)
     _table_name = 'compound'
 
-    class Meta:
-        table_name = 'compounds'
-
-    #Setters
+    # setters
     def set_name(self, name__):
         self.name = name__
     
@@ -41,7 +38,7 @@ class Compound(Entity):
         self.charge = charge__
 
 
-    #Inserts
+    # inserts
     @classmethod
     def insert_name(cls, list__, key):
         for comp in list__:
@@ -67,7 +64,7 @@ class Compound(Entity):
         for comp in list__:
             comp.set_charge(comp.data[key])
 
-    #Creation
+    # create
     @classmethod
     def create_compounds_from_files(cls, input_db_dir, **files):
         list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
@@ -124,6 +121,9 @@ class Compound(Entity):
                     print('can not find the compound ' + str(dict_["entry"]) + ' to set reactions')
         status = 'ok'
         return(status)
+
+    class Meta:
+        table_name = 'compound'
 
 class CompoundJSONStandardViewModel(ResourceViewModel):
     template = JSONViewTemplate("""
