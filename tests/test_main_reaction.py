@@ -12,7 +12,7 @@ from gws.settings import Settings
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
-from biota.chebiOntology import ChebiOntology
+from biota.chebi_ontology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.compound import Compound
 from biota.enzyme import Enzyme
@@ -104,7 +104,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
-        print("chebiOntology has been loaded in " + str(duration) + " sec")
+        print("chebi_ontology has been loaded in " + str(duration) + " sec")
 
         # ------------- Create Compound ------------- #
         chebi_input_db_dir = settings.get_data("chebi_input_db_dir")

@@ -13,11 +13,11 @@ from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
 from biota.eco import ECO
-from biota.chebiOntology import ChebiOntology
+from biota.chebi_ontology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.compound import Compound
 from biota.enzyme import Enzyme
-from biota.enzymeAnnotation import EnzymeAnnotation
+from biota.enzyme_annotation import EnzymeAnnotation
 from biota.reaction import Reaction
 
 #import external module 
@@ -52,24 +52,27 @@ class TestMain(unittest.TestCase):
         GO.drop_table()
         SBO.drop_table()
         BTO.drop_table()
+        ECO.drop_table()
         ChebiOntology.drop_table()
         Taxonomy.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
-        EnzymeAnnotation.drop_table()
         enzyme_bto.drop_table()
         Reaction.drop_table(**files_model)
+        EnzymeAnnotation.drop_table()
+
         # --- creations --- #
         GO.create_table()
         SBO.create_table()
         BTO.create_table()
+        ECO.create_table()
         ChebiOntology.create_table()
         Taxonomy.create_table()
         Compound.create_table()
         Enzyme.create_table()
-        EnzymeAnnotation.create_table()
         enzyme_bto.create_table()
         Reaction.create_table(**files_model)
+        EnzymeAnnotation.create_table()
         pass
    
     @classmethod
@@ -96,7 +99,8 @@ class TestMain(unittest.TestCase):
             rhea2metacyc_file = 'rhea2metacyc.tsv',
             rhea2macie_file = 'rhea2macie.tsv',
             rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
-            rhea2ec_file = 'rhea2ec.tsv'
+            rhea2ec_file = 'rhea2ec.tsv',
+            rhea2reactome_file = 'rhea2reactome.tsv'
         )
 
         start = default_timer()
@@ -136,7 +140,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
-        print("chebiOntology has been loaded in " + str(duration) + " sec")
+        print("chebi_ontology has been loaded in " + str(duration) + " sec")
 
         """
         # ------------- Create Taxonomy ------------- #
@@ -159,14 +163,14 @@ class TestMain(unittest.TestCase):
         duration  = default_timer() - duration
         print("enzyme and enzyme_btos have been loaded in " + str(duration) + " sec")
         
-        """
-        # ------------- Create EnzymeAnnotation ------------- #
-        EnzymeAnnotation.create_annotation()
-        duration  = default_timer() - duration
-        print("enzymeAnnotation has been loaded in " + str(duration) + " sec")
-        """
         # ------------- Create Reactions ------------- #
         Reaction.create_reactions_from_files(input_db_dir, **files)
         rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
         print("reactions, reactions_enzymes, reactions_substrates and reactions_products have been loaded in " + str(duration) + " sec")
         
+        """
+        # ------------- Create EnzymeAnnotation ------------- #
+        EnzymeAnnotation.create_annotation()
+        duration  = default_timer() - duration
+        print("enzyme_annotation has been loaded in " + str(duration) + " sec")
+        """

@@ -9,7 +9,7 @@ from gws.settings import Settings
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
-from biota.chebiOntology import ChebiOntology
+from biota.chebi_ontology import ChebiOntology
 from biota.taxonomy import Taxonomy
 from biota.compound import Compound
 from biota.enzyme import Enzyme

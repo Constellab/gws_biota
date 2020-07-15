@@ -13,7 +13,7 @@ from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
 from biota.eco import ECO
-from biota.chebiOntology import ChebiOntology
+from biota.chebi_ontology import ChebiOntology
 
 
 #import external module 
@@ -116,4 +116,4 @@ class TestMain(unittest.TestCase):
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration
-        print("chebiOntology has been loaded in " + str(duration) + " sec")
+        print("chebi_ontology has been loaded in " + str(duration) + " sec")

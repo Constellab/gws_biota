@@ -8,7 +8,7 @@ subsetdef: 3_STAR "Manually annotated by ChEBI Team"
 synonymtypedef: IUPAC_NAME "IUPAC NAME"
 synonymtypedef: BRAND_NAME "BRAND NAME"
 synonymtypedef: INN "INN"
-default-namespace: chebiOntology
+default-namespace: chebi_ontology
 remark: ChEBI subsumes and replaces the Chemical Ontology first
 remark: developed by Michael Ashburner & Pankaj Jaiswal.
 remark: Author: ChEBI curation team 

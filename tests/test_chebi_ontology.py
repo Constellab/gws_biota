@@ -5,7 +5,7 @@ import unittest
 from gws.prism.controller import Controller
 from gws.settings import Settings
 
-from biota.chebiOntology import ChebiOntology, ChebiOntologyStandardJSONViewModel, ChebiOntologyPremiumJSONViewModel
+from biota.chebi_ontology import ChebiOntology, ChebiOntologyStandardJSONViewModel, ChebiOntologyPremiumJSONViewModel
 
 ############################################################################################
 #
