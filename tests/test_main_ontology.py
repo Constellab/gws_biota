@@ -112,7 +112,7 @@ class TestMain(unittest.TestCase):
         
         # ------------- Create ChebiOntology ------------- #
         chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
-        ChebiOntology.create_chebis(chebi_input_db_dir, **files)
+        ChebiOntology.create_chebi(chebi_input_db_dir, **files)
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         duration  = default_timer() - duration

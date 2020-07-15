@@ -34,12 +34,13 @@ class ChebiOntology(Ontology):
             chebs.set_name(chebs.data[key])
 
     @classmethod
-    def create_chebis(cls, input_db_dir, **files):
+    def create_chebi(cls, input_db_dir, **files):
         onto = Chebi.create_ontology_from_file(input_db_dir, files['chebi_data'])
         list_chebi = Chebi.parse_onto_from_ontology(onto)
         chebis = [cls(data = dict_) for dict_ in list_chebi]
         cls.insert_chebi_id(chebis, "id")
         cls.insert_name(chebis, "name")
+        cls.save_all()
         return(list_chebi)
 
     class Meta():
