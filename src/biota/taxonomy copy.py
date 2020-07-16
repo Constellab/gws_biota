@@ -29,6 +29,50 @@ class Taxonomy(Resource):
 
     def set_rank(self, rank__):
         self.rank = rank__
+    
+    def set_ancestor(self):
+        if 'ancestor' in self.data.keys():
+            try: 
+                parent = Taxonomy.get(Taxonomy.tax_id == self.data['ancestor'])
+                self.ancestor = parent
+            except:
+                print("could not find the parent of: " + str(self.data['tax_id']))   
+
+    # inserts
+    @classmethod
+    def insert_tax_id(cls, list__, key):
+        for tax in list__:
+            tax.set_tax_id(tax.data[key])
+
+    @classmethod
+    def insert_name(cls, list__, key):
+        for tax in list__:
+            tax.set_name(tax.data[key])
+
+    @classmethod
+    def insert_rank(cls, list__, key):
+        for tax in list__:
+            tax.set_rank(tax.data[key])
+    
+    # @classmethod
+    # def insert_ancestor(cls, list__, key):
+    #     for tax in list__:
+    #         tax.set_ancestor(tax.data[key])
+    #     #cls.save_all()
+
+    # create
+    # @classmethod
+    # def create_taxons_from_list(cls, organism):
+    #     list_taxons = Taxo.parse_taxonomy_from_ncbi(organism)
+    #     taxons = [cls(data = d) for d in list_taxons]
+    #     cls.insert_tax_id(taxons, 'tax_id')
+    #     cls.insert_name(taxons, 'name')
+    #     cls.insert_rank(taxons, 'rank')
+    #     cls.save_all()
+
+    #     cls.__set_taxons_ancestors(taxons)
+    #     cls.save_all()
+    #     return(list_taxons)
 
     @classmethod
     def create_taxons_from_dict(cls, taxlist):
@@ -56,18 +100,16 @@ class Taxonomy(Resource):
         elapsed_time = time.time() - start_time
         print("step 2: time = {}".format(elapsed_time/60))
         
-        for tax in dict_taxons:
-            tax.tax_id = tax.data['tax_id']
-            tax.name = tax.data['name']
-            tax.rank = tax.data['rank']
-
+        cls.insert_tax_id(taxons, 'tax_id')
+        cls.insert_name(taxons, 'name')
+        cls.insert_rank(taxons, 'rank')
         cls.save_all()
 
         elapsed_time = time.time() - start_time
         print("step 3: time = {}".format(elapsed_time/60))
 
         start_time = time.time()
-        cls._set_taxons_ancestors(taxons)
+        cls.__set_taxons_ancestors2(taxons)
         cls.save_all()
 
         elapsed_time = time.time() - start_time
@@ -76,9 +118,54 @@ class Taxonomy(Resource):
         print('The superkingdom ' + tax + ' has been correctly loaded')
     
         return(dict_taxons)
+    
+    # @classmethod
+    # def create_taxons_from_dict_at_level(cls, list_superkingdom):
+    #     import time
+
+    #     for superkingdom in list_superkingdom:  
+    #         start_time = time.time()          
+    #         #dict_taxons = Taxo.get_all_taxonomy(superkingdom)
+
+    #         dict_taxons = Taxo.get_taxonomy_lineage(superkingdom, rank_limit = None)
+
+    #         elapsed_time = time.time() - start_time
+    #         print("step 1: time = {}, #taxon = {}".format(elapsed_time/60, len(dict_taxons)))
+            
+    #         start_time = time.time()
+    #         taxons = [cls(data = dict_taxons[d]) for d in dict_taxons]
+
+    #         elapsed_time = time.time() - start_time
+    #         print("step 2: time = {}".format(elapsed_time/60))
+            
+    #         cls.insert_tax_id(taxons, 'tax_id')
+    #         cls.insert_name(taxons, 'name')
+    #         cls.insert_rank(taxons, 'rank')
+    #         cls.save_all()
+
+    #         elapsed_time = time.time() - start_time
+    #         print("step 3: time = {}".format(elapsed_time/60))
+
+    #         start_time = time.time()
+    #         cls.__set_taxons_ancestors2(taxons)
+    #         cls.save_all()
+
+    #         elapsed_time = time.time() - start_time
+    #         print("step 4: time = {}".format(elapsed_time/60))
+
+    #         print('The superkingdom ' + superkingdom + ' has been correctly loaded')
+        
+        
+    #     status = 'ok'
+    #     return(status)
 
     @classmethod
-    def _set_taxons_ancestors(cls, list_taxons):
+    def __set_taxons_ancestors(cls, list_taxons):
+        for tax in list_taxons:
+            tax.set_ancestor()
+
+    @classmethod
+    def __set_taxons_ancestors2(cls, list_taxons):
         tax_dict = {} 
         for tax in list_taxons:
             if 'ancestor' in tax.data.keys():

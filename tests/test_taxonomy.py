@@ -26,7 +26,8 @@ class TestGO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        Taxonomy.create_taxons_from_dict(['Homininae'])
+        #Homininae
+        Taxonomy.create_taxons_from_dict(['Bacteria'])
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 9593).name, "Gorilla gorilla")
         
         # --------- Testing views --------- #
