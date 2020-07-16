@@ -10,7 +10,7 @@
         "taxonomy"      : "../taxonomy-py",
         "chebi"         : "../chebi-py",
         "brenda"        : "../brenda-py",
-        "quickgo"    : "../quickgo-py"
+        "quickgo"       : "../quickgo-py"
     },
     "statics"       : {
         "/static/pub-biota"   : "./public/static"
@@ -26,7 +26,7 @@
             "/static/gws/g3/all.css"
         ],
         "left_buttons":[
-            { "name": "biotadb", "icon": "fas fa-database", "onclick": "window.gws.biotadb" }
+            { "name": "biota", "icon": "fas fa-database", "onclick": "window.gws.biota" }
         ]
     }
 }

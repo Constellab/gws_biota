@@ -13,11 +13,24 @@ import uvicorn
 sys.path.append(os.path.join("../gws-py/src"))
 from gws import runner
 from gws.settings import Settings
-from gws.manage import read_module_name, parse_settings
+from gws.manage import read_module_name, parse_settings, update_json
 
 if __name__ == "__main__":
     __cdir__ = os.path.dirname(os.path.abspath(__file__))
+
+    settings = {
+        "app_dir"       : "./",
+        "app_host"      : "localhost",
+        "app_port"      : 3000,
+        "db_dir"        : "./",
+        "db_name"       : "db.sqlite3",
+        "is_test"       : False,
+        "dependencies"  : {},
+        "static_dirs"       : {},
+        "__cwd__"       : __cdir__
+    }
+
     module_name = read_module_name(__cdir__)
-    settings = parse_settings(module_cwd=__cdir__, module_name=module_name, module_setting_file="./settings.json")
+    settings = update_json(settings, parse_settings(module_cwd=__cdir__, module_name=module_name, module_setting_file="./settings.json"))
     Settings.init(settings)
     runner.run()

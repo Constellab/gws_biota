@@ -4,3 +4,7 @@
  * The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
  * About us: https://gencovery.com
  */
+
+window.gws.biota = function(){
+    console.log("databases loaded")
+}
