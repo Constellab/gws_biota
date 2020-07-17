@@ -664,3 +664,678 @@ KI_VALUE
 KI	#3# 0.0786 {NADPH}  <1>
 
 ///
+ID	1.1.1.119
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+PROTEIN
+PR	#1# Bacillus megaterium   <4,5,10>
+PR	#2# Pseudomonas fluorescens   <12>
+PR	#3# Cupriavidus necator   <8>
+PR	#4# Haloferax mediterranei   <9,11,13>
+PR	#5# Gluconobacter oxydans   <3>
+PR	#6# Gluconobacter cerinus   <1,2>
+PR	#7# Filobasidium uniguttulatum   <4>
+PR	#8# Halococcus saccharolyticus   <6>
+PR	#9# Haloferax mediterranei Q977U7  <7,9,13,14,15,17>
+PR	#9# Haloferax mediterranei Q977U7 SwissProt <7,9,13,14,15,17>
+PR	#10# Sulfurisphaera tokodaii Q96ZY7 UniProt <16>
+PR	#11# Sulfurisphaera tokodaii Q96ZY1 UniProt <16>
+
+RECOMMENDED_NAME
+RN	glucose 1-dehydrogenase (NADP+)
+
+
+SYSTEMATIC_NAME
+SN	D-glucose:NADP+ 1-oxidoreductase
+
+
+SYNONYMS
+SY	 nicotinamide adenine dinucleotide phosphate-linked aldohexose
+	dehydrogenase
+SY	 NADP-linked aldohexose dehydrogenase
+SY	 dehydrogenase, glucose (nicotinamide adenine dinucleotide phosphate)
+SY	 NADP-dependent glucose dehydrogenase
+SY	#1# GlcDH 2 <10>
+SY	#1,4,9# glucose dehydrogenase <9,10,14>
+SY	#10# STK_17040 (#10# locus name <16>) <16>
+SY	#11# NAD(P)-dependent GDH <16>
+SY	#11# glucose-1-dehydrogenase <16>
+SY	#11# nicotinamide adenine dinucleotide (phosphate)-dependent
+	glucose-1-dehydrogenase <16>
+SY	#4,9# GlcDH <9,14,17>
+SY	#9# halophilic glucose dehydrogenase <13>
+SY	#9# NAD(P)+ glucose dehydrogenase <13>
+SY	#9# Hm GDH <13>
+SY	#9# beta-D-glucose: NAD(P) 1-oxidoreductase <13>
+SY	#9,10,11# GDH <13,16>
+
+REACTION
+RE	D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+
+
+REACTION_TYPE
+RT	redox reaction
+RT	oxidation
+RT	reduction
+
+SOURCE_TISSUE
+ST	#2# commercial preparation <12>
+
+NATURAL_SUBSTRATE_PRODUCT
+NSP	#1,10,11# D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+ (#1#
+	unphosphorylated glucose as substrate <10>) <10,16>
+NSP	#1,10,11# D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+ (#1#
+	unphosphorylated glucose as substrate <10>) {} <10,16>
+NSP	#1,10,11# D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+ (#1#
+	unphosphorylated glucose as substrate <10>) {r} <10,16>
+
+SUBSTRATE_PRODUCT
+SP	#1,4,5,6,10,11# D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+
+	(#5# 4% of the reverse reaction when assayed with D-glucono-1,5-lactone
+	and NADPH at neutral or weak alkaline pH <3>; #1# unphosphorylated
+	glucose as substrate <10>; #10# the enzyme prefers NADP+ over NAD+ as
+	the cofactor. It shows a larger Km value for NAD+ (4.5 mM) than for
+	NADP+ (0.12 mM) at 80°C. At 25°C the Km values are 0.069 mM for NAD+
+	and 0.0059 mM for NADP+ <16>) <1,2,3,10,11,16>
+SP	#1,4,5,6,10,11# D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+
+	(#5# 4% of the reverse reaction when assayed with D-glucono-1,5-lactone
+	and NADPH at neutral or weak alkaline pH <3>; #1# unphosphorylated
+	glucose as substrate <10>; #10# the enzyme prefers NADP+ over NAD+ as
+	the cofactor. It shows a larger Km value for NAD+ (4.5 mM) than for
+	NADP+ (0.12 mM) at 80°C. At 25°C the Km values are 0.069 mM for NAD+
+	and 0.0059 mM for NADP+ <16>) {} <1,2,3,10,11,16>
+SP	#1,4,5,6,10,11# D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+
+	(#5# 4% of the reverse reaction when assayed with D-glucono-1,5-lactone
+	and NADPH at neutral or weak alkaline pH <3>; #1# unphosphorylated
+	glucose as substrate <10>; #10# the enzyme prefers NADP+ over NAD+ as
+	the cofactor. It shows a larger Km value for NAD+ (4.5 mM) than for
+	NADP+ (0.12 mM) at 80°C. At 25°C the Km values are 0.069 mM for NAD+
+	and 0.0059 mM for NADP+ <16>) {r} <1,2,3,10,11,16>
+SP	#1,7# D-glucose + 1,N6-ethanoadenine-NADP+ = D-glucono-1,5-lactone +
+	1,N6-ethanoadenine-NADPH {r} <4>
+SP	#1,7# D-glucose + N1-(2-aminoethyl)-NADP+ = D-glucono-1,5-lactone +
+	N1-(2-aminoethyl)-NADPH {r} <4>
+SP	#1,7# D-glucose + N6-(2-aminoethyl)-NADP+ = D-glucono-1,5-lactone +
+	N6-(2-aminoethyl)-NADPH {r} <4>
+SP	#4# beta-D-galactose + NADP+ = D-galactono-1,5-lactone + NADPH <9>
+SP	#4# D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH <13>
+SP	#4,8# D-glucose + NAD+ = D-glucono-1,5-lactone + NADH <6,13>
+SP	#4,8# D-glucose + NAD+ = D-glucono-1,5-lactone + NADH {} <6,13>
+SP	#5,6,7# D-mannose + NADP+ = D-mannono-1,5-lactone + NADPH <1,2,3,4>
+SP	#5,6,7# D-mannose + NADP+ = D-mannono-1,5-lactone + NADPH {} <1,2,3,4>
+SP	#6# 2-amino-2-deoxy-D-mannose + NADP+ =
+	2-amino-2-deoxy-D-mannono-1,5-lactone + NADPH {} <1,2>
+SP	#6# 2-amino-2-deoxy-D-mannose + NADP+ =
+	2-amino-2-deoxy-D-mannono-1,5-lactone + NADPH <1,2>
+SP	#6# 2-deoxy-D-glucose + NADP+ = 2-deoxy-D-glucono-1,5-lactone + NADPH +
+	H+ {} <1,2>
+SP	#6# 2-deoxy-D-glucose + NADP+ = 2-deoxy-D-glucono-1,5-lactone + NADPH +
+	H+ <1,2>
+SP	#9# D-glucose + NAD+ = D-glucono-1,5-lactone + NADH + H+ <13>
+SP	#9# beta-D-glucose + NADP+ = D-glucono-1,5-lactone + NADPH + H+ (#9#
+	the enzyme has a strong preference for NADP+ over NAD+ <13>) <13,14>
+SP	#9# beta-D-glucose + NAD+ = D-glucono-1,5-lactone + NADH + H+ (#9# the
+	enzyme has a strong preference for NADP+ over NAD+ <13>) <13>
+SP	#9# D-glucose + NAD(P)+ = D-glucono-1,5-lactone + NAD(P)H + H+ <13>
+SP	#9# beta-D-glucose + NAD+ = ? (#9# activity with NAD+ is 26% of the
+	activity with NADP+ <7>) <7>
+SP	#9# beta-D-glucose + NADP+ = ? (#9# activity with NAD+ is 26% of the
+	activity with NADP+. The enzyme shows also activity with D-fucose and
+	NADP+ (at 18% compared to the activity with beta-D-glucose and NADP+),
+	with D-galactose and NADP+ (at 13% compared to the activity with
+	beta-D-glucose and NADP+), with D-xylose and NAD+ (at 79% compared to
+	the activity with beta-D-glucose and NADP+), with D-xylose and NADP+
+	(at 88% compared to the activity with beta-D-glucose and NADP+) <7>) <7>
+
+TURNOVER_NUMBER
+TN	#10# 9.7 {NADP+}  (#10# pH 9.0, 80°C, mutant enzyme I189V <16>) <16>
+TN	#10# 9.7 {D-glucose}  (#10# pH 9.0, 80°C, mutant enzyme I189V <16>) <16>
+TN	#10# 16.7 {NADP+}  (#10# pH 9.0, 80°C, mutant enzyme V254I <16>) <16>
+TN	#10# 16.7 {D-glucose}  (#10# pH 9.0, 80°C, mutant enzyme V254I <16>)
+	<16>
+TN	#10# 10.1 {NADP+}  (#10# pH 9.0, 80°C, wild-type enzyme <16>) <16>
+TN	#10# 10.1 {D-glucose}  (#10# pH 9.0, 80°C, wild-type enzyme <16>) <16>
+TN	#10# 0.085 {NADP+}  (#10# pH 9.0, 25°C, mutant enzyme I189V <16>) <16>
+TN	#10,11# 0.11 {NADP+}  (#10# pH 9.0, 25°C, wild-type enzyme <16>; #11#
+	wild type enzyme, at pH 9.0 and 25°C <16>) <16>
+TN	#10,11# 0.11 {D-glucose}  (#10# pH 9.0, 25°C, wild-type enzyme <16>;
+	#11# wild type enzyme, at pH 9.0 and 25°C <16>) <16>
+TN	#10,11# 0.085 {D-glucose}  (#10# pH 9.0, 25°C, mutant enzyme I189V
+	<16>; #11# mutant enzyme I189V, at pH 9.0 and 25°C <16>) <16>
+TN	#10,11# 0.205 {NADP+}  (#10# pH 9.0, 25°C, mutant enzyme V254I <16>;
+	#11# mutant enzyme V254I, at pH 9.0 and 25°C <16>) <16>
+TN	#10,11# 0.205 {D-glucose}  (#10# pH 9.0, 25°C, mutant enzyme V254I
+	<16>; #11# mutant enzyme V254I, at pH 9.0 and 25°C <16>) <16>
+TN	#11# 0.0167 {NADP+}  (#11# mutant enzyme V254I, at pH 9.0 and 80°C
+	<16>) <16>
+TN	#11# 0.0167 {D-glucose}  (#11# mutant enzyme V254I, at pH 9.0 and 80°C
+	<16>) <16>
+TN	#11# 0.0097 {NADP+}  (#11# mutant enzyme I189V, at pH 9.0 and 80°C
+	<16>) <16>
+TN	#11# 0.0097 {D-glucose}  (#11# mutant enzyme I189V, at pH 9.0 and 80°C
+	<16>) <16>
+TN	#11# 0.0101 {NADP+}  (#11# wild type enzyme, at pH 9.0 and 80°C <16>)
+	<16>
+TN	#11# 0.0101 {D-glucose}  (#11# wild type enzyme, at pH 9.0 and 80°C
+	<16>) <16>
+TN	#11# 0.0857 {NADP+}  (#11# mutant enzyme I189V, at pH 9.0 and 25°C
+	<16>) <16>
+TN	#4# 0.5 {D-glucose}  (#4# wild-type, pH 8.8, 40°C <13>) <13>
+TN	#4# 0.2 {D-glucose}  (#4# mutant R207I, pH 8.8, 40°C <13>) <13>
+TN	#4# 0.26 {D-glucose}  (#4# cosubstrate NAD+, wild-type, pH 8.8, 40°C
+	<13>; #4# mutant G206D, pH 8.8, 40°C <13>) <13>
+TN	#4# 0.9 {D-glucose}  (#4# cosubstrate NAD+, mutant G206D/R207I, pH 8.8,
+	40°C <13>) <13>
+TN	#4# 0.57 {D-glucose}  (#4# cosubstrate NAD+, mutant G206D, pH 8.8, 40°C
+	<13>) <13>
+TN	#4# 0.047 {D-glucose}  (#4# cosubstrate NAD+, mutant G206D/R207I/R208N,
+	pH 8.8, 40°C <13>) <13>
+TN	#4# 0.072 {D-glucose}  (#4# cosubstrate NAD+, mutant R207I, pH 8.8,
+	40°C <13>) <13>
+TN	#4# 0.00051 {D-glucose}  (#4# wild-type <11>) <11>
+TN	#4# 0.00041 {D-glucose}  (#4# mutant D216K <11>; #4# mutant D344K <11>)
+	<11>
+TN	#4# 0.00045 {D-glucose}  (#4# mutant D172K <11>; #4# mutant
+	D172K/D216K/D344K <11>) <11>
+
+KM_VALUE
+KM	#10# 0.117 {NADP+}  (#10# pH 9.0, 80°C, wild-type enzyme <16>) <16>
+KM	#10,11# 0.132 {NADP+}  (#10# pH 9.0, 80°C, mutant enzyme V254I <16>;
+	#11# mutant enzyme V254I, at pH 9.0 and 80°C <16>) <16>
+KM	#10,11# 0.457 {D-glucose}  (#10# pH 9.0, 80°C, mutant enzyme V254I
+	<16>; #11# mutant enzyme V254I, at pH 9.0 and 80°C <16>) <16>
+KM	#10,11# 0.0286 {D-glucose}  (#10# pH 9.0, 25°C, wild-type enzyme <16>;
+	#11# wild type enzyme, at pH 9.0 and 25°C <16>) <16>
+KM	#10,11# 0.287 {D-glucose}  (#10# pH 9.0, 80°C, wild-type enzyme <16>;
+	#11# wild type enzyme, at pH 9.0 and 80°C <16>) <16>
+KM	#10,11# 0.109 {NADP+}  (#10# pH 9.0, 80°C, mutant enzyme I189V <16>;
+	#11# mutant enzyme I189V, at pH 9.0 and 80°C <16>) <16>
+KM	#10,11# 0.314 {D-glucose}  (#10# pH 9.0, 80°C, mutant enzyme I189V
+	<16>; #11# mutant enzyme I189V, at pH 9.0 and 80°C <16>) <16>
+KM	#10,11# 0.0293 {D-glucose}  (#10# pH 9.0, 25°C, mutant enzyme I189V
+	<16>; #11# mutant enzyme I189V, at pH 9.0 and 25°C <16>) <16>
+KM	#10,11# 0.0391 {D-glucose}  (#10# pH 9.0, 25°C, mutant enzyme V254I
+	<16>; #11# mutant enzyme V254I, at pH 9.0 and 25°C <16>) <16>
+KM	#10,11# 0.00588 {NADP+}  (#10# pH 9.0, 25°C, wild-type enzyme <16>;
+	#11# wild type enzyme, at pH 9.0 and 25°C <16>) <16>
+KM	#10,11# 0.00927 {NADP+}  (#10# pH 9.0, 25°C, mutant enzyme I189V <16>;
+	#11# mutant enzyme I189V, at pH 9.0 and 25°C <16>) <16>
+KM	#10,11# 0.00876 {NADP+}  (#10# pH 9.0, 25°C, mutant enzyme V254I <16>;
+	#11# mutant enzyme V254I, at pH 9.0 and 25°C <16>) <16>
+KM	#11# 0.118 {NADP+}  (#11# wild type enzyme, at pH 9.0 and 80°C <16>)
+	<16>
+KM	#4# 2.2 {D-glucose}  (#4# mutant D216K <11>) <11>
+KM	#4# 24 {D-glucose}  (#4# mutant R207I, pH 8.8, 40°C <13>) <13>
+KM	#4# 2.4 {D-glucose}  (#4# mutant D172K <11>) <11>
+KM	#4# 1.8 {D-glucose}  (#4# mutant D344K <11>) <11>
+KM	#4# 0.046 {NADP+}  (#4# mutant D172K/D216K/D344K <11>) <11>
+KM	#4# 0.036 {NADP+}  (#4# mutant D172K <11>) <11>
+KM	#4# 32 {D-glucose}  (#4# cosubstrate NAD+, mutant R207I, pH 8.8, 40°C
+	<13>) <13>
+KM	#4# 0.056 {NADP+}  (#4# mutant D344K <11>) <11>
+KM	#4# 80 {D-glucose}  (#4# cosubstrate NAD+, mutant G206D/R207I, pH 8.8,
+	40°C <13>) <13>
+KM	#4# 15 {D-glucose}  (#4# cosubstrate NAD+, mutant G206D, pH 8.8, 40°C
+	<13>) <13>
+KM	#4# 3.2 {D-glucose}  (#4# mutant D172K/D216K/D344K <11>) <11>
+KM	#4# 52 {D-glucose}  (#4# mutant G206D, pH 8.8, 40°C <13>) <13>
+KM	#4# 57 {D-glucose}  (#4# cosubstrate NAD+, mutant G206D/R207I/R208N, pH
+	8.8, 40°C <13>) <13>
+KM	#4,9# 1.3 {NAD+}  (#9# mutant enzyme G206D/R207I/R208N <13>; #9# mutant
+	enzyme R207I <13>; #4# mutant G206D/R207I/R208N, pH 8.8, 40°C <13>; #4#
+	mutant R207I, pH 8.8, 40°C <13>) <13>
+KM	#4,9# 1.7 {NADP+}  (#9# mutant enzyme R207I <13>; #4# mutant R207I, pH
+	8.8, 40°C <13>) <13>
+KM	#4,9# 0.4 {NAD+}  (#9# wild type enzyme <13>; #4# wild-type, pH 8.8,
+	40°C <13>) <13>
+KM	#4,9# 0.49 {NAD+}  (#9# mutant enzyme G206D <13>; #4# mutant G206D, pH
+	8.8, 40°C <13>) <13>
+KM	#4,9# 0.035 {NADP+}  (#4# wild-type <11>; #9# wild type enzyme <13>;
+	#4# mutant D216K <11>; #4# wild-type, pH 8.8, 40°C <13>) <11,13>
+KM	#4,9# 2.8 {D-glucose}  (#4# wild-type <11>; #9# with NADP+ as coenzyme
+	<13>; #4# wild-type, pH 8.8, 40°C <13>) <11,13>
+KM	#4,9# 2.7 {NAD+}  (#9# mutant enzyme G206D/R207I <13>; #4# mutant
+	G206D/R207I, pH 8.8, 40°C <13>) <13>
+KM	#4,9# 2.6 {NADP+}  (#9# mutant enzyme G206D <13>; #4# mutant G206D, pH
+	8.8, 40°C <13>) <13>
+KM	#4,9# 12.9 {D-glucose}  (#9# with NAD+ as coenzyme <13>; #4#
+	cosubstrate NAD+, wild-type, pH 8.8, 40°C <13>) <13>
+KM	#5# 0.01 {NADP+}  <3>
+KM	#5# 5 {D-glucose}  <3>
+KM	#6# 0.012 {NADP+}  <1>
+KM	#6# 0.038 {NADPH}  <1>
+KM	#6# 5.3 {D-glucose}  <1,2>
+KM	#6# 1.8 {D-mannose}  (#6# in 0.1 M Tris-buffer pH 8.0 <1,2>) <1,2>
+KM	#6# 5.6 {D-mannose}  (#6# in 0.1 M potassium phosphate pH 6.2 <1,2>)
+	<1,2>
+KM	#6# 29 {2-amino-2-deoxy-D-mannose}  <1,2>
+KM	#6# 39 {2-deoxy-D-glucose}  <1,2>
+KM	#7# 0.03 {N6-(2-aminoethyl)-NADP+}  <4>
+KM	#7# 0.05 {1,N6-ethanoadenine-NADP+}  <4>
+KM	#7# 0.02 {NADP+}  <4>
+KM	#7# 0.09 {polyethylene glycol(MW 20000)-N6-(2-aminoethyl)-NADP+}  <4>
+KM	#7# 0.07 {N1-(2-aminoethyl)-NADP+}  <4>
+KM	#8# 2 {D-glucose}  <6>
+KM	#8# 0.28 {NADP+}  <6>
+KM	#8# 4 {NAD+}  <6>
+KM	#9# 0.4 {NAD(P)+}  (#9# with NAD+ as coenzyme <13>) <13>
+KM	#9# 24 {beta-D-glucose}  (#9# mutant enzyme R207I, using NADP+ as
+	cosubstrate <13>) <13>
+KM	#9# 1.2 {NAD+}  (#9# pH 8.8, 40°C <7>) <7>
+KM	#9# 0.024 {NADP+}  (#9# pH 8.8, 40°C <7>) <7>
+KM	#9# 0.035 {NAD(P)+}  (#9# with NADP+ as coenzyme <13>) <13>
+KM	#9# 32 {beta-D-glucose}  (#9# mutant enzyme R207I, using NAD+ as
+	cosubstrate <13>) <13>
+KM	#9# 3.9 {beta-D-glucose}  (#9# pH 8.8, 40°C <7>) <7>
+KM	#9# 80 {beta-D-glucose}  (#9# mutant enzyme G206D/R207I, using NAD+ as
+	cosubstrate <13>) <13>
+KM	#9# 15 {beta-D-glucose}  (#9# mutant enzyme G206D, using NAD+ as
+	cosubstrate <13>) <13>
+KM	#9# 52 {beta-D-glucose}  (#9# mutant enzyme G206D, using NADP+ as
+	cosubstrate <13>) <13>
+KM	#9# 57 {beta-D-glucose}  (#9# mutant enzyme G206D/R207I/R208N, using
+	NAD+ as cosubstrate <13>) <13>
+KM	#9# 31.1 {beta-D-glucose}  (#9# wild type enzyme, using NADP+ as
+	cosubstrate <13>) <13>
+KM	#9# 12.9 {beta-D-glucose}  (#9# wild type enzyme, using NAD+ as
+	cosubstrate <13>) <13>
+
+PH_OPTIMUM
+PHO	#10# 9 (#10# assay at <16>) <16>
+PHO	#5# 8.5-9 (#5# in Tris-buffer <3>) <3>
+PHO	#6# 8 (#6# in Tris-buffer <1>) <1>
+
+PH_RANGE
+PHR	#6# 7.5-9 (#6# broad range of optimal activity, in Tris-buffer
+	consistently higher than that in phosphate-buffers <1>) <1>
+
+SPECIFIC_ACTIVITY
+SA	#5# 140.0 <3>
+SA	#6# 10.1 <1,2>
+SA	#8# -999.0 (#8# 25 mU/mg at 37°C <6>) <6>
+SA	#9# 550.0 (#9# pH 8.8, 40°C <7>) <7>
+
+TEMPERATURE_OPTIMUM
+TO	#5# 50 <3>
+
+COFACTOR
+CF	#4,5,6# NADPH <1,3,11>
+CF	#4,5,6,7,9,10,11# NADP+ (#9# the Km value of the wild type enzyme is
+	11fold lower for NADP+ than for NAD+, indicating that the enzyme has a
+	strong preference for NADP+ <13>; #9# Km-value for NAD+ is 50fold
+	higher than Km-value for NADP+ <7>; #10# the enzyme prefers NADP+ over
+	NAD+ as the cofactor. It shows a larger Km value for NAD+ (4.5 mM) than
+	for NADP+ (0.12 mM) at 80°C. At 25°C the Km values are 0.069 mM for
+	NAD+ and 0.0059 mM for NADP+ <16>) <1,2,3,4,7,9,11,13,14,16>
+CF	#4,9# NAD+ (#4# poor substrate for wild-type <13>; #9# Km-value for
+	NAD+ is 50fold higher than Km-value for NADP+ <7>) <7,13>
+CF	#7# N6-(2-aminoethyl)-NADP+ <4>
+CF	#7# N1-(2-aminoethyl)-NADP+ <4>
+CF	#7# polyethylene glycol(MW 20000)-N6-(2-aminoethyl)-NADP+ <4>
+CF	#7# 1,N6-ethanoadenine-NADP+ <4>
+
+ACTIVATING_COMPOUND
+AC	#4# Zn2+ <9>
+AC	#4# NaCl (#4# triple mutant D172K/D216K/D344K shows its maximum
+	activity in a buffer with 0.50-0.75 M NaCl while the wild type protein
+	has its maximum activity with 1.5 M NaCl <11>) <11>
+
+INHIBITORS
+IN	#4# NAD+ <13>
+IN	#4# NADP+ <13>
+IN	#4# KCl (#4# at 40°C, half-life in 0.5 M KCl is 86 h for wild-type, and
+	114 h for mutant D172K/D216K/D344K, 95 h for mutant D172K, 117 h for
+	mutant D216K, 114 h for mutant D344K. At 25°C, half-life in 0.5 M KCl
+	is 506 h for wild-type, and 613 h for mutant D172K/D216K/D344K, 630 h
+	for mutant D172K, 660 h for mutant D216K, 537 h for mutant D344K <11>)
+	<11>
+IN	#5# Cu2+ <3>
+IN	#5# Hg2+ <3>
+IN	#5# Ni2+ <3>
+IN	#5# p-chloromercuribenzoate <3>
+IN	#5# sulfhydryl reagents <3>
+IN	#6# CuSO4 <1,2>
+IN	#6# ZnSO4 <1,2>
+IN	#6# NADPH (#6# competitive to NADP+ <1>) <1>
+IN	#6# more (#6# overview: sugars found to be neither substrates nor
+	inhibitors <1>; #6# not: iodoacetate, N-ethylmaleimide,
+	p-hydroxymercuribenzoate, 5,5-dithiobis(2-nitrobenzate) <2>) <1,2>
+IN	#9# NAD(P)+ <13>
+IN	#9# EDTA (#9# 2 mM <7>) <7>
+
+METALS_IONS
+ME	#4,9# Zn2+ (#9# dependent on <14>; #4# zinc is an important component
+	of the catalytic centre <14>) <14>
+ME	#9# Mg2+ (#9# besides KCl/NaCl, the activity also depends on presence
+	of bivalent cations. Mg2+ is more effective than Mg2+ or Ni2+ <7>) <7>
+ME	#9# Mn2+ (#9# besides KCl/NaCl, the activity also depends on presence
+	of bivalent cations. Mn2+ is less effective than Mg2+ and more
+	effective than Ni2+ <7>) <7>
+ME	#9# Ni2+ (#9# besides KCl/NaCl, the activity also depends on presence
+	of bivalent cations. Ni2+ is more effective than Mg2+ or Mn2+ <7>) <7>
+ME	#9# NaCl (#9# the activity is dependent on the concentration of NaCl or
+	KCl in the activity buffer, being optimal at 1.3 M <7>) <7>
+ME	#9# KCl (#9# the activity is dependent on the concentration of NaCl or
+	KCl in the activity buffer, being optimal at 1.3 M <7>) <7>
+ME	#9# Zinc (#9# a member of the zinc-containing medium chain polyol
+	dehydrogenase family <17>) <17>
+
+MOLECULAR_WEIGHT
+MW	#4# 39000 <9>
+MW	#4# 19500 (#4# 2 * 19500 <9>) <9>
+MW	#5# 153000 (#5# gel filtration on Sephadex G-200 <3>) <3>
+MW	#5# 40000 (#5# 4 * 40000, SDS-PAGE <3>) <3>
+MW	#9# 89000 (#9# gel filtration <7>) <7>
+MW	#9# 53000 (#9# 2 * 53000, SDS-PAGE <7>) <7>
+
+SUBUNITS
+SU	#4,9# dimer (#9# 2 * 53000, SDS-PAGE <7>; #4# 2 * 19500 <9>) <7,9>
+SU	#5# tetramer (#5# 4 * 40000, SDS-PAGE <3>) <3>
+
+APPLICATION
+AP	#1# industry (#1# Optimizing whole-cell biocatalysts by integrating a
+	recombinant intracellular NADPH regeneration system through
+	co-expression of a glucose facilitator from Zymomonas mobilis for
+	uptake of unphosphorylated glucose and a NADP+-dependent glucose
+	dehydrogenase from Bacillus megaterium that oxidizes glucose to
+	gluconolactone. <10>) <10>
+AP	#1,3# synthesis (#3# use of enzyme in enzyme-catalyzed synthesis system
+	for poly(3-hydroxybutyrate), enzyme catalyzes regeneration of NADPH,
+	system yields 5.6 mg of poly(3-hydroxybutyrate), in a 5 ml-reaction
+	mixture <8>; #1# Escherichia coli strain expressing both recombinant
+	glucose 1-dehydrogenase and a glucose facilitator for uptake of
+	unphosphorylated glucose shows a nine times higher initial alpha-pinene
+	oxide formation rate corresponding to a sixfold higher yield of 20 mg
+	per g cell dry weight after 1.5 h and to a sevenfold increased
+	alpha-pinene oxide yield in the presence of glucose compared to
+	glucose-free conditions <10>) <8,10>
+AP	#2# analysis (#2# method for determination of D-glucose- and
+	D-galactose levels in glycoconjugates. The NAD(P)H produced from the
+	enzymatic oxidation of the monosaccharides reacts with a
+	CuSO4-bathocuproinedisulfonic acid reagent to produce a color complex
+	absorbing maximally at 486 nm. With galactose dehydrogenase and glucose
+	dehydrogenase serving as the model enzymes, reaction analysis gives a
+	linear plot from 2.5 to 250 nmol of sugar. Method has been applicated
+	to sugar released by acid hydrolysis from lactose, porcine submaxillary
+	mucin and raffinose was quantified <12>) <12>
+
+ENGINEERING
+EN	#1# more (#1# Escherichia coli strain expressing both recombinant
+	glucose 1-dehydrogenase and a glucose facilitator for uptake of
+	unphosphorylated glucose shows a nine times higher initial alpha-pinene
+	oxide formation rate corresponding to a sixfold higher yield of 20 mg
+	per g cell dry weight after 1.5 h and to a sevenfold increased
+	alpha-pinene oxide yield in the presence of glucose compared to
+	glucose-free conditions <10>; #1# introduction of both, GLF and GlcDH,
+	in P450-overexpressing Escherichia coli should enable the cell to carry
+	out a straightforward intracellular cofactor regeneration driven by
+	externally added glucose. For the generation of recombinant Escherichia
+	coli strains carrying two plasmids, these are transformed successively.
+	Firstly, pZY507glf is transformed into Escherichia coli BL21 (DE3).
+	Subsequently, competent cells are prepared from a positive
+	transformant, and then pETDUETbm-3qm glcdh is transformed. <10>) <10>
+EN	#10,11# V254I (#10# mutant has improved kcat and kcat/Km values at both
+	25°C and 80°C. The thermal stability of the mutant enzyme was
+	comparable to that of the wild-type enzyme. Calculation of the
+	energetic contribution of the V254I mutation for the dehydrogenase
+	reaction reveals that the mutation destabilizes the
+	enzyme-NADPD-glucose ternary complex and reduces the transition-state
+	energy, thus enhancing catalysis <16>; #11# the mutant has improved
+	kcat and kcat/Km values at both 25°C and 80°C compared to the wild type
+	enzyme <16>) <16>
+EN	#11# I189V (#11# the mutant has decreased kcat and kcat/Km values at
+	both 25°C and 80°C compared to the wild type enzyme <16>) <16>
+EN	#4# D172K (#4# mutation in surface residue, mutant protein is slightly
+	less halotolerant than wild-type <11>) <11>
+EN	#4# D216K (#4# mutation in surface residue, mutant protein is slightly
+	less halotolerant than wild-type <11>) <11>
+EN	#4# D344K (#4# mutation in surface residue, mutant protein is slightly
+	less halotolerant than wild-type <11>) <11>
+EN	#4# D172K/D216K/D344K (#4# mutation in surface residue, mutant protein
+	is slightly less halotolerant than wild-type <11>) <11>
+EN	#4,9# G206D (#4# less efficient with NADP+ than the wild type, 1.6fold
+	increase in ratio kcat/Km for NAD+ <13>; #9# prefers NAD+ over NADP+
+	<13>; #9# the mutant is less efficient with NADP+ than the wild type
+	enzyme, the relation kcat/KNAD+ is 1.6times higher than in the wild
+	type, resulting in an enzyme that prefers NAD+ over NADP+ <13>) <13>
+EN	#4,9# R207I (#9# less efficient with NAD+ or NADP+ than the wild-type
+	enzyme <13>; #4# less efficient with NADP+ than the wild type <13>; #9#
+	the mutant is less efficient with NADP+ than the wild type enzyme,
+	shows an increase of 48times in Km value with NADP+ when compared with
+	the wild type accompanied by a decrease in kcat, which clearly makes
+	the R207I mutant less efficient in catalysis with NADP+, the R207I
+	substitution also makes the enzyme less efficient with NAD+, with a
+	decrease of 4 times in kcat/Km, this substitution also increases the Km
+	for glucose <13>) <13>
+EN	#4,9# G206D/R207I (#9# active only with NAD+ <13>; #4# no activity with
+	NADP+, highest reaction rate with cofactor NAD+ of all mutants tested
+	<13>; #9# the mutant shows no activity with NADP+, when the coenzyme
+	NAD+ is incubated with this double mutant, it reaches the highest kcat
+	value, between 1.5 and 2times higher than the kcat of the wild type
+	enzyme with NADP+, and between 3 and 4times higher than the kcat of the
+	wild type with NAD+ <13>) <13>
+EN	#4,9# G206D/R207I/R208N (#9# active only with NAD+ <13>; #4# no
+	activity with NADP+ <13>; #9# the mutant shows no activity with NADP+
+	<13>) <13>
+EN	#9# D38C (#9# crystallization of a range of binary and ternary
+	complexes of the wild-type and a D38C mutant protein <9>) <9>
+
+CLONED
+CL	#1# (overexpression in Escherichia coli JM109 for use as a cofactor
+	regenerator) <5>
+CL	#1# (expression in Escherichia coli, together with a glucose
+	facilitator from Zymomonas mobilis for uptake of unphosphorylated
+	glucose) <10>
+CL	#1# (expression in Escherichia coli BL21 (DE3) already heterologously
+	overexpressing P450 BM-3 QM together with glucose facilitator (GLF)
+	from Zymomonas mobilis) <10>
+CL	#4# (expression as inclusion bodies in Escherichia coli) <13>
+CL	#9# (overexpressed in Escherichia coli) <15>
+CL	#9# (expressed in Escherichia coli BL21 (DE3) cells) <13>
+CL	#9# (expressed as recombinant protein in Escherichia coli strain
+	BL21(DE3)) <13>
+CL	#10# (expression in Escherichia coli) <16>
+CL	#11# (expressed in Escherichia coli Rosetta2 (DE3) cells) <16>
+
+CRYSTALLIZATION
+CR	#4# <14>
+CR	#4# (hanging-drop vapour diffusion) <9>
+CR	#5# <3>
+CR	#9# (the structures of GlcDH in binary complexes with either NADP+/Zn2+
+	or NADPH/Zn2+, a ternary complex with NADP+/Zn2+/glucose, and a
+	nonproductive ternary complex with NADP+/Zn2+ /gluconolactone are
+	determined from isomorphous crystals, in the presence of zinc (1 mM)
+	and either 5 mM NADP+, by using 1.4-1.6 M sodium citrate as the
+	precipitant (in 100 mM HEPES, pH 7.0, and 2 M NaCl) or 5 mM NADPH,
+	using 67-72% (w/v) 2-methyl-2,4-pentanediol as precipitant (in 100 mM
+	HEPES, pH 7.5, and 2 M NaCl)) <14>
+CR	#9# (1.6 A structure determination of the enzyme using crystals grown
+	under conditions that closely mimic those experienced within the cell
+	of the halophile. The structure is compared with nonhalophilic
+	homologues. Location of bound counterions in the structure. Analysis of
+	protein-solvent interactions to further the understanding of the
+	molecular basis of halophilic adaptation) <17>
+CR	#9# (hanging-drop vapour-diffusion method at 17°C, crystallization of a
+	range of binary and ternary complexes of the wild-type and a D38C
+	mutant protein. For most of the complexes, crystals belonging to space
+	group I222 are obtained using sodium/potassium citrate as a
+	precipitant. For the binary and non-productive ternary complexes with
+	NADPH/Zn, it is necessary to replace the citrate with
+	2-methyl-2,4-pentanediol. Despite the radical change in conditions, the
+	crystals thus formed are isomorphous) <9>
+CR	#9# (hanging-drop vapour-diffusion method using sodium citrate as the
+	precipitant. Two crystal forms representing the free enzyme and the
+	binary complex with NADP+ grow under these conditions. Crystals of form
+	I diffract to beyond 3.5 A resolution and belong to the hexagonal space
+	group P622, with unit-cell parameters a = b = 89.1, c = 214.6 A, alpha
+	= beta = 90°, gamma = 120°. Crystals of form II diffract to greater
+	than 2.0 A and belong to the orthorhombic space group I222 or I212121,
+	with unit-cell parameters a = 61.8, b = 110.9, c = 151.7 A, alpha =
+	beta = gamma = 90°) <15>
+
+PURIFICATION
+PU	#4# <9>
+PU	#5# (column chromatography on DEAE-Sephadex A-50 and affinty
+	chromatography by blue-dextran Sepharose 4B) <3>
+PU	#6# (partial) <1,2>
+PU	#9# <7,9,13,15,17>
+PU	#10# <16>
+PU	#11# (HiTrapQ column chromatography and Resource-phenyl column
+	chromatography) <16>
+
+RENATURED
+REN	#9# <13>
+
+GENERAL_STABILITY
+GS	#6# (lyophilization of dilute enzyme solutions, below 0.5 ng/ml,
+	results in significant loss of activity) <1,2>
+GS	#6# (freezing and thawing: significant loss of activity) <1,2>
+
+STORAGE_STABILITY
+SS	#5# (5°C, crystalline preparation in ammonium sulfate, 6 months) <3>
+SS	#6# (-20°C, 1 year) <1>
+SS	#6# (4°C, pH 5.4 - pH 8.5, 8 weeks) <1>
+SS	#9# (4°C, stable for several months) <7>
+SS	#9# (4°C, stable for weeks) <13>
+
+TEMPERATURE_STABILITY
+TS	#9# 65 (#9# half-life: 56.8 h, in the presence of 3 M NaCl, stability
+	decreases significantly with lower salt concentrations <7>) <7>
+
+REFERENCE
+RF	<1> Avigad, G.; Alroy, Y.; Englard, S.: Purification and properties of
+	a nicotinamide adenine dinucleotide phosphate-linked aldohexose
+	dehydrogenase from Gluconobacter cerinus. J. Biol. Chem. (1968) 243,
+	1936-1941. {Pubmed:4384672}
+RF	<2> Avigad, G.; Englard, S.: Aldohexose dehydrogenase from
+	Gluconobacter cerinus-1. Methods Enzymol. (1975) 41, 142-147.
+	{Pubmed:236431} (review)
+RF	<3> Adachi, O.; Matsushita, K.; Shinagawa, E.; Ameyama, M.:
+	Crystallization and characterization of NADP-dependent D-glucose
+	dehydrogenase from Gluconobacter suboxydans. Agric. Biol. Chem. (1980)
+	44, 301-308. {Pubmed:}
+RF	<4> Buckmann, A.F.; Schmid, R.: A different acceptance of
+	adenine-modified NADP+ by NAD(P)+-dependent glucose dehydrogenase from
+	Bacillus megatherium and strictly NADP+-dependent glucose dehydrogenase
+	from Cryptococcus uniguttulatus. Biotechnol. Appl. Biochem. (1991) 14,
+	104-113. {Pubmed:}
+RF	<5> Kataoka, M.; Rohani, L.P.S.; Wada, M.; Kita, K.; Yanase, H.; Urabe,
+	I.; Shimizu, S.: Escherichia coli transformant expressing the glucose
+	dehydrogenase gene from Bacillus megaterium as a cofactor regenerator
+	in a chiral alcohol production system. Biosci. Biotechnol. Biochem.
+	(1998) 62, 167-169. {Pubmed:9501530}
+RF	<6> Johnsen, U.; Selig, M.; Xavier, K.B.; Santos, H.; Schonheit, P.:
+	Different glycolytic pathways for glucose and fructose in the
+	halophilic archaeon Halococcus saccharolyticus. Arch. Microbiol. (2001)
+	175, 52-61. {Pubmed:11271421}
+RF	<7> Bonete, M.J.; Pire, C.; Llorca, F.I.; Camacho, M.L.: Glucose
+	dehydrogenase from the halophilic Archaeon Haloferax mediterranei:
+	Enzyme purification, characterization and N-terminal sequence. FEBS
+	Lett. (1996) 383, 227-229. {Pubmed:8925901} (c)
+RF	<8> Satoh, Y.; Tajima, K.; Tannai, H.; Munekata, M.: Enzyme-catalyzed
+	poly(3-hydroxybutyrate) synthesis from acetate with CoA recycling and
+	NADPH regeneration in vitro. J. Biosci. Bioeng. (2003) 95, 335-341.
+	{Pubmed:16233416}
+RF	<9> Esclapez, J.; Britton, K.L.; Baker, P.J.; Fisher, M.; Pire, C.;
+	Ferrer, J.; Bonete, M.J.; Rice, D.W.: Crystallization and preliminary
+	X-ray analysis of binary and ternary complexes of Haloferax
+	mediterranei glucose dehydrogenase. Acta Crystallogr. Sect. F (2005)
+	61, 743-746. {Pubmed:16511145}
+RF	<10> Schewe, H.; Kaup, B.A.; Schrader, J.: Improvement of P450(BM-3)
+	whole-cell biocatalysis by integrating heterologous cofactor
+	regeneration combining glucose facilitator and dehydrogenase in E.
+	coli. Appl. Microbiol. Biotechnol. (2008) 78, 55-65. {Pubmed:18057930}
+RF	<11> Esclapez, J.; Pire, C.; Bautista, V.; Martinez-Espinosa, R.M.;
+	Ferrer, J.; Bonete, M.J.: Analysis of acidic surface of Haloferax
+	mediterranei glucose dehydrogenase by site-directed mutagenesis. FEBS
+	Lett. (2007) 581, 837-842. {Pubmed:17289028}
+RF	<12> Sovic, D.; Lester, L.; Murray, E.; Cohenford, M.: The utilization
+	of bathocuproinedisulfonic acid as a reagent for determining D-glucose
+	and D-galactose levels in glycoconjugates. Bioorg. Chem. (2008) 36,
+	91-95. {Pubmed:18215411}
+RF	<13> Pire, C.; Esclapez, J.; Diaz, S.; Perez-Pomares, F.; Ferrer, J.;
+	Bonete, M.: Alteration of coenzyme specificity in halophilic NAD(P)+
+	glucose dehydrogenase by site-directed mutagenesis. J. Mol. Catal. B
+	(2009) 59, 261-265. {Pubmed:}
+RF	<14> Baker, P.J.; Britton, K.L.; Fisher, M.; Esclapez, J.; Pire, C.;
+	Bonete, M.J.; Ferrer, J.; Rice, D.W.: Active site dynamics in the
+	zinc-dependent medium chain alcohol dehydrogenase superfamily. Proc.
+	Natl. Acad. Sci. USA (2009) 106, 779-784. {Pubmed:19131516}
+RF	<15> Ferrer, J.; Fisher, M.; Burke, J.; Sedelnikova, S.E.; Baker, P.J.;
+	Gilmour, D.J.; Bonete, M.J.; Pire, C.; Esclapez, J.; Rice, D.W.:
+	Crystallization and preliminary X-ray analysis of glucose dehydrogenase
+	from Haloferax mediterranei. Acta Crystallogr. Sect. D (2001) 57,
+	1887-1889. {Pubmed:11717506}
+RF	<16> Sugii, T.; Akanuma, S.; Yagi S.; Yagyu, K.; Shimoda, Y.;
+	Yamagishi, A.: Characterization of the low-temperature activity of
+	Sulfolobus tokodaii glucose-1-dehydrogenase mutants. J. Biosci. Bioeng.
+	(2014) 118, 367-371. {Pubmed:24742629}
+RF	<17> Britton, K.L.; Baker, P.J.; Fisher, M.; Ruzheinikov, S.; Gilmour,
+	D.J.; Bonete, M.J.; Ferrer, J.; Pire, C.; Esclapez, J.; Rice, D.W.:
+	Analysis of protein solvent interactions in glucose dehydrogenase from
+	the extreme halophile Haloferax mediterranei. Proc. Natl. Acad. Sci.
+	USA (2006) 103, 4846-4851. {Pubmed:16551747}
+
+KI_VALUE
+KI	#4# 0.09 {NADP+}  (#4# wild-type, pH 8.8, 40°C <13>) <13>
+KI	#4# 1.3 {NADP+}  (#4# mutant R207I, pH 8.8, 40°C <13>) <13>
+KI	#4# 1 {NAD+}  (#4# mutant G206D, pH 8.8, 40°C <13>) <13>
+KI	#4# 2 {NAD+}  (#4# wild-type, pH 8.8, 40°C <13>) <13>
+KI	#4# 1.7 {NAD+}  (#4# mutant G206D/R207I/R208N, pH 8.8, 40°C <13>) <13>
+KI	#4# 1.17 {NAD+}  (#4# mutant G206D/R207I, pH 8.8, 40°C <13>) <13>
+KI	#4# 2.1 {NAD+}  (#4# mutant R207I, pH 8.8, 40°C <13>) <13>
+KI	#4# 0.69 {NADP+}  (#4# mutant G206D, pH 8.8, 40°C <13>) <13>
+KI	#9# 0.09 {NAD(P)+}  (#9# with NADP+ as coenzyme <13>) <13>
+KI	#9# 2 {NAD(P)+}  (#9# with NAD+ as coenzyme <13>) <13>
+
+KCAT_KM_VALUE
+KKM	#10,11# 0.092 (#10# pH 9.0, 25°C, mutant enzyme I189V <16>; #11# mutant
+	enzyme I189V, at pH 9.0 and 25°C <16>) <16>
+KKM	#10,11# 0.186 (#10# pH 9.0, 25°C, wild-type enzyme <16>; #11# wild type
+	enzyme, at pH 9.0 and 25°C <16>) <16>
+KKM	#10,11# 0.31 (#10# pH 9.0, 80°C, mutant enzyme I189V <16>; #11# mutant
+	enzyme I189V, at pH 9.0 and 80°C <16>) <16>
+KKM	#10,11# 0.126 (#10# pH 9.0, 80°C, mutant enzyme V254I <16>; #11# mutant
+	enzyme V254I, at pH 9.0 and 80°C <16>) <16>
+KKM	#10,11# 3.82 (#10# pH 9.0, 25°C, wild-type enzyme <16>; #11# wild type
+	enzyme, at pH 9.0 and 25°C <16>) <16>
+KKM	#10,11# 0.234 (#10# pH 9.0, 25°C, mutant enzyme V254I <16>; #11# mutant
+	enzyme V254I, at pH 9.0 and 25°C <16>) <16>
+KKM	#10,11# 2.91 (#10# pH 9.0, 25°C, mutant enzyme I189V <16>; #11# mutant
+	enzyme I189V, at pH 9.0 and 25°C <16>) <16>
+KKM	#10,11# 5.25 (#10# pH 9.0, 25°C, mutant enzyme V254I <16>; #11# mutant
+	enzyme V254I, at pH 9.0 and 25°C <16>) <16>
+KKM	#10,11# 0.351 (#10# pH 9.0, 80°C, wild-type enzyme <16>; #11# wild type
+	enzyme, at pH 9.0 and 80°C <16>) <16>
+KKM	#10,11# 0.365 (#10# pH 9.0, 80°C, mutant enzyme V254I <16>; #11# mutant
+	enzyme V254I, at pH 9.0 and 80°C <16>) <16>
+KKM	#10,11# 0.863 (#10# pH 9.0, 80°C, wild-type enzyme <16>; #11# wild type
+	enzyme, at pH 9.0 and 80°C <16>) <16>
+KKM	#10,11# 0.893 (#10# pH 9.0, 80°C, mutant enzyme I189V <16>; #11# mutant
+	enzyme I189V, at pH 9.0 and 80°C <16>) <16>
+KKM	#4# 0.015 (#4# wild-type, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.0001 (#4# mutant G206D, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.00012 (#4# mutant R207I, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.00073 (#4# wild-type, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.00112 (#4# mutant G206D, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.000055 (#4# mutant R207I, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.00033 (#4# mutant G206D/R207I, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.000035 (#4# mutant G206D/R207I/R208N, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.00019 (#4# wild-type, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.000005 (#4# mutant G206D, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.000008 (#4# mutant R207I, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.00002 (#4# cosubstrate NAD+, wild-type, pH 8.8, 40°C <13>) <13>
+KKM	#4# 0.000038 (#4# cosubstrate NAD+, mutant G206D, pH 8.8, 40°C <13>)
+	<13>
+KKM	#4# 0.000002 (#4# cosubstrate NAD+, mutant R207I, pH 8.8, 40°C <13>)
+	<13>
+KKM	#4# 0.000012 (#4# cosubstrate NAD+, mutant G206D/R207I, pH 8.8, 40°C
+	<13>) <13>
+KKM	#4# 0.0000008 (#4# cosubstrate NAD+, mutant G206D/R207I/R208N, pH 8.8,
+	40°C <13>) <13>
+
+///

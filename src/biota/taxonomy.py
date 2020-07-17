@@ -1,9 +1,12 @@
+import sys
+import os
 
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, Resource
 from gws.prism.controller import Controller
 from taxo.taxonomy import Taxo
 from peewee import CharField, ForeignKeyField
+
 
 ####################################################################################
 #
@@ -14,6 +17,7 @@ class Taxonomy(Resource):
     tax_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
+    division = CharField(null=True, index=True)
     ancestor = ForeignKeyField('self', backref='is_child_of', null = True)
     _table_name = 'taxonomy'
 
@@ -31,51 +35,43 @@ class Taxonomy(Resource):
         self.rank = rank__
 
     @classmethod
-    def create_taxons_from_dict(cls, taxlist):
-        for tax in taxlist:
-            cls.create_taxons_from_dict_at_level(tax, "phylum")
-
-    @classmethod
-    def create_taxons_from_dict_at_level(cls, tax, level):
-        print(tax)
-        import time
-
-        start_time = time.time()          
-
-        dict_taxons = Taxo.get_taxonomy_lineage(tax, rank_limit = level)
-
-        if len(dict_taxons) == 0:
-            return dict_taxons
-
-        elapsed_time = time.time() - start_time
-        print("step 1: time = {}, #taxon = {}".format(elapsed_time/60, len(dict_taxons)))
+    def create_taxons(cls, path, bulk_size, **files):
+        nodes_path = os.path.join(path, files['ncbi_nodes'])
+        dict_ncbi_names = Taxo.get_ncbi_names(path, **files)
+        start = 0
+        stop = 0
         
-        start_time = time.time()
-        taxons = [cls(data = dict_taxons[d]) for d in dict_taxons]
+        with open(nodes_path) as fh:
+            size_file = len(fh.readlines())
+        while True:
+            #step 1
+            if start >= size_file-1:
+                break
+            stop = min(start+bulk_size, size_file-1)
+            print(start, stop)
 
-        elapsed_time = time.time() - start_time
-        print("step 2: time = {}".format(elapsed_time/60))
-        
-        for tax in dict_taxons:
-            tax.tax_id = tax.data['tax_id']
-            tax.name = tax.data['name']
-            tax.rank = tax.data['rank']
+            dict_taxons = Taxo.get_all_taxonomy_by_bulk(path, bulk_size, start, stop, dict_ncbi_names, **files)
+            
+            if(dict_taxons == None):
+                break
+            #step 2
+            taxons = [cls(data = dict_taxons[d]) for d in dict_taxons.keys()]
+            
+            #step 3
+            for tax in taxons:
+                tax.tax_id = tax.data['tax_id']
+                if ('name' in tax.data.keys()):
+                    tax.name = tax.data['name']
+                else:
+                    tax.name = "Unspecified"
+                tax.rank = tax.data['rank']
+                tax.division = tax.data['division']
+            cls.save_all()
 
+            start = stop+1
+        #step 4
+        cls._set_taxons_ancestors(Taxonomy.select())
         cls.save_all()
-
-        elapsed_time = time.time() - start_time
-        print("step 3: time = {}".format(elapsed_time/60))
-
-        start_time = time.time()
-        cls._set_taxons_ancestors(taxons)
-        cls.save_all()
-
-        elapsed_time = time.time() - start_time
-        print("step 4: time = {}".format(elapsed_time/60))
-
-        print('The superkingdom ' + tax + ' has been correctly loaded')
-    
-        return(dict_taxons)
 
     @classmethod
     def _set_taxons_ancestors(cls, list_taxons):
@@ -95,10 +91,9 @@ class Taxonomy(Resource):
             if start >= len(tax_ids)-1:
                 break
 
-            stop = min(start+bluk_size, len(list_taxons)-1)
+            stop = min(start+bluk_size, len(tax_ids)-1)
             elems = tax_ids[start:(stop+1)]
 
-            print(len(elems))
 
             if len(elems) == 0:
                 break
