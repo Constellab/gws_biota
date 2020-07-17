@@ -55,6 +55,6 @@ class TestMain(unittest.TestCase):
         #duration  = default_timer() - start
         #print("Part ['Archaea', 'Bacteria', 'Viruses'] of the taxonomy has been loaded in " + str(duration) + " sec")
         
-        Taxonomy.create_taxons_from_dict(['Bacteria'])
+        Taxonomy.create_taxons_from_dict(['Homininae'])
         duration  = default_timer() - start
         print("Part ['Eukaryota'] of the taxonomy has been loaded in " + str(duration) + " sec")

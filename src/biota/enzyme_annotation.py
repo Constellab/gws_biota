@@ -9,6 +9,7 @@ from biota.enzyme import Enzyme
 from biota.taxonomy import Taxonomy
 from quickgo.quickgo import QuickGOAnnotation
 from peewee import CharField, ForeignKeyField
+import time
 
 ####################################################################################
 #
@@ -88,31 +89,56 @@ class EnzymeAnnotation(Annotation):
     def create_annotation(cls):
         list_annotation = []
         q = Enzyme.select().where(Enzyme.data['uniprot'] != 'null')
-        
-        for enzyme in q:
-            list_ann = QuickGOAnnotation.get_tsv_file_from_uniprot_id(str(enzyme.uniprot_id))
-            try:
-                for element in list_ann:
-                    list_annotation.append(element)
-                print('Results for ' + enzyme.uniprot_id + ' have been collected successfully')
-            except:
-                print('list empty')
-        
-        annotations = [cls(data = d) for d in list_annotation]
+        list_q = list(q)
+        start = 0
+        stop = 0
+        size_select = len(q)
+        bulk_size = 50
+        while True:
+            print("Trying to record 50 items from quickgo...")
+            if start >= size_select-1:
+                break
+            
+            stop = min(start+bulk_size, size_select-1)
 
-        cls.insert_gene_product_id(annotations, 'gene product id')
-        cls.insert_reference(annotations, 'reference')
-        cls.insert_assignment(annotations, 'assigned by')
-        cls.save_all()
+            elems = list_q[start:(stop+1)]
 
-        for annotation in annotations:
+            if len(elems) == 0:
+                    return None
+
+            for enzyme in elems:
+                start_time = time.time()
+                list_ann = QuickGOAnnotation.get_tsv_file_from_uniprot_id(str(enzyme.uniprot_id))
+                try:
+                    for element in list_ann:
+                        list_annotation.append(element)
+                    print('Results for ' + enzyme.uniprot_id + ' have been collected successfully')
+                except:
+                    print('list empty')
+            
+            annotations = [cls(data = d) for d in list_annotation]
+
+            cls.insert_gene_product_id(annotations, 'gene product id')
+            cls.insert_reference(annotations, 'reference')
+            cls.insert_assignment(annotations, 'assigned by')
+            cls.save_all()
+            
+            elapsed_time = time.time() - start_time
+            print("Loading 50 items from quickgo extract from QuickGO in: time = {}".format(elapsed_time/60))
+
+            start = stop
+        
+        start_time = time.time()
+        for annotation in EnzymeAnnotation.select():
             annotation.set_go_term()
             annotation.set_evidence()
         
         cls.save_all()
+        elapsed_time = time.time() - start_time
+        print("Get GO and ECO id for all table in: time = {}".format(elapsed_time/60))
 
-        class Meta():
-            table_name = 'enzyme_annotation'
+    class Meta():
+        table_name = 'enzyme_annotation'
 
 class EnzymeAnnotationJSONStandardViewModel(ResourceViewModel):
     template = JSONViewTemplate("""
