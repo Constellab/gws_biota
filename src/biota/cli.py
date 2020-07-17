@@ -166,7 +166,7 @@ def createdb(ctx, name):
     start_time = time.time()
 
     ncbi_input_db_dir = data_paths["ncbi"]
-    Taxonomy.create_taxons(ncbi_input_db_dir, bulk_size = 1000, **files)
+    Taxonomy.create_taxons(ncbi_input_db_dir, bulk_size = 750, **files)
     len_taxonomy = len(Taxonomy.select())
     
     elapsed_time = time.time() - start_time
