@@ -3,17 +3,7 @@
     "db_dir"        : "./",
     "db_name"       : "db.sqlite3",
     "biota_test_data_dir": "./tests/data",
-    "biota_db_data_dir" : {
-        "brenda"            : "../../extern/databases/brenda/brenda",
-        "bto"               : "../../extern/databases/brenda/bto", 
-        "chebi"           : "../../extern/databases/chebi",
-        "eco"           : "../../extern/databases/eco",
-        "go"           : "../../extern/databases/go",
-        "ncbi"           : "../../extern/databases/ncbi",
-        "rhea"           : "../../extern/databases/rhea",
-        "sbo"           : "../../extern/databases/sbo"
-
-    },
+    "biota_db_data_dir" : "",
     "dependencies"  : {
         "gws"           : "../gws-py",
         "rhea"          : "../rhea-py",
