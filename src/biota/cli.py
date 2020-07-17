@@ -140,7 +140,7 @@ def createdb(ctx, name):
     len_bto = len(BTO.select())
 
     elapsed_time = time.time() - start_time
-    print("step 3 | Loading bto and bto_ancestors: time = {} sec for #bto = {}".format(elapsed_time, len_bto))
+    print("step 3 | Loading bto and bto_ancestors in: time = {} sec for #bto = {}".format(elapsed_time, len_bto))
     
     # ------------- Create ECO ------------- #
     start_time = time.time()
@@ -150,8 +150,7 @@ def createdb(ctx, name):
     len_eco = len(ECO.select())
     
     elapsed_time = time.time() - start_time
-    print("step 4 | Loading eco and eco_ancestors: time = {} sec for #eco = {}".format(elapsed_time, len_eco))
-    
+    print("step 4 | Loading eco and eco_ancestors in: time = {} sec for #eco = {}".format(elapsed_time, len_eco))
     
     # ------------- Create ChebiOntology ------------- #
     start_time = time.time()
@@ -161,48 +160,49 @@ def createdb(ctx, name):
     len_chebi_ontology = len(ChebiOntology.select())
     
     elapsed_time = time.time() - start_time
-    print("step 5 | Loading chebi ontology: time = {} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
+    print("step 5 | Loading chebi ontology in: time = {} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
     
-    """
     # ------------- Create Taxonomy ------------- #
     start_time = time.time()
 
     ncbi_input_db_dir = data_paths["ncbi"]
-    Taxonomy.create_taxons(test_data_path, **files)
+    Taxonomy.create_taxons(ncbi_input_db_dir, bulk_size = 1000, **files)
     len_taxonomy = len(Taxonomy.select())
     
     elapsed_time = time.time() - start_time
-    print("step 5 | Loading taxonomy: time = {}, #taxons = {}".format(elapsed_time/60))
+    print("step 5 | Loading taxonomy in: time = {} for #taxons = {}".format(elapsed_time/60, len_taxonomy))
     
     # ------------- Create Compound ------------- #
     start_time = time.time()
 
-    chebi_input_db_dir = settings.get_data("chebi_input_db_dir")
+    chebi_input_db_dir = data_paths["chebi"]
     Compound.create_compounds_from_files(chebi_input_db_dir, **files)
-    self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
+    len_compound = Compound.select()
     
     elapsed_time = time.time() - start_time
-    print("step 6 | Loading compounds: time = {}".format(elapsed_time/60))
+    print("step 6 | Loading compounds in: time = {} for #compounds = {} ".format(elapsed_time/60, len_compound))
 
     # ------------- Create Enzyme ------------- #
     start_time = time.time()
 
-    brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir")
+    brenda_texfile_input_db_dir = data_paths["brenda"]
     Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
+    len_enzyme = Enzyme.select()
     
     elapsed_time = time.time() - start_time
-    print("step 7 | Loading enzymes and enzymes_btos: time = {}".format(elapsed_time/60))
+    print("step 7 | Loading enzymes and enzymes_btos in: time = {} for #enzymes = {".format(elapsed_time/60), len_enzyme))
     
     # ------------- Create Reactions ------------- #
     start_time = time.time()
 
-    Reaction.create_reactions_from_files(input_db_dir, **files)
-    rea1 = Reaction.get(Reaction.source_accession == 'RHEA:10031')
-    
+    rhea_input_db_dir = data_paths["rhea"]
+    Reaction.create_reactions_from_files(rhea_input_db_dir, **files)
+    len_rhea = Reaction.select()
+
     elapsed_time = time.time() - start_time
-    print("step 8 | Loading reactions, reactions_enzymes, reactions_substrates, reactions_products: time = {}".format(elapsed_time/60))
+    print("step 8 | Loading reactions, reactions_enzymes, reactions_substrates, reactions_products in: time = {} for #rhea = {}".format(elapsed_time/60, len_rhea))
     
-    
+    """
     # ------------- Create EnzymeAnnotation ------------- #
     start_time = time.time()
 

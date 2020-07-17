@@ -33,7 +33,6 @@ class TestGO(unittest.TestCase):
             division = "division.dmp",
             citations = "citations.dmp"
         )
-
         Taxonomy.create_taxons(test_data_path, bulk_size = 10, **files_test)
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'ancestor': '71', 'rank': 'species', 'division': 'Bacteria'})
         
