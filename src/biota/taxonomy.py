@@ -6,6 +6,7 @@ from gws.prism.model import ResourceViewModel, Resource
 from gws.prism.controller import Controller
 from taxo.taxonomy import Taxo
 from peewee import CharField, ForeignKeyField
+import time
 
 
 ####################################################################################
@@ -48,8 +49,8 @@ class Taxonomy(Resource):
             if start >= size_file-1:
                 break
             stop = min(start+bulk_size, size_file-1)
-            print(start, stop)
 
+            start_time = time.time()
             dict_taxons = Taxo.get_all_taxonomy_by_bulk(path, bulk_size, start, stop, dict_ncbi_names, **files)
             
             if(dict_taxons == None):
@@ -68,6 +69,8 @@ class Taxonomy(Resource):
                 tax.division = tax.data['division']
             cls.save_all()
 
+            elapsed_time = time.time() - start_time
+            print("Load 750 taxons in: time = {} sec ".format(elapsed_time))
             start = stop+1
         #step 4
         cls._set_taxons_ancestors(Taxonomy.select())
