@@ -27,7 +27,7 @@
         ],
         "buttons":{
             "biox": {
-                "icon": "fas fa-vials", "onclick": "window.gws.biota", "position": 9998
+                "icon": "fas fa-database", "onclick": "window.gws.biota", "position": 9998
             }
         }
     }
