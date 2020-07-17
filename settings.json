@@ -36,8 +36,10 @@
         "styles": [
             "/static/gws/g3/all.css"
         ],
-        "left_buttons":[
-            { "name": "biota", "icon": "fas fa-database", "onclick": "window.gws.biota" }
-        ]
+        "buttons":{
+            "biota": {
+                "icon": "fas fa-database", "onclick": "window.gws.biota", "position": 9997
+            }
+        }
     }
 }

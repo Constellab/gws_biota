@@ -5,6 +5,9 @@
  * About us: https://gencovery.com
  */
 
+if( window.gws == undefined )
+    window.gws = {}
+
 window.gws.biota = function(){
-    console.log("databases loaded")
+    console.log("biota loaded")
 }
