@@ -71,8 +71,8 @@ class Taxonomy(Resource):
             elapsed_time = time.time() - start_time
             print("Load 750 taxons in: time = {} sec ".format(elapsed_time))
             start = stop+1
+            cls.save_all()
             
-        cls.save_all()
         #step 4
         cls._set_taxons_ancestors(Taxonomy.select())
         cls.save_all()
