@@ -67,11 +67,12 @@ class Taxonomy(Resource):
                     tax.name = "Unspecified"
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
-            cls.save_all()
 
             elapsed_time = time.time() - start_time
             print("Load 750 taxons in: time = {} sec ".format(elapsed_time))
             start = stop+1
+            
+        cls.save_all()
         #step 4
         cls._set_taxons_ancestors(Taxonomy.select())
         cls.save_all()
