@@ -170,7 +170,7 @@ def createdb(ctx, name):
     len_taxonomy = len(Taxonomy.select())
     
     elapsed_time = time.time() - start_time
-    print("step 5 | Loading taxonomy in: time = {} for #taxons = {}".format(elapsed_time/60, len_taxonomy))
+    print("step 6 | Loading taxonomy in: time = {} for #taxons = {}".format(elapsed_time/60, len_taxonomy))
     
     # ------------- Create Compound ------------- #
     start_time = time.time()
@@ -180,7 +180,7 @@ def createdb(ctx, name):
     len_compound = Compound.select()
     
     elapsed_time = time.time() - start_time
-    print("step 6 | Loading compounds in: time = {} for #compounds = {} ".format(elapsed_time/60, len_compound))
+    print("step 7 | Loading compounds in: time = {} for #compounds = {} ".format(elapsed_time/60, len_compound))
 
     # ------------- Create Enzyme ------------- #
     start_time = time.time()
@@ -190,7 +190,7 @@ def createdb(ctx, name):
     len_enzyme = Enzyme.select()
     
     elapsed_time = time.time() - start_time
-    print("step 7 | Loading enzymes and enzymes_btos in: time = {} for #enzymes = {".format(elapsed_time/60), len_enzyme))
+    print("step 8 | Loading enzymes and enzymes_btos in: time = {} for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
     
     # ------------- Create Reactions ------------- #
     start_time = time.time()
@@ -200,7 +200,7 @@ def createdb(ctx, name):
     len_rhea = Reaction.select()
 
     elapsed_time = time.time() - start_time
-    print("step 8 | Loading reactions, reactions_enzymes, reactions_substrates, reactions_products in: time = {} for #rhea = {}".format(elapsed_time/60, len_rhea))
+    print("step 9 | Loading reactions, reactions_enzymes, reactions_substrates, reactions_products in: time = {} for #rhea = {}".format(elapsed_time/60, len_rhea))
     
     """
     # ------------- Create EnzymeAnnotation ------------- #

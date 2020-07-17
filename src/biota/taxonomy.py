@@ -36,7 +36,7 @@ class Taxonomy(Resource):
 
     @classmethod
     def create_taxons(cls, path, bulk_size, **files):
-        nodes_path = os.path.join(path, files['nodes'])
+        nodes_path = os.path.join(path, files['ncbi_nodes'])
         dict_ncbi_names = Taxo.get_ncbi_names(path, **files)
         start = 0
         stop = 0

@@ -28,10 +28,10 @@ class TestGO(unittest.TestCase):
     def test_db_object(self):
 
         files_test = dict(
-            nodes = "nodes_test.dmp",
-            names = "names_test.dmp",
-            division = "division.dmp",
-            citations = "citations.dmp"
+            ncbi_nodes = "nodes_test.dmp",
+            ncbi_names = "names_test.dmp",
+            ncbi_division = "division.dmp",
+            ncbi_citations = "citations.dmp"
         )
         Taxonomy.create_taxons(test_data_path, bulk_size = 10, **files_test)
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'ancestor': '71', 'rank': 'species', 'division': 'Bacteria'})
