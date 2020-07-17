@@ -37,6 +37,9 @@ from onto.ontology import Onto
 from chebi.chebi import Chebi
 from taxonomy.taxo import Taxo
 
+import click
+from gws.settings import Settings
+
 ############################################################################################
 #
 #                                        class main_admin
@@ -101,3 +104,13 @@ class TestMain(unittest.TestCase):
         GOJSONViewModel.save_all()
         view = go1_view_model.render()
         self.assertEqual(view, '{"id": GO:0000001 , "name": mitochondrion inheritance, "namespace": biological_process , "definition": The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton. }')
+
+@click.command(context_settings=dict(
+    ignore_unknown_options=True,
+    allow_extra_args=True
+))
+@click.pass_context
+@click.option('--output', '-o', help='Output path')
+def createdb(ctx,output):
+    print("Hello", output)
+    print("Welcome in the CLI!")
