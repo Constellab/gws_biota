@@ -3,22 +3,7 @@
     "db_dir"    : "./",
     "db_name"   : "db.sqlite3",
     "biota_test_data_dir": "./tests/data",
-<<<<<<< HEAD
-    "biota_db_data_dir" : {
-        "brenda"            : "../../extern/databases/brenda/brenda",
-        "bto"               : "../../extern/databases/brenda/bto", 
-        "chebi"           : "../../extern/databases/chebi",
-        "eco"           : "../../extern/databases/eco",
-        "go"           : "../../extern/databases/go",
-        "ncbi"           : "../../extern/databases/ncbi",
-        "rhea"           : "../../extern/databases/rhea",
-        "sbo"           : "../../extern/databases/sbo"
-
-    },
-    "dependencies"  : {
-=======
     "dependencies" : {
->>>>>>> develop
         "gws"           : "../gws-py",
         "rhea"          : "../rhea-py",
         "ontology"      : "../ontology-py",
@@ -41,13 +26,8 @@
             "/static/gws/g3/all.css"
         ],
         "buttons":{
-<<<<<<< HEAD
             "biota": {
                 "icon": "fas fa-database", "onclick": "window.gws.biota", "position": 9997
-=======
-            "biox": {
-                "icon": "fas fa-database", "onclick": "window.gws.biota", "position": 9998
->>>>>>> develop
             }
         }
     }
