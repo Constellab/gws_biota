@@ -3,7 +3,7 @@ from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, DbManager
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
-from onto.ontology import Onto
+from biota.helper.ontology import Onto
 from biota.ontology import Ontology
 
 ####################################################################################

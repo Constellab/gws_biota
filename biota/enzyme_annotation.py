@@ -7,7 +7,7 @@ from biota.go import GO
 from biota.eco import ECO
 from biota.enzyme import Enzyme
 from biota.taxonomy import Taxonomy
-from quickgo.quickgo import QuickGOAnnotation
+from biota.helper.quickgo import QuickGOAnnotation
 from peewee import CharField, ForeignKeyField
 #import time
 

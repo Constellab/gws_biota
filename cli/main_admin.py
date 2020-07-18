@@ -31,10 +31,10 @@ from biota.taxonomy import Taxonomy
 from biota.bto import BTO
 
 #import external module 
-from rhea.rhea import Rhea
-from brenda.brenda import brenda
-from onto.ontology import Onto
-from chebi.chebi import Chebi
+from biota.helper.rhea import Rhea
+from biota.helper.brenda import brenda
+from biota.helper.ontology import Onto
+from biota.helper.chebi import Chebi
 from taxonomy.taxo import Taxo
 
 import click

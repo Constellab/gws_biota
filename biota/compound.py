@@ -5,7 +5,7 @@ from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel
 from peewee import CharField, FloatField
 
-from chebi.chebi import Chebi
+from biota.helper.chebi import Chebi
 
 ####################################################################################
 #

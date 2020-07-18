@@ -1,16 +1,37 @@
 {
-    "name"      : "biota",
-    "db_dir"    : "./",
-    "db_name"   : "db.sqlite3",
-    "biota_test_data_dir": "./tests/data",
+    "name"                          : "biota",
+    "db_dir"                        : "./",
+    "db_name"                       : "db.sqlite3",
+    "biota_test_data_dir"           : "./tests/data",
+
+    "brenda_input_db_dir"           : "../../extern/databases/brenda",
+    "brenda_texfile_input_db_dir"   : "../../extern/databases/brenda/brenda",
+    "brenda_test_data_dir"          : "./tests/helper/data",
+
+    "chebi_input_db_dir"            : "../../extern/databases/chebi/",
+    "chebi_test_data_dir"           : "./tests/helper/data",
+    "chebi_ontology_test_data_dir"  : "./tests/helper/data",
+
+    "quickgo_api_url"               : "https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?selectedFields=geneProductId&selectedFields=symbol&selectedFields=qualifier&selectedFields=goId&selectedFields=goAspect&selectedFields=evidenceCode&selectedFields=goEvidence&selectedFields=reference&selectedFields=withFrom&selectedFields=taxonId&selectedFields=assignedBy&selectedFields=synonyms&selectedFields=name&geneProductId=",
+    
+    "go_input_db_dir"               : "../../extern/databases/go",
+    "eco_input_db_dir"              : "../../extern/databases/eco",
+    "sbo_input_db_dir"              : "../../extern/databases/sbo",
+    "bto_input_db_dir"              : "../../extern/databases/brenda/bto",
+    "go_test_data_dir"              : "./tests/helper/data",
+    "eco_test_data_dir"             : "./tests/helper/data",
+    "sbo_test_data_dir"             : "./tests/helper/data",
+    "bto_test_data_dir"             : "./tests/helper/data",
+
+    "rhea_input_db_dir"             : "../../extern/databases/rhea/tsv",
+    "rhea_test_data_dir"            : "./tests/helper/data",
+
+    "taxonomy_input_db_dir"         : "../../extern/databases/ncbi",
+    "taxonomy_test_data_dir"        : "./tests/helper/data",
+
     "dependencies" : {
         "gws"           : "../gws-py",
-        "rhea"          : "../rhea-py",
-        "ontology"      : "../ontology-py",
-        "taxonomy"      : "../taxonomy-py",
-        "chebi"         : "../chebi-py",
-        "brenda"        : "../brenda-py",
-        "quickgo"       : "../quickgo-py"
+        ":external:"    : ["../../extern/brenda-py"]
     },
     "statics"       : {
         "/static/biota"   : "./public/static"

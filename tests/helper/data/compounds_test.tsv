@@ -1,0 +1,19 @@
+ID	STATUS	CHEBI_ACCESSION	SOURCE	PARENT_ID	NAME
+58321	C	CHEBI:58321	Rhea	null	L-allysine zwitterion
+15378	C	CHEBI:15378	ChEBI	null	hydron
+29985	C	CHEBI:29985	ChEBI	null	L-glutamate(1-)
+57783	C	CHEBI:57783	Rhea	null	NADPH(4-)
+15377	C	CHEBI:15377	ChEBI	null	water
+57951	C	CHEBI:57951	Rhea	null	L-saccharopinate(1-)
+58349	C	CHEBI:58349	Rhea	null	NADP(3-)
+29969	C	CHEBI:29969	ChEBI	null	L-lysinium residue
+59789	C	CHEBI:59789	SUBMITTER	null	S-adenosyl-L-methionine zwitterion
+61929	C	CHEBI:61929	ChEBI	null	N(6)-methyl-L-lysinium residue
+57856	C	CHEBI:57856	Rhea	null	S-adenosyl-L-homocysteine zwitterion
+29986	C	CHEBI:29986	ChEBI	null	D-glutamate(1-)
+15379	C	CHEBI:15379	ChEBI	null	dioxygen
+16810	C	CHEBI:16810	ChEBI	null	2-oxoglutarate(2-)
+16240	C	CHEBI:16240	ChEBI	null	hydrogen peroxide
+28938	C	CHEBI:28938	ChEBI	null	ammonium
+88115	C	CHEBI:88115	SUBMITTER	null	N(2)-L-glutamino(1-) group
+78525	C	CHEBI:78525	SUBMITTER	null	L-glutamo(2-) group

@@ -2,7 +2,7 @@ from biota.ontology import Ontology
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel
 from peewee import CharField
-from chebi.chebi import Chebi
+from biota.helper.chebi import Chebi
 
 ####################################################################################
 #

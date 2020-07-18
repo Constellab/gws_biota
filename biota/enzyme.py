@@ -2,7 +2,7 @@ import os
 from biota.protein import Protein 
 from biota.taxonomy import Taxonomy as BiotaTaxo
 from biota.bto import BTO as BiotaBTO
-from brenda.brenda import Brenda
+from biota.helper.brenda import Brenda
 
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate

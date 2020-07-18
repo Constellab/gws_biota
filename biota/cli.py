@@ -22,11 +22,11 @@ from biota.enzyme_annotation import EnzymeAnnotation
 from biota.reaction import Reaction
 
 #import external module 
-from rhea.rhea import Rhea
-from brenda.brenda import Brenda
-from onto.ontology import Onto
-from chebi.chebi import Chebi
-from taxo.taxonomy import Taxo
+from biota.helper.rhea import Rhea
+from biota.helper.brenda import Brenda
+from biota.helper.ontology import Onto
+from biota.helper.chebi import Chebi
+from biota.helper.taxonomy import Taxo
 
 #import Timer
 from timeit import default_timer

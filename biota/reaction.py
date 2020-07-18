@@ -6,7 +6,7 @@ from biota.relation import Relation
 from biota.compound import Compound
 from biota.enzyme import Enzyme
 from biota.go import GO
-from rhea.rhea import Rhea
+from biota.helper.rhea import Rhea
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel

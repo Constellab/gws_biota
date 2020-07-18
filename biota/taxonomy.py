@@ -4,7 +4,7 @@ import os
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, Resource
 from gws.prism.controller import Controller
-from taxo.taxonomy import Taxo
+from biota.helper.taxonomy import Taxo
 from peewee import CharField, ForeignKeyField
 #import time
 
