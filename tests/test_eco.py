@@ -30,9 +30,6 @@ class TestECO(unittest.TestCase):
     
     def test_db_object(self):
         ### Test ECO class ###
-        files = dict(
-            eco_data = "eco.obo",
-        )
 
         files_test = dict(
             eco_data = "eco_test.obo",

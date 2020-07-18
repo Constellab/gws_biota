@@ -15,12 +15,7 @@ from onto.ontology import Onto
 class ECO(Ontology):
     eco_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
-    definition = CharField(null=True, index=True)
     _table_name = 'eco'
-
-    # setters
-    def set_definition(self, def__):
-        self.definition = def__
 
     def set_eco_id(self, id):
         self.eco_id = id
@@ -28,6 +23,10 @@ class ECO(Ontology):
     def set_name(self, name__):
         self.name = name__
     
+    @property
+    def definition(self):
+        return self.data["definition"]
+
     def __get_ancestors_query(self):
         vals = []
         for i in range(0, len(self.data['ancestors'])):
@@ -35,23 +34,7 @@ class ECO(Ontology):
                 val = {'eco': self.id, 'ancestor': ECO.get(ECO.eco_id == self.data['ancestors'][i]).id }
                 vals.append(val)
         return(vals)
-    
-    # inserts
-    @classmethod
-    def insert_definition(cls, list__, key):
-        for eco in list__:
-            eco.set_definition(eco.data[key])
 
-    @classmethod
-    def insert_eco_id(cls, list__, key):
-        for eco in list__:
-            eco.set_eco_id(eco.data[key])
-
-    @classmethod
-    def insert_name(cls, list__, key):
-        for eco in list__:
-            eco.set_name(eco.data[key])
-    
     # create and drop table methods
     @classmethod
     def create_table(cls, *arg, **kwargs):
@@ -69,10 +52,12 @@ class ECO(Ontology):
         onto_eco = Onto.create_ontology_from_obo(input_db_dir, files_test["eco_data"])
         list_eco = Onto.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [cls(data = dict_) for dict_ in list_eco]
-        cls.insert_eco_id(ecos,"id")
-        cls.insert_name(ecos, "name")
-        cls.insert_definition(ecos, "definition")
-        cls.save_all()
+
+        for eco in ecos:
+            eco.set_eco_id( eco.data["id"] )
+            eco.set_name( eco.data["name"] )
+
+        cls.save_all(ecos)
 
         vals = []
         bulk_size = 100

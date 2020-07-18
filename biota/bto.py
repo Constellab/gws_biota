@@ -32,14 +32,7 @@ class BTO(Ontology):
         Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
         Q.execute()
 
-    # setters
-    def set_bto_id(self, id):
-        self.bto_id = id
-
-    def set_label(self, label_):
-        self.label = label_ 
-
-    def __get_ancestors_query(self):
+    def _get_ancestors_query(self):
         vals = []
         for i in range(0,len(self.data['ancestors'])):
             if (self.data['ancestors'][i] != self.bto_id):
@@ -47,41 +40,11 @@ class BTO(Ontology):
                 vals.append(val)
         return vals
 
-    def set_ancestors(self):
-        vals = []
-        bulk_size = 100
+    def set_bto_id(self, bto_id):
+        self.bto_id = bto_id
 
-        with DbManager.db.atomic() as transaction:
-            try:
-                for i in range(0,len(self.data['ancestors'])):
-                    if (self.data['ancestors'][i] != self.bto_id):
-                        val = {'bto': self.id, 'ancestor': BTO.get(BTO.bto_id == self.data['ancestors'][i]).id }
-                        vals.append(val)
-                        if len(vals) == bulk_size:
-                            BTOAncestor.insert_many(vals).execute()
-                            vals = []
-                
-                if len(vals) != 0:
-                    BTOAncestor.insert_many(vals).execute()
-
-            except:
-                transaction.rollback()
-
-    # inserts
-    @classmethod
-    def insert_bto_id(cls,list__, key):
-        for bto in list__:
-            bto.set_bto_id(bto.data[key]) 
-
-    @classmethod
-    def insert_label(cls,list__, key):
-        for bto in list__:
-            bto.set_label(bto.data[key]) 
-
-    @classmethod
-    def insert_ancestors(cls,list__, key):
-        for bto in list__:
-            bto.set_ancestors(bto.data[key])
+    def set_label(self, label):
+        self.label = label
 
     @classmethod
     def create_table(cls, *arg, **kwargs):
@@ -98,9 +61,12 @@ class BTO(Ontology):
     def create_bto(cls, input_db_dir, **files):
         list_bto = Onto.parse_bto_from_json(input_db_dir, files['bto_json_data'])
         btos = [cls(data = dict_) for dict_ in list_bto]
-        cls.insert_bto_id(btos,"id")
-        cls.insert_label(btos, "label")
-        cls.save_all()
+
+        for bto in btos:
+            bto.set_bto_id( bto.data["id"] )
+            bto.set_label( bto.data["label"] )
+
+        cls.save_all(btos)
 
         vals = []
         bulk_size = 100
@@ -108,7 +74,7 @@ class BTO(Ontology):
         with DbManager.db.atomic() as transaction:
             try:
                 for bt in btos:
-                    val = bt.__get_ancestors_query()
+                    val = bt._get_ancestors_query()
                     if len(val) != 0:
                         for v in val:
                             vals.append(v)

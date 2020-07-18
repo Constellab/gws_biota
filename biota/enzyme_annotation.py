@@ -103,13 +103,13 @@ class EnzymeAnnotation(Annotation):
         cls.insert_gene_product_id(annotations, 'gene product id')
         cls.insert_reference(annotations, 'reference')
         cls.insert_assignment(annotations, 'assigned by')
-        cls.save_all()
+        cls.save_all(annotations)
 
         for annotation in annotations:
             annotation.set_go_term()
             annotation.set_evidence()
         
-        cls.save_all()
+        cls.save_all(annotations)
 
         class Meta():
             table_name = 'enzyme_annotation'
