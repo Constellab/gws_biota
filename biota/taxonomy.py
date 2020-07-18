@@ -1,13 +1,9 @@
-import sys
-import os
 
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, Resource
 from gws.prism.controller import Controller
 from taxo.taxonomy import Taxo
 from peewee import CharField, ForeignKeyField
-import time
-
 
 ####################################################################################
 #
@@ -18,7 +14,6 @@ class Taxonomy(Resource):
     tax_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
-    division = CharField(null=True, index=True)
     ancestor = ForeignKeyField('self', backref='is_child_of', null = True)
     _table_name = 'taxonomy'
 
@@ -34,82 +29,75 @@ class Taxonomy(Resource):
 
     def set_rank(self, rank__):
         self.rank = rank__
+    
+    def set_ancestor(self, save=True):
+        if('ancestor' in self.data.keys()):
+            try: 
+                parent = Taxonomy.get(Taxonomy.tax_id == self.data['ancestor'])
+                #print(Taxonomy.get(Taxonomy.tax_id == self.data['ancestor']))
+                self.ancestor = parent
+            except:
+                print("could not find the parent of: " + str(self.data['tax_id']))
+        if save:
+            self.save()     
+
+    # inserts
+    @classmethod
+    def insert_tax_id(cls, list__, key):
+        for tax in list__:
+            tax.set_tax_id(tax.data[key])
 
     @classmethod
-    def create_taxons(cls, path, bulk_size, **files):
-        nodes_path = os.path.join(path, files['ncbi_nodes'])
-        dict_ncbi_names = Taxo.get_ncbi_names(path, **files)
-        start = 0
-        stop = 0
-        
-        with open(nodes_path) as fh:
-            size_file = len(fh.readlines())
-        while True:
-            #step 1
-            if start >= size_file-1:
-                break
-            stop = min(start+bulk_size, size_file-1)
+    def insert_name(cls, list__, key):
+        for tax in list__:
+            tax.set_name(tax.data[key])
 
-            start_time = time.time()
-            dict_taxons = Taxo.get_all_taxonomy_by_bulk(path, bulk_size, start, stop, dict_ncbi_names, **files)
-            
-            if(dict_taxons == None):
-                break
-            #step 2
-            taxons = [cls(data = dict_taxons[d]) for d in dict_taxons.keys()]
-            
-            #step 3
-            for tax in taxons:
-                tax.tax_id = tax.data['tax_id']
-                if ('name' in tax.data.keys()):
-                    tax.name = tax.data['name']
-                else:
-                    tax.name = "Unspecified"
-                tax.rank = tax.data['rank']
-                tax.division = tax.data['division']
-
-            elapsed_time = time.time() - start_time
-            print("Load 750 taxons in: time = {} sec ".format(elapsed_time))
-
-            cls.save_all(taxons)
-            start = stop+1
-
-        #step 4
-        cls._set_taxons_ancestors(Taxonomy.select())
+    @classmethod
+    def insert_rank(cls, list__, key):
+        for tax in list__:
+            tax.set_rank(tax.data[key])
+    
+    @classmethod
+    def insert_ancestor(cls, list__, key):
+        for tax in list__:
+            tax.set_ancestor(tax.data[key], save=False)
         cls.save_all()
 
+    # create
     @classmethod
-    def _set_taxons_ancestors(cls, list_taxons):
-        tax_dict = {} 
+    def create_taxons_from_list(cls, organism):
+        list_taxons = Taxo.parse_taxonomy_from_ncbi(organism)
+        taxons = [cls(data = d) for d in list_taxons]
+        cls.insert_tax_id(taxons, 'tax_id')
+        cls.insert_name(taxons, 'name')
+        cls.insert_rank(taxons, 'rank')
+        cls.save_all()
+
+        cls.__set_taxons_ancestors(taxons)
+        cls.save_all()
+        return(list_taxons)
+
+    @classmethod
+    def create_taxons_from_dict(cls, list_superkingdom):
+        for superkingdom in list_superkingdom:
+            dict_taxons = Taxo.get_all_taxonomy(superkingdom)
+            taxons = [cls(data = dict_taxons[d]) for d in dict_taxons]
+            cls.insert_tax_id(taxons, 'tax_id')
+            cls.insert_name(taxons, 'name')
+            cls.insert_rank(taxons, 'rank')
+            cls.save_all()
+
+            cls.__set_taxons_ancestors(taxons)
+            cls.save_all()
+            print('The superkingdom ' + superkingdom + ' has been correctly loaded')
+        
+        status = 'ok'
+        return(status)
+    
+    @classmethod
+    def __set_taxons_ancestors(cls, list_taxons):
         for tax in list_taxons:
-            if 'ancestor' in tax.data.keys():
-                if int(tax.data['ancestor']) in tax_dict.keys():
-                    tax_dict[ int(tax.data['ancestor']) ].append(tax)
-                else:
-                    tax_dict[ int(tax.data['ancestor']) ] = [ tax ]
-
-        start = 0
-        stop = 0
-        bluk_size = 750
-        tax_ids = list(tax_dict.keys())
-        while True:
-            if start >= len(tax_ids)-1:
-                break
-
-            stop = min(start+bluk_size, len(tax_ids)-1)
-            elems = tax_ids[start:(stop+1)]
-
-
-            if len(elems) == 0:
-                break
-
-            q_ancestors = Taxonomy.select().where(Taxonomy.tax_id << elems)
-
-            for parent in q_ancestors:
-                for t in tax_dict[ int(parent.tax_id) ]:
-                    t.ancestor = parent
-            
-            start = stop
+            tax.set_ancestor()
 
     class Meta():
         table_name = 'taxonomy'

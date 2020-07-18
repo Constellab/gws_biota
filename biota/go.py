@@ -82,7 +82,7 @@ class GO(Ontology):
         cls.insert_name(gos, "name")
         cls.insert_namespace(gos, "namespace")
         cls.insert_definition(gos, "definition")
-        cls.save_all()
+        cls.save_all(gos)
 
         vals = []
         bulk_size = 100

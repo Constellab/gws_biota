@@ -101,7 +101,14 @@ class EnzymeAnnotation(Annotation):
             
             stop = min(start+bulk_size, size_select-1)
 
+<<<<<<< HEAD:biota/enzyme_annotation.py
             elems = list_q[start:(stop+1)]
+=======
+        cls.insert_gene_product_id(annotations, 'gene product id')
+        cls.insert_reference(annotations, 'reference')
+        cls.insert_assignment(annotations, 'assigned by')
+        cls.save_all(annotations)
+>>>>>>> develop:src/biota/enzyme_annotation.py
 
             if len(elems) == 0:
                     return None
@@ -133,9 +140,13 @@ class EnzymeAnnotation(Annotation):
             annotation.set_go_term()
             annotation.set_evidence()
         
+<<<<<<< HEAD:biota/enzyme_annotation.py
         cls.save_all()
         elapsed_time = time.time() - start_time
         print("Get GO and ECO id for all table in: time = {}".format(elapsed_time/60))
+=======
+        cls.save_all(annotations)
+>>>>>>> develop:src/biota/enzyme_annotation.py
 
     class Meta():
         table_name = 'enzyme_annotation'
