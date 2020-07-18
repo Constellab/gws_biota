@@ -15,7 +15,8 @@ class Pathway(Resource):
     version = CharField(null=True, index=True)
     _table_name = 'pathway'
 
-    # setters
+    # -- S -- 
+    
     def set_path_id(self, id):
         self.path_id = id
 

@@ -21,23 +21,7 @@ class Compound(Entity):
     charge = FloatField(null=True, index=True)
     _table_name = 'compound'
 
-    # setters
-    def set_name(self, name):
-        self.name = name
-    
-    def set_source_accession(self, source_accession):
-        self.source_accession = source_accession
-    
-    def set_formula(self, formula):
-        self.formula = formula
-    
-    def set_mass(self, mass):
-        self.mass = mass
-    
-    def set_charge(self, charge):
-        self.charge = charge
-
-    # create
+    # -- C -- 
     @classmethod
     def create_compounds_from_files(cls, input_db_dir, **files):
         list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
@@ -58,33 +42,24 @@ class Compound(Entity):
             comp.set_source_accession( comp.data["chebi_accession"] )
 
         return compounds
-    
-    @classmethod
-    def _set_chemicals(cls, list_chemical):
-        for chem in list_chemical:
-            if(chem['type'] == 'FORMULA'):
-                try:
-                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
-                    comp.set_formula(chem['chemical_data'])
-                except:
-                    print('can not find the compound CHEBI:' + str(chem['compound_id'] + ' to set formula'))
 
-            elif(chem['type'] == 'MASS'):
-                try:
-                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
-                    comp.set_mass(float(chem['chemical_data']))
-                except:
-                    print('can not find the compound CHEBI:' + str(chem['compound_id'] + ' to set mass'))
-                
-            elif(chem['type'] == 'CHARGE'):
-                try:
-                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
-                    comp.set_charge(float(chem['chemical_data']))
-                except:
-                    print('can not find the compound CHEBI:' + str(chem['compound_id']) + ' to set charge')
-        status = 'ok'
-        return status
-   
+    # -- S --
+
+    def set_name(self, name):
+        self.name = name
+    
+    def set_source_accession(self, source_accession):
+        self.source_accession = source_accession
+    
+    def set_formula(self, formula):
+        self.formula = formula
+    
+    def set_mass(self, mass):
+        self.mass = mass
+    
+    def set_charge(self, charge):
+        self.charge = charge
+
     @classmethod
     def set_reactions_from_list(cls, list_reaction):
         for dict_ in list_reaction:
@@ -93,9 +68,35 @@ class Compound(Entity):
                     comp = cls.get(cls.source_accession == dict_["entry"])
                     comp.set_reactions(dict_['reaction'])
                 except:
-                    print('can not find the compound ' + str(dict_["entry"]) + ' to set reactions')
-        status = 'ok'
-        return status
+                    pass
+                    #print('can not find the compound ' + str(dict_["entry"]) + ' to set reactions')
+        
+    @classmethod
+    def _set_chemicals(cls, list_chemical):
+        for chem in list_chemical:
+            if(chem['type'] == 'FORMULA'):
+                try:
+                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
+                    comp.set_formula(chem['chemical_data'])
+                except:
+                    pass
+                    #print('can not find the compound CHEBI:' + str(chem['compound_id'] + ' to set formula'))
+
+            elif(chem['type'] == 'MASS'):
+                try:
+                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
+                    comp.set_mass(float(chem['chemical_data']))
+                except:
+                    pass
+                    #print('can not find the compound CHEBI:' + str(chem['compound_id'] + ' to set mass'))
+                
+            elif(chem['type'] == 'CHARGE'):
+                try:
+                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
+                    comp.set_charge(float(chem['chemical_data']))
+                except:
+                    pass
+                    #print('can not find the compound CHEBI:' + str(chem['compound_id']) + ' to set charge')
 
     class Meta:
         table_name = 'compound'

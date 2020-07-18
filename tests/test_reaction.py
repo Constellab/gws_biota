@@ -15,18 +15,18 @@ from biota.reaction import Reaction, ReactionJSONStandardViewModel, ReactionJSON
 settings = Settings.retrieve()
 test_data_path = settings.get_data("biota_test_data_dir")
 
-files_model = dict(
-    substrate_reaction = Reaction.substrates.get_through_model(),
-    product_reaction = Reaction.products.get_through_model(),
-    enzyme_reaction = Reaction.enzymes.get_through_model()
-    )
+# files_model = dict(
+#     substrate_reaction = Reaction.substrates.get_through_model(),
+#     product_reaction = Reaction.products.get_through_model(),
+#     enzyme_reaction = Reaction.enzymes.get_through_model()
+#     )
 
 class TestReaction(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Reaction.drop_table(**files_model)
-        Reaction.create_table(**files_model)
+        Reaction.drop_table()
+        Reaction.create_table()
         
    
     @classmethod
@@ -35,16 +35,6 @@ class TestReaction(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        files = dict(
-            rhea_kegg_reaction_file =  'rhea-kegg.reaction',
-            rhea_direction_file = 'rhea-directions.tsv',
-            rhea2ecocyc_file = 'rhea2ecocyc.tsv',
-            rhea2metacyc_file = 'rhea2metacyc.tsv',
-            rhea2macie_file = 'rhea2macie.tsv',
-            rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
-            rhea2ec_file = 'rhea2ec.tsv',
-            rhea2reactome_file = 'rhea2reactome.tsv'
-        )
 
         files_test = dict(
             rhea_kegg_reaction_file =  'rhea-kegg_test.reaction',

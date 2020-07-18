@@ -42,12 +42,11 @@ data_paths = settings.get_data("biota_db_data_dir")
 
 enzyme_bto = Enzyme.bto.get_through_model()
 
-files_model = dict(
-    substrate_reaction = Reaction.substrates.get_through_model(),
-    product_reaction = Reaction.products.get_through_model(),
-    enzyme_reaction = Reaction.enzymes.get_through_model()
-    )
-
+# files_model = dict(
+#     substrate_reaction = Reaction.substrates.get_through_model(),
+#     product_reaction = Reaction.products.get_through_model(),
+#     enzyme_reaction = Reaction.enzymes.get_through_model()
+#     )
 
 @click.command(context_settings=dict(
     ignore_unknown_options=True,
@@ -68,7 +67,8 @@ def createdb(ctx, name):
     Compound.drop_table()
     Enzyme.drop_table()
     enzyme_bto.drop_table()
-    Reaction.drop_table(**files_model)
+    #Reaction.drop_table(**files_model)
+    Reaction.drop_table()
     EnzymeAnnotation.drop_table()
 
     # --- creations --- #
@@ -81,7 +81,8 @@ def createdb(ctx, name):
     Compound.create_table()
     Enzyme.create_table()
     enzyme_bto.create_table()
-    Reaction.create_table(**files_model)
+    #Reaction.create_table(**files_model)
+    Reaction.create_table()
     EnzymeAnnotation.create_table()
     
     print("Hello", name)

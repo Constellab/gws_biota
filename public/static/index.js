@@ -10,8 +10,4 @@ if( window.gws == undefined )
 
 window.gws.biota = function(){
     console.log("biota loaded")
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> develop

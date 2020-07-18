@@ -9,7 +9,7 @@ from biota.enzyme import Enzyme
 from biota.taxonomy import Taxonomy
 from quickgo.quickgo import QuickGOAnnotation
 from peewee import CharField, ForeignKeyField
-import time
+#import time
 
 ####################################################################################
 #
@@ -27,7 +27,55 @@ class EnzymeAnnotation(Annotation):
     assigned_by = CharField(null=True, index=True)
     _table_name = 'enzyme_annotation'
 
-    # setters
+    # -- C --
+
+    @classmethod
+    def create_annotation(cls):
+        list_annotation = []
+        page_number = 1
+        items_per_page = 100
+        while True:
+            list_q = Enzyme.select().where(Enzyme.data['uniprot'] != 'null').paginate(page_number, items_per_page)
+
+            if len(list_q) == 0:
+                break
+
+            for enzyme in list_q:
+                #start_time = time.time()
+                list_ann = QuickGOAnnotation.get_tsv_file_from_uniprot_id(str(enzyme.uniprot_id))
+                try:
+                    for element in list_ann:
+                        list_annotation.append(element)
+                    #print('Results for ' + enzyme.uniprot_id + ' have been collected successfully')
+                except:
+                    pass
+                    #print('list empty')
+            
+            annotations = [cls(data = d) for d in list_annotation]
+
+            for annotation in annotations:
+                annotation.set_gene_product_id(annotation.data['gene product id'])
+                annotation.set_reference(annotation.data['reference'])
+                annotation.set_assigned_by(annotation.data['assigned by'])
+
+            cls.save_all(annotations)
+            page_number = page_number + 1
+            #elapsed_time = time.time() - start_time
+            #print("Loading 50 items from quickgo extract from QuickGO in: time = {}".format(elapsed_time/60))
+
+            
+        
+        #start_time = time.time()
+        for annotation in EnzymeAnnotation.select():
+            annotation.set_go_term()
+            annotation.set_evidence()
+        
+        cls.save_all(annotations)
+        #elapsed_time = time.time() - start_time
+        #print("Get GO and ECO id for all table in: time = {}".format(elapsed_time/60))
+
+    # -- S --
+
     def set_gene_product_id(self, gene):
         self.gene_product_id = gene
     
@@ -46,7 +94,8 @@ class EnzymeAnnotation(Annotation):
                 go_reference = GO.get(GO.go_id == self.data['go term'])
                 self.go_term = go_reference
             except:
-                print("could not find the go term: " + str(self.data['go term']))
+                pass
+                #print("could not find the go term: " + str(self.data['go term']))
 
     def set_evidence(self):
         if('eco id' in self.data.keys()):
@@ -54,7 +103,8 @@ class EnzymeAnnotation(Annotation):
                 eco_reference = ECO.get(ECO.eco_id == self.data['eco id'])
                 self.evidence = eco_reference
             except:
-                print("could not find the eco term: " + str(self.data['eco id']))
+                pass
+                #print("could not find the eco term: " + str(self.data['eco id']))
 
     def set_taxonomy(self):
         if('taxon id' in self.data.keys()):
@@ -62,92 +112,10 @@ class EnzymeAnnotation(Annotation):
                 taxonomy_reference = Taxonomy.get(Taxonomy.tax_id == self.data['taxon id'])
                 self.taxonomy = taxonomy_reference
             except:
-                print("could not find the taxonomy term: " + str(self.data['taxon id']))
+                pass
+                #print("could not find the taxonomy term: " + str(self.data['taxon id']))
 
-    # inserts
-    @classmethod
-    def insert_gene_product_id(cls, list__, key):
-        for element in list__:
-            element.set_gene_product_id(element.data[key])
     
-    @classmethod
-    def insert_ec_id(cls, list__, key):
-        for element in list__:
-            element.set_ec_id(element.data[key])
-
-    @classmethod
-    def insert_reference(cls, list__, key):
-        for element in list__:
-            element.set_reference(element.data[key])
-    
-    @classmethod
-    def insert_assignment(cls, list__, key):
-        for element in list__:
-            element.set_assigned_by(element.data[key])
-    
-    @classmethod
-    def create_annotation(cls):
-        list_annotation = []
-        q = Enzyme.select().where(Enzyme.data['uniprot'] != 'null')
-        list_q = list(q)
-        start = 0
-        stop = 0
-        size_select = len(q)
-        bulk_size = 50
-        while True:
-            print("Trying to record 50 items from quickgo...")
-            if start >= size_select-1:
-                break
-            
-            stop = min(start+bulk_size, size_select-1)
-
-<<<<<<< HEAD:biota/enzyme_annotation.py
-            elems = list_q[start:(stop+1)]
-=======
-        cls.insert_gene_product_id(annotations, 'gene product id')
-        cls.insert_reference(annotations, 'reference')
-        cls.insert_assignment(annotations, 'assigned by')
-        cls.save_all(annotations)
->>>>>>> develop:src/biota/enzyme_annotation.py
-
-            if len(elems) == 0:
-                    return None
-
-            for enzyme in elems:
-                start_time = time.time()
-                list_ann = QuickGOAnnotation.get_tsv_file_from_uniprot_id(str(enzyme.uniprot_id))
-                try:
-                    for element in list_ann:
-                        list_annotation.append(element)
-                    print('Results for ' + enzyme.uniprot_id + ' have been collected successfully')
-                except:
-                    print('list empty')
-            
-            annotations = [cls(data = d) for d in list_annotation]
-
-            cls.insert_gene_product_id(annotations, 'gene product id')
-            cls.insert_reference(annotations, 'reference')
-            cls.insert_assignment(annotations, 'assigned by')
-            cls.save_all()
-            
-            elapsed_time = time.time() - start_time
-            print("Loading 50 items from quickgo extract from QuickGO in: time = {}".format(elapsed_time/60))
-
-            start = stop
-        
-        start_time = time.time()
-        for annotation in EnzymeAnnotation.select():
-            annotation.set_go_term()
-            annotation.set_evidence()
-        
-<<<<<<< HEAD:biota/enzyme_annotation.py
-        cls.save_all()
-        elapsed_time = time.time() - start_time
-        print("Get GO and ECO id for all table in: time = {}".format(elapsed_time/60))
-=======
-        cls.save_all(annotations)
->>>>>>> develop:src/biota/enzyme_annotation.py
-
     class Meta():
         table_name = 'enzyme_annotation'
 

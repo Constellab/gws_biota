@@ -21,6 +21,7 @@ from brendapy.tissues import BTO
 EnzymeBTODeffered = DeferredThroughModel()
 
 class Enzyme(Protein):
+    name = CharField(null=True, index=True)
     ec = CharField(null=True, index=True)
     organism = CharField(null=True, index=True)
     taxonomy = ForeignKeyField(BiotaTaxo, backref = 'taxonomy', null = True)
@@ -28,64 +29,8 @@ class Enzyme(Protein):
     uniprot_id = CharField(null=True, index=True)
     _table_name = 'enzyme'
 
-    # setters
-    def set_ec(self, ec__):
-        self.ec = ec__
-    
-    def set_organism(self, organism__):
-        self.organism = organism__
+    # -- C --
 
-    def set_taxonomy(self):
-        if(self.data['taxonomy'] != None):
-            try:
-                tax = BiotaTaxo.get(BiotaTaxo.tax_id == str(self.data['taxonomy']))
-                self.taxonomy = tax
-            except:
-                print("did not found the tax_id: " + str(self.data['taxonomy']))
-    
-    def set_tissues(self):
-        if(type(self.data['st']) == list):
-            for i in range(0,len(self.data['st'])):
-                try:
-                    tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'][i])
-                    self.bto.add(tissue)
-                except:
-                    print("BTO not found")
-        else:
-            try:
-                tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'])
-                self.bto.add(tissue)
-            except:
-                print("BTO not found")
-
-    def set_uniprot_id(self, uniprot_id__):
-        self.uniprot_id = uniprot_id__
-
-    # inserts
-    @classmethod
-    def insert_protein_id(cls, list__, key):
-        for comp in list__:
-            comp.set_protein_id(comp.data[key])
-
-    @classmethod
-    def insert_ec(cls, list__, key):
-        for comp in list__:
-            comp.set_ec(comp.data[key])
-
-    @classmethod
-    def insert_organism(cls, list__, key):
-        for comp in list__:
-            comp.set_organism(comp.data[key])
-    """
-    def insert_taxonomy(list__, key):
-        for comp in list__:
-            comp.set_taxonomy(comp.data[key])
-    """
-    @classmethod
-    def insert_uniprot_id(cls, list__, key):
-        for comp in list__:
-            comp.set_uniprot_id(comp.data[key])
-            
     @classmethod
     def create_enzymes_from_dict(cls, input_db_dir, **files):
         brenda = Brenda(os.path.join(input_db_dir, files['brenda_file']))
@@ -105,21 +50,74 @@ class Enzyme(Protein):
                 if(info in d.keys()):
                     dict_enz[info]= d[info]
             list_dict.append(dict_enz)
-        enzymes = [cls(data = dict_) for dict_ in list_dict]
-        cls.insert_ec(enzymes, 'ec')
-        cls.insert_organism(enzymes, 'organism')
-        cls.insert_uniprot_id(enzymes, 'uniprot')
-        cls.save_all()
-
-        for enz in enzymes:
-            enz.set_taxonomy()
-            if('st' in enz.data.keys()):
-                enz.set_tissues()
         
-        cls.save_all()
+        enzymes = [cls(data = dict_) for dict_ in list_dict]
+
+        for enzyme in enzymes:
+            enzyme.set_ec(enzyme.data["ec"])
+            enzyme.set_name(enzyme.data["name"])
+            enzyme.set_organism(enzyme.data["organism"])
+            enzyme.set_uniprot_id(enzyme.data["uniprot"])
+
+        cls.save_all(enzymes)
+
+        with DbManager.db.atomic() as transaction :
+            try:
+                for enzyme in enzymes:
+                    enzyme._update_taxonomy()
+                    if 'st' in enzyme.data.keys():
+                        enzyme._update_tissues()
+        
+                cls.save_all(enzymes)
+            
+            except:
+                transaction.rollback()
+                raise Exception("An error occured while setting enzyme taxonomy and bto")
         
         return(list_dict)
+
+    # -- S -- 
+
+    def set_ec(self, ec):
+        self.ec = ec
     
+    def set_name(self, name):
+        self.name = name
+
+    def set_organism(self, organism):
+        self.organism = organism
+    
+    def set_uniprot_id(self, uniprot_id):
+        self.uniprot_id = uniprot_id
+
+    # -- U --
+
+    def _update_taxonomy(self):
+        if(self.data['taxonomy'] != None):
+            try:
+                tax = BiotaTaxo.get(BiotaTaxo.tax_id == str(self.data['taxonomy']))
+                self.taxonomy = tax
+            except:
+                pass
+                #print("did not found the tax_id: " + str(self.data['taxonomy']))
+
+    def _update_tissues(self):
+        if(type(self.data['st']) == list):
+            for i in range(0,len(self.data['st'])):
+                try:
+                    tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'][i])
+                    self.bto.add(tissue)
+                except:
+                    pass
+                    #print("BTO not found")
+        else:
+            try:
+                tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'])
+                self.bto.add(tissue)
+            except:
+                pass
+                #print("BTO not found")
+
     class Meta():
         table_name = 'enzymes'
     
@@ -186,7 +184,9 @@ class EnzymeStatistics(Resource):
             'total_number_of_enzyme': 0,
             'uniprots_referenced': 0     
         }
+    
     #-------- Accessors --------#
+
     @property
     def enzymes_by_ec_group(self):
         return self.data['enzymes_by_ec_group']
@@ -289,12 +289,12 @@ class EnzymeStatisticsProcess(Process):
             proportions_params = {}
             uniprot_id_number = 0
         
-            print('Extract total number of enzyme')
+            #print('Extract total number of enzyme')
             enzymes = Enzyme.select()
             size = len(enzymes)
             se.set_total_number_enzyme(len(enzymes))
 
-            print('Extract organisms by ec_group, references number, uniprots referenced number')
+            #print('Extract organisms by ec_group, references number, uniprots referenced number')
 
             for i in range(1,8):
                 group = Enzyme.select().where(Enzyme.data['ec_group'] == str(i))
@@ -330,7 +330,7 @@ class EnzymeStatisticsProcess(Process):
                     dict_organism_number_by_ec_group[i] = len(dict_group)
                     dict_proportion_ec_group[i] = str(dict_size_ec_group[i]*100/size) + ' %'
             
-            print('Extraction of proportion of parameters referenced and number of entries in the table')
+            #print('Extraction of proportion of parameters referenced and number of entries in the table')
             for enzyme in enzymes:
                 for i in range(0, len(list_infos)):
                     if (list_infos[i] in enzyme.data.keys()):
@@ -371,13 +371,14 @@ class EnzymeStatisticsProcess(Process):
             size = len(Enzyme.select())
             uniprot_id_number = 0
             
-            print('Extract the proportion of the organism in the table')
+            #print('Extract the proportion of the organism in the table')
             try:
                 enzymes_organism = Enzyme.select().where(Enzyme.organism == params['organism'])
                 proportion = (len(enzymes_organism)*100)/size
                 se.set_proportion_in_table(str(proportion) + ' %')
             except:
-                print("Organism " + params['organism'] + " not found in the table")
+                pass
+                #print("Organism " + params['organism'] + " not found in the table")
 
             
             for i in range(1,8):
@@ -403,7 +404,7 @@ class EnzymeStatisticsProcess(Process):
                     if(proportion):
                         dict_proportion_ec_group[i] = str(dict_size_ec_group[i]*100/len(enzymes_organism)) + ' %'
             
-            print('Extraction of proportion of parameters referenced and number of entries in the table')
+            #print('Extraction of proportion of parameters referenced and number of entries in the table')
             for enzyme in enzymes_organism:
                 for i in range(0, len(list_infos)):
                     if (list_infos[i] in enzyme.data.keys()):

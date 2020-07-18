@@ -17,36 +17,13 @@ class ECO(Ontology):
     name = CharField(null=True, index=True)
     _table_name = 'eco'
 
-    def set_eco_id(self, id):
-        self.eco_id = id
+    # -- C --
 
-    def set_name(self, name__):
-        self.name = name__
-    
-    @property
-    def definition(self):
-        return self.data["definition"]
-
-    def __get_ancestors_query(self):
-        vals = []
-        for i in range(0, len(self.data['ancestors'])):
-            if(self.data['ancestors'][i] != self.eco_id):
-                val = {'eco': self.id, 'ancestor': ECO.get(ECO.eco_id == self.data['ancestors'][i]).id }
-                vals.append(val)
-        return(vals)
-
-    # create and drop table methods
     @classmethod
     def create_table(cls, *arg, **kwargs):
         super().create_table(*arg, **kwargs)
         ECOAncestor.create_table()
 
-    @classmethod
-    def drop_table(cls, *arg, **kwargs):
-        ECOAncestor.drop_table()
-        super().drop_table(*arg, **kwargs)
-    
-    # create eco
     @classmethod
     def create_eco(cls, input_db_dir, **files_test):
         onto_eco = Onto.create_ontology_from_obo(input_db_dir, files_test["eco_data"])
@@ -66,7 +43,7 @@ class ECO(Ontology):
             try:
                 for eco in ecos:
                     if 'ancestors' in eco.data.keys():
-                        val = eco.__get_ancestors_query()
+                        val = eco._get_ancestors_query()
                         if len(val) != 0:
                             for v in val:
                                 vals.append(v)
@@ -80,6 +57,37 @@ class ECO(Ontology):
 
             except:
                 transaction.rollback()
+
+    # -- D --
+
+    
+    @property
+    def definition(self):
+        return self.data["definition"]
+
+    @classmethod
+    def drop_table(cls, *arg, **kwargs):
+        ECOAncestor.drop_table()
+        super().drop_table(*arg, **kwargs)
+    
+
+    # -- G --
+
+    def _get_ancestors_query(self):
+        vals = []
+        for i in range(0, len(self.data['ancestors'])):
+            if(self.data['ancestors'][i] != self.eco_id):
+                val = {'eco': self.id, 'ancestor': ECO.get(ECO.eco_id == self.data['ancestors'][i]).id }
+                vals.append(val)
+        return(vals)
+
+    # -- S --
+
+    def set_eco_id(self, id):
+        self.eco_id = id
+
+    def set_name(self, name__):
+        self.name = name__
 
     class Meta():
         table_name = 'eco'

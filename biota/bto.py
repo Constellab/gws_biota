@@ -17,6 +17,8 @@ class BTO(Ontology):
     label = CharField(null=True, index=True)
     _table_name = 'bto'
 
+    # -- A --
+
     @property
     def ancestors(self):
         Q = BTOAncestor.select(BTOAncestor.bto == self.id)
@@ -28,35 +30,13 @@ class BTO(Ontology):
     def add_ancestor(self, ancestor):
         BTOAncestor.create(bto = self, ancestor = ancestor)
 
-    def remove_ancestor(self, ancestor):
-        Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
-        Q.execute()
-
-    def _get_ancestors_query(self):
-        vals = []
-        for i in range(0,len(self.data['ancestors'])):
-            if (self.data['ancestors'][i] != self.bto_id):
-                val = {'bto': self.id, 'ancestor': BTO.get(BTO.bto_id == self.data['ancestors'][i]).id }
-                vals.append(val)
-        return vals
-
-    def set_bto_id(self, bto_id):
-        self.bto_id = bto_id
-
-    def set_label(self, label):
-        self.label = label
+    # -- C --
 
     @classmethod
     def create_table(cls, *arg, **kwargs):
         super().create_table(*arg, **kwargs)
         BTOAncestor.create_table()
 
-    @classmethod
-    def drop_table(cls, *arg, **kwargs):
-        BTOAncestor.drop_table()
-        super().drop_table(*arg, **kwargs)
-
-    # create bto
     @classmethod
     def create_bto(cls, input_db_dir, **files):
         list_bto = Onto.parse_bto_from_json(input_db_dir, files['bto_json_data'])
@@ -88,6 +68,37 @@ class BTO(Ontology):
 
             except:
                 transaction.rollback()
+
+    # -- D --
+
+    @classmethod
+    def drop_table(cls, *arg, **kwargs):
+        BTOAncestor.drop_table()
+        super().drop_table(*arg, **kwargs)
+
+    # -- G --
+
+    def _get_ancestors_query(self):
+        vals = []
+        for i in range(0,len(self.data['ancestors'])):
+            if (self.data['ancestors'][i] != self.bto_id):
+                val = {'bto': self.id, 'ancestor': BTO.get(BTO.bto_id == self.data['ancestors'][i]).id }
+                vals.append(val)
+        return vals
+        
+    # -- R --
+
+    def remove_ancestor(self, ancestor):
+        Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
+        Q.execute()
+
+    # -- S --
+
+    def set_bto_id(self, bto_id):
+        self.bto_id = bto_id
+
+    def set_label(self, label):
+        self.label = label
   
     class Meta():
         table_name = 'bto'
