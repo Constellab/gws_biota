@@ -27,7 +27,7 @@ class Taxonomy(Resource):
     # -- C --
     
     @classmethod
-    def create_taxons(cls, path, bulk_size, **files):
+    def create_taxons(cls, path, **files):
         dict_ncbi_names = Taxo.get_ncbi_names(path, **files)
         dict_taxons = Taxo.get_all_taxonomy(path, dict_ncbi_names, **files)
 
@@ -68,7 +68,7 @@ class Taxonomy(Resource):
 
         #step 4
         cls._set_taxons_ancestors(Taxonomy.select())
-        cls.save_all()
+        cls.save_all(taxons)
 
     # -- S --
 

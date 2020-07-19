@@ -33,7 +33,7 @@ Gene.register_view_models([
     GeneJSONViewModel
 ])
 
-Controller.register_models([
+Controller.register_model_classes([
     Gene,
     GeneHTMLViewModel,
     GeneJSONViewModel

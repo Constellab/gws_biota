@@ -86,7 +86,7 @@ def createdb(ctx, name):
     EnzymeAnnotation.create_table()
     
     print("Hello", name)
-    print("Start loading biota_db...")
+    print("Start creating biota_db...")
 
     files = dict(
             go_data = "go.obo",
@@ -112,96 +112,85 @@ def createdb(ctx, name):
         )
 
     # ------------- Create GO ------------- #
+    print("Step 1 | Loading go and go_ancestors...")
     start_time = time.time()
-
-    go_input_db_dir = data_paths["go"]
+    go_input_db_dir = settings.get_data("go_input_db_dir") #data_paths["go"]
     GO.create_go(go_input_db_dir, **files)
     len_go = len(GO.select())
-    
     elapsed_time = time.time() - start_time
-    print("step 1 | Loading go and go_ancestors in: time = {} min for #go = {}".format(elapsed_time/60, len_go))
-    
+    print("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
     
     # ------------- Create SBO ------------- #
+    print("Step 2 | Loading sbo and sbo_ancestors...")
     start_time = time.time()
-
-    sbo_input_db_dir = data_paths["sbo"]
+    sbo_input_db_dir = settings.get_data("sbo_input_db_dir") #data_paths["sbo"]
     SBO.create_sbo(sbo_input_db_dir, **files)
     len_sbo = len(SBO.select())
-
     elapsed_time = time.time() - start_time
-    print("step 2 | Loading sbo and sbo_ancestors in: time = {} sec for #sbo= {}".format(elapsed_time, len_sbo))
+    print("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
     
-    
-    # ------------- Create BTO ------------- #
+    # ------------------- Create BTO ----------------- #
+    print("Step 3 | Loading bto and bto_ancestors...")
     start_time = time.time()
-
-    bto_input_db_dir = data_paths["bto"]
+    bto_input_db_dir = settings.get_data("bto_input_db_dir") #data_paths["bto"]
     BTO.create_bto(bto_input_db_dir, **files)
     len_bto = len(BTO.select())
-
     elapsed_time = time.time() - start_time
-    print("step 3 | Loading bto and bto_ancestors in: time = {} sec for #bto = {}".format(elapsed_time, len_bto))
+    print("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
     
-    # ------------- Create ECO ------------- #
+    # ------------------- Create ECO ----------------- #
+    print("Step 4 | Loading eco and eco_ancestors...")
     start_time = time.time()
-
-    eco_input_db_dir = data_paths["eco"]
+    eco_input_db_dir = settings.get_data("eco_input_db_dir") #data_paths["eco"]
     ECO.create_eco(eco_input_db_dir, **files)
     len_eco = len(ECO.select())
-    
     elapsed_time = time.time() - start_time
-    print("step 4 | Loading eco and eco_ancestors in: time = {} sec for #eco = {}".format(elapsed_time, len_eco))
+    print("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
     
     # ------------- Create ChebiOntology ------------- #
+    print("Step 5 | Loading chebi ontology...")
     start_time = time.time()
-
-    chebi_input_db_dir = data_paths["chebi"]
+    chebi_input_db_dir = settings.get_data("chebi_input_db_dir") #data_paths["chebi"]
     ChebiOntology.create_chebi(chebi_input_db_dir, **files)
     len_chebi_ontology = len(ChebiOntology.select())
-    
     elapsed_time = time.time() - start_time
-    print("step 5 | Loading chebi ontology in: time = {} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
-    
-    # ------------- Create Taxonomy ------------- #
-    start_time = time.time()
+    print("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
 
-    ncbi_input_db_dir = data_paths["ncbi"]
-    Taxonomy.create_taxons(ncbi_input_db_dir, bulk_size = 750, **files)
+    # ---------------- Create Taxonomy --------------- #
+    print("Step 6 | Loading ncbi taxonomy...")
+    start_time = time.time()
+    ncbi_input_db_dir = settings.get_data("taxonomy_input_db_dir") #data_paths["ncbi"]
+    Taxonomy.create_taxons(ncbi_input_db_dir, **files)
     len_taxonomy = len(Taxonomy.select())
-    
     elapsed_time = time.time() - start_time
-    print("step 6 | Loading taxonomy in: time = {} for #taxons = {}".format(elapsed_time/60, len_taxonomy))
+    print("... done in {:10.2f} min for #taxons = {}".format(elapsed_time/60, len_taxonomy))
     
-    # ------------- Create Compound ------------- #
+    # ---------------- Create Compound --------------- #
+    print("Step 7 | Loading chebi compounds...")
     start_time = time.time()
-
-    chebi_input_db_dir = data_paths["chebi"]
+    chebi_input_db_dir = settings.get_data("chebi_input_db_dir") #data_paths["chebi"]
     Compound.create_compounds_from_files(chebi_input_db_dir, **files)
     len_compound = Compound.select()
-    
     elapsed_time = time.time() - start_time
-    print("step 7 | Loading compounds in: time = {} for #compounds = {} ".format(elapsed_time/60, len_compound))
+    print("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
 
-    # ------------- Create Enzyme ------------- #
+    # ------------------ Create Enzyme --------------- #
+    print("Step 8 | Loading brenda enzymes and enzyme_btos...")
     start_time = time.time()
-
-    brenda_texfile_input_db_dir = data_paths["brenda"]
+    brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir") #data_paths["brenda"]
     Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
     len_enzyme = Enzyme.select()
-    
     elapsed_time = time.time() - start_time
-    print("step 8 | Loading enzymes and enzymes_btos in: time = {} for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
+    print("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
     
-    # ------------- Create Reactions ------------- #
+    # ---------------- Create Reactions -------------- #
+    print("Step 9 | Loading rhea reactions...")
     start_time = time.time()
-
-    rhea_input_db_dir = data_paths["rhea"]
+    rhea_input_db_dir = settings.get_data("rhea_input_db_dir") #data_paths["rhea"]
     Reaction.create_reactions_from_files(rhea_input_db_dir, **files)
     len_rhea = Reaction.select()
-
     elapsed_time = time.time() - start_time
-    print("step 9 | Loading reactions, reactions_enzymes, reactions_substrates, reactions_products in: time = {} for #rhea = {}".format(elapsed_time/60, len_rhea))
+    print("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
     
     """
     # ------------- Create EnzymeAnnotation ------------- #

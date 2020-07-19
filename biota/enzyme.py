@@ -434,4 +434,4 @@ class EnzymeStatisticsProcess(Process):
         self.output['EnzymeStatistics'] = se
 
 EnzymeBTODeffered.set_model(EnzymeBTO)
-Controller.register_models([EnzymeStatistics, EnzymeStatisticsProcess])
+Controller.register_model_classes([EnzymeStatistics, EnzymeStatisticsProcess])
