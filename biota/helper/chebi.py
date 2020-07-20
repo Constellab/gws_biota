@@ -1,7 +1,5 @@
 import sys
 import os
-import unittest
-
 import pronto 
 from pronto import Ontology
 

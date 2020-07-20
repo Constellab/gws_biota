@@ -76,6 +76,20 @@ class Enzyme(Protein):
         
         return(list_dict)
 
+    @classmethod
+    def create_table(cls, *args, **kwargs):
+        super().create_table(*args, **kwargs)
+        EnzymeBTO = Enzyme.bto.get_through_model()
+        EnzymeBTO.drop_table(*args, **kwargs)
+
+    # -- D -- 
+
+    @classmethod
+    def drop_table(cls, *args, **kwargs):
+        EnzymeBTO = Enzyme.bto.get_through_model()
+        EnzymeBTO.drop_table(*args, **kwargs)
+        super().drop_table(*args, **kwargs)
+    
     # -- S -- 
 
     def set_ec(self, ec):

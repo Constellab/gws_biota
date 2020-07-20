@@ -1,11 +1,8 @@
 import sys
 import os
 import re
-
 import pronto 
 from pronto import Ontology
-import os
-
 
 ############################################################################################
 #

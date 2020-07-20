@@ -24,7 +24,7 @@
     "sbo_test_data_dir"             : "./tests/helper/data",
     "bto_test_data_dir"             : "./tests/helper/data",
 
-    "rhea_input_db_dir"             : "../../extern/databases/rhea/tsv",
+    "rhea_input_db_dir"             : "../../extern/databases/rhea",
     "rhea_test_data_dir"            : "./tests/helper/data",
 
     "taxonomy_input_db_dir"         : "../../extern/databases/ncbi",
