@@ -57,13 +57,11 @@ def createdb(ctx, user):
 
     __cdir__ = os.path.dirname(os.path.abspath(__file__))
     fh = logging.FileHandler(os.path.join(__cdir__,'./biota.log'))
-    #sh = logging.StreamHandler(sys.stdout)
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter(" %(message)s")
     fh.setFormatter(formatter)
     logger.addHandler(fh)
-    #logger.addHandler(sh)
 
     # drop tables
     GO.drop_table()
@@ -124,7 +122,7 @@ def createdb(ctx, user):
     start_time = time.time()
     go_input_db_dir = settings.get_data("go_input_db_dir") #data_paths["go"]
     GO.create_go(go_input_db_dir, **files)
-    len_go = len(GO.select())
+    len_go = GO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
     
@@ -133,7 +131,7 @@ def createdb(ctx, user):
     start_time = time.time()
     sbo_input_db_dir = settings.get_data("sbo_input_db_dir") #data_paths["sbo"]
     SBO.create_sbo(sbo_input_db_dir, **files)
-    len_sbo = len(SBO.select())
+    len_sbo = SBO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
     
@@ -142,7 +140,7 @@ def createdb(ctx, user):
     start_time = time.time()
     bto_input_db_dir = settings.get_data("bto_input_db_dir") #data_paths["bto"]
     BTO.create_bto(bto_input_db_dir, **files)
-    len_bto = len(BTO.select())
+    len_bto = BTO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
     
@@ -151,7 +149,7 @@ def createdb(ctx, user):
     start_time = time.time()
     eco_input_db_dir = settings.get_data("eco_input_db_dir") #data_paths["eco"]
     ECO.create_eco(eco_input_db_dir, **files)
-    len_eco = len(ECO.select())
+    len_eco = ECO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
     
@@ -160,7 +158,7 @@ def createdb(ctx, user):
     start_time = time.time()
     chebi_input_db_dir = settings.get_data("chebi_input_db_dir") #data_paths["chebi"]
     ChebiOntology.create_chebi(chebi_input_db_dir, **files)
-    len_chebi_ontology = len(ChebiOntology.select())
+    len_chebi_ontology = ChebiOntology.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
 
@@ -169,7 +167,7 @@ def createdb(ctx, user):
     start_time = time.time()
     ncbi_input_db_dir = settings.get_data("taxonomy_input_db_dir") #data_paths["ncbi"]
     Taxonomy.create_taxons(ncbi_input_db_dir, **files)
-    len_taxonomy = len(Taxonomy.select())
+    len_taxonomy = Taxonomy.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #taxons = {}".format(elapsed_time/60, len_taxonomy))
     
@@ -178,7 +176,7 @@ def createdb(ctx, user):
     start_time = time.time()
     chebi_input_db_dir = settings.get_data("chebi_input_db_dir") #data_paths["chebi"]
     Compound.create_compounds_from_files(chebi_input_db_dir, **files)
-    len_compound = Compound.select()
+    len_compound = Compound.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
 
@@ -187,7 +185,7 @@ def createdb(ctx, user):
     start_time = time.time()
     brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir") #data_paths["brenda"]
     Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
-    len_enzyme = Enzyme.select()
+    len_enzyme = Enzyme.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
     
@@ -196,7 +194,7 @@ def createdb(ctx, user):
     start_time = time.time()
     rhea_input_db_dir = settings.get_data("rhea_input_db_dir") #data_paths["rhea"]
     Reaction.create_reactions_from_files(rhea_input_db_dir, **files)
-    len_rhea = Reaction.select()
+    len_rhea = Reaction.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
     
