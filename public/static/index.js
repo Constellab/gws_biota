@@ -9,5 +9,6 @@ if( window.gws == undefined )
     window.gws = {}
 
 window.gws.biota = function(){
-    console.log("biota loaded")
+    var explorerTab = window.gws.dashboard.getTabByName("explorer")
+    explorerTab.load("/biota/home")
 }
