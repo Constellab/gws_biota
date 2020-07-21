@@ -100,7 +100,7 @@ def createdb(ctx, user):
             eco_data = "eco.obo",
             chebi_data = "./obo/chebi.obo",
             bto_json_data = "bto.json",
-            brenda_file = "brenda_download.txt",
+            brenda_file = "./brenda/brenda_download.txt",
             chebi_compound_file = "./tsv/compounds.tsv",
             chebi_chemical_data_file = "./tsv/chemical_data.tsv",
             ncbi_nodes = "./taxdump/nodes.dmp",
@@ -183,8 +183,8 @@ def createdb(ctx, user):
     # ------------------ Create Enzyme --------------- #
     logger.info("Step 8 | Loading brenda enzymes and enzyme_btos...")
     start_time = time.time()
-    brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir") #data_paths["brenda"]
-    Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
+    brenda_input_db_dir = settings.get_data("brenda_input_db_dir") #data_paths["brenda"]
+    Enzyme.create_enzymes_from_dict(brenda_input_db_dir, **files)
     len_enzyme = Enzyme.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))

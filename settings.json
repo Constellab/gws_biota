@@ -6,7 +6,6 @@
     "biota_test_data_dir"           : "./tests/data",
     
     "brenda_input_db_dir"           : "../../extern/databases/brenda",
-    "brenda_texfile_input_db_dir"   : "../../extern/databases/brenda/brenda",
     "brenda_test_data_dir"          : "./tests/helper/data",
 
     "chebi_input_db_dir"            : "../../extern/databases/chebi/",
