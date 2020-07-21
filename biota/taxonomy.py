@@ -14,6 +14,26 @@ from peewee import CharField, ForeignKeyField
 #
 ####################################################################################
 class Taxonomy(Resource):
+    """
+
+    This class allows to load all terms of the NCBI taxonomy in the database
+    Through this class, the user will have access to the entire ncbi taxonomy
+
+    The Taxonomy Database is a curated classification and nomenclature for all of the organisms in the public sequence databases
+    taxonomy entities are automatically created by the create_taxons() method
+
+    :type tax_id: CharField
+    :property tax_id: taxonomy id in the ncbi taxonomy
+    :type name: CharField
+    :property name: scientic name in the ncbi taxonomy
+    :type rank: CharField
+    :property rank: bioologic rank 
+    :type division: CharField
+    :property division: the biological division (Bacteria, Eukaryota, Viruses, etc..)
+    :type ancestor: Taxonomy
+    :property ancestor: parentin the ncbi taxonomy
+
+    """
     tax_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
@@ -28,6 +48,17 @@ class Taxonomy(Resource):
     
     @classmethod
     def create_taxons(cls, path, **files):
+        """
+        This method allows biota module to create taxonomy entities (taxons)
+
+        :type path: str
+        :param path: path to the folder that contain ncbi dump files
+        :type files_test: dict
+        :param files_test: dictionnary that contains all data files names
+        :returns: None
+        :rtype: None
+
+        """
         dict_ncbi_names = Taxo.get_ncbi_names(path, **files)
         dict_taxons = Taxo.get_all_taxonomy(path, dict_ncbi_names, **files)
 
@@ -73,16 +104,33 @@ class Taxonomy(Resource):
     # -- S --
 
     def set_tax_id(self, tax_id__):
+        """
+        set self.tax_id
+        """
         self.tax_id = tax_id__
     
     def set_name(self, name__):
+        """
+        set self.name
+        """
         self.name = name__
 
     def set_rank(self, rank__):
+        """
+        set self.rank
+        """
         self.rank = rank__
 
     @classmethod
     def _set_taxons_ancestors(cls, list_taxons):
+        """
+
+        create the link between the taxonomy entitie and his parent in the ncbi taxonomy
+        :type list_taxons:
+        :parameter list_taxons: list of all taxonomy in the table 
+        :returns: None
+        
+        """
         tax_dict = {} 
         for tax in list_taxons:
             if 'ancestor' in tax.data.keys():

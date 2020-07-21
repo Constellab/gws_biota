@@ -88,7 +88,7 @@ def createdb(ctx, user):
     EnzymeAnnotation.create_table()
     
     if user is None:
-        user = "Gencoverer"
+        user = "Gencoverery"
     
     
     logger.info(f"Hello {user}")

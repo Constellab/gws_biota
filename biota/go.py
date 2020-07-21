@@ -14,7 +14,22 @@ from biota.helper.ontology import Onto
 
 class GO(Ontology):
     """
-    This class allows the users to load GO entities in the database
+
+    This class allows to load GO entities in the database
+    Through this class, the user has access to the entire GO ontology
+
+    The Gene Ontology (GO) is a major bioinformatics initiative to unify 
+    the representation of gene and gene product attributes across all species.
+    
+    GO entities are automatically created by the create_go() method
+
+    :type go_id: CharField 
+    :property go_id: id of the go term
+    :type name: CharField 
+    :property name: name of the go term
+    :type namespace: CharField 
+    :property namespace: namespace of the go term
+
     """
     go_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
@@ -27,7 +42,7 @@ class GO(Ontology):
     def create_table(cls, *arg, **kwargs):
         """
 
-        Creates tablea related to GO entities such as go, go ancestors, etc...
+        Creates tables related to GO entities such as go, go ancestors, etc...
         Uses the super() method of the gws.model object
 
         """
@@ -37,12 +52,14 @@ class GO(Ontology):
     @classmethod
     def create_go(cls, input_db_dir, **files_test):
         """
-        This method allows the user to create GO entities
+        This method allows biota module to create GO entities
 
         :type input_db_dir: str
-        :param input_db_dir: path to the folder taht contain the go.obo file
+        :param input_db_dir: path to the folder that contain the go.obo file
         :type files_test: dict
         :param files_test: dictionnary that contains all data files names
+        :returns: None
+        :rtype: None
 
         """
         onto_go = Onto.create_ontology_from_obo(input_db_dir, files_test["go_data"])
@@ -84,7 +101,7 @@ class GO(Ontology):
     def drop_table(cls, *arg, **kwargs):
         """
         
-        Drops tablea related to GO entities such as go, go ancestors, etc...
+        Drops tables related to GO entities such as go, go ancestors, etc...
         Uses the super() method of the gws.model object
 
         """
@@ -93,23 +110,55 @@ class GO(Ontology):
     
     @property
     def definition(self):
+        """
+
+            return self.definition
+
+        """
         return self.data["definition"]
 
     # -- S --
 
     def set_definition(self, def__):
+        """
+
+            set self.definition
+        
+        """
         self.definition = def__
 
     def set_go_id(self, id):
+        """
+
+            set self.go_id
+        
+        """
         self.go_id = id
 
     def set_name(self, name__):
+        """
+
+            set self.name
+        
+        """
         self.name = name__
     
     def set_namespace(self, namespace__):
+        """
+
+            set self.namespace
+        
+        """
         self.namespace = namespace__
     
     def _get_ancestors_query(self):
+        """
+
+        look for the go term ancestors and returns all go-go_ancestors relations in a list 
+        :returns: a list of dictionnaries in the following format: {'go': self.id, 'ancestor': ancestor.id}
+        :rtype: list
+        
+        """
         vals = []
         for i in range(0, len(self.data['ancestors'])):
             if(self.data['ancestors'][i] != self.go_id):
@@ -124,6 +173,14 @@ class GOAncestor(PWModel):
     """
     
     This class refers to go ancestors, wihch are go entities but also parent of go element
+
+    GOAncestor entities are created by the create_go() method which get ancestors of the go term by
+    calling __get_ancestors_query()
+
+    :type go: CharField 
+    :property go: id of the concerned go term
+    :type ancestor: CharField 
+    :property ancestor: ancestor of the concerned go term
     
     """
     go = ForeignKeyField(GO)
