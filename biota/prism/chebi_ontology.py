@@ -1,4 +1,4 @@
-from biota.prism.ontology import 
+from biota.prism.ontology import Ontology
 from biota.helper.chebi import Chebi
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel
