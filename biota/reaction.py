@@ -38,7 +38,7 @@ class Reaction(Relation):
     @classmethod
     def create_reactions_from_files(cls, input_db_dir, **files):
         list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
-        reactions = cls.__create_reactions(list_react)
+        cls.__create_reactions(list_react)
 
         list_directions = Rhea.parse_csv_from_file(input_db_dir, files['rhea_direction_file'])
         list_master, list_LR, list_RL, list_BI = Rhea.get_columns_from_lines(list_directions)
@@ -126,18 +126,18 @@ class Reaction(Relation):
     def set_master_id(self, master_id_):
         self.master_id = master_id_
     
-    def set_products(self, save = False):
+    def set_products(self):
         for i in range(0,len(self.data['products'])):
-            comps = Compound.get(Compound.source_accession == str(self.data['products'][i]))
-            self.products.add(comps)
+            comp = Compound.get(Compound.source_accession == str(self.data['products'][i]))
+            self.products.add(comp)
 
     def set_source_accession(self, source__):
         self.source_accession = source__
 
-    def set_substrates(self, save = False):
+    def set_substrates(self):
         for i in range(0,len(self.data['substrates'])):
-            comps = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
-            self.substrates.add(comps)
+            comp = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
+            self.substrates.add(comp)
 
     # -- U --
 

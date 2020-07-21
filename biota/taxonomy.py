@@ -67,24 +67,31 @@ class Taxonomy(Resource):
             #print("Save {} taxa in {} sec".format(bulk_size, elapsed_time))
 
         #step 4
-        cls._set_taxons_ancestors(Taxonomy.select())
-        cls.save_all(taxons)
+        page_number = 1
+        nb_items_per_page = 750
+        while True:
+            taxons = Taxonomy.select().paginate(page_number, nb_items_per_page)
+            if len(taxons) == 0:
+                break
+            cls._set_taxons_ancestors(taxons)
+            cls.save_all(taxons)
+            page_number = page_number + 1
 
     # -- S --
 
-    def set_tax_id(self, tax_id__):
-        self.tax_id = tax_id__
+    def set_tax_id(self, tax_id):
+        self.tax_id = tax_id
     
-    def set_name(self, name__):
-        self.name = name__
+    def set_name(self, name):
+        self.name = name
 
-    def set_rank(self, rank__):
-        self.rank = rank__
+    def set_rank(self, rank):
+        self.rank = rank
 
     @classmethod
-    def _set_taxons_ancestors(cls, list_taxons):
+    def _set_taxons_ancestors(cls, taxon_list):
         tax_dict = {} 
-        for tax in list_taxons:
+        for tax in taxon_list:
             if 'ancestor' in tax.data.keys():
                 if int(tax.data['ancestor']) in tax_dict.keys():
                     tax_dict[ int(tax.data['ancestor']) ].append(tax)
