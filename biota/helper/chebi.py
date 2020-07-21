@@ -12,12 +12,32 @@ from pronto import Ontology
 ############################################################################################
 
 class Chebi():
+    """
+
+    This module allows to get list of dictionnaries where terms represents chebi chemical compounds and 
+    to get list of dictionnaries where terms represents chebi ontology terms
+
+    """
 
     @staticmethod
     def parse_csv_from_file(path, file) -> list:
         """
-        Parses a chebi tsv file of chemicals and returns a list of dictionaries
+        Parses a chebi .tsv file of chemicals entities and returns a list of dictionaries
+
+        This method allows the user to get all informations in the spreadsheet. It is assumed that the firt row 
+        of the spreadsheet is the location of the columns
+
+        This tool accepts tab (\t) separated value files (.csv) as well as excel
+        (.xls, .xlsx) files
+
+        :type path: str
+        :param path: Location of the spreadsheet
+        :type file: str
+        :param file: Name of the spreadsheet
+        :returns: list of dictionnaries reapresenting rows of the spreadsheet
+        :rtype: list
         """
+
         file_path = os.path.join(path, file)
         with open(file_path) as fh:
             line_count = 0
@@ -43,12 +63,29 @@ class Chebi():
                     
                     list__.append(dict_compound)
                     line_count += 1
-            #status = 'test ok'
         return(list__)
 
     @staticmethod
     def parse_csv_from_list(path, file, infos = list) -> list:
-        
+        """
+        Parses a chebi tsv file of chemicals entities and returns a list of dictionaries
+
+        This method allows the user to get all informations in the spreadsheet. It is assumed that the paramater
+        infos indicates location of the columns
+
+        This tool accepts tab (\t) separated value files (.csv) as well as excel
+        (.xls, .xlsx) files
+
+        :type path: str
+        :param path: Location of the spreadsheet
+        :type file: str
+        :param file: Name of the obo file
+        :type infos: list
+        :param infos: list of names of columns of the spreadsheet
+        :returns: list of dictionnaries reapresenting rows of the spreadsheet
+        :rtype: list
+        """
+
         file_path = os.path.join(path, file)
         with open(file_path) as fh:
             if isinstance(infos, list):
@@ -75,17 +112,42 @@ class Chebi():
                         line_count += 1
             else:
                 raise Exception("Chebi", "parse_csv_from_list",  "invalid type")
-            #status = 'test ok'
         return(list__)
 
     @staticmethod
     def create_ontology_from_file(path, file):
+        """
+        Create the chebi ontology from the markup language file chebi.obo
+
+        This method allows the create an ontalogy from an .obo file.
+
+        :type path: str
+        :param path: Location of the spreadsheet
+        :type file: str
+        :param file: Name of the spreadsheet
+        :returns: Ontology object from the package pronto
+        :rtype: Ontology
+        """
+
         file_path = os.path.join(path, file)
         onto = Ontology(file_path)
         return onto
         
     @staticmethod
     def parse_onto_from_ontology(ontology):
+        """
+        Parses a chebi ontology and returns a list of dictionnaries where each elements represent an ontology terms
+
+        This method allows the user to format all the chebi ontology in readable and usable terms.
+
+        This tool accepts only Ontology object created from the package pronto
+
+        :type ontology: Ontology
+        :param path: chebi ontology
+        :returns: list of dictionnaries reapresenting all terms of the ontology
+        :rtype: list
+        """
+
         list_chebi_term = []
         for term in ontology.terms():
             dict_term = {}

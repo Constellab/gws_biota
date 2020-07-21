@@ -14,9 +14,32 @@ import os
 ############################################################################################
 
 class Rhea():
+    """
+
+    This module allows to get list of biological reactions from rhea files and informations about thoses 
+    reactions, such as master id, equations, substrates, products, biocyc id, kegg id, etc...
+
+    """
 
     @staticmethod
     def parse_csv_from_file(path, file) -> list:
+        """
+        Parses a .tsv file and returns a list of dictionaries
+
+        This method allows the user to get all informations in the spreadsheet. It is assumed that the firt row 
+        of the spreadsheet is the location of the columns
+
+        This tool accepts tab (\t) separated value files (.csv) as well as excel
+        (.xls, .xlsx) files
+
+        :type path: str
+        :param path: location of the spreadsheet
+        :type file: str
+        :param file: name of the spreadsheet
+        :returns: list of dictionnaries reapresenting rows of the spreadsheet
+        :rtype: list
+        """
+
         file_path = os.path.join(path, file)
         with open(file_path) as fh:
             line_count = 0
@@ -47,6 +70,26 @@ class Rhea():
 
     @staticmethod
     def parse_reaction_from_file(path, file):
+        """
+        Parses a rhea-kegg.reaction file of biological reactions and returns a list of dictionaries
+
+        This tool accepts only the formated rhea-kegg.reaction file on which reaction are 
+        described this way:
+
+        ENTRY       RHEA:10022
+        DEFINITION  (S)-2-amino-6-oxohexanoate + H(+) + L-glutamate + NADPH => H2O + L-saccharopine + NADP(+)
+        EQUATION    CHEBI:58321 + CHEBI:15378 + CHEBI:29985 + CHEBI:57783 => CHEBI:15377 + CHEBI:57951 + CHEBI:58349
+
+        and reactions are separated by the "///" symbol
+
+        :type path: str
+        :param path: location of the file
+        :type file: str
+        :param file: name of the file
+        :returns: list of dictionnaries reapresenting reactions
+        :rtype: list
+        """
+
         file_path = os.path.join(path, file)
         with open(file_path) as fh:
             contents = fh.read()
@@ -145,6 +188,29 @@ class Rhea():
 
     @staticmethod
     def parse_compound_from_file(path, file):
+
+        """
+        Parses a rhea-kegg.compound file of biological compounds and returns a list of dictionaries
+
+        This tool accepts only the formated rhea-kegg.compound file on which compounds are 
+        described this way:
+
+        ENTRY       CHEBI:7
+        NAME        (+)-car-3-ene
+        FORMULA     C10H16
+        REACTION    32539 32540 32541 32542
+        ENZYME      4.2.3.107
+
+        and compounds are separated by the "///" symbol
+
+        :type path: str
+        :param path: location of the file
+        :type file: str
+        :param file: name of the file
+        :returns: list of dictionnaries reapresenting compounds
+        :rtype: list
+        """
+
         file_path = os.path.join(path, file)
         with open(file_path) as fh:
             contents = fh.read()
@@ -172,15 +238,28 @@ class Rhea():
                     dict__['reaction'] = str_reaction.split(' ')
                     list_dict.append(dict__)
         return(list_dict)
-
-    @staticmethod
-    def create_ontology_from_owl(path, file):
-        file_path = os.path.join(path, file)
-        onto = Ontology(file_path)
-        return onto
     
     @staticmethod
     def get_columns_from_lines(list_lines):
+        """
+        Parses a list of dictionnaries get from using the parse_csv_from_file() method on
+        rhea-directions.tsv file.
+
+        Each dictionnaries of the input list are formated this way:
+        {'rhea_id_master': rhea_id, 'rhea_id_lr': rhea_id, 'rhea_id_rl': rhea_id, 'rhea_id_bi': rhea_id} 
+        
+        Returns differents lists correponding to sets of reactions 
+        directed in a specific direction.
+
+        This method allows to separate reactions id by specific directions. rhea_master is the list
+        of master reaction id
+
+        :type list_lines:
+        :param list_lines:
+        :returns: rhea_master, rhea_id_LR, rhea_id_RL, rhea_id_BI, lists of reactions id in a specific direction
+        :rtype: list 
+        
+        """
         rhea_master = []
         rhea_id_LR = []
         rhea_id_RL = []
@@ -191,15 +270,3 @@ class Rhea():
             rhea_id_RL.append(dict['rhea_id_rl'])
             rhea_id_BI.append(dict['rhea_id_bi'])
         return(rhea_master, rhea_id_LR, rhea_id_RL, rhea_id_BI)
-
-
-
-
-    # @staticmethod
-    # def from_owl_to_obo(path, file, filename_):
-    #     file_path = os.path.join(path, file)
-    #     save_path = os.path.realpath('./databases_input')
-    #     complete_name = os.path.join(save_path, filename_+".obo")
-    #     edam = Ontology(file_path)
-    #     with open(complete_name, "wb") as f:
-    #         edam.dump(f, format='obo')

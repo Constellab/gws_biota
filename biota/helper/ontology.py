@@ -12,10 +12,34 @@ import re
 ############################################################################################
 
 class Onto():
+    """
+    
+    This module allows to get all ontologie that will be used by the Gencovery web application.
+    
+    This include GO, SBO, BTO and ECO ontologies
+
+    """
     
     #---------- create and correction functions --------------#
     @staticmethod
     def correction_of_sbo_file(path, file, out_file):
+        """
+        
+        Correct the initial sbo.obo file which contained syntax errors which prevented to use 
+        the pronto package to parse the obo file
+
+        This method read the initial obo file and create a corrected copy whose the name is given
+        by the out_file parameter which is located in the same folder as the original file
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the original obo file
+        :type out_file: str
+        :param out_file: Name of the corrected obo file
+
+        :rtype: None
+        """
         with open(os.path.join(path, file),'rt') as file: 
             with open(os.path.join(path, out_file ),'wt') as outfile:
                 for line in file.readlines():
@@ -27,12 +51,33 @@ class Onto():
 
     @staticmethod
     def create_ontology_from_obo(path, file):
+        """
+        This method allows the create an ontalogy from an .obo file.
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the obo file
+        :returns: Ontology object from the package pronto
+        :rtype: Ontology
+        """
+
         file_path = os.path.join(path, file)
         onto = Ontology(file_path)
         return onto
 
     @staticmethod
     def create_ontology_from_owl(path, file):
+        """
+        This method allows the create an ontalogy from an .owl file.
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the obo file
+        :returns: Ontology object from the package pronto
+        :rtype: Ontology
+        """
         file_path = os.path.join(path, file)
         onto = Ontology(file_path)
         return onto
@@ -40,6 +85,16 @@ class Onto():
     #---------- parsing functions --------------#
     @staticmethod
     def parse_bto_from_json(path,file):
+        """
+        Create the bto ontology from a json file
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the json file
+        :returns: Ontology object from the package pronto
+        :rtype: Ontology
+        """
         list_bto = []
         with open(os.path.join(path, file)) as json_bto_data:
             data = json.load(json_bto_data)
@@ -60,6 +115,14 @@ class Onto():
     
     @staticmethod
     def parse_eco_terms_from_ontoloy(ontology):
+        """
+        Create eco ontology terms from a Ontology object
+
+        :type ontology: Ontology
+        :param ontology: ECO ontology created by the create_ontology_from_obo method
+        :returns: list on dictionnaries where each terms represents an eco ontology term
+        :rtype: list
+        """
         list_eco = []
         for term in ontology.terms():
             dict_eco = {}
@@ -84,6 +147,14 @@ class Onto():
 
     @staticmethod
     def parse_obo_from_ontology(ontology):
+        """
+        Create an ontology from a Ontology object
+
+        :type ontology: Ontology
+        :param ontology: ontology created by the create_ontology_from_obo method
+        :returns: list on dictionnaries where each terms represents an ontology term
+        :rtype: list
+        """
         list_go = []
         for term in ontology.terms():
             dict_go = {}
@@ -135,6 +206,14 @@ class Onto():
 
     @staticmethod
     def parse_sbo_terms_from_ontology(ontology):
+        """
+        Create sbo ontology terms from a Ontology object
+
+        :type ontology: Ontology
+        :param ontology: SBO ontology created by the create_ontology_from_obo method
+        :returns: list on dictionnaries where each terms represents a sbo ontology term
+        :rtype: list
+        """
         list_sbo = []
         for term in ontology.terms():
             dict_sbo = {}
@@ -166,6 +245,18 @@ class Onto():
     #---------- owl to obo converter --------------#
     @staticmethod
     def from_owl_to_obo(path, file, filename_):
+        """
+        Use the pronto package to convert a .owl to a .obo file
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the original owl file
+        :type filename_: str
+        :param filename_: Name of the converted obo file
+
+        :rtype: None
+        """
         file_path = os.path.join(path, file)
         save_path = os.path.realpath('./databases_input')
         complete_name = os.path.join(save_path, filename_+".obo")

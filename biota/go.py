@@ -13,6 +13,9 @@ from biota.helper.ontology import Onto
 ####################################################################################
 
 class GO(Ontology):
+    """
+    This class allows the users to load GO entities in the database
+    """
     go_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     namespace = CharField(null=True, index=True)
@@ -22,11 +25,26 @@ class GO(Ontology):
     
     @classmethod
     def create_table(cls, *arg, **kwargs):
+        """
+
+        Creates tablea related to GO entities such as go, go ancestors, etc...
+        Uses the super() method of the gws.model object
+
+        """
         super().create_table(*arg, **kwargs)
         GOAncestor.create_table()
 
     @classmethod
     def create_go(cls, input_db_dir, **files_test):
+        """
+        This method allows the user to create GO entities
+
+        :type input_db_dir: str
+        :param input_db_dir: path to the folder taht contain the go.obo file
+        :type files_test: dict
+        :param files_test: dictionnary that contains all data files names
+
+        """
         onto_go = Onto.create_ontology_from_obo(input_db_dir, files_test["go_data"])
         list_go = Onto.parse_obo_from_ontology(onto_go)
         
@@ -64,6 +82,12 @@ class GO(Ontology):
 
     @classmethod
     def drop_table(cls, *arg, **kwargs):
+        """
+        
+        Drops tablea related to GO entities such as go, go ancestors, etc...
+        Uses the super() method of the gws.model object
+
+        """
         GOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
     
@@ -97,6 +121,11 @@ class GO(Ontology):
         table_name = 'go'
 
 class GOAncestor(PWModel):
+    """
+    
+    This class refers to go ancestors, wihch are go entities but also parent of go element
+    
+    """
     go = ForeignKeyField(GO)
     ancestor = ForeignKeyField(GO)
     class Meta:
