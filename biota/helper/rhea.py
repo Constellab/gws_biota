@@ -3,6 +3,7 @@ import os
 import re
 import pronto 
 from pronto import Ontology
+import csv
 
 ############################################################################################
 #
@@ -15,32 +16,13 @@ class Rhea():
     @staticmethod
     def parse_csv_from_file(path, file) -> list:
         file_path = os.path.join(path, file)
-        with open(file_path) as fh:
-            line_count = 0
-            list__ = []
-            for line in fh.readlines():
-                if line_count < 1:
-                    if('\t' not in line):
-                        raise Exception("csv-parser", "invalid type of file", "separation character must be a TAB")
-                    else:
-                        infos_table = line.split('\t')
-                        line_count +=1
-                else:
-                    list_row = []
-                    list_row = line.split('\t')
-                    dict_compound = {}
-
-                    if len(list_row) == len(infos_table):
-                        for i in range(0, len(infos_table)):
-                            dict_compound[infos_table[i].lower().replace('\n', '')] = list_row[i].replace('\n', '')
-                    else:
-                        for i in range(0, len(list_row)):
-                            dict_compound[infos_table[i].lower().replace('\n', '')] = list_row[i].replace('\n', '') 
-                    
-                    list__.append(dict_compound)
-                    line_count += 1
-
-        return(list__)
+        list__ = []
+        with open(file_path, newline='') as csvfile:
+            reader = csv.DictReader(csvfile, delimiter='\t', quoting=csv.QUOTE_NONE)
+            for row in reader:
+                list__.append( {key.lower() if type(key) == str else key: value for key, value in row.items()} )
+        
+        return list__
 
     @staticmethod
     def parse_reaction_from_file(path, file):
@@ -182,11 +164,11 @@ class Rhea():
         rhea_id_LR = []
         rhea_id_RL = []
         rhea_id_BI = []
-        for dict in list_lines:
-            rhea_master.append(dict['rhea_id_master'])
-            rhea_id_LR.append(dict['rhea_id_lr'])
-            rhea_id_RL.append(dict['rhea_id_rl'])
-            rhea_id_BI.append(dict['rhea_id_bi'])
+        for dict_ in list_lines:
+            rhea_master.append(dict_['rhea_id_master'])
+            rhea_id_LR.append(dict_['rhea_id_lr'])
+            rhea_id_RL.append(dict_['rhea_id_rl'])
+            rhea_id_BI.append(dict_['rhea_id_bi'])
         return(rhea_master, rhea_id_LR, rhea_id_RL, rhea_id_BI)
 
 
