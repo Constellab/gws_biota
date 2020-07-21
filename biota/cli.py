@@ -4,6 +4,7 @@ import unittest
 import copy
 import asyncio
 import click
+import logging
 
 #import from gws
 from gws.prism.controller import Controller
@@ -40,8 +41,6 @@ import time
 settings = Settings.retrieve()
 data_paths = settings.get_data("biota_db_data_dir")
 
-enzyme_bto = Enzyme.bto.get_through_model()
-
 # files_model = dict(
 #     substrate_reaction = Reaction.substrates.get_through_model(),
 #     product_reaction = Reaction.products.get_through_model(),
@@ -52,12 +51,19 @@ enzyme_bto = Enzyme.bto.get_through_model()
     ignore_unknown_options=True,
     allow_extra_args=True
 ))
-
 @click.pass_context
-@click.option('--name', '-n', help='Output path')
+@click.option('--user', '-n', help='User name')
+def createdb(ctx, user):
 
-def createdb(ctx, name):
-    # --- drops --- #
+    __cdir__ = os.path.dirname(os.path.abspath(__file__))
+    fh = logging.FileHandler(os.path.join(__cdir__,'./biota.log'))
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter(" %(message)s")
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # drop tables
     GO.drop_table()
     SBO.drop_table()
     BTO.drop_table()
@@ -66,12 +72,10 @@ def createdb(ctx, name):
     Taxonomy.drop_table()
     Compound.drop_table()
     Enzyme.drop_table()
-    enzyme_bto.drop_table()
-    #Reaction.drop_table(**files_model)
     Reaction.drop_table()
     EnzymeAnnotation.drop_table()
 
-    # --- creations --- #
+    # create tables
     GO.create_table()
     SBO.create_table()
     BTO.create_table()
@@ -80,13 +84,15 @@ def createdb(ctx, name):
     Taxonomy.create_table()
     Compound.create_table()
     Enzyme.create_table()
-    enzyme_bto.create_table()
-    #Reaction.create_table(**files_model)
     Reaction.create_table()
     EnzymeAnnotation.create_table()
     
-    print("Hello", name)
-    print("Start creating biota_db...")
+    if user is None:
+        user = "Gencoverer"
+    
+    
+    logger.info(f"Hello {user}")
+    logger.info("Start creating biota_db...")
 
     files = dict(
             go_data = "go.obo",
@@ -112,85 +118,85 @@ def createdb(ctx, name):
         )
 
     # ------------- Create GO ------------- #
-    print("Step 1 | Loading go and go_ancestors...")
+    logger.info("Step 1 | Loading go and go_ancestors...")
     start_time = time.time()
     go_input_db_dir = settings.get_data("go_input_db_dir") #data_paths["go"]
     GO.create_go(go_input_db_dir, **files)
-    len_go = len(GO.select())
+    len_go = GO.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
+    logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
     
     # ------------- Create SBO ------------- #
-    print("Step 2 | Loading sbo and sbo_ancestors...")
+    logger.info("Step 2 | Loading sbo and sbo_ancestors...")
     start_time = time.time()
     sbo_input_db_dir = settings.get_data("sbo_input_db_dir") #data_paths["sbo"]
     SBO.create_sbo(sbo_input_db_dir, **files)
-    len_sbo = len(SBO.select())
+    len_sbo = SBO.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
+    logger.info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
     
     # ------------------- Create BTO ----------------- #
-    print("Step 3 | Loading bto and bto_ancestors...")
+    logger.info("Step 3 | Loading bto and bto_ancestors...")
     start_time = time.time()
     bto_input_db_dir = settings.get_data("bto_input_db_dir") #data_paths["bto"]
     BTO.create_bto(bto_input_db_dir, **files)
-    len_bto = len(BTO.select())
+    len_bto = BTO.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
+    logger.info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
     
     # ------------------- Create ECO ----------------- #
-    print("Step 4 | Loading eco and eco_ancestors...")
+    logger.info("Step 4 | Loading eco and eco_ancestors...")
     start_time = time.time()
     eco_input_db_dir = settings.get_data("eco_input_db_dir") #data_paths["eco"]
     ECO.create_eco(eco_input_db_dir, **files)
-    len_eco = len(ECO.select())
+    len_eco = ECO.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
+    logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
     
     # ------------- Create ChebiOntology ------------- #
-    print("Step 5 | Loading chebi ontology...")
+    logger.info("Step 5 | Loading chebi ontology...")
     start_time = time.time()
     chebi_input_db_dir = settings.get_data("chebi_input_db_dir") #data_paths["chebi"]
     ChebiOntology.create_chebi(chebi_input_db_dir, **files)
-    len_chebi_ontology = len(ChebiOntology.select())
+    len_chebi_ontology = ChebiOntology.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
+    logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
 
     # ---------------- Create Taxonomy --------------- #
-    print("Step 6 | Loading ncbi taxonomy...")
+    logger.info("Step 6 | Loading ncbi taxonomy...")
     start_time = time.time()
     ncbi_input_db_dir = settings.get_data("taxonomy_input_db_dir") #data_paths["ncbi"]
     Taxonomy.create_taxons(ncbi_input_db_dir, **files)
-    len_taxonomy = len(Taxonomy.select())
+    len_taxonomy = Taxonomy.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} min for #taxons = {}".format(elapsed_time/60, len_taxonomy))
+    logger.info("... done in {:10.2f} min for #taxons = {}".format(elapsed_time/60, len_taxonomy))
     
     # ---------------- Create Compound --------------- #
-    print("Step 7 | Loading chebi compounds...")
+    logger.info("Step 7 | Loading chebi compounds...")
     start_time = time.time()
     chebi_input_db_dir = settings.get_data("chebi_input_db_dir") #data_paths["chebi"]
     Compound.create_compounds_from_files(chebi_input_db_dir, **files)
-    len_compound = Compound.select()
+    len_compound = Compound.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
+    logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
 
     # ------------------ Create Enzyme --------------- #
-    print("Step 8 | Loading brenda enzymes and enzyme_btos...")
+    logger.info("Step 8 | Loading brenda enzymes and enzyme_btos...")
     start_time = time.time()
     brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir") #data_paths["brenda"]
     Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
-    len_enzyme = Enzyme.select()
+    len_enzyme = Enzyme.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
+    logger.info("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
     
     # ---------------- Create Reactions -------------- #
-    print("Step 9 | Loading rhea reactions...")
+    logger.info("Step 9 | Loading rhea reactions...")
     start_time = time.time()
     rhea_input_db_dir = settings.get_data("rhea_input_db_dir") #data_paths["rhea"]
     Reaction.create_reactions_from_files(rhea_input_db_dir, **files)
-    len_rhea = Reaction.select()
+    len_rhea = Reaction.select().count()
     elapsed_time = time.time() - start_time
-    print("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
+    logger.info("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
     
     """
     # ------------- Create EnzymeAnnotation ------------- #
@@ -199,5 +205,5 @@ def createdb(ctx, name):
     EnzymeAnnotation.create_annotation()
     
     elapsed_time = time.time() - start_time
-    print("step 7 | Loading enzymes_annotations: time = {}".format(elapsed_time/60))
+    logger.info("step 7 | Loading enzymes_annotations: time = {}".format(elapsed_time/60))
     """

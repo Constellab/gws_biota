@@ -1,7 +1,6 @@
 import sys
 import os
 import re
-from itertools import islice
 
 ############################################################################################
 #
