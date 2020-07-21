@@ -11,16 +11,16 @@ from gws.prism.controller import Controller
 
 #import from biota
 from gws.settings import Settings
-from biota.go import GO
-from biota.sbo import SBO
-from biota.bto import BTO
-from biota.eco import ECO
-from biota.chebi_ontology import ChebiOntology
-from biota.taxonomy import Taxonomy
-from biota.compound import Compound
-from biota.enzyme import Enzyme
-from biota.enzyme_annotation import EnzymeAnnotation
-from biota.reaction import Reaction
+from biota.prism.go import GO
+from biota.prism.sbo import SBO
+from biota.prism.bto import BTO
+from biota.prism.eco import ECO
+from biota.prism.chebi_ontology import ChebiOntology
+from biota.prism.taxonomy import Taxonomy
+from biota.prism.compound import Compound
+from biota.prism.enzyme import Enzyme
+from biota.prism.enzyme_annotation import EnzymeAnnotation
+from biota.prism.reaction import Reaction
 
 #import external module 
 from biota.helper.rhea import Rhea
