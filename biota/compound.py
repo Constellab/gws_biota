@@ -14,6 +14,20 @@ from biota.helper.chebi import Chebi
 ####################################################################################
 
 class Compound(Entity):
+    """
+
+    This class allows to load chebi compound entities in the database
+    
+    chebi compound entities are automatically created by the create_go() method
+
+    :type go_id: CharField 
+    :property go_id: id of the go term
+    :type name: CharField 
+    :property name: name of the go term
+    :type namespace: CharField 
+    :property namespace: namespace of the go term
+
+    """
     name = CharField(null=True, index=True)
     source_accession = CharField(null=True, index=True)
     formula = CharField(null=True, index=True)
