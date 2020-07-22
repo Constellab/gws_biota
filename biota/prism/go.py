@@ -50,7 +50,7 @@ class GO(Ontology):
         GOAncestor.create_table()
 
     @classmethod
-    def create_go(cls, input_db_dir, **files_test):
+    def create_go(cls, input_db_dir, **files):
         """
         This method allows biota module to create GO entities
 
@@ -62,7 +62,7 @@ class GO(Ontology):
         :rtype: None
 
         """
-        onto_go = Onto.create_ontology_from_obo(input_db_dir, files_test["go_data"])
+        onto_go = Onto.create_ontology_from_obo(input_db_dir, files["go_data"])
         list_go = Onto.parse_obo_from_ontology(onto_go)
         
         gos = [cls(data = dict_) for dict_ in list_go]
@@ -177,9 +177,9 @@ class GOAncestor(PWModel):
     GOAncestor entities are created by the create_go() method which get ancestors of the go term by
     calling __get_ancestors_query()
 
-    :type go: CharField 
+    :type go: GO 
     :property go: id of the concerned go term
-    :type ancestor: CharField 
+    :type ancestor: GO 
     :property ancestor: ancestor of the concerned go term
     
     """

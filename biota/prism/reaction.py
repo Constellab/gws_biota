@@ -22,10 +22,33 @@ ReactionProductDeferred = DeferredThroughModel()
 ReactionEnzymeDeferred = DeferredThroughModel()
 
 class Reaction(Relation):
+    """
+    This class allows to load RHEA reactions entities in the database
+    
+    enzymes are automatically created by the create_reactions_from_files() method
+    
+    :type source_accession: CharField
+    :property source_accession: rhea identifiers of the reaction
+    :type master_id: CharField
+    :property master_id: master id of the reaction
+    :type direction: CharField
+    :property direction: direction of the reaction 
+    (UN: undirected, LR: left-right, RL: right-left, BI: bidirectionnal)
+    :type biocyc_ids: CharField
+    :property biocyc_ids: reaction identifier in the biocyc database
+    :type kegg_id: CharField
+    :property kegg_id: reaction identifier in the kegg databse
+    :type substrates: Compound
+    :property substrates: substrates of the reaction
+    :type products: Compound
+    :property products: products of the reaction
+    :type enzymes: Enzyme
+    :property enzymes: enzymes of the reaction
+
+    """
     source_accession = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
-    master_id = CharField(null=True, index=True)
     biocyc_ids = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
     substrates = ManyToManyField(Compound, backref='is_substrate_of', through_model = ReactionSubstrateDeferred)
@@ -37,6 +60,25 @@ class Reaction(Relation):
       
     @classmethod
     def create_reactions_from_files(cls, input_db_dir, **files):
+        """
+        Creates and registers chebi reaction entities in the database
+        Use the rhea helper of biota to get all reactions in a list
+        Creates reactions by the calling __create_reactions() method
+        Collects directions of reactions and set them by calling the 
+        update_direction_from_list() method
+        Collects external identifiers of reactions such as ecocy, 
+        reactome or kegg identifiers and set them by calling
+        _update_master_and_id_(...)() methods
+        Register compounds by calling the save_all() method 
+
+        :type input_db_dir: str
+        :param input_db_dir: path to the folder that contain the go.obo file
+        :type files: dict
+        :param files: dictionnary that contains all data files names
+        :returns: None
+        :rtype: None
+
+        """
         list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
         cls.__create_reactions(list_react)
 
@@ -66,6 +108,20 @@ class Reaction(Relation):
 
     @classmethod
     def __create_reactions(cls, list_reaction):
+        """
+
+        Creates reactions from a list
+        Add reactions-substrates and reaction-products relation in
+        reaction_subtrates and reations_products by calling
+        set_substrates(), set_products()
+
+        :type list_reaction: list
+        :param list_reaction: list of dictionnaries where each element refers 
+        to a rhea reaction
+        :returns: list of reactions entities
+        :rtype: list
+
+        """
         reactions = [cls(data = dict) for dict in list_reaction]
         for react in reactions:
             if 'entry' in react.data.keys():
@@ -85,6 +141,13 @@ class Reaction(Relation):
 
     @classmethod
     def create_table(cls, *args, **kwargs):
+        """
+
+        Creates tables related to reaction entities such as reactions, reactions_enzymes,
+        reactions_products, etc...
+        Uses the super() method of the gws.model object
+
+        """
         super().create_table(*args, **kwargs)
         ReactionSubstrate.create_table()
         ReactionProduct.create_table()
@@ -94,6 +157,13 @@ class Reaction(Relation):
 
     @classmethod
     def drop_table(cls, *args, **kwargs):
+        """
+        
+        Drops tables related to GO entities such as reactions, reactions_enzymes,
+        reactions_products, etc...
+        Uses the super() method of the gws.model object
+
+        """
         ReactionSubstrate.drop_table()
         ReactionProduct.drop_table()
         ReactionEnzyme.drop_table()
@@ -143,6 +213,15 @@ class Reaction(Relation):
 
     @classmethod
     def _update_master_and_id_from_rhea2ec(cls, list_reaction_infos):
+        """
+
+        Get informations about master id and biocyc id of from a rhea2ec.tsv file
+        update those index if the concerned reaction is in the table
+
+        :type list_reaction_infos: list
+        :param list_reaction_infos: list of dictionnaries that contains informations about reactions
+    
+        """
         accessions = []
         master_ids = {}
         biocyc_ids = {}
@@ -173,6 +252,15 @@ class Reaction(Relation):
 
     @classmethod
     def _update_master_and_id_from_rhea2biocyc(cls, list_reaction_infos):
+        """
+        
+        Get informations about master id and biocyc id of from a rhea2biocyc.tsv file
+        update those index if the concerned reaction is in the table
+
+        :type list_reaction_infos: list
+        :param list_reaction_infos: list of dictionnaries that contains informations about reactions
+    
+        """
         accessions = []
         master_ids = {}
         biocyc_ids = {}
@@ -214,6 +302,15 @@ class Reaction(Relation):
 
     @classmethod
     def _update_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
+        """
+        
+        Get informations about master id and biocyc id of from a rhea2kegg.tsv file
+        update those index if the concerned reaction is in the table
+
+        :type list_reaction_infos: list
+        :param list_reaction_infos: list of dictionnaries that contains informations about reactions
+    
+        """
         accessions = []
         master_ids = {}
         kegg_ids = {}
@@ -253,6 +350,7 @@ class Reaction(Relation):
         #     except:
         #         print('can not find the reaction RHEA:' + dict__['rhea_id'])
 
+    """
     @classmethod
     def _update_master_and_id_from_rhea2ec(cls, list_reaction_infos):
         accessions = []
@@ -280,9 +378,22 @@ class Reaction(Relation):
             stop = start + bulk_size
 
             cls.save_all(q)
+    """
 
     @classmethod
     def _update_direction_from_list(cls, list_direction, direction):
+        """
+        
+        Get informations about direction of from rhea.tsv files and
+        update the direction property if the concerned reaction is in the table
+
+        :type list_direction: list
+        :param list_direction: list of dictionnaries that contains informations about
+        directions of reactions
+        :type direction : str
+        :param direction : direction of reactions in the file
+
+        """
         accessions = []
         for s in list_direction:
             accessions.append('RHEA:'+s)
@@ -309,6 +420,19 @@ class Reaction(Relation):
 
 
 class ReactionSubstrate(PWModel):
+    """
+    
+    This class refers to substrates of rhea reactions
+
+    ReactionSubstrate entities are created by the __create_reactions() method 
+    which get substrates of reactions directly from their data
+
+    :type compound: Compound 
+    :property compound: subtrate of the reaction
+    :type reaction: Reaction 
+    :property reaction: concerned reaction
+    
+    """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
     class Meta:
@@ -317,6 +441,19 @@ class ReactionSubstrate(PWModel):
 
 
 class ReactionProduct(PWModel):
+    """
+    
+    This class refers to products of rhea reactions
+
+    ReactionProduct entities are created by the __create_reactions() method 
+    which get products of reactions directly from their data
+
+    :type compound: Compound 
+    :property compound: product of the reaction
+    :type reaction: Reaction 
+    :property reaction: concerned reaction
+    
+    """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
     class Meta:
@@ -324,6 +461,19 @@ class ReactionProduct(PWModel):
         database = DbManager.db
 
 class ReactionEnzyme(PWModel):
+    """
+    
+    This class refers to products of rhea reactions
+
+    ReactionProduct entities are created by the __create_reactions() method 
+    which get enzymes of reactions directly from their data
+
+    :type enzyme: Enzyme 
+    :property enzyme: enzyme of the reaction
+    :type reaction: Reaction 
+    :property reaction: concerned reaction
+    
+    """
     enzyme = ForeignKeyField(Enzyme)
     reaction = ForeignKeyField(Reaction)
     class Meta:

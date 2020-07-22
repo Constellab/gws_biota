@@ -18,14 +18,18 @@ class Compound(Entity):
 
     This class allows to load chebi compound entities in the database
     
-    chebi compound entities are automatically created by the create_go() method
+    chebi compound entities are automatically created by the create_compounds_from_files() method
 
-    :type go_id: CharField 
-    :property go_id: id of the go term
-    :type name: CharField 
-    :property name: name of the go term
-    :type namespace: CharField 
-    :property namespace: namespace of the go term
+    :type name : CharField
+    :property name : name of the compound
+    :type source_accession: CharField
+    :property source_accession: chebi accession number
+    :type formula: CharField
+    :property formula: chimical formula
+    :type mass: FloatField 
+    :property mass: mass of the compound
+    :type charge: FloatField
+    :property charge: charge of the compound
 
     """
     name = CharField(null=True, index=True)
@@ -38,6 +42,22 @@ class Compound(Entity):
     # -- C -- 
     @classmethod
     def create_compounds_from_files(cls, input_db_dir, **files):
+        """
+        Creates and registers chebi compound entities in the database
+        Use the chebi helper of biota to get all chebi compound in a list
+        Creates compounds by calling create_compounds() method
+        Collects chemical informations about chebi compounds and set their chemical 
+        attribute by calling the _set_chemicals() method
+        Register compounds by calling the save_all() method 
+
+        :type input_db_dir: str
+        :param input_db_dir: path to the folder that contain the go.obo file
+        :type files: dict
+        :param files: dictionnary that contains all data files names
+        :returns: None
+        :rtype: None
+
+        """
         list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
         compounds = cls.create_compounds(list_comp)
         cls.save_all(compounds)
@@ -46,10 +66,21 @@ class Compound(Entity):
         cls._set_chemicals(list_chemical)
         cls.save_all(compounds)
 
-        return list_comp
+
 
     @classmethod
     def create_compounds(cls, list_compound):
+        """
+
+        Creates chebi compound from a list 
+
+        :type list_compound: list
+        :param list_compound: list of dictionnaries where each element refers 
+        to a chebi compound
+        :returns: list of Compound entities
+        :rtype: list
+
+        """
         compounds = [cls(data = dict_) for dict_ in list_compound]
         for comp in compounds:
             comp.set_name( comp.data["name"] )
@@ -75,18 +106,19 @@ class Compound(Entity):
         self.charge = charge
 
     @classmethod
-    def set_reactions_from_list(cls, list_reaction):
-        for dict_ in list_reaction:
-            if ('entry' in dict_.keys()):
-                try:
-                    comp = cls.get(cls.source_accession == dict_["entry"])
-                    comp.set_reactions(dict_['reaction'])
-                except:
-                    pass
-                    #print('can not find the compound ' + str(dict_["entry"]) + ' to set reactions')
-        
-    @classmethod
     def _set_chemicals(cls, list_chemical):
+        """
+        
+        Sets chemical informations of compound from a tsv file which contains 
+        chebi chemical informations such as mass, chemical formula of charge
+
+        :type list_chemical: list 
+        :param list_chemical: list of chemical informations in the tsv file, 
+        each element represent one informations about formula, mass or charge of a 
+        chebi compound 
+        :returns: None
+
+        """
         for chem in list_chemical:
             if(chem['type'] == 'FORMULA'):
                 try:

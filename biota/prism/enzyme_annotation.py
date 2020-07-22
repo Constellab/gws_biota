@@ -18,6 +18,32 @@ from peewee import CharField, ForeignKeyField
 ####################################################################################
 
 class EnzymeAnnotation(Annotation):
+    """
+
+    This class allows to load Enzyme Gene Annotation extract from QuickGO browser 
+    website in the database
+    Through this class, the user has acess to all the annotations about an enzyme
+    if this one has a uniprot id referenced
+
+    
+    GO entities are automatically created by the create_annotation() method
+
+    :type gene_product_id: CharField 
+    :property gene_product_id: uniprot id of the concerned protein
+    :type ec_id: sts 
+    :property ec_id: ec number of the protein
+    :type go_term: GO
+    :property go_term: GO identifier in the GO table
+    :type evidence: ECO
+    :property evidence: ECO identifier in the ECO table
+    :type reference: str
+    :property reference: reference number of the annotation (PMID, GO_REF, etc...)
+    :type taxonomy: Taxonomy
+    :property taxonomy: taxonomy identifier in the taxonomy database
+    :type assigned_by: str
+    :property assigned_by: database which created the annontation
+
+    """
     gene_product_id = CharField(null=True, index=True)
     ec_id = CharField(null=True, index=True)
     go_term = ForeignKeyField(GO, backref='go_associated', null = True)
@@ -31,6 +57,13 @@ class EnzymeAnnotation(Annotation):
 
     @classmethod
     def create_annotation(cls):
+        """
+        Creates and registers EnzymeAnnotation entities in the database
+        Use the quickgo helper module of biota to get all annotation in a list
+        Creates annotations
+        Register compounds by calling the save_all() method 
+
+        """
         list_annotation = []
         page_number = 1
         items_per_page = 100
@@ -89,6 +122,12 @@ class EnzymeAnnotation(Annotation):
         self.assigned_by = assignment
 
     def set_go_term(self):
+        """
+
+        Collects the GO identifier of the annotation in the go table and update 
+        the go_id property of the annotation
+
+        """
         if('go term' in self.data.keys()):
             try:
                 go_reference = GO.get(GO.go_id == self.data['go term'])
@@ -98,6 +137,12 @@ class EnzymeAnnotation(Annotation):
                 #print("could not find the go term: " + str(self.data['go term']))
 
     def set_evidence(self):
+        """
+        
+        Collects the ECO identifier of the annotation in the eco table and update 
+        the eco_id property of the annotation
+
+        """
         if('eco id' in self.data.keys()):
             try:
                 eco_reference = ECO.get(ECO.eco_id == self.data['eco id'])
@@ -107,6 +152,13 @@ class EnzymeAnnotation(Annotation):
                 #print("could not find the eco term: " + str(self.data['eco id']))
 
     def set_taxonomy(self):
+        """
+        
+        Collects the Taxonomy identifier of the annotation in the taxonomy table and update 
+        the taxonomy property of the annotation
+
+        """
+        
         if('taxon id' in self.data.keys()):
             try:
                 taxonomy_reference = Taxonomy.get(Taxonomy.tax_id == self.data['taxon id'])
