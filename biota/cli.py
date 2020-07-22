@@ -198,12 +198,12 @@ def createdb(ctx, user):
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
     
-    """
-    # ------------- Create EnzymeAnnotation ------------- #
-    start_time = time.time()
-
-    EnzymeAnnotation.create_annotation()
     
+    # ------------- Create EnzymeAnnotation ------------- #
+    logger.info("Step 10 | Loading enzyme annotations...")
+    start_time = time.time()
+    EnzymeAnnotation.create_annotation()
+    len_enzyme_annotation = EnzymeAnnotation.select().count()
     elapsed_time = time.time() - start_time
-    logger.info("step 7 | Loading enzymes_annotations: time = {}".format(elapsed_time/60))
-    """
+    logger.info("... done in {:10.2f} min for #enzyme_annotations = {}".format(elapsed_time/60, len_enzyme_annotation))
+    

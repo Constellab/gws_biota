@@ -58,6 +58,7 @@ class EnzymeAnnotation(Annotation):
     @classmethod
     def create_annotation(cls):
         """
+        
         Creates and registers EnzymeAnnotation entities in the database
         Use the quickgo helper module of biota to get all annotation in a list
         Creates annotations
@@ -158,7 +159,7 @@ class EnzymeAnnotation(Annotation):
         the taxonomy property of the annotation
 
         """
-        
+
         if('taxon id' in self.data.keys()):
             try:
                 taxonomy_reference = Taxonomy.get(Taxonomy.tax_id == self.data['taxon id'])
