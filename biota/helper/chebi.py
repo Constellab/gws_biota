@@ -2,6 +2,7 @@ import sys
 import os
 import pronto 
 from pronto import Ontology
+import csv
 
 ############################################################################################
 #
@@ -35,82 +36,15 @@ class Chebi():
         :returns: list of dictionnaries reapresenting rows of the spreadsheet
         :rtype: list
         """
-
+        
         file_path = os.path.join(path, file)
-        with open(file_path) as fh:
-            line_count = 0
-            list__ = []
-            for line in fh.readlines():
-                if(line_count < 1):
-                    if('\t' not in line):
-                        raise Exception("csv-parser", "invalid type of file", "separation character must be a TAB")
-                    else:
-                        infos_table = line.split('\t')
-                        line_count +=1
-                else:
-                    list_row = []
-                    list_row = line.split('\t')
-                    dict_compound = {}
-
-                    if(len(list_row) == len(infos_table)):
-                        for i in range(0, len(infos_table)):
-                                dict_compound[infos_table[i].lower().replace('\n', '')] = list_row[i].replace('\n', '')
-                    else:
-                        for i in range(0, len(list_row)):
-                            dict_compound[infos_table[i].lower().replace('\n', '')] = list_row[i].replace('\n', '') 
-                    
-                    list__.append(dict_compound)
-                    line_count += 1
-        return(list__)
-
-    @staticmethod
-    def parse_csv_from_list(path, file, infos = list) -> list:
-        """
-        Parses a chebi tsv file of chemicals entities and returns a list of dictionaries
-
-        This method allows the user to get all informations in the spreadsheet. It is assumed that the paramater
-        infos indicates location of the columns
-
-        This tool accepts tab (\t) separated value files (.csv) as well as excel
-        (.xls, .xlsx) files
-
-        :type path: str
-        :param path: Location of the spreadsheet
-        :type file: str
-        :param file: Name of the obo file
-        :type infos: list
-        :param infos: list of names of columns of the spreadsheet
-        :returns: list of dictionnaries reapresenting rows of the spreadsheet
-        :rtype: list
-        """
-
-        file_path = os.path.join(path, file)
-        with open(file_path) as fh:
-            if isinstance(infos, list):
-                line_count = 0
-                list__ = []
-                infos_table = infos
-                for line in fh.readlines():
-                    if(line_count < 1):
-                        infos_table = line.split('\t')
-                        line_count +=1
-                    else:
-                        list_row = []
-                        list_row = line.split('\t')
-                        dict_compound = {}
-
-                        if(len(list_row) == len(infos_table)):
-                            for i in range(0, len(infos_table)):
-                                    dict_compound[infos_table[i].lower().replace('\n', '')] = list_row[i].replace('\n', '')
-                        else:
-                            for i in range(0, len(list_row)):
-                                dict_compound[infos_table[i].lower().replace('\n', '')] = list_row[i].replace('\n', '') 
-                        
-                        list__.append(dict_compound)
-                        line_count += 1
-            else:
-                raise Exception("Chebi", "parse_csv_from_list",  "invalid type")
-        return(list__)
+        list__ = []
+        with open(file_path, newline='') as csvfile:
+            reader = csv.DictReader(csvfile, delimiter='\t', quoting=csv.QUOTE_NONE)
+            for row in reader:
+                list__.append( {key.lower() if type(key) == str else key: value for key, value in row.items()} )
+        
+        return list__
 
     @staticmethod
     def create_ontology_from_file(path, file):

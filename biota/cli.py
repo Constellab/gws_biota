@@ -11,16 +11,16 @@ from gws.prism.controller import Controller
 
 #import from biota
 from gws.settings import Settings
-from biota.go import GO
-from biota.sbo import SBO
-from biota.bto import BTO
-from biota.eco import ECO
-from biota.chebi_ontology import ChebiOntology
-from biota.taxonomy import Taxonomy
-from biota.compound import Compound
-from biota.enzyme import Enzyme
-from biota.enzyme_annotation import EnzymeAnnotation
-from biota.reaction import Reaction
+from biota.prism.go import GO
+from biota.prism.sbo import SBO
+from biota.prism.bto import BTO
+from biota.prism.eco import ECO
+from biota.prism.chebi_ontology import ChebiOntology
+from biota.prism.taxonomy import Taxonomy
+from biota.prism.compound import Compound
+from biota.prism.enzyme import Enzyme
+from biota.prism.enzyme_annotation import EnzymeAnnotation
+from biota.prism.reaction import Reaction
 
 #import external module 
 from biota.helper.rhea import Rhea
@@ -98,23 +98,23 @@ def createdb(ctx, user):
             go_data = "go.obo",
             sbo_data = "sbo.obo",
             eco_data = "eco.obo",
-            chebi_data = "chebi.obo",
+            chebi_data = "./obo/chebi.obo",
             bto_json_data = "bto.json",
-            brenda_file = "brenda_download.txt",
-            chebi_compound_file = "compounds.tsv",
-            chebi_chemical_data_file = "chemical_data.tsv",
-            ncbi_nodes = "nodes.dmp",
-            ncbi_names = "names.dmp",
-            ncbi_division = "division.dmp",
-            ncbi_citations = "citations.dmp",
-            rhea_kegg_reaction_file = 'rhea-kegg.reaction',
-            rhea_direction_file = 'rhea-directions.tsv',
-            rhea2ecocyc_file = 'rhea2ecocyc.tsv',
-            rhea2metacyc_file = 'rhea2metacyc.tsv',
-            rhea2macie_file = 'rhea2macie.tsv',
-            rhea2kegg_reaction_file = 'rhea2kegg_reaction.tsv',
-            rhea2ec_file = 'rhea2ec.tsv',
-            rhea2reactome_file = 'rhea2reactome.tsv'
+            brenda_file = "./brenda/brenda_download.txt",
+            chebi_compound_file = "./tsv/compounds.tsv",
+            chebi_chemical_data_file = "./tsv/chemical_data.tsv",
+            ncbi_nodes = "./taxdump/nodes.dmp",
+            ncbi_names = "./taxdump/names.dmp",
+            ncbi_division = "./taxdump/division.dmp",
+            ncbi_citations = "./taxdump/citations.dmp",
+            rhea_kegg_reaction_file = './kegg/rhea-kegg.reaction',
+            rhea_direction_file = './tsv/rhea-directions.tsv',
+            rhea2ecocyc_file = './tsv/rhea2ecocyc.tsv',
+            rhea2metacyc_file = './tsv/rhea2metacyc.tsv',
+            rhea2macie_file = './tsv/rhea2macie.tsv',
+            rhea2kegg_reaction_file = './tsv/rhea2kegg_reaction.tsv',
+            rhea2ec_file = './tsv/rhea2ec.tsv',
+            rhea2reactome_file = './tsv/rhea2reactome.tsv'
         )
 
     # ------------- Create GO ------------- #
@@ -183,8 +183,8 @@ def createdb(ctx, user):
     # ------------------ Create Enzyme --------------- #
     logger.info("Step 8 | Loading brenda enzymes and enzyme_btos...")
     start_time = time.time()
-    brenda_texfile_input_db_dir = settings.get_data("brenda_texfile_input_db_dir") #data_paths["brenda"]
-    Enzyme.create_enzymes_from_dict(brenda_texfile_input_db_dir, **files)
+    brenda_input_db_dir = settings.get_data("brenda_input_db_dir") #data_paths["brenda"]
+    Enzyme.create_enzymes_from_dict(brenda_input_db_dir, **files)
     len_enzyme = Enzyme.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
