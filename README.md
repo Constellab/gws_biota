@@ -60,6 +60,14 @@ Before to launch anything with biota, make sure that you have downloaded all the
 ### Documentation:
 You can find documentation about prism and helper package of biota on the following page: ./docs/build/index.html
 
+### Authors:
+
+Djomangan Adama OUATTARA: douattara AT gencovery.com <br />
+Dandou Sarah: dandousarah AT gmail.com 
+
+### Maintainers:
+Djomangan Adama OUATTARA
+
 # License
 
 This software is the exclusive property of Gencovery SAS. 
