@@ -1,1 +1,1 @@
-python manage.py --cli biota.cli.createdb > out.log 2>&1 &
+python manage.py --cli biota.app.cli.createdb > out.log 2>&1 &

@@ -1,6 +1,6 @@
 {
     "name"                          : "biota",
-    "db_dir"                        : "./",
+    "db_dir"                        : "./data/",
     "db_name"                       : "db.sqlite3",
     "biota_db_data_dir"             : "./",
     "biota_test_data_dir"           : "./tests/data",
