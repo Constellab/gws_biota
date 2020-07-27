@@ -1,3 +1,4 @@
+cd ./docs/ 
 sphinx-quickstart
 rm ./docs/source/conf.py
 cp ./docs/templates/conf.py ./docs/source/
