@@ -47,17 +47,17 @@ class TestGO(unittest.TestCase):
         view1 = go1_standard_view_model.render()
         view2 = go1_premium_view_model.render()
         self.assertEqual(view1,"""
-            {
-            "id": GO:0000006,
-            "name": high-affinity zinc transmembrane transporter activity
-            }
+        {
+            "id": "GO:0000006",
+            "name": "high-affinity zinc transmembrane transporter activity"
+        }
         """)
         self.assertEqual(view2,"""
-            {
-            "id": GO:0000006,
-            "name": high-affinity zinc transmembrane transporter activity,
-            "namespace": molecular_function,
-            "definition": Enables the transfer of zinc ions (Zn2+) from one side of a membrane to the other, probably powered by proton motive force. In high-affinity transport the transporter is able to bind the solute even if it is only present at very low concentrations.,
-            "ancestors": ['GO:0005385']
-            }
+        {
+            "id": "GO:0000006",
+            "name": "high-affinity zinc transmembrane transporter activity",
+            "namespace": "molecular_function",
+            "definition": "Enables the transfer of zinc ions (Zn2+) from one side of a membrane to the other, probably powered by proton motive force. In high-affinity transport the transporter is able to bind the solute even if it is only present at very low concentrations.",
+            "ancestors": "['GO:0005385']"
+        }
         """)
