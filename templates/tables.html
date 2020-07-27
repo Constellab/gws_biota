@@ -1,0 +1,41 @@
+<div >
+    <p> Now available on BIOTA </p>
+</div>
+
+<div class="row">
+    {% for name, table in settings.app.tables_descriptions.items() %}
+        <div class="col-md-3">
+            <div class="card">
+  
+                <!-- Card content -->
+                <div class="card-body elegant-color white-text rounded-bottom">
+              
+                  <!-- Title -->
+                  <h4 class="card-title">{{ name }}</h4>
+                  <hr class="hr-light">
+                  <!-- Text -->
+                  <p class="card-text white-text mb-4">{{table.description}}</p>
+                  <!-- Link -->
+                  <a href="#!" class="white-text d-flex justify-content-end">
+                    <h5>See {{ name }} <i class="fas fa-angle-double-right"></i></h5> <br>
+                  </a>
+              
+                </div>
+              
+              </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+<!--
+<div class="container">
+    <div class="row">
+        {% for name, btn in settings.app.tables_buttons.items() %}
+            <div class="col-sm">
+                <i class = "{{ btn.icon }}" ></i>
+                <p> {{ name }} </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>-->

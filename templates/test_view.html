@@ -1,0 +1,13 @@
+<div clas = "container">
+    {% for name, description in views.items() %}
+        <a class="card1" href="#">
+          <h3>{{description.id}}</h3>
+          <p class="small">{{description.name}}</p>
+          <div class="go-corner" href="#">
+            <div class="go-arrow">
+              →
+            </div>
+          </div>
+        </a>
+    {% endfor %}
+</div>
