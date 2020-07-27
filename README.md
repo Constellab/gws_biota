@@ -21,6 +21,8 @@ This module has been developed in python 3.8.2.
 ```itsdangerous``` version 1.1.0 <br />
 ```awesome-slugify``` version 1.6.5 <br />
 ```pronto``` version 2.1.0 <br />
+```sphinx``` version 3.1.2 <br />
+```sphinx-rtd-theme``` version 0.5.0 <br />
 ```numpy``` <br />
 ```ujson``` <br />
 

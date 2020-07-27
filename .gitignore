@@ -36,7 +36,8 @@ databases_input/
 # Docs
 # -----------------------------------------------------------
 
-docs/
+docs/*
+!docs/templates/
 
 # https://github.com/github/gitignore
 
@@ -154,9 +155,6 @@ instance/
 
 # Scrapy stuff:
 .scrapy
-
-# Sphinx documentation
-docs/_build/
 
 # PyBuilder
 target/

@@ -12,3 +12,5 @@ ujson
 pandas
 pyparsing
 owlready2
+sphinx
+sphinx-rtd-theme
