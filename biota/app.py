@@ -1,6 +1,11 @@
+# GWS app module
+# This software is the exclusive property of Gencovery SAS. 
+# The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
+# About us: https://gencovery.com
+
 from gws.settings import Settings
-from gws.prism.app import App as BaseApp
 from gws.prism.controller import Controller
+from gws.app import App as GWSApp
 from starlette.routing import Route, Mount
 from starlette.endpoints import HTTPEndpoint
 from starlette.templating import Jinja2Templates
@@ -43,12 +48,11 @@ async def test_view(request):
     #return (templates.TemplateResponse('test_view.html', {'request': request, 'settings': settings}))
     #return templates.TemplateResponse('test_view.html', {'request': request, 'settings': settings})
 
-
-
-class App(BaseApp):
+class App(GWSApp):
 
     @classmethod
     def on_init(cls):
+        super().on_init()
 
         #biota routes
         cls.routes.append(Route('/biota/home/', homepage) )

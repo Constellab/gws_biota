@@ -9,3 +9,6 @@ awesome-slugify
 pronto==2.1.0
 numpy
 ujson
+pandas
+pyparsing
+owlready2
