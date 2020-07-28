@@ -1,3 +1,8 @@
+# LICENSE
+# This software is the exclusive property of Gencovery SAS. 
+# The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
+# About us: https://gencovery.com
+
 from gws.prism.model import ResourceViewModel
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
@@ -9,7 +14,6 @@ from biota.prism.enzyme import Enzyme
 from biota.prism.taxonomy import Taxonomy
 from biota.helper.quickgo import QuickGOAnnotation
 from peewee import CharField, ForeignKeyField
-#import time
 
 ####################################################################################
 #
