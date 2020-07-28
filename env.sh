@@ -9,10 +9,6 @@ python -m virtualenv .venv --python=python3
 
 # prism requirement file
 python -m pip install -r ../gws-py/requirements.txt
-python -m pip install -r ../brenda-py/requirements.txt
-python -m pip install -r ../chebi-py/requirements.txt
-python -m pip install -r ../taxonomy-py/requirements.txt
-python -m pip install -r ../ontology-py/requirements.txt
 
 # current requirement file
 python -m pip install -r requirements.txt
