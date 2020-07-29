@@ -9,18 +9,10 @@ if( window.gws == undefined )
     window.gws = {}
 
 
-function load_tables() {
-//var explorerTab = window.gws.dashboard.getTabByName("explorer")
-//explorerTab.load("/biota/tables")
-console.log("CLIC !")
-}
-
 window.gws.biota = function(){
-    load_tables()
     var explorerTab = window.gws.dashboard.getTabByName("explorer")
     var viewerTab = window.gws.dashboard.getTabByName("viewer")
-    //explorerTab.load("/biota/home")
-    explorerTab.load("/biota/tables")
+    explorerTab.load("/biota/home")
     viewerTab.load("/biota/testviews")
 }
 

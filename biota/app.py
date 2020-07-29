@@ -25,7 +25,7 @@ import json
 settings = Settings.retrieve()
 template_dir = settings.get_template_dir("biota")
 templates = Jinja2Templates(directory=template_dir)
-#go_size = GO.select().count()
+go_size = GO.select().count()
 
 dict_descriptions = {
     "GO": "The Gene Ontology: a major bioinformatics initiative to unify the representation of gene and gene product attributes across all species."
@@ -37,13 +37,16 @@ async def homepage(request):
 async def tablepage(request):
     return templates.TemplateResponse('tables.html', {'request': request, 'settings': settings})
 
-async def test_view(request):
-    #view = App.get_go_example_views()
-    # dict_ = App.get_go_example_views()
-    # for view in dict_.keys():
-    #     dict_[view] = json.loads(dict_[view])
+async def cardpage(request):
+    return templates.TemplateResponse('card.html', {'request': request, 'settings': settings})
 
-    response = templates.TemplateResponse('test_view.html', {'request': request, 'settings': settings})
+async def test_view(request):
+    view = App.get_go_example_views()
+    dict_ = App.get_go_example_views()
+    for view in dict_.keys():
+        dict_[view] = json.loads(dict_[view])
+
+    response = templates.TemplateResponse('test_view.html', {'request': request, 'settings': settings, "views": dict_})
     return response
     #return (templates.TemplateResponse('test_view.html', {'request': request, 'settings': settings}))
     #return templates.TemplateResponse('test_view.html', {'request': request, 'settings': settings})
@@ -57,6 +60,7 @@ class App(GWSApp):
         #biota routes
         cls.routes.append(Route('/biota/home/', homepage) )
         cls.routes.append(Route('/biota/tables/', tablepage) )
+        cls.routes.append(Route('/biota/card/{name}/{id}', cardpage) )
         cls.routes.append(Route('/biota/testviews/', test_view ) )
     
     def get_go_example_views():
