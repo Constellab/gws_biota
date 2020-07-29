@@ -2,7 +2,7 @@ import sys
 import os
 import unittest
 
-from biota.helper.quickgo import QuickGOAnnotation
+from biota._helper.quickgo import QuickGOAnnotation
 import re
 
 

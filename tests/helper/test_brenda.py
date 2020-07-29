@@ -4,7 +4,7 @@ import unittest
 
 from gws.settings import Settings
 from gws.prism.controller import Controller
-from biota.helper.brenda import Brenda
+from biota._helper.brenda import Brenda
 
 ############################################################################################
 #

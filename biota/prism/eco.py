@@ -9,7 +9,7 @@ from gws.prism.model import Model, ResourceViewModel, DbManager
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 from biota.prism.ontology import Ontology
-from biota.helper.ontology import Onto
+from biota._helper.ontology import Onto
 
 ####################################################################################
 #

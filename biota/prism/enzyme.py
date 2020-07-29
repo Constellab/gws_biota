@@ -7,7 +7,7 @@ import os
 from biota.prism.protein import Protein 
 from biota.prism.taxonomy import Taxonomy as BiotaTaxo
 from biota.prism.bto import BTO as BiotaBTO
-from biota.helper.brenda import Brenda
+from biota._helper.brenda import Brenda
 
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
@@ -27,11 +27,8 @@ EnzymeBTODeffered = DeferredThroughModel()
 
 class Enzyme(Protein):
     """
-
     This class allows to load BRENDA enzyme entities in the database
-    
-    enzymes are automatically created by the create_enzymes_from_dict() 
-    method
+    enzymes are automatically created by the create_enzymes_from_dict() method
 
     :type name : CharField
     :property name : name of the compound
@@ -45,13 +42,12 @@ class Enzyme(Protein):
     :property bto: tissue location 
     :type uniprot_id: CharField
     :property uniprot_id: uniprot id of the enzyme
-
     """
     name = CharField(null=True, index=True)
     ec = CharField(null=True, index=True)
     organism = CharField(null=True, index=True)
-    taxonomy = ForeignKeyField(BiotaTaxo, backref = 'taxonomy', null = True)
-    bto = ManyToManyField(BiotaBTO, backref='blood tissue taxonomy', through_model = EnzymeBTODeffered)
+    taxonomy = ForeignKeyField(BiotaTaxo, backref = 'enzymes', null = True)
+    bto = ManyToManyField(BiotaBTO, backref='enzymes', through_model = EnzymeBTODeffered)
     uniprot_id = CharField(null=True, index=True)
     _table_name = 'enzyme'
 
@@ -60,12 +56,10 @@ class Enzyme(Protein):
     @classmethod
     def create_enzymes_from_dict(cls, input_db_dir, **files):
         """
-
         Creates and registers enzymes in the database
         Use the brenda helper of biota to get all enzymes entities in a list
         Creates enzymes
-        Collects taxonomy and tissues location informations by calling 
-        taxonomy and bto tables
+        Collects taxonomy and tissues location informations by calling taxonomy and bto tables
         Register enzymes by calling the save_all() method 
 
         :type input_db_dir: str
@@ -74,7 +68,6 @@ class Enzyme(Protein):
         :param files_test: dictionnary that contains all data files names
         :returns: None
         :rtype: None
-
         """
         brenda = Brenda(os.path.join(input_db_dir, files['brenda_file']))
         list_proteins = brenda.parse_all_protein_to_dict()
@@ -121,10 +114,8 @@ class Enzyme(Protein):
     @classmethod
     def create_table(cls, *args, **kwargs):
         """
-
         Creates tables related to enzyme entities such as enzymes, enzymes_btos
         Uses the super() method of the gws.model object
-
         """
 
         super().create_table(*args, **kwargs)
@@ -136,10 +127,8 @@ class Enzyme(Protein):
     @classmethod
     def drop_table(cls, *args, **kwargs):
         """
-        
         Drops tables related to enzyme entities such as enzymes, enzymes_btos
         Uses the super() method of the gws.model object
-
         """
         EnzymeBTO = Enzyme.bto.get_through_model()
         EnzymeBTO.drop_table(*args, **kwargs)
@@ -163,11 +152,9 @@ class Enzyme(Protein):
 
     def _update_taxonomy(self):
         """
-
         See if there is any information about the enzyme taxonomy and if so, connects
-        the enzyme and his taxonomy by adding the related tax_id from the taxonomy table
-        to the taxonomy property of the enzyme
-
+            the enzyme and his taxonomy by adding the related tax_id from the taxonomy table
+            to the taxonomy property of the enzyme
         """
         if(self.data['taxonomy'] != None):
             try:
@@ -179,11 +166,9 @@ class Enzyme(Protein):
 
     def _update_tissues(self):
         """
-        
         See if there is any information about the enzyme tissue locations and if so, 
-        connects the enzyme and tissues by adding an enzyme-tissues relation in th enzymes_btos
-        table
-
+            connects the enzyme and tissues by adding an enzyme-tissues relation in th enzymes_btos
+            table
         """
         if(type(self.data['st']) == list):
             for i in range(0,len(self.data['st'])):
@@ -206,16 +191,13 @@ class Enzyme(Protein):
     
 class EnzymeBTO(PWModel):
     """
-    
     This class refers to tissues of brenda enzymes
-
     EnzymeBTO entities are created by the _update_tissues() method of the Enzyme class
 
     :type enzyme: Enzyme 
     :property enzyme: id of the concerned enzyme
     :type bto: BTO 
     :property bto: tissue location
-    
     """
     enzyme = ForeignKeyField(Enzyme)
     bto = ForeignKeyField(BiotaBTO)
@@ -265,9 +247,8 @@ class EnzymeJSONPremiumViewModel(ResourceViewModel):
 
 class EnzymeStatistics(Resource):
     """
-    This class refers to statistics of enzyme tables 
-    The aim of this class is to gather statistics about enzymes in biota database
-    examples: number of organism, proportion of enzymes by ec group, etc..
+    This class refers to statistics of enzyme tables.
+    The aim of this class is to gather statistics about enzymes in biota database.
     
     :type enzymes_by_ec_group: dict
     :property : number of enzymes by ec group
@@ -279,20 +260,18 @@ class EnzymeStatistics(Resource):
     :type set_number_of_organisms: int
     :property set_number_of_organisms: total number of organism
     :type proportion_by_ec_group: dictionnary
-    :property proportion_by_ec_group: dictionnary that contains proportion (%) of enzymes number
-    by ec group in the table
+    :property proportion_by_ec_group: dictionnary that contains proportion (%) of enzymes 
+        number by ec group in the table
     :type proportion_in_table: str 
-    :property proportion_in_table: proportion of enzyme that refer to a specific organism
-    in the table
+    :property proportion_in_table: proportion of enzyme that refer to a specific organism in the table
     :type proportion_of_params: dict
-    :property proportion_of_params: dictionnary where keys are a kinetic or chemical 
-    information and values are proportion of  enzyme with this parameter entered in the table
+    :property proportion_of_params: dictionnary where keys are a kinetic or chemical information 
+        and values are proportion of enzyme with this parameter entered in the table
     :type total_number_of_enzyme: int
     :property total_number_of_enzyme: total number of enzyme in the table
     :type uniprots_referenced: int
-    :property uniprots_referenced: total number of enzyme with a uniprot identifiers refferenced
-    in the table
-
+    :property uniprots_referenced: total number of enzyme with a uniprot identifiers 
+        referenced in the table
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -396,13 +375,11 @@ class EnzymeStatisticsJSONViewModel(ResourceViewModel):
  
 class EnzymeStatisticsProcess(Process):
     """
-    
     The class allows the biota module to get statistics informations about enzymes 
-    in the biota database
+        in the biota database
     It browses enyme table to collect and process statistics informations
     The process can provide general statistics information about the table or more 
-    specific informations with about enzymes of a given organism
-
+        specific informations with about enzymes of a given organism
     """
     input_specs = {'EnzymeStatistics': EnzymeStatistics}
     output_specs = {'EnzymeStatistics': EnzymeStatistics}

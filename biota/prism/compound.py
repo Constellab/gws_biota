@@ -8,7 +8,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel
 from biota.prism.entity import Entity
-from biota.helper.chebi import Chebi
+from biota._helper.chebi import Chebi
 from peewee import CharField, FloatField
 
 
@@ -20,7 +20,6 @@ from peewee import CharField, FloatField
 
 class Compound(Entity):
     """
-
     This class allows to load chebi compound entities in the database
     
     chebi compound entities are automatically created by the create_compounds_from_files() method
@@ -35,7 +34,6 @@ class Compound(Entity):
     :property mass: mass of the compound
     :type charge: FloatField
     :property charge: charge of the compound
-
     """
     name = CharField(null=True, index=True)
     source_accession = CharField(null=True, index=True)
@@ -61,7 +59,6 @@ class Compound(Entity):
         :param files: dictionnary that contains all data files names
         :returns: None
         :rtype: None
-
         """
         list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
         compounds = cls.create_compounds(list_comp)
@@ -76,15 +73,12 @@ class Compound(Entity):
     @classmethod
     def create_compounds(cls, list_compound):
         """
-
         Creates chebi compound from a list 
-
         :type list_compound: list
         :param list_compound: list of dictionnaries where each element refers 
         to a chebi compound
         :returns: list of Compound entities
         :rtype: list
-
         """
         compounds = [cls(data = dict_) for dict_ in list_compound]
         for comp in compounds:
@@ -113,7 +107,6 @@ class Compound(Entity):
     @classmethod
     def _set_chemicals(cls, list_chemical):
         """
-        
         Sets chemical informations of compound from a tsv file which contains 
         chebi chemical informations such as mass, chemical formula of charge
 
@@ -122,7 +115,6 @@ class Compound(Entity):
         each element represent one informations about formula, mass or charge of a 
         chebi compound 
         :returns: None
-
         """
         for chem in list_chemical:
             if(chem['type'] == 'FORMULA'):

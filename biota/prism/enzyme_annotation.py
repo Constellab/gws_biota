@@ -12,7 +12,7 @@ from biota.prism.go import GO
 from biota.prism.eco import ECO
 from biota.prism.enzyme import Enzyme
 from biota.prism.taxonomy import Taxonomy
-from biota.helper.quickgo import QuickGOAnnotation
+from biota._helper.quickgo import QuickGOAnnotation
 from peewee import CharField, ForeignKeyField
 
 ####################################################################################

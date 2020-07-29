@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-from biota.helper.taxonomy import Taxo
+from biota._helper.taxonomy import Taxo
 import re
 
 ####################################################################################

@@ -4,7 +4,7 @@
 # About us: https://gencovery.com
 
 from biota.prism.ontology import Ontology
-from biota.helper.chebi import Chebi
+from biota._helper.chebi import Chebi
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel
 from peewee import CharField

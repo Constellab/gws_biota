@@ -11,7 +11,7 @@ from biota.prism.relation import Relation
 from biota.prism.compound import Compound
 from biota.prism.enzyme import Enzyme
 from biota.prism.go import GO
-from biota.helper.rhea import Rhea
+from biota._helper.rhea import Rhea
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
@@ -49,7 +49,6 @@ class Reaction(Relation):
     :property products: products of the reaction
     :type enzymes: Enzyme
     :property enzymes: enzymes of the reaction
-
     """
     source_accession = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
@@ -82,7 +81,6 @@ class Reaction(Relation):
         :param files: dictionnary that contains all data files names
         :returns: None
         :rtype: None
-
         """
         list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
         cls.__create_reactions(list_react)
@@ -114,7 +112,6 @@ class Reaction(Relation):
     @classmethod
     def __create_reactions(cls, list_reaction):
         """
-
         Creates reactions from a list
         Add reactions-substrates and reaction-products relation in
         reaction_subtrates and reations_products by calling
@@ -125,7 +122,6 @@ class Reaction(Relation):
         to a rhea reaction
         :returns: list of reactions entities
         :rtype: list
-
         """
         reactions = [cls(data = dict) for dict in list_reaction]
         for react in reactions:
@@ -147,11 +143,9 @@ class Reaction(Relation):
     @classmethod
     def create_table(cls, *args, **kwargs):
         """
-
         Creates tables related to reaction entities such as reactions, reactions_enzymes,
-        reactions_products, etc...
+        reactions_products, etc.
         Uses the super() method of the gws.model object
-
         """
         super().create_table(*args, **kwargs)
         ReactionSubstrate.create_table()
@@ -163,11 +157,9 @@ class Reaction(Relation):
     @classmethod
     def drop_table(cls, *args, **kwargs):
         """
-        
         Drops tables related to GO entities such as reactions, reactions_enzymes,
-        reactions_products, etc...
+        reactions_products, etc.
         Uses the super() method of the gws.model object
-
         """
         ReactionSubstrate.drop_table()
         ReactionProduct.drop_table()
@@ -219,13 +211,11 @@ class Reaction(Relation):
     @classmethod
     def _update_master_and_id_from_rhea2ec(cls, list_reaction_infos):
         """
-
         Get informations about master id and biocyc id of from a rhea2ec.tsv file
         update those index if the concerned reaction is in the table
 
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
-    
         """
         accessions = []
         master_ids = {}
@@ -258,13 +248,11 @@ class Reaction(Relation):
     @classmethod
     def _update_master_and_id_from_rhea2biocyc(cls, list_reaction_infos):
         """
-        
         Get informations about master id and biocyc id of from a rhea2biocyc.tsv file
         update those index if the concerned reaction is in the table
 
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
-    
         """
         accessions = []
         master_ids = {}
@@ -308,13 +296,11 @@ class Reaction(Relation):
     @classmethod
     def _update_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
         """
-        
         Get informations about master id and biocyc id of from a rhea2kegg.tsv file
         update those index if the concerned reaction is in the table
 
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
-    
         """
         accessions = []
         master_ids = {}
@@ -388,7 +374,6 @@ class Reaction(Relation):
     @classmethod
     def _update_direction_from_list(cls, list_direction, direction):
         """
-        
         Get informations about direction of from rhea.tsv files and
         update the direction property if the concerned reaction is in the table
 
@@ -397,7 +382,6 @@ class Reaction(Relation):
         directions of reactions
         :type direction : str
         :param direction : direction of reactions in the file
-
         """
         accessions = []
         for s in list_direction:
@@ -426,7 +410,6 @@ class Reaction(Relation):
 
 class ReactionSubstrate(PWModel):
     """
-    
     This class refers to substrates of rhea reactions
 
     ReactionSubstrate entities are created by the __create_reactions() method 
@@ -436,7 +419,6 @@ class ReactionSubstrate(PWModel):
     :property compound: subtrate of the reaction
     :type reaction: Reaction 
     :property reaction: concerned reaction
-    
     """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
@@ -447,7 +429,6 @@ class ReactionSubstrate(PWModel):
 
 class ReactionProduct(PWModel):
     """
-    
     This class refers to products of rhea reactions
 
     ReactionProduct entities are created by the __create_reactions() method 
@@ -456,8 +437,7 @@ class ReactionProduct(PWModel):
     :type compound: Compound 
     :property compound: product of the reaction
     :type reaction: Reaction 
-    :property reaction: concerned reaction
-    
+    :property reaction: concerned reaction 
     """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
@@ -467,7 +447,6 @@ class ReactionProduct(PWModel):
 
 class ReactionEnzyme(PWModel):
     """
-    
     This class refers to products of rhea reactions
 
     ReactionProduct entities are created by the __create_reactions() method 
@@ -477,7 +456,6 @@ class ReactionEnzyme(PWModel):
     :property enzyme: enzyme of the reaction
     :type reaction: Reaction 
     :property reaction: concerned reaction
-    
     """
     enzyme = ForeignKeyField(Enzyme)
     reaction = ForeignKeyField(Reaction)

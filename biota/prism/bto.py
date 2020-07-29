@@ -9,7 +9,7 @@ from gws.prism.model import ResourceViewModel, DbManager
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 from biota.prism.ontology import Ontology
-from biota.helper.ontology import Onto
+from biota._helper.ontology import Onto
 
 ####################################################################################
 #
@@ -19,7 +19,6 @@ from biota.helper.ontology import Onto
 
 class BTO(Ontology):
     """
-
     This class allows to load BTO entities in the database
     Through this class, the user has access to the entire BTO ontology
 
@@ -35,7 +34,6 @@ class BTO(Ontology):
     :property bto_id: id of the bto term
     :type label: CharField 
     :property label: label of the bto term
-
     """
     bto_id = CharField(null=True, index=True)
     label = CharField(null=True, index=True)
@@ -46,10 +44,8 @@ class BTO(Ontology):
     @classmethod
     def create_table(cls, *arg, **kwargs):
         """
-
         Creates tables related to BTO entities such as bto, bto ancestors, etc...
         Uses the super() method of the gws.model object to create the bto table
-
         """
         super().create_table(*arg, **kwargs)
         BTOAncestor.create_table()
@@ -57,7 +53,6 @@ class BTO(Ontology):
     @classmethod
     def create_bto(cls, input_db_dir, **files):
         """
-
         This method allows the biota module to create BTO entities
 
         :type input_db_dir: str
@@ -66,7 +61,6 @@ class BTO(Ontology):
         :param files_test: dictionnary that contains all data files names
         :returns: None
         :rtype: None
-
         """
         list_bto = Onto.parse_bto_from_json(input_db_dir, files['bto_json_data'])
         btos = [cls(data = dict_) for dict_ in list_bto]
@@ -103,10 +97,8 @@ class BTO(Ontology):
     @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
-        
         Drops tables related to BTO entities such as bto, bto ancestors, etc...
         Uses the super() method of the gws.model object to drop the bto table
-
         """
         BTOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
@@ -115,11 +107,9 @@ class BTO(Ontology):
 
     def _get_ancestors_query(self):
         """
-
         look for the bto term ancestors and returns all bto-bto_ancetors relations in a list 
         :returns: a list of dictionnaries inf the following format: {'bto': self.id, 'ancestor': ancestor.id}
         :rtype: list
-        
         """
         vals = []
         for i in range(0,len(self.data['ancestors'])):
@@ -132,9 +122,7 @@ class BTO(Ontology):
 
     def remove_ancestor(self, ancestor):
         """
-
         remove bto-bto_ancestors relations of the bto_ancestors table whose ancestors is the ancestor parameter
-        
         """
         Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
         Q.execute()
@@ -158,7 +146,6 @@ class BTO(Ontology):
 
 class BTOAncestor(PWModel):
     """
-    
     This class refers to bto ancestors, which are bto entities but also parent of bto element
 
     SBOAncestor entities are created by the create_bto() method which get ancestors of the bto term by
@@ -168,7 +155,6 @@ class BTOAncestor(PWModel):
     :property bto: id of the concerned bto term
     :type ancestor: CharField 
     :property ancestor: ancestor of the concerned bto term
-    
     """
     bto = ForeignKeyField(BTO)
     ancestor = ForeignKeyField(BTO)

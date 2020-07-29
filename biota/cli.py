@@ -28,11 +28,11 @@ from biota.prism.enzyme_annotation import EnzymeAnnotation
 from biota.prism.reaction import Reaction
 
 #import external module 
-from biota.helper.rhea import Rhea
-from biota.helper.brenda import Brenda
-from biota.helper.ontology import Onto
-from biota.helper.chebi import Chebi
-from biota.helper.taxonomy import Taxo
+from biota._helper.rhea import Rhea
+from biota._helper.brenda import Brenda
+from biota._helper.ontology import Onto
+from biota._helper.chebi import Chebi
+from biota._helper.taxonomy import Taxo
 
 #import Timer
 from timeit import default_timer

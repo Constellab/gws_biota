@@ -5,7 +5,7 @@ import unittest
 from gws.settings import Settings
 from gws.prism.controller import Controller
 
-from biota.helper.rhea import Rhea
+from biota._helper.rhea import Rhea
 from pronto import Ontology
 import re
 

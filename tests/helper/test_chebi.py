@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-from biota.helper.chebi import Chebi
+from biota._helper.chebi import Chebi
 
 
 

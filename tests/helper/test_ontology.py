@@ -2,7 +2,7 @@ import sys
 import os
 import unittest
  
-from biota.helper.ontology import Onto
+from biota._helper.ontology import Onto
 from gws.settings import Settings
 import json
 
