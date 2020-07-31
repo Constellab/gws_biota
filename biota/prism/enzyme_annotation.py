@@ -3,50 +3,44 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws.prism.model import ResourceViewModel
+
+from peewee import CharField, ForeignKeyField
+
+from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 
-from biota.prism.annotation import Annotation
 from biota.prism.go import GO
 from biota.prism.eco import ECO
 from biota.prism.enzyme import Enzyme
 from biota.prism.taxonomy import Taxonomy
 from biota._helper.quickgo import QuickGOAnnotation
-from peewee import CharField, ForeignKeyField
 
-####################################################################################
-#
-# Annotation class
-#
-####################################################################################
 
-class EnzymeAnnotation(Annotation):
+class EnzymeAnnotation(Resource):
     """
-
-    This class allows to load Enzyme Gene Annotation extract from QuickGO browser 
-    website in the database
-    Through this class, the user has acess to all the annotations about an enzyme
-    if this one has a uniprot id referenced
-
+    This class represents Enzyme Gene Annotation extracted from QuickGO.
     
-    GO entities are automatically created by the create_annotation() method
-
-    :type gene_product_id: CharField 
+    QuickGO provides a unified interface to query information about ontology terms 
+    from GO (the Gene Ontology) and ECO (the Evidence & Conclusion Ontology), 
+    Gene Ontology annotations from the EBI's GOA database, and gene products 
+    (proteins from UniProt, RNA from RNAcentral and complexes from ComplexPortal) (https://www.ebi.ac.uk/QuickGO).
+    QuickGo is available under the APACHE LICENSE, VERSION 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+     
     :property gene_product_id: uniprot id of the concerned protein
-    :type ec_id: sts 
+    :type gene_product_id: CharField 
     :property ec_id: ec number of the protein
-    :type go_term: GO
+    :type ec_id: sts 
     :property go_term: GO identifier in the GO table
-    :type evidence: ECO
+    :type go_term: GO
     :property evidence: ECO identifier in the ECO table
-    :type reference: str
+    :type evidence: ECO
     :property reference: reference number of the annotation (PMID, GO_REF, etc...)
-    :type taxonomy: Taxonomy
+    :type reference: str
     :property taxonomy: taxonomy identifier in the taxonomy database
-    :type assigned_by: str
+    :type taxonomy: Taxonomy
     :property assigned_by: database which created the annontation
-
+    :type assigned_by: str
     """
     gene_product_id = CharField(null=True, index=True)
     ec_id = CharField(null=True, index=True)
@@ -60,15 +54,11 @@ class EnzymeAnnotation(Annotation):
     # -- C --
 
     @classmethod
-    def create_annotation(cls):
+    def create_annotation_db(cls):
         """
-        
-        Creates and registers EnzymeAnnotation entities in the database
-        Use the quickgo helper module of biota to get all annotation in a list
-        Creates annotations
-        Register compounds by calling the save_all() method 
+        Creates and fills the `enzyme_annotation` database 
+        """
 
-        """
         list_annotation = []
         page_number = 1
         items_per_page = 100
@@ -79,15 +69,12 @@ class EnzymeAnnotation(Annotation):
                 break
 
             for enzyme in list_q:
-                #start_time = time.time()
                 list_ann = QuickGOAnnotation.get_tsv_file_from_uniprot_id(str(enzyme.uniprot_id))
                 try:
                     for element in list_ann:
                         list_annotation.append(element)
-                    #print('Results for ' + enzyme.uniprot_id + ' have been collected successfully')
                 except:
                     pass
-                    #print('list empty')
             
             annotations = [cls(data = d) for d in list_annotation]
 
@@ -98,19 +85,12 @@ class EnzymeAnnotation(Annotation):
 
             cls.save_all(annotations)
             page_number = page_number + 1
-            #elapsed_time = time.time() - start_time
-            #print("Loading 50 items from quickgo extract from QuickGO in: time = {}".format(elapsed_time/60))
-
-            
-        
-        #start_time = time.time()
+                
         for annotation in EnzymeAnnotation.select():
             annotation.set_go_term()
             annotation.set_evidence()
         
         cls.save_all(annotations)
-        #elapsed_time = time.time() - start_time
-        #print("Get GO and ECO id for all table in: time = {}".format(elapsed_time/60))
 
     # -- S --
 
@@ -128,12 +108,11 @@ class EnzymeAnnotation(Annotation):
 
     def set_go_term(self):
         """
-
         Collects the GO identifier of the annotation in the go table and update 
         the go_id property of the annotation
-
         """
-        if('go term' in self.data.keys()):
+
+        if 'go term' in self.data.keys():
             try:
                 go_reference = GO.get(GO.go_id == self.data['go term'])
                 self.go_term = go_reference
@@ -143,12 +122,11 @@ class EnzymeAnnotation(Annotation):
 
     def set_evidence(self):
         """
-        
         Collects the ECO identifier of the annotation in the eco table and update 
         the eco_id property of the annotation
-
         """
-        if('eco id' in self.data.keys()):
+
+        if 'eco id' in self.data.keys():
             try:
                 eco_reference = ECO.get(ECO.eco_id == self.data['eco id'])
                 self.evidence = eco_reference

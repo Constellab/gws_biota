@@ -1,10 +1,7 @@
-import sys
-import os
-import unittest
 
+import unittest
 from gws.settings import Settings
-from biota._helper.taxonomy import Taxo
-import re
+from biota._helper.ncbi import Taxonomy as NCBITaxonomy
 
 ####################################################################################
 #
@@ -26,8 +23,8 @@ class TestModel(unittest.TestCase):
         )
 
 
-        dict_ncbi_names = Taxo.get_ncbi_names(path, **files)
-        dict_taxons = Taxo.get_all_taxonomy(path, dict_ncbi_names, **files)
+        dict_ncbi_names = NCBITaxonomy.get_ncbi_names(path, **files)
+        dict_taxons = NCBITaxonomy.get_all_taxonomy(path, dict_ncbi_names, **files)
         
         print('')   
         print(dict_taxons)

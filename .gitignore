@@ -38,7 +38,6 @@ databases_input/
 
 docs/*
 !docs/templates/
-!docs/scripts/
 
 # https://github.com/github/gitignore
 

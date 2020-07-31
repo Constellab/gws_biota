@@ -3,15 +3,15 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from gws.prism.controller import Controller
+
 from biota.prism.entity import Entity
 
-####################################################################################
-#
-# Protein class
-#
-####################################################################################
-
 class Protein(Entity):
+    """
+    This class represents proteins.
+    """
+
     _table_name = 'protein'
 
     def __init__(self, *args, **kwargs):
@@ -21,3 +21,4 @@ class Protein(Entity):
         table_name = 'protein'
 
 
+Controller.register_model_classes([Protein])

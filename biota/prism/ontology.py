@@ -5,13 +5,11 @@
 
 from gws.prism.model import Resource
 
-####################################################################################
-#
-# Ontology class
-#
-####################################################################################
-
 class Ontology(Resource):
+    """
+    This class represents base ontology class.
+    """
+
     _table_name = 'ontology'
 
     def __init__(self, *args, **kwargs):

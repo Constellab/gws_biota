@@ -39,7 +39,7 @@ class TestBTO(unittest.TestCase):
             bto_json_data = "bto_test.json",
         )
 
-        BTO.create_bto(test_data_path, **files_test)
+        BTO.create_bto_db(test_data_path, **files_test)
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         # --------- Testing views --------- #
         bto1 = BTO.get(BTO.bto_id == 'BTO_0000002')

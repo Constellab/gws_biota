@@ -28,7 +28,7 @@ class TestEnzymeAnnotation(unittest.TestCase):
 
     def test_db_object(self):
         
-        EnzymeAnnotation.create_annotation()
+        EnzymeAnnotation.create_annotation_db()
         #self.assertEqual(EnzymeAnnotation.get(EnzymeAnnotation.go_term_id == 6176).reference, 'PMID:21873635')
         self.assertEqual(EnzymeAnnotation.get(EnzymeAnnotation.reference == "GO_REF:0000044").assigned_by, 'UniProt')
 

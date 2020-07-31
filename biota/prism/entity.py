@@ -3,10 +3,17 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from biota.prism.element import Element
+from gws.prism.model import Resource
 from peewee import CharField
 
-class Entity(Element):
+class Entity(Resource):
+    """
+    This class represents base molecular entities
+    
+    :property go_id : GO term id
+    :type go_id : class:`peewee.CharField`
+    """
+
     go_id = CharField(null=True, index=True)
     _table_name = 'entity'
 

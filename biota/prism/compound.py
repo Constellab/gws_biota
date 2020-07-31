@@ -3,38 +3,37 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import os, sys
+from peewee import CharField, FloatField
+
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel
+
 from biota.prism.entity import Entity
-from biota._helper.chebi import Chebi
-from peewee import CharField, FloatField
-
-
-####################################################################################
-#
-# Compound class
-#
-####################################################################################
+from biota._helper.chebi import Chebi as ChebiHelper
 
 class Compound(Entity):
     """
-    This class allows to load chebi compound entities in the database
+    This class represents metabolic compounds from the ChEBI database.
     
-    chebi compound entities are automatically created by the create_compounds_from_files() method
+    Chemical Entities of Biological Interest (ChEBI) includes an
+    ontological classification, whereby the relationships between molecular 
+    entities or classes of entities and their parents and/or children are 
+    specified (https://www.ebi.ac.uk/chebi/). ChEBI data are available under the Creative Commons License (CC BY 4.0),
+    https://creativecommons.org/licenses/by/4.0/
 
-    :type name : CharField
     :property name : name of the compound
-    :type source_accession: CharField
+    :type name : CharField
     :property source_accession: chebi accession number
-    :type formula: CharField
+    :type source_accession: CharField
     :property formula: chimical formula
-    :type mass: FloatField 
+    :type formula: CharField
     :property mass: mass of the compound
-    :type charge: FloatField
+    :type mass: FloatField 
     :property charge: charge of the compound
+    :type charge: FloatField
     """
+    
     name = CharField(null=True, index=True)
     source_accession = CharField(null=True, index=True)
     formula = CharField(null=True, index=True)
@@ -44,34 +43,29 @@ class Compound(Entity):
 
     # -- C -- 
     @classmethod
-    def create_compounds_from_files(cls, input_db_dir, **files):
+    def create_compound_db(cls, biodata_db_dir, **files):
         """
-        Creates and registers chebi compound entities in the database
-        Use the chebi helper of biota to get all chebi compound in a list
-        Creates compounds by calling create_compounds() method
-        Collects chemical informations about chebi compounds and set their chemical 
-        attribute by calling the _set_chemicals() method
-        Register compounds by calling the save_all() method 
+        Creates and fills the `compound` database
 
-        :type input_db_dir: str
-        :param input_db_dir: path to the folder that contain the go.obo file
-        :type files: dict
+        :param biodata_db_dir: path of the :file:`go.obo`
+        :type biodata_db_dir: str
         :param files: dictionnary that contains all data files names
+        :type files: dict
         :returns: None
         :rtype: None
         """
-        list_comp = Chebi.parse_csv_from_file(input_db_dir, files['chebi_compound_file'])
-        compounds = cls.create_compounds(list_comp)
+        list_comp = ChebiHelper.parse_csv_from_file(biodata_db_dir, files['chebi_compound_file'])
+        compounds = cls._create_compounds(list_comp)
         cls.save_all(compounds)
 
-        list_chemical = Chebi.parse_csv_from_file(input_db_dir, files['chebi_chemical_data_file'])
+        list_chemical = ChebiHelper.parse_csv_from_file(biodata_db_dir, files['chebi_chemical_data_file'])
         cls._set_chemicals(list_chemical)
         cls.save_all(compounds)
 
 
 
     @classmethod
-    def create_compounds(cls, list_compound):
+    def _create_compounds(cls, list_compound):
         """
         Creates chebi compound from a list 
         :type list_compound: list
@@ -168,6 +162,4 @@ class CompoundJSONPremiumViewModel(ResourceViewModel):
             }
         """)
 
-
-
-
+Controller.register_model_classes([Compound])

@@ -26,19 +26,13 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        files = dict(
-            chebi_compound_file = "compounds.tsv",
-            chebi_chemical_data_file =  "chemical_data.tsv",
-            #rhea_kegg_compound_file =  "rhea-kegg.compound"
-        )
-
         files_test = dict(
             chebi_compound_file = "compounds_test.tsv",
             chebi_chemical_data_file =  "chemical_data_test.tsv",
             #rhea_kegg_compound_file =  "rhea-kegg-test.compound"
         )
 
-        Compound.create_compounds_from_files(test_data_path, **files_test)
+        Compound.create_compound_db(test_data_path, **files_test)
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
         

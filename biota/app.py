@@ -3,29 +3,23 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws.settings import Settings
-from gws.prism.controller import Controller
-from gws.app import App as GWSApp
+import json
+
 from starlette.routing import Route, Mount
 from starlette.endpoints import HTTPEndpoint
 from starlette.templating import Jinja2Templates
 
+from gws.settings import Settings
+from gws.prism.controller import Controller
+from gws.app import App as GWSApp
+
 from biota.prism.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
 from biota.prism.taxonomy import Taxonomy, TaxonomyJSONStandardViewModel, TaxonomyJSONPremiumViewModel
 from biota.prism.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
-#from biota.prism.enzyme import Enzyme, EnzymeJSONStandardViewModel, EnzymeJSONPremiumViewModel, EnzymeStatistics, EnzymeStatisticsProcess
-
-import json
-####################################################################################
-#
-# HTTP and WebSocket endpoints
-#
-####################################################################################
 
 settings = Settings.retrieve()
 template_dir = settings.get_template_dir("biota")
 templates = Jinja2Templates(directory=template_dir)
-go_size = GO.select().count()
 
 dict_descriptions = {
     "GO": "The Gene Ontology: a major bioinformatics initiative to unify the representation of gene and gene product attributes across all species."

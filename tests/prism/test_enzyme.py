@@ -35,7 +35,7 @@ class TestEnzyme(unittest.TestCase):
             brenda_file = "brenda_test.txt"
         )
 
-        Enzyme.create_enzymes_from_dict(test_data_path, **files_test)
+        Enzyme.create_enzyme_db(test_data_path, **files_test)
         self.assertEqual(Enzyme.get(Enzyme.ec == '1.4.3.7').organism, 'Candida boidinii')
         self.assertEqual(Enzyme.get(Enzyme.ec == '3.5.1.43').organism, 'Bacillus circulans')
         

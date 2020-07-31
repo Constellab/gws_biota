@@ -3,37 +3,30 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import ResourceViewModel, DbManager
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
-from biota.prism.ontology import Ontology
-from biota._helper.ontology import Onto
 
-####################################################################################
-#
-# BTO class
-#
-####################################################################################
+from gws.prism.controller import Controller
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import Resource, ResourceViewModel, DbManager
+
+from biota.prism.ontology import Ontology
+from biota._helper.ontology import Onto as OntoHelper
 
 class BTO(Ontology):
     """
-    This class allows to load BTO entities in the database
-    Through this class, the user has access to the entire BTO ontology
-
-    The BTO (BRENDA Tissue Ontology) represents a comprehensive structured encyclopedia. 
-    It provides terms, classifications, and definitions of tissues, organs, anatomical structures, 
-    plant parts, cell cultures, cell types, and cell lines of organisms from all taxonomic groups 
-    (animals, plants, fungis, protozoon) as enzyme sources. The information is connected to the 
-    functional data in the BRENDA ("BRaunschweig ENzyme DAtabase“) enzyme information system. 
+    This class represents BTO terms.
     
-    BTO entities are automatically created by the create_bto() method
+    The BTO (BRENDA Tissue Ontology) is a comprehensive structured 
+    encyclopedia. It providies terms, classifications, and definitions of tissues, organs, anatomical structures, 
+    plant parts, cell cultures, cell types, and cell lines of organisms from all taxonomic groups 
+    (animals, plants, fungis, protozoon) as enzyme sources (https://www.brenda-enzymes.org/). 
+    BRENDA data are available under the Creative Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
 
-    :type bto_id: CharField 
     :property bto_id: id of the bto term
-    :type label: CharField 
+    :type bto_id: class:`peewee.CharField`
     :property label: label of the bto term
+    :type label: class:`peewee.CharField` 
     """
     bto_id = CharField(null=True, index=True)
     label = CharField(null=True, index=True)
@@ -44,25 +37,25 @@ class BTO(Ontology):
     @classmethod
     def create_table(cls, *arg, **kwargs):
         """
-        Creates tables related to BTO entities such as bto, bto ancestors, etc...
-        Uses the super() method of the gws.model object to create the bto table
+        Creates `bto` table and related tables.
+
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         super().create_table(*arg, **kwargs)
         BTOAncestor.create_table()
-    # -- C --
+        
     @classmethod
-    def create_bto(cls, input_db_dir, **files):
+    def create_bto_db(cls, biodata_db_dir, **files):
         """
-        This method allows the biota module to create BTO entities
+        Creates and fills the `bto` database
 
-        :type input_db_dir: str
-        :param input_db_dir: path to the folder that contain the bto.json file
-        :type files_test: dict
-        :param files_test: dictionnary that contains all data files names
-        :returns: None
-        :rtype: None
+        :param biodata_db_dir: path of the :file:`bto.json`
+        :type biodata_db_dir: str
+        
+        :param files: dictionnary that contains all data files names
+        :type files: dict
         """
-        list_bto = Onto.parse_bto_from_json(input_db_dir, files['bto_json_data'])
+        list_bto = OntoHelper.parse_bto_from_json(biodata_db_dir, files['bto_json_data'])
         btos = [cls(data = dict_) for dict_ in list_bto]
 
         for bto in btos:
@@ -77,7 +70,7 @@ class BTO(Ontology):
         with DbManager.db.atomic() as transaction:
             try:
                 for bt in btos:
-                    val = bt._get_ancestors_query()
+                    val = bt.__build_insert_query_vals_of_ancestors()
                     if len(val) != 0:
                         for v in val:
                             vals.append(v)
@@ -97,17 +90,19 @@ class BTO(Ontology):
     @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
-        Drops tables related to BTO entities such as bto, bto ancestors, etc...
-        Uses the super() method of the gws.model object to drop the bto table
+        Drops table and related tables.
+
+        Extra parameters are passed to :meth:`peewee.Model.drop_table`
         """
         BTOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
 
     # -- G --
 
-    def _get_ancestors_query(self):
+    def __build_insert_query_vals_of_ancestors(self):
         """
-        look for the bto term ancestors and returns all bto-bto_ancetors relations in a list 
+        Look for the bto term ancestors and returns all bto-bto_ancetors relations in a list.
+
         :returns: a list of dictionnaries inf the following format: {'bto': self.id, 'ancestor': ancestor.id}
         :rtype: list
         """
@@ -122,7 +117,7 @@ class BTO(Ontology):
 
     def remove_ancestor(self, ancestor):
         """
-        remove bto-bto_ancestors relations of the bto_ancestors table whose ancestors is the ancestor parameter
+        Remove a bto ancestor.
         """
         Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
         Q.execute()
@@ -131,13 +126,19 @@ class BTO(Ontology):
 
     def set_bto_id(self, bto_id):
         """
-        set self.bto_id
+        Set the bto_id accessor
+
+        :param: bto_id: The bto_id accessor
+        :type bto_id: str
         """
         self.bto_id = bto_id
 
     def set_label(self, label):
         """
-        set self.label
+        Set the label
+
+        :param: label: The label
+        :type label: str
         """
         self.label = label
   
@@ -146,15 +147,13 @@ class BTO(Ontology):
 
 class BTOAncestor(PWModel):
     """
-    This class refers to bto ancestors, which are bto entities but also parent of bto element
+    This class defines the many-to-many relationship between the bto terms and their ancestors
 
-    SBOAncestor entities are created by the create_bto() method which get ancestors of the bto term by
-    calling __get_ancestors_query()
-
-    :type bto: CharField 
     :property bto: id of the concerned bto term
-    :type ancestor: CharField 
+    :type bto: CharField 
+    
     :property ancestor: ancestor of the concerned bto term
+    :type ancestor: CharField 
     """
     bto = ForeignKeyField(BTO)
     ancestor = ForeignKeyField(BTO)
@@ -188,3 +187,5 @@ class BTOJSONPremiumViewModel(ResourceViewModel):
         for i in range(0, len(q)):
             list_ancestors.append(q[i].ancestor.bto_id)
         return(list_ancestors)
+
+Controller.register_model_classes([BTO])

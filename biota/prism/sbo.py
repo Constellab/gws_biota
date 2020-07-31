@@ -3,40 +3,35 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from peewee import CharField, ForeignKeyField
+from peewee import Model as PWModel
+
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, DbManager
-from peewee import CharField, ForeignKeyField
-from peewee import Model as PWModel
+
 from biota._helper.ontology import Onto
 from biota.prism.ontology import Ontology
 
-####################################################################################
-#
-# SBO class
-#
-####################################################################################
-
 class SBO(Ontology):
     """
+    This class represents SBO terms.
 
-    This class allows to load SBO entities in the database
-    Through this class, the user has access to the entire SBO ontology
+    The SBO (Systems Biology Ontology) is a set of controlled, relational vocabularies 
+    of terms commonly used in Systems Biology, and in particular in computational modelling.
+    It introduce a layer of semantic information into the standard description of a model, 
+    or to annotate the results of biochemical experiments in order to facilitate their efficient reuse
+    (http://www.ebi.ac.uk/sbo). SBO is under the Artistic License 2.0 (https://opensource.org/licenses/Artistic-2.0)
 
-    SBO terms can be used to introduce a layer of semantic information into the standard 
-    description of a model, or to annotate the results of biochemical experiments in order 
-    to facilitate their efficient reuse. SBO is an Open Biomedical Ontologies (OBO)
     
-    SBO entities are automatically created by the create_sbo() method
-
-    :type sbo_id: CharField 
     :property sbo_id: id of the sbo term
-    :type name: CharField 
+    :type sbo_id: CharField 
     :property name: name of the sbo term
-    :type namespace: CharField 
+    :type name: CharField 
     :property namespace: namespace of the go term
-
+    :type namespace: CharField 
     """
+
     sbo_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     _table_name = 'sbo'
@@ -44,21 +39,20 @@ class SBO(Ontology):
     # -- C --
      
     @classmethod
-    def create_sbo(cls, input_db_dir, **files):
+    def create_sbo_db(cls, biodata_db_dir, **files):
         """
+        Creates and fills the `sbo` database
 
-        This method allows biota module to create GO entities
-
-        :type input_db_dir: str
-        :param input_db_dir: path to the folder that contain the sboo.obo file
-        :type files_test: dict
+        :param biodata_db_dir: path to the folder that contain the :file:`sbo.obo` file
+        :type biodata_db_dir: str
         :param files_test: dictionnary that contains all data files names
+        :type files_test: dict
         :returns: None
         :rtype: None
-
         """
-        Onto.correction_of_sbo_file(input_db_dir, files["sbo_data"], 'sbo_out_test.obo')
-        ontology = Onto.create_ontology_from_owl(input_db_dir, 'sbo_out_test.obo')
+
+        Onto.correction_of_sbo_file(biodata_db_dir, files["sbo_data"], 'sbo_out_test.obo')
+        ontology = Onto.create_ontology_from_owl(biodata_db_dir, 'sbo_out_test.obo')
         list_sbo = Onto.parse_sbo_terms_from_ontology(ontology)
 
         sbos = [cls(data = dict_) for dict_ in list_sbo]
@@ -75,7 +69,7 @@ class SBO(Ontology):
             try:
                 for sbo in sbos:
                     if 'ancestors' in sbo.data.keys():
-                        val = sbo._get_ancestors_query()
+                        val = sbo.__build_insert_query_vals_of_ancestors()
                         if len(val) != 0:
                             for v in val:
                                 vals.append(v)
@@ -93,10 +87,9 @@ class SBO(Ontology):
     @classmethod
     def create_table(cls, *arg, **kwargs):
         """
+        Creates `sbo` table and related tables.
 
-        Creates tables related to SBO entities such as sbo, sbo ancestors, etc...
-        Uses the super() method of the gws.model object to create the sbo table
-
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         super().create_table(*arg, **kwargs)
         SBOAncestor.create_table()
@@ -106,19 +99,19 @@ class SBO(Ontology):
     @property
     def definition(self):
         """
+        Returns the definition of the got term
 
-        returns self.definition
-
+        :returns: The definition
+        :rtype: str
         """
         return self.data["definition"]
 
     @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
-        
-        Drops tables related to SBO entities such as sbo, sbo ancestors, etc...
-        Uses the super() method of the gws.model object to drop the sbo table
+        Drops `sbo` table and related tables.
 
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         SBOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
@@ -127,27 +120,28 @@ class SBO(Ontology):
 
     def set_name(self, name__):
         """
+        Sets the name of the sbo term
 
-        set self.sbo_id
-        
+        :param name: The name
+        :type name: str
         """
         self.name = name__    
 
-    def set_sbo_id(self, id):
+    def set_sbo_id(self, sbo_id):
         """
+        Sets the sbo id of the sbo term
 
-        set self.name
-        
+        :param sbo_id: The sbo id
+        :type sbo_id: str
         """
-        self.sbo_id = id
+        self.sbo_id = sbo_id
     
-    def _get_ancestors_query(self):
+    def __build_insert_query_vals_of_ancestors(self):
         """
+        Look for the sbo term ancestors and returns all sbo-sbo_ancestors relations in a list.
 
-        look for the sbo term ancestors and returns all sbo-sbo_ancestors relations in a list 
         :returns: a list of dictionnaries inf the following format: {'sbo': self.id, 'ancestor': ancestor.id}
         :rtype: list
-        
         """
         vals = []
         for i in range(0, len(self.data['ancestors'])):
@@ -161,17 +155,12 @@ class SBO(Ontology):
 
 class SBOAncestor(PWModel):
     """
-    
-    This class refers to sbo ancestors, which are sbo entities but also parent of sbo element
+    This class defines the many-to-many relationship between the sbo terms and theirs ancestors
 
-    SBOAncestor entities are created by the create_sbo() method which get ancestors of the sbo term by
-    calling __get_ancestors_query()
-
-    :type sbo: CharField 
     :property sbo: id of the concerned sbo term
-    :type ancestor: CharField 
+    :type sbo: CharField 
     :property ancestor: ancestor of the concerned sbo term
-    
+    :type ancestor: CharField 
     """
     sbo = ForeignKeyField(SBO)
     ancestor = ForeignKeyField(SBO)
@@ -205,3 +194,5 @@ class SBOPremiumJSONViewModel(ResourceViewModel):
         for i in range(0, len(q)):
             list_ancestors.append(q[i].ancestor.sbo_id)
         return list_ancestors
+
+Controller.register_model_classes([SBO])

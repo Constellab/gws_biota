@@ -32,7 +32,7 @@ class TestChebiOntology(unittest.TestCase):
             chebi_data = "chebi_test.obo",
         )
         
-        ChebiOntology.create_chebi(test_data_path, **files_test)
+        ChebiOntology.create_chebi_ontology_db(test_data_path, **files_test)
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
         

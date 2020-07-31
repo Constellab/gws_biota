@@ -2,6 +2,23 @@
 # This software is the exclusive property of Gencovery SAS. 
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
+#
+# BRENDA Copyright Notice and License:
+# BRENDA data are available under the Creative Commons License (CC BY 4.0).
+# The Creative Commons Attribution License CC BY 4.0 is applied to all copyrightable parts of BRENDA. 
+# The copyrightable parts of BRENDA are copyright-protected by Prof. Dr. D. Schomburg, Technische 
+# Universität Braunschweig, BRICS,Department of Bioinformatics and Biochemistry, 
+# Rebenring 56, 38106 Braunschweig, Germany.
+# https://www.brenda-enzymes.org
+#
+# Attribution 4.0 International (CC BY 4.0) information, 2020:
+# You are free to:
+#   * Share — copy and redistribute the material in any medium or format
+#   * Adapt — remix, transform, and build upon the material
+#     for any purpose, even commercially.
+# This license is acceptable for Free Cultural Works.
+# The licensor cannot revoke these freedoms as long as you follow the license terms
+# (https://creativecommons.org/licenses/by/4.0/).
 
 import os
 from biota.prism.protein import Protein 
@@ -16,33 +33,31 @@ from gws.prism.model import Process, ResourceViewModel, Resource, DbManager
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
 
-from brendapy.tissues import BTO
-
-####################################################################################
-#
-# Enzyme class
-#
-####################################################################################
 EnzymeBTODeffered = DeferredThroughModel()
 
 class Enzyme(Protein):
     """
-    This class allows to load BRENDA enzyme entities in the database
-    enzymes are automatically created by the create_enzymes_from_dict() method
+    This class represents enzymes extracted from the BRENDA database.
 
-    :type name : CharField
+    BRENDA is the main collection of enzyme functional data available to the scientific community 
+    (https://www.brenda-enzymes.org/). BRENDA data are available under the Creative 
+    Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
+
+
     :property name : name of the compound
-    :type ec: CharField
+    :type name: class:`peewee.CharField`
     :property ec: ec accession number
-    :type organism: CharField
+    :type ec: class:`peewee.CharField`
     :property organism: organism of the enzyme
-    :type taxonomy: Taxonomy 
-    :property taxonomy: taxonomy id of the enzyme (ncbi taxonomy)
-    :type bto: BTO
-    :property bto: tissue location 
-    :type uniprot_id: CharField
+    :type organism: class:`peewee.CharField`
+    :property taxonomy: taxonomy id that gives the organism
+    :type taxonomy: class:`biota.db.Taxonomy`
+    :property bto: bto id that gives the tissue location 
+    :type bto: class:`biota.db.BTO`
     :property uniprot_id: uniprot id of the enzyme
+    :type uniprot_id: class:`peewee.CharField`
     """
+    
     name = CharField(null=True, index=True)
     ec = CharField(null=True, index=True)
     organism = CharField(null=True, index=True)
@@ -54,22 +69,18 @@ class Enzyme(Protein):
     # -- C --
 
     @classmethod
-    def create_enzymes_from_dict(cls, input_db_dir, **files):
+    def create_enzyme_db(cls, biodata_db_dir, **files):
         """
-        Creates and registers enzymes in the database
-        Use the brenda helper of biota to get all enzymes entities in a list
-        Creates enzymes
-        Collects taxonomy and tissues location informations by calling taxonomy and bto tables
-        Register enzymes by calling the save_all() method 
+        Creates and fills the `enzyme` database
 
-        :type input_db_dir: str
-        :param input_db_dir: path to the folder that contain the go.obo file
-        :type files_test: dict
-        :param files_test: dictionnary that contains all data files names
+        :param biodata_db_dir: path of the :file:`go.obo`
+        :type biodata_db_dir: str
+        :param files: dictionnary that contains all data files names
+        :type files: dict
         :returns: None
         :rtype: None
         """
-        brenda = Brenda(os.path.join(input_db_dir, files['brenda_file']))
+        brenda = Brenda(os.path.join(biodata_db_dir, files['brenda_file']))
         list_proteins = brenda.parse_all_protein_to_dict()
         list_dict = []
         list_chemical_info = ['ac','cf','cr','en','exp','gs','ic50','in','lo','me','mw','nsp','os','oss',
@@ -187,7 +198,7 @@ class Enzyme(Protein):
                 #print("BTO not found")
 
     class Meta():
-        table_name = 'enzymes'
+        table_name = 'enzyme'
     
 class EnzymeBTO(PWModel):
     """
@@ -250,28 +261,28 @@ class EnzymeStatistics(Resource):
     This class refers to statistics of enzyme tables.
     The aim of this class is to gather statistics about enzymes in biota database.
     
-    :type enzymes_by_ec_group: dict
     :property : number of enzymes by ec group
-    :type number_of_ec_class: int
+    :type enzymes_by_ec_group: dict
     :property number_of_ec_class: total number of ec class 
-    :type number_of_entries: dict
+    :type number_of_ec_class: int
     :property number_of_entries: dictionnary where keys are a kinetic or chemical 
     information and values are number of enzyme with this parameter entered
-    :type set_number_of_organisms: int
+    :type number_of_entries: dict
     :property set_number_of_organisms: total number of organism
-    :type proportion_by_ec_group: dictionnary
+    :type set_number_of_organisms: int
     :property proportion_by_ec_group: dictionnary that contains proportion (%) of enzymes 
-        number by ec group in the table
-    :type proportion_in_table: str 
+    number by ec group in the table
+    :type proportion_by_ec_group: dictionnary
     :property proportion_in_table: proportion of enzyme that refer to a specific organism in the table
-    :type proportion_of_params: dict
+    :type proportion_in_table: str 
     :property proportion_of_params: dictionnary where keys are a kinetic or chemical information 
-        and values are proportion of enzyme with this parameter entered in the table
-    :type total_number_of_enzyme: int
+    and values are proportion of enzyme with this parameter entered in the table
+    :type proportion_of_params: dict
     :property total_number_of_enzyme: total number of enzyme in the table
-    :type uniprots_referenced: int
+    :type total_number_of_enzyme: int
     :property uniprots_referenced: total number of enzyme with a uniprot identifiers 
-        referenced in the table
+    referenced in the table
+    :type uniprots_referenced: int
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -375,11 +386,11 @@ class EnzymeStatisticsJSONViewModel(ResourceViewModel):
  
 class EnzymeStatisticsProcess(Process):
     """
-    The class allows the biota module to get statistics informations about enzymes 
-        in the biota database
+    The class allows the biota module to get statistics informations about enzymes in the biota database
     It browses enyme table to collect and process statistics informations
+    
     The process can provide general statistics information about the table or more 
-        specific informations with about enzymes of a given organism
+    specific informations with about enzymes of a given organism
     """
     input_specs = {'EnzymeStatistics': EnzymeStatistics}
     output_specs = {'EnzymeStatistics': EnzymeStatistics}
@@ -545,4 +556,5 @@ class EnzymeStatisticsProcess(Process):
         self.output['EnzymeStatistics'] = se
 
 EnzymeBTODeffered.set_model(EnzymeBTO)
-Controller.register_model_classes([EnzymeStatistics, EnzymeStatisticsProcess])
+
+Controller.register_model_classes([Enzyme, EnzymeStatistics, EnzymeStatisticsProcess])

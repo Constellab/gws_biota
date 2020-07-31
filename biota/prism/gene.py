@@ -3,12 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from biota.prism.entity import Entity
+from peewee import CharField
+
 from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate
 from gws.prism.model import ResourceViewModel
-from peewee import CharField
 
+from biota.prism.entity import Entity
 
 ####################################################################################
 #
@@ -17,6 +18,10 @@ from peewee import CharField
 ####################################################################################
 
 class Gene(Entity):
+    """
+    This class represents genes
+    """
+
     KO = CharField(null=True, index=True)
     _table_name = 'gene'
 

@@ -3,13 +3,15 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import ResourceViewModel, DbManager
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
+
+from gws.prism.controller import Controller
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import Resource, ResourceViewModel, DbManager
+
 from biota.prism.ontology import Ontology
-from biota._helper.ontology import Onto
+from biota._helper.ontology import Onto as OntoHelper
 
 ####################################################################################
 #
@@ -19,22 +21,19 @@ from biota._helper.ontology import Onto
 
 class GO(Ontology):
     """
+    This class represents GO terms.
 
-    This class allows to load GO entities in the database
-    Through this class, the user has access to the entire GO ontology
-
-    The Gene Ontology (GO) is a major bioinformatics initiative to unify 
-    the representation of gene and gene product attributes across all species.
+    The Gene Ontology (GO) is a major bioinformatics initiative to unify
+    the representation of gene and gene product attributes across all 
+    species (http://geneontology.org/). GO data are available under the Creative 
+    Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
     
-    GO entities are automatically created by the create_go() method
-
-    :type go_id: CharField 
     :property go_id: id of the go term
-    :type name: CharField 
+    :type go_id: CharField 
     :property name: name of the go term
-    :type namespace: CharField 
+    :type name: CharField 
     :property namespace: namespace of the go term
-
+    :type namespace: CharField 
     """
     go_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
@@ -46,29 +45,27 @@ class GO(Ontology):
     @classmethod
     def create_table(cls, *arg, **kwargs):
         """
+        Creates `go` table and related tables.
 
-        Creates tables related to GO entities such as go, go ancestors, etc...
-        Uses the super() method of the gws.model object
-
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         super().create_table(*arg, **kwargs)
         GOAncestor.create_table()
 
     @classmethod
-    def create_go(cls, input_db_dir, **files):
+    def create_go_db(cls, biodata_db_dir, **files):
         """
-        This method allows biota module to create GO entities
+        Creates and fills the `go` database
 
-        :type input_db_dir: str
-        :param input_db_dir: path to the folder that contain the go.obo file
-        :type files_test: dict
-        :param files_test: dictionnary that contains all data files names
+        :param biodata_db_dir: path of the :file:`go.obo`
+        :type biodata_db_dir: str
+        :param files: dictionnary that contains all data files names
+        :type files: dict
         :returns: None
         :rtype: None
-
         """
-        onto_go = Onto.create_ontology_from_obo(input_db_dir, files["go_data"])
-        list_go = Onto.parse_obo_from_ontology(onto_go)
+        onto_go = OntoHelper.create_ontology_from_obo(biodata_db_dir, files["go_data"])
+        list_go = OntoHelper.parse_obo_from_ontology(onto_go)
         
         gos = [cls(data = dict_) for dict_ in list_go]
         for go in gos:
@@ -85,7 +82,7 @@ class GO(Ontology):
             try:
                 for go in gos:
                     if 'ancestors' in go.data.keys():
-                        val = go._get_ancestors_query()
+                        val = go.__build_insert_query_vals_of_ancestors()
                         if len(val) != 0:
                             for v in val:
                                 vals.append(v)
@@ -100,15 +97,17 @@ class GO(Ontology):
             except:
                 transaction.rollback()
 
+    class Meta:
+        table_name = 'go'
+
     # -- D --
 
     @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
-        
-        Drops tables related to GO entities such as go, go ancestors, etc...
-        Uses the super() method of the gws.model object
+        Drops `go` table and related tables.
 
+        Extra parameters are passed to :meth:`peewee.Model.drop_table`
         """
         GOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
@@ -116,53 +115,57 @@ class GO(Ontology):
     @property
     def definition(self):
         """
+        Returns the definition of the got term
 
-            return self.definition
-
+        :returns: The definition
+        :rtype: str
         """
         return self.data["definition"]
 
     # -- S --
 
-    def set_definition(self, def__):
+    def set_definition(self, definition):
         """
+        Set the definition of the go term
 
-            set self.definition
-        
+        :param definition: The definition
+        :type definition: str
         """
-        self.definition = def__
+        self.definition = definition
 
     def set_go_id(self, id):
         """
+        Sets the id of the go term
 
-            set self.go_id
-        
+        :param id: The id
+        :type id: str
         """
         self.go_id = id
 
-    def set_name(self, name__):
+    def set_name(self, name):
         """
+        Sets the name of the go term
 
-            set self.name
-        
+        :param name: The name
+        :type name: str
         """
-        self.name = name__
+        self.name = name
     
-    def set_namespace(self, namespace__):
+    def set_namespace(self, namespace):
         """
+        Sets the namespace of the go term
 
-            set self.namespace
-        
+        :param namespace: The namespace
+        :type namespace: str
         """
-        self.namespace = namespace__
+        self.namespace = namespace
     
-    def _get_ancestors_query(self):
+    def __build_insert_query_vals_of_ancestors(self):
         """
+        Look for the go term ancestors and returns all go-go_ancestors relations in a list 
 
-        look for the go term ancestors and returns all go-go_ancestors relations in a list 
-        :returns: a list of dictionnaries in the following format: {'go': self.id, 'ancestor': ancestor.id}
+        :returns: A list of dictionnaries in the following format: {'go': self.id, 'ancestor': ancestor.id}
         :rtype: list
-        
         """
         vals = []
         for i in range(0, len(self.data['ancestors'])):
@@ -176,18 +179,14 @@ class GO(Ontology):
 
 class GOAncestor(PWModel):
     """
-    
-    This class refers to go ancestors, wihch are go entities but also parent of go element
+    This class defines the many-to-many relationship between the go terms and theirs ancestors
 
-    GOAncestor entities are created by the create_go() method which get ancestors of the go term by
-    calling __get_ancestors_query()
-
+    :property go: id of the go term
     :type go: GO 
-    :property go: id of the concerned go term
+    :property ancestor: ancestor of the go term
     :type ancestor: GO 
-    :property ancestor: ancestor of the concerned go term
-    
     """
+
     go = ForeignKeyField(GO)
     ancestor = ForeignKeyField(GO)
     class Meta:
@@ -222,3 +221,5 @@ class GOJSONPremiumViewModel(ResourceViewModel):
         for i in range(0, len(q)):
             list_ancestors.append(q[i].ancestor.go_id)
         return(list_ancestors)
+
+Controller.register_model_classes([GO])

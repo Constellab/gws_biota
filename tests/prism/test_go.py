@@ -37,7 +37,7 @@ class TestGO(unittest.TestCase):
             go_data = "go_test.obo",
         )
 
-        GO.create_go(test_data_path, **files_test)
+        GO.create_go_db(test_data_path, **files_test)
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
        
         # --------- Testing views --------- #

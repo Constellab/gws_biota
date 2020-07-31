@@ -8,7 +8,7 @@ import re
 #                                         
 ############################################################################################
 
-class Taxo():
+class Taxonomy():
     """
 
     This module allows to all the ncbi taxonomy terms but also additionnal informations such as:

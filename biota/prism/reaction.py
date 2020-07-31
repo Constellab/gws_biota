@@ -3,11 +3,12 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import ResourceViewModel, DbManager
-from gws.prism.controller import Controller
 
-from biota.prism.relation import Relation
+from gws.prism.model import Resource, ResourceViewModel, DbManager
+from gws.prism.controller import Controller
+from gws.prism.view import JSONViewTemplate
+
+from biota.prism.entity import Entity
 from biota.prism.compound import Compound
 from biota.prism.enzyme import Enzyme
 from biota.prism.go import GO
@@ -26,30 +27,34 @@ ReactionSubstrateDeferred = DeferredThroughModel()
 ReactionProductDeferred = DeferredThroughModel()
 ReactionEnzymeDeferred = DeferredThroughModel()
 
-class Reaction(Relation):
+class Reaction(Entity):
     """
-    This class allows to load RHEA reactions entities in the database
-    
-    enzymes are automatically created by the create_reactions_from_files() method
-    
-    :type source_accession: CharField
+    This class represents metabolic reactions extracted from Rhea database.
+
+    Rhea is an expert curated resource of biochemical reactions designed for the 
+    annotation of enzymes and genome-scale metabolic networks and models (https://www.rhea-db.org/).
+    Rhea data are available under the Creative 
+    Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
+
     :property source_accession: rhea identifiers of the reaction
-    :type master_id: CharField
+    :type source_accession: CharField
     :property master_id: master id of the reaction
-    :type direction: CharField
+    :type master_id: CharField
     :property direction: direction of the reaction 
-    (UN: undirected, LR: left-right, RL: right-left, BI: bidirectionnal)
-    :type biocyc_ids: CharField
+    :type direction: CharField
+        (UN: undirected, LR: left-right, RL: right-left, BI: bidirectionnal)
     :property biocyc_ids: reaction identifier in the biocyc database
-    :type kegg_id: CharField
+    :type biocyc_ids: CharField
     :property kegg_id: reaction identifier in the kegg databse
-    :type substrates: Compound
+    :type kegg_id: CharField
     :property substrates: substrates of the reaction
-    :type products: Compound
+    :type substrates: Compound
     :property products: products of the reaction
-    :type enzymes: Enzyme
+    :type products: Compound
     :property enzymes: enzymes of the reaction
+    :type enzymes: Enzyme
     """
+
     source_accession = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
@@ -58,56 +63,63 @@ class Reaction(Relation):
     substrates = ManyToManyField(Compound, backref='is_substrate_of', through_model = ReactionSubstrateDeferred)
     products = ManyToManyField(Compound, backref='is_product_of', through_model = ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, backref='is_enzyme_of', through_model = ReactionEnzymeDeferred)
-    _table_name = 'reactions'
+    _table_name = 'reaction'
+
+    # -- A --
+
+    def append_biocyc_id(self, id):
+        """
+        Appends a biocyc id to the reaction
+
+        :param id: The id
+        :type id: str
+        """
+        try:
+            self.biocyc_ids.append(id)
+        except:
+            self.biocyc_ids = []
+            self.biocyc_ids.append(id)
 
     # -- C --
       
     @classmethod
-    def create_reactions_from_files(cls, input_db_dir, **files):
+    def create_reaction_db(cls, biodata_db_dir, **files):
         """
-        Creates and registers chebi reaction entities in the database
-        Use the rhea helper of biota to get all reactions in a list
-        Creates reactions by the calling __create_reactions() method
-        Collects directions of reactions and set them by calling the 
-        update_direction_from_list() method
-        Collects external identifiers of reactions such as ecocy, 
-        reactome or kegg identifiers and set them by calling
-        _update_master_and_id_(...)() methods
-        Register compounds by calling the save_all() method 
+        Creates and fills the `reaction` database
 
-        :type input_db_dir: str
-        :param input_db_dir: path to the folder that contain the go.obo file
-        :type files: dict
+        :param biodata_db_dir: path to the folder that contain the go.obo file
+        :type biodata_db_dir: str
         :param files: dictionnary that contains all data files names
+        :type files: dict
         :returns: None
         :rtype: None
         """
-        list_react = Rhea.parse_reaction_from_file(input_db_dir, files['rhea_kegg_reaction_file'])
+        list_react = Rhea.parse_reaction_from_file(biodata_db_dir, files['rhea_kegg_reaction_file'])
         cls.__create_reactions(list_react)
 
-        list_directions = Rhea.parse_csv_from_file(input_db_dir, files['rhea_direction_file'])
+        list_directions = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea_direction_file'])
         list_master, list_LR, list_RL, list_BI = Rhea.get_columns_from_lines(list_directions)
 
-        cls._update_direction_from_list(list_master, 'UN')
-        cls._update_direction_from_list(list_LR, 'LR')
-        cls._update_direction_from_list(list_RL, 'RL')
-        cls._update_direction_from_list(list_BI, 'BI')
+        cls.__update_direction_from_list(list_master, 'UN')
+        cls.__update_direction_from_list(list_LR, 'LR')
+        cls.__update_direction_from_list(list_RL, 'RL')
+        cls.__update_direction_from_list(list_BI, 'BI')
 
-        list_ecocyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2ecocyc_file'])
-        list_metacyc_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2metacyc_file'])
-        list_macie_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2macie_file'])
+        list_ecocyc_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2ecocyc_file'])
+        list_metacyc_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2metacyc_file'])
+        list_macie_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2macie_file'])
         
-        cls._update_master_and_id_from_rhea2biocyc(list_ecocyc_react)
-        cls._update_master_and_id_from_rhea2biocyc(list_metacyc_react)
-        cls._update_master_and_id_from_rhea2biocyc(list_macie_react)
+        cls.__update_master_and_id_from_rhea2biocyc(list_ecocyc_react)
+        cls.__update_master_and_id_from_rhea2biocyc(list_metacyc_react)
+        cls.__update_master_and_id_from_rhea2biocyc(list_macie_react)
     
-        list_kegg_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2kegg_reaction_file'])
-        list_ec_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2ec_file'])
-        list_reactome_react = Rhea.parse_csv_from_file(input_db_dir, files['rhea2reactome_file'])
+        list_kegg_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2kegg_reaction_file'])
+        list_ec_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2ec_file'])
+        list_reactome_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2reactome_file'])
 
-        cls._update_master_and_id_from_rhea2kegg(list_kegg_react)
-        cls._update_master_and_id_from_rhea2ec(list_ec_react)
-        cls._update_master_and_id_from_rhea2ec(list_reactome_react)
+        cls.__update_master_and_id_from_rhea2kegg(list_kegg_react)
+        cls.__update_master_and_id_from_rhea2ec(list_ec_react)
+        cls.__update_master_and_id_from_rhea2ec(list_reactome_react)
 
     @classmethod
     def __create_reactions(cls, list_reaction):
@@ -115,7 +127,7 @@ class Reaction(Relation):
         Creates reactions from a list
         Add reactions-substrates and reaction-products relation in
         reaction_subtrates and reations_products by calling
-        set_substrates(), set_products()
+        __set_substrates_from_data(), __set_products_from_data()
 
         :type list_reaction: list
         :param list_reaction: list of dictionnaries where each element refers 
@@ -131,10 +143,10 @@ class Reaction(Relation):
         cls.save_all(reactions)
 
         for react in reactions:
-            react.set_substrates()
-            react.set_products()
+            react.__set_substrates_from_data()
+            react.__set_products_from_data()
             if('enzyme' in react.data.keys()):
-                react.set_enzymes()
+                react.__set_enzymes_from_data()
         
         cls.save_all(reactions)
 
@@ -143,9 +155,9 @@ class Reaction(Relation):
     @classmethod
     def create_table(cls, *args, **kwargs):
         """
-        Creates tables related to reaction entities such as reactions, reactions_enzymes,
-        reactions_products, etc.
-        Uses the super() method of the gws.model object
+        Creates `reaction` table and related tables.
+
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         super().create_table(*args, **kwargs)
         ReactionSubstrate.create_table()
@@ -157,9 +169,9 @@ class Reaction(Relation):
     @classmethod
     def drop_table(cls, *args, **kwargs):
         """
-        Drops tables related to GO entities such as reactions, reactions_enzymes,
-        reactions_products, etc.
-        Uses the super() method of the gws.model object
+        Drops `reaction` table and related tables.
+
+        Extra parameters are passed to :meth:`peewee.Model.drop_table`
         """
         ReactionSubstrate.drop_table()
         ReactionProduct.drop_table()
@@ -167,18 +179,64 @@ class Reaction(Relation):
         super().drop_table(*args, **kwargs)
 
     # -- S -- 
+
+    def set_direction(self, direction):
+        """
+        Set the direction of the reaction
+
+        :param direction: The direction
+        :type direction: str
+        """
+        self.direction = direction
+            
+    def set_kegg_id(self, kegg_id):
+        """
+        Set the KEGG id the reaction
+
+        :param kegg_id: The kegg id
+        :type kegg_id: str
+        """
+        self.kegg_id = kegg_id
     
-    def set_biocyc_ids(self, ext_id_):
-        try:
-            self.biocyc_ids.append(ext_id_)
-        except:
-            self.biocyc_ids = []
-            self.biocyc_ids.append(ext_id_)
+    def set_master_id(self, master_id):
+        """
+        Set the master id the reaction
 
-    def set_direction(self, direction__):
-        self.direction = direction__
+        :param master_id: The master id
+        :type master_id: str
+        """
+        self.master_id = master_id
+    
+    def set_source_accession(self, source):
+        """
+        Set the source accession the reaction
 
-    def set_enzymes(self):
+        :param source: The source accession
+        :type source: str
+        """
+        self.source_accession = source
+
+    def __set_substrates_from_data(self):
+        """
+        Set substrates from `data`
+        """
+        for i in range(0,len(self.data['substrates'])):
+            print(self.data['substrates'])
+            comp = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
+            self.substrates.add(comp)
+    
+    def __set_products_from_data(self):
+        """
+        Set products from `data`
+        """
+        for i in range(0,len(self.data['products'])):
+            comp = Compound.get(Compound.source_accession == str(self.data['products'][i]))
+            self.products.add(comp)
+
+    def __set_enzymes_from_data(self):
+        """
+        Set enzymes from `data`
+        """
         for i in range(0,len(self.data['enzyme'])):
             try:
                 enzym = Enzyme.get(Enzyme.ec == str(self.data['enzyme'][i]))
@@ -186,32 +244,12 @@ class Reaction(Relation):
             except:
                 pass
                 #print("ec not found")
-            
-    def set_kegg_id(self, kegg_id):
-        self.kegg_id = kegg_id
-    
-    def set_master_id(self, master_id_):
-        self.master_id = master_id_
-    
-    def set_products(self):
-        for i in range(0,len(self.data['products'])):
-            comp = Compound.get(Compound.source_accession == str(self.data['products'][i]))
-            self.products.add(comp)
-
-    def set_source_accession(self, source__):
-        self.source_accession = source__
-
-    def set_substrates(self):
-        for i in range(0,len(self.data['substrates'])):
-            comp = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
-            self.substrates.add(comp)
-
     # -- U --
 
     @classmethod
-    def _update_master_and_id_from_rhea2ec(cls, list_reaction_infos):
+    def __update_master_and_id_from_rhea2ec(cls, list_reaction_infos):
         """
-        Get informations about master id and biocyc id of from a rhea2ec.tsv file
+        Get informations about master id and biocyc id of from a :file:`rhea2ec.tsv` file
         update those index if the concerned reaction is in the table
 
         :type list_reaction_infos: list
@@ -238,7 +276,7 @@ class Reaction(Relation):
 
             for rea in q:
                 if rea.source_accession in biocyc_ids:
-                    rea.set_biocyc_ids(biocyc_ids[rea.source_accession])
+                    rea.append_biocyc_id(biocyc_ids[rea.source_accession])
 
             start = stop - 1
             stop = start + bulk_size
@@ -246,9 +284,9 @@ class Reaction(Relation):
             cls.save_all(q)
 
     @classmethod
-    def _update_master_and_id_from_rhea2biocyc(cls, list_reaction_infos):
+    def __update_master_and_id_from_rhea2biocyc(cls, list_reaction_infos):
         """
-        Get informations about master id and biocyc id of from a rhea2biocyc.tsv file
+        Get informations about master id and biocyc id of from a :file:`rhea2biocyc.tsv` file
         update those index if the concerned reaction is in the table
 
         :type list_reaction_infos: list
@@ -278,7 +316,7 @@ class Reaction(Relation):
                     rea.set_master_id(master_ids[rea.source_accession])
                 
                 if rea.source_accession in biocyc_ids:
-                    rea.set_biocyc_ids(biocyc_ids[rea.source_accession])
+                    rea.append_biocyc_id(biocyc_ids[rea.source_accession])
 
             start = stop - 1
             stop = start + bulk_size
@@ -289,14 +327,14 @@ class Reaction(Relation):
         #     try:
         #       rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
         #       rea.set_master_id(dict__['master_id'])
-        #       rea.set_biocyc_ids(dict__['id'])
+        #       rea.append_biocyc_id(dict__['id'])
         #     except:
         #         print('can not find the reaction RHEA:' + dict__['rhea_id'])
 
     @classmethod
-    def _update_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
+    def __update_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
         """
-        Get informations about master id and biocyc id of from a rhea2kegg.tsv file
+        Get informations about master id and biocyc id of from a :file:`rhea2kegg.tsv` file
         update those index if the concerned reaction is in the table
 
         :type list_reaction_infos: list
@@ -333,48 +371,10 @@ class Reaction(Relation):
 
             cls.save_all(q)
 
-        # for dict__ in list_reaction_infos:
-        #     try:
-        #       rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
-        #       rea.set_master_id(dict__['master_id'])
-        #       rea.set_kegg_id(dict__['id'])
-        #     except:
-        #         print('can not find the reaction RHEA:' + dict__['rhea_id'])
-
-    """
     @classmethod
-    def _update_master_and_id_from_rhea2ec(cls, list_reaction_infos):
-        accessions = []
-        master_ids = {}
-        for dict__ in list_reaction_infos:
-            accession = 'RHEA:'+dict__['rhea_id']
-            accessions.append(accession)
-            master_ids[accession] = dict__['master_id']
-
-        bulk_size = 750
-        start = 0
-        stop = start + bulk_size
-
-        while True:
-            if start >= len(accessions):
-                break
-
-            q = cls.select().where(cls.source_accession << accessions[start:stop])
-
-            for rea in q:
-                if rea.source_accession in master_ids:
-                    rea.set_master_id(master_ids[rea.source_accession])
-
-            start = stop - 1
-            stop = start + bulk_size
-
-            cls.save_all(q)
-    """
-
-    @classmethod
-    def _update_direction_from_list(cls, list_direction, direction):
+    def __update_direction_from_list(cls, list_direction, direction):
         """
-        Get informations about direction of from rhea.tsv files and
+        Get informations about direction of from :file:`rhea.tsv` files and
         update the direction property if the concerned reaction is in the table
 
         :type list_direction: list
@@ -410,10 +410,7 @@ class Reaction(Relation):
 
 class ReactionSubstrate(PWModel):
     """
-    This class refers to substrates of rhea reactions
-
-    ReactionSubstrate entities are created by the __create_reactions() method 
-    which get substrates of reactions directly from their data
+    This class defines the many-to-many relationship between susbtrates and reactions.
 
     :type compound: Compound 
     :property compound: subtrate of the reaction
@@ -429,15 +426,12 @@ class ReactionSubstrate(PWModel):
 
 class ReactionProduct(PWModel):
     """
-    This class refers to products of rhea reactions
+    This class defines the many-to-many relationship between products and reactions.
 
-    ReactionProduct entities are created by the __create_reactions() method 
-    which get products of reactions directly from their data
-
-    :type compound: Compound 
     :property compound: product of the reaction
-    :type reaction: Reaction 
+    :type compound: Compound 
     :property reaction: concerned reaction 
+    :type reaction: Reaction 
     """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
@@ -447,15 +441,13 @@ class ReactionProduct(PWModel):
 
 class ReactionEnzyme(PWModel):
     """
-    This class refers to products of rhea reactions
+    This class defines the many-to-many relationship between enzymes and reactions.
 
-    ReactionProduct entities are created by the __create_reactions() method 
-    which get enzymes of reactions directly from their data
-
-    :type enzyme: Enzyme 
     :property enzyme: enzyme of the reaction
-    :type reaction: Reaction 
+    :type enzyme: Enzyme 
+    
     :property reaction: concerned reaction
+    :type reaction: Reaction 
     """
     enzyme = ForeignKeyField(Enzyme)
     reaction = ForeignKeyField(Reaction)
@@ -512,3 +504,5 @@ class ReactionJSONPremiumViewModel(ResourceViewModel):
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)
 ReactionEnzymeDeferred.set_model(ReactionEnzyme)
+
+Controller.register_model_classes([Reaction])

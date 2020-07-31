@@ -47,7 +47,7 @@ class TestReaction(unittest.TestCase):
             rhea2reactome_file = 'rhea2reactome_test.tsv'
         )
 
-        Reaction.create_reactions_from_files(test_data_path, **files_test)
+        Reaction.create_reaction_db(test_data_path, **files_test)
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10022').master_id, '10020')
         self.assertEqual(Reaction.get(Reaction.source_accession == 'RHEA:10031').kegg_id, 'R00279')
         

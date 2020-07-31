@@ -3,38 +3,30 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import Model, ResourceViewModel, DbManager
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
-from biota.prism.ontology import Ontology
-from biota._helper.ontology import Onto
 
-####################################################################################
-#
-# ECO class
-#
-####################################################################################
+from gws.prism.controller import Controller
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import Resource, ResourceViewModel, DbManager
+
+from biota.prism.ontology import Ontology
+from biota._helper.ontology import Onto as OntoHelper
 
 class ECO(Ontology):
     """
+    This class represents Evidence ECO terms.
 
-    This class allows to load ECO entities in the database
-    Through this class, the biota has access to the entire ECO ontology
-
-    The Evidence and Conclusion Ontology (ECO) contains terms (classes) that describe 
+    The Evidence and Conclusion Ontology (ECO) contains terms that describe 
     types of evidence and assertion methods. ECO terms are used in the process of 
     biocuration to capture the evidence that supports biological assertions 
-    (e.g. gene product X has function Y as supported by evidence Z) 
-    
-    ECO entities are automatically created by the create_eco() method
+    (http://www.evidenceontology.org/). ECO is under the Creative Commons License CC0 1.0 Universal (CC0 1.0), 
+    https://creativecommons.org/publicdomain/zero/1.0/.
 
-    :type eco_id: CharField 
     :property eco_id: id of the eco term
-    :type name: CharField 
+    :type eco_id: class:`peewee.CharField`
     :property name: name of the eco term
-
+    :type name: class:`peewee.CharField` 
     """
 
     eco_id = CharField(null=True, index=True)
@@ -46,31 +38,28 @@ class ECO(Ontology):
     @classmethod
     def create_table(cls, *arg, **kwargs):
         """
+        Creates `eco` table and related tables.
 
-        Creates tables related to ECO entities such as eco, eco ancestors, etc...
-        Uses the super() method of the gws.model object to create the eco table
-
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         super().create_table(*arg, **kwargs)
         ECOAncestor.create_table()
 
     @classmethod
-    def create_eco(cls, input_db_dir, **files_test):
+    def create_eco_db(cls, biodata_db_dir, **files):
         """
-
-        This method allows the biota module to create ECO entities
-
-        :type input_db_dir: str
-        :param input_db_dir: path to the folder that contain the eco.obo file
-        :type files_test: dict
-        :param files_test: dictionnary that contains all data files names
+        Creates and fills the `eco` database
+        
+        :param biodata_db_dir: path of the :file:`eco.obo`
+        :type biodata_db_dir: str
+        :param files: dictionnary that contains all data files names
+        :type files: dict
         :returns: None
         :rtype: None
-
         """
 
-        onto_eco = Onto.create_ontology_from_obo(input_db_dir, files_test["eco_data"])
-        list_eco = Onto.parse_eco_terms_from_ontoloy(onto_eco)
+        onto_eco = OntoHelper.create_ontology_from_obo(biodata_db_dir, files["eco_data"])
+        list_eco = OntoHelper.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [cls(data = dict_) for dict_ in list_eco]
 
         for eco in ecos:
@@ -114,10 +103,9 @@ class ECO(Ontology):
     @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
-        
-        Drops tables related to ECO entities such as eco, eco ancestors, etc...
-        Uses the super() method of the gws.model object to drop the eco table
+        Drops `eco` table and related tables.
 
+        Extra parameters are passed to :meth:`peewee.Model.drop_table`
         """
         ECOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
@@ -159,10 +147,9 @@ class ECO(Ontology):
 
 class ECOAncestor(PWModel):
     """
-    
-    This class refers to eco ancestors, which are eco entities but also parent of eco element
+    This class defines the many-to-many relationship between the eco terms and theirs ancestors
 
-    ECOAncestor entities are created by the create_eco() method which get ancestors of the eco term by
+    ECOAncestor entities are created by the create_eco_db() method which get ancestors of the eco term by
     calling __get_ancestors_query()
 
     :type eco: CharField 
@@ -205,3 +192,4 @@ class ECOJSONPremiumViewModel(ResourceViewModel):
         return list_ancestors
 
     
+Controller.register_model_classes([ECO])

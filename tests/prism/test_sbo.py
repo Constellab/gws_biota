@@ -31,7 +31,7 @@ class TestSBO(unittest.TestCase):
             sbo_data = "sbo_test.obo",
         )
     
-        SBO.create_sbo(test_data_path, **files_test)
+        SBO.create_sbo_db(test_data_path, **files_test)
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
         

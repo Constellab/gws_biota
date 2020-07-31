@@ -3,40 +3,35 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import sys
-import os
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import ResourceViewModel, Resource
-from gws.prism.controller import Controller
-from biota._helper.taxonomy import Taxo
 from peewee import CharField, ForeignKeyField
 
-####################################################################################
-#
-# Taxonomy class
-#
-####################################################################################
-class Taxonomy(Resource):
+from gws.prism.controller import Controller
+from gws.prism.view import JSONViewTemplate
+from gws.prism.model import ResourceViewModel, Resource
+
+from biota.prism.ontology import Ontology
+from biota._helper.ncbi import Taxonomy as NCBITaxonomy
+
+class Taxonomy(Ontology):
     """
+    This class represents the NCBI taxonomy terms.
 
-    This class allows to load all terms of the NCBI taxonomy in the database
-    Through this class, the user will have access to the entire ncbi taxonomy
+    The NCBI Taxonomy Database is a curated classification and nomenclature for 
+    all of the organisms in the public sequence databases. NCBI Website and Data Usage 
+    Policies and Disclaimers (https://www.ncbi.nlm.nih.gov/home/about/policies/).
 
-    The Taxonomy Database is a curated classification and nomenclature for all of the organisms in the public sequence databases
-    taxonomy entities are automatically created by the create_taxons() method
-
-    :type tax_id: CharField
     :property tax_id: taxonomy id in the ncbi taxonomy
-    :type name: CharField
+    :type tax_id: CharField
     :property name: scientic name in the ncbi taxonomy
-    :type rank: CharField
+    :type name: CharField
     :property rank: bioologic rank 
-    :type division: CharField
+    :type rank: CharField
     :property division: the biological division (Bacteria, Eukaryota, Viruses, etc..)
-    :type ancestor: Taxonomy
+    :type division: CharField
     :property ancestor: parentin the ncbi taxonomy
-
+    :type ancestor: Taxonomy
     """
+    
     tax_id = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
@@ -50,20 +45,20 @@ class Taxonomy(Resource):
     # -- C --
     
     @classmethod
-    def create_taxons(cls, path, **files):
+    def create_taxonomy_db(cls, biodata_db_dir, **files):
         """
-        This method allows biota module to create taxonomy entities (taxons)
+        Creates and fills the `taxonomy` database
 
-        :type path: str
-        :param path: path to the folder that contain ncbi dump files
-        :type files_test: dict
+        :param biodata_db_dir: path to the folder that contain ncbi taxonomy dump files
+        :type biodata_db_dir: str
         :param files_test: dictionnary that contains all data files names
+        :type files_test: dict
         :returns: None
         :rtype: None
-
         """
-        dict_ncbi_names = Taxo.get_ncbi_names(path, **files)
-        dict_taxons = Taxo.get_all_taxonomy(path, dict_ncbi_names, **files)
+
+        dict_ncbi_names = NCBITaxonomy.get_ncbi_names(biodata_db_dir, **files)
+        dict_taxons = NCBITaxonomy.get_all_taxonomy(biodata_db_dir, dict_ncbi_names, **files)
 
         bulk_size = 750
         start = 0
@@ -76,13 +71,13 @@ class Taxonomy(Resource):
             #start_time = time.time()
 
             #step 2
-            taxons = [cls(data = dict_taxons[d]) for d in dict_keys[start:stop]]
+            taxa = [cls(data = dict_taxons[d]) for d in dict_keys[start:stop]]
             
-            if len(taxons) == 0:
+            if len(taxa) == 0:
                 break
 
             #step 3
-            for tax in taxons:
+            for tax in taxa:
                 tax.tax_id = tax.data['tax_id']
                 if ('name' in tax.data.keys()):
                     tax.name = tax.data['name']
@@ -93,7 +88,7 @@ class Taxonomy(Resource):
 
             #elapsed_time = time.time() - start_time
 
-            cls.save_all(taxons)
+            cls.save_all(taxa)
 
             start = stop-1
             stop = start+bulk_size
@@ -104,34 +99,52 @@ class Taxonomy(Resource):
         page_number = 1
         nb_items_per_page = 750
         while True:
-            taxons = Taxonomy.select().paginate(page_number, nb_items_per_page)
-            if len(taxons) == 0:
+            taxa = Taxonomy.select().paginate(page_number, nb_items_per_page)
+            if len(taxa) == 0:
                 break
-            cls._set_taxons_ancestors(taxons)
-            cls.save_all(taxons)
+            cls.__set_taxa_ancestors(taxa)
+            cls.save_all(taxa)
             page_number = page_number + 1
 
     # -- S --
 
     def set_tax_id(self, tax_id):
+        """
+        Sets the ncbi taxonomy id
+
+        :param tax_id: The ncbi taxonomy id
+        :type tax_id: str
+        """
         self.tax_id = tax_id
     
     def set_name(self, name):
+        """
+        Sets the name of the taxonomy
+
+        :param name: The name
+        :type name: str
+        """
         self.name = name
 
     def set_rank(self, rank):
+        """
+        Sets the rank of the taxonomy
+
+        :param rank: The rank
+        :type rank: str
+        """
         self.rank = rank
 
     @classmethod
-    def _set_taxons_ancestors(cls, taxon_list):
+    def __set_taxa_ancestors(cls, taxon_list):
         """
+        Create the relationships between the taxonomy entity and his parent in the ncbi taxonomy
 
-        create the link between the taxonomy entitie and his parent in the ncbi taxonomy
         :type list_taxons:
         :parameter list_taxons: list of all taxonomy in the table 
         :returns: None
-        
         """
+
         tax_dict = {} 
         for tax in taxon_list:
             if 'ancestor' in tax.data.keys():
@@ -179,3 +192,5 @@ class TaxonomyJSONPremiumViewModel(ResourceViewModel):
             "ancestor": {{view_model.model.ancestor.tax_id}},
             }
         """)
+
+    Controller.register_model_classes([Taxonomy])
