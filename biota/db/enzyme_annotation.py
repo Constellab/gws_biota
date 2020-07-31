@@ -10,10 +10,10 @@ from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 
-from biota.prism.go import GO
-from biota.prism.eco import ECO
-from biota.prism.enzyme import Enzyme
-from biota.prism.taxonomy import Taxonomy
+from biota.db.go import GO
+from biota.db.eco import ECO
+from biota.db.enzyme import Enzyme
+from biota.db.taxonomy import Taxonomy
 from biota._helper.quickgo import QuickGOAnnotation
 
 

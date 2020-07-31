@@ -21,9 +21,9 @@
 # (https://creativecommons.org/licenses/by/4.0/).
 
 import os
-from biota.prism.protein import Protein 
-from biota.prism.taxonomy import Taxonomy as BiotaTaxo
-from biota.prism.bto import BTO as BiotaBTO
+from biota.db.protein import Protein 
+from biota.db.taxonomy import Taxonomy as BiotaTaxo
+from biota.db.bto import BTO as BiotaBTO
 from biota._helper.brenda import Brenda
 
 from gws.prism.controller import Controller

@@ -11,7 +11,7 @@ from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, DbManager
 
 from biota._helper.ontology import Onto
-from biota.prism.ontology import Ontology
+from biota.db.ontology import Ontology
 
 class SBO(Ontology):
     """

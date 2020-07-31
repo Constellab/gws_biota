@@ -4,7 +4,7 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.prism.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
+from biota.db.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
 
 ############################################################################################
 #

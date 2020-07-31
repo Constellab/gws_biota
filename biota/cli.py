@@ -16,16 +16,16 @@ from gws.prism.controller import Controller
 
 #import from biota
 from gws.settings import Settings
-from biota.prism.go import GO
-from biota.prism.sbo import SBO
-from biota.prism.bto import BTO
-from biota.prism.eco import ECO
-from biota.prism.chebi_ontology import ChebiOntology
-from biota.prism.taxonomy import Taxonomy
-from biota.prism.compound import Compound
-from biota.prism.enzyme import Enzyme
-from biota.prism.enzyme_annotation import EnzymeAnnotation
-from biota.prism.reaction import Reaction
+from biota.db.go import GO
+from biota.db.sbo import SBO
+from biota.db.bto import BTO
+from biota.db.eco import ECO
+from biota.db.chebi_ontology import ChebiOntology
+from biota.db.taxonomy import Taxonomy
+from biota.db.compound import Compound
+from biota.db.enzyme import Enzyme
+from biota.db.enzyme_annotation import EnzymeAnnotation
+from biota.db.reaction import Reaction
 
 #import Timer
 from timeit import default_timer

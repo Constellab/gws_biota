@@ -5,7 +5,7 @@
 
 from gws.prism.controller import Controller
 
-from biota.prism.entity import Entity
+from biota.db.entity import Entity
 
 class Protein(Entity):
     """

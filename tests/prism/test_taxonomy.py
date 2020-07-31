@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-from biota.prism.taxonomy import Taxonomy, TaxonomyJSONStandardViewModel, TaxonomyJSONPremiumViewModel
+from biota.db.taxonomy import Taxonomy, TaxonomyJSONStandardViewModel, TaxonomyJSONPremiumViewModel
 
 ############################################################################################
 #

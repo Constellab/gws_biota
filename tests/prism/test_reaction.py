@@ -5,7 +5,7 @@ import copy
 import asyncio
 
 from gws.settings import Settings
-from biota.prism.reaction import Reaction, ReactionJSONStandardViewModel, ReactionJSONPremiumViewModel
+from biota.db.reaction import Reaction, ReactionJSONStandardViewModel, ReactionJSONPremiumViewModel
 
 ############################################################################################
 #

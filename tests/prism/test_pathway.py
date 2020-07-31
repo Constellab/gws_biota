@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-from biota.prism.pathway import Pathway, PathwayJSONViewModel
+from biota.db.pathway import Pathway, PathwayJSONViewModel
 
 ############################################################################################
 #

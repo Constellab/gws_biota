@@ -9,7 +9,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import HTMLViewTemplate, JSONViewTemplate
 from gws.prism.model import ResourceViewModel
 
-from biota.prism.entity import Entity
+from biota.db.entity import Entity
 
 ####################################################################################
 #

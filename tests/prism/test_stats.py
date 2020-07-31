@@ -3,7 +3,7 @@ import os
 import unittest
 import asyncio
 
-from biota.prism.enzyme import EnzymeStatistics, EnzymeStatisticsProcess, EnzymeStatisticsJSONViewModel
+from biota.db.enzyme import EnzymeStatistics, EnzymeStatisticsProcess, EnzymeStatisticsJSONViewModel
 
 ############################################################################################
 #

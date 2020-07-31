@@ -8,10 +8,10 @@ from gws.prism.model import Resource, ResourceViewModel, DbManager
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 
-from biota.prism.entity import Entity
-from biota.prism.compound import Compound
-from biota.prism.enzyme import Enzyme
-from biota.prism.go import GO
+from biota.db.entity import Entity
+from biota.db.compound import Compound
+from biota.db.enzyme import Enzyme
+from biota.db.go import GO
 from biota._helper.rhea import Rhea
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel

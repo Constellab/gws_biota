@@ -8,7 +8,7 @@ from peewee import CharField, ForeignKeyField
 from gws.prism.controller import Controller
 from gws.prism.model import Resource
 
-from biota.prism.taxonomy import Taxonomy
+from biota.db.taxonomy import Taxonomy
 
 
 class Organism(Resource):

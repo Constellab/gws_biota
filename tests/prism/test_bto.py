@@ -4,7 +4,7 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.prism.bto import BTO, BTOJSONStandardViewModel, BTOJSONPremiumViewModel
+from biota.db.bto import BTO, BTOJSONStandardViewModel, BTOJSONPremiumViewModel
 
 
 ############################################################################################

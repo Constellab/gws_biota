@@ -9,7 +9,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, Resource
 
-from biota.prism.ontology import Ontology
+from biota.db.ontology import Ontology
 from biota._helper.ncbi import Taxonomy as NCBITaxonomy
 
 class Taxonomy(Ontology):

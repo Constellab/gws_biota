@@ -4,7 +4,7 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.prism.eco import ECO, ECOJSONStandardViewModel, ECOJSONPremiumViewModel
+from biota.db.eco import ECO, ECOJSONStandardViewModel, ECOJSONPremiumViewModel
 
 ############################################################################################
 #

@@ -27,7 +27,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import Resource, ResourceViewModel
 
-from biota.prism.ontology import Ontology
+from biota.db.ontology import Ontology
 from biota._helper.chebi import Chebi as ChebiHelper
 
 class ChebiOntology(Ontology):

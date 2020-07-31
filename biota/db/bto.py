@@ -10,7 +10,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import Resource, ResourceViewModel, DbManager
 
-from biota.prism.ontology import Ontology
+from biota.db.ontology import Ontology
 from biota._helper.ontology import Onto as OntoHelper
 
 class BTO(Ontology):

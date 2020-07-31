@@ -4,7 +4,7 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.prism.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
+from biota.db.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
 
 ############################################################################################
 #

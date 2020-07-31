@@ -5,8 +5,8 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.prism.enzyme import Enzyme, EnzymeJSONStandardViewModel, EnzymeJSONPremiumViewModel
-from biota.prism.bto import BTO
+from biota.db.enzyme import Enzyme, EnzymeJSONStandardViewModel, EnzymeJSONPremiumViewModel
+from biota.db.bto import BTO
 
 ############################################################################################
 #

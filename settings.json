@@ -1,8 +1,8 @@
 {
     "name"                          : "biota",
-    "title"                         : "GWS biota",
-    "description"                   : "This application provides modules to deliver services on GWS biota databases",
-    "authors"                       : "2020, Gencovery - Biota",
+    "title"                         : "GWS Biota",
+    "description"                   : "GWS (Gencovery Web Services) Biota provides web services to access high-quality and curated public biological data.",
+    "authors"                       : "Gencovery",
     "version"                       : "0.1",
 
     "db_dir"                        : "./data/",

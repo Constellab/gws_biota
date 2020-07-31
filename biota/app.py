@@ -13,9 +13,9 @@ from gws.settings import Settings
 from gws.prism.controller import Controller
 from gws.app import App as GWSApp
 
-from biota.prism.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
-from biota.prism.taxonomy import Taxonomy, TaxonomyJSONStandardViewModel, TaxonomyJSONPremiumViewModel
-from biota.prism.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
+from biota.db.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
+from biota.db.taxonomy import Taxonomy, TaxonomyJSONStandardViewModel, TaxonomyJSONPremiumViewModel
+from biota.db.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
 
 settings = Settings.retrieve()
 template_dir = settings.get_template_dir("biota")

@@ -3,7 +3,7 @@ import unittest
 from gws.prism.controller import Controller
 from gws.settings import Settings
 
-from biota.prism.enzyme_annotation import EnzymeAnnotation, EnzymeAnnotationJSONStandardViewModel, EnzymeAnnotationJSONPremiumViewModel
+from biota.db.enzyme_annotation import EnzymeAnnotation, EnzymeAnnotationJSONStandardViewModel, EnzymeAnnotationJSONPremiumViewModel
 
 ############################################################################################
 #
