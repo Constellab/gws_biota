@@ -11,12 +11,6 @@ from gws.prism.model import ResourceViewModel
 
 from biota.db.entity import Entity
 
-####################################################################################
-#
-# Gene class
-#
-####################################################################################
-
 class Gene(Entity):
     """
     This class represents genes

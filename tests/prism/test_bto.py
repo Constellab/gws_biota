@@ -6,12 +6,6 @@ from gws.prism.controller import Controller
 from gws.settings import Settings
 from biota.db.bto import BTO, BTOJSONStandardViewModel, BTOJSONPremiumViewModel
 
-
-############################################################################################
-#
-#                                        TestBTO
-#                                         
-############################################################################################
 settings = Settings.retrieve()
 test_data_path = settings.get_data("biota_test_data_dir")
  
@@ -30,17 +24,13 @@ class TestBTO(unittest.TestCase):
     
     def test_db_object(self):
         ### Test GO class ###
-
-        files = dict(
-            bto_json_data = "bto.json",
-        )
-
         files_test = dict(
             bto_json_data = "bto_test.json",
         )
 
         BTO.create_bto_db(test_data_path, **files_test)
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
+        
         # --------- Testing views --------- #
         bto1 = BTO.get(BTO.bto_id == 'BTO_0000002')
         bto1_standard_view_model = BTOJSONStandardViewModel(bto1)

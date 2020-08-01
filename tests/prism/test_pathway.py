@@ -26,4 +26,4 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        print('test is ok')
+        pass

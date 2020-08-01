@@ -10,28 +10,31 @@
     "biota_db_data_dir"             : "./",
     "biota_test_data_dir"           : "./tests/data",
     
-    "brenda_input_db_dir"           : "../../extern/biodata/brenda",
+    "brenda_biotada_dir"           : "../../extern/biodata/brenda",
     "brenda_test_data_dir"          : "./tests/helper/data",
 
-    "chebi_input_db_dir"            : "../../extern/biodata/chebi/",
+    "chebi_biotada_dir"            : "../../extern/biodata/chebi/",
     "chebi_test_data_dir"           : "./tests/helper/data",
     "chebi_ontology_test_data_dir"  : "./tests/helper/data",
 
     "quickgo_api_url"               : "https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?selectedFields=geneProductId&selectedFields=symbol&selectedFields=qualifier&selectedFields=goId&selectedFields=goAspect&selectedFields=evidenceCode&selectedFields=goEvidence&selectedFields=reference&selectedFields=withFrom&selectedFields=taxonId&selectedFields=assignedBy&selectedFields=synonyms&selectedFields=name&geneProductId=",
     
-    "go_input_db_dir"               : "../../extern/biodata/go",
-    "eco_input_db_dir"              : "../../extern/biodata/eco",
-    "sbo_input_db_dir"              : "../../extern/biodata/sbo",
-    "bto_input_db_dir"              : "../../extern/biodata/brenda/bto",
+    "go_biotada_dir"               : "../../extern/biodata/go",
+    "eco_biotada_dir"              : "../../extern/biodata/eco",
+    "sbo_biotada_dir"              : "../../extern/biodata/sbo",
+    "bto_biotada_dir"              : "../../extern/biodata/brenda/bto",
+    "pwo_biotada_dir"              : "../../extern/biodata/pwo",
+
     "go_test_data_dir"              : "./tests/helper/data",
     "eco_test_data_dir"             : "./tests/helper/data",
     "sbo_test_data_dir"             : "./tests/helper/data",
     "bto_test_data_dir"             : "./tests/helper/data",
+    "pwo_test_data_dir"             : "./tests/helper/data",
 
-    "rhea_input_db_dir"             : "../../extern/biodata/rhea",
+    "rhea_biotada_dir"             : "../../extern/biodata/rhea",
     "rhea_test_data_dir"            : "./tests/helper/data",
 
-    "taxonomy_input_db_dir"         : "../../extern/biodata/ncbi",
+    "taxonomy_biotada_dir"         : "../../extern/biodata/ncbi",
     "taxonomy_test_data_dir"        : "./tests/helper/data",
 
     "dependencies" : {

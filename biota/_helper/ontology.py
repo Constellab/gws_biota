@@ -20,11 +20,9 @@ class Onto():
 
     """
     
-    #---------- create and correction functions --------------#
     @staticmethod
     def correction_of_sbo_file(path, file, out_file):
         """
-        
         Correct the initial sbo.obo file which contained syntax errors which prevented to use 
         the pronto package to parse the obo file
 
@@ -37,7 +35,6 @@ class Onto():
         :param file: Name of the original obo file
         :type out_file: str
         :param out_file: Name of the corrected obo file
-
         :rtype: None
         """
         with open(os.path.join(path, file),'rt') as file: 
@@ -50,24 +47,39 @@ class Onto():
                         outfile.write(line)
 
     @staticmethod
-    def create_ontology_from_obo(path, file):
+    def correction_of_pwo_file(path, file, out_file):
         """
-        This method allows the create an ontalogy from an .obo file.
+        Correct the initial pwo obo file which contained syntax errors which prevented to use 
+        the pronto package to parse the obo file
+
+        This method read the initial obo file and create a corrected copy whose the name is given
+        by the out_file parameter which is located in the same folder as the original file
 
         :type path: str
         :param path: Location of the file
         :type file: str
-        :param file: Name of the obo file
-        :returns: Ontology object from the package pronto
-        :rtype: Ontology
+        :param file: Name of the original obo file
+        :type out_file: str
+        :param out_file: Name of the corrected obo file
+        :rtype: None
         """
-
-        file_path = os.path.join(path, file)
-        onto = Ontology(file_path)
-        return onto
+        with open(os.path.join(path, file),'rt') as file: 
+            with open(os.path.join(path, out_file ),'wt') as outfile:
+                for line in file.readlines():
+                    m = re.search('\[(.+)\]', line)
+                    if m:
+                        text = m.group(1)
+                        entries = text.replace("\,","##").split(",")
+                        for i in range(0, len(entries)):
+                            entries[i] = entries[i].strip().replace(" ", "-")     
+                        
+                        corrected_text = ", ".join(entries)  
+                        outfile.write(line.replace(text, corrected_text).replace("##", "\,"))
+                    else:
+                        outfile.write(line)
 
     @staticmethod
-    def create_ontology_from_owl(path, file):
+    def create_ontology_from_obo(path, file):
         """
         This method allows the create an ontalogy from an .owl file.
 
@@ -82,7 +94,6 @@ class Onto():
         onto = Ontology(file_path)
         return onto
 
-    #---------- parsing functions --------------#
     @staticmethod
     def parse_bto_from_json(path,file):
         """
@@ -129,8 +140,7 @@ class Onto():
             dict_eco['id'] = term.id
             dict_eco['name'] = term.name.replace('\r', '')
             dict_eco['definition'] = str(term.definition) #str 
-            #dict_eco['synonyms'] = list(term.synonyms)
-            # ------ get ancestors ------ #
+
             try:
                 sup = term.superclasses(distance = 1, with_self = False)
                 fro = sup.to_set().ids
@@ -140,7 +150,6 @@ class Onto():
                         dict_eco['ancestors'].append(data)
             except:
                 pass
-                #print('ancestors not in the ontology')
 
             list_eco.append(dict_eco)
         return(list_eco)
@@ -242,7 +251,6 @@ class Onto():
 
         return(list_sbo)
     
-    #---------- owl to obo converter --------------#
     @staticmethod
     def from_owl_to_obo(path, file, filename_):
         """
@@ -263,3 +271,34 @@ class Onto():
         edam = Ontology(file_path)
         with open(complete_name, "wb") as f:
             edam.dump(f, format='obo')
+
+
+    @staticmethod
+    def parse_pwo_terms_from_ontology(ontology):
+        """
+        Create pathway ontology terms from a Ontology object
+
+        :type ontology: Ontology
+        :param ontology: Pathway ontology created by the create_ontology_from_obo method
+        :returns: list on dictionnaries where each terms represents an pwo ontology term
+        :rtype: list
+        """
+        list_pwo = []
+        for term in ontology.terms():
+            dict_pwo = {}
+            dict_pwo['id'] = term.id
+            dict_pwo['name'] = term.name.replace('\r', '')
+            dict_pwo['definition'] = str(term.definition) #str 
+
+            try:
+                sup = term.superclasses(distance = 1, with_self = False)
+                fro = sup.to_set().ids
+                if len(fro) > 0:
+                    dict_pwo['ancestors'] = []
+                    for data in fro:
+                        dict_pwo['ancestors'].append(data)
+            except:
+                pass
+
+            list_pwo.append(dict_pwo)
+        return(list_pwo)

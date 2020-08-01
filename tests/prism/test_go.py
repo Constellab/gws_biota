@@ -6,17 +6,12 @@ from gws.prism.controller import Controller
 from gws.settings import Settings
 from biota.db.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
 
-############################################################################################
-#
-#                                        TestGO
-#                                         
-############################################################################################
 settings = Settings.retrieve()
 test_data_path = settings.get_data("biota_test_data_dir")
 
 class TestGO(unittest.TestCase):
-    @classmethod
     
+    @classmethod
     def setUpClass(cls):
         GO.drop_table()
         GO.create_table()
@@ -29,10 +24,6 @@ class TestGO(unittest.TestCase):
     
     def test_db_object(self):
         ### Test GO class ###
-        files = dict(
-            go_data = "go.obo",
-        )
-
         files_test = dict(
             go_data = "go_test.obo",
         )
@@ -40,7 +31,6 @@ class TestGO(unittest.TestCase):
         GO.create_go_db(test_data_path, **files_test)
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
        
-        # --------- Testing views --------- #
         go1 = GO.get(GO.go_id == 'GO:0000006')
         go1_standard_view_model = GOJSONStandardViewModel(go1)
         go1_premium_view_model = GOJSONPremiumViewModel(go1)

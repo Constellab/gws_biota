@@ -43,7 +43,6 @@ class TestChebiOntology(unittest.TestCase):
         chebi1_premium_view_model = ChebiOntologyPremiumJSONViewModel(chebi1)
         
         view1 = chebi1_standard_view_model.render()
-        view2 = chebi1_premium_view_model.render()
         
         self.assertEqual(view1,"""
             {
@@ -51,12 +50,3 @@ class TestChebiOntology(unittest.TestCase):
             "label": fluoride,
             }
         """)
-        #random test pass
-        #self.assertEqual(view2,"""
-        #    {
-        #    "id": CHEBI:17051,
-        #    "label": fluoride,
-        #    "definition": None,
-        #    "alternative_id": ['CHEBI:5113', 'CHEBI:14271', 'CHEBI:49593']
-        #    }
-        #""")

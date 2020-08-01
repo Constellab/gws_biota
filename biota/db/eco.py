@@ -149,15 +149,12 @@ class ECOAncestor(PWModel):
     """
     This class defines the many-to-many relationship between the eco terms and theirs ancestors
 
-    ECOAncestor entities are created by the create_eco_db() method which get ancestors of the eco term by
-    calling __get_ancestors_query()
-
     :type eco: CharField 
     :property eco: id of the concerned eco term
     :type ancestor: CharField 
     :property ancestor: ancestor of the concerned eco term
-    
     """
+    
     eco = ForeignKeyField(ECO)
     ancestor = ForeignKeyField(ECO)
     class Meta:

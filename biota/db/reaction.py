@@ -10,7 +10,7 @@ from gws.prism.view import JSONViewTemplate
 
 from biota.db.entity import Entity
 from biota.db.compound import Compound
-from biota.db.enzyme import Enzyme
+from biota.db.enzyme_function import EnzymeFunction
 from biota.db.go import GO
 from biota._helper.rhea import Rhea
 
@@ -51,8 +51,8 @@ class Reaction(Entity):
     :type substrates: Compound
     :property products: products of the reaction
     :type products: Compound
-    :property enzymes: enzymes of the reaction
-    :type enzymes: Enzyme
+    :property enzyme_functions: enzyme_functions of the reaction
+    :type enzyme_functions: EnzymeFunction
     """
 
     source_accession = CharField(null=True, index=True)
@@ -62,7 +62,7 @@ class Reaction(Entity):
     kegg_id = CharField(null=True, index=True)
     substrates = ManyToManyField(Compound, backref='is_substrate_of', through_model = ReactionSubstrateDeferred)
     products = ManyToManyField(Compound, backref='is_product_of', through_model = ReactionProductDeferred)
-    enzymes = ManyToManyField(Enzyme, backref='is_enzyme_of', through_model = ReactionEnzymeDeferred)
+    enzyme_functions = ManyToManyField(EnzymeFunction, backref='is_enzyme_of', through_model = ReactionEnzymeDeferred)
     _table_name = 'reaction'
 
     # -- A --
@@ -145,7 +145,7 @@ class Reaction(Entity):
         for react in reactions:
             react.__set_substrates_from_data()
             react.__set_products_from_data()
-            if('enzyme' in react.data.keys()):
+            if('enzyme_function' in react.data.keys()):
                 react.__set_enzymes_from_data()
         
         cls.save_all(reactions)
@@ -235,12 +235,12 @@ class Reaction(Entity):
 
     def __set_enzymes_from_data(self):
         """
-        Set enzymes from `data`
+        Set enzyme_functions from `data`
         """
-        for i in range(0,len(self.data['enzyme'])):
+        for i in range(0,len(self.data['enzyme_function'])):
             try:
-                enzym = Enzyme.get(Enzyme.ec == str(self.data['enzyme'][i]))
-                self.enzymes.add(enzym)
+                enzym = EnzymeFunction.get(EnzymeFunction.ec == str(self.data['enzyme_function'][i]))
+                self.enzyme_functions.add(enzym)
             except:
                 pass
                 #print("ec not found")
@@ -441,15 +441,15 @@ class ReactionProduct(PWModel):
 
 class ReactionEnzyme(PWModel):
     """
-    This class defines the many-to-many relationship between enzymes and reactions.
+    This class defines the many-to-many relationship between enzyme_functions and reactions.
 
-    :property enzyme: enzyme of the reaction
-    :type enzyme: Enzyme 
+    :property enzyme_function: enzyme_function of the reaction
+    :type enzyme_function: EnzymeFunction 
     
     :property reaction: concerned reaction
     :type reaction: Reaction 
     """
-    enzyme = ForeignKeyField(Enzyme)
+    enzyme_function = ForeignKeyField(EnzymeFunction)
     reaction = ForeignKeyField(Reaction)
     class Meta:
         table_name = 'reactions_enzymes'
@@ -471,14 +471,14 @@ class ReactionJSONPremiumViewModel(ResourceViewModel):
             "equation": {{view_model.model.data['source_equation']}},
             "master_id": {{view_model.model.master_id}},
             "direction" : {{view_model.model.direction}},
-            "enzymes": {{view_model.display_enzymes()}},
+            "enzyme_functions": {{view_model.display_enzymes()}},
             "substrates": {{view_model.display_substrates()}},
             "products": {{view_model.display_products()}}
             }
         """)
 
     def display_enzymes(self):
-        q = self.model.enzymes
+        q = self.model.enzyme_functions
         list_enzymes = []
         for i in range(0, len(q)):
             list_enzymes.append(q[i].ec)

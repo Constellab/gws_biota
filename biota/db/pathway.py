@@ -9,7 +9,7 @@ from gws.prism.controller import Controller
 from gws.prism.model import Resource, ResourceViewModel
 from gws.prism.view import JSONViewTemplate
 
-class Pathway(Resource):
+class PWO(Resource):
     """
     This class represents biological pathways
     """
@@ -20,6 +20,8 @@ class Pathway(Resource):
     version = CharField(null=True, index=True)
     _table_name = 'pathway'
 
+    # -- C --
+
     # -- S -- 
     
     def set_pathway_id(self, id):
@@ -29,7 +31,6 @@ class Pathway(Resource):
         :param id: The id
         :type id: str
         """
-
         self.pathway_id = id
 
     def set_name(self, name):
@@ -39,7 +40,6 @@ class Pathway(Resource):
         :param name: The name
         :type name: str
         """
-
         self.name = name
 
     def set_compartments(self, comps):

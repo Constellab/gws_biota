@@ -5,11 +5,6 @@ from gws.settings import Settings
 
 from biota.db.enzyme_annotation import EnzymeAnnotation, EnzymeAnnotationJSONStandardViewModel, EnzymeAnnotationJSONPremiumViewModel
 
-############################################################################################
-#
-#                                        Test Enzyme Annotation
-#                                         
-############################################################################################
 settings = Settings.retrieve()
 test_data_path = settings.get_data("biota_test_data_dir")
 

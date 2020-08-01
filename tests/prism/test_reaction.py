@@ -15,12 +15,6 @@ from biota.db.reaction import Reaction, ReactionJSONStandardViewModel, ReactionJ
 settings = Settings.retrieve()
 test_data_path = settings.get_data("biota_test_data_dir")
 
-# files_model = dict(
-#     substrate_reaction = Reaction.substrates.get_through_model(),
-#     product_reaction = Reaction.products.get_through_model(),
-#     enzyme_reaction = Reaction.enzymes.get_through_model()
-#     )
-
 class TestReaction(unittest.TestCase):
 
     @classmethod
@@ -31,7 +25,6 @@ class TestReaction(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
-        #Reaction.drop_table()
         pass
     
     def test_db_object(self):
@@ -74,7 +67,7 @@ class TestReaction(unittest.TestCase):
             "equation": CHEBI:29986 + CHEBI:15377 + CHEBI:15379 <=> CHEBI:16810 + CHEBI:16240 + CHEBI:28938,
             "master_id": 10028,
             "direction" : BI,
-            "enzymes": None,
+            "enzyme_functions": None,
             "substrates": ['CHEBI:29986', 'CHEBI:15377', 'CHEBI:15379'],
             "products": ['CHEBI:16810', 'CHEBI:16240', 'CHEBI:28938']
             }

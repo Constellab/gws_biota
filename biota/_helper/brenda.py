@@ -32,13 +32,13 @@ class Brenda():
             proteins = self.parser.get_proteins(ec)
             for p in proteins.values():
                 dict_p = {}
-                #Set main information about the enzyme
+                #Set main information about the enzyme_function
                 dict_p['ec'] = p.ec
                 dict_p['taxonomy'] = p.taxonomy
                 dict_p['organism'] = p.organism
                 dict_p['uniprot'] = p.uniprot
 
-                #Set referenced name of the enzyme
+                #Set referenced name of the enzyme_function
                 if (p.RN != None):
                     dict_p['name'] = list(p.RN)[0]
 
@@ -111,7 +111,7 @@ class Brenda():
                         else:
                             dict_p['exp'] = list_exp
 
-                #Set general information on enzyme (GI)
+                #Set general information on enzyme_function (GI)
                 list_copy = getattr(p, 'GI')
                 if list_copy != None:
                     list_gi = []
@@ -455,7 +455,7 @@ class Brenda():
                         else:
                             dict_p['st'] = list_st
 
-                #Set kinetics information about the enzyme: KKM, KI, KM
+                #Set kinetics information about the enzyme_function: KKM, KI, KM
                 list_copy = getattr(p, 'KKM')
                 if (list_copy != None):
                     list_kkm = []

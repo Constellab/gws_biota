@@ -1,25 +1,18 @@
-import sys
-import os
+import json
 import unittest
- 
 from biota._helper.ontology import Onto
 from gws.settings import Settings
-import json
-
-############################################################################################
-#
-#                                        Test go.obo parser
-#                                         
-############################################################################################
-
 
 class TestOntology(unittest.TestCase):
+    
     def test_db_object(self):
+        
         settings = Settings.retrieve()
         go_path = settings.get_data("go_test_data_dir")
         eco_path = settings.get_data("eco_test_data_dir")
         bto_path = settings.get_data("bto_test_data_dir")
         sbo_path = settings.get_data("sbo_test_data_dir")
+        pwo_path = settings.get_data("pwo_test_data_dir")
         
         #### Test go parser ####
         ontology = Onto.create_ontology_from_obo(go_path,'go_test.obo')
@@ -32,7 +25,7 @@ class TestOntology(unittest.TestCase):
         #### Test sbo parser ####
         file = "sbo_test.obo"
         Onto.correction_of_sbo_file(sbo_path, file, 'sbo_out_test.obo')
-        ontology = Onto.create_ontology_from_owl(sbo_path, 'sbo_out_test.obo')
+        ontology = Onto.create_ontology_from_obo(sbo_path, 'sbo_out_test.obo')
         list_sbo_terms = Onto.parse_sbo_terms_from_ontology(ontology)
         self.assertEqual(len(list_sbo_terms), 21)
         self.assertEqual(list_sbo_terms[0]['id'], 'SBO:0000000')
@@ -49,3 +42,16 @@ class TestOntology(unittest.TestCase):
         file = "eco_test.obo"
         ontology = Onto.create_ontology_from_obo(eco_path, file)
         list_eco = Onto.parse_eco_terms_from_ontoloy(ontology)
+        self.assertEqual(len(list_eco), 25)
+        self.assertEqual(list_eco[0], {'id': 'ECO:0000000', 'name': 'evidence', 'definition': 'A type of information that is used to support an assertion.'})
+        self.assertEqual(list_eco[10], {'id': 'ECO:0000010', 'name': 'protein expression evidence', 'definition': 'A type of expression pattern evidence resulting from protein abundance quantification techniques.', 'ancestors': ['ECO:0000008']})
+      
+        #### Test pwo parser ####
+        file = "pwo_test.obo"
+        Onto.correction_of_pwo_file(pwo_path, file, 'pwo_out_test.obo')
+        ontology = Onto.create_ontology_from_obo(pwo_path, 'pwo_out_test.obo')
+        list_pwo = Onto.parse_pwo_terms_from_ontology(ontology)
+        self.assertEqual(len(list_pwo), 34)
+        self.assertEqual(list_pwo[0], {'id': 'PW:0000000', 'name': 'term zero', 'definition': 'None'})
+        self.assertEqual(list_pwo[10], {'id': 'PW:0000010', 'name': 'lipid metabolic pathway', 'definition': 'The metabolic reactions involved in the oxidation, utilization and/or synthesis of lipids in the tissues.', 'ancestors': ['PW:0000002']})
+      

@@ -1,0 +1,265 @@
+format-version: 1.2
+data-version: 7.55
+date: 11:07:2020 20:13
+saved-by: gthayman
+auto-generated-by: --RGD OBO FILE GENERATOR -- build 2020-07-03 --
+default-namespace: pathway
+ontology: pw
+
+[Term]
+id: PW:0000000
+name: term zero
+is_obsolete: true
+
+[Term]
+id: PW:0000001
+name: pathway
+def: "A pathway is a set of inter-connected  reactions and interactions whose delineation and scope are used as a model for exploring and studying, describing and understanding the working of and relationships between biomolecules within a context." []
+
+[Term]
+id: PW:0000002
+name: classic metabolic pathway
+def: "The various, enzyme controlled, series of reactions allowing for the conversion of materials, energy availability and biodegradation of xenobiotics." [http://www.onelook.com/-"OneLook"]
+comment: The definition was compiled based on a number of available defintions in various dictionaries.
+is_a: PW:0000001 ! pathway
+
+[Term]
+id: PW:0000003
+name: signaling pathway
+def: "The pathways where a signal - hormone, neurotransmitter, growth factor, peptide, any molecule - triggers one or multiple cascades of events. This involves a number of molecules, including receptors, proteins, ligands, messengers, any participating molecule. A signaling pathway may be upstream or downstream of other signaling pathways. Signaling pathways control a very broad spectrum of processes as well as pathways." [OneLook:www.onelook.com]
+comment: The definition was compiled based on a number of definitions available in various dictionaries.
+is_a: PW:0000001 ! pathway
+
+[Term]
+id: PW:0000004
+name: regulatory pathway
+def: "The pathways that control the processes by which a cell or organism develops, adjusts, behaves, responds to conditions or changes in these conditions, or in any manner helps promote and maintain its efficient functioning." [OneLook:www.onelook.com]
+comment: The definition was complied based on a number of definitions available in several dictionaries
+is_a: PW:0000001 ! pathway
+
+[Term]
+id: PW:0000005
+name: carbohydrate metabolic pathway
+def: "Those metabolic reactions and pathways involved in the oxidation, breakdown and synthesis of carbohydrates in the tissue. The breakdown can be utilized by the body for energy production. The converse synthesis is used for energy storage." [OneLook:www.onelook.com]
+comment: The definition  was compiled using the Online Medical dictionary and the Stedman's medical dictionary available at OneLook
+is_a: PW:0000002 ! classic metabolic pathway
+
+[Term]
+id: PW:0000006
+name: Ras superfamily mediated signaling pathway
+def: "The Ras superfamily consists of a diverse group of small, monomeric G proteins that function as molecular switches alternating between the GDP-inactive and the GTP-active bound state. The GTP-bound form can interact with many downstream effectors. Ras superfamily controls a broad spectrum of processes; deregulation of Ras cascades has been linked to several forms of cancer. The superfamily is structurally classified in five families." [GO:0007265, PMID:11027944, PMID:11152757]
+comment: Numerous articles contributed to this definition, too many to cite independently.
+synonym: "monomeric G protein mediated signaling pathway" RELATED []
+is_a: PW:0000125 ! G protein mediated signaling pathway
+
+[Term]
+id: PW:0000007
+name: mitogen activated protein kinase signaling pathway
+def: "The mitogen -activated protein kinase pathway groups several serine/threonine protein kinases mediated cascades in response to a number of extracellular stimuli.  A characteristic feature of these cascades is the presence of at least three kinases in series leading to the activation of a multifunctional MAP kinase." [GO:0000165, KEGG:map04010, PMID:14570565, PMID:14976517, PMID:17229475, PMID:17306385, Reactome:REACT_634.5]
+synonym: "KEGG:04010" RELATED []
+synonym: "MAPK signaling pathway" RELATED []
+is_a: PW:0000003 ! signaling pathway
+is_a: PW:0001194 ! serine/threonine-specific kinase mediated signaling pathway
+
+[Term]
+id: PW:0000008
+name: Wnt signaling pathway
+def: "The secreted glycoproteins of the Wnt family regulate a wide spectrum of developmental processes and they are also playing important roles in the adult organism. Deregulation of Wnt cascades has oncogenic effects and is responsible for tumorigenesis in adults." [PMID:12573432, PMID:15001769, PMID:15041171]
+synonym: "KEGG:04310" RELATED []
+is_a: PW:0000650 ! signaling pathway pertinent to development
+is_a: PW:0000656 ! glycoprotein signaling pathway
+
+[Term]
+id: PW:0000009
+name: apoptotic cell death pathway
+def: "Apoptosis is a programmed cell death pathway that is characterized by particular morphological features such as membrane blebbing and DNA fragmentation. It can be intrinsic or extrinsic and involves the activation of caspases." [GO:0006915, KEGG:map04210, PMID:12196263, PMID:18414491]
+synonym: "KEGG:04210" RELATED []
+synonym: "programmed cell death pathway" RELATED []
+synonym: "Reactome:R-HSA-109581" EXACT []
+is_a: PW:0001557 ! programmed cell death pathway
+
+[Term]
+id: PW:0000010
+name: lipid metabolic pathway
+def: "The metabolic reactions involved in the oxidation, utilization and/or synthesis of lipids in the tissues." [OneLook:www.onelook.com]
+is_a: PW:0000002 ! classic metabolic pathway
+
+[Term]
+id: PW:0000011
+name: amino acid metabolic pathway
+def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation of the primary or standard 20 amino acids found in proteins. Amino acids are described as non-essential or essential depending on whether humans can or can not synthesize them, respectively. Chemically, they are classified based on the polarity of their side chain or R group, as non-polar and hydrophobic and hydrophilic and charged or polar uncharged. Amino acid metabolic pathways are also listed with their KEGG entries." [http://www.genome.jp/kegg/-"KEGG", MCW-library:Handbooks-of-Biochemistry]
+is_a: PW:0000002 ! classic metabolic pathway
+
+[Term]
+id: PW:0000012
+name: nucleotide metabolic pathway
+def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation of nucleotides. Nucleotides, which are the units of DNA and RNA, can also play important roles in cellular energy, enzyme regulation as well as serve as signaling molecules." [PMID:20561600, PMID:21222015]
+is_a: PW:0000002 ! classic metabolic pathway
+
+[Term]
+id: PW:0000013
+name: disease pathway
+def: "Complex human diseases encompass a spectrum of genetic and environmental attributes that together affect the normal functioning of several molecular and cellular pathways. Their combined and accumulated effect is manifested in the anomalous phenotype of the complex condition." [InHouse:InHouse-PW-dictionary]
+synonym: "complex human diseases" RELATED []
+is_a: PW:0000001 ! pathway
+
+[Term]
+id: PW:0000014
+name: neurodegenerative pathway
+def: "Neurodegenerative diseases group together a number of conditions of various and many times poorly understood origins that are characterized by the progressive loss of particular neurons, the formation of particular structures such as plaques and fibrils, and protein aggregates. Proteosomal degradation, programmed cell death and oxidative stress are among a number of pathways thought to be disrupted." [inHouse:InHouse-PW-dictionary]
+synonym: "neurodegenerative disease pathway" EXACT []
+is_a: PW:0001412 ! nervous system disease pathway
+
+[Term]
+id: PW:0000015
+name: Alzheimer's disease pathway
+def: "A mostly sporadic, late-onset condition affecting the central nervous system, that is the most prevalent neurodegenerative disease and the most common form of dementia. It is characterized by the presence of amyloid plaques and fibril tangles. Possible pathways affected range from protein mis-folding and aggregation, to oxidative stress and impaired metal homeostasis." [InHouse:InHouse-PW-dictionary, KEGG:map05010]
+synonym: "Alzheimer disease pathway" EXACT []
+synonym: "KEGG:05010" RELATED []
+is_a: PW:0000014 ! neurodegenerative pathway
+
+[Term]
+id: PW:0000016
+name: amyotrophic lateral sclerosis pathway
+def: "A late onset, mostly sporadic neurodegenerative disease characterized by the loss of motor neurons in the brain stem and spinal cord. Various pathways are thought to be deregulated and contribute to the condition; among them calcium and/or zinc homeostasis, apoptosis, Cdk5 and calcineurin dependent processes, and in the case of the more rare, genetically inherited form of the disease, mutations in the cytosolic Cu, Zn superoxide dismutase (SOD1) and the subsequent changes in the processes that involve SOD1." [InHouse:In-House-PW-dictionary, KEGG:map05014]
+synonym: "ALS pathway" EXACT []
+synonym: "amyotrophic lateral sclerosis disease pathway" EXACT []
+synonym: "KEGG:05014" RELATED []
+is_a: PW:0000014 ! neurodegenerative pathway
+
+[Term]
+id: PW:0000017
+name: Huntington's disease pathway
+def: "An autosomal dominant neurodegenerative disease manifesting in movement, cognitive and psychiatric disorders caused by the abnormal expansion of a polyglutamine (polyQ) stretch in the Huntingtin (HTT) protein. It mostly affects the caudate-putamen striatal neurons. Other areas are also affected and undergo a size reduction. HTT is thought to be involved in several cellular pathways. Its functions are overcome by the mutant protein mHTT." [PMID:26938440]
+synonym: "HD pathway" EXACT []
+synonym: "Huntington's chorea pathway" EXACT []
+synonym: "Huntington disease pathway" EXACT []
+synonym: "KEGG:05016" RELATED []
+is_a: PW:0000171 ! polyglutamine repeat pathway
+
+[Term]
+id: PW:0000018
+name: Parkinson's disease pathway
+def: "One of the most common neurodegenerative diseases that is characterized by the loss of dopaminergic neurons in the substantia nigra and the presence of cytoplasmic inclusions called Lewy bodies in surrounding neurons. Several pathways are thought to be deregulated; for instance, imbalance of iron homeostasis is believed to contribute to the pathogenesis of the condition." [KEGG:map05012, PMID:18052765, PMID:19422283]
+synonym: "KEGG:05012" RELATED []
+synonym: "paralysis agitans pathway" EXACT []
+synonym: "Parkinson disease pathway" EXACT []
+is_a: PW:0000014 ! neurodegenerative pathway
+
+[Term]
+id: PW:0000019
+name: prion disease pathway
+def: "Prion disease - any of a group of fatal, transmissible neurodegenerative diseases caused by abnormalities of prion protein metabolism, which may result from mutations in the prion protein gene or from infection with pathogenic isoforms of the protein.  Characteristics include neuronal loss, gliosis, and extensive vacuolization of the cerebral cortex. Prion diseases may be sporadic, inherited as an autosomal dominant trait, or acquired. Human diseases include Creutzfeldt-Jakob disease, Gerstmann-Strussler syndrome, fatal familial insomnia, and kuru" [KEGG:map05020, OneLook:www.onelook.com]
+synonym: "KEGG:05020" RELATED []
+synonym: "prion protein disease pathway" EXACT []
+synonym: "spongiform encephalopathy pathway" EXACT []
+synonym: "transmissible spongiform encephalopathy pathway" EXACT []
+is_a: PW:0000014 ! neurodegenerative pathway
+
+[Term]
+id: PW:0000020
+name: cardiovascular system disease pathway
+def: "Cardiovascular diseases represent a very broad spectrum of conditions that can also combine with diabetes and renal failure." [InHouse:InHouse-PW-dictionary]
+is_a: PW:0000013 ! disease pathway
+
+[Term]
+id: PW:0000021
+name: hypertension pathway
+def: "Hypertension, high arterial blood pressure: various criteria for its threshold have been suggested, ranging from 140 mm Hg systolic and 90 mm Hg diastolic to as high as 200 mm Hg systolic and 110 mm Hg diastolic. Hypertension may have no known cause (essential or idiopathic h.) or be associated with other primary diseases (secondary h.)." [OneLook:www.onelook.com]
+is_a: PW:0000020 ! cardiovascular system disease pathway
+
+[Term]
+id: PW:0000022
+name: cardiomyopathy pathway
+def: "Cardiomyopathy - a general diagnostic term designating primary noninflammatory disease of the heart muscle, often of obscure or unknown etiology and not the result of ischemic, hypertensive, congenital, valvular, or pericardial disease. It is usually subdivided into dilated, hypertrophic, and restrictive cardiomyopathy (1). Cardiomyopathy is the deterioration of the cardiac muscle of the heart wall." [OneLook:www.onelook.com]
+is_a: PW:0000020 ! cardiovascular system disease pathway
+
+[Term]
+id: PW:0000023
+name: immune response pathway
+def: "The Immune response pathways mediate the defense of host cells against infection and injury. The first line of defense is provided by the phylogenetically older innate immune response. The later, more versatile response is provided by the pathways of adaptive immunity: the B cell mediated humoral and the T cell mediated cellular or cell-mediated responses." [GO:0006955, MCW-library:Handbook-of-cellular-and-molecular-immunology, OneLook:www.onelook.com]
+is_a: PW:0000004 ! regulatory pathway
+
+[Term]
+id: PW:0000024
+name: inflammatory response pathway
+def: "Inflammation is the cellular response of the innate immune system to infection or injury. Sensing of infection by pattern recognition receptors triggers signaling cascades leading to the expression of mediator genes such as the pro-inflammatory cytokines." [GO:0006954, MCW-library:Cellular-and-molecular-immunology\,-by-Abbas\,-Abul-K, OneLook:www.onelook.com, PMID:15364056, PMID:16226680, PMID:16281932, PMID:20303867, PMID:20303872]
+synonym: "CLR signaling pathway" RELATED []
+relationship: part_of PW:0000234 ! innate immune response pathway
+
+[Term]
+id: PW:0000025
+name: glycolysis/gluconeogenesis pathway
+def: "Those metabolic reactions involved in the energy-yielding conversion of glucose to pyruvate or in the formation of glucose from non-carbohydrate precursors such as pyruvate, lactate, citric acid cycle intermediates, the carbon skeleton of many amino acids. While many enzymes are shared by the two pathways, a few steps are carried out by pathway-specific enzymes. The two pathways are independently regulated." [KEGG:map00010]
+synonym: "KEGG:00010" RELATED []
+is_a: PW:0000005 ! carbohydrate metabolic pathway
+
+[Term]
+id: PW:0000026
+name: citric acid cycle pathway
+def: "The series of chemical reactions that are central to all aerobic cells and constitute the citric acid cycle. Also known as the tricarboxylic acid cycle (TCA) or Krebs cycle, it is the center of convergence for all molecular fuels." [GO:0006099, KEGG:map00020, OneLook:www.onelook.com, Reactome:REACT_1046.3]
+synonym: "KEGG:00020" RELATED []
+synonym: "Krebs cycle pathway" RELATED []
+synonym: "SMP:00057" RELATED []
+synonym: "TCA cycle pathway" RELATED []
+synonym: "tricarboxylic cycle pathway" RELATED []
+is_a: PW:0000033 ! energy metabolic pathway
+relationship: part_of PW:0000357 ! energy homeostasis pathway
+
+[Term]
+id: PW:0000027
+name: glutamic acid/glutamate metabolic pathway
+def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation glutamic acid/glutamate. Glutamate is the major excitatory neurotransmitter." [OneLook:www.onelook.com]
+comment: Definition compiled based on the information available for glutamate at OneLook
+synonym: "SMP:00072" RELATED []
+is_a: PW:0000445 ! excitatory neurotransmitter metabolic pathway
+is_a: PW:0001075 ! hydrophilic amino acid metabolic pathway
+
+[Term]
+id: PW:0000028
+name: alanine, aspartate and glutamate metabolic pathway
+def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation of alanine, aspartate and glutamate." [OneLook:www.onelook.com]
+comment: The definition was compiled based on the information on alanine and aspartate available at OneLook.
+synonym: "KEGG:00250" RELATED []
+is_a: PW:0001077 ! amino acid metabolic pathway (KEGG)
+
+[Term]
+id: PW:0000029
+name: fatty acid biosynthetic pathway
+alt_id: PW:0000030
+def: "Acetyl-CoA, the starting material for fatty acid biosynthesis, can be derived from amino acid and lipid degradation or the oxidative decarboxylation of pyruvate. Fatty acid biosynthesis involves the condensation of C2 units; it requires seven enzymatic reactions which are carried out by the multifunctional enzyme fatty acid synthase." [PMID:11248039, PMID:8001737]
+synonym: "KEGG:00061" RELATED []
+synonym: "SMP:00456" RELATED []
+is_a: PW:0000058 ! fatty acid metabolic pathway
+
+[Term]
+id: PW:0000031
+name: purine metabolic pathway
+def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation of purines. Purines consist of a pyrimidine ring fused to an imidazole ring. The nucleobases adenine and guanine in DNA are purines." [OneLook:www.onelook.com]
+synonym: "KEGG:00230" RELATED []
+synonym: "SMP:00050" RELATED []
+is_a: PW:0000012 ! nucleotide metabolic pathway
+
+[Term]
+id: PW:0000032
+name: pyrimidine metabolic pathway
+def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation of pyrimidines. Cytosine, thymine and uracil - the nucleobases found in nucleic acids, are pyrimidine derivatives." [OneLook:www.onelook.com]
+synonym: "KEGG:00240" RELATED []
+synonym: "SMP:00046" RELATED []
+is_a: PW:0000012 ! nucleotide metabolic pathway
+
+[Term]
+id: PW:0000033
+name: energy metabolic pathway
+def: "Those metabolic reactions and pathways whose role is to release or provide energy." [OneLook:www.onelook.com]
+is_a: PW:0000002 ! classic metabolic pathway
+
+[Term]
+id: PW:0000034
+name: electron transport chain pathway
+def: "Those metabolic reactions thereby the electrons derived from the oxidation of glucose and lipids or the degradation of amino acids, are passed to oxygen via a series of series of spatially separated complexes. The energy derived generates an electrochemical gradient that drives the synthesis of ATP. The coupling between the electron transport chain, also known as the respiratory chain and the ATP biosynthetic pathway is known as oxidative phosphorylation. Under certain circumstances the two may be uncoupled." [GO:0022904, OneLook:www.onelook.com, PMID:19760284, PMID:21625217]
+synonym: "ETC pathway" RELATED []
+synonym: "respiratory chain pathway" RELATED []
+synonym: "SMP:00355" RELATED []
+relationship: part_of PW:0001059 ! oxidative phosphorylation pathway
+

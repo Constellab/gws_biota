@@ -10,7 +10,7 @@ from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, DbManager
 
-from biota._helper.ontology import Onto
+from biota._helper.ontology import Onto as OntoHelper
 from biota.db.ontology import Ontology
 
 class SBO(Ontology):
@@ -23,13 +23,10 @@ class SBO(Ontology):
     or to annotate the results of biochemical experiments in order to facilitate their efficient reuse
     (http://www.ebi.ac.uk/sbo). SBO is under the Artistic License 2.0 (https://opensource.org/licenses/Artistic-2.0)
 
-    
     :property sbo_id: id of the sbo term
-    :type sbo_id: CharField 
+    :type sbo_id: class:`peewee.CharField` 
     :property name: name of the sbo term
-    :type name: CharField 
-    :property namespace: namespace of the go term
-    :type namespace: CharField 
+    :type name: class:`peewee.CharField` 
     """
 
     sbo_id = CharField(null=True, index=True)
@@ -51,9 +48,9 @@ class SBO(Ontology):
         :rtype: None
         """
 
-        Onto.correction_of_sbo_file(biodata_db_dir, files["sbo_data"], 'sbo_out_test.obo')
-        ontology = Onto.create_ontology_from_owl(biodata_db_dir, 'sbo_out_test.obo')
-        list_sbo = Onto.parse_sbo_terms_from_ontology(ontology)
+        OntoHelper.correction_of_sbo_file(biodata_db_dir, files["sbo_data"], 'sbo_out_test.obo')
+        ontology = OntoHelper.create_ontology_from_obo(biodata_db_dir, 'sbo_out_test.obo')
+        list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
 
         sbos = [cls(data = dict_) for dict_ in list_sbo]
         for sbo in sbos:

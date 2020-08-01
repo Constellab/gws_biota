@@ -3,7 +3,7 @@ import os
 import unittest
 import asyncio
 
-from biota.db.enzyme import EnzymeStatistics, EnzymeStatisticsProcess, EnzymeStatisticsJSONViewModel
+from biota.db.enzyme_function import EnzymeFunctionStatistics, EnzymeFunctionStatisticsProcess, EnzymeFunctionStatisticsJSONViewModel
 
 ############################################################################################
 #
@@ -16,31 +16,31 @@ class TestProcess(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        EnzymeStatistics.drop_table()
-        EnzymeStatisticsProcess.drop_table()
+        EnzymeFunctionStatistics.drop_table()
+        EnzymeFunctionStatisticsProcess.drop_table()
         pass
 
     @classmethod
     def tearDownClass(cls):
-        EnzymeStatistics.drop_table()
-        EnzymeStatisticsProcess.drop_table()
+        EnzymeFunctionStatistics.drop_table()
+        EnzymeFunctionStatisticsProcess.drop_table()
         pass
 
     def test_process(self):
         asyncio.run( self._process() )
 
     async def _process(self):
-        stats = EnzymeStatistics()
-        s1 = EnzymeStatisticsProcess()
-        s1.input['EnzymeStatistics'] = stats
+        stats = EnzymeFunctionStatistics()
+        s1 = EnzymeFunctionStatisticsProcess()
+        s1.input['EnzymeFunctionStatistics'] = stats
         params = {'global_informations': True, 'organism': "Octopus vulgaris"}
         await s1.run(params)
-        s1.output['EnzymeStatistics'].save()
-        #self.assertEqual(s1.output['EnzymeStatistics'].data['total_number_of_enzyme'], 7)
-        #self.assertEqual(s1.output['EnzymeStatistics'].data['number_of_references'], 7)
-        #self.assertEqual(s1.output['EnzymeStatistics'].data['number_of_organisms'], 7)
+        s1.output['EnzymeFunctionStatistics'].save()
+        #self.assertEqual(s1.output['EnzymeFunctionStatistics'].data['enzyme_function_count'], 7)
+        #self.assertEqual(s1.output['EnzymeFunctionStatistics'].data['number_of_references'], 7)
+        #self.assertEqual(s1.output['EnzymeFunctionStatistics'].data['number_of_organisms'], 7)
         
-        enzymestat1_view_model = EnzymeStatisticsJSONViewModel(s1.output['EnzymeStatistics'])
+        enzymestat1_view_model = EnzymeFunctionStatisticsJSONViewModel(s1.output['EnzymeFunctionStatistics'])
         view = enzymestat1_view_model.render()
         print(len(view))
         print(view)

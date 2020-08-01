@@ -6,11 +6,6 @@ from gws.prism.controller import Controller
 from gws.settings import Settings
 from biota.db.eco import ECO, ECOJSONStandardViewModel, ECOJSONPremiumViewModel
 
-############################################################################################
-#
-#                                        TestECO
-#                                         
-############################################################################################
 settings = Settings.retrieve()
 test_data_path = settings.get_data("biota_test_data_dir")
 

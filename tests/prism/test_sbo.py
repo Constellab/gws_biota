@@ -6,17 +6,12 @@ from gws.prism.controller import Controller
 from gws.settings import Settings
 from biota.db.sbo import SBO, SBOStandardJSONViewModel, SBOPremiumJSONViewModel
 
-############################################################################################
-#
-#                                        TestGO
-#                                         
-############################################################################################
 settings = Settings.retrieve()
 test_data_path = settings.get_data("biota_test_data_dir")
 
 class TestSBO(unittest.TestCase):
-    @classmethod
     
+    @classmethod
     def setUpClass(cls):
         SBO.drop_table()
         SBO.create_table()

@@ -12,7 +12,7 @@ from gws.prism.view import JSONViewTemplate
 
 from biota.db.go import GO
 from biota.db.eco import ECO
-from biota.db.enzyme import Enzyme
+from biota.db.enzyme_function import EnzymeFunction
 from biota.db.taxonomy import Taxonomy
 from biota._helper.quickgo import QuickGOAnnotation
 
@@ -63,7 +63,7 @@ class EnzymeAnnotation(Resource):
         page_number = 1
         items_per_page = 100
         while True:
-            list_q = Enzyme.select().where(Enzyme.data['uniprot'] != 'null').paginate(page_number, items_per_page)
+            list_q = EnzymeFunction.select().where(EnzymeFunction.data['uniprot'] != 'null').paginate(page_number, items_per_page)
 
             if len(list_q) == 0:
                 break
