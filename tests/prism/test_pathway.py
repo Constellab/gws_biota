@@ -11,7 +11,7 @@ from biota.db.pathway import Pathway, PathwayJSONViewModel
 #                                         
 ############################################################################################
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 
 class TestCompound(unittest.TestCase):

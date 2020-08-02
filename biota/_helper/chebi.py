@@ -12,10 +12,8 @@ import csv
 
 class Chebi():
     """
-
     This module allows to get list of dictionnaries where terms represents chebi chemical compounds and 
     to get list of dictionnaries where terms represents chebi ontology terms
-
     """
 
     @staticmethod

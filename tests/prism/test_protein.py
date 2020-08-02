@@ -7,7 +7,7 @@ from gws.settings import Settings
 from biota.db.protein import Protein
 
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 class TestProtein(unittest.TestCase):
     
@@ -25,4 +25,4 @@ class TestProtein(unittest.TestCase):
             brenda_file = "brenda_test.txt"
         )
 
-        Protein.create_protein_db(test_data_path, **files_test)
+        Protein.create_protein_db(testdata_path, **files_test)

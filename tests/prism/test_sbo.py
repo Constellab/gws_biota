@@ -7,7 +7,7 @@ from gws.settings import Settings
 from biota.db.sbo import SBO, SBOStandardJSONViewModel, SBOPremiumJSONViewModel
 
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 class TestSBO(unittest.TestCase):
     
@@ -26,7 +26,7 @@ class TestSBO(unittest.TestCase):
             sbo_data = "sbo_test.obo",
         )
     
-        SBO.create_sbo_db(test_data_path, **files_test)
+        SBO.create_sbo_db(testdata_path, **files_test)
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
         

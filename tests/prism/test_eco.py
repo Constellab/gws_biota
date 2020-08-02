@@ -7,7 +7,7 @@ from gws.settings import Settings
 from biota.db.eco import ECO, ECOJSONStandardViewModel, ECOJSONPremiumViewModel
 
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 
 class TestECO(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestECO(unittest.TestCase):
             eco_data = "eco_test.obo",
         )
 
-        ECO.create_eco_db(test_data_path, **files_test)
+        ECO.create_eco_db(testdata_path, **files_test)
         self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
         
         # --------- Testing views --------- #

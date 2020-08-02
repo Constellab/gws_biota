@@ -11,7 +11,7 @@ from biota.db.taxonomy import Taxonomy, TaxonomyJSONStandardViewModel, TaxonomyJ
 #                                         
 ############################################################################################
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 class TestGO(unittest.TestCase):
     @classmethod
@@ -33,7 +33,7 @@ class TestGO(unittest.TestCase):
             ncbi_division = "division.dmp",
             ncbi_citations = "citations.dmp"
         )
-        Taxonomy.create_taxonomy_db(test_data_path, **files_test)
+        Taxonomy.create_taxonomy_db(testdata_path, **files_test)
         #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'ancestor': '71', 'rank': 'species', 'division': 'Bacteria'})
         
         """

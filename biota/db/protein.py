@@ -21,7 +21,7 @@ class Protein(Entity):
     @classmethod
     def create_protein_db(cls, biodata_db_dir, **files):
         from biota.db.enzyme import Enzyme
-        Enzyme.create_enzyme_db(cls, biodata_db_dir, **files)
+        Enzyme.create_enzyme_db(biodata_db_dir, **files)
 
     class Meta():
         table_name = 'protein'

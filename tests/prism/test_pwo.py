@@ -7,7 +7,7 @@ from gws.settings import Settings
 from biota.db.pwo import PWO
 
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 class TestPWO(unittest.TestCase):
     
@@ -25,6 +25,6 @@ class TestPWO(unittest.TestCase):
             pwo_data = "pwo_test.obo",
         )
     
-        PWO.create_pwo_db(test_data_path, **files_test)
+        PWO.create_pwo_db(testdata_path, **files_test)
         self.assertEqual(PWO.get(PWO.pwo_id == 'PW:0000000').name, 'term zero')
         self.assertEqual(PWO.get(PWO.pwo_id == "PW:0000005").name, 'carbohydrate metabolic pathway')

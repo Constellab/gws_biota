@@ -8,11 +8,11 @@ class TestOntology(unittest.TestCase):
     def test_db_object(self):
         
         settings = Settings.retrieve()
-        go_path = settings.get_data("go_test_data_dir")
-        eco_path = settings.get_data("eco_test_data_dir")
-        bto_path = settings.get_data("bto_test_data_dir")
-        sbo_path = settings.get_data("sbo_test_data_dir")
-        pwo_path = settings.get_data("pwo_test_data_dir")
+        go_path = settings.get_data("biota:go_testdata_dir")
+        eco_path = settings.get_data("biota:eco_testdata_dir")
+        bto_path = settings.get_data("biota:bto_testdata_dir")
+        sbo_path = settings.get_data("biota:sbo_testdata_dir")
+        pwo_path = settings.get_data("biota:pwo_testdata_dir")
         
         #### Test go parser ####
         ontology = Onto.create_ontology_from_obo(go_path,'go_test.obo')

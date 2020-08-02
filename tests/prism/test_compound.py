@@ -12,7 +12,7 @@ from biota.db.compound import Compound, CompoundJSONStandardViewModel, CompoundJ
 #                                         
 ############################################################################################
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 class TestCompound(unittest.TestCase):
     @classmethod
@@ -32,7 +32,7 @@ class TestCompound(unittest.TestCase):
             #rhea_kegg_compound_file =  "rhea-kegg-test.compound"
         )
 
-        Compound.create_compound_db(test_data_path, **files_test)
+        Compound.create_compound_db(testdata_path, **files_test)
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
         self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
         

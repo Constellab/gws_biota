@@ -8,6 +8,7 @@ from biota.db.protein import Protein
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.bto import BTO as BiotaBTO
 from biota._helper.brenda import Brenda
+from biota._helper.bkms import BKMS
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
@@ -21,54 +22,144 @@ from biota.db.protein import Protein
 
 EnzymeFunctionBTODeffered = DeferredThroughModel()
 
-"""
-BRENDA ENZYME information from flat file.
-The following information is available:
-    AC    activating compound
-    AP    application
-    CF    cofactor
-    CL    cloned
-    CR    crystallization
-    EN    engineering
-    EXP    expression
-    GI    general information on enzyme
-    GS    general stability
-    IC50    IC-50 Value
-    ID    EC-class
-    IN    inhibitors
-    KKM    Kcat/KM-Value substrate in {...}
-    KI    Ki-value    inhibitor in {...}
-    KM    KM-value    substrate in {...}
-    LO    localization
-    ME    metals/ions
-    MW    molecular weight
-    NSP    natural substrates/products    reversibilty information in {...}
-    OS    oxygen stability
-    OSS    organic solvent stability
-    PHO    pH-optimum
-    PHR    pH-range
-    PHS    pH stability
-    PI    isoelectric point
-    PM    posttranslation modification
-    PR    protein
-    PU    purification
-    RE    reaction catalyzed
-    RF    references
-    REN    renatured
-    RN    accepted name (IUPAC)
-    RT    reaction type
-    SA    specific activity
-    SN    synonyms
-    SP    substrates/products    reversibilty information in {...}
-    SS    storage stability
-    ST    source/tissue
-    SU    subunits
-    SY    systematic name
-    TN    turnover number    substrate in {...}
-    TO    temperature optimum
-    TR    temperature range
-    TS    temperature stability
-"""
+
+class Param():
+    """
+    Adpater class that represents a BRENDA parameter
+
+    :property what : Description of the parameter
+    :type what : srt
+    :property value : Value of the parameter
+    :type value : srt
+    :property refs : References numbers associated with the parameter value
+    :type refs : list
+    :property full_refs : Full references (pubmed id, or description) associated with the parameter value
+    :type full_refs : list
+    :property comments : Short comments extracted from the references 
+    :type comments : str
+    """
+
+    what: str = ''
+    value: str = ''
+    refs: list = []
+    full_refs: list = []
+    comments: str = ''
+
+    def __init__(self, value = None, refs = None, full_refs = None, comments = None, what = None):
+        self.value = value
+        self.refs = refs
+        self.full_refs = full_refs
+        self.comments = comments
+        self.what = what
+
+    def exists(self) -> bool:
+        """
+        Returns True if the parameter exists (i.e. :property:`value` is not `None`) 
+        and False otherwise.
+        :rtype: bool
+        """
+        return not self.value is None
+    
+class Params():
+    """
+    Adpater class that represents a list of BRENDA parameters
+    """
+
+    _name = None
+    _data = None
+    _full_refs = None
+
+    __whats = dict(
+        AC = "activating compound",
+        AP = "application",
+        CF = "cofactor",
+        CL = "cloned",
+        CR = "crystallization",
+        EN = "engineering",
+        EXP = "expression",
+        GI = "general information on enzyme",
+        GS = "general stability",
+        IC50 = "IC-50 Value",
+        ID = "EC-class",
+        IN = "inhibitors",
+        KKM = "Kcat/KM-Value substrate in {...}",
+        KI = "Ki-value    inhibitor in {...}",
+        KM = "KM-value    substrate in {...}",
+        LO = "localization",
+        ME = "metals/ions",
+        MW = "molecular weight",
+        NSP = "natural substrates/products    reversibilty information in {...}",
+        OS = "oxygen stability",
+        OSS = "organic solvent stability",
+        PHO = "pH-optimum",
+        PHR = "pH-range",
+        PHS = "pH stability",
+        PI = "isoelectric point",
+        PM = "posttranslation modification",
+        PR = "protein",
+        PU = "purification",
+        RE = "reaction catalyzed",
+        RF = "references",
+        REN = "renatured",
+        RN = "accepted name (IUPAC)",
+        RT = "reaction type",
+        SA = "specific activity",
+        SN = "synonyms",
+        SP = "substrates/products    reversibilty information in {...}",
+        SS = "storage stability",
+        ST = "source/tissue",
+        SU = "subunits",
+        SY = "systematic name",
+        TN = "turnover number substrate in {...}",
+        TO = "temperature optimum",
+        TR = "temperature range",
+        TS = "temperature stability"
+    )
+    
+    def __init__(self, name, data):
+        self._name = name
+        self._data = data.get(name, None)
+        self._full_refs = data.get("references", None)
+        
+    # -- G --
+
+    def __len__(self):
+        if isinstance(self._data, list):
+            return len(self._data)
+        else:
+            return 0
+
+    def __getitem__(self, index = 0):
+        if isinstance(self._data, list):
+            if index < len(self):
+                if isinstance(self._data[index], str):
+                    return Param(
+                        value = self._data[index],
+                        what = self.__whats[self._name]
+                    )
+                elif isinstance(self._data[index], dict):
+                    return Param(
+                        value = self._data[index].get("data", None),
+                        refs = self._data[index].get("refs", None),
+                        full_refs = self._full_refs,
+                        comments = self._data[index].get("comment", None),
+                        what = self.__whats[self._name]
+                    )
+                else:
+                    return Param()    
+            else:
+                return Param()
+        else:
+            return Param()
+
+    def __str__(self):
+        """String representation. """
+        from pprint import pformat
+        return pformat({
+            "name" : self._name,
+            "data" : self._data,
+            "full_refs" : self._full_refs
+        })
 
 class EnzymeFunction(Resource):
     """
@@ -119,26 +210,47 @@ class EnzymeFunction(Resource):
         """
         brenda = Brenda(os.path.join(biodata_db_dir, files['brenda_file']))
         list_of_proteins = brenda.parse_all_protein_to_dict()
-        list_of_chemical_info = ['ac','cf','cr','en','exp','gs','ic50','in','lo','me','mw','nsp','os','oss',
-        'pho','phr','phs','pi','pm','refs','sn','sy','su','to','tr','ts','tn','st','kkm','ki','km']
         
+        enzymes = cls.__create_enzyme_and_protein_dbs(list_of_proteins)
+        enzyme_functions = []
+        for d in list_of_proteins:
+            ec = d['ec']
+
+            enz_fun = EnzymeFunction(
+                enzyme = enzymes[ec],
+                data = d
+            )
+
+            enzyme_functions.append(enz_fun)
+
+        cls.save_all(enzyme_functions)
+        cls.__update_tax_tissue_and_pathways(enzyme_functions, biodata_db_dir, files['bkms_file'])  
+
+    @classmethod
+    def __create_enzyme_and_protein_dbs(cls, list_of_proteins):
         proteins = {}
         enzymes = {}
+        info = ['SN','SY']
         for d in list_of_proteins:
             ec = d['ec']
 
             if ec in enzymes:
                 continue
-                
-            protein = Protein(
-                name = d['name'], 
-                uniprot_id = d['uniprot'], 
-                data = {'source': 'brenda'}
-            )
+            
+            data = {'source': 'brenda'}  
+            for k in info:
+                if k in d:
+                    data[k] = d[k]
 
+            protein = Protein(
+                name = d['RN'], 
+                uniprot_id = d['uniprot'], 
+                data = data
+            )
+            
             enzyme = Enzyme(
                 ec = ec, 
-                protein = protein,
+                protein = protein
             )     
 
             proteins[ec] = protein
@@ -147,38 +259,7 @@ class EnzymeFunction(Resource):
         Protein.save_all(proteins.values()) 
         Enzyme.save_all(enzymes.values())
 
-        enzyme_functions = []
-        for d in list_of_proteins:
-            ec = d['ec']
-            enz_fun_data = {}
-            enz_fun_data['taxonomy'] = d['taxonomy']
-            enz_fun_data['organism'] = d['organism']
-            for info in list_of_chemical_info:
-                if(info in d.keys()):
-                    enz_fun_data[info]= d[info]
-
-            enz_fun = EnzymeFunction(
-                enzyme = enzymes[ec],
-                data = enz_fun_data
-            )
-
-            enzyme_functions.append(enz_fun)
-
-        cls.save_all(enzyme_functions)
-
-        with DbManager.db.atomic() as transaction :
-            try:
-                for enzyme_function in enzyme_functions:
-                    enzyme_function._update_taxonomy()
-                    if 'st' in enzyme_function.data.keys():
-                        enzyme_function._update_tissues()
-        
-                cls.save_all(enzyme_functions)
-            
-            except:
-                transaction.rollback()
-                raise Exception("An error occured while setting enzyme_function taxonomy and bto")
-        
+        return enzymes
 
     @classmethod
     def create_table(cls, *args, **kwargs):
@@ -217,7 +298,7 @@ class EnzymeFunction(Resource):
         :returns: The EC number of the enzyme
         :rtype: str
         """
-        return str(self.enzyme.ec)
+        return self.enzyme.ec
     
     # -- N --
 
@@ -229,7 +310,7 @@ class EnzymeFunction(Resource):
         :returns: The name of the enzyme
         :rtype: str
         """
-        return str(self.enzyme.name)
+        return self.enzyme.name
 
     # -- O --
 
@@ -243,9 +324,47 @@ class EnzymeFunction(Resource):
         """
         return self.data["organism"]
 
+    # -- P --
+
+    def params(self, name) -> Params:
+        """
+        Returns the list of parameters associated with `name`
+
+        :param name: Name of the parameter
+        :type name: str
+        :returns: Parameters
+        :rtype: ParamList
+        """
+        return Params(name, self.data)
+
     # -- U --
 
-    def _update_taxonomy(self):
+    @classmethod
+    def __update_tax_tissue_and_pathways(cls, enzyme_functions, biodata_dir, bkms_file):
+        
+        bkms_list = BKMS.parse_csv_from_file(biodata_dir, bkms_file)
+
+        with DbManager.db.atomic() as transaction :
+            try:
+                for enzyme_function in enzyme_functions:
+                    # update tax
+                    enzyme_function.__update_taxonomy()
+                    
+                    # update bto
+                    if 'st' in enzyme_function.data.keys():
+                        enzyme_function.__update_tissues()
+
+                    # update pathways
+
+                    
+                cls.save_all(enzyme_functions)
+            
+            except:
+                transaction.rollback()
+                raise Exception("An error occured while setting enzyme_function taxonomy and bto")
+        
+
+    def __update_taxonomy(self):
         """
         See if there is any information about the enzyme_function taxonomy and if so, connects
             the enzyme_function and its taxonomy by adding the related tax_id from the taxonomy table
@@ -258,7 +377,7 @@ class EnzymeFunction(Resource):
             except:
                 pass
 
-    def _update_tissues(self):
+    def __update_tissues(self):
         """
         See if there is any information about the enzyme_function tissue locations and if so, 
             connects the enzyme_function and tissues by adding an enzyme_function-tissues relation in th enzymes_btos
@@ -284,7 +403,7 @@ class EnzymeFunction(Resource):
 class EnzymeFunctionBTO(PWModel):
     """
     This class refers to tissues of brenda enzyme_functions
-    EnzymeFunctionBTO entities are created by the _update_tissues() method of the EnzymeFunction class
+    EnzymeFunctionBTO entities are created by the __update_tissues() method of the EnzymeFunction class
 
     :type enzyme_function: EnzymeFunction 
     :property enzyme_function: id of the concerned enzyme_function

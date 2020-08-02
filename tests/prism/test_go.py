@@ -7,7 +7,7 @@ from gws.settings import Settings
 from biota.db.go import GO, GOJSONStandardViewModel, GOJSONPremiumViewModel
 
 settings = Settings.retrieve()
-test_data_path = settings.get_data("biota_test_data_dir")
+testdata_path = settings.get_data("biota:testdata_dir")
 
 class TestGO(unittest.TestCase):
     
@@ -28,7 +28,7 @@ class TestGO(unittest.TestCase):
             go_data = "go_test.obo",
         )
 
-        GO.create_go_db(test_data_path, **files_test)
+        GO.create_go_db(testdata_path, **files_test)
         self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
        
         go1 = GO.get(GO.go_id == 'GO:0000006')

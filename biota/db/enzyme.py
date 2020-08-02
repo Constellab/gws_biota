@@ -54,7 +54,7 @@ class Enzyme(Entity):
         """
         Creates and fills the `protein` database
 
-        :param biodata_db_dir: path of the :file:`go.obo`
+        :param biodata_db_dir: path of the brenda dump file
         :type biodata_db_dir: str
         :param files: dictionnary that contains all data files names
         :type files: dict
@@ -65,16 +65,23 @@ class Enzyme(Entity):
         list_enzymes = brenda.parse_all_protein_to_dict()
         proteins = {}
         enzymes = {}
+        info = ['SN','SY']
         for d in list_enzymes:
             ec = d['ec']
 
             if ec in enzymes:
                 continue
-                
+            
+            data_ = {'source': 'brenda'}  
+            for k in info:
+                if k in d:  
+                    data_[k] = d[k]
+
+            print(data_)
             protein = Protein(
-                name = d['name'], 
+                name = d['RN'], 
                 uniprot_id = d['uniprot'], 
-                data = {'source': 'brenda'}
+                data = data_
             )
 
             enzyme = Enzyme(
