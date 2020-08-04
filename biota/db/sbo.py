@@ -49,8 +49,8 @@ class SBO(Ontology):
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        OntoHelper.correction_of_sbo_file(biodata_db_dir, files["sbo_file"], 'sbo_out_test.obo')
-        ontology = OntoHelper.create_ontology_from_obo(biodata_db_dir, 'sbo_out_test.obo')
+        data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(biodata_db_dir, files["sbo_file"])
+        ontology = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
         list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
 
         sbos = [cls(data = dict_) for dict_ in list_sbo]

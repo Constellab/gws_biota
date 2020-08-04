@@ -21,7 +21,7 @@ class Onto():
     """
     
     @staticmethod
-    def correction_of_sbo_file(path, file, out_file):
+    def correction_of_sbo_file(path, file):
         """
         Correct the initial sbo.obo file which contained syntax errors which prevented to use 
         the pronto package to parse the obo file
@@ -32,13 +32,22 @@ class Onto():
         :type path: str
         :param path: Location of the file
         :type file: str
-        :param file: Name of the original obo file
-        :type out_file: str
         :param out_file: Name of the corrected obo file
         :rtype: None
         """
-        with open(os.path.join(path, file),'rt') as file: 
-            with open(os.path.join(path, out_file ),'wt') as outfile:
+
+        in_file = os.path.join(path, file)
+        
+        tab = in_file.split("/")
+        n = len(tab)
+        path = ("/").join(tab[0:n-1])
+        in_filename = tab[-1]
+
+        out_filename = 'corrected_'+in_filename
+        out_file = os.path.join(path, out_filename)
+
+        with open(in_file,'rt') as file: 
+            with open(out_file,'wt') as outfile:
                 for line in file.readlines():
                     if line.startswith('synonym'):
                         if ' []' in line:
@@ -46,8 +55,10 @@ class Onto():
                     else:
                         outfile.write(line)
 
+        return path, out_filename
+
     @staticmethod
-    def correction_of_pwo_file(path, file, out_file):
+    def correction_of_pwo_file(path, file):
         """
         Correct the initial pwo obo file which contained syntax errors which prevented to use 
         the pronto package to parse the obo file
@@ -58,13 +69,22 @@ class Onto():
         :type path: str
         :param path: Location of the file
         :type file: str
-        :param file: Name of the original obo file
-        :type out_file: str
         :param out_file: Name of the corrected obo file
         :rtype: None
         """
-        with open(os.path.join(path, file),'rt') as file: 
-            with open(os.path.join(path, out_file ),'wt') as outfile:
+
+        in_file = os.path.join(path, file)
+        
+        tab = in_file.split("/")
+        n = len(tab)
+        path = ("/").join(tab[0:n-1])
+        in_filename = tab[-1]
+
+        out_filename = 'corrected_'+in_filename
+        out_file = os.path.join(path, out_filename)
+
+        with open(in_file,'rt') as file: 
+            with open(out_file,'wt') as outfile:
                 for line in file.readlines():
                     m = re.search('\[(.+)\]', line)
                     if m:
@@ -77,6 +97,8 @@ class Onto():
                         outfile.write(line.replace(text, corrected_text).replace("##", "\,"))
                     else:
                         outfile.write(line)
+
+        return path, out_filename
 
     @staticmethod
     def create_ontology_from_obo(path, file):

@@ -64,7 +64,9 @@ class ChebiOntology(Ontology):
 
         from biota._helper.chebi import Chebi as ChebiHelper
 
-        onto = ChebiHelper.create_ontology_from_file(biodata_db_dir, files['chebi_file'])
+        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(biodata_db_dir, files['chebi_file'])
+
+        onto = ChebiHelper.create_ontology_from_file(data_dir, corrected_file_name)
         list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
         chebis = [cls(data = dict_) for dict_ in list_chebi]
 
@@ -78,7 +80,7 @@ class ChebiOntology(Ontology):
     class Meta():
         table_name = 'chebi_ontology'
 
-class ChebiOntologyStandardJSONViewModel(ResourceViewModel):
+class ChebiOntologyJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate("""
             {
             "id": {{view_model.model.chebi_id}},

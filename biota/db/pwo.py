@@ -45,8 +45,8 @@ class PWO(Resource):
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        OntoHelper.correction_of_pwo_file(biodata_db_dir, files["pwo_file"], 'pwo_out_test.obo')
-        ontology = OntoHelper.create_ontology_from_obo(biodata_db_dir, 'pwo_out_test.obo')
+        data_dir, corrected_file_name = OntoHelper.correction_of_pwo_file(biodata_db_dir, files["pwo_file"])
+        ontology = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
         list_of_pwo = OntoHelper.parse_pwo_terms_from_ontology(ontology)
 
         pwos = [cls(data = dict_) for dict_ in list_of_pwo]

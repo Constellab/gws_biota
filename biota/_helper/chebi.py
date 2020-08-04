@@ -1,8 +1,10 @@
 import sys
 import os
+import csv
+import re
+
 import pronto 
 from pronto import Ontology
-import csv
 
 ############################################################################################
 #
@@ -92,3 +94,40 @@ class Chebi():
             list_chebi_term.append(dict_term)
         
         return(list_chebi_term)
+
+    @staticmethod
+    def correction_of_chebi_file(path, file):
+        """
+        Correct the initial chebi obo file which contained syntax errors which prevented to use 
+        the pronto package to parse the obo file
+
+        This method read the initial obo file and create a corrected copy whose the name is given
+        by the out_file parameter which is located in the same folder as the original file
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the original obo file
+        :rtype: None
+        """
+
+        in_file = os.path.join(path, file)
+        tab = in_file.split("/")
+        n = len(tab)
+        path = ("/").join(tab[0:n-1])
+        in_filename = tab[-1]
+        out_filename = 'corrected_'+in_filename
+        out_file = os.path.join(path, './', out_filename)
+
+        with open(in_file,'rt') as file: 
+            with open(out_file,'wt') as outfile:
+                for line in file.readlines():
+                    m = re.search('xref: [a-zA-Z]+:([^\{\}]+) .*', line)
+                    if m:
+                        text = m.group(1)
+                        corrected_text = text.replace(" ", "_")
+                        outfile.write(line.replace(text, corrected_text))
+                    else:
+                        outfile.write(line)
+        
+        return path, out_filename

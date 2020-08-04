@@ -24,8 +24,8 @@ class TestOntology(unittest.TestCase):
         
         #### Test sbo parser ####
         file = "sbo_test.obo"
-        Onto.correction_of_sbo_file(sbo_path, file, 'sbo_out_test.obo')
-        ontology = Onto.create_ontology_from_obo(sbo_path, 'sbo_out_test.obo')
+        Onto.correction_of_sbo_file(sbo_path, file, 'sbo_corrected.obo')
+        ontology = Onto.create_ontology_from_obo(sbo_path, 'sbo_corrected.obo')
         list_sbo_terms = Onto.parse_sbo_terms_from_ontology(ontology)
         self.assertEqual(len(list_sbo_terms), 21)
         self.assertEqual(list_sbo_terms[0]['id'], 'SBO:0000000')
