@@ -32,11 +32,21 @@ import time
 @click.pass_context
 @click.option('--user', '-u', help='User name')
 def createdb(ctx, user):
+    settings = Settings.retrieve()
+
     if user is None:
         user = "Gencoverer"
 
     __cdir__ = os.path.dirname(os.path.abspath(__file__))
-    fh = logging.FileHandler(os.path.join(__cdir__,'./biota.log'))
+    
+    log_dir = settings.get_log_dir()
+    
+    print(log_dir)
+
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+
+    fh = logging.FileHandler(os.path.join(log_dir,'./biota.log'))
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter(" %(message)s")
@@ -96,8 +106,6 @@ def createdb(ctx, user):
             rhea2ec_file = './tsv/rhea2ec.tsv',
             rhea2reactome_file = './tsv/rhea2reactome.tsv'
         )
-
-    settings = Settings.retrieve()
 
     # ------------- Create GO ------------- #
     logger.info("Step 1 | Loading go and go_ancestors...")
