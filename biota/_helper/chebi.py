@@ -122,7 +122,7 @@ class Chebi():
         with open(in_file,'rt') as file: 
             with open(out_file,'wt') as outfile:
                 for line in file.readlines():
-                    m = re.search('xref: [a-zA-Z]+:([^\{\}]+) .*', line)
+                    m = re.search('xref: [a-zA-Z]+:([^\{\}\"]+) .*', line)
                     if m:
                         text = m.group(1)
                         corrected_text = text.replace(" ", "_")

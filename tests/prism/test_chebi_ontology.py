@@ -13,7 +13,7 @@ from biota.db.chebi_ontology import ChebiOntology, ChebiOntologyJSONViewModel, C
 #                                         
 ############################################################################################
 settings = Settings.retrieve()
-testdata_path = settings.get_data("biota:chebi_biodata_dir")
+testdata_path = settings.get_data("biota:chebi_testdata_dir")
 
 class TestChebiOntology(unittest.TestCase):
     @classmethod
@@ -29,7 +29,7 @@ class TestChebiOntology(unittest.TestCase):
     def test_db_object(self):
 
         files_test = dict(
-            chebi_file = "./obo_original/chebi.obo",
+            chebi_file = "chebi_test.obo",
         )
         
         ChebiOntology.create_chebi_ontology_db(testdata_path, **files_test)
