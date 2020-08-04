@@ -27,7 +27,7 @@ class TestECO(unittest.TestCase):
         ### Test ECO class ###
 
         files_test = dict(
-            eco_data = "eco_test.obo",
+            eco_file = "eco_test.obo",
         )
 
         ECO.create_eco_db(testdata_path, **files_test)

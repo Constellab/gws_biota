@@ -16,10 +16,10 @@ class TestModel(unittest.TestCase):
         path = settings.get_data("biota:taxonomy_testdata_dir")
         
         files = dict(
-            ncbi_nodes = "nodes_test.dmp",
-            ncbi_names = "names_test.dmp",
-            ncbi_division = "division.dmp",
-            ncbi_citations = "citations.dmp"
+            ncbi_node_file = "nodes_test.dmp",
+            ncbi_name_file = "names_test.dmp",
+            ncbi_division_file = "division.dmp",
+            ncbi_citation_file = "citations.dmp"
         )
 
 

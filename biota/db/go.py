@@ -8,10 +8,9 @@ from peewee import Model as PWModel
 
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
-from gws.prism.model import Resource, ResourceViewModel, DbManager
+from gws.prism.model import ResourceViewModel, DbManager
 
 from biota.db.ontology import Ontology
-from biota._helper.ontology import Onto as OntoHelper
 
 class GO(Ontology):
     """
@@ -58,7 +57,10 @@ class GO(Ontology):
         :returns: None
         :rtype: None
         """
-        onto_go = OntoHelper.create_ontology_from_obo(biodata_db_dir, files["go_data"])
+
+        from biota._helper.ontology import Onto as OntoHelper
+
+        onto_go = OntoHelper.create_ontology_from_obo(biodata_db_dir, files["go_file"])
         list_go = OntoHelper.parse_obo_from_ontology(onto_go)
         
         gos = [cls(data = dict_) for dict_ in list_go]

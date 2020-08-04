@@ -25,7 +25,7 @@ class TestGO(unittest.TestCase):
     def test_db_object(self):
         ### Test GO class ###
         files_test = dict(
-            go_data = "go_test.obo",
+            go_file = "go_test.obo",
         )
 
         GO.create_go_db(testdata_path, **files_test)

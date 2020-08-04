@@ -23,7 +23,7 @@ class TestSBO(unittest.TestCase):
     
     def test_db_object(self):
         files_test = dict(
-            sbo_data = "sbo_test.obo",
+            sbo_file = "sbo_test.obo",
         )
     
         SBO.create_sbo_db(testdata_path, **files_test)

@@ -55,8 +55,8 @@ class Taxonomy():
         :rtype: dict
 
         """
-        nodes_path = os.path.join(path, files['ncbi_nodes'])
-        division = cls.__get_division(path, files["ncbi_division"])
+        nodes_path = os.path.join(path, files['ncbi_node_file'])
+        division = cls.__get_division(path, files["ncbi_division_file"])
         dict_taxons = {}
         
         with open(nodes_path) as fh:
@@ -95,7 +95,7 @@ class Taxonomy():
         :rtype: dict
         """
 
-        names_path = os.path.join(path, files['ncbi_names'])
+        names_path = os.path.join(path, files['ncbi_name_file'])
         with open(names_path) as fh:
             dict_ncbi_names = {}
             for line in fh.readlines():

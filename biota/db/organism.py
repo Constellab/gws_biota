@@ -10,7 +10,6 @@ from gws.prism.model import Resource
 
 from biota.db.taxonomy import Taxonomy
 
-
 class Organism(Resource):
     """
     This class represents living organisms

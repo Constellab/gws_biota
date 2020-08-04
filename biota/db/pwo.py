@@ -8,7 +8,6 @@ from peewee import Model as PWModel
 
 from gws.prism.controller import Controller
 from gws.prism.model import Resource, DbManager
-from biota._helper.ontology import Onto as OntoHelper
 
 class PWO(Resource):
     """
@@ -44,7 +43,9 @@ class PWO(Resource):
         :rtype: None
         """
 
-        OntoHelper.correction_of_pwo_file(biodata_db_dir, files["pwo_data"], 'pwo_out_test.obo')
+        from biota._helper.ontology import Onto as OntoHelper
+
+        OntoHelper.correction_of_pwo_file(biodata_db_dir, files["pwo_file"], 'pwo_out_test.obo')
         ontology = OntoHelper.create_ontology_from_obo(biodata_db_dir, 'pwo_out_test.obo')
         list_of_pwo = OntoHelper.parse_pwo_terms_from_ontology(ontology)
 

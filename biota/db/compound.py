@@ -10,7 +10,6 @@ from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel
 
 from biota.db.entity import Entity
-from biota._helper.chebi import Chebi as ChebiHelper
 
 class Compound(Entity):
     """
@@ -54,6 +53,9 @@ class Compound(Entity):
         :returns: None
         :rtype: None
         """
+
+        from biota._helper.chebi import Chebi as ChebiHelper
+
         list_comp = ChebiHelper.parse_csv_from_file(biodata_db_dir, files['chebi_compound_file'])
         compounds = cls._create_compounds(list_comp)
         cls.save_all(compounds)

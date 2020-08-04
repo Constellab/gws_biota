@@ -8,10 +8,9 @@ from peewee import Model as PWModel
 
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
-from gws.prism.model import Resource, ResourceViewModel, DbManager
+from gws.prism.model import ResourceViewModel, DbManager
 
 from biota.db.ontology import Ontology
-from biota._helper.ontology import Onto as OntoHelper
 
 class BTO(Ontology):
     """
@@ -55,7 +54,10 @@ class BTO(Ontology):
         :param files: dictionnary that contains all data files names
         :type files: dict
         """
-        list_bto = OntoHelper.parse_bto_from_json(biodata_db_dir, files['bto_json_data'])
+
+        from biota._helper.ontology import Onto as OntoHelper
+
+        list_bto = OntoHelper.parse_bto_from_json(biodata_db_dir, files['bto_file'])
         btos = [cls(data = dict_) for dict_ in list_bto]
 
         for bto in btos:

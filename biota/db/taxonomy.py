@@ -10,7 +10,6 @@ from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, Resource
 
 from biota.db.ontology import Ontology
-from biota._helper.ncbi import Taxonomy as NCBITaxonomy
 
 class Taxonomy(Ontology):
     """
@@ -57,8 +56,10 @@ class Taxonomy(Ontology):
         :rtype: None
         """
 
-        dict_ncbi_names = NCBITaxonomy.get_ncbi_names(biodata_db_dir, **files)
-        dict_taxons = NCBITaxonomy.get_all_taxonomy(biodata_db_dir, dict_ncbi_names, **files)
+        from biota._helper.ncbi import Taxonomy as NCBITaxonomyHelper
+
+        dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_db_dir, **files)
+        dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_db_dir, dict_ncbi_names, **files)
 
         bulk_size = 750
         start = 0

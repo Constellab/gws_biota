@@ -14,8 +14,6 @@ from biota.db.go import GO
 from biota.db.eco import ECO
 from biota.db.enzyme_function import EnzymeFunction
 from biota.db.taxonomy import Taxonomy
-from biota._helper.quickgo import QuickGOAnnotation
-
 
 class EnzymeAnnotation(Resource):
     """
@@ -58,6 +56,9 @@ class EnzymeAnnotation(Resource):
         """
         Creates and fills the `enzyme_annotation` database 
         """
+
+        from biota._helper.quickgo import QuickGOAnnotation
+
 
         list_annotation = []
         page_number = 1

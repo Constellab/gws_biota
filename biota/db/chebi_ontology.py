@@ -25,10 +25,9 @@ from peewee import CharField
 
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
-from gws.prism.model import Resource, ResourceViewModel
+from gws.prism.model import ResourceViewModel
 
 from biota.db.ontology import Ontology
-from biota._helper.chebi import Chebi as ChebiHelper
 
 class ChebiOntology(Ontology):
     """
@@ -62,7 +61,10 @@ class ChebiOntology(Ontology):
         :returns: None
         :rtype: None
         """
-        onto = ChebiHelper.create_ontology_from_file(biodata_db_dir, files['chebi_data'])
+
+        from biota._helper.chebi import Chebi as ChebiHelper
+
+        onto = ChebiHelper.create_ontology_from_file(biodata_db_dir, files['chebi_file'])
         list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
         chebis = [cls(data = dict_) for dict_ in list_chebi]
 

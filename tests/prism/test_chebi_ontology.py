@@ -29,7 +29,7 @@ class TestChebiOntology(unittest.TestCase):
     def test_db_object(self):
 
         files_test = dict(
-            chebi_data = "chebi_test.obo",
+            chebi_file = "chebi_test.obo",
         )
         
         ChebiOntology.create_chebi_ontology_db(testdata_path, **files_test)

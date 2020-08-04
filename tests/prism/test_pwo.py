@@ -22,7 +22,7 @@ class TestPWO(unittest.TestCase):
     
     def test_db_object(self):
         files_test = dict(
-            pwo_data = "pwo_test.obo",
+            pwo_file = "pwo_test.obo",
         )
     
         PWO.create_pwo_db(testdata_path, **files_test)

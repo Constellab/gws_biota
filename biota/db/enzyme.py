@@ -9,8 +9,6 @@ from peewee import ForeignKeyField, CharField
 from gws.prism.controller import Controller
 from gws.prism.model import DbManager
 
-from biota._helper.bkms import BKMS
-from biota._helper.brenda import Brenda
 from biota.db.entity import Entity
 from biota.db.protein import Protein
 from biota.db.pwo import PWO
@@ -65,6 +63,10 @@ class Enzyme(Entity):
         :returns: None
         :rtype: None
         """
+
+        from biota._helper.bkms import BKMS
+        from biota._helper.brenda import Brenda
+
         brenda = Brenda(os.path.join(biodata_db_dir, files['brenda_file']))
 
         list_of_proteins = brenda.parse_all_protein_to_dict()

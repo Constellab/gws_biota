@@ -23,7 +23,7 @@ class TestBTO(unittest.TestCase):
     
     def test_db_object(self):
         files_test = dict(
-            bto_json_data = "bto_test.json",
+            bto_file = "bto_test.json",
         )
 
         BTO.create_bto_db(testdata_path, **files_test)

@@ -4,11 +4,6 @@
 # About us: https://gencovery.com
 
 import os
-from biota.db.protein import Protein 
-from biota.db.taxonomy import Taxonomy as BiotaTaxo
-from biota.db.bto import BTO as BiotaBTO
-from biota._helper.brenda import Brenda
-from biota._helper.bkms import BKMS
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
@@ -17,8 +12,10 @@ from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import Process, ResourceViewModel, Resource, DbManager
 
+from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.enzyme import Enzyme
 from biota.db.protein import Protein
+from biota.db.bto import BTO as BiotaBTO
 
 EnzymeFunctionBTODeffered = DeferredThroughModel()
 
@@ -218,6 +215,10 @@ class EnzymeFunction(Resource):
         :returns: None
         :rtype: None
         """
+
+        from biota._helper.brenda import Brenda
+        from biota._helper.bkms import BKMS
+
         brenda = Brenda(os.path.join(biodata_db_dir, files['brenda_file']))
         list_of_proteins = brenda.parse_all_protein_to_dict()
         

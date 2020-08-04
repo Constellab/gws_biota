@@ -3,16 +3,10 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import sys
 import os
-import unittest
-import copy
-import asyncio
 import click
 import logging
 
-#import from gws
-from gws.prism.controller import Controller
 
 #import from biota
 from gws.settings import Settings
@@ -24,23 +18,22 @@ from biota.db.chebi_ontology import ChebiOntology
 from biota.db.taxonomy import Taxonomy
 from biota.db.compound import Compound
 from biota.db.enzyme_function import EnzymeFunction
-from biota.db.enzyme_annotation import EnzymeAnnotation
+#from biota.db.enzyme_annotation import EnzymeAnnotation
 from biota.db.reaction import Reaction
 
 #import Timer
 from timeit import default_timer
 import time
 
-settings = Settings.retrieve()
-data_paths = settings.get_data("biota:biodata_dir")
-
 @click.command(context_settings=dict(
     ignore_unknown_options=True,
     allow_extra_args=True
 ))
 @click.pass_context
-@click.option('--user', '-n', help='User name')
+@click.option('--user', '-u', help='User name')
 def createdb(ctx, user):
+    if user is None:
+        user = "Gencoverer"
 
     __cdir__ = os.path.dirname(os.path.abspath(__file__))
     fh = logging.FileHandler(os.path.join(__cdir__,'./biota.log'))
@@ -49,6 +42,9 @@ def createdb(ctx, user):
     formatter = logging.Formatter(" %(message)s")
     fh.setFormatter(formatter)
     logger.addHandler(fh)
+
+    logger.info(f"Hello {user}")
+    logger.info(f"Create tables ...")
 
     # drop tables
     GO.drop_table()
@@ -60,7 +56,7 @@ def createdb(ctx, user):
     Compound.drop_table()
     EnzymeFunction.drop_table()
     Reaction.drop_table()
-    EnzymeAnnotation.drop_table()
+    #EnzymeAnnotation.drop_table()
 
     # create tables
     GO.create_table()
@@ -72,28 +68,25 @@ def createdb(ctx, user):
     Compound.create_table()
     EnzymeFunction.create_table()
     Reaction.create_table()
-    EnzymeAnnotation.create_table()
+    #EnzymeAnnotation.create_table()
     
-    if user is None:
-        user = "Gencoverer"
-    
-    
-    logger.info(f"Hello {user}")
     logger.info("Start creating biota_db...")
 
     files = dict(
-            go_data = "go.obo",
-            sbo_data = "sbo.obo",
-            eco_data = "eco.obo",
-            chebi_data = "./obo/chebi.obo",
-            bto_json_data = "bto.json",
+            go_file = "go.obo",
+            sbo_file = "sbo.obo",
+            eco_file = "eco.obo",
+            chebi_file = "./obo/chebi.obo",
+            bto_file = "bto.json",
+            pwo_file = "./pwo/pwo.obo",
             brenda_file = "./brenda/brenda_download.txt",
+            bkms_file = "./bkms/Reactions_BKMS.csv",
             chebi_compound_file = "./tsv/compounds.tsv",
             chebi_chemical_data_file = "./tsv/chemical_data.tsv",
-            ncbi_nodes = "./taxdump/nodes.dmp",
-            ncbi_names = "./taxdump/names.dmp",
-            ncbi_division = "./taxdump/division.dmp",
-            ncbi_citations = "./taxdump/citations.dmp",
+            ncbi_node_file = "./taxdump/nodes.dmp",
+            ncbi_name_file = "./taxdump/names.dmp",
+            ncbi_division_file = "./taxdump/division.dmp",
+            ncbi_citation_file = "./taxdump/citations.dmp",
             rhea_kegg_reaction_file = './kegg/rhea-kegg.reaction',
             rhea_direction_file = './tsv/rhea-directions.tsv',
             rhea2ecocyc_file = './tsv/rhea2ecocyc.tsv',
@@ -103,6 +96,8 @@ def createdb(ctx, user):
             rhea2ec_file = './tsv/rhea2ec.tsv',
             rhea2reactome_file = './tsv/rhea2reactome.tsv'
         )
+
+    settings = Settings.retrieve()
 
     # ------------- Create GO ------------- #
     logger.info("Step 1 | Loading go and go_ancestors...")

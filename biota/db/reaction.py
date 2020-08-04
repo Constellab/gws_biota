@@ -3,20 +3,16 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
+from peewee import Model as PWModel
 
-from gws.prism.model import Resource, ResourceViewModel, DbManager
+from gws.prism.model import ResourceViewModel, DbManager
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 
 from biota.db.entity import Entity
 from biota.db.compound import Compound
-from biota.db.enzyme import Enzyme
 from biota.db.enzyme_function import EnzymeFunction
-from biota.db.go import GO
-from biota._helper.rhea import Rhea
-
-from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
-from peewee import Model as PWModel
 
 ####################################################################################
 #
@@ -99,6 +95,9 @@ class Reaction(Entity):
         :returns: None
         :rtype: None
         """
+
+        from biota._helper.rhea import Rhea
+
         list_of_reactions = Rhea.parse_reaction_from_file(biodata_db_dir, files['rhea_kegg_reaction_file'])
         cls.__create_reactions(list_of_reactions)
 
@@ -237,6 +236,7 @@ class Reaction(Entity):
         """
         Set enzyme_functions from `data`
         """
+        from biota.db.enzyme import Enzyme
         Q = EnzymeFunction.select().join(Enzyme).where(Enzyme.ec << self.data['enzymes'])
         for enz in Q:
             self.enzyme_functions.add(enz)

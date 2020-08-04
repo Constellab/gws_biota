@@ -10,7 +10,6 @@ from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
 from gws.prism.model import ResourceViewModel, DbManager
 
-from biota._helper.ontology import Onto as OntoHelper
 from biota.db.ontology import Ontology
 
 class SBO(Ontology):
@@ -48,7 +47,9 @@ class SBO(Ontology):
         :rtype: None
         """
 
-        OntoHelper.correction_of_sbo_file(biodata_db_dir, files["sbo_data"], 'sbo_out_test.obo')
+        from biota._helper.ontology import Onto as OntoHelper
+
+        OntoHelper.correction_of_sbo_file(biodata_db_dir, files["sbo_file"], 'sbo_out_test.obo')
         ontology = OntoHelper.create_ontology_from_obo(biodata_db_dir, 'sbo_out_test.obo')
         list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
 

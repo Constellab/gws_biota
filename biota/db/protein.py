@@ -6,7 +6,6 @@
 import os
 from peewee import ForeignKeyField, CharField
 from gws.prism.controller import Controller
-from biota._helper.brenda import Brenda
 from biota.db.entity import Entity
 
 class Protein(Entity):

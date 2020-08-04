@@ -4,4 +4,4 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-python manage.py --cli biota.cli.createdb > out.log 2>&1 &
+python3 manage.py --cli biota.cli.createdb > out.log 2>&1 &
