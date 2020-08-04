@@ -36,7 +36,7 @@ class Taxonomy(Ontology):
     name = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
     division = CharField(null=True, index=True)
-    ancestor = ForeignKeyField('self', backref='is_child_of', null = True)
+    ancestor = ForeignKeyField('self', backref='ancestor', null = True)
     _table_name = 'taxonomy'
 
     def __init__(self, *args, **kwargs):

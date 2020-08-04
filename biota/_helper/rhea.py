@@ -92,8 +92,8 @@ class Rhea():
                                     list_enzyme.append(list_infos[j].replace(n[0], ''))
                                 else:
                                     list_enzyme.append(list_infos[j])
-                            dict__['enzyme'] = list_enzyme
-                            
+                            dict__['enzymes'] = list_enzyme
+                
                 if('equation' in dict__.keys()):
                     dict__['source_equation'] = dict__['equation']   
                     if (len(re.findall(' =>', dict__['equation'])) > 0):
@@ -204,13 +204,13 @@ class Rhea():
                         if (list_infos[0] not in dict__.keys() and list_infos[0] != '' and list_infos[0] != "ENZYME"):
                             dict__[list_infos[0].lower()] = list_infos[1]
                         elif (list_infos[0] == ''):
-                            if('enzyme' not in dict__.keys()):
+                            if('enzymes' not in dict__.keys()):
                                 dict__['reaction'] += " "+ list_infos[1]
                         elif (list_infos[0] == 'ENZYME'):
                             list_enzyme = []
                             for j in range(1, len(list_infos)):
                                 list_enzyme.append(list_infos[j])
-                            dict__['enzyme'] = list_enzyme
+                            dict__['enzymes'] = list_enzyme
                         #### convert dict__['REACTION'] in a list ###
                 if('reaction' in dict__.keys()):
                     str_reaction = dict__['reaction']
@@ -239,13 +239,18 @@ class Rhea():
         :rtype: list 
         
         """
-        rhea_master = []
-        rhea_id_LR = []
-        rhea_id_RL = []
-        rhea_id_BI = []
+
+        cols = {
+            "UN": [],
+            "LR": [],
+            "RL": [],
+            "BI": []
+        }
+
         for dict in list_lines:
-            rhea_master.append(dict['rhea_id_master'])
-            rhea_id_LR.append(dict['rhea_id_lr'])
-            rhea_id_RL.append(dict['rhea_id_rl'])
-            rhea_id_BI.append(dict['rhea_id_bi'])
-        return(rhea_master, rhea_id_LR, rhea_id_RL, rhea_id_BI)
+            cols["UN"].append(dict['rhea_id_master'])
+            cols["LR"].append(dict['rhea_id_lr'])
+            cols["RL"].append(dict['rhea_id_rl'])
+            cols["BI"].append(dict['rhea_id_bi'])
+
+        return cols

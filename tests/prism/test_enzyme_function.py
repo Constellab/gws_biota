@@ -64,6 +64,9 @@ class TestEnzyme(unittest.TestCase):
         self.assertEqual(enzo[0].params('RT')[3].value, "reduction")
         self.assertEqual(enzo[0].params('RT')[1000].value, None)
 
+        self.assertEqual(enzo[0].params('ST')[0].value, "cell culture")
+        self.assertEqual(enzo[0].params('ST')[0].get("bto"), "BTO_0000214")
+
         self.assertEqual(enzo[0].params('UknownParam')[0].value, None)
         self.assertEqual(enzo[0].params('UknownParam')[1000].value, None)
 

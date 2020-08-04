@@ -23,7 +23,8 @@ class TestEnzyme(unittest.TestCase):
 
     def test_db_object(self):
         files_test = dict(
-            brenda_file = "brenda_test.txt"
+            brenda_file = "brenda_test.txt",
+            bkms_file = "bkms_test.csv"
         )
 
         Enzyme.create_enzyme_db(testdata_path, **files_test)

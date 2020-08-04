@@ -164,28 +164,7 @@ class BTOAncestor(PWModel):
             (('bto', 'ancestor'), True),
         )
 
-class BTOJSONStandardViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.bto_id}}, 
-            "label": {{view_model.model.label}},
-            }
-        """)
-
-class BTOJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.bto_id}}, 
-            "label": {{view_model.model.label}},
-            "ancestors" : {{view_model.display_ancestors()}},
-            }
-        """)
-    
-    def display_ancestors(self):
-        q = BTOAncestor.select().where(BTOAncestor.bto == self.model.id)
-        list_ancestors = []
-        for i in range(0, len(q)):
-            list_ancestors.append(q[i].ancestor.bto_id)
-        return(list_ancestors)
+class BTOJSONViewModel(ResourceViewModel):
+    template = JSONViewTemplate('{"id": "{{view_model.model.bto_id}}", "label": "{{view_model.model.label}}"}')
 
 Controller.register_model_classes([BTO])

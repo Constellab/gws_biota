@@ -176,5 +176,24 @@
         "BTO_0001479",
         "BTO_0000216"
       ]
+    },
+    "infected cell": {
+      "key": "BTO_0000152",
+      "label": "infected cell",
+      "ancestors": [
+        "BTO_0000152",
+        "BTO_0000214",
+        "BTO_0000000",
+        "BTO_0001490"
+      ]
+    },
+    "cell culture": {
+      "key": "BTO_0000214",
+      "label": "cell culture",
+      "ancestors": [
+        "BTO_0001490",
+        "BTO_0000214",
+        "BTO_0000000"
+      ]
     }
 }

@@ -24,8 +24,8 @@ class Compound(Entity):
 
     :property name : name of the compound
     :type name : CharField
-    :property source_accession: chebi accession number
-    :type source_accession: CharField
+    :property chebi_id: chebi accession number
+    :type chebi_id: CharField
     :property formula: chimical formula
     :type formula: CharField
     :property mass: mass of the compound
@@ -35,7 +35,7 @@ class Compound(Entity):
     """
     
     name = CharField(null=True, index=True)
-    source_accession = CharField(null=True, index=True)
+    chebi_id = CharField(null=True, index=True)
     formula = CharField(null=True, index=True)
     mass = FloatField(null=True, index=True)
     charge = FloatField(null=True, index=True)
@@ -76,8 +76,8 @@ class Compound(Entity):
         """
         compounds = [cls(data = dict_) for dict_ in list_compound]
         for comp in compounds:
-            comp.set_name( comp.data["name"] )
-            comp.set_source_accession( comp.data["chebi_accession"] )
+            comp.name =  comp.data["name"]
+            comp.chebi_id = comp.data["chebi_accession"]
 
         return compounds
 
@@ -86,8 +86,8 @@ class Compound(Entity):
     def set_name(self, name):
         self.name = name
     
-    def set_source_accession(self, source_accession):
-        self.source_accession = source_accession
+    def set_chebi_id(self, chebi_id):
+        self.chebi_id = chebi_id
     
     def set_formula(self, formula):
         self.formula = formula
@@ -113,7 +113,7 @@ class Compound(Entity):
         for chem in list_chemical:
             if(chem['type'] == 'FORMULA'):
                 try:
-                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
+                    comp = cls.get(cls.chebi_id == 'CHEBI:' + chem['compound_id'])
                     comp.set_formula(chem['chemical_data'])
                 except:
                     pass
@@ -121,7 +121,7 @@ class Compound(Entity):
 
             elif(chem['type'] == 'MASS'):
                 try:
-                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
+                    comp = cls.get(cls.chebi_id == 'CHEBI:' + chem['compound_id'])
                     comp.set_mass(float(chem['chemical_data']))
                 except:
                     pass
@@ -129,7 +129,7 @@ class Compound(Entity):
                 
             elif(chem['type'] == 'CHARGE'):
                 try:
-                    comp = cls.get(cls.source_accession == 'CHEBI:' + chem['compound_id'])
+                    comp = cls.get(cls.chebi_id == 'CHEBI:' + chem['compound_id'])
                     comp.set_charge(float(chem['chemical_data']))
                 except:
                     pass
@@ -141,7 +141,7 @@ class Compound(Entity):
 class CompoundJSONStandardViewModel(ResourceViewModel):
     template = JSONViewTemplate("""
             {
-            "id": {{view_model.model.source_accession}},
+            "id": {{view_model.model.chebi_id}},
             "name": {{view_model.model.name}},
             }
         """)
@@ -149,7 +149,7 @@ class CompoundJSONStandardViewModel(ResourceViewModel):
 class CompoundJSONPremiumViewModel(ResourceViewModel):
     template = JSONViewTemplate("""
             {
-            "id": {{view_model.model.source_accession}},
+            "id": {{view_model.model.chebi_id}},
             "name": {{view_model.model.name}},
             "source": {{view_model.model.data["source"]}},
             "formula": {{view_model.model.formula}},

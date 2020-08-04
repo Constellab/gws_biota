@@ -39,18 +39,25 @@ class Param():
     :type comments : str
     """
 
-    what: str = ''
-    value: str = ''
+    what: str = None
+    data: dict = None
     refs: list = []
     full_refs: list = []
-    comments: str = ''
+    comments: str = None
 
-    def __init__(self, value = None, refs = None, full_refs = None, comments = None, what = None):
-        self.value = value
+    def __init__(self, data = None, refs = None, full_refs = None, comments = None, what = None):
+        self.data = data
         self.refs = refs
         self.full_refs = full_refs
         self.comments = comments
         self.what = what
+
+    @property
+    def value(self):
+        if self.data is None:
+            return None
+        else:
+            return self.data.get("data", None)
 
     def exists(self) -> bool:
         """
@@ -60,6 +67,9 @@ class Param():
         """
         return not self.value is None
     
+    def get(self, key):
+        return self.data.get(key, None)
+
 class Params():
     """
     Adpater class that represents a list of BRENDA parameters
@@ -134,12 +144,12 @@ class Params():
             if index < len(self):
                 if isinstance(self._data[index], str):
                     return Param(
-                        value = self._data[index],
+                        data = {'data': self._data[index]},
                         what = self.__whats[self._name]
                     )
                 elif isinstance(self._data[index], dict):
                     return Param(
-                        value = self._data[index].get("data", None),
+                        data = self._data[index],
                         refs = self._data[index].get("refs", None),
                         full_refs = self._full_refs,
                         comments = self._data[index].get("comment", None),
@@ -189,7 +199,7 @@ class EnzymeFunction(Resource):
     """
     
     go_id = CharField(null=True, index=True)
-    enzyme = ForeignKeyField(Enzyme, backref = '', null = True)
+    enzyme = ForeignKeyField(Enzyme, backref = 'enzyme_functions', null = True)
     taxonomy = ForeignKeyField(BiotaTaxo, backref = 'enzyme_functions', null = True)
     bto = ManyToManyField(BiotaBTO, backref='enzyme_functions', through_model = EnzymeFunctionBTODeffered)
     _table_name = 'enzyme_function'
@@ -211,7 +221,11 @@ class EnzymeFunction(Resource):
         brenda = Brenda(os.path.join(biodata_db_dir, files['brenda_file']))
         list_of_proteins = brenda.parse_all_protein_to_dict()
         
-        enzymes = cls.__create_enzyme_and_protein_dbs(list_of_proteins)
+        enzymes = Enzyme.__create_enzyme_and_protein_dbs(list_of_proteins)
+
+        list_of_bkms = BKMS.parse_csv_from_file(biodata_db_dir, files['bkms_file'])
+        Enzyme.__update_pathway_from_bkms(list_of_bkms)
+
         enzyme_functions = []
         for d in list_of_proteins:
             ec = d['ec']
@@ -224,42 +238,7 @@ class EnzymeFunction(Resource):
             enzyme_functions.append(enz_fun)
 
         cls.save_all(enzyme_functions)
-        cls.__update_tax_tissue_and_pathways(enzyme_functions, biodata_db_dir, files['bkms_file'])  
-
-    @classmethod
-    def __create_enzyme_and_protein_dbs(cls, list_of_proteins):
-        proteins = {}
-        enzymes = {}
-        info = ['SN','SY']
-        for d in list_of_proteins:
-            ec = d['ec']
-
-            if ec in enzymes:
-                continue
-            
-            data = {'source': 'brenda'}  
-            for k in info:
-                if k in d:
-                    data[k] = d[k]
-
-            protein = Protein(
-                name = d['RN'], 
-                uniprot_id = d['uniprot'], 
-                data = data
-            )
-            
-            enzyme = Enzyme(
-                ec = ec, 
-                protein = protein
-            )     
-
-            proteins[ec] = protein
-            enzymes[ec] = enzyme
-
-        Protein.save_all(proteins.values()) 
-        Enzyme.save_all(enzymes.values())
-
-        return enzymes
+        cls.__update_tax_tissue(enzyme_functions)  
 
     @classmethod
     def create_table(cls, *args, **kwargs):
@@ -273,7 +252,7 @@ class EnzymeFunction(Resource):
 
         super().create_table(*args, **kwargs)
         EnzymeFunctionBTO = EnzymeFunction.bto.get_through_model()
-        EnzymeFunctionBTO.drop_table(*args, **kwargs)
+        EnzymeFunctionBTO.create_table(*args, **kwargs)
 
     # -- D -- 
 
@@ -340,37 +319,22 @@ class EnzymeFunction(Resource):
     # -- U --
 
     @classmethod
-    def __update_tax_tissue_and_pathways(cls, enzyme_functions, biodata_dir, bkms_file):
-        
-        bkms_list = BKMS.parse_csv_from_file(biodata_dir, bkms_file)
+    def __update_tax_tissue(cls, enzyme_functions):
 
-        with DbManager.db.atomic() as transaction :
-            try:
-                for enzyme_function in enzyme_functions:
-                    # update tax
-                    enzyme_function.__update_taxonomy()
-                    
-                    # update bto
-                    if 'st' in enzyme_function.data.keys():
-                        enzyme_function.__update_tissues()
+        for enz_fun in enzyme_functions:
+            enz_fun.__update_taxonomy()
+            enz_fun.__update_tissues()
 
-                    # update pathways
-
-                    
-                cls.save_all(enzyme_functions)
-            
-            except:
-                transaction.rollback()
-                raise Exception("An error occured while setting enzyme_function taxonomy and bto")
-        
+        cls.save_all(enzyme_functions)
 
     def __update_taxonomy(self):
         """
         See if there is any information about the enzyme_function taxonomy and if so, connects
-            the enzyme_function and its taxonomy by adding the related tax_id from the taxonomy table
-            to the taxonomy property of the enzyme_function
+        the enzyme_function and its taxonomy by adding the related tax_id from the taxonomy 
+        table to the taxonomy property of the enzyme_function
         """
-        if(self.data['taxonomy'] != None):
+
+        if not self.data['taxonomy'] is None:
             try:
                 tax = BiotaTaxo.get(BiotaTaxo.tax_id == str(self.data['taxonomy']))
                 self.taxonomy = tax
@@ -380,22 +344,18 @@ class EnzymeFunction(Resource):
     def __update_tissues(self):
         """
         See if there is any information about the enzyme_function tissue locations and if so, 
-            connects the enzyme_function and tissues by adding an enzyme_function-tissues relation in th enzymes_btos
-            table
+        connects the enzyme_function and tissues by adding an enzyme_function-tissues relation 
+        in the enzyme_function_btos table
         """
-        if(type(self.data['st']) == list):
-            for i in range(0,len(self.data['st'])):
-                try:
-                    tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'][i])
-                    self.bto.add(tissue)
-                except:
-                    pass
-        else:
-            try:
-                tissue = BiotaBTO.get(BiotaBTO.bto_id == self.data['st'])
-                self.bto.add(tissue)
-            except:
-                pass
+
+        n = len(self.params('ST'))
+        bto_ids = []
+        for i in range(0,n):
+            bto_ids.append( self.params('ST')[i].get("bto") )
+            
+        q = BiotaBTO.select().where(BiotaBTO.bto_id << bto_ids)
+        for bto in q: 
+            self.bto.add(bto)
 
     class Meta():
         table_name = 'enzyme_function'
@@ -413,7 +373,7 @@ class EnzymeFunctionBTO(PWModel):
     enzyme_function = ForeignKeyField(EnzymeFunction)
     bto = ForeignKeyField(BiotaBTO)
     class Meta:
-        table_name = 'enzymes_btos'
+        table_name = 'enzyme_function_btos'
         database = DbManager.db
 
 class EnzymeFunctionStatistics(Resource):

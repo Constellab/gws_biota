@@ -13,12 +13,6 @@ from gws.prism.model import Resource, ResourceViewModel, DbManager
 from biota.db.ontology import Ontology
 from biota._helper.ontology import Onto as OntoHelper
 
-####################################################################################
-#
-# GO class
-#
-####################################################################################
-
 class GO(Ontology):
     """
     This class represents GO terms.

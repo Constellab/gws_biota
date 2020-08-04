@@ -4,7 +4,7 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.db.bto import BTO, BTOJSONStandardViewModel, BTOJSONPremiumViewModel
+from biota.db.bto import BTO, BTOJSONViewModel
 
 settings = Settings.retrieve()
 testdata_path = settings.get_data("biota:testdata_dir")
@@ -19,11 +19,9 @@ class TestBTO(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
-        #BTO.drop_table()
         pass
     
     def test_db_object(self):
-        ### Test GO class ###
         files_test = dict(
             bto_json_data = "bto_test.json",
         )
@@ -31,23 +29,7 @@ class TestBTO(unittest.TestCase):
         BTO.create_bto_db(testdata_path, **files_test)
         self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').label, 'tissues, cell types and enzyme sources')
         
-        # --------- Testing views --------- #
-        bto1 = BTO.get(BTO.bto_id == 'BTO_0000002')
-        bto1_standard_view_model = BTOJSONStandardViewModel(bto1)
-        bto1_premium_view_model = BTOJSONPremiumViewModel(bto1)
-        view1 = bto1_standard_view_model.render()
-        view2 = bto1_premium_view_model.render()
-        self.assertEqual(view1,"""
-            {
-            "id": BTO_0000002, 
-            "label": culture condition:1,4-dichlorobenzene-grown cell,
-            }
-        """)
-        self.assertEqual(view2,"""
-            {
-            "id": BTO_0000002, 
-            "label": culture condition:1,4-dichlorobenzene-grown cell,
-            "ancestors" : ['BTO_0000216', 'BTO_0001479'],
-            }
-        """)
-        
+        bto = BTO.get(BTO.bto_id == 'BTO_0000002')
+        bto_view_model = BTOJSONViewModel(bto)
+        view = bto_view_model.render()
+        self.assertEqual(view,'{"id": "BTO_0000002", "label": "culture condition:1,4-dichlorobenzene-grown cell"}')

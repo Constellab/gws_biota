@@ -17,7 +17,7 @@ class Organism(Resource):
     """
 
     name = CharField(null=True, index=True)
-    taxonomy = ForeignKeyField(Taxonomy)
+    taxonomy = ForeignKeyField(Taxonomy, backref = 'organisms', null = True)
     _table_name = 'organism'
 
     def __init__(self, *args, **kwargs):

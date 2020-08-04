@@ -10,6 +10,7 @@ from gws.prism.view import JSONViewTemplate
 
 from biota.db.entity import Entity
 from biota.db.compound import Compound
+from biota.db.enzyme import Enzyme
 from biota.db.enzyme_function import EnzymeFunction
 from biota.db.go import GO
 from biota._helper.rhea import Rhea
@@ -25,7 +26,7 @@ from peewee import Model as PWModel
 
 ReactionSubstrateDeferred = DeferredThroughModel()
 ReactionProductDeferred = DeferredThroughModel()
-ReactionEnzymeDeferred = DeferredThroughModel()
+ReactionEnzymeFunctionDeferred = DeferredThroughModel()
 
 class Reaction(Entity):
     """
@@ -36,33 +37,37 @@ class Reaction(Entity):
     Rhea data are available under the Creative 
     Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
 
-    :property source_accession: rhea identifiers of the reaction
-    :type source_accession: CharField
+    :property rhea_id: rhea accession number
+    :type rhea_id: CharField
     :property master_id: master id of the reaction
     :type master_id: CharField
     :property direction: direction of the reaction 
-    :type direction: CharField
-        (UN: undirected, LR: left-right, RL: right-left, BI: bidirectionnal)
+    :type direction: CharField (UN = undirected, LR = left-right, RL = right-left, BI = bidirectionnal)
     :property biocyc_ids: reaction identifier in the biocyc database
     :type biocyc_ids: CharField
     :property kegg_id: reaction identifier in the kegg databse
     :type kegg_id: CharField
     :property substrates: substrates of the reaction
-    :type substrates: Compound
+    :type substrates: List of `Compound`
     :property products: products of the reaction
-    :type products: Compound
+    :type products: List of `Compound`
     :property enzyme_functions: enzyme_functions of the reaction
-    :type enzyme_functions: EnzymeFunction
+    :type enzyme_functions: List of `EnzymeFunction`
     """
-
-    source_accession = CharField(null=True, index=True)
+    rhea_id = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
+    
     biocyc_ids = CharField(null=True, index=True)
+
+    #brenda_id = CharField(null=True, index=True)
+    metacyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
-    substrates = ManyToManyField(Compound, backref='is_substrate_of', through_model = ReactionSubstrateDeferred)
-    products = ManyToManyField(Compound, backref='is_product_of', through_model = ReactionProductDeferred)
-    enzyme_functions = ManyToManyField(EnzymeFunction, backref='is_enzyme_of', through_model = ReactionEnzymeDeferred)
+    sabio_rk_id = CharField(null=True, index=True)
+
+    substrates = ManyToManyField(Compound, backref='reactions', through_model = ReactionSubstrateDeferred)
+    products = ManyToManyField(Compound, backref='reactions', through_model = ReactionProductDeferred)
+    enzyme_functions = ManyToManyField(EnzymeFunction, backref='reactions', through_model = ReactionEnzymeFunctionDeferred)
     _table_name = 'reaction'
 
     # -- A --
@@ -94,32 +99,28 @@ class Reaction(Entity):
         :returns: None
         :rtype: None
         """
-        list_react = Rhea.parse_reaction_from_file(biodata_db_dir, files['rhea_kegg_reaction_file'])
-        cls.__create_reactions(list_react)
+        list_of_reactions = Rhea.parse_reaction_from_file(biodata_db_dir, files['rhea_kegg_reaction_file'])
+        cls.__create_reactions(list_of_reactions)
 
-        list_directions = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea_direction_file'])
-        list_master, list_LR, list_RL, list_BI = Rhea.get_columns_from_lines(list_directions)
+        list_of_directions = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea_direction_file'])
+        cols = Rhea.get_columns_from_lines(list_of_directions)
 
-        cls.__update_direction_from_list(list_master, 'UN')
-        cls.__update_direction_from_list(list_LR, 'LR')
-        cls.__update_direction_from_list(list_RL, 'RL')
-        cls.__update_direction_from_list(list_BI, 'BI')
-
-        list_ecocyc_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2ecocyc_file'])
-        list_metacyc_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2metacyc_file'])
-        list_macie_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2macie_file'])
+        for k in ['UN', 'LR', 'RL', 'BI']:
+            cls.__update_direction_from_list(cols[k], k)
         
-        cls.__update_master_and_id_from_rhea2biocyc(list_ecocyc_react)
-        cls.__update_master_and_id_from_rhea2biocyc(list_metacyc_react)
-        cls.__update_master_and_id_from_rhea2biocyc(list_macie_react)
-    
-        list_kegg_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2kegg_reaction_file'])
-        list_ec_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2ec_file'])
-        list_reactome_react = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2reactome_file'])
+        biocyc_dbs = ['ecocyc', 'metacyc', 'macie']
+        for k in biocyc_dbs:
+            xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2'+k+'_file'])
+            cls.__update_master_and_id_from_rhea2biocyc(xref_ids)
 
-        cls.__update_master_and_id_from_rhea2kegg(list_kegg_react)
-        cls.__update_master_and_id_from_rhea2ec(list_ec_react)
-        cls.__update_master_and_id_from_rhea2ec(list_reactome_react)
+        xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2kegg_reaction_file'])
+        cls.__update_master_and_id_from_rhea2kegg(xref_ids)
+
+        xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2ec_file'])
+        cls.__update_master_and_id_from_rhea2ec(xref_ids)
+
+        xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2reactome_file'])
+        cls.__update_master_and_id_from_rhea2ec(xref_ids)
 
     @classmethod
     def __create_reactions(cls, list_reaction):
@@ -138,15 +139,15 @@ class Reaction(Entity):
         reactions = [cls(data = dict) for dict in list_reaction]
         for react in reactions:
             if 'entry' in react.data.keys():
-                react.set_source_accession(react.data['entry'])
+                react.rhea_id = react.data['entry']
         
         cls.save_all(reactions)
 
         for react in reactions:
             react.__set_substrates_from_data()
             react.__set_products_from_data()
-            if('enzyme_function' in react.data.keys()):
-                react.__set_enzymes_from_data()
+            if 'enzymes' in react.data.keys():
+                react.__set_enzyme_functions_from_data()
         
         cls.save_all(reactions)
 
@@ -162,7 +163,7 @@ class Reaction(Entity):
         super().create_table(*args, **kwargs)
         ReactionSubstrate.create_table()
         ReactionProduct.create_table()
-        ReactionEnzyme.create_table()
+        ReactionEnzymeFunction.create_table()
 
     # -- D -- 
 
@@ -175,7 +176,7 @@ class Reaction(Entity):
         """
         ReactionSubstrate.drop_table()
         ReactionProduct.drop_table()
-        ReactionEnzyme.drop_table()
+        ReactionEnzymeFunction.drop_table()
         super().drop_table(*args, **kwargs)
 
     # -- S -- 
@@ -198,6 +199,15 @@ class Reaction(Entity):
         """
         self.kegg_id = kegg_id
     
+    def set_rhea_id(self, kegg_id):
+        """
+        Set the RHEA id the reaction
+
+        :param rhea_id: The RHEA id
+        :type rhea_id: str
+        """
+        self.kegg_id = kegg_id
+
     def set_master_id(self, master_id):
         """
         Set the master id the reaction
@@ -206,44 +216,31 @@ class Reaction(Entity):
         :type master_id: str
         """
         self.master_id = master_id
-    
-    def set_source_accession(self, source):
-        """
-        Set the source accession the reaction
-
-        :param source: The source accession
-        :type source: str
-        """
-        self.source_accession = source
 
     def __set_substrates_from_data(self):
         """
         Set substrates from `data`
         """
-        for i in range(0,len(self.data['substrates'])):
-            print(self.data['substrates'])
-            comp = Compound.get(Compound.source_accession == str(self.data['substrates'][i]))
+        Q = Compound.select().where(Compound.chebi_id << self.data['substrates'])
+        for comp in Q:
             self.substrates.add(comp)
     
     def __set_products_from_data(self):
         """
         Set products from `data`
         """
-        for i in range(0,len(self.data['products'])):
-            comp = Compound.get(Compound.source_accession == str(self.data['products'][i]))
+        Q = Compound.select().where(Compound.chebi_id << self.data['products'])
+        for comp in Q:
             self.products.add(comp)
-
-    def __set_enzymes_from_data(self):
+    
+    def __set_enzyme_functions_from_data(self):
         """
         Set enzyme_functions from `data`
         """
-        for i in range(0,len(self.data['enzyme_function'])):
-            try:
-                enzym = EnzymeFunction.get(EnzymeFunction.ec == str(self.data['enzyme_function'][i]))
-                self.enzyme_functions.add(enzym)
-            except:
-                pass
-                #print("ec not found")
+        Q = EnzymeFunction.select().join(Enzyme).where(Enzyme.ec << self.data['enzymes'])
+        for enz in Q:
+            self.enzyme_functions.add(enz)
+
     # -- U --
 
     @classmethod
@@ -255,33 +252,33 @@ class Reaction(Entity):
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
-        accessions = []
+        rhea_ids = []
         master_ids = {}
         biocyc_ids = {}
         for dict__ in list_reaction_infos:
-            accession = 'RHEA:'+dict__['rhea_id']
-            accessions.append(accession)
-            master_ids[accession] = dict__['master_id']
-            biocyc_ids[accession] = dict__['id']
+            rhea_id = 'RHEA:'+dict__['rhea_id']
+            rhea_ids.append(rhea_id)
+            master_ids[rhea_id] = dict__['master_id']
+            biocyc_ids[rhea_id] = dict__['id']
 
         bulk_size = 750
         start = 0
         stop = start + bulk_size
 
         while True:
-            if start >= len(accessions):
+            if start >= len(rhea_ids):
                 break
 
-            q = cls.select().where(cls.source_accession << accessions[start:stop])
+            Q = cls.select().where(cls.rhea_id << rhea_ids[start:stop])
 
-            for rea in q:
-                if rea.source_accession in biocyc_ids:
-                    rea.append_biocyc_id(biocyc_ids[rea.source_accession])
+            for reaction in Q:
+                if reaction.rhea_id in biocyc_ids:
+                    reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
 
             start = stop - 1
             stop = start + bulk_size
 
-            cls.save_all(q)
+            cls.save_all(Q)
 
     @classmethod
     def __update_master_and_id_from_rhea2biocyc(cls, list_reaction_infos):
@@ -292,44 +289,36 @@ class Reaction(Entity):
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
-        accessions = []
+        rhea_ids = []
         master_ids = {}
         biocyc_ids = {}
         for dict__ in list_reaction_infos:
-            accession = 'RHEA:'+dict__['rhea_id']
-            accessions.append(accession)
-            master_ids[accession] = dict__['master_id']
-            biocyc_ids[accession] = dict__['id']
+            rhea_id = 'RHEA:'+dict__['rhea_id']
+            rhea_ids.append(rhea_id)
+            master_ids[rhea_id] = dict__['master_id']
+            biocyc_ids[rhea_id] = dict__['id']
 
         bulk_size = 750
         start = 0
         stop = start + bulk_size
 
         while True:
-            if start >= len(accessions):
+            if start >= len(rhea_ids):
                 break
 
-            q = cls.select().where(cls.source_accession << accessions[start:stop])
+            q = cls.select().where(cls.rhea_id << rhea_ids[start:stop])
    
-            for rea in q:
-                if rea.source_accession in master_ids:
-                    rea.set_master_id(master_ids[rea.source_accession])
+            for reaction in q:
+                if reaction.rhea_id in master_ids:
+                    reaction.set_master_id(master_ids[reaction.rhea_id])
                 
-                if rea.source_accession in biocyc_ids:
-                    rea.append_biocyc_id(biocyc_ids[rea.source_accession])
+                if reaction.rhea_id in biocyc_ids:
+                    reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
 
             start = stop - 1
             stop = start + bulk_size
 
             cls.save_all(q)
-
-        # for dict__ in list_reaction_infos:
-        #     try:
-        #       rea = cls.get(cls.source_accession == 'RHEA:' + dict__['rhea_id'])  
-        #       rea.set_master_id(dict__['master_id'])
-        #       rea.append_biocyc_id(dict__['id'])
-        #     except:
-        #         print('can not find the reaction RHEA:' + dict__['rhea_id'])
 
     @classmethod
     def __update_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
@@ -340,31 +329,31 @@ class Reaction(Entity):
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
-        accessions = []
+        rhea_ids = []
         master_ids = {}
         kegg_ids = {}
         for dict__ in list_reaction_infos:
-            accession = 'RHEA:'+dict__['rhea_id']
-            accessions.append(accession)
-            master_ids[accession] = dict__['master_id']
-            kegg_ids[accession] = dict__['id']
+            rhea_id = 'RHEA:'+dict__['rhea_id']
+            rhea_ids.append(rhea_id)
+            master_ids[rhea_id] = dict__['master_id']
+            kegg_ids[rhea_id] = dict__['id']
 
         bulk_size = 750
         start = 0
         stop = start + bulk_size
 
         while True:
-            if start >= len(accessions):
+            if start >= len(rhea_ids):
                 break
 
-            q = cls.select().where(cls.source_accession << accessions[start:stop])
+            q = cls.select().where(cls.rhea_id << rhea_ids[start:stop])
 
-            for rea in q:
-                if rea.source_accession in master_ids:
-                    rea.set_master_id(master_ids[rea.source_accession])
+            for reaction in q:
+                if reaction.rhea_id in master_ids:
+                    reaction.set_master_id(master_ids[reaction.rhea_id])
                 
-                if rea.source_accession in kegg_ids:
-                    rea.set_kegg_id(kegg_ids[rea.source_accession])
+                if reaction.rhea_id in kegg_ids:
+                    reaction.set_kegg_id(kegg_ids[reaction.rhea_id])
 
             start = stop - 1
             stop = start + bulk_size
@@ -383,26 +372,39 @@ class Reaction(Entity):
         :type direction : str
         :param direction : direction of reactions in the file
         """
-        accessions = []
+        rhea_ids = []
         for s in list_direction:
-            accessions.append('RHEA:'+s)
+            rhea_ids.append('RHEA:'+s)
 
         bulk_size = 750
         start = 0
         stop = start + bulk_size
         while True:
-            if start >= len(accessions):
+            if start >= len(rhea_ids):
                 break
 
-            q = cls.select().where(cls.source_accession << accessions[start:stop])
+            q = cls.select().where(cls.rhea_id << rhea_ids[start:stop])
 
-            for rea in q:
-                rea.set_direction(direction)
+            for reaction in q:
+                reaction.set_direction(direction)
 
             start = stop - 1
             stop = start + bulk_size
 
             cls.save_all(q)
+
+    # @classmethod
+    # def __update_xref_ids_from_bkms(cls, list_of_bkms):
+    #     """
+    #     Populate crosse-reference database ids
+    #     """
+ 
+    #     for bkms in list_of_bkms:
+    #         ec = bkms["ec_number"]
+
+    #         Q = EnzymeFunction.select().where(EnzymeFunction.ec == ec)
+    #         for ef in Q:
+    #             ef.reactions
 
     class Meta:
         table_name = 'reaction'
@@ -420,7 +422,7 @@ class ReactionSubstrate(PWModel):
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
     class Meta:
-        table_name = 'reactions_subsrates'
+        table_name = 'reaction_subsrates'
         database = DbManager.db
 
 
@@ -436,10 +438,10 @@ class ReactionProduct(PWModel):
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
     class Meta:
-        table_name = 'reactions_products'
+        table_name = 'reaction_products'
         database = DbManager.db
 
-class ReactionEnzyme(PWModel):
+class ReactionEnzymeFunction(PWModel):
     """
     This class defines the many-to-many relationship between enzyme_functions and reactions.
 
@@ -452,57 +454,19 @@ class ReactionEnzyme(PWModel):
     enzyme_function = ForeignKeyField(EnzymeFunction)
     reaction = ForeignKeyField(Reaction)
     class Meta:
-        table_name = 'reactions_enzymes'
+        table_name = 'reaction_enzyme_functions'
         database = DbManager.db
 
-class ReactionJSONStandardViewModel(ResourceViewModel):
+class ReactionJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate("""
             {
-            "id": {{view_model.model.source_accession}},
-            "definition": {{view_model.model.data['definition']}},
+            "id": "{{view_model.model.rhea_id}}",
+            "definition": "{{view_model.model.data['definition']}}",
             }
-        """)
-
-class ReactionJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.source_accession}},
-            "definition": {{view_model.model.data['definition']}},
-            "equation": {{view_model.model.data['source_equation']}},
-            "master_id": {{view_model.model.master_id}},
-            "direction" : {{view_model.model.direction}},
-            "enzyme_functions": {{view_model.display_enzymes()}},
-            "substrates": {{view_model.display_substrates()}},
-            "products": {{view_model.display_products()}}
-            }
-        """)
-
-    def display_enzymes(self):
-        q = self.model.enzyme_functions
-        list_enzymes = []
-        for i in range(0, len(q)):
-            list_enzymes.append(q[i].ec)
-        if (len(list_enzymes) == 0):
-            list_enzymes = None
-        return(list_enzymes)
-    
-    def display_substrates(self):
-        q = self.model.substrates
-        list_substrates = []
-        for i in range(0, len(q)):
-            list_substrates.append(q[i].source_accession)
-        return(list_substrates)
-    
-    def display_products(self):
-        q = self.model.products
-        list_products = []
-        for i in range(0, len(q)):
-            list_products.append(q[i].source_accession)
-        return(list_products)
-        
+        """) 
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)
-ReactionEnzymeDeferred.set_model(ReactionEnzyme)
+ReactionEnzymeFunctionDeferred.set_model(ReactionEnzymeFunction)
 
 Controller.register_model_classes([Reaction])
