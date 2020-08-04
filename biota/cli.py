@@ -37,12 +37,7 @@ def createdb(ctx, user):
     if user is None:
         user = "Gencoverer"
 
-    __cdir__ = os.path.dirname(os.path.abspath(__file__))
-    
     log_dir = settings.get_log_dir()
-    
-    print(log_dir)
-
     if not os.path.exists(log_dir):
         os.mkdir(log_dir)
 
