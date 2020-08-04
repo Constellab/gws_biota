@@ -107,8 +107,8 @@ def createdb(ctx, user):
     # ------------- Create GO ------------- #
     logger.info("Step 1 | Loading go and go_ancestors...")
     start_time = time.time()
-    biota:go_biodata_dir = settings.get_data("biota:go_biodata_dir")
-    GO.create_go_db(biota:go_biodata_dir, **files)
+    go_biodata_dir = settings.get_data("biota:go_biodata_dir")
+    GO.create_go_db(go_biodata_dir, **files)
     len_go = GO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
@@ -116,8 +116,8 @@ def createdb(ctx, user):
     # ------------- Create SBO ------------- #
     logger.info("Step 2 | Loading sbo and sbo_ancestors...")
     start_time = time.time()
-    biota:sbo_biodata_dir = settings.get_data("biota:sbo_biodata_dir")
-    SBO.create_sbo_db(biota:sbo_biodata_dir, **files)
+    sbo_biodata_dir = settings.get_data("biota:sbo_biodata_dir")
+    SBO.create_sbo_db(sbo_biodata_dir, **files)
     len_sbo = SBO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
@@ -125,8 +125,8 @@ def createdb(ctx, user):
     # ------------------- Create BTO ----------------- #
     logger.info("Step 3 | Loading bto and bto_ancestors...")
     start_time = time.time()
-    biota:bto_biodata_dir = settings.get_data("biota:bto_biodata_dir")
-    BTO.create_bto_db(biota:bto_biodata_dir, **files)
+    bto_biodata_dir = settings.get_data("biota:bto_biodata_dir")
+    BTO.create_bto_db(bto_biodata_dir, **files)
     len_bto = BTO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
@@ -134,8 +134,8 @@ def createdb(ctx, user):
     # ------------------- Create ECO ----------------- #
     logger.info("Step 4 | Loading eco and eco_ancestors...")
     start_time = time.time()
-    biota:eco_biodata_dir = settings.get_data("biota:eco_biodata_dir")
-    ECO.create_eco_db(biota:eco_biodata_dir, **files)
+    eco_biodata_dir = settings.get_data("biota:eco_biodata_dir")
+    ECO.create_eco_db(eco_biodata_dir, **files)
     len_eco = ECO.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
@@ -143,8 +143,8 @@ def createdb(ctx, user):
     # ------------- Create ChebiOntology ------------- #
     logger.info("Step 5 | Loading chebi ontology...")
     start_time = time.time()
-    biota:chebi_biodata_dir = settings.get_data("biota:chebi_biodata_dir")
-    ChebiOntology.create_chebi_ontology_db(biota:chebi_biodata_dir, **files)
+    chebi_biodata_dir = settings.get_data("biota:chebi_biodata_dir")
+    ChebiOntology.create_chebi_ontology_db(chebi_biodata_dir, **files)
     len_chebi_ontology = ChebiOntology.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
@@ -161,8 +161,8 @@ def createdb(ctx, user):
     # ---------------- Create Compound --------------- #
     logger.info("Step 7 | Loading chebi compounds...")
     start_time = time.time()
-    biota:chebi_biodata_dir = settings.get_data("biota:chebi_biodata_dir")
-    Compound.create_compound_db(biota:chebi_biodata_dir, **files)
+    chebi_biodata_dir = settings.get_data("biota:chebi_biodata_dir")
+    Compound.create_compound_db(chebi_biodata_dir, **files)
     len_compound = Compound.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
@@ -170,8 +170,8 @@ def createdb(ctx, user):
     # ------------------ Create EnzymeFunction --------------- #
     logger.info("Step 8 | Loading brenda enzyme_functions and enzyme_btos...")
     start_time = time.time()
-    biota:brenda_biodata_dir = settings.get_data("biota:brenda_biodata_dir")
-    EnzymeFunction.create_enzyme_function_db(biota:brenda_biodata_dir, **files)
+    brenda_biodata_dir = settings.get_data("biota:brenda_biodata_dir")
+    EnzymeFunction.create_enzyme_function_db(brenda_biodata_dir, **files)
     len_enzyme = EnzymeFunction.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #enzyme_functions = {} ".format(elapsed_time/60, len_enzyme))
@@ -179,8 +179,8 @@ def createdb(ctx, user):
     # ---------------- Create Reactions -------------- #
     logger.info("Step 9 | Loading rhea reactions...")
     start_time = time.time()
-    biota:rhea_biodata_dir = settings.get_data("biota:rhea_biodata_dir")
-    Reaction.create_reaction_db(biota:rhea_biodata_dir, **files)
+    rhea_biodata_dir = settings.get_data("biota:rhea_biodata_dir")
+    Reaction.create_reaction_db(rhea_biodata_dir, **files)
     len_rhea = Reaction.select().count()
     elapsed_time = time.time() - start_time
     logger.info("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
