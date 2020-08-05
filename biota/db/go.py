@@ -46,7 +46,7 @@ class GO(Ontology):
         GOAncestor.create_table()
 
     @classmethod
-    def create_go_db(cls, biodata_dir = None, go_file = None):
+    def create_go_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `go` database
 
@@ -60,7 +60,7 @@ class GO(Ontology):
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        onto_go = OntoHelper.create_ontology_from_obo(biodata_dir, go_file)
+        onto_go = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['go_file'])
         list_go = OntoHelper.parse_obo_from_ontology(onto_go)
         
         gos = [cls(data = dict_) for dict_ in list_go]

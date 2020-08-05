@@ -84,7 +84,7 @@ class Reaction(Entity):
     # -- C --
       
     @classmethod
-    def create_reaction_db(cls, biodata_dir, **kwargs):
+    def create_reaction_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `reaction` database
 
