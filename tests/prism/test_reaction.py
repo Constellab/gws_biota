@@ -5,8 +5,7 @@ import copy
 import asyncio
 
 from gws.settings import Settings
-from biota.db.reaction import Reaction, ReactionJSONViewModel
-
+from biota.db.reaction import Reaction
 
 settings = Settings.retrieve()
 testdata_path = settings.get_data("biota:testdata_dir")
@@ -25,7 +24,8 @@ class TestReaction(unittest.TestCase):
     
     def test_db_object(self):
 
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             rhea_kegg_reaction_file =  'rhea-kegg_test.reaction',
             rhea_direction_file = 'rhea-directions-test.tsv',
             rhea2ecocyc_file = 'rhea2ecocyc-test.tsv',
@@ -36,19 +36,6 @@ class TestReaction(unittest.TestCase):
             rhea2reactome_file = 'rhea2reactome_test.tsv'
         )
 
-        Reaction.create_reaction_db(testdata_path, **files_test)
+        Reaction.create_reaction_db(**params)
         self.assertEqual(Reaction.get(Reaction.rhea_id == 'RHEA:10022').master_id, '10020')
         self.assertEqual(Reaction.get(Reaction.rhea_id == 'RHEA:10031').kegg_id, 'R00279')
-        
-        rea = Reaction.get(Reaction.rhea_id == 'RHEA:10031')
-        
-        rea_view_model = ReactionJSONViewModel(rea)
-
-        view = rea_view_model.render()
-
-        self.assertEqual(view,"""
-            {
-            "id": "RHEA:10031",
-            "definition": "D-glutamate + H2O + O2 <=> 2-oxoglutarate + H2O2 + NH4(+)",
-            }
-        """)

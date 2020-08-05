@@ -45,21 +45,21 @@ class ECO(Ontology):
         ECOAncestor.create_table()
 
     @classmethod
-    def create_eco_db(cls, biodata_db_dir, **files):
+    def create_eco_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `eco` database
         
-        :param biodata_db_dir: path of the :file:`eco.obo`
-        :type biodata_db_dir: str
-        :param files: dictionnary that contains all data files names
-        :type files: dict
+        :param biodata_dir: path of the :file:`eco.obo`
+        :type biodata_dir: str
+        :param kwargs: dictionnary that contains all data files names
+        :type kwargs: dict
         :returns: None
         :rtype: None
         """
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        onto_eco = OntoHelper.create_ontology_from_obo(biodata_db_dir, files["eco_file"])
+        onto_eco = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['eco_file'])
         list_eco = OntoHelper.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [cls(data = dict_) for dict_ in list_eco]
 
@@ -165,29 +165,4 @@ class ECOAncestor(PWModel):
             (('eco', 'ancestor'), True),
         )
 
-class ECOJSONStandardViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.eco_id}},
-            "name": {{view_model.model.name}},
-            }
-        """)
-
-class ECOJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.eco_id}},
-            "name": {{view_model.model.name}},
-            "ancestors": {{view_model.display_ancestors()}}
-            }
-        """)
-
-    def display_ancestors(self):
-        q = ECOAncestor.select().where(ECOAncestor.eco == self.model.id)
-        list_ancestors = []
-        for i in range(0, len(q)):
-            list_ancestors.append(q[i].ancestor.eco_id)
-        return list_ancestors
-
-    
 Controller.register_model_classes([ECO])

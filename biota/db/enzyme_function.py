@@ -204,12 +204,12 @@ class EnzymeFunction(Resource):
     # -- C --
 
     @classmethod
-    def create_enzyme_function_db(cls, biodata_db_dir, **files):
+    def create_enzyme_function_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `enzyme_function` database
 
-        :param biodata_db_dir: path of the :file:`go.obo`
-        :type biodata_db_dir: str
+        :param biodata_dir: path of the :file:`go.obo`
+        :type biodata_dir: str
         :param files: dictionnary that contains all data files names
         :type files: dict
         :returns: None
@@ -219,13 +219,11 @@ class EnzymeFunction(Resource):
         from biota._helper.brenda import Brenda
         from biota._helper.bkms import BKMS
 
-        brenda = Brenda(os.path.join(biodata_db_dir, files['brenda_file']))
+        brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
         list_of_proteins = brenda.parse_all_protein_to_dict()
         
-        enzymes = Enzyme.__create_enzyme_and_protein_dbs(list_of_proteins)
-
-        list_of_bkms = BKMS.parse_csv_from_file(biodata_db_dir, files['bkms_file'])
-        Enzyme.__update_pathway_from_bkms(list_of_bkms)
+        kwargs['proteins'] = list_of_proteins
+        enzymes = Enzyme.create_enzyme_db(**kwargs)
 
         enzyme_functions = []
         for d in list_of_proteins:

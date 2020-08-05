@@ -4,13 +4,8 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.db.compound import Compound, CompoundJSONStandardViewModel, CompoundJSONPremiumViewModel
+from biota.db.compound import Compound
 
-############################################################################################
-#
-#                                        TestCompound
-#                                         
-############################################################################################
 settings = Settings.retrieve()
 testdata_path = settings.get_data("biota:testdata_dir")
 
@@ -26,43 +21,12 @@ class TestCompound(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             chebi_compound_file = "compounds_test.tsv",
             chebi_chemical_data_file =  "chemical_data_test.tsv",
-            #rhea_kegg_compound_file =  "rhea-kegg-test.compound"
         )
 
-        Compound.create_compound_db(testdata_path, **files_test)
-        self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:58321').name, 'L-allysine zwitterion')
-        self.assertEqual(Compound.get(Compound.source_accession == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
-        
-        # --------- Testing views --------- #
-        comp1 = Compound.get(Compound.source_accession == 'CHEBI:58321')
-        
-        comp1_standard_view_model = CompoundJSONStandardViewModel(comp1)
-        comp1_premium_view_model = CompoundJSONPremiumViewModel(comp1)
-        
-        view2 = comp1_premium_view_model.render()
-        view1 = comp1_standard_view_model.render()
-
-        self.assertEqual(view1,"""
-            {
-            "id": CHEBI:58321,
-            "name": L-allysine zwitterion,
-            }
-        """)
-
-        self.assertEqual(view2,"""
-            {
-            "id": CHEBI:58321,
-            "name": L-allysine zwitterion,
-            "source": Rhea,
-            "formula": None,
-            "mass": None,
-            "charge": None,
-            "definition": ,
-            "status": C,
-            "created by": ,
-            "star": 
-            }
-        """)
+        Compound.create_compound_db(**params)
+        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:58321').name, 'L-allysine zwitterion')
+        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')

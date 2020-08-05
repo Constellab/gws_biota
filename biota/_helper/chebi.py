@@ -3,7 +3,6 @@ import os
 import csv
 import re
 
-import pronto 
 from pronto import Ontology
 
 ############################################################################################

@@ -46,12 +46,12 @@ class GO(Ontology):
         GOAncestor.create_table()
 
     @classmethod
-    def create_go_db(cls, biodata_db_dir, **files):
+    def create_go_db(cls, biodata_dir = None, go_file = None):
         """
         Creates and fills the `go` database
 
-        :param biodata_db_dir: path of the :file:`go.obo`
-        :type biodata_db_dir: str
+        :param biodata_dir: path of the :file:`go.obo`
+        :type biodata_dir: str
         :param files: dictionnary that contains all data files names
         :type files: dict
         :returns: None
@@ -60,7 +60,7 @@ class GO(Ontology):
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        onto_go = OntoHelper.create_ontology_from_obo(biodata_db_dir, files["go_file"])
+        onto_go = OntoHelper.create_ontology_from_obo(biodata_dir, go_file)
         list_go = OntoHelper.parse_obo_from_ontology(onto_go)
         
         gos = [cls(data = dict_) for dict_ in list_go]
@@ -191,31 +191,5 @@ class GOAncestor(PWModel):
         indexes = (
             (('go', 'ancestor'), True),
         )
-
-class GOJSONStandardViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-        {
-            "id": "{{view_model.model.go_id}}",
-            "name": "{{view_model.model.name}}"
-        }
-        """)
-    
-class GOJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-        {
-            "id": "{{view_model.model.go_id}}",
-            "name": "{{view_model.model.name}}",
-            "namespace": "{{view_model.model.namespace}}",
-            "definition": "{{view_model.model.definition}}",
-            "ancestors": "{{view_model.display_ancestors()}}"
-        }
-        """)
-
-    def display_ancestors(self):
-        q = GOAncestor.select().where(GOAncestor.go == self.model.id)
-        list_ancestors = []
-        for i in range(0, len(q)):
-            list_ancestors.append(q[i].ancestor.go_id)
-        return(list_ancestors)
 
 Controller.register_model_classes([GO])

@@ -4,7 +4,7 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.db.eco import ECO, ECOJSONStandardViewModel, ECOJSONPremiumViewModel
+from biota.db.eco import ECO
 
 settings = Settings.retrieve()
 testdata_path = settings.get_data("biota:testdata_dir")
@@ -20,39 +20,14 @@ class TestECO(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
-        #ECO.drop_table()
         pass
     
     def test_db_object(self):
-        ### Test ECO class ###
-
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             eco_file = "eco_test.obo",
         )
 
-        ECO.create_eco_db(testdata_path, **files_test)
+        ECO.create_eco_db(**params)
         self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
-        
-        # --------- Testing views --------- #
-        eco1 = ECO.get(ECO.eco_id == 'ECO:0000002')
-        
-        eco1_standard_view_model = ECOJSONStandardViewModel(eco1)
-        eco1_premium_view_model = ECOJSONPremiumViewModel(eco1)
-
-        view1 = eco1_standard_view_model.render()
-        view2 = eco1_premium_view_model.render()
-
-        self.assertEqual(view1,"""
-            {
-            "id": ECO:0000002,
-            "name": direct assay evidence,
-            }
-        """)
-
-        self.assertEqual(view2,"""
-            {
-            "id": ECO:0000002,
-            "name": direct assay evidence,
-            "ancestors": ['ECO:0000006']
-            }
-        """)
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000002').name, "direct assay evidence")

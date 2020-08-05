@@ -22,31 +22,13 @@ class TestSBO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             sbo_file = "sbo_test.obo",
         )
     
-        SBO.create_sbo_db(testdata_path, **files_test)
+        SBO.create_sbo_db(**params)
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').name, 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").name, 'obsolete mathematical expression')
-        
-        # --------- Testing views --------- #
-        sbo1 = SBO.get(SBO.sbo_id == 'SBO:0000004')
-        sbo1_standard_view_model = SBOStandardJSONViewModel(sbo1)
-        sbo1_premium_view_model = SBOPremiumJSONViewModel(sbo1)
-        view1 = sbo1_standard_view_model.render()
-        view2 = sbo1_premium_view_model.render()
-        self.assertEqual(view1,"""
-            {
-            "id": SBO:0000004,
-            "name": modelling framework
-            }
-        """)
-        self.assertEqual(view2,"""
-            {
-            "id": SBO:0000004,
-            "name": modelling framework,
-            "definition": Set of assumptions that underlay a mathematical description.,
-            "ancestors": ['SBO:0000000']
-            }
-        """)
+        self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000004").name, 'modelling framework')
+

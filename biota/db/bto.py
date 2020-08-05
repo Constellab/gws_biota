@@ -44,20 +44,19 @@ class BTO(Ontology):
         BTOAncestor.create_table()
         
     @classmethod
-    def create_bto_db(cls, biodata_db_dir, **files):
+    def create_bto_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `bto` database
 
-        :param biodata_db_dir: path of the :file:`bto.json`
-        :type biodata_db_dir: str
-        
-        :param files: dictionnary that contains all data files names
-        :type files: dict
+        :param biodata_dir: path of the :file:`bto.json`
+        :type biodata_dir: str
+        :param kwargs: dictionnary that contains all data file names
+        :type kwargs: dict
         """
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        list_bto = OntoHelper.parse_bto_from_json(biodata_db_dir, files['bto_file'])
+        list_bto = OntoHelper.parse_bto_from_json(biodata_dir, kwargs['bto_file'])
         btos = [cls(data = dict_) for dict_ in list_bto]
 
         for bto in btos:
@@ -165,8 +164,5 @@ class BTOAncestor(PWModel):
         indexes = (
             (('bto', 'ancestor'), True),
         )
-
-class BTOJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{"id": "{{view_model.model.bto_id}}", "label": "{{view_model.model.label}}"}')
 
 Controller.register_model_classes([BTO])

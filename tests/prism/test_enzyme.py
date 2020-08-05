@@ -22,9 +22,10 @@ class TestEnzyme(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             brenda_file = "brenda_test.txt",
             bkms_file = "bkms_test.csv"
         )
 
-        Enzyme.create_enzyme_db(testdata_path, **files_test)
+        Enzyme.create_enzyme_db(**params)

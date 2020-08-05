@@ -26,20 +26,5 @@ class Gene(Entity):
     class Meta():
         table_name = 'gene'
 
-class GeneHTMLViewModel(ResourceViewModel):
-    template = HTMLViewTemplate("ID: {{view_model.model.data.ID}}")
-
-class GeneJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate("ID: {{view_model.model.data.ID}}")
-
-Gene.register_view_models([
-    GeneHTMLViewModel, 
-    GeneJSONViewModel
-])
-
-Controller.register_model_classes([
-    Gene,
-    GeneHTMLViewModel,
-    GeneJSONViewModel
-])
+Controller.register_model_classes([Gene])
 

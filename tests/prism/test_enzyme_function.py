@@ -25,12 +25,13 @@ class TestEnzyme(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             brenda_file = "brenda_test.txt",
-            bkms_file   = "bkms_test.csv"
+            bkms_file   = "bkms_test.csv",
         )
 
-        EnzymeFunction.create_enzyme_function_db(testdata_path, **files_test)
+        EnzymeFunction.create_enzyme_function_db(**params)
 
         enzo = EnzymeFunction.select().join(Enzyme).where(Enzyme.ec == '1.4.3.7')
         self.assertEqual(enzo[0].organism, 'Candida boidinii')

@@ -21,10 +21,11 @@ class TestPWO(unittest.TestCase):
         pass
     
     def test_db_object(self):
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             pwo_file = "pwo_test.obo",
         )
     
-        PWO.create_pwo_db(testdata_path, **files_test)
+        PWO.create_pwo_db(**params)
         self.assertEqual(PWO.get(PWO.pwo_id == 'PW:0000000').name, 'term zero')
         self.assertEqual(PWO.get(PWO.pwo_id == "PW:0000005").name, 'carbohydrate metabolic pathway')

@@ -52,29 +52,35 @@ class Enzyme(Entity):
         Protein.create_table()
 
     @classmethod
-    def create_enzyme_db(cls, biodata_db_dir, **files):
+    #def create_enzyme_db(cls, biodata_dir, **files):
+    def create_enzyme_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `protein` database
 
-        :param biodata_db_dir: path of the brenda dump file
-        :type biodata_db_dir: str
-        :param files: dictionnary that contains all data files names
-        :type files: dict
+        :param biodata_dir: path of the brenda dump file
+        :type biodata_dir: str
+        :param kwargs: dictionnary that contains all data files names
+        :type kwargs: dict
         :returns: None
         :rtype: None
         """
 
-        from biota._helper.bkms import BKMS
-        from biota._helper.brenda import Brenda
+        if not kwargs.get('proteins', None) is None:
+            enzymes =  cls.__create_enzyme_and_protein_dbs(kwargs['proteins'])
+        else:
+            from biota._helper.bkms import BKMS
+            from biota._helper.brenda import Brenda
+            brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
+            proteins = brenda.parse_all_protein_to_dict()
+            enzymes = cls.__create_enzyme_and_protein_dbs(proteins)
 
-        brenda = Brenda(os.path.join(biodata_db_dir, files['brenda_file']))
+        if (not biodata_dir is None) and (not kwargs.get('bkms_file', None) is None):
+            from biota._helper.bkms import BKMS
+            list_of_bkms = BKMS.parse_csv_from_file(biodata_dir, kwargs['bkms_file'])
+            cls.__update_pathway_from_bkms(list_of_bkms)
 
-        list_of_proteins = brenda.parse_all_protein_to_dict()
-        cls.__create_enzyme_and_protein_dbs(list_of_proteins)
-
-        list_of_bkms = BKMS.parse_csv_from_file(biodata_db_dir, files['bkms_file'])
-        cls.__update_pathway_from_bkms(list_of_bkms)
-
+        return enzymes
+        
     @classmethod
     def __create_enzyme_and_protein_dbs(cls, list_of_proteins):
         proteins = {}

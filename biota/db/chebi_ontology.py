@@ -50,21 +50,21 @@ class ChebiOntology(Ontology):
     _table_name = 'chebi_ontology'
 
     @classmethod
-    def create_chebi_ontology_db(cls, biodata_db_dir, **files):
+    def create_chebi_ontology_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `chebi_ontology` database
 
-        :type biodata_db_dir: str
-        :param biodata_db_dir: path of the :file:`chebi.obo`
-        :type files: dict
-        :param files: dictionnary that contains all data files names
+        :type biodata_dir: str
+        :param biodata_dir: path of the :file:`chebi.obo`
+        :type kwargs: dict
+        :param kwargs: dictionnary that contains all data files names
         :returns: None
         :rtype: None
         """
 
         from biota._helper.chebi import Chebi as ChebiHelper
 
-        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(biodata_db_dir, files['chebi_file'])
+        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(biodata_dir, kwargs['chebi_file'])
 
         onto = ChebiHelper.create_ontology_from_file(data_dir, corrected_file_name)
         list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
@@ -79,23 +79,5 @@ class ChebiOntology(Ontology):
 
     class Meta():
         table_name = 'chebi_ontology'
-
-class ChebiOntologyJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.chebi_id}},
-            "label": {{view_model.model.name}},
-            }
-        """)
-
-class ChebiOntologyPremiumJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.chebi_id}},
-            "label": {{view_model.model.name}},
-            "definition": {{view_model.model.data["definition"]}},
-            "alternative_id": {{view_model.model.data["alt_id"]}}
-            }
-        """)
 
 Controller.register_model_classes([ChebiOntology])

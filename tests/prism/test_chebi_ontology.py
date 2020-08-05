@@ -5,8 +5,7 @@ import unittest
 from gws.prism.controller import Controller
 from gws.settings import Settings
 
-from biota.db.chebi_ontology import ChebiOntology, ChebiOntologyJSONViewModel, ChebiOntologyPremiumJSONViewModel
-
+from biota.db.chebi_ontology import ChebiOntology
 ############################################################################################
 #
 #                                        TestChebiOntology
@@ -28,22 +27,11 @@ class TestChebiOntology(unittest.TestCase):
 
     def test_db_object(self):
 
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             chebi_file = "chebi_test.obo",
         )
         
-        ChebiOntology.create_chebi_ontology_db(testdata_path, **files_test)
+        ChebiOntology.create_chebi_ontology_db(**params)
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:24431').name, "chemical entity")
         self.assertEqual(ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051').name, 'fluoride')
-        
-        # --------- Testing views --------- #
-        chebi = ChebiOntology.get(ChebiOntology.chebi_id == 'CHEBI:17051')
-        chebi_standard_view_model = ChebiOntologyJSONViewModel(chebi)
-        view = chebi_standard_view_model.render()
-        
-        self.assertEqual(view,"""
-            {
-            "id": CHEBI:17051,
-            "label": fluoride,
-            }
-        """)

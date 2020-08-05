@@ -84,24 +84,24 @@ class Reaction(Entity):
     # -- C --
       
     @classmethod
-    def create_reaction_db(cls, biodata_db_dir, **files):
+    def create_reaction_db(cls, biodata_dir, **kwargs):
         """
         Creates and fills the `reaction` database
 
-        :param biodata_db_dir: path to the folder that contain the go.obo file
-        :type biodata_db_dir: str
-        :param files: dictionnary that contains all data files names
-        :type files: dict
+        :param biodata_dir: path to the folder that contain the go.obo file
+        :type biodata_dir: str
+        :param kwargs: dictionnary that contains all data files names
+        :type kwargs: dict
         :returns: None
         :rtype: None
         """
 
         from biota._helper.rhea import Rhea
 
-        list_of_reactions = Rhea.parse_reaction_from_file(biodata_db_dir, files['rhea_kegg_reaction_file'])
+        list_of_reactions = Rhea.parse_reaction_from_file(biodata_dir, kwargs['rhea_kegg_reaction_file'])
         cls.__create_reactions(list_of_reactions)
 
-        list_of_directions = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea_direction_file'])
+        list_of_directions = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea_direction_file'])
         cols = Rhea.get_columns_from_lines(list_of_directions)
 
         for k in ['UN', 'LR', 'RL', 'BI']:
@@ -109,16 +109,16 @@ class Reaction(Entity):
         
         biocyc_dbs = ['ecocyc', 'metacyc', 'macie']
         for k in biocyc_dbs:
-            xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2'+k+'_file'])
+            xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2'+k+'_file'])
             cls.__update_master_and_id_from_rhea2biocyc(xref_ids)
 
-        xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2kegg_reaction_file'])
+        xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2kegg_reaction_file'])
         cls.__update_master_and_id_from_rhea2kegg(xref_ids)
 
-        xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2ec_file'])
+        xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2ec_file'])
         cls.__update_master_and_id_from_rhea2ec(xref_ids)
 
-        xref_ids = Rhea.parse_csv_from_file(biodata_db_dir, files['rhea2reactome_file'])
+        xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2reactome_file'])
         cls.__update_master_and_id_from_rhea2ec(xref_ids)
 
     @classmethod
@@ -393,19 +393,6 @@ class Reaction(Entity):
 
             cls.save_all(q)
 
-    # @classmethod
-    # def __update_xref_ids_from_bkms(cls, list_of_bkms):
-    #     """
-    #     Populate crosse-reference database ids
-    #     """
- 
-    #     for bkms in list_of_bkms:
-    #         ec = bkms["ec_number"]
-
-    #         Q = EnzymeFunction.select().where(EnzymeFunction.ec == ec)
-    #         for ef in Q:
-    #             ef.reactions
-
     class Meta:
         table_name = 'reaction'
 
@@ -456,14 +443,6 @@ class ReactionEnzymeFunction(PWModel):
     class Meta:
         table_name = 'reaction_enzyme_functions'
         database = DbManager.db
-
-class ReactionJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": "{{view_model.model.rhea_id}}",
-            "definition": "{{view_model.model.data['definition']}}",
-            }
-        """) 
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)

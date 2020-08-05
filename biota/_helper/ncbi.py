@@ -2,19 +2,12 @@ import sys
 import os
 import re
 
-############################################################################################
-#
-#                                        Taxonomy parser
-#                                         
-############################################################################################
-
 class Taxonomy():
     """
-
     This module allows to all the ncbi taxonomy terms but also additionnal informations such as:
     parent id of terms, division, citations, etc..
-
     """
+
     @classmethod
     def __get_division(cls, path, file):
         """
@@ -40,7 +33,6 @@ class Taxonomy():
     
     @classmethod
     def get_all_taxonomy(cls, path, dict_ncbi_names, **files):
-        
         """
         Get all ncbi taxonomy terms
 
@@ -53,8 +45,8 @@ class Taxonomy():
         :returns: dictionnary of ncbi taxonomy terms in the following format 
             {tax_id: {"tax_id": int, "ancestor": int, "rank": str, "division": str}}
         :rtype: dict
-
         """
+
         nodes_path = os.path.join(path, files['ncbi_node_file'])
         division = cls.__get_division(path, files["ncbi_division_file"])
         dict_taxons = {}

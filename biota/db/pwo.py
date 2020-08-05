@@ -31,12 +31,12 @@ class PWO(Resource):
     # -- C --
 
     @classmethod
-    def create_pwo_db(cls, biodata_db_dir, **files):
+    def create_pwo_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `pwo` database
         
-        :param biodata_db_dir: path of the :file:`pwo.obo`
-        :type biodata_db_dir: str
+        :param biodata_dir: path of the :file:`pwo.obo`
+        :type biodata_dir: str
         :param files: dictionnary that contains all data files names
         :type files: dict
         :returns: None
@@ -45,7 +45,7 @@ class PWO(Resource):
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        data_dir, corrected_file_name = OntoHelper.correction_of_pwo_file(biodata_db_dir, files["pwo_file"])
+        data_dir, corrected_file_name = OntoHelper.correction_of_pwo_file(biodata_dir, kwargs['pwo_file'])
         ontology = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
         list_of_pwo = OntoHelper.parse_pwo_terms_from_ontology(ontology)
 

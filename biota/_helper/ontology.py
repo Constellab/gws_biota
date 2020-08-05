@@ -193,7 +193,7 @@ class Onto():
             dict_go['name'] = term.name.replace('\r', '')
             dict_go['namespace'] = term.namespace.replace('\r', '')
             dict_go['definition'] = str(term.definition) #str
-            #dict_go['xrefs'] = term.xrefs 
+
             # ------ get xrefs ------#
             try:
                 xrefs_fro = term.xrefs
@@ -203,7 +203,6 @@ class Onto():
                         dict_go['xrefs'].append(data.id)
             except:
                 pass
-                #print('can not extract xrefs')
 
             # ------ get ancestors ------ #
             try:
@@ -215,7 +214,6 @@ class Onto():
                         dict_go['ancestors'].append(data)
             except:
                 pass
-                #print('ancestors not in the ontology')
 
             if 'xrefs' in dict_go:
                 for data in dict_go['xrefs']:
@@ -267,7 +265,6 @@ class Onto():
                         dict_sbo['ancestors'].append(data)
             except:
                 pass
-                #print('ancestors not in the ontology')
 
             list_sbo.append(dict_sbo)
 

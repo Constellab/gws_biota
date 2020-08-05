@@ -35,12 +35,12 @@ class SBO(Ontology):
     # -- C --
      
     @classmethod
-    def create_sbo_db(cls, biodata_db_dir, **files):
+    def create_sbo_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `sbo` database
 
-        :param biodata_db_dir: path to the folder that contain the :file:`sbo.obo` file
-        :type biodata_db_dir: str
+        :param biodata_dir: path to the folder that contain the :file:`sbo.obo` file
+        :type biodata_dir: str
         :param files_test: dictionnary that contains all data files names
         :type files_test: dict
         :returns: None
@@ -49,7 +49,7 @@ class SBO(Ontology):
 
         from biota._helper.ontology import Onto as OntoHelper
 
-        data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(biodata_db_dir, files["sbo_file"])
+        data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(biodata_dir, kwargs['sbo_file'])
         ontology = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
         list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
 

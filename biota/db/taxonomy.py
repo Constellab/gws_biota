@@ -44,22 +44,22 @@ class Taxonomy(Ontology):
     # -- C --
     
     @classmethod
-    def create_taxonomy_db(cls, biodata_db_dir, **files):
+    def create_taxonomy_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `taxonomy` database
 
-        :param biodata_db_dir: path to the folder that contain ncbi taxonomy dump files
-        :type biodata_db_dir: str
-        :param files_test: dictionnary that contains all data files names
-        :type files_test: dict
+        :param biodata_dir: path to the folder that contain ncbi taxonomy dump files
+        :type biodata_dir: str
+        :param kwargs: dictionnary that contains all data files names
+        :type kwargs: dict
         :returns: None
         :rtype: None
         """
 
         from biota._helper.ncbi import Taxonomy as NCBITaxonomyHelper
 
-        dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_db_dir, **files)
-        dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_db_dir, dict_ncbi_names, **files)
+        dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)
+        dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
 
         bulk_size = 750
         start = 0
@@ -68,8 +68,6 @@ class Taxonomy(Ontology):
         dict_keys = list(dict_taxons.keys())
         
         while True:
-            
-            #start_time = time.time()
 
             #step 2
             taxa = [cls(data = dict_taxons[d]) for d in dict_keys[start:stop]]
@@ -87,14 +85,10 @@ class Taxonomy(Ontology):
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
 
-            #elapsed_time = time.time() - start_time
-
             cls.save_all(taxa)
 
             start = stop-1
             stop = start+bulk_size
-
-            #print("Save {} taxa in {} sec".format(bulk_size, elapsed_time))
 
         #step 4
         page_number = 1
@@ -176,22 +170,5 @@ class Taxonomy(Ontology):
     class Meta():
         table_name = 'taxonomy'
 
-class TaxonomyJSONStandardViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.tax_id}},
-            "name": {{view_model.model.name}},
-            }
-        """)
 
-class TaxonomyJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.tax_id}},
-            "name": {{view_model.model.name}},
-            "rank": {{view_model.model.rank}},
-            "ancestor": {{view_model.model.ancestor.tax_id}},
-            }
-        """)
-
-    Controller.register_model_classes([Taxonomy])
+Controller.register_model_classes([Taxonomy])

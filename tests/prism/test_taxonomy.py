@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-from biota.db.taxonomy import Taxonomy, TaxonomyJSONStandardViewModel, TaxonomyJSONPremiumViewModel
+from biota.db.taxonomy import Taxonomy
 
 ############################################################################################
 #
@@ -27,38 +27,13 @@ class TestGO(unittest.TestCase):
     
     def test_db_object(self):
 
-        files_test = dict(
+        params = dict(
+            biodata_dir = testdata_path,
             ncbi_node_file = "nodes_test.dmp",
             ncbi_name_file = "names_test.dmp",
             ncbi_division_file = "division.dmp",
             ncbi_citation_file = "citations.dmp"
         )
-        Taxonomy.create_taxonomy_db(testdata_path, **files_test)
-        #self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'ancestor': '71', 'rank': 'species', 'division': 'Bacteria'})
-        
-        """
-        # --------- Testing views --------- #
-        tax1 = Taxonomy.get(Taxonomy.tax_id == 9593)
-        
-        tax1_standard_view_model = TaxonomyJSONStandardViewModel(tax1)
-        tax1_premium_view_model = TaxonomyJSONPremiumViewModel(tax1)
-        
-        view1 = tax1_standard_view_model.render()
-        view2 = tax1_premium_view_model.render()
-        """
-        # self.assertEqual(view1,"""
-        #     {
-        #     "id": 9593,
-        #     "name": Gorilla gorilla,
-        #     }
-        # """)
-
-        # self.assertEqual(view2,"""
-        #     {
-        #     "id": 9593,
-        #     "name": Gorilla gorilla,
-        #     "rank": species,
-        #     "ancestor": 9592,
-        #     }
-        # """)
-        
+        Taxonomy.create_taxonomy_db(**params)
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'ancestor': '71', 'rank': 'species', 'division': 'Bacteria'})
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'tax_id': '1', 'name': 'root', 'ancestor': '1', 'rank': 'no rank', 'division': 'Unassigned'})

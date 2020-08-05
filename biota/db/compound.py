@@ -42,25 +42,25 @@ class Compound(Entity):
 
     # -- C -- 
     @classmethod
-    def create_compound_db(cls, biodata_db_dir, **files):
+    def create_compound_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `compound` database
 
-        :param biodata_db_dir: path of the :file:`go.obo`
-        :type biodata_db_dir: str
-        :param files: dictionnary that contains all data files names
-        :type files: dict
+        :param biodata_dir: path of the :file:`go.obo`
+        :type biodata_dir: str
+        :param kwargs: dictionnary that contains all data files names
+        :type kwargs: dict
         :returns: None
         :rtype: None
         """
 
         from biota._helper.chebi import Chebi as ChebiHelper
 
-        list_comp = ChebiHelper.parse_csv_from_file(biodata_db_dir, files['chebi_compound_file'])
+        list_comp = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_compound_file'])
         compounds = cls._create_compounds(list_comp)
         cls.save_all(compounds)
 
-        list_chemical = ChebiHelper.parse_csv_from_file(biodata_db_dir, files['chebi_chemical_data_file'])
+        list_chemical = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_chemical_data_file'])
         cls._set_chemicals(list_chemical)
         cls.save_all(compounds)
 
@@ -139,29 +139,5 @@ class Compound(Entity):
 
     class Meta:
         table_name = 'compound'
-
-class CompoundJSONStandardViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.chebi_id}},
-            "name": {{view_model.model.name}},
-            }
-        """)
-
-class CompoundJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.chebi_id}},
-            "name": {{view_model.model.name}},
-            "source": {{view_model.model.data["source"]}},
-            "formula": {{view_model.model.formula}},
-            "mass": {{view_model.model.mass}},
-            "charge": {{view_model.model.charge}},
-            "definition": {{view_model.model.data["definition"]}},
-            "status": {{view_model.model.data["status"]}},
-            "created by": {{view_model.model.data["created_by"]}},
-            "star": {{view_model.model.data["star"]}}
-            }
-        """)
 
 Controller.register_model_classes([Compound])

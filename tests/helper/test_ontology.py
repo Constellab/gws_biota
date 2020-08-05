@@ -24,8 +24,8 @@ class TestOntology(unittest.TestCase):
         
         #### Test sbo parser ####
         file = "sbo_test.obo"
-        Onto.correction_of_sbo_file(sbo_path, file, 'sbo_corrected.obo')
-        ontology = Onto.create_ontology_from_obo(sbo_path, 'sbo_corrected.obo')
+        sbo_path, file_name = Onto.correction_of_sbo_file(sbo_path, file)
+        ontology = Onto.create_ontology_from_obo(sbo_path, file_name)
         list_sbo_terms = Onto.parse_sbo_terms_from_ontology(ontology)
         self.assertEqual(len(list_sbo_terms), 21)
         self.assertEqual(list_sbo_terms[0]['id'], 'SBO:0000000')
@@ -48,8 +48,8 @@ class TestOntology(unittest.TestCase):
       
         #### Test pwo parser ####
         file = "pwo_test.obo"
-        Onto.correction_of_pwo_file(pwo_path, file, 'pwo_out_test.obo')
-        ontology = Onto.create_ontology_from_obo(pwo_path, 'pwo_out_test.obo')
+        pwo_path, file_name = Onto.correction_of_pwo_file(pwo_path, file)
+        ontology = Onto.create_ontology_from_obo(pwo_path, file_name)
         list_pwo = Onto.parse_pwo_terms_from_ontology(ontology)
         self.assertEqual(len(list_pwo), 34)
         self.assertEqual(list_pwo[0], {'id': 'PW:0000000', 'name': 'term zero', 'definition': 'None'})
