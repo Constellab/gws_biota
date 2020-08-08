@@ -6,6 +6,7 @@ from gws.prism.controller import Controller
 from gws.settings import Settings
 
 from biota.db.chebi_ontology import ChebiOntology
+
 ############################################################################################
 #
 #                                        TestChebiOntology

@@ -140,4 +140,4 @@ class Compound(Entity):
     class Meta:
         table_name = 'compound'
 
-Controller.register_model_classes([Compound])
+Controller.register_model_specs([Compound])

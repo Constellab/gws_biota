@@ -165,4 +165,4 @@ class BTOAncestor(PWModel):
             (('bto', 'ancestor'), True),
         )
 
-Controller.register_model_classes([BTO])
+Controller.register_model_specs([BTO])

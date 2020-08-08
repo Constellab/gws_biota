@@ -24,4 +24,4 @@ class Pathway(Resource):
     class Meta():
         table_name = 'pathway'
 
-Controller.register_model_classes([Pathway])
+Controller.register_model_specs([Pathway])

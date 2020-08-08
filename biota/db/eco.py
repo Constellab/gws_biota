@@ -165,4 +165,4 @@ class ECOAncestor(PWModel):
             (('eco', 'ancestor'), True),
         )
 
-Controller.register_model_classes([ECO])
+Controller.register_model_specs([ECO])

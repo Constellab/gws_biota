@@ -171,4 +171,4 @@ class Taxonomy(Ontology):
         table_name = 'taxonomy'
 
 
-Controller.register_model_classes([Taxonomy])
+Controller.register_model_specs([Taxonomy])

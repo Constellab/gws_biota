@@ -192,4 +192,4 @@ class GOAncestor(PWModel):
             (('go', 'ancestor'), True),
         )
 
-Controller.register_model_classes([GO])
+Controller.register_model_specs([GO])

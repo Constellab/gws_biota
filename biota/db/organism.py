@@ -25,5 +25,5 @@ class Organism(Resource):
     class Meta():
         table_name = 'organism'
 
-Controller.register_model_classes([Organism])
+Controller.register_model_specs([Organism])
 

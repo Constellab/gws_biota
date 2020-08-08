@@ -9,14 +9,6 @@ from biota._helper.rhea import Rhea
 from pronto import Ontology
 import re
 
-
-####################################################################################
-#
-#                                  TEST REACTION PARSER
-#
-####################################################################################
-
-
 class TestModel(unittest.TestCase):
 
     def test_db_object(self):

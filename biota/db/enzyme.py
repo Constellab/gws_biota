@@ -52,7 +52,6 @@ class Enzyme(Entity):
         Protein.create_table()
 
     @classmethod
-    #def create_enzyme_db(cls, biodata_dir, **files):
     def create_enzyme_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `protein` database
@@ -80,7 +79,7 @@ class Enzyme(Entity):
             cls.__update_pathway_from_bkms(list_of_bkms)
 
         return enzymes
-        
+
     @classmethod
     def __create_enzyme_and_protein_dbs(cls, list_of_proteins):
         proteins = {}
@@ -165,4 +164,4 @@ class Enzyme(Entity):
         table_name = 'enzyme'
 
 
-Controller.register_model_classes([Enzyme])
+Controller.register_model_specs([Enzyme])

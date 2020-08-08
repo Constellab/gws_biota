@@ -26,4 +26,4 @@ class Protein(Entity):
         table_name = 'protein'
 
 
-Controller.register_model_classes([Protein])
+Controller.register_model_specs([Protein])

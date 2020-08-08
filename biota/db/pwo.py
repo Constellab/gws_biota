@@ -166,4 +166,4 @@ class PWOAncestor(PWModel):
             (('pwo', 'ancestor'), True),
         )
 
-Controller.register_model_classes([PWO])
+Controller.register_model_specs([PWO])

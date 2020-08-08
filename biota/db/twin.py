@@ -68,4 +68,4 @@ class Twin(Resource):
 class PathwayJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{"id": {{view_model.model.pathway_id}}, "name": {{view_model.model.name}},"compartments": {{view_model.model.compartments}}, "version": {{view_model.model.compartments}} }') 
 
-Controller.register_model_classes([Twin])
+Controller.register_model_specs([Twin])

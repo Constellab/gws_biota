@@ -448,4 +448,4 @@ ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)
 ReactionEnzymeFunctionDeferred.set_model(ReactionEnzymeFunction)
 
-Controller.register_model_classes([Reaction])
+Controller.register_model_specs([Reaction])

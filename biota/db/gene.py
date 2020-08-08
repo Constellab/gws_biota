@@ -26,5 +26,5 @@ class Gene(Entity):
     class Meta():
         table_name = 'gene'
 
-Controller.register_model_classes([Gene])
+Controller.register_model_specs([Gene])
 

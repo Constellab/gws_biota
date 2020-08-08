@@ -193,4 +193,4 @@ class SBOPremiumJSONViewModel(ResourceViewModel):
             list_ancestors.append(q[i].ancestor.sbo_id)
         return list_ancestors
 
-Controller.register_model_classes([SBO])
+Controller.register_model_specs([SBO])

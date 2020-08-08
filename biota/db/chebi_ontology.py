@@ -80,4 +80,4 @@ class ChebiOntology(Ontology):
     class Meta():
         table_name = 'chebi_ontology'
 
-Controller.register_model_classes([ChebiOntology])
+Controller.register_model_specs([ChebiOntology])

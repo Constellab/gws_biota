@@ -10,7 +10,7 @@ from peewee import Model as PWModel
 
 from gws.prism.controller import Controller
 from gws.prism.view import JSONViewTemplate
-from gws.prism.model import Process, ResourceViewModel, Resource, DbManager
+from gws.prism.model import Config, Process, ResourceViewModel, Resource, DbManager
 
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.enzyme import Enzyme
@@ -502,8 +502,14 @@ class EnzymeFunctionStatistics(Resource):
 
 class EnzymeFunctionStatisticsJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{{view_model.model.data}}')
- 
-class EnzymeFunctionStatisticsProcess(Process):
+
+class StatisticsExtractorConfig(Config):
+    specs = {
+        'global_informations': {"type": bool, "default": True}, 
+        'organism': {"type": str, "default": ""}
+    }
+
+class StatisticsExtractor(Process):
     """
     The class allows the biota module to get statistics informations about enzyme_functions in the biota database
     It browses enyme table to collect and process statistics informations
@@ -511,9 +517,13 @@ class EnzymeFunctionStatisticsProcess(Process):
     The process can provide general statistics information about the table or more 
     specific informations with about enzyme_functions of a given organism
     """
-    input_specs = {'EnzymeFunctionStatistics': EnzymeFunctionStatistics}
+    input_specs = {}
     output_specs = {'EnzymeFunctionStatistics': EnzymeFunctionStatistics}
-    async def task(self, params={}): 
+    config_specs = {'default': StatisticsExtractorConfig}
+
+    async def task(self): 
+        params = self.config.data
+
         se = EnzymeFunctionStatistics()
 
         if (params['global_informations']): # Case if the user want only global information about the EnzymeFunction table
@@ -676,4 +686,4 @@ class EnzymeFunctionStatisticsProcess(Process):
 
 EnzymeFunctionBTODeffered.set_model(EnzymeFunctionBTO)
 
-Controller.register_model_classes([EnzymeFunction, EnzymeFunctionStatistics, EnzymeFunctionStatisticsProcess])
+Controller.register_model_specs([EnzymeFunction, EnzymeFunctionStatistics, StatisticsExtractor])
