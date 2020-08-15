@@ -17,7 +17,10 @@ class TestChebi(unittest.TestCase):
     
     def test_db_object(self):
         settings = Settings.retrieve()
-        testdata_path = settings.get_dir("biota:chebi_testdata_dir")
+        testdata_path = os.path.join(
+            settings.get_dir("biota:testdata_dir"),
+            '../_helper/data/'
+        )
 
         #### Test .csv/.tsv parser ####
         list_comp = Chebi.parse_csv_from_file(testdata_path,'compounds_test.tsv')

@@ -16,7 +16,11 @@ class TestBrenda(unittest.TestCase):
     
     def test_db_object(self):
         settings = Settings.retrieve()
-        testdata_path = settings.get_dir("biota:brenda_testdata_dir")
+        testdata_path = os.path.join(
+            settings.get_dir("biota:testdata_dir"),
+            '../_helper/data/'
+        )
+
         brenda = Brenda(os.path.join(testdata_path, "brenda_test.txt"))
         list_proteins = brenda.parse_all_protein_to_dict()
     

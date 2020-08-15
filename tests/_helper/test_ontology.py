@@ -1,3 +1,4 @@
+import os
 import json
 import unittest
 from biota._helper.ontology import Onto
@@ -8,14 +9,14 @@ class TestOntology(unittest.TestCase):
     def test_db_object(self):
         
         settings = Settings.retrieve()
-        go_path = settings.get_dir("biota:go_testdata_dir")
-        eco_path = settings.get_dir("biota:eco_testdata_dir")
-        bto_path = settings.get_dir("biota:bto_testdata_dir")
-        sbo_path = settings.get_dir("biota:sbo_testdata_dir")
-        pwo_path = settings.get_dir("biota:pwo_testdata_dir")
-        
+        testdata_path = os.path.join(
+            settings.get_dir("biota:testdata_dir"),
+            '../_helper/data/'
+        )
+
         #### Test go parser ####
-        ontology = Onto.create_ontology_from_obo(go_path,'go_test.obo')
+        file = 'go_test.obo'
+        ontology = Onto.create_ontology_from_obo(testdata_path,file)
         list_go = Onto.parse_obo_from_ontology(ontology)
         self.assertEqual(len(list_go), 14)
         self.assertEqual(list_go[0]['id'], 'GO:0000001')
@@ -24,7 +25,7 @@ class TestOntology(unittest.TestCase):
         
         #### Test sbo parser ####
         file = "sbo_test.obo"
-        sbo_path, file_name = Onto.correction_of_sbo_file(sbo_path, file)
+        sbo_path, file_name = Onto.correction_of_sbo_file(testdata_path, file)
         ontology = Onto.create_ontology_from_obo(sbo_path, file_name)
         list_sbo_terms = Onto.parse_sbo_terms_from_ontology(ontology)
         self.assertEqual(len(list_sbo_terms), 21)
@@ -33,14 +34,14 @@ class TestOntology(unittest.TestCase):
         
         #### Test BTO parser ####
         file = "bto_test.json"
-        list_bto = Onto.parse_bto_from_json(bto_path, file)
+        list_bto = Onto.parse_bto_from_json(testdata_path, file)
         self.assertEqual(len(list_bto), 18)
         self.assertEqual(list_bto[0], {'id': 'BTO_0000000', 'label': 'tissues, cell types and enzyme sources', 'ancestors': ['BTO_0000000']})
         self.assertEqual(list_bto[1], {'id': 'BTO_0000001', 'label': 'culture condition:-induced cell', 'ancestors': ['BTO_0000001', 'BTO_0000216']})
         
         #### Test ECO parser ####
         file = "eco_test.obo"
-        ontology = Onto.create_ontology_from_obo(eco_path, file)
+        ontology = Onto.create_ontology_from_obo(testdata_path, file)
         list_eco = Onto.parse_eco_terms_from_ontoloy(ontology)
         self.assertEqual(len(list_eco), 25)
         self.assertEqual(list_eco[0], {'id': 'ECO:0000000', 'name': 'evidence', 'definition': 'A type of information that is used to support an assertion.'})
@@ -48,7 +49,7 @@ class TestOntology(unittest.TestCase):
       
         #### Test pwo parser ####
         file = "pwo_test.obo"
-        pwo_path, file_name = Onto.correction_of_pwo_file(pwo_path, file)
+        pwo_path, file_name = Onto.correction_of_pwo_file(testdata_path, file)
         ontology = Onto.create_ontology_from_obo(pwo_path, file_name)
         list_pwo = Onto.parse_pwo_terms_from_ontology(ontology)
         self.assertEqual(len(list_pwo), 34)

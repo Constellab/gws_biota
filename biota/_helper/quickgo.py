@@ -35,7 +35,7 @@ class QuickGOAnnotation():
         """
 
         settings = Settings.retrieve()
-        URL = settings.get_dir("biota:quickgo_api_url")
+        URL = settings.get_url("biota:quickgo_api_url")
         try:
             requestURL = URL + str(uniprot_id)
             r = requests.get(requestURL, headers={ "Accept" : "text/tsv"})
