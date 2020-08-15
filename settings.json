@@ -1,54 +1,57 @@
 {
-    "name"                          : "biota",
-    "title"                         : "GWS Biota",
-    "description"                   : "GWS (Gencovery Web Services) Biota provides web services to access high-quality and curated public biological data.",
-    "authors"                       : "Gencovery",
-    "version"                       : "0.1",
+    "name"          : "biota",
+    "title"         : "GWS Biota",
+    "description"   : "GWS (Gencovery Web Services) Biota provides web services to access high-quality and curated public biological data.",
+    "authors"       : "Gencovery",
+    "version"       : "0.1",
 
-    "db_dir"                        : "./data/",
-    "db_name"                       : "db.sqlite3",
+    "db_dir"        : "./data/",
+    "db_name"       : "db.sqlite3",
 
-    "biota:biodata_dir"             : "./",
-    "biota:testdata_dir"            : "./tests/data",
-    
-    "biota:brenda_biodata_dir"      : "../../extern/biodata/brenda",
-    "biota:brenda_testdata_dir"     : "./tests/helper/data",
+    "dirs"          : {
+        "biota:biodata_dir"             : "./",
+        "biota:testdata_dir"            : "./tests/data",
+        
+        "biota:brenda_biodata_dir"      : "../../extern/biodata/brenda",
+        "biota:brenda_testdata_dir"     : "./tests/helper/data",
 
-    "biota:bkms_biodata_dir"        : "../../extern/biodata/bkms",
-    "biota:bkms_testdata_dir"       : "./tests/helper/data",
+        "biota:bkms_biodata_dir"        : "../../extern/biodata/bkms",
+        "biota:bkms_testdata_dir"       : "./tests/helper/data",
 
-    "biota:chebi_biodata_dir"       : "../../extern/biodata/chebi/",
-    "biota:chebi_testdata_dir"      : "./tests/helper/data",
+        "biota:chebi_biodata_dir"       : "../../extern/biodata/chebi/",
+        "biota:chebi_testdata_dir"      : "./tests/helper/data",
 
-    "biota:quickgo_api_url"         : "https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?selectedFields=geneProductId&selectedFields=symbol&selectedFields=qualifier&selectedFields=goId&selectedFields=goAspect&selectedFields=evidenceCode&selectedFields=goEvidence&selectedFields=reference&selectedFields=withFrom&selectedFields=taxonId&selectedFields=assignedBy&selectedFields=synonyms&selectedFields=name&geneProductId=",
-    
-    "biota:go_biodata_dir"          : "../../extern/biodata/go",
-    "biota:eco_biodata_dir"         : "../../extern/biodata/eco",
-    "biota:sbo_biodata_dir"         : "../../extern/biodata/sbo",
-    "biota:bto_biodata_dir"         : "../../extern/biodata/brenda/bto",
-    "biota:pwo_biodata_dir"         : "../../extern/biodata/pwo",
+        "biota:quickgo_api_url"         : "https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?selectedFields=geneProductId&selectedFields=symbol&selectedFields=qualifier&selectedFields=goId&selectedFields=goAspect&selectedFields=evidenceCode&selectedFields=goEvidence&selectedFields=reference&selectedFields=withFrom&selectedFields=taxonId&selectedFields=assignedBy&selectedFields=synonyms&selectedFields=name&geneProductId=",
+        
+        "biota:go_biodata_dir"          : "../../extern/biodata/go",
+        "biota:eco_biodata_dir"         : "../../extern/biodata/eco",
+        "biota:sbo_biodata_dir"         : "../../extern/biodata/sbo",
+        "biota:bto_biodata_dir"         : "../../extern/biodata/brenda/bto",
+        "biota:pwo_biodata_dir"         : "../../extern/biodata/pwo",
 
-    "biota:go_testdata_dir"         : "./tests/helper/data",
-    "biota:eco_testdata_dir"        : "./tests/helper/data",
-    "biota:sbo_testdata_dir"        : "./tests/helper/data",
-    "biota:bto_testdata_dir"        : "./tests/helper/data",
-    "biota:pwo_testdata_dir"        : "./tests/helper/data",
+        "biota:go_testdata_dir"         : "./tests/helper/data",
+        "biota:eco_testdata_dir"        : "./tests/helper/data",
+        "biota:sbo_testdata_dir"        : "./tests/helper/data",
+        "biota:bto_testdata_dir"        : "./tests/helper/data",
+        "biota:pwo_testdata_dir"        : "./tests/helper/data",
 
-    "biota:rhea_biodata_dir"        : "../../extern/biodata/rhea",
-    "biota:rhea_testdata_dir"       : "./tests/helper/data",
+        "biota:rhea_biodata_dir"        : "../../extern/biodata/rhea",
+        "biota:rhea_testdata_dir"       : "./tests/helper/data",
 
-    "biota:taxonomy_biodata_dir"    : "../../extern/biodata/ncbi",
-    "biota:taxonomy_testdata_dir"   : "./tests/helper/data",
+        "biota:taxonomy_biodata_dir"    : "../../extern/biodata/ncbi",
+        "biota:taxonomy_testdata_dir"   : "./tests/helper/data"
+    },
 
     "dependencies" : {
         "gws"           : "../gws-py",
         ":external:"    : ["../../extern/brenda-py"]
     },
-    "statics"       : {
-        "/static/biota"   : "./public/static"
-    },
+    
     "app":{
         "title": "Biota",
+        "statics"       : {
+            "/static/biota"   : "./public/static"
+        },
         "scripts": [
         ],
         "modules": [

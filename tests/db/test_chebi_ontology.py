@@ -13,7 +13,7 @@ from biota.db.chebi_ontology import ChebiOntology
 #                                         
 ############################################################################################
 settings = Settings.retrieve()
-testdata_path = settings.get_data("biota:chebi_testdata_dir")
+testdata_path = settings.get_dir("biota:chebi_testdata_dir")
 
 class TestChebiOntology(unittest.TestCase):
     @classmethod

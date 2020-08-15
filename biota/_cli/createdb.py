@@ -98,7 +98,7 @@ def createdb(user):
     # ------------- Create GO ------------- #
     logger.info("Step 1 | Loading go and go_ancestors...")
     start_time = time.time()
-    go_biodata_dir = settings.get_data("biota:go_biodata_dir")
+    go_biodata_dir = settings.get_dir("biota:go_biodata_dir")
     GO.create_go_db(go_biodata_dir, **files)
     len_go = GO.select().count()
     elapsed_time = time.time() - start_time
@@ -107,7 +107,7 @@ def createdb(user):
     # ------------- Create SBO ------------- #
     logger.info("Step 2 | Loading sbo and sbo_ancestors...")
     start_time = time.time()
-    sbo_biodata_dir = settings.get_data("biota:sbo_biodata_dir")
+    sbo_biodata_dir = settings.get_dir("biota:sbo_biodata_dir")
     SBO.create_sbo_db(sbo_biodata_dir, **files)
     len_sbo = SBO.select().count()
     elapsed_time = time.time() - start_time
@@ -116,7 +116,7 @@ def createdb(user):
     # ------------------- Create BTO ----------------- #
     logger.info("Step 3 | Loading bto and bto_ancestors...")
     start_time = time.time()
-    bto_biodata_dir = settings.get_data("biota:bto_biodata_dir")
+    bto_biodata_dir = settings.get_dir("biota:bto_biodata_dir")
     BTO.create_bto_db(bto_biodata_dir, **files)
     len_bto = BTO.select().count()
     elapsed_time = time.time() - start_time
@@ -125,7 +125,7 @@ def createdb(user):
     # ------------------- Create ECO ----------------- #
     logger.info("Step 4 | Loading eco and eco_ancestors...")
     start_time = time.time()
-    eco_biodata_dir = settings.get_data("biota:eco_biodata_dir")
+    eco_biodata_dir = settings.get_dir("biota:eco_biodata_dir")
     ECO.create_eco_db(eco_biodata_dir, **files)
     len_eco = ECO.select().count()
     elapsed_time = time.time() - start_time
@@ -134,7 +134,7 @@ def createdb(user):
     # ------------- Create ChebiOntology ------------- #
     logger.info("Step 5 | Loading chebi ontology...")
     start_time = time.time()
-    chebi_biodata_dir = settings.get_data("biota:chebi_biodata_dir")
+    chebi_biodata_dir = settings.get_dir("biota:chebi_biodata_dir")
     ChebiOntology.create_chebi_ontology_db(chebi_biodata_dir, **files)
     len_chebi_ontology = ChebiOntology.select().count()
     elapsed_time = time.time() - start_time
@@ -143,7 +143,7 @@ def createdb(user):
     # ---------------- Create Taxonomy --------------- #
     logger.info("Step 6 | Loading ncbi taxonomy...")
     start_time = time.time()
-    ncbi_biodata_dir = settings.get_data("biota:taxonomy_biodata_dir")
+    ncbi_biodata_dir = settings.get_dir("biota:taxonomy_biodata_dir")
     Taxonomy.create_taxonomy_db(ncbi_biodata_dir, **files)
     len_taxonomy = Taxonomy.select().count()
     elapsed_time = time.time() - start_time
@@ -152,7 +152,7 @@ def createdb(user):
     # ---------------- Create Compound --------------- #
     logger.info("Step 7 | Loading chebi compounds...")
     start_time = time.time()
-    chebi_biodata_dir = settings.get_data("biota:chebi_biodata_dir")
+    chebi_biodata_dir = settings.get_dir("biota:chebi_biodata_dir")
     Compound.create_compound_db(chebi_biodata_dir, **files)
     len_compound = Compound.select().count()
     elapsed_time = time.time() - start_time
@@ -161,7 +161,7 @@ def createdb(user):
     # ------------------ Create EnzymeFunction --------------- #
     logger.info("Step 8 | Loading brenda enzyme_functions and enzyme_btos...")
     start_time = time.time()
-    brenda_biodata_dir = settings.get_data("biota:brenda_biodata_dir")
+    brenda_biodata_dir = settings.get_dir("biota:brenda_biodata_dir")
     EnzymeFunction.create_enzyme_function_db(brenda_biodata_dir, **files)
     len_enzyme = EnzymeFunction.select().count()
     elapsed_time = time.time() - start_time
@@ -170,7 +170,7 @@ def createdb(user):
     # ---------------- Create Reactions -------------- #
     logger.info("Step 9 | Loading rhea reactions...")
     start_time = time.time()
-    rhea_biodata_dir = settings.get_data("biota:rhea_biodata_dir")
+    rhea_biodata_dir = settings.get_dir("biota:rhea_biodata_dir")
     Reaction.create_reaction_db(rhea_biodata_dir, **files)
     len_rhea = Reaction.select().count()
     elapsed_time = time.time() - start_time

@@ -13,7 +13,7 @@ class TestModel(unittest.TestCase):
 
     def test_db_object(self):        
         settings = Settings.retrieve()
-        path = settings.get_data("biota:taxonomy_testdata_dir")
+        path = settings.get_dir("biota:taxonomy_testdata_dir")
         
         files = dict(
             ncbi_node_file = "nodes_test.dmp",

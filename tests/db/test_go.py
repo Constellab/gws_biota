@@ -7,7 +7,7 @@ from gws.settings import Settings
 from biota.db.go import GO
 
 settings = Settings.retrieve()
-testdata_path = settings.get_data("biota:testdata_dir")
+testdata_path = settings.get_dir("biota:testdata_dir")
 
 class TestGO(unittest.TestCase):
     

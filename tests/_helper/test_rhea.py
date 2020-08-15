@@ -13,7 +13,7 @@ class TestModel(unittest.TestCase):
 
     def test_db_object(self):
         settings = Settings.retrieve()
-        path_test = settings.get_data("biota:rhea_testdata_dir")
+        path_test = settings.get_dir("biota:rhea_testdata_dir")
 
         #### Test reaction parser ####
         list_reactions = Rhea.parse_reaction_from_file(path_test, 'rhea-kegg_test.reaction')
