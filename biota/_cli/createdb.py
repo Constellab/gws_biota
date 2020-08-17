@@ -5,10 +5,10 @@
 
 import os
 import click
-import logging
+import time
 
-#import from biota
 from gws.settings import Settings
+from gws.logger import Logger
 from biota.db.go import GO
 from biota.db.sbo import SBO
 from biota.db.bto import BTO
@@ -17,12 +17,8 @@ from biota.db.chebi_ontology import ChebiOntology
 from biota.db.taxonomy import Taxonomy
 from biota.db.compound import Compound
 from biota.db.enzyme_function import EnzymeFunction
-#from biota.db.enzyme_annotation import EnzymeAnnotation
 from biota.db.reaction import Reaction
-
-#import Timer
-from timeit import default_timer
-import time
+#from biota.db.enzyme_annotation import EnzymeAnnotation
 
 def createdb(user):
     settings = Settings.retrieve()
@@ -30,17 +26,7 @@ def createdb(user):
     if user is None:
         user = "Gencoverer"
 
-    log_dir = settings.get_log_dir()
-    if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
-
-    fh = logging.FileHandler(os.path.join(log_dir,'./biota.log'))
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-    formatter = logging.Formatter(" %(message)s")
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
+    logger = Logger()
     logger.info(f"Hello {user}")
     logger.info(f"Create tables ...")
 
