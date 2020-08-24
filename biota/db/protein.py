@@ -21,9 +21,3 @@ class Protein(Entity):
     def create_protein_db(cls, biodata_dir = None, **kwargs):
         from biota.db.enzyme import Enzyme
         Enzyme.create_enzyme_db(biodata_dir = biodata_dir, **kwargs)
-
-    class Meta():
-        table_name = 'protein'
-
-
-Controller.register_model_specs([Protein])

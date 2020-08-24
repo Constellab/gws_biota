@@ -62,10 +62,13 @@ class ECO(Ontology):
         onto_eco = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['eco_file'])
         list_eco = OntoHelper.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [cls(data = dict_) for dict_ in list_eco]
+        job = kwargs.get('job',None)
 
         for eco in ecos:
             eco.set_eco_id( eco.data["id"] )
             eco.set_name( eco.data["name"] )
+            if not job is None:
+                eco._set_job(job)
 
         cls.save_all(ecos)
 
@@ -143,8 +146,6 @@ class ECO(Ontology):
         """
         self.name = name__
 
-    class Meta():
-        table_name = 'eco'
 
 class ECOAncestor(PWModel):
     """
@@ -158,11 +159,10 @@ class ECOAncestor(PWModel):
     
     eco = ForeignKeyField(ECO)
     ancestor = ForeignKeyField(ECO)
+    
     class Meta:
         table_name = 'eco_ancestors'
         database = DbManager.db
         indexes = (
             (('eco', 'ancestor'), True),
         )
-
-Controller.register_model_specs([ECO])

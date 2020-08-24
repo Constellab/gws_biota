@@ -69,15 +69,13 @@ class ChebiOntology(Ontology):
         onto = ChebiHelper.create_ontology_from_file(data_dir, corrected_file_name)
         list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
         chebis = [cls(data = dict_) for dict_ in list_chebi]
-
+        job = kwargs.get('job',None)
+        
         for chebi in chebis:
             chebi.name = chebi.data["name"]
             chebi.chebi_id = chebi.data["id"]
+            if not job is None:
+                chebi._set_job(job)
 
         cls.save_all(chebis)
         return(list_chebi)
-
-    class Meta():
-        table_name = 'chebi_ontology'
-
-Controller.register_model_specs([ChebiOntology])

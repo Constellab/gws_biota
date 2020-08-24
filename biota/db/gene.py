@@ -21,10 +21,3 @@ class Gene(Entity):
 
     def set_KO(self, ko):
         self.KO = ko
-    pass
-
-    class Meta():
-        table_name = 'gene'
-
-Controller.register_model_specs([Gene])
-

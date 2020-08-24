@@ -3,7 +3,9 @@ import os
 import unittest
 import asyncio
 
-from biota.db.enzyme_function import EnzymeFunctionStatistics, StatisticsExtractor, StatisticsExtractorConfig, EnzymeFunctionStatisticsJSONViewModel
+from biota.db.enzyme_function import EnzymeFunctionStatistics, \
+                                    StatisticsExtractor, \
+                                    EnzymeFunctionStatisticsJSONViewModel
 
 class TestProcess(unittest.TestCase):
 
@@ -11,6 +13,8 @@ class TestProcess(unittest.TestCase):
     def setUpClass(cls):
         EnzymeFunctionStatistics.drop_table()
         StatisticsExtractor.drop_table()
+        EnzymeFunctionStatistics.create_table()
+        StatisticsExtractor.create_table()
         pass
 
     @classmethod

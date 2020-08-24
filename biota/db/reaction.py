@@ -98,8 +98,9 @@ class Reaction(Entity):
 
         from biota._helper.rhea import Rhea
 
+        job = kwargs.get('job',None)
         list_of_reactions = Rhea.parse_reaction_from_file(biodata_dir, kwargs['rhea_kegg_reaction_file'])
-        cls.__create_reactions(list_of_reactions)
+        cls.__create_reactions(list_of_reactions, job=job)
 
         list_of_directions = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea_direction_file'])
         cols = Rhea.get_columns_from_lines(list_of_directions)
@@ -122,7 +123,7 @@ class Reaction(Entity):
         cls.__update_master_and_id_from_rhea2ec(xref_ids)
 
     @classmethod
-    def __create_reactions(cls, list_reaction):
+    def __create_reactions(cls, list_reaction, job=None):
         """
         Creates reactions from a list
         Add reactions-substrates and reaction-products relation in
@@ -139,7 +140,10 @@ class Reaction(Entity):
         for react in reactions:
             if 'entry' in react.data.keys():
                 react.rhea_id = react.data['entry']
-        
+
+            if not job is None:
+                react._set_job(job)
+
         cls.save_all(reactions)
 
         for react in reactions:
@@ -393,8 +397,6 @@ class Reaction(Entity):
 
             cls.save_all(q)
 
-    class Meta:
-        table_name = 'reaction'
 
 
 class ReactionSubstrate(PWModel):
@@ -408,6 +410,7 @@ class ReactionSubstrate(PWModel):
     """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
+    
     class Meta:
         table_name = 'reaction_subsrates'
         database = DbManager.db
@@ -424,6 +427,7 @@ class ReactionProduct(PWModel):
     """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
+    
     class Meta:
         table_name = 'reaction_products'
         database = DbManager.db
@@ -440,6 +444,7 @@ class ReactionEnzymeFunction(PWModel):
     """
     enzyme_function = ForeignKeyField(EnzymeFunction)
     reaction = ForeignKeyField(Reaction)
+    
     class Meta:
         table_name = 'reaction_enzyme_functions'
         database = DbManager.db
@@ -447,5 +452,3 @@ class ReactionEnzymeFunction(PWModel):
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)
 ReactionEnzymeFunctionDeferred.set_model(ReactionEnzymeFunction)
-
-Controller.register_model_specs([Reaction])

@@ -58,6 +58,7 @@ class Taxonomy(Ontology):
 
         from biota._helper.ncbi import Taxonomy as NCBITaxonomyHelper
 
+        job = kwargs.get('job',None)
         dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)
         dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
 
@@ -84,6 +85,9 @@ class Taxonomy(Ontology):
                     tax.name = "Unspecified"
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
+                
+                if not job is None:
+                    tax._set_job(job)
 
             cls.save_all(taxa)
 
@@ -166,9 +170,3 @@ class Taxonomy(Ontology):
                     t.ancestor = parent
             
             start = stop-1
-
-    class Meta():
-        table_name = 'taxonomy'
-
-
-Controller.register_model_specs([Taxonomy])

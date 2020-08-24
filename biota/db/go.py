@@ -60,6 +60,7 @@ class GO(Ontology):
 
         from biota._helper.ontology import Onto as OntoHelper
 
+        job = kwargs.get('job',None)
         onto_go = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['go_file'])
         list_go = OntoHelper.parse_obo_from_ontology(onto_go)
         
@@ -68,6 +69,8 @@ class GO(Ontology):
             go.set_go_id(go.data["id"])
             go.set_name(go.data["name"])
             go.set_namespace(go.data["namespace"])
+            if not job is None:
+                go._set_job(job)
 
         cls.save_all(gos)
 
@@ -93,9 +96,7 @@ class GO(Ontology):
             except:
                 transaction.rollback()
 
-    class Meta:
-        table_name = 'go'
-
+  
     # -- D --
 
     @classmethod
@@ -170,8 +171,6 @@ class GO(Ontology):
                 vals.append(val)
         return(vals)
 
-    class Meta():
-        table_name = 'go'
 
 class GOAncestor(PWModel):
     """
@@ -185,11 +184,10 @@ class GOAncestor(PWModel):
 
     go = ForeignKeyField(GO)
     ancestor = ForeignKeyField(GO)
+    
     class Meta:
         table_name = 'go_ancestors'
         database = DbManager.db
         indexes = (
             (('go', 'ancestor'), True),
         )
-
-Controller.register_model_specs([GO])

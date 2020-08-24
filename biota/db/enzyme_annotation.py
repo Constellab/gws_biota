@@ -59,7 +59,6 @@ class EnzymeAnnotation(Resource):
 
         from biota._helper.quickgo import QuickGOAnnotation
 
-
         list_annotation = []
         page_number = 1
         items_per_page = 100
@@ -151,9 +150,6 @@ class EnzymeAnnotation(Resource):
                 pass
                 #print("could not find the taxonomy term: " + str(self.data['taxon id']))
 
-    
-    class Meta():
-        table_name = 'enzyme_annotation'
 
 class EnzymeAnnotationJSONStandardViewModel(ResourceViewModel):
     template = JSONViewTemplate("""

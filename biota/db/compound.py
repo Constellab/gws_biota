@@ -57,7 +57,9 @@ class Compound(Entity):
         from biota._helper.chebi import Chebi as ChebiHelper
 
         list_comp = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_compound_file'])
-        compounds = cls._create_compounds(list_comp)
+        job = kwargs.get('job',None)
+        compounds = cls._create_compounds(list_comp, job=job)   
+
         cls.save_all(compounds)
 
         list_chemical = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_chemical_data_file'])
@@ -67,7 +69,7 @@ class Compound(Entity):
 
 
     @classmethod
-    def _create_compounds(cls, list_compound):
+    def _create_compounds(cls, list_compound, job=None):
         """
         Creates chebi compound from a list 
         :type list_compound: list
@@ -80,6 +82,8 @@ class Compound(Entity):
         for comp in compounds:
             comp.name =  comp.data["name"]
             comp.chebi_id = comp.data["chebi_accession"]
+            if not job is None:
+                comp._set_job(job)
 
         return compounds
 
@@ -136,8 +140,3 @@ class Compound(Entity):
                 except:
                     pass
                     #print('can not find the compound CHEBI:' + str(chem['compound_id']) + ' to set charge')
-
-    class Meta:
-        table_name = 'compound'
-
-Controller.register_model_specs([Compound])

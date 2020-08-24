@@ -219,6 +219,7 @@ class EnzymeFunction(Resource):
         from biota._helper.brenda import Brenda
         from biota._helper.bkms import BKMS
 
+        job = kwargs.get('job',None)
         brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
         list_of_proteins = brenda.parse_all_protein_to_dict()
         
@@ -233,6 +234,9 @@ class EnzymeFunction(Resource):
                 enzyme = enzymes[ec],
                 data = d
             )
+
+            if not job is None:
+                enz_fun._set_job(job)
 
             enzyme_functions.append(enz_fun)
 
@@ -356,9 +360,7 @@ class EnzymeFunction(Resource):
         for bto in q: 
             self.bto.add(bto)
 
-    class Meta():
-        table_name = 'enzyme_function'
-    
+
 class EnzymeFunctionBTO(PWModel):
     """
     This class refers to tissues of brenda enzyme_functions
@@ -371,10 +373,11 @@ class EnzymeFunctionBTO(PWModel):
     """
     enzyme_function = ForeignKeyField(EnzymeFunction)
     bto = ForeignKeyField(BiotaBTO)
-    class Meta:
-        table_name = 'enzyme_function_btos'
-        database = DbManager.db
 
+    class Meta:
+         table_name = 'enzyme_function_btos'
+         database = DbManager.db
+        
 class EnzymeFunctionStatistics(Resource):
     """
     This class refers to statistics of enzyme_function tables.
@@ -503,12 +506,6 @@ class EnzymeFunctionStatistics(Resource):
 class EnzymeFunctionStatisticsJSONViewModel(ResourceViewModel):
     template = JSONViewTemplate('{{view_model.model.data}}')
 
-class StatisticsExtractorConfig(Config):
-    specs = {
-        'global_informations': {"type": bool, "default": True}, 
-        'organism': {"type": str, "default": ""}
-    }
-
 class StatisticsExtractor(Process):
     """
     The class allows the biota module to get statistics informations about enzyme_functions in the biota database
@@ -519,14 +516,17 @@ class StatisticsExtractor(Process):
     """
     input_specs = {}
     output_specs = {'EnzymeFunctionStatistics': EnzymeFunctionStatistics}
-    config_specs = {'default': StatisticsExtractorConfig}
+    config_specs = {
+        'global_informations': {"type": 'bool', "default": True}, 
+        'organism': {"type": 'str', "default": ""}
+    }
 
-    async def task(self): 
+    def task(self): 
         params = self.config.data
 
         se = EnzymeFunctionStatistics()
 
-        if (params['global_informations']): # Case if the user want only global information about the EnzymeFunction table
+        if (self.get_param('global_informations')): # Case if the user want only global information about the EnzymeFunction table
             dict_entries = {}
             dict_enz_funyme_functions_classes = {}
             dict_organisms = {}
@@ -685,5 +685,3 @@ class StatisticsExtractor(Process):
         self.output['EnzymeFunctionStatistics'] = se
 
 EnzymeFunctionBTODeffered.set_model(EnzymeFunctionBTO)
-
-Controller.register_model_specs([EnzymeFunction, EnzymeFunctionStatistics, StatisticsExtractor])

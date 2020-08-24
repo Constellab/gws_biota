@@ -21,9 +21,3 @@ class Organism(Resource):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    class Meta():
-        table_name = 'organism'
-
-Controller.register_model_specs([Organism])
-

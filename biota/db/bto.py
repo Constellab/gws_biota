@@ -58,10 +58,13 @@ class BTO(Ontology):
 
         list_bto = OntoHelper.parse_bto_from_json(biodata_dir, kwargs['bto_file'])
         btos = [cls(data = dict_) for dict_ in list_bto]
+        job = kwargs.get('job',None)
 
         for bto in btos:
             bto.set_bto_id( bto.data["id"] )
             bto.set_label( bto.data["label"] )
+            if not job is None:
+                bto._set_job(job)
 
         cls.save_all(btos)
 
@@ -142,9 +145,6 @@ class BTO(Ontology):
         :type label: str
         """
         self.label = label
-  
-    class Meta():
-        table_name = 'bto'
 
 class BTOAncestor(PWModel):
     """
@@ -158,11 +158,10 @@ class BTOAncestor(PWModel):
     """
     bto = ForeignKeyField(BTO)
     ancestor = ForeignKeyField(BTO)
+    
     class Meta:
         table_name = 'bto_ancestors'
         database = DbManager.db
         indexes = (
             (('bto', 'ancestor'), True),
         )
-
-Controller.register_model_specs([BTO])

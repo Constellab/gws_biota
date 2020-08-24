@@ -10,7 +10,7 @@
 
     "dirs"          : {
         "biota:biodata_dir"             : "./",
-        "biota:testdata_dir"            : "./tests/data",
+        "biota:testdata_dir"            : "./tests/testdata",
         "biota:brenda_biodata_dir"      : "../../extern/biodata/brenda",
         "biota:bkms_biodata_dir"        : "../../extern/biodata/bkms",
         "biota:chebi_biodata_dir"       : "../../extern/biodata/chebi/",

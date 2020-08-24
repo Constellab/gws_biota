@@ -23,6 +23,3 @@ class Entity(Resource):
     def set_go(self, go):
         self.go_id = go
     
-    class Meta:
-        table_name = 'entity'
-

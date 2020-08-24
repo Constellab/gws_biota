@@ -49,6 +49,7 @@ class SBO(Ontology):
 
         from biota._helper.ontology import Onto as OntoHelper
 
+        job = kwargs.get('job',None)
         data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(biodata_dir, kwargs['sbo_file'])
         ontology = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
         list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
@@ -57,6 +58,8 @@ class SBO(Ontology):
         for sbo in sbos:
             sbo.set_sbo_id(sbo.data["id"])
             sbo.set_name(sbo.data["name"])
+            if not job is None:
+                sbo._set_job(job)
 
         cls.save_all(sbos)
 
@@ -148,9 +151,6 @@ class SBO(Ontology):
                 vals.append(val)
         return(vals)
 
-    class Meta():
-        table_name = 'sbo'
-
 class SBOAncestor(PWModel):
     """
     This class defines the many-to-many relationship between the sbo terms and theirs ancestors
@@ -162,6 +162,7 @@ class SBOAncestor(PWModel):
     """
     sbo = ForeignKeyField(SBO)
     ancestor = ForeignKeyField(SBO)
+    
     class Meta:
         table_name = 'sbo_ancestors'
         database = DbManager.db
@@ -192,5 +193,3 @@ class SBOPremiumJSONViewModel(ResourceViewModel):
         for i in range(0, len(q)):
             list_ancestors.append(q[i].ancestor.sbo_id)
         return list_ancestors
-
-Controller.register_model_specs([SBO])

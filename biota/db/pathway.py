@@ -20,8 +20,3 @@ class Pathway(Resource):
     # -- C --
 
     # -- S -- 
-
-    class Meta():
-        table_name = 'pathway'
-
-Controller.register_model_specs([Pathway])

@@ -64,14 +64,16 @@ class Enzyme(Entity):
         :rtype: None
         """
 
+        job = kwargs.get('job',None)
+
         if not kwargs.get('proteins', None) is None:
-            enzymes =  cls.__create_enzyme_and_protein_dbs(kwargs['proteins'])
+            enzymes =  cls.__create_enzyme_and_protein_dbs(kwargs['proteins'], job=job)
         else:
             from biota._helper.bkms import BKMS
             from biota._helper.brenda import Brenda
             brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
             proteins = brenda.parse_all_protein_to_dict()
-            enzymes = cls.__create_enzyme_and_protein_dbs(proteins)
+            enzymes = cls.__create_enzyme_and_protein_dbs(proteins, job=job)
 
         if (not biodata_dir is None) and (not kwargs.get('bkms_file', None) is None):
             from biota._helper.bkms import BKMS
@@ -81,7 +83,7 @@ class Enzyme(Entity):
         return enzymes
 
     @classmethod
-    def __create_enzyme_and_protein_dbs(cls, list_of_proteins):
+    def __create_enzyme_and_protein_dbs(cls, list_of_proteins, job=None):
         proteins = {}
         enzymes = {}
         info = ['SN','SY']
@@ -106,6 +108,10 @@ class Enzyme(Entity):
                 ec = ec, 
                 protein = protein
             )     
+            
+            if not job is None:
+                protein._set_job(job)
+                enzyme._set_job(job)
 
             proteins[ec] = protein
             enzymes[ec] = enzyme
@@ -159,9 +165,3 @@ class Enzyme(Entity):
 
         if len(enzymes) > 0:
             Enzyme.save_all(enzymes.values())
-
-    class Meta():
-        table_name = 'enzyme'
-
-
-Controller.register_model_specs([Enzyme])

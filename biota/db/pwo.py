@@ -45,6 +45,7 @@ class PWO(Resource):
 
         from biota._helper.ontology import Onto as OntoHelper
 
+        job = kwargs.get('job',None)
         data_dir, corrected_file_name = OntoHelper.correction_of_pwo_file(biodata_dir, kwargs['pwo_file'])
         ontology = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
         list_of_pwo = OntoHelper.parse_pwo_terms_from_ontology(ontology)
@@ -53,6 +54,8 @@ class PWO(Resource):
         for pwo in pwos:
             pwo.set_pwo_id( pwo.data["id"] )
             pwo.set_name( pwo.data["name"] )
+            if not job is None:
+                pwo._set_job(job)
 
         cls.save_all(pwos)
 
@@ -144,8 +147,6 @@ class PWO(Resource):
                 vals.append(val)
         return(vals)
 
-    class Meta():
-        table_name = 'pwo'
 
 class PWOAncestor(PWModel):
     """
@@ -159,11 +160,10 @@ class PWOAncestor(PWModel):
 
     pwo = ForeignKeyField(PWO)
     ancestor = ForeignKeyField(PWO)
+    
     class Meta:
         table_name = 'pwo_ancestors'
         database = DbManager.db
         indexes = (
             (('pwo', 'ancestor'), True),
         )
-
-Controller.register_model_specs([PWO])
