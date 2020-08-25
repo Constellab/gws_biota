@@ -59,7 +59,6 @@ class Compound(Entity):
         list_comp = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_compound_file'])
         job = kwargs.get('job',None)
         compounds = cls._create_compounds(list_comp, job=job)   
-
         cls.save_all(compounds)
 
         list_chemical = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_chemical_data_file'])

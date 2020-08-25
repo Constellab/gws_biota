@@ -63,4 +63,8 @@ def createdb(user):
     )
 
     import asyncio
-    asyncio.run( protocol.run() )
+    try:
+        asyncio.run( protocol.run() )
+    except Exception as err:
+        logger.info(f"An error occured: {err}")
+        raise Exception(err)
