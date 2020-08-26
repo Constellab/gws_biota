@@ -61,7 +61,7 @@ class DbCreator(Process):
     def task( self ):
 
         if GO.table_exists():
-            raise Exception("DbCreator", "task", "A databse already exists")
+            Logger.error(Exception("DbCreator", "task", "Biodata databases already exist"))
 
         # drop tables
         GO.drop_table()
@@ -93,7 +93,7 @@ class DbCreator(Process):
         params['job'] = self.get_active_job()
 
         # ------------- Create GO ------------- #
-        logger.info("Step 1 | Loading go and go_ancestors...")
+        logger.info("Step 1 | Saving go and go_ancestors...")
         start_time = time.time()
         go_biodata_dir = self.get_param("biota:go_biodata_dir")
         GO.create_go_db(go_biodata_dir, **params)
@@ -102,7 +102,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
         
         # ------------- Create SBO ------------- #
-        logger.info("Step 2 | Loading sbo and sbo_ancestors...")
+        logger.info("Step 2 | Saving sbo and sbo_ancestors...")
         start_time = time.time()
         sbo_biodata_dir = self.get_param("biota:sbo_biodata_dir")
         SBO.create_sbo_db(sbo_biodata_dir, **params)
@@ -111,7 +111,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
         
         # ------------------- Create BTO ----------------- #
-        logger.info("Step 3 | Loading bto and bto_ancestors...")
+        logger.info("Step 3 | Saving bto and bto_ancestors...")
         start_time = time.time()
         bto_biodata_dir = self.get_param("biota:bto_biodata_dir")
         BTO.create_bto_db(bto_biodata_dir, **params)
@@ -120,7 +120,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
         
         # ------------------- Create ECO ----------------- #
-        logger.info("Step 4 | Loading eco and eco_ancestors...")
+        logger.info("Step 4 | Saving eco and eco_ancestors...")
         start_time = time.time()
         eco_biodata_dir = self.get_param("biota:eco_biodata_dir")
         ECO.create_eco_db(eco_biodata_dir, **params)
@@ -129,7 +129,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
         
         # ------------- Create ChebiOntology ------------- #
-        logger.info("Step 5 | Loading chebi ontology...")
+        logger.info("Step 5 | Saving chebi ontology...")
         start_time = time.time()
         chebi_biodata_dir = self.get_param("biota:chebi_biodata_dir")
         ChebiOntology.create_chebi_ontology_db(chebi_biodata_dir, **params)
@@ -138,7 +138,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
 
         # ---------------- Create Taxonomy --------------- #
-        logger.info("Step 6 | Loading ncbi taxonomy...")
+        logger.info("Step 6 | Saving ncbi taxonomy...")
         start_time = time.time()
         ncbi_biodata_dir = self.get_param("biota:taxonomy_biodata_dir")
         Taxonomy.create_taxonomy_db(ncbi_biodata_dir, **params)
@@ -147,7 +147,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
         
         # ---------------- Create Compound --------------- #
-        logger.info("Step 7 | Loading chebi compounds...")
+        logger.info("Step 7 | Saving chebi compounds...")
         start_time = time.time()
         chebi_biodata_dir = self.get_param("biota:chebi_biodata_dir")
         Compound.create_compound_db(chebi_biodata_dir, **params)
@@ -156,7 +156,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
 
         # ------------------ Create EnzymeFunction --------------- #
-        logger.info("Step 8 | Loading brenda enzyme_functions and enzyme_btos...")
+        logger.info("Step 8 | Saving brenda enzyme_functions and enzyme_btos...")
         start_time = time.time()
         brenda_biodata_dir = self.get_param("biota:brenda_biodata_dir")
         EnzymeFunction.create_enzyme_function_db(brenda_biodata_dir, **params)
@@ -165,7 +165,7 @@ class DbCreator(Process):
         logger.info("... done in {:10.2f} min for #enzyme_functions = {} ".format(elapsed_time/60, len_enzyme))
         
         # ---------------- Create Reactions -------------- #
-        logger.info("Step 9 | Loading rhea reactions...")
+        logger.info("Step 9 | Saving rhea reactions...")
         start_time = time.time()
         rhea_biodata_dir = self.get_param("biota:rhea_biodata_dir")
         Reaction.create_reaction_db(rhea_biodata_dir, **params)
@@ -175,7 +175,7 @@ class DbCreator(Process):
 
         """"
         # ------------- Create EnzymeAnnotation ------------- #
-        logger.info("Step 10 | Loading enzyme_function annotations...")
+        logger.info("Step 10 | Saving enzyme_function annotations...")
         start_time = time.time()
         EnzymeAnnotation.create_annotation_db()
         len_enzyme_annotation = EnzymeAnnotation.select().count()
