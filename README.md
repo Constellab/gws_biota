@@ -1,12 +1,8 @@
-# Biota 
+# Biota brick
 
-This software is the core library to manage Gecovery knowledge databases. <br />
+This software brick is the core library to manage Gecovery knowledge databases. <br />
 
-This python package is a prism package which is a Gencovery's technology. <br />
-
-The purpose of BIOTA is to collect biological data from official databases such as BRENDA, RHEA or CHEBI and to create the reference database of the Gencovery web application. <br />
-
-This database gather crucial data for the visualization of metabolic pathways and networks and modeling in a homogeneous and coherent way. <br />
+The purpose of Biota is to collect biological data from official open biological databases to create a reference database for GWS bricks. <br />
 
 This module has been developed in python 3.8.2.  
 
@@ -38,7 +34,7 @@ Create a virtual environment in biota-py root:
 ```python -m virtualenv .venv```
 
 Activate the virtual environment:
-```.\.venv\Scripts\activate```
+```source .\.venv\bin\activate```
 
 Install required packages:
 ```pip -m install -r requirements.txt```
@@ -47,7 +43,7 @@ Install required packages:
 
 Before to launch the loading of the complete database make sure that all tests of biota are OK with:
 
-```python manage.py --test test_modulename```
+```python manage.py --test <module name>```
 
 ### Biota database loading 
 Launch complete database loading 
@@ -56,19 +52,11 @@ Launch complete database loading
 
 ```createdb.sh``` on windows
 
-### Data
-Before to launch anything with biota, make sure that you have downloaded all the necessary data
+### Prequesities
+Before launching anything with Biota, ensure that you have downloaded all the necessary data
 
 ### Documentation:
-You can find documentation about prism and helper package of biota on the following page: ./docs/build/index.html
-
-### Authors:
-
-Djomangan Adama OUATTARA: douattara AT gencovery.com <br />
-Dandou Sarah: dandousarah AT gmail.com 
-
-### Maintainers:
-Djomangan Adama OUATTARA
+You can find documentation about prism and helper package of biota on the following brick in the ./docs/ folder
 
 # License
 

@@ -1,7 +1,5 @@
 {
     "name"          : "biota",
-    "title"         : "GWS Biota",
-    "description"   : "GWS (Gencovery Web Services) Biota provides web services to access high-quality and curated public biological data.",
     "authors"       : "Gencovery",
     "version"       : "0.1",
 
@@ -28,27 +26,24 @@
     },
 
     "dependencies" : {
-        "gws"           : "../gws-py",
+        "gview"           : "../gview-py",
         ":external:"    : ["../../extern/brenda-py"]
     },
     
     "app":{
-        "title": "Biota",
+        "title"         : "Biota Databases",
+        "description"   : "Web services for high-quality and curated public biological data",
         "statics"       : {
             "/static/biota"   : "./public/static"
         },
-        "scripts": [
-        ],
-        "modules": [
-            "/static/biota/index.js"
-        ],
+        "scripts": [],
+        "modules": [],
         "styles": [
-            "/static/gws/g3/all.css",
-            "/static/biota/style.css"
+            "/static/biota/index.css"
         ],
         "buttons":{
             "biota": {
-                "icon": "fas fa-database", "onclick": "window.gws.biota", "position": 9997
+                "label": "Biota databases", "icon": "fas fa-database", "onclick": "", "position": 9997
             }
         }
     }
