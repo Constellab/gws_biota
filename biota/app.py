@@ -13,12 +13,11 @@ from gws.settings import Settings
 from gws.prism.controller import Controller
 
 settings = Settings.retrieve()
-template_dir = settings.get_template_dir("gview")
+template_dir = settings.get_public_dir("biota")
 templates = Jinja2Templates(directory=template_dir)
 
 async def homepage(request):
-    request.title = "Biota databases"
-    return templates.TemplateResponse("./index/index.html", {
+    return templates.TemplateResponse("index.html", {
         "request": request, 
         "settings": settings
     })

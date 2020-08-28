@@ -31,7 +31,7 @@
     },
     
     "app":{
-        "title"         : "Biota Databases",
+        "title"         : "Biota - GWS biological databases",
         "description"   : "Web services for high-quality and curated public biological data",
         "statics"       : {
             "/static/biota"   : "./public/static"
@@ -43,7 +43,7 @@
         ],
         "buttons":{
             "biota": {
-                "label": "Biota databases", "icon": "fas fa-database", "onclick": "", "position": 9997
+                "label": "Biota", "icon": "fas fa-database", "onclick": "", "position": 9997
             }
         }
     }
