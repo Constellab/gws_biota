@@ -89,7 +89,7 @@ class DbCreator(Process):
         logger = Logger()
         logger.info("Start creating biota_db...")
 
-        params = self.config.params
+        params = (self.config.params).copy()    #get a copy
         params['job'] = self.get_active_job()
 
         # ------------- Create GO ------------- #
