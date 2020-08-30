@@ -39,8 +39,8 @@ class App:
         To prevent route collisions, it is highly recommended to 
         prefix route names of the name of the current brick.
         e.g.: 
-            * /<brick name>/home/       -> home page route
-            * /<brick name>/settings/   -> setting page route
+        * /<brick name>/home/       -> home page route
+        * /<brick name>/settings/   -> setting page route
         """
 
         # adds new routes

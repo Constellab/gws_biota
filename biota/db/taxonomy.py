@@ -5,10 +5,7 @@
 
 from peewee import CharField, ForeignKeyField
 
-from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import ResourceViewModel, Resource
-
+from gws.prism.model import Resource
 from biota.db.ontology import Ontology
 
 class Taxonomy(Ontology):

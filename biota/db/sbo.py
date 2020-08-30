@@ -6,10 +6,7 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
-from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import ResourceViewModel, DbManager
-
+from gws.prism.model import DbManager
 from biota.db.ontology import Ontology
 
 class SBO(Ontology):
@@ -169,23 +166,6 @@ class SBOAncestor(PWModel):
         indexes = (
             (('sbo', 'ancestor'), True),
         )
-
-class SBOStandardJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.sbo_id}},
-            "name": {{view_model.model.name}}
-            }
-        """)
-class SBOPremiumJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "id": {{view_model.model.sbo_id}},
-            "name": {{view_model.model.name}},
-            "definition": {{view_model.model.definition}},
-            "ancestors": {{view_model.display_ancestors()}}
-            }
-        """)
     
     def display_ancestors(self):
         q = SBOAncestor.select().where(SBOAncestor.sbo == self.model.id)

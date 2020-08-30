@@ -4,11 +4,7 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, FloatField
-
 from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import ResourceViewModel
-
 from biota.db.entity import Entity
 
 class Compound(Entity):

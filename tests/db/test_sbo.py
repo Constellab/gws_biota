@@ -4,7 +4,7 @@ import unittest
 
 from gws.prism.controller import Controller
 from gws.settings import Settings
-from biota.db.sbo import SBO, SBOStandardJSONViewModel, SBOPremiumJSONViewModel
+from biota.db.sbo import SBO
 
 settings = Settings.retrieve()
 testdata_path = settings.get_dir("biota:testdata_dir")

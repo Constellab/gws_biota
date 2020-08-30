@@ -9,8 +9,7 @@ from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughM
 from peewee import Model as PWModel
 
 from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
-from gws.prism.model import Config, Process, ResourceViewModel, Resource, DbManager
+from gws.prism.model import Config, Process, Resource, DbManager
 
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.enzyme import Enzyme
@@ -198,7 +197,7 @@ class EnzymeFunction(Resource):
     go_id = CharField(null=True, index=True)
     enzyme = ForeignKeyField(Enzyme, backref = 'enzyme_functions', null = True)
     taxonomy = ForeignKeyField(BiotaTaxo, backref = 'enzyme_functions', null = True)
-    bto = ManyToManyField(BiotaBTO, backref='enzyme_functions', through_model = EnzymeFunctionBTODeffered)
+    bto = ManyToManyField(BiotaBTO, through_model = EnzymeFunctionBTODeffered)
     _table_name = 'enzyme_function'
 
     # -- C --
@@ -254,7 +253,7 @@ class EnzymeFunction(Resource):
         Enzyme.create_table(*args, **kwargs)
 
         super().create_table(*args, **kwargs)
-        EnzymeFunctionBTO = EnzymeFunction.bto.get_through_model()
+        #EnzymeFunctionBTO = EnzymeFunction.bto.get_through_model()
         EnzymeFunctionBTO.create_table(*args, **kwargs)
 
     # -- D -- 
@@ -266,7 +265,7 @@ class EnzymeFunction(Resource):
 
         Extra parameters are passed to :meth:`peewee.Model.drop_table`
         """
-        EnzymeFunctionBTO = EnzymeFunction.bto.get_through_model()
+        #EnzymeFunctionBTO = EnzymeFunction.bto.get_through_model()
         EnzymeFunctionBTO.drop_table(*args, **kwargs)
         super().drop_table(*args, **kwargs)
     
@@ -319,6 +318,22 @@ class EnzymeFunction(Resource):
         """
         return Params(name, self.data)
 
+    # -- R --
+
+    @property
+    def reactions(self):
+        """
+        Returns the list of reactions associated with the enzyme function
+        :returns: List of reactions
+        :rtype: Query rows
+        """
+        from biota.db.reaction import Reaction, ReactionEnzymeFunction
+        from peewee import JOIN
+        Q = Reaction.select() \
+                    .join(ReactionEnzymeFunction) \
+                    .where(ReactionEnzymeFunction.enzyme_function == self)        
+        return Q
+
     # -- U --
 
     @classmethod
@@ -356,8 +371,8 @@ class EnzymeFunction(Resource):
         for i in range(0,n):
             bto_ids.append( self.params('ST')[i].get("bto") )
             
-        q = BiotaBTO.select().where(BiotaBTO.bto_id << bto_ids)
-        for bto in q: 
+        Q = BiotaBTO.select().where(BiotaBTO.bto_id << bto_ids)
+        for bto in Q: 
             self.bto.add(bto)
 
 
@@ -502,9 +517,6 @@ class EnzymeFunctionStatistics(Resource):
 
     def set_uniprots_referenced(self, uniprots):
         self.data['uniprots_referenced'] = uniprots
-
-class EnzymeFunctionStatisticsJSONViewModel(ResourceViewModel):
-    template = JSONViewTemplate('{{view_model.model.data}}')
 
 class StatisticsExtractor(Process):
     """

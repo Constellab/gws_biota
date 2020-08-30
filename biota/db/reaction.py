@@ -6,9 +6,7 @@
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
 
-from gws.prism.model import ResourceViewModel, DbManager
-from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
+from gws.prism.model import DbManager
 
 from biota.db.entity import Entity
 from biota.db.compound import Compound
@@ -61,9 +59,9 @@ class Reaction(Entity):
     kegg_id = CharField(null=True, index=True)
     sabio_rk_id = CharField(null=True, index=True)
 
-    substrates = ManyToManyField(Compound, backref='reactions', through_model = ReactionSubstrateDeferred)
-    products = ManyToManyField(Compound, backref='reactions', through_model = ReactionProductDeferred)
-    enzyme_functions = ManyToManyField(EnzymeFunction, backref='reactions', through_model = ReactionEnzymeFunctionDeferred)
+    substrates = ManyToManyField(Compound, through_model = ReactionSubstrateDeferred)
+    products = ManyToManyField(Compound, through_model = ReactionProductDeferred)
+    enzyme_functions = ManyToManyField(EnzymeFunction, through_model = ReactionEnzymeFunctionDeferred)
     _table_name = 'reaction'
 
     # -- A --

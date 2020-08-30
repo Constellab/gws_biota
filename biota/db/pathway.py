@@ -4,10 +4,7 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
-
-from gws.prism.controller import Controller
-from gws.prism.model import Resource, ResourceViewModel
-from gws.prism.view import JSONViewTemplate
+from gws.prism.model import Resource
 
 class Pathway(Resource):
     """

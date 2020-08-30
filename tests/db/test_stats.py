@@ -4,8 +4,8 @@ import unittest
 import asyncio
 
 from biota.db.enzyme_function import EnzymeFunctionStatistics, \
-                                    StatisticsExtractor, \
-                                    EnzymeFunctionStatisticsJSONViewModel
+                                    StatisticsExtractor
+                                    
 
 class TestProcess(unittest.TestCase):
 
@@ -33,11 +33,4 @@ class TestProcess(unittest.TestCase):
         await s.run()
 
         s.output['EnzymeFunctionStatistics'].save()
-  
-        vmodel = EnzymeFunctionStatisticsJSONViewModel(s.output['EnzymeFunctionStatistics'])
-        view = vmodel.render()
-        print(len(view))
-        print(view)
-        #for i in range(0, 10):
-            #print(view[i])
-        #self.assertEqual(view[10], 7)
+        self.assertTrue( s.is_saved() )

@@ -6,9 +6,8 @@
 
 from peewee import CharField, ForeignKeyField
 
-from gws.prism.model import Resource, ResourceViewModel
+from gws.prism.model import Resource
 from gws.prism.controller import Controller
-from gws.prism.view import JSONViewTemplate
 
 from biota.db.go import GO
 from biota.db.eco import ECO
@@ -149,31 +148,3 @@ class EnzymeAnnotation(Resource):
             except:
                 pass
                 #print("could not find the taxonomy term: " + str(self.data['taxon id']))
-
-
-class EnzymeAnnotationJSONStandardViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "gene product id": {{view_model.model.gene_product_id}},
-            "GO term": {{view_model.model.go_term.go_id}},
-            "ECO term": {{view_model.model.evidence.eco_id}},
-            "reference": {{view_model.model.reference}},
-            "taxonomy": {{view_model.model.taxonomy}},
-            "assigned by": {{view_model.model.assigned_by}}
-            }
-        """)
-
-class EnzymeAnnotationJSONPremiumViewModel(ResourceViewModel):
-    template = JSONViewTemplate("""
-            {
-            "gene product id": {{view_model.model.gene_product_id}},
-            "GO term": {{view_model.model.go_term.go_id}},
-            "qualifier": {{view_model.model.data['qualifier']}}
-            "GO aspect": {{view_model.model.data['go aspect']}},
-            "ECO term": {{view_model.model.evidence.eco_id}},
-            "evidence code": {{view_model.model.data['go evidence code']}}
-            "reference": {{view_model.model.reference}},
-            "taxonomy": {{view_model.model.taxonomy}},
-            "assigned by": {{view_model.model.assigned_by}}
-            }
-        """)
