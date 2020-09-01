@@ -6,7 +6,9 @@
 from peewee import CharField
 from gws.prism.model import Resource
 
-class Pathway(Resource):
+from biota.db.base import Base
+
+class Pathway(Base):
     """
     This class represents biological pathways
     """

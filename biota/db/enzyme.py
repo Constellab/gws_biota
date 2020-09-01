@@ -7,7 +7,6 @@ import os
 from peewee import ForeignKeyField, CharField
 
 from gws.prism.controller import Controller
-from gws.prism.model import DbManager
 
 from biota.db.entity import Entity
 from biota.db.protein import Protein
@@ -131,6 +130,13 @@ class Enzyme(Entity):
         Extra parameters are passed to :meth:`peewee.Model.drop_tables`
         """
         super().drop_table(*arg, **kwargs)
+
+    # -- E --
+
+    @property
+    def enzyme_function(self):
+        from biota.db.enzyme_function import EnzymeFunction
+        return EnzymeFunction.select().where(EnzymeFunction.enzyme == self)
 
     # -- U --
 

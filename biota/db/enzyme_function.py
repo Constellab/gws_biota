@@ -9,15 +9,17 @@ from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughM
 from peewee import Model as PWModel
 
 from gws.prism.controller import Controller
-from gws.prism.model import Config, Process, Resource, DbManager
+from gws.prism.model import Config, Process, Resource
 
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.enzyme import Enzyme
 from biota.db.protein import Protein
 from biota.db.bto import BTO as BiotaBTO
 
-EnzymeFunctionBTODeffered = DeferredThroughModel()
+from biota.db.base import Base, DbManager
 
+
+EnzymeFunctionBTODeffered = DeferredThroughModel()
 
 class Param():
     """
@@ -167,7 +169,7 @@ class Params():
             "full_refs" : self._full_refs
         })
 
-class EnzymeFunction(Resource):
+class EnzymeFunction(Base):
     """
     This class represents enzyme_functions extracted from the BRENDA and BKMS database.
 

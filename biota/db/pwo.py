@@ -7,9 +7,11 @@ from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
 from gws.prism.controller import Controller
-from gws.prism.model import Resource, DbManager
+from gws.prism.model import Resource
 
-class PWO(Resource):
+from biota.db.base import Base, DbManager
+
+class PWO(Base):
     """
     This class represents Pathway Ontology (PWO) terms
 

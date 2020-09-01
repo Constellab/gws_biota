@@ -5,8 +5,9 @@
 
 from peewee import CharField
 from gws.prism.model import Resource
+from biota.db.base import Base
 
-class Entity(Resource):
+class Entity(Base):
     """
     This class represents base molecular entities
     

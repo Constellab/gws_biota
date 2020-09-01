@@ -8,9 +8,10 @@ from peewee import CharField, ForeignKeyField
 from gws.prism.controller import Controller
 from gws.prism.model import Resource
 
+from biota.db.base import Base
 from biota.db.taxonomy import Taxonomy
 
-class Organism(Resource):
+class Organism(Base):
     """
     This class represents living organisms
     """

@@ -4,8 +4,9 @@
 # About us: https://gencovery.com
 
 from gws.prism.model import Resource
+from biota.db.base import Base
 
-class Ontology(Resource):
+class Ontology(Base):
     """
     This class represents base ontology class.
     """

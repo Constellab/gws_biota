@@ -6,8 +6,7 @@
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
 
-from gws.prism.model import DbManager
-
+from biota.db.base import Base, DbManager
 from biota.db.entity import Entity
 from biota.db.compound import Compound
 from biota.db.enzyme_function import EnzymeFunction

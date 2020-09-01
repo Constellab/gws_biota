@@ -6,8 +6,8 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
-from gws.prism.model import DbManager
 from biota.db.ontology import Ontology
+from biota.db.base import Base, DbManager
 
 class BTO(Ontology):
     """
