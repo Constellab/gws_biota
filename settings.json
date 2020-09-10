@@ -8,7 +8,6 @@
 
     "dirs"          : {
         "biota:db_dir"                  : "./data/",
-
         "biota:biodata_dir"             : "./",
         "biota:testdata_dir"            : "./tests/testdata",
         "biota:brenda_biodata_dir"      : "../../extern/biodata/brenda",
@@ -28,7 +27,7 @@
     },
 
     "dependencies" : {
-        "gview"           : "../gview-py",
+        "gws"           : "../gws-py",
         ":external:"    : ["../../extern/brenda-py"]
     },
     
