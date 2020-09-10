@@ -149,7 +149,6 @@ class BTOAncestor(PWModel):
 
     :property bto: id of the concerned bto term
     :type bto: CharField 
-    
     :property ancestor: ancestor of the concerned bto term
     :type ancestor: CharField 
     """

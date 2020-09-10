@@ -66,7 +66,8 @@ class Compound(Entity):
     @classmethod
     def _create_compounds(cls, list_compound, job=None):
         """
-        Creates chebi compound from a list 
+        Creates chebi compound from a list.
+        
         :type list_compound: list
         :param list_compound: list of dictionnaries where each element refers 
         to a chebi compound

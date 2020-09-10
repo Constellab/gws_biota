@@ -117,11 +117,10 @@ class ECO(Ontology):
 
     def _get_ancestors_query(self):
         """
+        Look for the eco term ancestors and returns all eco-eco_ancetors relations in a list 
 
-        look for the eco term ancestors and returns all eco-eco_ancetors relations in a list 
         :returns: a list of dictionnaries inf the following format: {'eco': self.id, 'ancestor': ancestor.id}
         :rtype: list
-        
         """
         vals = []
         for i in range(0, len(self.data['ancestors'])):
@@ -140,7 +139,7 @@ class ECO(Ontology):
 
     def set_name(self, name__):
         """
-        set self.name
+        Set name
         """
         self.name = name__
 

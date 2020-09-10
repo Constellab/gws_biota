@@ -135,10 +135,8 @@ class EnzymeAnnotation(Resource):
 
     def set_taxonomy(self):
         """
-        
         Collects the Taxonomy identifier of the annotation in the taxonomy table and update 
         the taxonomy property of the annotation
-
         """
 
         if('taxon id' in self.data.keys()):

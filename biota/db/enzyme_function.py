@@ -61,6 +61,7 @@ class Param():
         """
         Returns True if the parameter exists (i.e. :property:`value` is not `None`) 
         and False otherwise.
+        
         :rtype: bool
         """
         return not self.value is None

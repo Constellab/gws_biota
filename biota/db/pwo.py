@@ -98,7 +98,7 @@ class PWO(Base):
     @property
     def definition(self):
         """
-        Returns the definition of the got term
+        Returns the definition of the go term
 
         :returns: The definition
         :rtype: str
