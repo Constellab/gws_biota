@@ -11,10 +11,10 @@ python3 -m virtualenv .venv --python=python3
 
 # activate vitual env
 . ./.venv/bin/activate
-#. ./.venv/Scripts/activate
 
 # prism requirement file
-python3 -m pip install -r ../gws-py/requirements.txt
+for req in "$@"
+do
+  python3 -m pip install -r "$req"
+done
 
-# current requirement file
-python3 -m pip install -r requirements.txt

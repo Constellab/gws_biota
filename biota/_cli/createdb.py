@@ -8,7 +8,7 @@ import click
 from gws.settings import Settings
 from gws.logger import Logger
 from biota.db.backend import DbCreator
-from gws.prism.model import Protocol
+from gws.model import Protocol
 
 def createdb(user):
     if user is None:

@@ -10,7 +10,7 @@ from starlette.endpoints import HTTPEndpoint
 from starlette.templating import Jinja2Templates
 
 from gws.settings import Settings
-from gws.prism.controller import Controller
+from gws.controller import Controller
 
 settings = Settings.retrieve()
 template_dir = settings.get_public_dir("biota")

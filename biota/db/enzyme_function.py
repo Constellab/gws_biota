@@ -8,8 +8,8 @@ import os
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
 
-from gws.prism.controller import Controller
-from gws.prism.model import Config, Process, Resource
+from gws.controller import Controller
+from gws.model import Config, Process, Resource
 
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.enzyme import Enzyme

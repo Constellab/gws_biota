@@ -5,7 +5,7 @@
 
 from peewee import CharField, ForeignKeyField
 
-from gws.prism.model import Resource
+from gws.model import Resource
 from biota.db.ontology import Ontology
 
 class Taxonomy(Ontology):

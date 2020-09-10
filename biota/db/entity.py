@@ -4,7 +4,7 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
-from gws.prism.model import Resource
+from gws.model import Resource
 from biota.db.base import Base
 
 class Entity(Base):

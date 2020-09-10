@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws.prism.model import Resource
+from gws.model import Resource
 from biota.db.base import Base
 
 class Ontology(Base):

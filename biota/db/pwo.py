@@ -6,8 +6,8 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
-from gws.prism.controller import Controller
-from gws.prism.model import Resource
+from gws.controller import Controller
+from gws.model import Resource
 
 from biota.db.base import Base, DbManager
 

@@ -1,6 +1,6 @@
 import unittest
 
-from gws.prism.controller import Controller
+from gws.controller import Controller
 from gws.settings import Settings
 
 from biota.db.enzyme_annotation import EnzymeAnnotation

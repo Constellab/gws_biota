@@ -6,8 +6,8 @@
 
 from peewee import CharField, ForeignKeyField
 
-from gws.prism.model import Resource
-from gws.prism.controller import Controller
+from gws.model import Resource
+from gws.controller import Controller
 
 from biota.db.go import GO
 from biota.db.eco import ECO

@@ -23,7 +23,7 @@
 
 from peewee import CharField
 
-from gws.prism.controller import Controller
+from gws.controller import Controller
 from biota.db.ontology import Ontology
 
 class ChebiOntology(Ontology):

@@ -4,7 +4,7 @@
 # About us: https://gencovery.com
 
 import time
-from gws.prism.model import Process
+from gws.model import Process
 from gws.logger import Logger
 
 from biota.db.go import GO

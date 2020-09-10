@@ -15,5 +15,4 @@ owlready2
 sphinx
 sphinx-rtd-theme
 rinohtype
-pandas
 xlrd >= 1.0.0

@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-from gws.prism.controller import Controller
+from gws.controller import Controller
 from biota._helper.brenda import Brenda
 
 ############################################################################################

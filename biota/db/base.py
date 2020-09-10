@@ -6,8 +6,8 @@
 import os
 from peewee import SqliteDatabase, Proxy
 
-from gws.prism.base import DbManager as BaseDbManager
-from gws.prism.model import Resource
+from gws.base import DbManager as BaseDbManager
+from gws.model import Resource
 
 from gws.settings import Settings
 
