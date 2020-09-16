@@ -10,16 +10,16 @@
         "biota:db_dir"                  : "./data/",
         "biota:biodata_dir"             : "./",
         "biota:testdata_dir"            : "./tests/testdata",
-        "biota:brenda_biodata_dir"      : "../../extern/biodata/brenda",
-        "biota:bkms_biodata_dir"        : "../../extern/biodata/bkms",
-        "biota:chebi_biodata_dir"       : "../../extern/biodata/chebi/",
-        "biota:go_biodata_dir"          : "../../extern/biodata/go",
-        "biota:eco_biodata_dir"         : "../../extern/biodata/eco",
-        "biota:sbo_biodata_dir"         : "../../extern/biodata/sbo",
-        "biota:bto_biodata_dir"         : "../../extern/biodata/brenda/bto",
-        "biota:pwo_biodata_dir"         : "../../extern/biodata/pwo",
-        "biota:rhea_biodata_dir"        : "../../extern/biodata/rhea",
-        "biota:taxonomy_biodata_dir"    : "../../extern/biodata/ncbi"
+        "biota:brenda_biodata_dir"      : "../../data/biodata/brenda",
+        "biota:bkms_biodata_dir"        : "../../data/biodata/bkms",
+        "biota:chebi_biodata_dir"       : "../../data/biodata/chebi/",
+        "biota:go_biodata_dir"          : "../../data/biodata/go",
+        "biota:eco_biodata_dir"         : "../../data/biodata/eco",
+        "biota:sbo_biodata_dir"         : "../../data/biodata/sbo",
+        "biota:bto_biodata_dir"         : "../../data/biodata/brenda/bto",
+        "biota:pwo_biodata_dir"         : "../../data/biodata/pwo",
+        "biota:rhea_biodata_dir"        : "../../data/biodata/rhea",
+        "biota:taxonomy_biodata_dir"    : "../../data/biodata/ncbi"
     },
 
     "urls":{
@@ -27,7 +27,7 @@
     },
 
     "dependencies" : {
-        "gws"           : "../gws-py",
+        "gws"           : "../gws",
         ":external:"    : ["../../extern/brenda-py"]
     },
     

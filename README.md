@@ -25,12 +25,12 @@ This module has been developed in python 3.8.2.
 ### Installation:
 
 #### Mac and Linux
-Create a virtual environment in biota-py root and load required package:
+Create a virtual environment in biota root and load required package:
 ```bash env.sh```
 
 #### Windows 
 
-Create a virtual environment in biota-py root: 
+Create a virtual environment in biota root: 
 ```python -m virtualenv .venv```
 
 Activate the virtual environment:
