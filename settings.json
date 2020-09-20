@@ -26,10 +26,13 @@
         "biota:quickgo_api_url"         : "https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?selectedFields=geneProductId&selectedFields=symbol&selectedFields=qualifier&selectedFields=goId&selectedFields=goAspect&selectedFields=evidenceCode&selectedFields=goEvidence&selectedFields=reference&selectedFields=withFrom&selectedFields=taxonId&selectedFields=assignedBy&selectedFields=synonyms&selectedFields=name&geneProductId="
     },
 
-    "dependencies" : {
-        "gws"           : "../gws",
-        ":external:"    : ["../../extern/brenda-py"]
-    },
+    "externs" : [
+        "brenda-py"
+    ],
+
+    "dependencies" : [
+        "gws"
+    ],
     
     "app":{
         "title"         : "Biota - GWS biological databases",
