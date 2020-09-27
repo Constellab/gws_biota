@@ -44,6 +44,7 @@ class DbCreator(Process):
         "rhea2kegg_reaction_file"   : {"type": str, "default": "./tsv/rhea2kegg_reaction.tsv"},
         "rhea2ec_file"              : {"type": str, "default": "./tsv/rhea2ec.tsv"},
         "rhea2reactome_file"        : {"type": str, "default": "./tsv/rhea2reactome.tsv"},
+        "biota:db_dir"              : {"type": str},
         "biota:biodata_dir"         : {"type": str},
         "biota:testdata_dir"        : {"type": str},
         "biota:brenda_biodata_dir"  : {"type": str},

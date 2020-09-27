@@ -6,7 +6,8 @@
     "log_dir"       : "../../logs",
     "db_dir"        : "../../data/db/",
     "db_name"       : "db.sqlite3",
-
+    "biota:db_dir"                  : "../../data/biota/db/",
+    
     "dirs"          : {
         "biota:testdata_dir"            : "./tests/testdata",
         "biota:db_dir"                  : "../../data/biota/db/",
