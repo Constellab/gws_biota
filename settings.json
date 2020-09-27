@@ -47,7 +47,7 @@
         ],
         "buttons":{
             "biota": {
-                "label": "Biota", "icon": "fas fa-database", "onclick": "", "position": 9997
+                "label": "Biota", "icon": "fas fa-database", "onclick": "", "position": 9997, "url": "/biota"
             }
         }
     }
