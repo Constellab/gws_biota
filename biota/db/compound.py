@@ -34,6 +34,8 @@ class Compound(Entity):
     formula = CharField(null=True, index=True)
     mass = FloatField(null=True, index=True)
     charge = FloatField(null=True, index=True)
+
+    _elements = {'H','C', 'O', 'P', 'S', 'N', 'Mg','X','Fe','Zn','Co','R','Ca','Y','I','Na','Cl','K','R'}
     _table_name = 'compound'
 
     # -- C -- 
@@ -62,6 +64,7 @@ class Compound(Entity):
         cls.save_all(compounds)
 
 
+    # -- C --
 
     @classmethod
     def _create_compounds(cls, list_compound, job=None):
@@ -82,6 +85,11 @@ class Compound(Entity):
                 comp._set_job(job)
 
         return compounds
+
+    # -- G --
+
+    def get_composition(self):
+        pass
 
     # -- S --
 
@@ -112,27 +120,55 @@ class Compound(Entity):
         chebi compound 
         :returns: None
         """
+
+        #print(list_chemical)
+
+        list_of_comps = {}
         for chem in list_chemical:
+            chebi_id = 'CHEBI:' + chem['compound_id']
+
             if(chem['type'] == 'FORMULA'):
                 try:
-                    comp = cls.get(cls.chebi_id == 'CHEBI:' + chem['compound_id'])
+                    if chebi_id in list_of_comps:
+                        comp = list_of_comps[chebi_id]
+                    else:
+                        comp = cls.get(cls.chebi_id == chebi_id)
+                        list_of_comps[chebi_id] = comp
+
                     comp.set_formula(chem['chemical_data'])
+                    
                 except:
-                    pass
-                    #print('can not find the compound CHEBI:' + str(chem['compound_id'] + ' to set formula'))
+                    continue
 
             elif(chem['type'] == 'MASS'):
                 try:
-                    comp = cls.get(cls.chebi_id == 'CHEBI:' + chem['compound_id'])
+                    if chebi_id in list_of_comps:
+                        comp = list_of_comps[chebi_id]
+                    else:
+                        comp = cls.get(cls.chebi_id == chebi_id)
+                        list_of_comps[chebi_id] = comp
+
                     comp.set_mass(float(chem['chemical_data']))
                 except:
-                    pass
-                    #print('can not find the compound CHEBI:' + str(chem['compound_id'] + ' to set mass'))
+                    continue
                 
             elif(chem['type'] == 'CHARGE'):
                 try:
-                    comp = cls.get(cls.chebi_id == 'CHEBI:' + chem['compound_id'])
+                    if chebi_id in list_of_comps:
+                        comp = list_of_comps[chebi_id]
+                    else:
+                        comp = cls.get(cls.chebi_id == chebi_id)
+                        list_of_comps[chebi_id] = comp
+
                     comp.set_charge(float(chem['chemical_data']))
                 except:
-                    pass
-                    #print('can not find the compound CHEBI:' + str(chem['compound_id']) + ' to set charge')
+                    continue
+            
+            
+
+            if len(list_of_comps.keys()) >= 500:
+                cls.save_all(list_of_comps.values())
+                list_of_comps = {}
+        
+        if len(list_of_comps.keys()) != 0:
+            cls.save_all(list_of_comps.values())

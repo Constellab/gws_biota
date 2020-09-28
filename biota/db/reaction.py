@@ -61,6 +61,7 @@ class Reaction(Entity):
     substrates = ManyToManyField(Compound, through_model = ReactionSubstrateDeferred)
     products = ManyToManyField(Compound, through_model = ReactionProductDeferred)
     enzyme_functions = ManyToManyField(EnzymeFunction, through_model = ReactionEnzymeFunctionDeferred)
+
     _table_name = 'reaction'
 
     # -- A --
@@ -178,6 +179,34 @@ class Reaction(Entity):
         ReactionProduct.drop_table()
         ReactionEnzymeFunction.drop_table()
         super().drop_table(*args, **kwargs)
+
+    # -- I -- 
+
+    def is_charge_balanced(self):
+        total_substrate_charge = 0
+        total_product_charge = 0
+
+        for s in self.substrates:
+            total_substrate_charge = total_substrate_charge + s.charge
+        
+        for p in self.products:
+            total_product_charge = total_product_charge + p.charge
+
+        return total_substrate_charge == total_product_charge
+
+    def is_mass_balanced(self):
+        total_substrate_mass = 0
+        total_product_mass = 0
+
+        for s in self.substrates:
+            total_substrate_mass = total_substrate_mass + s.mass
+        
+        for p in self.products:
+            total_product_mass = total_product_mass + p.mass
+
+        return total_substrate_mass == total_product_mass
+
+    
 
     # -- S -- 
 
