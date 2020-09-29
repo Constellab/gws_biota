@@ -32,7 +32,8 @@ class Compound(Entity):
     name = CharField(null=True, index=True)
     chebi_id = CharField(null=True, index=True)
     formula = CharField(null=True, index=True)
-    mass = FloatField(null=True, index=True)
+    average_mass = FloatField(null=True, index=True)
+    monoisotopic_mass = FloatField(null=True, index=True)
     charge = FloatField(null=True, index=True)
 
     _elements = {'H','C', 'O', 'P', 'S', 'N', 'Mg','X','Fe','Zn','Co','R','Ca','Y','I','Na','Cl','K','R'}
@@ -102,8 +103,11 @@ class Compound(Entity):
     def set_formula(self, formula):
         self.formula = formula
     
-    def set_mass(self, mass):
-        self.mass = mass
+    def set_average_mass(self, mass):
+        self.average_mass = mass
+    
+    def set_monoisotopic_mass(self, mass):
+        self.monoisotopic_mass = mass
     
     def set_charge(self, charge):
         self.charge = charge
@@ -148,10 +152,22 @@ class Compound(Entity):
                         comp = cls.get(cls.chebi_id == chebi_id)
                         list_of_comps[chebi_id] = comp
 
-                    comp.set_mass(float(chem['chemical_data']))
+                    comp.set_average_mass(float(chem['chemical_data']))
                 except:
                     continue
-                
+            
+            elif(chem['type'] == 'MONOISOTOPIC MASS'):
+                try:
+                    if chebi_id in list_of_comps:
+                        comp = list_of_comps[chebi_id]
+                    else:
+                        comp = cls.get(cls.chebi_id == chebi_id)
+                        list_of_comps[chebi_id] = comp
+
+                    comp.set_monoisotopic_mass(float(chem['chemical_data']))
+                except:
+                    continue
+
             elif(chem['type'] == 'CHARGE'):
                 try:
                     if chebi_id in list_of_comps:
@@ -164,8 +180,6 @@ class Compound(Entity):
                 except:
                     continue
             
-            
-
             if len(list_of_comps.keys()) >= 500:
                 cls.save_all(list_of_comps.values())
                 list_of_comps = {}
