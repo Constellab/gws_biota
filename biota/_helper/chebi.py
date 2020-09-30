@@ -18,7 +18,7 @@ class Chebi():
     """
 
     @staticmethod
-    def parse_csv_from_file(path, file) -> list:
+    def parse_csv_from_file(path, file, delimiter='\t', quoting=csv.QUOTE_NONE) -> list:
         """
         Parses a chebi .tsv file of chemicals entities and returns a list of dictionaries
 
@@ -39,7 +39,7 @@ class Chebi():
         file_path = os.path.join(path, file)
         list__ = []
         with open(file_path, newline='') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter='\t', quoting=csv.QUOTE_NONE)
+            reader = csv.DictReader(csvfile, delimiter=delimiter, quoting=quoting)
             for row in reader:
                 list__.append( {key.lower() if type(key) == str else key: value for key, value in row.items()} )
         

@@ -16,3 +16,4 @@ sphinx
 sphinx-rtd-theme
 rinohtype
 xlrd >= 1.0.0
+

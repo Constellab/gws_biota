@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, FloatField
+from peewee import CharField, FloatField, TextField
 from gws.controller import Controller
 from biota.db.entity import Entity
 
@@ -35,8 +35,9 @@ class Compound(Entity):
     average_mass = FloatField(null=True, index=True)
     monoisotopic_mass = FloatField(null=True, index=True)
     charge = FloatField(null=True, index=True)
+    structure_2d = TextField(null=True)
+    structure_3d = TextField(null=True)
 
-    _elements = {'H','C', 'O', 'P', 'S', 'N', 'Mg','X','Fe','Zn','Co','R','Ca','Y','I','Na','Cl','K','R'}
     _table_name = 'compound'
 
     # -- C -- 
