@@ -9,6 +9,7 @@ from starlette.routing import Route, Mount
 from starlette.endpoints import HTTPEndpoint
 from starlette.templating import Jinja2Templates
 
+from gws.app import BaseApp
 from gws.settings import Settings
 from gws.controller import Controller
 
@@ -22,15 +23,13 @@ async def homepage(request):
         "settings": settings
     })
 
-class App:
+class App(BaseApp):
     """
     App class of Biota.
     """
 
-    routes = []
-
     @classmethod
-    def init_routes(cls):
+    def init(cls):
         """
         Defines the web routes of the brick.
 
