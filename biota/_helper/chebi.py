@@ -3,6 +3,7 @@ import os
 import csv
 import re
 
+import ctfile
 from pronto import Ontology
 
 ############################################################################################
@@ -130,3 +131,10 @@ class Chebi():
                         outfile.write(line)
         
         return path, out_filename
+
+    @staticmethod
+    def read_sdf(path, file):
+        file_path = os.path.join(path, file)
+        with open(file_path, 'r') as f:
+            ctf = ctfile.load(f)
+            return ctf

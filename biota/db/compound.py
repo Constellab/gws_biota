@@ -3,8 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, FloatField, TextField
-from gws.controller import Controller
+from peewee import CharField, FloatField, TextField, IntegerField
 from biota.db.entity import Entity
 
 class Compound(Entity):
@@ -30,68 +29,148 @@ class Compound(Entity):
     """
     
     name = CharField(null=True, index=True)
+    inchi = CharField(null=True, index=True)
+    inchi_key = CharField(null=True, index=True)
+    smiles = CharField(null=True, index=True)
+    uipac = CharField(null=True, index=True)
     chebi_id = CharField(null=True, index=True)
+    chebi_star = IntegerField(null=True, index=True)
+    metacyc_id = CharField(null=True, index=True)
+    kegg_id = CharField(null=True, index=True)
     formula = CharField(null=True, index=True)
     average_mass = FloatField(null=True, index=True)
     monoisotopic_mass = FloatField(null=True, index=True)
-    charge = FloatField(null=True, index=True)
-    structure_2d = TextField(null=True)
-    structure_3d = TextField(null=True)
+    charge = IntegerField(null=True, index=True)
 
     _table_name = 'compound'
 
+    atom_block = {
+        0:'x', 
+        1:'y', 
+        2:'z', 
+        3:'atom_symbol', 
+        4:'mass_difference', 
+        5:'charge', 
+        6:'atom_stereo_parity', 
+        7:'hydrogen_count',
+        8:'stereo_care_box', 
+        9:'valence',
+        10:'atom_atom_mapping_number',
+        11:'inversion_retention_flag',
+        12:'exact_change_flag'
+    }
+
+    bond_block = {
+        0:'first_atom_number',
+        1:'second_atom_number',
+        2:'bond_type',
+        3:'bond_stereo',
+        4:'bond_topology',
+        5:'reacting_center_status'
+    }
+
     # -- C -- 
+
     @classmethod
     def create_compound_db(cls, biodata_dir = None, **kwargs):
-        """
-        Creates and fills the `compound` database
-
-        :param biodata_dir: path of the :file:`go.obo`
-        :type biodata_dir: str
-        :param kwargs: dictionnary that contains all data files names
-        :type kwargs: dict
-        :returns: None
-        :rtype: None
-        """
-
         from biota._helper.chebi import Chebi as ChebiHelper
-
-        list_comp = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_compound_file'])
+        ctf = ChebiHelper.read_sdf(biodata_dir, kwargs['chebi_sdf_file'])
         job = kwargs.get('job',None)
-        compounds = cls._create_compounds(list_comp, job=job)   
-        cls.save_all(compounds)
 
-        list_chemical = ChebiHelper.parse_csv_from_file(biodata_dir, kwargs['chebi_chemical_data_file'])
-        cls._set_chemicals(list_chemical)
-        cls.save_all(compounds)
-
-
-    # -- C --
-
-    @classmethod
-    def _create_compounds(cls, list_compound, job=None):
-        """
-        Creates chebi compound from a list.
+        n = len(ctf.sdfdata)
         
-        :type list_compound: list
-        :param list_compound: list of dictionnaries where each element refers 
-        to a chebi compound
-        :returns: list of Compound entities
-        :rtype: list
-        """
-        compounds = [cls(data = dict_) for dict_ in list_compound]
-        for comp in compounds:
-            comp.name =  comp.data["name"]
-            comp.chebi_id = comp.data["chebi_accession"]
+        str_mapping = {
+            'name': 'ChEBI Name',
+            'inchi': 'InChI',
+            'inchi_key': 'InChIKey',
+            'smiles': 'SMILES',
+            'chebi_id': 'ChEBI ID',
+            'uipac': 'IUPAC Names',
+            'formula': 'Formulae',
+            'metacyc_id': 'MetaCyc Database Links',
+            'kegg_id': 'KEGG COMPOUND Database Links',
+        }
+        
+        comps = []
+        for i in range(0,n):
+            comp = Compound()
+
             if not job is None:
                 comp._set_job(job)
 
-        return compounds
+            for k in str_mapping:
+                val = ctf.sdfdata[i].get(str_mapping[k],'')
+                if isinstance(val, list):
+                    setattr(comp, k, val[0])
+                else:
+                    setattr(comp, k, val)
 
-    # -- G --
+            comp.chebi_star = int(ctf.sdfdata[i]['Star'][0])
+            comp.average_mass = float(ctf.sdfdata[i]['Mass'][0])
+            comp.monoisotopic_mass = float(ctf.sdfdata[i]['Monoisotopic Mass'][0])
+            comp.charge = int(ctf.sdfdata[i]['Charge'][0])
 
-    def get_composition(self):
-        pass
+            comp.data = {
+                'definition': ctf.sdfdata[i].get('Definition',[''])[0],
+                'wikipedia': ctf.molfiles[i].get('Wikipedia Database Links',[''])[0],
+                'lipidmaps_id': ctf.sdfdata[i].get('LIPID MAPS instance Database Links',[''])[0],
+                'hmdb_id': ctf.sdfdata[i].get('HMDB Database Links',[''])[0],
+                'synonyms': ctf.sdfdata[i].get('Synonyms',[]),
+                'pubmed': ctf.sdfdata[i].get('PubMed citation Links',[]),
+                'structure': cls.__extract_structure(ctf.molfiles[i]),
+                'last_modified': ctf.sdfdata[i].get('Last Modified',[''])[0]
+            }
+            comps.append(comp)
+
+            if len(comps) >= 500:
+                cls.save_all(comps)
+                comps = []
+        
+        if len(comps) > 0:
+            cls.save_all(comps)
+
+    @property
+    def structure(self):
+        struct = {'atoms': [], 'bonds': []}
+        structure_data = self.data['structure']
+
+        for matrix_atom in structure_data['atoms']:
+            atom = {}
+            for idx in self.atom_block:
+                name = self.atom_block[idx]
+                atom[name] = matrix_atom[idx]
+
+            struct['atoms'].append(atom)
+
+        for matrix_bond in structure_data['bonds']:
+            bond = {}
+            for idx in self.bond_block:
+                name = self.bond_block[idx]
+                bond[name] = matrix_bond[idx]
+
+            struct['bonds'].append(bond)
+
+        return struct
+
+    @classmethod
+    def __extract_structure(cls, mols):
+        data = {'atoms': [], 'bonds': []}
+        for atom in mols.atoms:
+            tab = []
+            for k in cls.atom_block.values():
+                tab.append(atom[k])
+
+            data['atoms'].append(tab)
+
+        for bond in mols.bonds:
+            tab = []
+            for k in cls.bond_block.values():
+                tab.append(bond[k])
+
+            data['bonds'].append(tab)
+
+
+        return data
 
     # -- S --
 
@@ -112,78 +191,3 @@ class Compound(Entity):
     
     def set_charge(self, charge):
         self.charge = charge
-
-    @classmethod
-    def _set_chemicals(cls, list_chemical):
-        """
-        Sets chemical informations of compound from a tsv file which contains 
-        chebi chemical informations such as mass, chemical formula of charge
-
-        :type list_chemical: list 
-        :param list_chemical: list of chemical informations in the tsv file, 
-        each element represent one informations about formula, mass or charge of a 
-        chebi compound 
-        :returns: None
-        """
-
-        #print(list_chemical)
-
-        list_of_comps = {}
-        for chem in list_chemical:
-            chebi_id = 'CHEBI:' + chem['compound_id']
-
-            if(chem['type'] == 'FORMULA'):
-                try:
-                    if chebi_id in list_of_comps:
-                        comp = list_of_comps[chebi_id]
-                    else:
-                        comp = cls.get(cls.chebi_id == chebi_id)
-                        list_of_comps[chebi_id] = comp
-
-                    comp.set_formula(chem['chemical_data'])
-                    
-                except:
-                    continue
-
-            elif(chem['type'] == 'MASS'):
-                try:
-                    if chebi_id in list_of_comps:
-                        comp = list_of_comps[chebi_id]
-                    else:
-                        comp = cls.get(cls.chebi_id == chebi_id)
-                        list_of_comps[chebi_id] = comp
-
-                    comp.set_average_mass(float(chem['chemical_data']))
-                except:
-                    continue
-            
-            elif(chem['type'] == 'MONOISOTOPIC MASS'):
-                try:
-                    if chebi_id in list_of_comps:
-                        comp = list_of_comps[chebi_id]
-                    else:
-                        comp = cls.get(cls.chebi_id == chebi_id)
-                        list_of_comps[chebi_id] = comp
-
-                    comp.set_monoisotopic_mass(float(chem['chemical_data']))
-                except:
-                    continue
-
-            elif(chem['type'] == 'CHARGE'):
-                try:
-                    if chebi_id in list_of_comps:
-                        comp = list_of_comps[chebi_id]
-                    else:
-                        comp = cls.get(cls.chebi_id == chebi_id)
-                        list_of_comps[chebi_id] = comp
-
-                    comp.set_charge(float(chem['chemical_data']))
-                except:
-                    continue
-            
-            if len(list_of_comps.keys()) >= 500:
-                cls.save_all(list_of_comps.values())
-                list_of_comps = {}
-        
-        if len(list_of_comps.keys()) != 0:
-            cls.save_all(list_of_comps.values())
