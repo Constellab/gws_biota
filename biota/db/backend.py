@@ -139,15 +139,6 @@ class DbCreator(Process):
         elapsed_time = time.time() - start_time
         logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
 
-        # ---------------- Create Taxonomy --------------- #
-        logger.info("Step 6 | Saving ncbi taxonomy...")
-        start_time = time.time()
-        ncbi_biodata_dir = self.get_param("biota:taxonomy_biodata_dir")
-        Taxonomy.create_taxonomy_db(ncbi_biodata_dir, **params)
-        len_taxonomy = Taxonomy.select().count()
-        elapsed_time = time.time() - start_time
-        logger.info("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
-        
         # ---------------- Create Compound --------------- #
         logger.info("Step 7 | Saving chebi compounds...")
         start_time = time.time()
@@ -156,6 +147,15 @@ class DbCreator(Process):
         len_compound = Compound.select().count()
         elapsed_time = time.time() - start_time
         logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
+
+        # ---------------- Create Taxonomy --------------- #
+        logger.info("Step 6 | Saving ncbi taxonomy...")
+        start_time = time.time()
+        ncbi_biodata_dir = self.get_param("biota:taxonomy_biodata_dir")
+        Taxonomy.create_taxonomy_db(ncbi_biodata_dir, **params)
+        len_taxonomy = Taxonomy.select().count()
+        elapsed_time = time.time() - start_time
+        logger.info("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
 
         # ------------------ Create EnzymeFunction --------------- #
         logger.info("Step 8 | Saving brenda enzyme_functions and enzyme_btos...")
