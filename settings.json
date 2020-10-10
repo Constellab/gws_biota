@@ -27,8 +27,7 @@
     },
 
     "externs" : [
-        "brenda-py",
-        "mollusk-py"
+        "brenda-py"
     ],
 
     "dependencies" : [
