@@ -11,7 +11,6 @@ from biota.db.go import GO
 from biota.db.sbo import SBO
 from biota.db.bto import BTO
 from biota.db.eco import ECO
-from biota.db.chebi_ontology import ChebiOntology
 from biota.db.taxonomy import Taxonomy
 from biota.db.compound import Compound
 from biota.db.enzyme import Enzyme
@@ -73,7 +72,6 @@ class DbCreator(Process):
         SBO.drop_table()
         BTO.drop_table()
         ECO.drop_table()
-        ChebiOntology.drop_table()
         Taxonomy.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
@@ -85,7 +83,6 @@ class DbCreator(Process):
         SBO.create_table()
         BTO.create_table()
         ECO.create_table()
-        ChebiOntology.create_table()
         Taxonomy.create_table()
         Compound.create_table()
         Enzyme.create_table()
@@ -133,15 +130,6 @@ class DbCreator(Process):
         elapsed_time = time.time() - start_time
         logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
         
-        # # ------------- Create ChebiOntology ------------- #
-        # logger.info("Step 5 | Saving chebi ontology...")
-        # start_time = time.time()
-        # chebi_biodata_dir = self.get_param("biota:chebi_biodata_dir")
-        # ChebiOntology.create_chebi_ontology_db(chebi_biodata_dir, **params)
-        # len_chebi_ontology = ChebiOntology.select().count()
-        # elapsed_time = time.time() - start_time
-        # logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
-
         # ---------------- Create Compound --------------- #
         logger.info("Step 5 | Saving chebi compounds...")
         start_time = time.time()
