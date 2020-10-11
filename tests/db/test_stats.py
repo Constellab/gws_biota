@@ -3,7 +3,7 @@ import os
 import unittest
 import asyncio
 
-from biota.db.enzyme_function import EnzymeFunctionStatistics, \
+from biota.db.enzyme import EnzymeStatistics, \
                                     StatisticsExtractor
                                     
 
@@ -11,15 +11,15 @@ class TestProcess(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        EnzymeFunctionStatistics.drop_table()
+        EnzymeStatistics.drop_table()
         StatisticsExtractor.drop_table()
-        EnzymeFunctionStatistics.create_table()
+        EnzymeStatistics.create_table()
         StatisticsExtractor.create_table()
         pass
 
     @classmethod
     def tearDownClass(cls):
-        EnzymeFunctionStatistics.drop_table()
+        EnzymeStatistics.drop_table()
         StatisticsExtractor.drop_table()
         pass
 
@@ -32,5 +32,5 @@ class TestProcess(unittest.TestCase):
         s.set_param('organism', "Octopus vulgaris")
         await s.run()
 
-        s.output['EnzymeFunctionStatistics'].save()
+        s.output['EnzymeStatistics'].save()
         self.assertTrue( s.is_saved() )

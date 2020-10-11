@@ -14,8 +14,9 @@ from biota.db.eco import ECO
 from biota.db.chebi_ontology import ChebiOntology
 from biota.db.taxonomy import Taxonomy
 from biota.db.compound import Compound
-from biota.db.enzyme_function import EnzymeFunction
+from biota.db.enzyme import Enzyme
 from biota.db.reaction import Reaction
+from biota.db.fasta import Fasta
 
 class DbCreator(Process):
 
@@ -30,9 +31,10 @@ class DbCreator(Process):
         "pwo_file"                  : {"type": str, "default": "./pwo/pwo.obo"},
         "brenda_file"               : {"type": str, "default": "./brenda/brenda_download.txt"},
         "bkms_file"                 : {"type": str, "default": "./bkms/Reactions_BKMS.csv"},
+        "fasta_file"                : {"type": str, "default": "./uniprot/uniprot_sprot.fasta"},
         #"chebi_compound_file"       : {"type": str, "default": "./tsv/compounds.tsv"},
         #"chebi_chemical_data_file"  : {"type": str, "default": "./tsv/chemical_data.tsv"},
-        "chebi_sdf_file"            : {"type": str, "default": "./sdf/ChEBI_complete.sdf"},
+        #"chebi_sdf_file"            : {"type": str, "default": "./sdf/ChEBI_complete.sdf"},
         "ncbi_node_file"            : {"type": str, "default": "./taxdump/nodes.dmp"},
         "ncbi_name_file"            : {"type": str, "default": "./taxdump/names.dmp"},
         "ncbi_division_file"        : {"type": str, "default": "./taxdump/division.dmp"},
@@ -48,6 +50,7 @@ class DbCreator(Process):
         "biota:db_dir"              : {"type": str},
         "biota:biodata_dir"         : {"type": str},
         "biota:testdata_dir"        : {"type": str},
+        "biota:fasta_biodata_dir"   : {"type": str},
         "biota:brenda_biodata_dir"  : {"type": str},
         "biota:bkms_biodata_dir"    : {"type": str},
         "biota:chebi_biodata_dir"   : {"type": str},
@@ -73,7 +76,7 @@ class DbCreator(Process):
         ChebiOntology.drop_table()
         Taxonomy.drop_table()
         Compound.drop_table()
-        EnzymeFunction.drop_table()
+        Enzyme.drop_table()
         Reaction.drop_table()
         #EnzymeAnnotation.drop_table()
 
@@ -85,7 +88,7 @@ class DbCreator(Process):
         ChebiOntology.create_table()
         Taxonomy.create_table()
         Compound.create_table()
-        EnzymeFunction.create_table()
+        Enzyme.create_table()
         Reaction.create_table()
 
         logger = Logger()
@@ -130,17 +133,17 @@ class DbCreator(Process):
         elapsed_time = time.time() - start_time
         logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
         
-        # ------------- Create ChebiOntology ------------- #
-        logger.info("Step 5 | Saving chebi ontology...")
-        start_time = time.time()
-        chebi_biodata_dir = self.get_param("biota:chebi_biodata_dir")
-        ChebiOntology.create_chebi_ontology_db(chebi_biodata_dir, **params)
-        len_chebi_ontology = ChebiOntology.select().count()
-        elapsed_time = time.time() - start_time
-        logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
+        # # ------------- Create ChebiOntology ------------- #
+        # logger.info("Step 5 | Saving chebi ontology...")
+        # start_time = time.time()
+        # chebi_biodata_dir = self.get_param("biota:chebi_biodata_dir")
+        # ChebiOntology.create_chebi_ontology_db(chebi_biodata_dir, **params)
+        # len_chebi_ontology = ChebiOntology.select().count()
+        # elapsed_time = time.time() - start_time
+        # logger.info("... done in {:10.2f} min for #chebi_ontology = {}".format(elapsed_time/60, len_chebi_ontology))
 
         # ---------------- Create Compound --------------- #
-        logger.info("Step 7 | Saving chebi compounds...")
+        logger.info("Step 5 | Saving chebi compounds...")
         start_time = time.time()
         chebi_biodata_dir = self.get_param("biota:chebi_biodata_dir")
         Compound.create_compound_db(chebi_biodata_dir, **params)
@@ -157,14 +160,24 @@ class DbCreator(Process):
         elapsed_time = time.time() - start_time
         logger.info("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
 
-        # ------------------ Create EnzymeFunction --------------- #
-        logger.info("Step 8 | Saving brenda enzyme_functions and enzyme_btos...")
+        # ---------------- Create Fasta --------------- #
+        logger.info("Step 7 | Saving chebi fasta...")
+        start_time = time.time()
+        fasta_biodata_dir = self.get_param("biota:fasta_biodata_dir")
+        Fasta.create_compound_db(fasta_biodata_dir, **params)
+        len_fasta = Fasta.select().count()
+        elapsed_time = time.time() - start_time
+        logger.info("... done in {:10.2f} min for #fasta = {} ".format(elapsed_time/60, len_fasta))
+
+
+        # ------------------ Create Enzyme --------------- #
+        logger.info("Step 8 | Saving brenda proteins and protein_btos...")
         start_time = time.time()
         brenda_biodata_dir = self.get_param("biota:brenda_biodata_dir")
-        EnzymeFunction.create_enzyme_function_db(brenda_biodata_dir, **params)
-        len_enzyme = EnzymeFunction.select().count()
+        Enzyme.create_protein_db(brenda_biodata_dir, **params)
+        len_protein = Enzyme.select().count()
         elapsed_time = time.time() - start_time
-        logger.info("... done in {:10.2f} min for #enzyme_functions = {} ".format(elapsed_time/60, len_enzyme))
+        logger.info("... done in {:10.2f} min for #proteins = {} ".format(elapsed_time/60, len_protein))
         
         # ---------------- Create Reactions -------------- #
         logger.info("Step 9 | Saving rhea reactions...")
@@ -174,13 +187,3 @@ class DbCreator(Process):
         len_rhea = Reaction.select().count()
         elapsed_time = time.time() - start_time
         logger.info("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
-
-        """"
-        # ------------- Create EnzymeAnnotation ------------- #
-        logger.info("Step 10 | Saving enzyme_function annotations...")
-        start_time = time.time()
-        EnzymeAnnotation.create_annotation_db()
-        len_enzyme_annotation = EnzymeAnnotation.select().count()
-        elapsed_time = time.time() - start_time
-        logger.info("... done in {:10.2f} min for #enzyme_annotations = {}".format(elapsed_time/60, len_enzyme_annotation))
-        """

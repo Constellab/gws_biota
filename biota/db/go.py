@@ -66,6 +66,7 @@ class GO(Ontology):
             go.set_go_id(go.data["id"])
             go.set_name(go.data["name"])
             go.set_namespace(go.data["namespace"])
+
             if not job is None:
                 go._set_job(job)
 

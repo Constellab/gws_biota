@@ -22,7 +22,7 @@ class TestBrenda(unittest.TestCase):
         )
 
         brenda = Brenda(os.path.join(testdata_path, "brenda_test.txt"))
-        list_proteins = brenda.parse_all_protein_to_dict()
+        list_proteins = brenda.parse_all_enzyme_to_dict()
     
         self.assertEqual(list_proteins[0]['organism'], 'Pseudomonas sp.')
         self.assertEqual(list_proteins[6]['ec'], '1.13.11.38')

@@ -19,7 +19,7 @@ class Brenda():
     def __init__(self, file_path):
         self.parser = BrendaParser(brenda_file = file_path)
     
-    def parse_all_protein_to_dict(self):
+    def parse_all_enzyme_to_dict(self):
         """
         Uses the package brandapy to parses the brenda_download.txt file and returns a list of dictionnaries
         where terms represent proteins filled with their informations (experimental properties, citations, synonyms, etc...). 

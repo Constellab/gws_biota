@@ -65,6 +65,7 @@ class ECO(Ontology):
         for eco in ecos:
             eco.set_eco_id( eco.data["id"] )
             eco.set_name( eco.data["name"] )
+
             if not job is None:
                 eco._set_job(job)
 

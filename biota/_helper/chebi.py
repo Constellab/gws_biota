@@ -3,7 +3,6 @@ import os
 import csv
 import re
 
-import ctfile
 from pronto import Ontology
 
 ############################################################################################
@@ -85,14 +84,56 @@ class Chebi():
             dict_term = {}
             dict_term['id'] = term.id
             dict_term['name'] = term.name.replace('\r', '')
-            dict_term['definition'] = term.definition
             dict_term['alt_id'] = list(term.alternate_ids)
-            #dict_term['synonyms'] = list(term.synonyms)
-            #dict_term['subsets'] = term.subsets
-            #dict_term['property_value'] = list(term.annotations)
-            #dict_term['xrefs'] = list(term.xrefs)
+            dict_term['ancestors'] = []
+            dict_term['inchikey'] = ''
+            dict_term['inchi'] = ''
+            dict_term['smiles'] = ''
+            dict_term['charge'] = ''
+            dict_term['mass'] = ''
+            dict_term['monoisotopic_mass'] = ''
+
+            for pv in term.annotations:
+                if '/inchikey' in pv.property:
+                    dict_term['inchikey'] = pv.literal
+                elif '/inchi' in pv.property:
+                    dict_term['inchi'] = pv.literal
+                elif '/smiles' in pv.property:
+                    dict_term['smiles'] = pv.literal
+                elif '/formula' in pv.property:
+                    dict_term['formula'] = pv.literal
+                elif '/monoisotopicmass' in pv.property:
+                    dict_term['monoisotopic_mass'] = pv.literal
+                elif '/mass' in pv.property:
+                    dict_term['mass'] = pv.literal
+                elif '/charge' in pv.property:
+                    dict_term['charge'] = pv.literal
+
+            # ancestors
+            for c in term.superclasses():
+                if c.id != term.id:
+                    dict_term['ancestors'].append(c.id)
+
+            # synonyms
+            dict_term['synonyms'] = []
+            for syn in term.synonyms:
+                if syn.scope == "EXACT":
+                    if syn.description != dict_term['name']:
+                        dict_term['synonyms'].append(syn.description)
+
+            # definition
+            if term.definition is None:
+                dict_term['definition'] = ""
+            else:
+                dict_term['definition'] = term.definition
+
+            dict_term['xref'] = {}
+            for xref in term.xrefs:
+                xref_id = xref.id.split(":")[0].lower()
+                dict_term['xref'][xref_id] = xref.id.split(":")[1]
+
             list_chebi_term.append(dict_term)
-        
+
         return(list_chebi_term)
 
     @staticmethod
@@ -122,7 +163,7 @@ class Chebi():
         with open(in_file,'rt') as file: 
             with open(out_file,'wt') as outfile:
                 for line in file.readlines():
-                    m = re.search('xref: [a-zA-Z]+:([^\{\}\"]+) .*', line)
+                    m = re.search(r'xref: [a-zA-Z]+:([^\{\}\"]+) .*', line)
                     if m:
                         text = m.group(1)
                         corrected_text = text.replace(" ", "_")

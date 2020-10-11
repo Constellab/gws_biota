@@ -4,25 +4,30 @@ import unittest
 
 from gws.controller import Controller
 from gws.settings import Settings
-from biota.db.protein import Protein
+from biota.db.fasta import Fasta
 
 settings = Settings.retrieve()
 testdata_path = settings.get_dir("biota:testdata_dir")
 
-class TestProtein(unittest.TestCase):
+class TestGO(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        Protein.drop_table()
-        Protein.create_table()
+        Fasta.drop_table()
+        Fasta.create_table()
+        pass
    
     @classmethod
     def tearDownClass(cls):
+        #GO.drop_table()
         pass
-
+    
     def test_db_object(self):
-        files_test = dict(
-            brenda_file = "brenda_test.txt"
+        params = dict(
+            biodata_dir = testdata_path,
+            fasta_file = "uniprot_sprot.fasta",
         )
 
-        Protein.create_protein_db(testdata_path, **files_test)
+        Fasta.create_fasta_db(**params)  
+
+                

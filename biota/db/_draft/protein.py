@@ -8,13 +8,12 @@ from peewee import ForeignKeyField, CharField
 from gws.controller import Controller
 from biota.db.entity import Entity
 
-class Protein(Entity):
+class Enzyme(Entity):
     """
     This class represents proteins.
     """
 
     name = CharField(null=True, index=True)
-    uniprot_id = CharField(null=True, index=True)
     _table_name = 'protein'
 
     @classmethod

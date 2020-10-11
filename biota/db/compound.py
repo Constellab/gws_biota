@@ -2,192 +2,109 @@
 # This software is the exclusive property of Gencovery SAS. 
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
+#
+# ChEBI Copyright Notice and License:
+# ChEBI data are available under the Creative Commons License (CC BY 4.0).
+# The Creative Commons Attribution License CC BY 4.0 
+# is applied to all copyrightable parts of BRENDA. 
+# The copyrightable parts of BRENDA are copyright-protected by Prof. Dr. D. Schomburg, Technische 
+# Universität Braunschweig, BRICS,Department of Bioinformatics and Biochemistry, 
+# Rebenring 56, 38106 Braunschweig, Germany.
+# https://www.brenda-enzymes.org
+#
+# Attribution 4.0 International (CC BY 4.0) information, 2020:
+# You are free to:
+# * Share — copy and redistribute the material in any medium or format
+# * Adapt — remix, transform, and build upon the material
+#     for any purpose, even commercially.
+# This license is acceptable for Free Cultural Works.
+# The licensor cannot revoke these freedoms as long as you follow the license terms.
+# https://creativecommons.org/licenses/by/4.0/.
 
-from peewee import CharField, FloatField, TextField, IntegerField
-from biota.db.entity import Entity
+from peewee import CharField, FloatField, IntegerField
+from biota.db.base import Base
 
-class Compound(Entity):
+class Compound(Base):
     """
-    This class represents metabolic compounds from the ChEBI database.
+    This class represents ChEBI Ontology terms.
     
-    Chemical Entities of Biological Interest (ChEBI) includes an
-    ontological classification, whereby the relationships between molecular 
-    entities or classes of entities and their parents and/or children are 
+    Chemical Entities of Biological Interest (ChEBI) includes an ontological classification, whereby the 
+    relationships between molecular entities or classes of entities and their parents and/or children are 
     specified (https://www.ebi.ac.uk/chebi/). ChEBI data are available under the Creative Commons License (CC BY 4.0),
     https://creativecommons.org/licenses/by/4.0/
 
-    :property name : name of the compound
-    :type name : CharField
-    :property chebi_id: chebi accession number
-    :type chebi_id: CharField
-    :property formula: chimical formula
-    :type formula: CharField
-    :property mass: mass of the compound
-    :type mass: FloatField 
-    :property charge: charge of the compound
-    :type charge: FloatField
+
+    :property chebi_id: id of the ChEBI term
+    :type chebi_id: class:`peewee.CharField`
+    :property name: name of the ChEBI term
+    :type name: class:`peewee.CharField`
     """
-    
-    name = CharField(null=True, index=True)
-    inchi = CharField(null=True, index=True)
-    inchi_key = CharField(null=True, index=True)
-    smiles = CharField(null=True, index=True)
-    uipac = CharField(null=True, index=True)
+
     chebi_id = CharField(null=True, index=True)
-    chebi_star = IntegerField(null=True, index=True)
-    metacyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
-    formula = CharField(null=True, index=True)
-    average_mass = FloatField(null=True, index=True)
+    metacyc_id = CharField(null=True, index=True)
+    name = CharField(null=True, index=True)
+    charge = FloatField(null=True, index=True)
+    mass = FloatField(null=True, index=True)
     monoisotopic_mass = FloatField(null=True, index=True)
-    charge = IntegerField(null=True, index=True)
+    inchi = CharField(null=True, index=True)
+    inchikey = CharField(null=True, index=True)
+    smiles = CharField(null=True, index=True)
 
     _table_name = 'compound'
 
-    atom_block = {
-        0:'x', 
-        1:'y', 
-        2:'z', 
-        3:'atom_symbol', 
-        4:'mass_difference', 
-        5:'charge', 
-        6:'atom_stereo_parity', 
-        7:'hydrogen_count',
-        8:'stereo_care_box', 
-        9:'valence',
-        10:'atom_atom_mapping_number',
-        11:'inversion_retention_flag',
-        12:'exact_change_flag'
-    }
-
-    bond_block = {
-        0:'first_atom_number',
-        1:'second_atom_number',
-        2:'bond_type',
-        3:'bond_stereo',
-        4:'bond_topology',
-        5:'reacting_center_status'
-    }
-
-    # -- C -- 
-
     @classmethod
     def create_compound_db(cls, biodata_dir = None, **kwargs):
-        from biota._helper.chebi import Chebi as ChebiHelper
-        ctf = ChebiHelper.read_sdf(biodata_dir, kwargs['chebi_sdf_file'])
-        job = kwargs.get('job',None)
+        """
+        Creates and fills the `chebi_ontology` database
 
-        n = len(ctf.sdfdata)
+        :type biodata_dir: str
+        :param biodata_dir: path of the :file:`chebi.obo`
+        :type kwargs: dict
+        :param kwargs: dictionnary that contains all data files names
+        :returns: None
+        :rtype: None
+        """
+
+        from biota._helper.chebi import Chebi as ChebiHelper
+
+        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(biodata_dir, kwargs['chebi_file'])
+
+        onto = ChebiHelper.create_ontology_from_file(data_dir, corrected_file_name)
+        list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
+        chebis = [cls(data = dict_) for dict_ in list_chebi]
+        job = kwargs.get('job',None)
         
-        str_mapping = {
-            'name': 'ChEBI Name',
-            'inchi': 'InChI',
-            'inchi_key': 'InChIKey',
-            'smiles': 'SMILES',
-            'chebi_id': 'ChEBI ID',
-            'uipac': 'IUPAC Names',
-            'formula': 'Formulae',
-            'metacyc_id': 'MetaCyc Database Links',
-            'kegg_id': 'KEGG COMPOUND Database Links',
-        }
-        
-        comps = []
-        for i in range(0,n):
-            comp = Compound()
+        for chebi in chebis:
+            chebi.name = chebi.data["name"]
+            chebi.chebi_id = chebi.data["id"]
+            
+            chebi.inchi = chebi.data["inchi"]
+            chebi.inchikey = chebi.data["inchikey"]
+            chebi.smiles = chebi.data["smiles"]
+            chebi.mass = chebi.data["mass"]
+            chebi.monoisotopic_mass = chebi.data["monoisotopic_mass"]
+            chebi.charge = chebi.data["charge"]
+            
+            if "kegg" in chebi.data["xref"]:
+                chebi.kegg_id = chebi.data["xref"]["kegg"]
+                del chebi.data["xref"]["kegg"]
+
+            if "metacyc" in chebi.data["xref"]:
+                chebi.metacyc_id = chebi.data["xref"]["metacyc"]
+                del chebi.data["xref"]["metacyc"]
+
+            del chebi.data["name"]
+            del chebi.data["id"]
+            del chebi.data["inchi"]
+            del chebi.data["inchikey"]
+            del chebi.data["smiles"]
+            del chebi.data["mass"]
+            del chebi.data["monoisotopic_mass"]
+            del chebi.data["charge"]
 
             if not job is None:
-                comp._set_job(job)
+                chebi._set_job(job)
 
-            for k in str_mapping:
-                val = ctf.sdfdata[i].get(str_mapping[k],'')
-                if isinstance(val, list):
-                    setattr(comp, k, val[0])
-                else:
-                    setattr(comp, k, val)
-
-            comp.chebi_star = int(ctf.sdfdata[i]['Star'][0])
-            comp.average_mass = float(ctf.sdfdata[i]['Mass'][0])
-            comp.monoisotopic_mass = float(ctf.sdfdata[i]['Monoisotopic Mass'][0])
-            comp.charge = int(ctf.sdfdata[i]['Charge'][0])
-
-            comp.data = {
-                'definition': ctf.sdfdata[i].get('Definition',[''])[0],
-                'wikipedia': ctf.molfiles[i].get('Wikipedia Database Links',[''])[0],
-                'lipidmaps_id': ctf.sdfdata[i].get('LIPID MAPS instance Database Links',[''])[0],
-                'hmdb_id': ctf.sdfdata[i].get('HMDB Database Links',[''])[0],
-                'synonyms': ctf.sdfdata[i].get('Synonyms',[]),
-                'pubmed': ctf.sdfdata[i].get('PubMed citation Links',[]),
-                'structure': cls.__extract_structure(ctf.molfiles[i]),
-                'last_modified': ctf.sdfdata[i].get('Last Modified',[''])[0]
-            }
-            comps.append(comp)
-
-            if len(comps) >= 500:
-                cls.save_all(comps)
-                comps = []
-        
-        if len(comps) > 0:
-            cls.save_all(comps)
-
-    @property
-    def structure(self):
-        struct = {'atoms': [], 'bonds': []}
-        structure_data = self.data['structure']
-
-        for matrix_atom in structure_data['atoms']:
-            atom = {}
-            for idx in self.atom_block:
-                name = self.atom_block[idx]
-                atom[name] = matrix_atom[idx]
-
-            struct['atoms'].append(atom)
-
-        for matrix_bond in structure_data['bonds']:
-            bond = {}
-            for idx in self.bond_block:
-                name = self.bond_block[idx]
-                bond[name] = matrix_bond[idx]
-
-            struct['bonds'].append(bond)
-
-        return struct
-
-    @classmethod
-    def __extract_structure(cls, mols):
-        data = {'atoms': [], 'bonds': []}
-        for atom in mols.atoms:
-            tab = []
-            for k in cls.atom_block.values():
-                tab.append(atom[k])
-
-            data['atoms'].append(tab)
-
-        for bond in mols.bonds:
-            tab = []
-            for k in cls.bond_block.values():
-                tab.append(bond[k])
-
-            data['bonds'].append(tab)
-
-
-        return data
-
-    # -- S --
-
-    def set_name(self, name):
-        self.name = name
-    
-    def set_chebi_id(self, chebi_id):
-        self.chebi_id = chebi_id
-    
-    def set_formula(self, formula):
-        self.formula = formula
-    
-    def set_average_mass(self, mass):
-        self.average_mass = mass
-    
-    def set_monoisotopic_mass(self, mass):
-        self.monoisotopic_mass = mass
-    
-    def set_charge(self, charge):
-        self.charge = charge
+        cls.save_all(chebis)
+        return(list_chebi)

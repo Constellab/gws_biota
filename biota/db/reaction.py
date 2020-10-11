@@ -9,7 +9,7 @@ from peewee import Model as PWModel
 from biota.db.base import Base, DbManager
 from biota.db.entity import Entity
 from biota.db.compound import Compound
-from biota.db.enzyme_function import EnzymeFunction
+from biota.db.enzyme import Enzyme
 
 ####################################################################################
 #
@@ -19,7 +19,7 @@ from biota.db.enzyme_function import EnzymeFunction
 
 ReactionSubstrateDeferred = DeferredThroughModel()
 ReactionProductDeferred = DeferredThroughModel()
-ReactionEnzymeFunctionDeferred = DeferredThroughModel()
+ReactionEnzymeDeferred = DeferredThroughModel()
 
 class Reaction(Entity):
     """
@@ -44,8 +44,8 @@ class Reaction(Entity):
     :type substrates: List of `Compound`
     :property products: products of the reaction
     :type products: List of `Compound`
-    :property enzyme_functions: enzyme_functions of the reaction
-    :type enzyme_functions: List of `EnzymeFunction`
+    :property enzymes: enzymes of the reaction
+    :type enzymes: List of `Enzyme`
     """
     rhea_id = CharField(null=True, index=True)
     master_id = CharField(null=True, index=True)
@@ -60,7 +60,7 @@ class Reaction(Entity):
 
     substrates = ManyToManyField(Compound, through_model = ReactionSubstrateDeferred)
     products = ManyToManyField(Compound, through_model = ReactionProductDeferred)
-    enzyme_functions = ManyToManyField(EnzymeFunction, through_model = ReactionEnzymeFunctionDeferred)
+    enzymes = ManyToManyField(Enzyme, through_model = ReactionEnzymeDeferred)
 
     _table_name = 'reaction'
 
@@ -148,7 +148,7 @@ class Reaction(Entity):
             react.__set_substrates_from_data()
             react.__set_products_from_data()
             if 'enzymes' in react.data.keys():
-                react.__set_enzyme_functions_from_data()
+                react.__set_enzymes_from_data()
         
         cls.save_all(reactions)
 
@@ -164,7 +164,7 @@ class Reaction(Entity):
         super().create_table(*args, **kwargs)
         ReactionSubstrate.create_table()
         ReactionProduct.create_table()
-        ReactionEnzymeFunction.create_table()
+        ReactionEnzyme.create_table()
 
     # -- D -- 
 
@@ -177,7 +177,7 @@ class Reaction(Entity):
         """
         ReactionSubstrate.drop_table()
         ReactionProduct.drop_table()
-        ReactionEnzymeFunction.drop_table()
+        ReactionEnzyme.drop_table()
         super().drop_table(*args, **kwargs)
 
     # -- I -- 
@@ -262,14 +262,14 @@ class Reaction(Entity):
         for comp in Q:
             self.products.add(comp)
     
-    def __set_enzyme_functions_from_data(self):
+    def __set_enzymes_from_data(self):
         """
-        Set enzyme_functions from `data`
+        Set enzymes from `data`
         """
         from biota.db.enzyme import Enzyme
-        Q = EnzymeFunction.select().join(Enzyme).where(Enzyme.ec << self.data['enzymes'])
+        Q = Enzyme.select().where(Enzyme.ec_number << self.data['enzymes'])
         for enz in Q:
-            self.enzyme_functions.add(enz)
+            self.enzymes.add(enz)
 
     # -- U --
 
@@ -458,23 +458,23 @@ class ReactionProduct(PWModel):
         table_name = 'reaction_products'
         database = DbManager.db
 
-class ReactionEnzymeFunction(PWModel):
+class ReactionEnzyme(PWModel):
     """
-    This class defines the many-to-many relationship between enzyme_functions and reactions.
+    This class defines the many-to-many relationship between enzymes and reactions.
 
-    :property enzyme_function: enzyme_function of the reaction
-    :type enzyme_function: EnzymeFunction 
+    :property enzyme: enzyme of the reaction
+    :type enzyme: Enzyme 
     
     :property reaction: concerned reaction
     :type reaction: Reaction 
     """
-    enzyme_function = ForeignKeyField(EnzymeFunction)
+    enzyme = ForeignKeyField(Enzyme)
     reaction = ForeignKeyField(Reaction)
     
     class Meta:
-        table_name = 'reaction_enzyme_functions'
+        table_name = 'reaction_enzymes'
         database = DbManager.db
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)
-ReactionEnzymeFunctionDeferred.set_model(ReactionEnzymeFunction)
+ReactionEnzymeDeferred.set_model(ReactionEnzyme)

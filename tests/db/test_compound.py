@@ -4,10 +4,19 @@ import unittest
 
 from gws.controller import Controller
 from gws.settings import Settings
+
 from biota.db.compound import Compound
 
+############################################################################################
+#
+#                                        TestChebiOntology
+#                                         
+############################################################################################
 settings = Settings.retrieve()
-testdata_path = settings.get_dir("biota:testdata_dir")
+testdata_path = os.path.join(
+    settings.get_dir("biota:testdata_dir"),
+    '../_helper/data/'
+)
 
 class TestCompound(unittest.TestCase):
     @classmethod
@@ -19,33 +28,14 @@ class TestCompound(unittest.TestCase):
     def tearDownClass(cls):
         #Compound.drop_table()
         pass
-    
-    def test_compound(self):
-        testdata_path = settings.get_dir("biota:testdata_dir")
+
+    def test_db_object(self):
 
         params = dict(
             biodata_dir = testdata_path,
-            chebi_sdf_file = "chebi.sdf",
+            chebi_file = "chebi_test.obo",
         )
 
         Compound.create_compound_db(**params)
-
-        comp = Compound.get(Compound.chebi_id == 'CHEBI:90')
-        self.assertEqual(comp.average_mass, 290.2681)
-        self.assertEqual(comp.monoisotopic_mass, 290.07904)
-        self.assertEqual(comp.inchi_key, 'PFTAWBLQPZVEMU-UKRRQHHQSA-N')
-
-        print(comp.structure)
-
-
-    # def test_db_object(self):
-    #     return
-    #     params = dict(
-    #         biodata_dir = testdata_path,
-    #         chebi_compound_file = "compounds_test.tsv",
-    #         chebi_chemical_data_file =  "chemical_data_test.tsv",
-    #     )
-
-    #     Compound.create_compound_db(**params)
-    #     self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:58321').name, 'L-allysine zwitterion')
-    #     self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:59789').name, 'S-adenosyl-L-methionine zwitterion')
+        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:24431').name, "chemical entity")
+        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:17051').name, 'fluoride')

@@ -60,6 +60,10 @@ class BTO(Ontology):
         for bto in btos:
             bto.set_bto_id( bto.data["id"] )
             bto.set_label( bto.data["label"] )
+
+            #del bto.data["id"]
+            #del bto.data["label"]
+
             if not job is None:
                 bto._set_job(job)
 
