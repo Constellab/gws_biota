@@ -27,8 +27,7 @@
     },
 
     "externs" : [
-        "brenda-py",
-        "ctfile-py"
+        "brenda-py"
     ],
 
     "dependencies" : [
