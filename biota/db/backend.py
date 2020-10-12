@@ -152,7 +152,7 @@ class DbCreator(Process):
         logger.info("Step 7 | Saving chebi fasta...")
         start_time = time.time()
         fasta_biodata_dir = self.get_param("biota:fasta_biodata_dir")
-        Fasta.create_compound_db(fasta_biodata_dir, **params)
+        Fasta.create_fasta_db(fasta_biodata_dir, **params)
         len_fasta = Fasta.select().count()
         elapsed_time = time.time() - start_time
         logger.info("... done in {:10.2f} min for #fasta = {} ".format(elapsed_time/60, len_fasta))
