@@ -22,15 +22,15 @@ class DbCreator(Process):
     input_specs = {}
     output_specs = {}
     config_specs =  {
-        "go_file"                   : {"type": str, "default": "./go.obo"},
-        "sbo_file"                  : {"type": str, "default": "./sbo.obo"},
-        "eco_file"                  : {"type": str, "default": "./eco.obo"},
+        "go_file"                   : {"type": str, "default": "go.obo"},
+        "sbo_file"                  : {"type": str, "default": "sbo.obo"},
+        "eco_file"                  : {"type": str, "default": "eco.obo"},
         "chebi_file"                : {"type": str, "default": "./obo/chebi.obo"},
-        "bto_file"                  : {"type": str, "default": "./bto.json"},
+        "bto_file"                  : {"type": str, "default": "bto.json"},
         "pwo_file"                  : {"type": str, "default": "./pwo/pwo.obo"},
         "brenda_file"               : {"type": str, "default": "./brenda/brenda_download.txt"},
         "bkms_file"                 : {"type": str, "default": "./bkms/Reactions_BKMS.csv"},
-        "fasta_file"                : {"type": str, "default": "./uniprot_sprot.fasta"},
+        "fasta_file"                : {"type": str, "default": "./uniprot/uniprot_sprot.fasta"},
         #"chebi_compound_file"       : {"type": str, "default": "./tsv/compounds.tsv"},
         #"chebi_chemical_data_file"  : {"type": str, "default": "./tsv/chemical_data.tsv"},
         #"chebi_sdf_file"            : {"type": str, "default": "./sdf/ChEBI_complete.sdf"},
@@ -93,16 +93,6 @@ class DbCreator(Process):
 
         params = (self.config.params).copy()    #get a copy
         params['job'] = self.get_active_job()
-
-        # ---------------- Create Fasta --------------- #
-        logger.info("Step 7 | Saving chebi fasta...")
-        start_time = time.time()
-        fasta_biodata_dir = self.get_param("biota:fasta_biodata_dir")
-        Fasta.create_fasta_db(fasta_biodata_dir, **params)
-        len_fasta = Fasta.select().count()
-        elapsed_time = time.time() - start_time
-        logger.info("... done in {:10.2f} min for #fasta = {} ".format(elapsed_time/60, len_fasta))
-
 
         # ------------- Create GO ------------- #
         logger.info("Step 1 | Saving go and go_ancestors...")
