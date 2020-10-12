@@ -21,14 +21,14 @@ def createdb(user):
     settings = Settings.retrieve()
 
     params = dict(
-        go_file = "go.obo",
-        sbo_file = "sbo.obo",
-        eco_file = "eco.obo",
+        go_file = "./go.obo",
+        sbo_file = "./sbo.obo",
+        eco_file = "./eco.obo",
         chebi_file = "./obo/chebi.obo",
-        bto_file = "bto.json",
+        bto_file = "./bto.json",
         pwo_file = "./pwo/pwo.obo",
         brenda_file = "./brenda/brenda_download.txt",
-        fasta_file = "./uniprot/uniprot_sprot.fasta",
+        fasta_file = "./uniprot_sprot.fasta",
         bkms_file = "./bkms/Reactions_BKMS.csv",
         #chebi_compound_file = "./tsv/compounds.tsv",
         #chebi_chemical_data_file = "./tsv/chemical_data.tsv",
