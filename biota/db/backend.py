@@ -159,13 +159,13 @@ class DbCreator(Process):
 
 
         # ------------------ Create Enzyme --------------- #
-        logger.info("Step 8 | Saving brenda proteins and protein_btos...")
+        logger.info("Step 8 | Saving brenda enzymes and enzyme_btos...")
         start_time = time.time()
         brenda_biodata_dir = self.get_param("biota:brenda_biodata_dir")
-        Enzyme.create_protein_db(brenda_biodata_dir, **params)
-        len_protein = Enzyme.select().count()
+        Enzyme.create_enzyme_db(brenda_biodata_dir, **params)
+        len_enzyme = Enzyme.select().count()
         elapsed_time = time.time() - start_time
-        logger.info("... done in {:10.2f} min for #proteins = {} ".format(elapsed_time/60, len_protein))
+        logger.info("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
         
         # ---------------- Create Reactions -------------- #
         logger.info("Step 9 | Saving rhea reactions...")
