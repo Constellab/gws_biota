@@ -4,7 +4,6 @@
 # About us: https://gencovery.com
 
 import click
-
 from gws.settings import Settings
 from gws.logger import Logger
 from biota.db.backend import DbCreator
@@ -14,9 +13,8 @@ def createdb(user):
     if user is None:
         user = "Gencoverer"
 
-    logger = Logger()
-    logger.info(f"Hello {user}")
-    logger.info(f"Creating tables ...")
+    Logger.info(f"Hello {user}")
+    Logger.info(f"Creating tables ...")
 
     settings = Settings.retrieve()
 
