@@ -6,7 +6,7 @@
 import os
 import time
 from gws.model import Process
-from gws.Logger import Logger
+from gws.logger import Logger
 
 from biota.db.go import GO
 from biota.db.sbo import SBO
