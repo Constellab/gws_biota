@@ -10,17 +10,7 @@
     "dirs"          : {
         "biota:testdata_dir"            : "./tests/testdata",
         "biota:db_dir"                  : "../../data/biota/db/",
-        "biota:brenda_biodata_dir"      : "../../data/biota/biodata/brenda",
-        "biota:fasta_biodata_dir"       : "../../data/biota/biodata/uniprot",
-        "biota:bkms_biodata_dir"        : "../../data/biota/biodata/bkms",
-        "biota:chebi_biodata_dir"       : "../../data/biota/biodata/chebi",
-        "biota:go_biodata_dir"          : "../../data/biota/biodata/go",
-        "biota:eco_biodata_dir"         : "../../data/biota/biodata/eco",
-        "biota:sbo_biodata_dir"         : "../../data/biota/biodata/sbo",
-        "biota:bto_biodata_dir"         : "../../data/biota/biodata/brenda/bto",
-        "biota:pwo_biodata_dir"         : "../../data/biota/biodata/pwo",
-        "biota:rhea_biodata_dir"        : "../../data/biota/biodata/rhea",
-        "biota:taxonomy_biodata_dir"    : "../../data/biota/biodata/ncbi"
+        "biota:biodata_dir"             : "../../data/biota/biodata/"
     },
 
     "urls":{
