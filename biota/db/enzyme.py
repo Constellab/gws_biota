@@ -231,7 +231,7 @@ class Enzyme(Base):
         brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
         list_of_enzymes = brenda.parse_all_enzyme_to_dict()
 
-        pos = {}
+        po_list = {}
         enzymes = []
         for d in list_of_enzymes:
             ec = d['ec']
@@ -241,15 +241,15 @@ class Enzyme(Base):
                 data = d
             )
 
-            if not ec in pos:
-                pos[ec] = PO(
+            if not ec in po_list:
+                po_list[ec] = PO(
                     name = d["RN"][0],
                     ec_number = ec,
                 )
 
             if not job is None:
                 enz._set_job(job)
-                pos[ec]._set_job(job)
+                po_list[ec]._set_job(job)
 
             del d["RN"]
             del d["ec"]
@@ -257,7 +257,7 @@ class Enzyme(Base):
 
             enzymes.append(enz)
 
-        PO.save_all(pos.values())
+        PO.save_all(po_list.values())
         cls.save_all(enzymes)
         cls.__update_tax_tissue(enzymes)  
 
@@ -440,7 +440,7 @@ class Enzyme(Base):
 
                 if len(po_list.keys()) >= bulk_size:
                     PO.save_all(po_list.values())
-                    po_list = {}
+                    po_list = []
 
         if len(po_list) > 0:
             PO.save_all(po_list.values())
