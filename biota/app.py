@@ -3,8 +3,6 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import json
-
 from starlette.routing import Route
 from starlette.authentication import requires
 from starlette.responses import RedirectResponse
