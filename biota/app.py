@@ -3,9 +3,5 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-# from fastapi import FastAPI
-# brick = "biota"
-# app = FastAPI()
-
 async def page_index(request):
     return None
