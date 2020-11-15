@@ -87,7 +87,7 @@ class DbCreator(Process):
             if k.endswith("_file"):
                 file_path = os.path.join(biodata_dir, params[k])
                 if not os.path.exists(file_path):
-                    Logger.error(Exception("Biodata file {file_path} does not exist"))
+                    Logger.error(Exception(f"Biodata file {file_path} does not exist"))
 
         # ------------- Create GO ------------- #
         Logger.info("Step 1 | Saving go and go_ancestors...")
