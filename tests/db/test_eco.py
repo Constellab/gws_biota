@@ -20,6 +20,7 @@ class TestECO(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
+        ECO.drop_table()
         pass
     
     def test_db_object(self):
@@ -29,5 +30,5 @@ class TestECO(unittest.TestCase):
         )
 
         ECO.create_eco_db(**params)
-        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').name, "inference from background scientific knowledge")
-        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000002').name, "direct assay evidence")
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').get_name(), "inference from background scientific knowledge")
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000002').get_name(), "direct assay evidence")

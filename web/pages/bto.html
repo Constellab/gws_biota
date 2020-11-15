@@ -1,0 +1,50 @@
+<div class="gview:breadcrump" json="true">
+    {
+        "sep": ">",
+        "list":[
+            {"text": "Biota", "href": "/page/biota"},
+            {"text": "bto", "href": "/page/biota/bto"}
+        ]
+    }
+</div>
+
+
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-9">
+
+            <div class="mdc-card">
+                <div class="mdc-card__primary-action" tabindex="0">
+                    <div class="mdc-card__media" style="padding: 0px 16px;">
+                        <h2 class="mdc-typography mdc-typography--headline6"></h2>
+                        <h3 class="mdc-typography mdc-typography--subtitle2"></h3>
+                    </div>
+                    <div id="bto-list" class="mdc-typography mdc-typography--body2" style="padding: 0px 16px;">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3">
+            {% include('_sidebar.html') %}
+        </div>
+    </div>
+</div>
+
+
+<script class="gws:script">
+    gws.send({
+        "url": "/api/biota/bto-list",
+        "type": "json",
+        "method": "GET",
+        "success":function(html){
+            document.querySelector("#bto-list").innerHTML = html
+            GView.upgradeAll()
+        },
+        "failure":function(html){
+            document.querySelector("#bto-list").innerHTML = html
+        }
+    })
+</script>

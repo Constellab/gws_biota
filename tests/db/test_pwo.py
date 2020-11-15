@@ -18,6 +18,7 @@ class TestPWO(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
+        PWO.drop_table()
         pass
     
     def test_db_object(self):
@@ -27,5 +28,5 @@ class TestPWO(unittest.TestCase):
         )
     
         PWO.create_pwo_db(**params)
-        self.assertEqual(PWO.get(PWO.pwo_id == 'PW:0000000').name, 'term zero')
-        self.assertEqual(PWO.get(PWO.pwo_id == "PW:0000005").name, 'carbohydrate metabolic pathway')
+        self.assertEqual(PWO.get(PWO.pwo_id == 'PW:0000000').get_name(), 'term zero')
+        self.assertEqual(PWO.get(PWO.pwo_id == "PW:0000005").get_name(), 'carbohydrate metabolic pathway')

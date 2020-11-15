@@ -21,6 +21,7 @@ class Fasta(Entity):
     uniprot_gene = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
 
+    _fts_fields = { **Entity._fts_fields, 'description': 1.0 }
     _table_name = 'fasta'
 
     @classmethod

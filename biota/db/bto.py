@@ -21,23 +21,22 @@ class BTO(Ontology):
 
     :property bto_id: id of the bto term
     :type bto_id: class:`peewee.CharField`
-    :property label: label of the bto term
-    :type label: class:`peewee.CharField` 
+    :property name: name of the bto term
+    :type name: class:`peewee.CharField` 
     """
     bto_id = CharField(null=True, index=True)
-    label = CharField(null=True, index=True)
     _table_name = 'bto'
 
     # -- C --
 
     @classmethod
-    def create_table(cls, *arg, **kwargs):
+    def create_table(cls, *args, **kwargs):
         """
         Creates `bto` table and related tables.
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
-        super().create_table(*arg, **kwargs)
+        super().create_table(*args, **kwargs)
         BTOAncestor.create_table()
         
     @classmethod
@@ -59,11 +58,10 @@ class BTO(Ontology):
 
         for bto in btos:
             bto.set_bto_id( bto.data["id"] )
-            bto.set_label( bto.data["label"] )
+            bto.set_name( bto.data["title"] )
 
-            #del bto.data["id"]
-            #del bto.data["label"]
-
+            del bto.data["id"]
+            
             if not job is None:
                 bto._set_job(job)
 
@@ -137,15 +135,6 @@ class BTO(Ontology):
         :type bto_id: str
         """
         self.bto_id = bto_id
-
-    def set_label(self, label):
-        """
-        Set the label
-
-        :param: label: The label
-        :type label: str
-        """
-        self.label = label
 
 class BTOAncestor(PWModel):
     """

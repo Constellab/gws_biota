@@ -137,7 +137,7 @@ class Onto():
                     pass
                 else:
                     dict_bto['id'] = data[key]['key']
-                    dict_bto['label'] = data[key]['label']
+                    dict_bto['title'] = data[key]['label']
                     if('ancestors' in data[key].keys()):
                         dict_bto['ancestors'] = data[key]['ancestors']
                     if ('synonyms' in data[key].keys() ):
@@ -160,7 +160,7 @@ class Onto():
         for term in ontology.terms():
             dict_eco = {}
             dict_eco['id'] = term.id
-            dict_eco['name'] = term.name.replace('\r', '')
+            dict_eco['title'] = term.name.replace('\r', '')
             dict_eco['definition'] = str(term.definition) #str 
 
             try:
@@ -190,7 +190,7 @@ class Onto():
         for term in ontology.terms():
             dict_go = {}
             dict_go['id'] = term.id
-            dict_go['name'] = term.name.replace('\r', '')
+            dict_go['title'] = term.name.replace('\r', '')
             dict_go['namespace'] = term.namespace.replace('\r', '')
             dict_go['definition'] = str(term.definition) #str
 
@@ -247,7 +247,7 @@ class Onto():
         for term in ontology.terms():
             dict_sbo = {}
             dict_sbo['id'] = term.id
-            dict_sbo['name'] = term.name.replace('\r', '')
+            dict_sbo['title'] = term.name.replace('\r', '')
 
             if '</math>' in term.definition:
                 list_def = term.definition.split("<math xmlns")
@@ -306,7 +306,7 @@ class Onto():
         for term in ontology.terms():
             dict_pwo = {}
             dict_pwo['id'] = term.id
-            dict_pwo['name'] = term.name.replace('\r', '')
+            dict_pwo['title'] = term.name.replace('\r', '')
             dict_pwo['definition'] = str(term.definition) #str 
 
             try:

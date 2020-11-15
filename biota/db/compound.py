@@ -36,14 +36,11 @@ class Compound(Base):
 
     :property chebi_id: id of the ChEBI term
     :type chebi_id: class:`peewee.CharField`
-    :property name: name of the ChEBI term
-    :type name: class:`peewee.CharField`
     """
 
     chebi_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
     metacyc_id = CharField(null=True, index=True)
-    name = CharField(null=True, index=True)
     charge = FloatField(null=True, index=True)
     mass = FloatField(null=True, index=True)
     monoisotopic_mass = FloatField(null=True, index=True)
@@ -51,6 +48,7 @@ class Compound(Base):
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
 
+    _fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
     _table_name = 'compound'
 
     @classmethod
@@ -76,7 +74,7 @@ class Compound(Base):
         job = kwargs.get('job',None)
         
         for chebi in chebis:
-            chebi.name = chebi.data["name"]
+            chebi.set_name(chebi.data["title"])
             chebi.chebi_id = chebi.data["id"]
             
             chebi.inchi = chebi.data["inchi"]
@@ -94,7 +92,6 @@ class Compound(Base):
                 chebi.metacyc_id = chebi.data["xref"]["metacyc"]
                 del chebi.data["xref"]["metacyc"]
 
-            del chebi.data["name"]
             del chebi.data["id"]
             del chebi.data["inchi"]
             del chebi.data["inchikey"]

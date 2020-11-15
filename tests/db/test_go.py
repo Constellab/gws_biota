@@ -19,7 +19,7 @@ class TestGO(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
-        #GO.drop_table()
+        GO.drop_table()
         pass
     
     def test_db_object(self):
@@ -29,5 +29,5 @@ class TestGO(unittest.TestCase):
         )
 
         GO.create_go_db(**params)
-        self.assertEqual(GO.get(GO.go_id == 'GO:0000001').name, "mitochondrion inheritance")
-        self.assertEqual(GO.get(GO.go_id == 'GO:0000006').name, "high-affinity zinc transmembrane transporter activity")
+        self.assertEqual(GO.get(GO.go_id == 'GO:0000001').get_name(), "mitochondrion inheritance")
+        self.assertEqual(GO.get(GO.go_id == 'GO:0000006').get_name(), "high-affinity zinc transmembrane transporter activity")

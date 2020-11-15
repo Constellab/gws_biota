@@ -26,20 +26,21 @@ class GO(Ontology):
     :type namespace: CharField 
     """
     go_id = CharField(null=True, index=True)
-    name = CharField(null=True, index=True)
     namespace = CharField(null=True, index=True)
+    
+    _fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
     _table_name = 'go'
 
     # -- C -- 
     
     @classmethod
-    def create_table(cls, *arg, **kwargs):
+    def create_table(cls, *args, **kwargs):
         """
         Creates `go` table and related tables.
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
-        super().create_table(*arg, **kwargs)
+        super().create_table(*args, **kwargs)
         GOAncestor.create_table()
 
     @classmethod
@@ -64,8 +65,10 @@ class GO(Ontology):
         gos = [cls(data = dict_) for dict_ in list_go]
         for go in gos:
             go.set_go_id(go.data["id"])
-            go.set_name(go.data["name"])
+            go.set_name(go.data["title"])
             go.set_namespace(go.data["namespace"])
+
+            del go.data["id"]
 
             if not job is None:
                 go._set_job(job)
@@ -136,15 +139,6 @@ class GO(Ontology):
         :type id: str
         """
         self.go_id = id
-
-    def set_name(self, name):
-        """
-        Sets the name of the go term
-
-        :param name: The name
-        :type name: str
-        """
-        self.name = name
     
     def set_namespace(self, namespace):
         """

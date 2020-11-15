@@ -27,19 +27,18 @@ class ECO(Ontology):
     """
 
     eco_id = CharField(null=True, index=True)
-    name = CharField(null=True, index=True)
     _table_name = 'eco'
 
     # -- C --
 
     @classmethod
-    def create_table(cls, *arg, **kwargs):
+    def create_table(cls, *args, **kwargs):
         """
         Creates `eco` table and related tables.
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
-        super().create_table(*arg, **kwargs)
+        super().create_table(*args, **kwargs)
         ECOAncestor.create_table()
 
     @classmethod
@@ -64,8 +63,10 @@ class ECO(Ontology):
 
         for eco in ecos:
             eco.set_eco_id( eco.data["id"] )
-            eco.set_name( eco.data["name"] )
+            eco.set_name( eco.data["title"] )
 
+            del eco.data["id"]
+            
             if not job is None:
                 eco._set_job(job)
 
@@ -137,13 +138,6 @@ class ECO(Ontology):
         set self.eco_id
         """
         self.eco_id = id
-
-    def set_name(self, name__):
-        """
-        Set name
-        """
-        self.name = name__
-
 
 class ECOAncestor(PWModel):
     """

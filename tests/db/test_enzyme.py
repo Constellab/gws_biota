@@ -5,7 +5,7 @@ import unittest
 from gws.controller import Controller
 from gws.settings import Settings
 from biota.db.enzyme import Enzyme
-from biota.db.enzyme import Enzyme
+from biota.db.bto import BTO
 from biota.db.po import PO
 
 
@@ -13,15 +13,19 @@ settings = Settings.retrieve()
 testdata_path = settings.get_dir("biota:testdata_dir")
 
 class TestEnzyme(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
-        Enzyme.drop_table()
         PO.drop_table()
         Enzyme.drop_table()
         Enzyme.create_table()
+        pass
    
     @classmethod
     def tearDownClass(cls):
+        PO.drop_table()
+        Enzyme.drop_table()
+        BTO.drop_table()
         pass
 
     def test_db_object(self):

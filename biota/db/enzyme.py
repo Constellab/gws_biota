@@ -4,6 +4,7 @@
 # About us: https://gencovery.com
 
 import os
+from collections import OrderedDict
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
@@ -204,10 +205,10 @@ class Enzyme(Base):
     ec_number = CharField(null=True, index=True)
     uniprot_id = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
-    #taxonomy = ForeignKeyField(BiotaTaxo, backref = 'enzymes', null = True)
     bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
     
-    _table_name = 'enzyme'
+    _fts_fields = { **Base._fts_fields, 'RN': 2.0, 'organism': 1.0 }
+    _table_name = 'enzymes'
 
     # -- C --
 
@@ -251,7 +252,8 @@ class Enzyme(Base):
                 enz._set_job(job)
                 po_list[ec]._set_job(job)
 
-            del d["RN"]
+            #del d["RN"]
+            del d["protein_id"]
             del d["ec"]
             del d["uniprot"]
 
@@ -271,12 +273,14 @@ class Enzyme(Base):
         """
         Creates `enzyme` table and related tables.
 
-        Extra parameters are passed to :meth:`peewee.Model.create_table`
+        Extra parameters are passed to :meth:`create_table`
         """
-        PO.create_table(*args, **kwargs)
+        PO.create_table()
+
         super().create_table(*args, **kwargs)
-        #EnzymeBTO = Enzyme.bto.get_through_model()
-        EnzymeBTO.create_table(*args, **kwargs)
+        EnzymeBTO.create_table()
+
+        #raise Exception("A")
 
     # -- D -- 
 
@@ -309,7 +313,7 @@ class Enzyme(Base):
         :returns: The name of the enzyme orthologue
         :rtype: str
         """
-        return self.po.name
+        return self.po.get_name()
 
     @property
     def synomyms(self):
@@ -361,6 +365,14 @@ class Enzyme(Base):
                     .join(ReactionEnzyme) \
                     .where(ReactionEnzyme.enzyme == self)        
         return Q
+
+    # -- S --
+
+    def save(self, *arg, **kwargs):
+        if isinstance(self.data, OrderedDict):
+            self.data = dict(self.data)
+        
+        return super().save(*arg, **kwargs)
 
     # -- T --
 

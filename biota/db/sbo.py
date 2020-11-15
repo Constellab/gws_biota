@@ -26,7 +26,8 @@ class SBO(Ontology):
     """
 
     sbo_id = CharField(null=True, index=True)
-    name = CharField(null=True, index=True)
+    
+    _fts_fields = { **Ontology._fts_fields}
     _table_name = 'sbo'
 
     # -- C --
@@ -54,9 +55,11 @@ class SBO(Ontology):
         sbos = [cls(data = dict_) for dict_ in list_sbo]
         for sbo in sbos:
             sbo.set_sbo_id(sbo.data["id"])
-            sbo.set_name(sbo.data["name"])
+            sbo.set_name(sbo.data["title"])
             if not job is None:
                 sbo._set_job(job)
+
+            del sbo.data["id"]
 
         cls.save_all(sbos)
 
@@ -83,13 +86,13 @@ class SBO(Ontology):
                 transaction.rollback()
 
     @classmethod
-    def create_table(cls, *arg, **kwargs):
+    def create_table(cls, *args, **kwargs):
         """
         Creates `sbo` table and related tables.
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
-        super().create_table(*arg, **kwargs)
+        super().create_table(*args, **kwargs)
         SBOAncestor.create_table()
 
     # -- D --
@@ -115,15 +118,6 @@ class SBO(Ontology):
         super().drop_table(*arg, **kwargs)
 
     # -- S --
-
-    def set_name(self, name__):
-        """
-        Sets the name of the sbo term
-
-        :param name: The name
-        :type name: str
-        """
-        self.name = name__    
 
     def set_sbo_id(self, sbo_id):
         """

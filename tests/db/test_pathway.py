@@ -17,7 +17,7 @@ class TestCompound(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
-        #Pathway.drop_table()
+        Pathway.drop_table()
         pass
 
     def test_db_object(self):

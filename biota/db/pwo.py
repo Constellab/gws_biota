@@ -9,9 +9,10 @@ from peewee import Model as PWModel
 from gws.controller import Controller
 from gws.model import Resource
 
+from biota.db.ontology import Ontology
 from biota.db.base import Base, DbManager
 
-class PWO(Base):
+class PWO(Ontology):
     """
     This class represents Pathway Ontology (PWO) terms
 
@@ -27,7 +28,8 @@ class PWO(Base):
     """
 
     pwo_id = CharField(null=True, index=True)
-    name = CharField(null=True, index=True)
+    
+    _fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
     _table_name = 'pwo'
 
     # -- C --
@@ -55,9 +57,11 @@ class PWO(Base):
         pwos = [cls(data = dict_) for dict_ in list_of_pwo]
         for pwo in pwos:
             pwo.set_pwo_id( pwo.data["id"] )
-            pwo.set_name( pwo.data["name"] )
+            pwo.set_name( pwo.data["title"] )
             if not job is None:
                 pwo._set_job(job)
+
+            del pwo.data["id"]
 
         cls.save_all(pwos)
 
@@ -84,13 +88,13 @@ class PWO(Base):
                 transaction.rollback()
 
     @classmethod
-    def create_table(cls, *arg, **kwargs):
+    def create_table(cls, *args, **kwargs):
         """
         Creates `pwo` table and related tables.
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
-        super().create_table(*arg, **kwargs)
+        super().create_table(*args, **kwargs)
         PWOAncestor.create_table()
 
     # -- D --
@@ -115,16 +119,7 @@ class PWO(Base):
         PWOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
 
-    # -- S --
-
-    def set_name(self, name__):
-        """
-        Sets the name of the pwo term
-
-        :param name: The name
-        :type name: str
-        """
-        self.name = name__    
+    # -- S -- 
 
     def set_pwo_id(self, pwo_id):
         """

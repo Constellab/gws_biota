@@ -8,10 +8,9 @@ from biota.db.entity import Entity
 
 class PO(Entity):
     """
-    This class represents protein orthology.
+    This class represents protein ortholog.
     """
 
-    name = CharField(null=True, index=True)
     ec_number = CharField(null=True, index=True)
     ko = CharField(null=True, index=True)
     

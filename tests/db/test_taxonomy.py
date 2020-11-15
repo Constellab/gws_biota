@@ -14,15 +14,15 @@ settings = Settings.retrieve()
 testdata_path = settings.get_dir("biota:testdata_dir")
 
 class TestGO(unittest.TestCase):
+
     @classmethod
-    
     def setUpClass(cls):
         Taxonomy.drop_table()
         Taxonomy.create_table()
    
     @classmethod
     def tearDownClass(cls):
-        #Taxonomy.drop_table()
+        Taxonomy.drop_table()
         pass
     
     def test_db_object(self):
@@ -35,5 +35,5 @@ class TestGO(unittest.TestCase):
             ncbi_citation_file = "citations.dmp"
         )
         Taxonomy.create_taxonomy_db(**params)
-        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'ancestor': '71', 'rank': 'species', 'division': 'Bacteria'})
-        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'tax_id': '1', 'name': 'root', 'ancestor': '1', 'rank': 'no rank', 'division': 'Unassigned'})
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'ancestor': '71', 'rank': 'species', 'division': 'Bacteria', 'title': 'Unspecified'})
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'title': 'root', 'ancestor': '1', 'rank': 'no rank', 'division': 'Unassigned'})

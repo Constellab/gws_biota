@@ -52,7 +52,6 @@ class Reaction(Entity):
     direction = CharField(null=True, index=True)
     
     biocyc_ids = CharField(null=True, index=True)
-
     #brenda_id = CharField(null=True, index=True)
     metacyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
@@ -62,6 +61,7 @@ class Reaction(Entity):
     products = ManyToManyField(Compound, through_model = ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, through_model = ReactionEnzymeDeferred)
 
+    _fts_fields = { **Entity._fts_fields, 'definition': 2.0 }
     _table_name = 'reaction'
 
     # -- A --
@@ -138,6 +138,7 @@ class Reaction(Entity):
         for react in reactions:
             if 'entry' in react.data.keys():
                 react.rhea_id = react.data['entry']
+                del react.data['entry']
 
             if not job is None:
                 react._set_job(job)

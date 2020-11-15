@@ -26,6 +26,32 @@ class DbManager(BaseDbManager):
     db = SqliteDatabase(biota_db_path)  #redirect to a separate defautl db
 
 class Base(Resource):
+    
+    _fts_fields = { 'title': 2.0 }
 
+    @classmethod
+    def fts_model(cls):
+        _FTSModel = super().fts_model()
+        _FTSModel._meta.database = DbManager.db
+        return _FTSModel
+
+    def get_name(self) -> str:
+        """
+        Get the name. Alias of `:meth:get_title`
+
+        :param: name: The name
+        :type name: str
+        """
+        return self.get_title()
+
+    def set_name(self, name: str):
+        """
+        Set the name. Alias of `:meth:set_title`
+
+        :param: name: The name
+        :type name: str
+        """
+        self.set_title(name)
+    
     class Meta:
         database = DbManager.db

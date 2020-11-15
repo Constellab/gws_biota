@@ -18,8 +18,6 @@ class Taxonomy(Ontology):
 
     :property tax_id: taxonomy id in the ncbi taxonomy
     :type tax_id: CharField
-    :property name: scientic name in the ncbi taxonomy
-    :type name: CharField
     :property rank: bioologic rank 
     :type rank: CharField
     :property division: the biological division (Bacteria, Eukaryota, Viruses, etc..)
@@ -29,10 +27,11 @@ class Taxonomy(Ontology):
     """
     
     tax_id = CharField(null=True, index=True)
-    name = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
     division = CharField(null=True, index=True)
     ancestor = ForeignKeyField('self', backref='ancestor', null = True)
+    
+    _fts_fields = { **Ontology._fts_fields }
     _table_name = 'taxonomy'
 
     def __init__(self, *args, **kwargs):
@@ -76,10 +75,13 @@ class Taxonomy(Ontology):
             #step 3
             for tax in taxa:
                 tax.tax_id = tax.data['tax_id']
-                if ('name' in tax.data.keys()):
-                    tax.name = tax.data['name']
+                del tax.data['tax_id']
+
+                if 'title' in tax.data.keys():
+                    tax.set_name(tax.data['title'])
                 else:
-                    tax.name = "Unspecified"
+                    tax.set_name("Unspecified")
+
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
                 
@@ -112,15 +114,6 @@ class Taxonomy(Ontology):
         :type tax_id: str
         """
         self.tax_id = tax_id
-    
-    def set_name(self, name):
-        """
-        Sets the name of the taxonomy
-
-        :param name: The name
-        :type name: str
-        """
-        self.name = name
 
     def set_rank(self, rank):
         """

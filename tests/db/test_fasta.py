@@ -19,7 +19,7 @@ class TestGO(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
-        #GO.drop_table()
+        Fasta.drop_table()
         pass
     
     def test_db_object(self):

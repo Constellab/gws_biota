@@ -7,7 +7,7 @@ import click
 from gws.settings import Settings
 from gws.logger import Logger
 from biota.db.backend import DbCreator
-from gws.model import Protocol
+from gws.model import Protocol, Experiment
 
 def createdb(user):
     if user is None:
@@ -51,6 +51,7 @@ def createdb(user):
     for k in params:
         db_creator.set_param(k, params[k])
 
+    e = Experiment()
     protocol = Protocol(
         name = 'biota_db_creation',
         processes = { 'db_creator': db_creator },
@@ -58,6 +59,7 @@ def createdb(user):
         interfaces = {},
         outerfaces = {}
     )
+    protocol.set_active_experiment(e)
 
     import asyncio
     asyncio.run( protocol.run() )

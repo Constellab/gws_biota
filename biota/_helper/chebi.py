@@ -83,7 +83,7 @@ class Chebi():
         for term in ontology.terms():
             dict_term = {}
             dict_term['id'] = term.id
-            dict_term['name'] = term.name.replace('\r', '')
+            dict_term['title'] = term.name.replace('\r', '')
             dict_term['alt_id'] = list(term.alternate_ids)
             dict_term['ancestors'] = []
             dict_term['inchikey'] = ''
@@ -118,7 +118,7 @@ class Chebi():
             dict_term['synonyms'] = []
             for syn in term.synonyms:
                 if syn.scope == "EXACT":
-                    if syn.description != dict_term['name']:
+                    if syn.description != dict_term['title']:
                         dict_term['synonyms'].append(syn.description)
 
             # definition
