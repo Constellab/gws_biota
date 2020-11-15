@@ -75,8 +75,7 @@ class Taxonomy(Ontology):
             #step 3
             for tax in taxa:
                 tax.tax_id = tax.data['tax_id']
-                del tax.data['tax_id']
-
+                
                 if 'title' in tax.data.keys():
                     tax.set_name(tax.data['title'])
                 else:
@@ -88,9 +87,13 @@ class Taxonomy(Ontology):
                 if not job is None:
                     tax._set_job(job)
 
+                del tax.data['tax_id']
+                del tax.data['rank']
+                del tax.data['division']
+
             cls.save_all(taxa)
 
-            start = stop-1
+            start = stop
             stop = start+bulk_size
 
         #step 4
@@ -142,21 +145,21 @@ class Taxonomy(Ontology):
                 else:
                     tax_dict[ int(tax.data['ancestor']) ] = [ tax ]
 
-        start = 0
-        stop = 0
         bluk_size = 750
+        start = 0
+        stop = start+bluk_size
         tax_ids = list(tax_dict.keys())
         while True:
             if start >= len(tax_ids)-1:
                 break
 
-            stop = start+bluk_size
+            
             elems = tax_ids[start:stop]
-
             q_ancestors = Taxonomy.select().where(Taxonomy.tax_id << elems)
 
             for parent in q_ancestors:
                 for t in tax_dict[ int(parent.tax_id) ]:
                     t.ancestor = parent
             
-            start = stop-1
+            start = stop
+            stop = start+bluk_size

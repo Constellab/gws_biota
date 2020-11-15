@@ -306,7 +306,7 @@ class Reaction(Entity):
                 if reaction.rhea_id in biocyc_ids:
                     reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
 
-            start = stop - 1
+            start = stop
             stop = start + bulk_size
 
             cls.save_all(Q)
