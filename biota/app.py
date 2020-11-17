@@ -16,25 +16,28 @@ class _ApiModel(BaseModel):
     page: Optional[int] = 1
     filter: Optional[str] = ""
 
-# Pages
 
-async def index_page(request, q=None, data=None):
-    return None
+class Page:
+
+    @staticmethod
+    # URL: ./page/biota/
+    # Params: [GET=q, POST=data]
+    async def index(request, q=None, data=None):
+        return None
 
 
+class API:
 
-async def bto_list_api(request, q=None, data=None):
-    params: BaseModel = Query.parse(q, Model=_ApiModel)
-    params = params.dict()
+    @staticmethod
+    # URL: ./page/biota/bto-list
+    # Params: [GET=q, POST=data]
+    async def bto_list(request, q=None, data=None):
+        params: BaseModel = Query.parse(q, Model=_ApiModel)
+        params = params.dict()
 
-    page = 1
-    if page in params:
-        page = params[page]
+        page = 1
+        if page in params:
+            page = params[page]
 
-    print(page)
-
-    Q = BTO.select().paginate(page, NUMBER_OF_ITEMS_PER_PAGE)
-
-    print(len(Q))
-    
-    return Query.select_query_to_list(Q, return_format="json")
+        Q = BTO.select().paginate(page, NUMBER_OF_ITEMS_PER_PAGE)
+        return Query.select_query_to_list(Q, return_format="json")

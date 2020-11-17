@@ -403,7 +403,6 @@ class Enzyme(Base):
 
         if 'taxonomy' in self.data:
             try:
-                #tax = BiotaTaxo.get(BiotaTaxo.tax_id == str(self.data['taxonomy']))
                 self.tax_id = str(self.data['taxonomy'])
                 del self.data['taxonomy']
             except:

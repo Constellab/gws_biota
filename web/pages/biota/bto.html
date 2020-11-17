@@ -1,0 +1,35 @@
+
+<div class="gws-activate-search-bar"></div>
+
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8">
+
+            <div class="gview:breadcrump" json="true">
+                {
+                    "sep": ">",
+                    "list":[
+                        {"text": "Biota", "href": "/page/biota"},
+                        {"text": "BTO", "href": "/page/biota/bto"}
+                    ]
+                }
+            </div>
+
+            <div>
+                {{ reponse }}
+            </div>
+
+        </div>
+    
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+            {% include 'biota/sidebar.html' %}
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener("load", function(){
+        SearchBar.activate()
+        SearchBar.setAction("/page/biota/bto-list")
+    })
+</script>

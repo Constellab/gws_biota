@@ -153,7 +153,6 @@ class Taxonomy(Ontology):
             if start >= len(tax_ids)-1:
                 break
 
-            
             elems = tax_ids[start:stop]
             q_ancestors = Taxonomy.select().where(Taxonomy.tax_id << elems)
 
