@@ -30,14 +30,7 @@ class API:
 
     @staticmethod
     # URL: ./page/biota/bto-list
-    # Params: [GET=q, POST=data]
-    async def bto_list(request, q=None, data=None):
-        params: BaseModel = Query.parse(q, Model=_ApiModel)
-        params = params.dict()
-
-        page = 1
-        if page in params:
-            page = params[page]
-
+    async def bto_list(request):
+        page = request.query_params.get('page',1)
         Q = BTO.select().paginate(page, NUMBER_OF_ITEMS_PER_PAGE)
         return Query.select_query_to_list(Q, return_format="json")
