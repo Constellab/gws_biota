@@ -22,8 +22,8 @@ def createdb(user, fts=False):
     if user is None:
         user = "Gencoverer"
 
-    if fts:
-        settings.activate_fts(fts)
+    settings.activate_fts(fts)
+    settings.save()
 
     Logger.info(f"Hello {user}")
     Logger.info(f"Creating tables ...")
