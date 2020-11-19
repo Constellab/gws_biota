@@ -9,14 +9,24 @@ from gws.logger import Logger
 from biota.db.backend import DbCreator
 from gws.model import Protocol, Experiment
 
-def createdb(user):
+@click.command(context_settings=dict(
+    ignore_unknown_options=True,
+    allow_extra_args=True
+))
+@click.pass_context
+@click.option('--user', help='User name')
+@click.option('--fts', is_flag=True, help='Activate Fulltext Search')
+def createdb(user, fts=False):
+    settings = Settings.retrieve()
+
     if user is None:
         user = "Gencoverer"
 
+    if fts:
+        settings.activate_fts(fts)
+
     Logger.info(f"Hello {user}")
     Logger.info(f"Creating tables ...")
-
-    settings = Settings.retrieve()
 
     params = dict(
         go_file         = "./go/go.obo",
