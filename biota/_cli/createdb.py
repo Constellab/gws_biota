@@ -14,9 +14,9 @@ from gws.model import Protocol, Experiment
     allow_extra_args=True
 ))
 @click.pass_context
-@click.option('--user', help='User name')
+@click.option('--user', default=None, help='User name')
 @click.option('--fts', is_flag=True, help='Activate Fulltext Search')
-def createdb(user, fts=False):
+def createdb(ctx, user=None, fts=False):
     settings = Settings.retrieve()
 
     if user is None:
