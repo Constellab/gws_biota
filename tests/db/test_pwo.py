@@ -18,7 +18,7 @@ class TestPWO(unittest.TestCase):
    
     @classmethod
     def tearDownClass(cls):
-        PWO.drop_table()
+        #PWO.drop_table()
         pass
     
     def test_db_object(self):

@@ -28,7 +28,10 @@ class PWO(Ontology):
     """
 
     pwo_id = CharField(null=True, index=True)
-    
+    kegg_id = CharField(null=True, index=True)
+    brenda_id = CharField(null=True, index=True)
+    metacyc_id = CharField(null=True, index=True)
+
     _fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
     _table_name = 'pwo'
 
@@ -140,7 +143,10 @@ class PWO(Ontology):
         vals = []
         for i in range(0, len(self.data['ancestors'])):
             if(self.data['ancestors'][i] != self.pwo_id):
-                val = {'pwo': self.id, 'ancestor': PWO.get(PWO.pwo_id == self.data['ancestors'][i]).id }
+                val = {
+                    'pwo': self.id, 
+                    'ancestor': PWO.get(PWO.pwo_id == self.data['ancestors'][i]).id 
+                }
                 vals.append(val)
         return(vals)
 

@@ -12,6 +12,7 @@ from biota.db.go import GO
 from biota.db.sbo import SBO
 from biota.db.bto import BTO
 from biota.db.eco import ECO
+from biota.db.pwo import PWO
 from biota.db.taxonomy import Taxonomy
 from biota.db.compound import Compound
 from biota.db.enzyme import Enzyme
@@ -59,6 +60,7 @@ class DbCreator(Process):
         SBO.drop_table()
         BTO.drop_table()
         ECO.drop_table()
+        PWO.drop_table()
         Taxonomy.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
@@ -70,6 +72,7 @@ class DbCreator(Process):
         SBO.create_table()
         BTO.create_table()
         ECO.create_table()
+        PWO.create_table()
         Taxonomy.create_table()
         Compound.create_table()
         Enzyme.create_table()
@@ -90,16 +93,29 @@ class DbCreator(Process):
                     Logger.error(Exception(f"Biodata file {file_path} does not exist"))
 
         # ------------- Create GO ------------- #
-        Logger.info("Step 1 | Saving go and go_ancestors...")
+        i = 1
+        Logger.info(f"Step {i} | Saving go and go_ancestors...")
         start_time = time.time()
         
         GO.create_go_db(biodata_dir, **params)
         len_go = GO.select().count()
         elapsed_time = time.time() - start_time
         Logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
+
+        # ------------- Create PWO ------------- #
+        i=i+1
+        Logger.info(f"Step {i} | Saving pwo and pwo_ancestors...")
+        start_time = time.time()
         
+        PWO.create_pwo_db(biodata_dir, **params)
+        len_pwo = PWO.select().count()
+        elapsed_time = time.time() - start_time
+        Logger.info("... done in {:10.2f} min for #pwo = {}".format(elapsed_time/60, len_pwo))
+
+
         # ------------- Create SBO ------------- #
-        Logger.info("Step 2 | Saving sbo and sbo_ancestors...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving sbo and sbo_ancestors...")
         start_time = time.time()
         SBO.create_sbo_db(biodata_dir, **params)
         len_sbo = SBO.select().count()
@@ -107,7 +123,8 @@ class DbCreator(Process):
         Logger.info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
         
         # ------------------- Create BTO ----------------- #
-        Logger.info("Step 3 | Saving bto and bto_ancestors...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving bto and bto_ancestors...")
         start_time = time.time()
         BTO.create_bto_db(biodata_dir, **params)
         len_bto = BTO.select().count()
@@ -115,7 +132,8 @@ class DbCreator(Process):
         Logger.info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
         
         # ------------------- Create ECO ----------------- #
-        Logger.info("Step 4 | Saving eco and eco_ancestors...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving eco and eco_ancestors...")
         start_time = time.time()
         ECO.create_eco_db(biodata_dir, **params)
         len_eco = ECO.select().count()
@@ -123,7 +141,8 @@ class DbCreator(Process):
         Logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
         
         # ---------------- Create Compound --------------- #
-        Logger.info("Step 5 | Saving chebi compounds...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving chebi compounds...")
         start_time = time.time()
         Compound.create_compound_db(biodata_dir, **params)
         len_compound = Compound.select().count()
@@ -131,7 +150,8 @@ class DbCreator(Process):
         Logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
 
         # ---------------- Create Taxonomy --------------- #
-        Logger.info("Step 6 | Saving ncbi taxonomy...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving ncbi taxonomy...")
         start_time = time.time()
         Taxonomy.create_taxonomy_db(biodata_dir, **params)
         len_taxonomy = Taxonomy.select().count()
@@ -139,7 +159,8 @@ class DbCreator(Process):
         Logger.info("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
 
         # ---------------- Create Fasta --------------- #
-        Logger.info("Step 7 | Saving chebi fasta...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving chebi fasta...")
         start_time = time.time()
         Fasta.create_fasta_db(biodata_dir, **params)
         len_fasta = Fasta.select().count()
@@ -148,7 +169,8 @@ class DbCreator(Process):
 
 
         # ------------------ Create Enzyme --------------- #
-        Logger.info("Step 8 | Saving brenda enzymes and enzyme_btos...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving brenda enzymes and enzyme_btos...")
         start_time = time.time()
         Enzyme.create_enzyme_db(biodata_dir, **params)
         len_enzyme = Enzyme.select().count()
@@ -156,7 +178,8 @@ class DbCreator(Process):
         Logger.info("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
         
         # ---------------- Create Reactions -------------- #
-        Logger.info("Step 9 | Saving rhea reactions...")
+        i=i+1
+        Logger.info(f"Step {i} | Saving rhea reactions...")
         start_time = time.time()
         Reaction.create_reaction_db(biodata_dir, **params)
         len_rhea = Reaction.select().count()

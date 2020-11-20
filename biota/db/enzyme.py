@@ -15,6 +15,7 @@ from gws.model import Config, Process, Resource
 from biota.db.base import Base, DbManager
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.po import PO
+from biota.db.pwo import PWO
 from biota.db.bto import BTO as BiotaBTO
 from biota.db.fasta import Fasta
 
@@ -437,17 +438,16 @@ class Enzyme(Base):
         dbs = ['brenda', 'kegg', 'metacyc']
         for bkms in list_of_bkms:
             ec_number = bkms["ec_number"]
-    
             Q = PO.select().where(PO.ec_number == ec_number)
-            for enzyme in Q:
+            for po in Q:
                 for k in dbs:
 
                     if bkms.get(k+'_pathway_name',"") != "":
                         pwy_id = bkms.get(k+'_pathway_id', "ID")
                         pwy_name = bkms[k+'_pathway_name']
-                        enzyme.data[k+'_pathway'] = { pwy_id : pwy_name }
+                        po.data[k+'_pathway'] = { pwy_id : pwy_name }
 
-                po_list[enzyme.ec_number] = enzyme
+                po_list[po.ec_number] = po
 
                 if len(po_list.keys()) >= bulk_size:
                     PO.save_all(po_list.values())
