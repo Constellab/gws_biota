@@ -102,15 +102,15 @@ class DbCreator(Process):
         elapsed_time = time.time() - start_time
         Logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
 
-        # ------------- Create PWO ------------- #
-        i=i+1
-        Logger.info(f"Step {i} | Saving pwo and pwo_ancestors...")
-        start_time = time.time()
+        # # ------------- Create PWO ------------- #
+        # i=i+1
+        # Logger.info(f"Step {i} | Saving pwo and pwo_ancestors...")
+        # start_time = time.time()
         
-        PWO.create_pwo_db(biodata_dir, **params)
-        len_pwo = PWO.select().count()
-        elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} min for #pwo = {}".format(elapsed_time/60, len_pwo))
+        # PWO.create_pwo_db(biodata_dir, **params)
+        # len_pwo = PWO.select().count()
+        # elapsed_time = time.time() - start_time
+        # Logger.info("... done in {:10.2f} min for #pwo = {}".format(elapsed_time/60, len_pwo))
 
 
         # ------------- Create SBO ------------- #
