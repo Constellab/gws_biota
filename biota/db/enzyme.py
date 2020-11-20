@@ -451,7 +451,7 @@ class Enzyme(Base):
 
                 if len(po_list.keys()) >= bulk_size:
                     PO.save_all(po_list.values())
-                    po_list = []
+                    po_list = {}
 
         if len(po_list) > 0:
             PO.save_all(po_list.values())
