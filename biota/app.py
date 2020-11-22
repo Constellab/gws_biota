@@ -77,5 +77,15 @@ class Page:
         except Exception as err:
             return {"status": False, "data": f"{err}"}
 
+    @staticmethod
+    # URL: ./page/biota/enzyme
+    async def enzyme(request: Request):
+        page = request.query_params.get('page',1)
+        try:
+            data = Controller.fetch_enzyme_list(page=page)
+            return { "status": True, "data": data }
+        except Exception as err:
+            return {"status": False, "data": f"{err}"}
+
 class API:
     pass

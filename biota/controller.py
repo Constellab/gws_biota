@@ -14,6 +14,7 @@ from biota.db.eco import ECO
 from biota.db.pwo import PWO
 from biota.db.sbo import SBO
 from biota.db.taxonomy import Taxonomy
+from biota.db.enzyme import Enzyme
 
 class Controller(BaseController):
 
@@ -40,4 +41,9 @@ class Controller(BaseController):
     @classmethod
     def fetch_taxonomy_list(cls, page=1, name=""):            
         Q = Taxonomy.select() #.order_by(Taxonomy.tax_id.desc())
+        return Paginator(Q, page=page).as_model_list()
+
+    @classmethod
+    def fetch_enzyme_list(cls, page=1, name=""):            
+        Q = Enzyme.select() #.order_by(Enzyme.ec_number.desc())
         return Paginator(Q, page=page).as_model_list()

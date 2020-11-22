@@ -233,7 +233,20 @@ class Enzyme(Base):
         brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
         list_of_enzymes = brenda.parse_all_enzyme_to_dict()
 
+        # save PO
         po_list = {}
+        for d in list_of_enzymes:
+            ec = d['ec']
+            if not ec in po_list:
+                po_list[ec] = PO(
+                    name = d["RN"][0],
+                    ec_number = ec,
+                )
+                po_list[ec]._set_job(job)
+                
+        PO.save_all(po_list.values())
+
+        # save Enzymes
         enzymes = []
         for d in list_of_enzymes:
             ec = d['ec']
@@ -243,15 +256,8 @@ class Enzyme(Base):
                 data = d
             )
 
-            if not ec in po_list:
-                po_list[ec] = PO(
-                    name = d["RN"][0],
-                    ec_number = ec,
-                )
-
             if not job is None:
                 enz._set_job(job)
-                po_list[ec]._set_job(job)
 
             #del d["RN"]
             del d["protein_id"]
@@ -260,7 +266,6 @@ class Enzyme(Base):
 
             enzymes.append(enz)
 
-        PO.save_all(po_list.values())
         cls.save_all(enzymes)
         cls.__update_tax_tissue(enzymes)  
 
@@ -303,6 +308,20 @@ class Enzyme(Base):
             return Fasta.get(Fasta.uniprot_id == self.uniprot_id)
         except:
             return None
+
+    # -- G --
+
+    def get_title(self):
+        """
+        Name of the enzyme orthologue
+
+        :returns: The name of the enzyme orthologue
+        :rtype: str
+        """
+        if self.po is None:
+            return None
+            
+        return self.po.get_title()
 
     # -- N --
 
