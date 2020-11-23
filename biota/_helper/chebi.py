@@ -81,14 +81,15 @@ class Chebi():
 
         list_chebi_term = []
         for term in ontology.terms():
-            subset = ''
+            subsets = ''
             if len(term.subsets):
-                subset = list(term.subsets)[0]
+                subsets = list(term.subsets)[0]
+                
             dict_term = {}
             dict_term['id'] = term.id
             dict_term['title'] = term.name.replace('\r', '')
             dict_term['alt_id'] = list(term.alternate_ids)
-            dict_term['subset'] = subset
+            dict_term['subsets'] = subsets
             dict_term['ancestors'] = []
             dict_term['inchikey'] = ''
             dict_term['inchi'] = ''

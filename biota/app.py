@@ -33,6 +33,16 @@ class Page:
         return await Page.bto_list(request)
 
     @staticmethod
+    # URL: ./page/biota/bto/entity
+    async def bto_entity(request: Request):
+        uri = request.query_params.get('uri')
+        try:
+            data = Controller.fetch_entity(uri, model_type="bto")
+            return { "status": True, "data": data }
+        except Exception as err:
+            return {"status": False, "data": f"{err}"}
+
+    @staticmethod
     # URL: ./page/biota/bto/list
     async def bto_list(request: Request):
         page = request.query_params.get('page',1)

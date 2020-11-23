@@ -27,6 +27,16 @@ class BTO(Ontology):
     bto_id = CharField(null=True, index=True)
     _table_name = 'bto'
 
+    # -- A --
+
+    @property
+    def ancestors(self):
+        bto_ids = self.data['ancestors']
+        if self.bto_id in bto_ids:
+            bto_ids.remove(self.bto_id)
+
+        return BTO.select().where(BTO.bto_id.in_(bto_ids))
+
     # -- C --
 
     @classmethod
@@ -117,13 +127,12 @@ class BTO(Ontology):
         return vals
         
     # -- R --
-
-    def remove_ancestor(self, ancestor):
-        """
-        Remove a bto ancestor.
-        """
-        Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
-        Q.execute()
+    # def remove_ancestor(self, ancestor):
+    #     """
+    #     Remove a bto ancestor.
+    #     """
+    #     Q = BTOAncestor.delete().where(BTOAncestor.bto == self.id, BTOAncestor.ancestor == ancestor.id)
+    #     Q.execute()
 
     # -- S --
 

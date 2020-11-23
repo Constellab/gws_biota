@@ -11,7 +11,6 @@ from gws.query import Query, Paginator
 from gws.controller import Controller as BaseController
 from biota.db.bto import BTO
 from biota.db.eco import ECO
-from biota.db.pwo import PWO
 from biota.db.sbo import SBO
 from biota.db.taxonomy import Taxonomy
 from biota.db.enzyme import Enzyme
@@ -23,7 +22,19 @@ class Controller(BaseController):
     @classmethod
     def fetch_entity(cls, uri: str, model_type: str):         
         try:
-            if model_type == "taxonomy":
+            if model_type == "bto":
+                return BTO.get(BTO.uri == uri)
+            elif model_type == "eco":
+                return ECO.get(ECO.uri == uri)
+            elif model_type == "sbo":
+                return SBO.get(SBO.uri == uri)
+            elif model_type == "enzyme":
+                return Enzyme.get(Enzyme.uri == uri)
+            elif model_type == "reaction":
+                return Reaction.get(Reaction.uri == uri)
+            elif model_type == "compound":
+                return Compound.get(Compound.uri == uri)
+            elif model_type == "taxonomy":
                 return Taxonomy.get(Taxonomy.uri == uri)
             else:
                 return None
