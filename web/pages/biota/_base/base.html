@@ -1,9 +1,11 @@
-<h1 class="mdc-typography--headline5">BRENDA Tissue Ontology</h1>
+<h1 class="mdc-typography--headline5">
+    {% block biota_title %} {% endblock %}
+</h1>
 
 <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8">
-            {% include 'biota/bto/list.html' %}
+            {% block biota_content %} {% endblock %}
         </div>
     
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
@@ -12,9 +14,4 @@
     </div>
 </div>
 
-<script>
-    window.addEventListener("load", function(){
-        SearchBar.activate()
-        SearchBar.setAction("/page/biota/bto")
-    })
-</script>
+{% block biota_script %} {% endblock %}

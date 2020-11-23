@@ -1,5 +1,5 @@
 {% if response.data|length == 0 %}
-    No PWO found
+    No BTO found
 {% else %}
 <div class="mdc-data-table" style="width:100%">
     <div class="mdc-data-table__table-container">
@@ -24,7 +24,7 @@
             </thead>
             <tbody class="mdc-data-table__content">
                 
-                {% for pwo in response.data.results %}
+                {% for bto in response.data.results %}
                 <tr class="mdc-data-table__row">
 
                     <td class="mdc-data-table__cell mdc-data-table__cell--checkbox">
@@ -41,15 +41,15 @@
                     </td>
 
                     <th class="mdc-data-table__cell" scope="row">
-                        <a class="gws-multiline gws-multiline--primary gws-pwo-title" href="/page/biox/pwo?uri={{ pwo.uri }}">
-                            {% if pwo.get_title() %}
-                                {{ pwo.get_title() }}
+                        <a class="gws-multiline gws-multiline--primary gws-bto-title" href="/page/biox/bto?uri={{ bto.uri }}">
+                            {% if bto.get_title() %}
+                                {{ bto.get_title() }}
                             {% else %}
                                 No title
                             {% endif %}
                         </a>
-                        <span class="gws-multiline gws-multiline--secondary">Type: {{ pwo.type }}<span>
-                        <span class="gws-multiline gws-multiline--secondary">URI: {{ pwo.uri }}<span>
+                        <span class="gws-multiline gws-multiline--secondary">Type: {{ bto.type }}<span>
+                        <span class="gws-multiline gws-multiline--secondary">URI: {{ bto.uri }}<span>
                     </th>
                 </tr>
                 {% endfor %}
@@ -57,7 +57,7 @@
         </table>
     </div>
 
-    {% include 'gws/paginator/paginator.html' %}
+    {% include 'gws/_paginator/paginator.html' %}
     
 </div>
 {% endif %}

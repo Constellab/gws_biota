@@ -258,6 +258,7 @@ class Enzyme(Base):
 
             if not job is None:
                 enz._set_job(job)
+                enz.po = po_list[ec]
 
             #del d["RN"]
             del d["protein_id"]
@@ -318,12 +319,11 @@ class Enzyme(Base):
         :returns: The name of the enzyme ortholog
         :rtype: str
         """
-        return self.po.get_title()
-        # try:
-        #     po = PO.get(PO.ec_number == self.ec_number)
-        #     return po.get_title()
-        # except:
-        #     return False
+        
+        try:
+            return self.po.get_title()
+        except:
+            return None
 
     # -- N --
 

@@ -1,63 +1,13 @@
-{% if response.data|length == 0 %}
-    No ECO found
-{% else %}
-<div class="mdc-data-table" style="width:100%">
-    <div class="mdc-data-table__table-container">
-        <table class="mdc-data-table__table" aria-label="Dessert calories">
-            <thead>
-                <tr class="mdc-data-table__header-row">
+{% extends 'biota/_base/base.html' %}
 
-                    <th class="mdc-data-table__header-cell mdc-data-table__header-cell--checkbox" role="columnheader" scope="col">
-                        <div class="mdc-checkbox mdc-data-table__header-row-checkbox mdc-checkbox--selected">
-                            <input type="checkbox" class="mdc-checkbox__native-control" aria-label="Toggle all rows" />
-                            <div class="mdc-checkbox__background">
-                                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                </svg>
-                                <div class="mdc-checkbox__mixedmark"></div>
-                            </div>
-                            <div class="mdc-checkbox__ripple"></div>
-                        </div>
-                    </th>
-                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Description</th>
-                </tr>
-            </thead>
-            <tbody class="mdc-data-table__content">
-                
-                {% for eco in response.data.results %}
-                <tr class="mdc-data-table__row">
+{% block biota_title %}
+    Evidence and Conclusion Ontology
+{% endblock %}
 
-                    <td class="mdc-data-table__cell mdc-data-table__cell--checkbox">
-                        <div class="mdc-checkbox mdc-data-table__row-checkbox">
-                            <input type="checkbox" class="mdc-checkbox__native-control" aria-labelledby="u0" />
-                            <div class="mdc-checkbox__background">
-                                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                </svg>
-                                <div class="mdc-checkbox__mixedmark"></div>
-                            </div>
-                            <div class="mdc-checkbox__ripple"></div>
-                        </div>
-                    </td>
+{% block biota_content %}
+    {% include 'biota/eco/_include/list.html' %}
+{% endblock %}
 
-                    <th class="mdc-data-table__cell" scope="row">
-                        <a class="gws-multiline gws-multiline--primary gws-eco-title" href="/page/biox/eco?uri={{ eco.uri }}">
-                            {% if eco.get_title() %}
-                                {{ eco.get_title() }}
-                            {% else %}
-                                No title
-                            {% endif %}
-                        </a>
-                        <span class="gws-multiline gws-multiline--secondary">Type: {{ eco.type }}<span>
-                        <span class="gws-multiline gws-multiline--secondary">URI: {{ eco.uri }}<span>
-                    </th>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    {% include 'gws/paginator/paginator.html' %}
-    
-</div>
-{% endif %}
+{% block biota_script %}
+    {% include 'biota/eco/_include/script.html' %}
+{% endblock %}
