@@ -87,5 +87,25 @@ class Page:
         except Exception as err:
             return {"status": False, "data": f"{err}"}
 
+    @staticmethod
+    # URL: ./page/biota/reaction
+    async def reaction(request: Request):
+        page = request.query_params.get('page',1)
+        try:
+            data = Controller.fetch_reaction_list(page=page)
+            return { "status": True, "data": data }
+        except Exception as err:
+            return {"status": False, "data": f"{err}"}
+    
+    @staticmethod
+    # URL: ./page/biota/compound
+    async def compound(request: Request):
+        page = request.query_params.get('page',1)
+        try:
+            data = Controller.fetch_compound_list(page=page)
+            return { "status": True, "data": data }
+        except Exception as err:
+            return {"status": False, "data": f"{err}"}
+
 class API:
     pass

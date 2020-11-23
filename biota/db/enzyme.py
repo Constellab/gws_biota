@@ -315,13 +315,15 @@ class Enzyme(Base):
         """
         Name of the enzyme orthologue
 
-        :returns: The name of the enzyme orthologue
+        :returns: The name of the enzyme ortholog
         :rtype: str
         """
-        if self.po is None:
-            return None
-            
         return self.po.get_title()
+        # try:
+        #     po = PO.get(PO.ec_number == self.ec_number)
+        #     return po.get_title()
+        # except:
+        #     return False
 
     # -- N --
 

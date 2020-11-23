@@ -47,6 +47,7 @@ class Compound(Base):
     inchi = CharField(null=True, index=True)
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
+    chebi_star = CharField(null=True, index=True)
 
     _fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
     _table_name = 'compound'
@@ -83,6 +84,7 @@ class Compound(Base):
             chebi.mass = chebi.data["mass"]
             chebi.monoisotopic_mass = chebi.data["monoisotopic_mass"]
             chebi.charge = chebi.data["charge"]
+            chebi.chebi_star = chebi.data["subset"]
             
             if "kegg" in chebi.data["xref"]:
                 chebi.kegg_id = chebi.data["xref"]["kegg"]
@@ -99,6 +101,7 @@ class Compound(Base):
             del chebi.data["mass"]
             del chebi.data["monoisotopic_mass"]
             del chebi.data["charge"]
+            del chebi.data["subsets"]
 
             if not job is None:
                 chebi._set_job(job)

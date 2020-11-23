@@ -169,6 +169,10 @@ class Reaction(Entity):
 
     # -- D -- 
 
+    @property
+    def definition(self):
+        return self.data["definition"]
+
     @classmethod
     def drop_table(cls, *args, **kwargs):
         """
