@@ -58,7 +58,7 @@ class Taxonomy():
                 line = line.replace("\t|\n", "")
                 infos = line.split("\t|\t")
                 dict_single_tax['tax_id'] = infos[0]
-
+   
                 if infos[0] in dict_ncbi_names.keys():
                     dict_single_tax['title'] = dict_ncbi_names[infos[0]]
 

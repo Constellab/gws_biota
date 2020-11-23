@@ -21,6 +21,16 @@ from biota.db.compound import Compound
 class Controller(BaseController):
 
     @classmethod
+    def fetch_entity(cls, uri: str, model_type: str):         
+        try:
+            if model_type == "taxonomy":
+                return Taxonomy.get(Taxonomy.uri == uri)
+            else:
+                return None
+        except:
+            return None
+
+    @classmethod
     def fetch_bto_list(cls, page=1, name=""):            
         Q = BTO.select() #.order_by(BTO.bto_id.desc())
         return Paginator(Q, page=page).as_model_list()

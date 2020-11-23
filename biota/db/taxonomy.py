@@ -29,7 +29,8 @@ class Taxonomy(Ontology):
     tax_id = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
     division = CharField(null=True, index=True)
-    ancestor = ForeignKeyField('self', backref='ancestor', null = True)
+    ancestor_tax_id = CharField(null=True, index=True)
+    #ancestor = ForeignKeyField('self', backref='children', null = True)
     
     _fts_fields = { **Ontology._fts_fields }
     _table_name = 'taxonomy'
@@ -37,8 +38,31 @@ class Taxonomy(Ontology):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    # -- A --
+
+    @property
+    def ancestor(self):
+        try:
+            return Taxonomy.get(Taxonomy.id == self.ancestor_tax_id)
+        except:
+            return None
+
+    @property
+    def ancestors(self):
+        tax = self
+        ancestors = []
+        while not tax.ancestor is None: 
+            ancestors.append(tax.ancestor)
+            tax = tax.ancestor
+
+        return ancestors
+
     # -- C --
     
+    @property
+    def children(self):
+        return Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.id)
+
     @classmethod
     def create_taxonomy_db(cls, biodata_dir = None, **kwargs):
         """
@@ -83,31 +107,37 @@ class Taxonomy(Ontology):
 
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
-                
+                tax.ancestor_tax_id = tax.data['ancestor']
+
                 if not job is None:
                     tax._set_job(job)
 
                 del tax.data['tax_id']
                 del tax.data['rank']
                 del tax.data['division']
+                del tax.data['ancestor']
 
             cls.save_all(taxa)
 
             start = stop
             stop = start+bulk_size
 
-        #step 4
-        page_number = 1
-        nb_items_per_page = 750
-        while True:
-            taxa = Taxonomy.select().paginate(page_number, nb_items_per_page)
-            if len(taxa) == 0:
-                break
-            cls.__set_taxa_ancestors(taxa)
-            cls.save_all(taxa)
-            page_number = page_number + 1
-
+        # #step 4
+        # page_number = 1
+        # nb_items_per_page = 750
+        # while True:
+        #     taxa = Taxonomy.select().paginate(page_number, nb_items_per_page)
+        #     if len(taxa) == 0:
+        #         break
+        #     cls.__set_taxa_ancestors(taxa)
+        #     cls.save_all(taxa)
+        #     page_number = page_number + 1
+    
     # -- S --
+
+    @property
+    def siblings(self):
+        return Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.ancestor_tax_id)
 
     def set_tax_id(self, tax_id):
         """
@@ -127,38 +157,38 @@ class Taxonomy(Ontology):
         """
         self.rank = rank
 
-    @classmethod
-    def __set_taxa_ancestors(cls, taxon_list):
-        """
-        Create the relationships between the taxonomy entity and his parent in the ncbi taxonomy
+    # @classmethod
+    # def __set_taxa_ancestors(cls, taxon_list):
+    #     """
+    #     Create the relationships between the taxonomy entity and his parent in the ncbi taxonomy
 
-        :type list_taxons:
-        :parameter list_taxons: list of all taxonomy in the table 
-        :returns: None
-        """
+    #     :type list_taxons:
+    #     :parameter list_taxons: list of all taxonomy in the table 
+    #     :returns: None
+    #     """
 
-        tax_dict = {} 
-        for tax in taxon_list:
-            if 'ancestor' in tax.data.keys():
-                if int(tax.data['ancestor']) in tax_dict.keys():
-                    tax_dict[ int(tax.data['ancestor']) ].append(tax)
-                else:
-                    tax_dict[ int(tax.data['ancestor']) ] = [ tax ]
+    #     tax_dict = {} 
+    #     for tax in taxon_list:
+    #         if 'ancestor' in tax.data.keys():
+    #             if tax.data['ancestor'] in tax_dict.keys():
+    #                 tax_dict[ tax.data['ancestor'] ].append(tax)
+    #             else:
+    #                 tax_dict[ tax.data['ancestor'] ] = [ tax ]
 
-        bluk_size = 750
-        start = 0
-        stop = start+bluk_size
-        tax_ids = list(tax_dict.keys())
-        while True:
-            if start >= len(tax_ids)-1:
-                break
+    #     bluk_size = 750
+    #     start = 0
+    #     stop = start+bluk_size
+    #     tax_ids = list(tax_dict.keys())
+    #     while True:
+    #         if start >= len(tax_ids)-1:
+    #             break
 
-            elems = tax_ids[start:stop]
-            q_ancestors = Taxonomy.select().where(Taxonomy.tax_id << elems)
+    #         elems = tax_ids[start:stop]
+    #         q_ancestors = Taxonomy.select().where(Taxonomy.tax_id << elems)
 
-            for parent in q_ancestors:
-                for t in tax_dict[ int(parent.tax_id) ]:
-                    t.ancestor = parent
+    #         for parent in q_ancestors:
+    #             for t in tax_dict[ parent.tax_ids ]:
+    #                 t.ancestor = parent
             
-            start = stop
-            stop = start+bluk_size
+    #         start = stop
+    #         stop = start+bluk_size

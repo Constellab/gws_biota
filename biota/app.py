@@ -17,7 +17,7 @@ class Page:
     @staticmethod
     # URL: ./page/biota/[[index]/[index]]
     async def index_index(request: Request):
-        return await Page.dashboard(request)
+        return await Page.index_dashboard(request)
 
     @staticmethod
     # URL: ./page/biota/[index/dashboard]
@@ -81,23 +81,18 @@ class Page:
     # URL: ./page/biota/taxonomy/list
     async def taxonomy_list(request: Request):
         page = request.query_params.get('page',1)
-        uri = request.query_params.get('uri',None)
-
-        if uri is None:
-            try:
-                data = Controller.fetch_taxonomy_list(page=page)
-                return { "status": True, "data": data }
-            except Exception as err:
-                return {"status": False, "data": f"{err}"}
-        else:
-            pass
+        try:
+            data = Controller.fetch_taxonomy_list(page=page)
+            return { "status": True, "data": data }
+        except Exception as err:
+            return {"status": False, "data": f"{err}"}
     
     @staticmethod
     # URL: ./page/biota/taxonomy/entity
     async def taxonomy_entity(request: Request):
-        page = request.query_params.get('page',1)
+        uri = request.query_params.get('uri')
         try:
-            data = Controller.fetch_taxonomy_list(page=page)
+            data = Controller.fetch_entity(uri, model_type="taxonomy")
             return { "status": True, "data": data }
         except Exception as err:
             return {"status": False, "data": f"{err}"}
