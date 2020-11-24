@@ -8,7 +8,6 @@ from gws.settings import Settings
 from biota.db.reaction import Reaction
 from biota.db.compound import Compound
 from biota.db.enzyme import Enzyme
-from biota.db.po import PO
 
 
 settings = Settings.retrieve()
@@ -26,7 +25,6 @@ class TestReaction(unittest.TestCase):
         Reaction.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
-        PO.drop_table()
         pass
     
     def test_db_object(self):

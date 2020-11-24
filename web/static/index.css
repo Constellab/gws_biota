@@ -1,0 +1,13 @@
+
+.gws-db-stats-numbers{
+    color: #555;
+    margin-top: 16px;
+}
+
+.gws-db-stats-numbers--num{
+    font-size: 1.5rem;
+}
+
+.gws-db-stats-numbers--text{
+    font-size: 0.8rem;
+}

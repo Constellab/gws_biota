@@ -17,7 +17,11 @@ from biota.db.enzyme import Enzyme
 from biota.db.reaction import Reaction
 from biota.db.compound import Compound
 
+from biota.db.stats import Stats
+
 class Controller(BaseController):
+    
+    # -- F --
 
     @classmethod
     def fetch_entity(cls, uri: str, model_type: str):         
@@ -52,11 +56,6 @@ class Controller(BaseController):
         return Paginator(Q, page=page).as_model_list()
 
     @classmethod
-    def fetch_pwo_list(cls, page=1, name=""):            
-        Q = PWO.select() #.order_by(PWO.pwo_id.desc())
-        return Paginator(Q, page=page).as_model_list()
-
-    @classmethod
     def fetch_sbo_list(cls, page=1, name=""):            
         Q = SBO.select() #.order_by(SBO.sbo_id.desc())
         return Paginator(Q, page=page).as_model_list()
@@ -80,3 +79,10 @@ class Controller(BaseController):
     def fetch_compound_list(cls, page=1, name=""):            
         Q = Compound.select().where(Compound.mass > 0) #.order_by(Reaction.ec_number.desc())
         return Paginator(Q, page=page).as_model_list()
+
+    # -- G --
+
+    @classmethod
+    def fetch_last_stats(cls):
+        return Stats.get_stats(renew=False) 
+        

@@ -1,13 +1,4 @@
-{% extends 'biota/_base/base.html' %}
+{% set title_icon = '<i class="fas fa-project-diagram"></i>' %}
+{% set title = 'Evidence and Conclusion Ontology' %}
 
-{% block biota_title %}
-    Evidence and Conclusion Ontology
-{% endblock %}
-
-{% block biota_content %}
-    {% include 'biota/eco/_include/list.html' %}
-{% endblock %}
-
-{% block biota_script %}
-    {% include 'biota/eco/_include/script.html' %}
-{% endblock %}
+{% include 'biota/_base/list.html' %}

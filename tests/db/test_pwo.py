@@ -28,5 +28,5 @@ class TestPWO(unittest.TestCase):
         )
     
         PWO.create_pwo_db(**params)
-        self.assertEqual(PWO.get(PWO.pwo_id == 'PW:0000000').get_name(), 'term zero')
-        self.assertEqual(PWO.get(PWO.pwo_id == "PW:0000005").get_name(), 'carbohydrate metabolic pathway')
+        self.assertEqual(PWO.get(PWO.pwo_id == 'PW:0000000').get_name(), 'Term zero')
+        self.assertEqual(PWO.get(PWO.pwo_id == "PW:0000005").get_name(), 'Carbohydrate metabolic pathway')

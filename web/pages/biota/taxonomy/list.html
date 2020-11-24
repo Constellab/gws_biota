@@ -1,14 +1,4 @@
-{% extends 'biota/_base/base.html' %}
+{% set title_icon = '<span class="fas fa-bacteria"></span>' %}
+{% set title = 'Taxonomy' %}
 
-{% block biota_title %}
-    Taxonomy
-{% endblock %}
-
-{% block biota_content %}
-    {% include 'biota/taxonomy/_include/list.html' %}
-{% endblock %}
-
-{% block biota_script %}
-    {% include 'biota/taxonomy/_include/script.html' %}
-{% endblock %}
-
+{% include 'biota/_base/list.html' %}

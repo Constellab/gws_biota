@@ -28,5 +28,5 @@ class TestBTO(unittest.TestCase):
         )
 
         BTO.create_bto_db(**params)
-        self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').get_name(), 'tissues, cell types and enzyme sources')        
-        self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000002').get_name(), 'culture condition:1,4-dichlorobenzene-grown cell')
+        self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000000').get_name(), 'Tissues, cell types and enzyme sources')        
+        self.assertEqual(BTO.get(BTO.bto_id == 'BTO_0000002').get_name(), 'Culture condition:1,4-dichlorobenzene-grown cell')

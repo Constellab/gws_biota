@@ -1,13 +1,4 @@
-{% extends 'biota/_base/base.html' %}
+{% set title_icon = '<i class="fas fa-project-diagram"></i>' %}
+{% set title = 'System Biology Ontology' %}
 
-{% block biota_title %}
-    Systems Biology Ontology
-{% endblock %}
-
-{% block biota_content %}
-    {% include 'biota/sbo/_include/list.html' %}
-{% endblock %}
-
-{% block biota_script %}
-    {% include 'biota/sbo/_include/script.html' %}
-{% endblock %}
+{% include 'biota/_base/list.html' %}

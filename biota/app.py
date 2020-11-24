@@ -14,18 +14,7 @@ from biota.controller import Controller
 
 class Page:
 
-    @staticmethod
-    # URL: ./page/biota/[[index]/[index]]
-    async def index_index(request: Request):
-        return await Page.index_dashboard(request)
-
-    @staticmethod
-    # URL: ./page/biota/[index/dashboard]
-    async def index_dashboard(request: Request):
-        try:
-            return { "status": True, "data": {} }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
+    # -- B -- 
 
     @staticmethod
     # URL: ./page/biota/bto/[index]
@@ -36,22 +25,29 @@ class Page:
     # URL: ./page/biota/bto/entity
     async def bto_entity(request: Request):
         uri = request.query_params.get('uri')
-        try:
-            data = Controller.fetch_entity(uri, model_type="bto")
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
+        return Controller.fetch_entity(uri, model_type="bto")
 
     @staticmethod
     # URL: ./page/biota/bto/list
     async def bto_list(request: Request):
         page = request.query_params.get('page',1)
-        try:
-            data = Controller.fetch_bto_list(page=page)
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
+        return Controller.fetch_bto_list(page=page)
 
+    # -- C --
+
+    @staticmethod
+    # URL: ./page/biota/compound/[index]
+    async def compound_index(request: Request):
+        return await Page.compound_list(request)
+
+    @staticmethod
+    # URL: ./page/biota/compound/list
+    async def compound_list(request: Request):
+        page = request.query_params.get('page',1)
+        return Controller.fetch_compound_list(page=page)
+
+    # -- E -- 
+    
     @staticmethod
     # URL: ./page/biota/eco/[index]
     async def eco_index(request: Request):
@@ -61,52 +57,16 @@ class Page:
     # URL: ./page/biota/eco/list
     async def eco_list(request: Request):
         page = request.query_params.get('page',1)
-        try:
-            data = Controller.fetch_eco_list(page=page)
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
+        return Controller.fetch_eco_list(page=page)
 
     @staticmethod
-    # URL: ./page/biota/sbo/[index]
-    async def sbo_index(request: Request):
-        return await Page.sbo_list(request)
-
-    @staticmethod
-    # URL: ./page/biota/sbo/list
-    async def sbo_list(request: Request):
-        page = request.query_params.get('page',1)
-        try:
-            data = Controller.fetch_sbo_list(page=page)
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
-
-    @staticmethod
-    # URL: ./page/biota/taxonomy/[index]
-    async def taxonomy_index(request: Request):
-        return await Page.taxonomy_list(request)
-
-    @staticmethod
-    # URL: ./page/biota/taxonomy/list
-    async def taxonomy_list(request: Request):
-        page = request.query_params.get('page',1)
-        try:
-            data = Controller.fetch_taxonomy_list(page=page)
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
-    
-    @staticmethod
-    # URL: ./page/biota/taxonomy/entity
-    async def taxonomy_entity(request: Request):
+    # URL: ./page/biota/eco/entity
+    async def eco_entity(request: Request):
         uri = request.query_params.get('uri')
-        try:
-            data = Controller.fetch_entity(uri, model_type="taxonomy")
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
+        return Controller.fetch_entity(uri, model_type="eco")
 
+    # -- E --
+    
     @staticmethod
     # URL: ./page/biota/enzyme/[index]
     async def enzyme_index(request: Request):
@@ -116,11 +76,21 @@ class Page:
     # URL: ./page/biota/enzyme/list
     async def enzyme_list(request: Request):
         page = request.query_params.get('page',1)
-        try:
-            data = Controller.fetch_enzyme_list(page=page)
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
+        return Controller.fetch_enzyme_list(page=page)
+
+    # -- I --
+
+    @staticmethod
+    # URL: ./page/biota/[[index]/[index]]
+    async def index_index(request: Request):
+        return await Page.index_dashboard(request)
+
+    @staticmethod
+    # URL: ./page/biota/[index/dashboard]
+    async def index_dashboard(request: Request):
+        return Controller.fetch_last_stats()
+
+    # -- R --
 
     @staticmethod
     # URL: ./page/biota/reaction/[index]
@@ -131,26 +101,51 @@ class Page:
     # URL: ./page/biota/reaction/list
     async def reaction_list(request: Request):
         page = request.query_params.get('page',1)
-        try:
-            data = Controller.fetch_reaction_list(page=page)
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
-    
-    @staticmethod
-    # URL: ./page/biota/compound/[index]
-    async def compound_index(request: Request):
-        return await Page.compound_list(request)
+        return Controller.fetch_reaction_list(page=page)
+
+    # -- S --
 
     @staticmethod
-    # URL: ./page/biota/compound/list
-    async def compound_list(request: Request):
+    # URL: ./page/biota/sbo/[index]
+    async def sbo_index(request: Request):
+        return await Page.sbo_list(request)
+
+    @staticmethod
+    # URL: ./page/biota/sbo/list
+    async def sbo_list(request: Request):
         page = request.query_params.get('page',1)
-        try:
-            data = Controller.fetch_compound_list(page=page)
-            return { "status": True, "data": data }
-        except Exception as err:
-            return {"status": False, "data": f"{err}"}
+        return Controller.fetch_sbo_list(page=page)
+
+    @staticmethod
+    # URL: ./page/biota/sbo/entity
+    async def sbo_entity(request: Request):
+        uri = request.query_params.get('uri')
+        return Controller.fetch_entity(uri, model_type="sbo")
+
+    @staticmethod
+    # URL: ./page/biota/stats/last
+    async def stats_last(request: Request):
+        return Controller.fetch_last_stats()
+
+    # -- T --
+
+    @staticmethod
+    # URL: ./page/biota/taxonomy/[index]
+    async def taxonomy_index(request: Request):
+        return await Page.taxonomy_list(request)
+
+    @staticmethod
+    # URL: ./page/biota/taxonomy/list
+    async def taxonomy_list(request: Request):
+        page = request.query_params.get('page',1)
+        return Controller.fetch_taxonomy_list(page=page)
+    
+    @staticmethod
+    # URL: ./page/biota/taxonomy/entity
+    async def taxonomy_entity(request: Request):
+        uri = request.query_params.get('uri')
+        return Controller.fetch_entity(uri, model_type="taxonomy")
+
 
 class API:
     pass

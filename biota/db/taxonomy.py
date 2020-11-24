@@ -35,6 +35,12 @@ class Taxonomy(Ontology):
     _fts_fields = { **Ontology._fts_fields }
     _table_name = 'taxonomy'
 
+    _children = None
+    _siblings = None
+    _ancestor = None
+    _ancestor_checked = False
+    _ancestors = None
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -42,26 +48,42 @@ class Taxonomy(Ontology):
 
     @property
     def ancestor(self):
+        if self._ancestor_checked:
+            return self._ancestor
+
+        self._ancestor_checked = True
         try:
-            return Taxonomy.get(Taxonomy.id == self.ancestor_tax_id)
+            if self.tax_id == self.ancestor_tax_id:
+                return None
+                
+            self._ancestor = Taxonomy.get(Taxonomy.tax_id == self.ancestor_tax_id)
+            return self._ancestor
         except:
             return None
 
     @property
     def ancestors(self):
+        if not self._ancestors is None:
+            return self._ancestors
+
         tax = self
-        ancestors = []
+        self._ancestors = []
         while not tax.ancestor is None: 
-            ancestors.append(tax.ancestor)
+            self._ancestors.append(tax.ancestor)
             tax = tax.ancestor
 
-        return ancestors
+        self._ancestors.reverse()
+        return self._ancestors
 
     # -- C --
     
     @property
     def children(self):
-        return Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.id)
+        if not self._children is None:
+            return self._children
+
+        self._children = Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.tax_id)
+        return self._children
 
     @classmethod
     def create_taxonomy_db(cls, biodata_dir = None, **kwargs):
@@ -137,7 +159,11 @@ class Taxonomy(Ontology):
 
     @property
     def siblings(self):
-        return Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.ancestor_tax_id)
+        if not self._siblings is None:
+            return self._siblings
+
+        self._siblings = Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.ancestor_tax_id)
+        return self._siblings
 
     def set_tax_id(self, tax_id):
         """

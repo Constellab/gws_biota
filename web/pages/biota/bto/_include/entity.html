@@ -1,40 +1,18 @@
-{% if response.status and response.data != None %}
-
-{% set bto = response.data %}
-
-<h1 class="mdc-typography--headline5 gws-page-title">
-    <span class="fas fa-bacteria"></span> &nbsp;
-    {% if bto.get_title() %}
-        {{ bto.get_title() }}
-    {% else %}
-        No title
-    {% endif %}
-</h1>
-
+{% set bto = entity %}
 <div class="gview:card" data-class="" data-style="min-width:372px; width: 100%">
     <div title>
-        {% if bto.get_title() %}
-            {{ bto.get_title() }}
-        {% else %}
-            No title
-        {% endif %}
+        {{ bto.get_title('No title') }}
     </div>
     <div body>
-        <span class="gws-multiline gws-multiline--secondary">BTO id: {{ bto.bto_id }} </span>
-        {% if bto.data.synonymes %}
-            {% for syn in bto.data.synonymes %}
-                <span class="gws-multiline gws-multiline--secondary">Synonyme: {{ syn }} </span>
+        <span class="gws-multiline gws-multiline--secondary">{{ bto.definition }}</span>
+        <span class="gws-multiline gws-multiline--secondary">SBO ID: {{ bto.bto_id }} </span>
+        {% if bto.ancestors|length > 0 %}
+            <hr>
+            {% for ancestor in bto.ancestors %}
+                <span class="gws-multiline gws-multiline--secondary">Ancestor: {{ ancestor.get_title() }} </span>
             {% endfor %}
         {% endif %}
-
-        {% for ancestor in bto.ancestors %}
-            <span class="gws-multiline gws-multiline--secondary">Ancestors: {{ ancestor.get_title() }} - {{ ancestor.bto_id }} </span>
-        {% endfor %}
+        <hr>
+        <span class="gws-multiline gws-multiline--secondary">URI: {{ bto.uri }} </span>
     </div>
 </div>
-
-{% else %}
-
-    No bto found
-
-{% endif %}

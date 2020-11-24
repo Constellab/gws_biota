@@ -30,5 +30,5 @@ class TestECO(unittest.TestCase):
         )
 
         ECO.create_eco_db(**params)
-        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').get_name(), "inference from background scientific knowledge")
-        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000002').get_name(), "direct assay evidence")
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000001').get_name(), "Inference from background scientific knowledge")
+        self.assertEqual(ECO.get(ECO.eco_id == 'ECO:0000002').get_name(), "Direct assay evidence")

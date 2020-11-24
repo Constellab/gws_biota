@@ -27,8 +27,23 @@ class SBO(Ontology):
 
     sbo_id = CharField(null=True, index=True)
     
-    _fts_fields = { **Ontology._fts_fields}
+    _fts_fields = { **Ontology._fts_fields }
     _table_name = 'sbo'
+    _ancestors = None
+
+    # -- A --
+
+    @property
+    def ancestors(self):
+        if not self._ancestors is None:
+            return self._ancestors
+
+        self._ancestors = []
+        Q = SBOAncestor.select().where(SBOAncestor.sbo == self.id)
+        for q in Q:
+            self._ancestors.append(q.ancestor)
+        
+        return self._ancestors
 
     # -- C --
      
@@ -105,7 +120,9 @@ class SBO(Ontology):
         :returns: The definition
         :rtype: str
         """
-        return self.data["definition"]
+         
+        definition = self.data["definition"]
+        return ". ".join(i.capitalize() for i in definition.split(". "))
 
     @classmethod
     def drop_table(cls, *arg, **kwargs):
@@ -161,9 +178,9 @@ class SBOAncestor(PWModel):
             (('sbo', 'ancestor'), True),
         )
     
-    def display_ancestors(self):
-        q = SBOAncestor.select().where(SBOAncestor.sbo == self.model.id)
-        list_ancestors = []
-        for i in range(0, len(q)):
-            list_ancestors.append(q[i].ancestor.sbo_id)
-        return list_ancestors
+    # def display_ancestors(self):
+    #     q = SBOAncestor.select().where(SBOAncestor.sbo == self.model.id)
+    #     list_ancestors = []
+    #     for i in range(0, len(q)):
+    #         list_ancestors.append(q[i].ancestor.sbo_id)
+    #     return list_ancestors

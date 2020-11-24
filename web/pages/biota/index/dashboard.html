@@ -7,44 +7,71 @@
     Organisms and ontology base
 </h1>
 
+{% set stats = response.results.data %}
+
 <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
 
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title>Taxonomy</div>
-                <div body> Organism classification </div>
+                <div body> 
+                    Organism classification
+                    <div class="gws-db-stats-numbers">
+                        <span class="gws-db-stats-numbers--num gws-big-number">{{ stats.taxonomy }}</span>
+                        <span class="gws-db-stats-numbers--text">entries</span>
+                    </div>
+                </div>
+
                 <div action_icon_1 href="/page/biota/taxonomy">navigate_next</div>
             </div>
         </div>
 
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title>BTO</div>
-                <div body> BRENDA Tissue Ontology </div>
+                <div body> 
+                    BRENDA Tissue Ontology 
+                    <div class="gws-db-stats-numbers">
+                        <span class="gws-db-stats-numbers--num gws-big-number">{{ stats.bto }}</span>
+                        <span class="gws-db-stats-numbers--text">entries</span>
+                    </div>
+                </div>
                 <div action_icon_1 href="/page/biota/bto">navigate_next</div>
             </div>
         </div>
 
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title> SBO </div>
-                <div body> Systems Biology Ontology </div>
+                <div body> 
+                    Systems Biology Ontology 
+                    <div class="gws-db-stats-numbers">
+                        <span class="gws-db-stats-numbers--num gws-big-number">{{ stats.sbo }}</span>
+                        <span class="gws-db-stats-numbers--text">entries</span>
+                    </div>
+                </div>
                 <div action_icon_1 href="/page/biota/sbo">navigate_next</div>
             </div>
         </div>
 
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title> ECO </div>
-                <div body> Evidence and Conclusion Ontology </div>
+                <div body> 
+                    Evidence and Conclusion Ontology 
+                    <div class="gws-db-stats-numbers">
+                        <span class="gws-db-stats-numbers--num gws-big-number">{{ stats.eco }}</span>
+                        <span class="gws-db-stats-numbers--text">entries</span>
+                    </div>
+                </div>
                 <div action_icon_1 href="/page/biota/eco">navigate_next</div>
             </div>
         </div>
 
         <!--
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title>PWO</div>
                 <div body> Pathway Ontology </div>
                 <div action_icon_1 href="/page/biota/pwo">navigate_next</div>
@@ -65,25 +92,43 @@
     <div class="mdc-layout-grid__inner">
 
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title> Enzymes </div>
-                <div body> Enzyme functions and genes </div>
+                <div body> 
+                    Enzyme functions and genes
+                    <div class="gws-db-stats-numbers">
+                        <span class="gws-db-stats-numbers--num gws-big-number">{{ stats.enzyme }}</span>
+                        <span class="gws-db-stats-numbers--text">entries</span>
+                    </div> 
+                </div>
                 <div action_icon_1 href="/page/biota/enzyme">navigate_next</div>
             </div>
         </div>
 
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title> Reactions </div>
-                <div body> Metabolic reactions </div>
+                <div body> 
+                    Metabolic reactions 
+                    <div class="gws-db-stats-numbers">
+                        <span class="gws-db-stats-numbers--num gws-big-number">{{ stats.reaction }}</span>
+                        <span class="gws-db-stats-numbers--text">entries</span>
+                    </div>
+                </div>
                 <div action_icon_1 href="/page/biota/reaction">navigate_next</div>
             </div>
         </div>
 
         <div class="mdc-layout-grid__cell">
-            <div class="gview:card" data-style="width:172px">
+            <div class="gview:card" data-style="width:200px">
                 <div title> Compounds </div>
-                <div body> Metabolic compounds </div>
+                <div body> 
+                    Metabolic compounds 
+                    <div class="gws-db-stats-numbers">
+                        <span class="gws-db-stats-numbers--num gws-big-number">{{ stats.compound }}</span>
+                        <span class="gws-db-stats-numbers--text">entries</span>
+                    </div>
+                </div>
                 <div action_icon_1 href="/page/biota/compound/">navigate_next</div>
             </div>
         </div>

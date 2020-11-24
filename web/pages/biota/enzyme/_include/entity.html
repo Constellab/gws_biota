@@ -1,0 +1,18 @@
+{% set enzyme = entity %}
+<div class="gview:card" data-class="" data-style="min-width:372px; width: 100%">
+    <div title>
+        {{ enzyme.get_title('No title') }}
+    </div>
+    <div body>
+        <span class="gws-multiline gws-multiline--secondary">{{ enzyme.definition }}</span>
+        <span class="gws-multiline gws-multiline--secondary">SBO ID: {{ enzyme.enzyme_id }} </span>
+        {% if enzyme.ancestors|length > 0 %}
+            <hr>
+            {% for ancestor in enzyme.ancestors %}
+                <span class="gws-multiline gws-multiline--secondary">Ancestor: {{ ancestor.get_title() }} </span>
+            {% endfor %}
+        {% endif %}
+        <hr>
+        <span class="gws-multiline gws-multiline--secondary">URI: {{ enzyme.uri }} </span>
+    </div>
+</div>

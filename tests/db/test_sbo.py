@@ -28,7 +28,7 @@ class TestSBO(unittest.TestCase):
         )
     
         SBO.create_sbo_db(**params)
-        self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').get_name(), 'systems biology representation')
-        self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").get_name(), 'obsolete mathematical expression')
-        self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000004").get_name(), 'modelling framework')
+        self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').get_name(), 'Systems biology representation')
+        self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").get_name(), 'Obsolete mathematical expression')
+        self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000004").get_name(), 'Modelling framework')
 

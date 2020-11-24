@@ -14,8 +14,6 @@ from gws.model import Config, Process, Resource
 
 from biota.db.base import Base, DbManager
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
-from biota.db.po import PO
-from biota.db.pwo import PWO
 from biota.db.bto import BTO as BiotaBTO
 from biota.db.fasta import Fasta
 
@@ -171,6 +169,15 @@ class Params():
             "full_refs" : self._full_refs
         })
 
+class EnzymePathway(Base):
+    """
+    This class represents enzyme ortholog.
+    """
+
+    ec_number = CharField(null=True, index=True)
+    _table_name = 'enzyme_pathway'
+
+
 class Enzyme(Base):
     """
     This class represents enzymes extracted from open databases
@@ -202,13 +209,13 @@ class Enzyme(Base):
     :type uniprot_id: class:`peewee.CharField`
     """
     
-    po = ForeignKeyField(PO, backref = 'enzymes', null = True)
+    pathway = ForeignKeyField(EnzymePathway, backref = 'enzymes', null = True)
     ec_number = CharField(null=True, index=True)
     uniprot_id = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
     bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
     
-    _fts_fields = { **Base._fts_fields, 'RN': 2.0, 'organism': 1.0 }
+    _fts_fields = { **Base._fts_fields, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0 }
     _table_name = 'enzymes'
 
     # -- C --
@@ -233,18 +240,17 @@ class Enzyme(Base):
         brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
         list_of_enzymes = brenda.parse_all_enzyme_to_dict()
 
-        # save PO
-        po_list = {}
+        # save EnzymePathway
+        pathways = {}
         for d in list_of_enzymes:
             ec = d['ec']
-            if not ec in po_list:
-                po_list[ec] = PO(
-                    name = d["RN"][0],
-                    ec_number = ec,
-                )
-                po_list[ec]._set_job(job)
+            if not ec in pathways:
+                pathways[ec] = EnzymePathway(ec_number = ec)
+
+                if not job is None:
+                    pathways[ec]._set_job(job)
                 
-        PO.save_all(po_list.values())
+        EnzymePathway.save_all(pathways.values())
 
         # save Enzymes
         enzymes = []
@@ -258,10 +264,10 @@ class Enzyme(Base):
 
             if not job is None:
                 enz._set_job(job)
-                enz.po = po_list[ec]
+                enz.pathway = pathways[ec]
 
             #del d["RN"]
-            del d["protein_id"]
+            #del d["protein_id"]
             del d["ec"]
             del d["uniprot"]
 
@@ -282,12 +288,9 @@ class Enzyme(Base):
 
         Extra parameters are passed to :meth:`create_table`
         """
-        PO.create_table()
-
+        EnzymePathway.create_table()
         super().create_table(*args, **kwargs)
         EnzymeBTO.create_table()
-
-        #raise Exception("A")
 
     # -- D -- 
 
@@ -298,7 +301,8 @@ class Enzyme(Base):
 
         Extra parameters are passed to :meth:`peewee.Model.drop_table`
         """
-        #EnzymeBTO = Enzyme.bto.get_through_model()
+        
+        EnzymePathway.drop_table(*args, **kwargs)
         EnzymeBTO.drop_table(*args, **kwargs)
         super().drop_table(*args, **kwargs)
     
@@ -312,30 +316,16 @@ class Enzyme(Base):
 
     # -- G --
 
-    def get_title(self):
+    def get_title(self, default=""):
         """
         Name of the enzyme orthologue
 
         :returns: The name of the enzyme ortholog
         :rtype: str
         """
-        
-        try:
-            return self.po.get_title()
-        except:
-            return None
+        return self.data.get("RN", [default])[0]
 
     # -- N --
-
-    @property
-    def name(self):
-        """
-        Name of the enzyme orthologue
-
-        :returns: The name of the enzyme orthologue
-        :rtype: str
-        """
-        return self.po.get_name()
 
     @property
     def synomyms(self):
@@ -345,7 +335,7 @@ class Enzyme(Base):
         :returns: The name of the enzyme orthologue
         :rtype: str
         """
-        return self.po.synonyms
+        return self.data["SN"]
 
     # -- O --
 
@@ -454,28 +444,28 @@ class Enzyme(Base):
         in the enzyme_btostable
         """
 
-        po_list = {}
+        pathways = {}
         bulk_size = 750
         dbs = ['brenda', 'kegg', 'metacyc']
         for bkms in list_of_bkms:
             ec_number = bkms["ec_number"]
-            Q = PO.select().where(PO.ec_number == ec_number)
-            for po in Q:
+            Q = EnzymePathway.select().where(EnzymePathway.ec_number == ec_number)
+            for pathway in Q:
                 for k in dbs:
 
                     if bkms.get(k+'_pathway_name',"") != "":
                         pwy_id = bkms.get(k+'_pathway_id', "ID")
                         pwy_name = bkms[k+'_pathway_name']
-                        po.data[k+'_pathway'] = { pwy_id : pwy_name }
+                        pathway.data[k+'_pathway'] = { pwy_id : pwy_name }
 
-                po_list[po.ec_number] = po
+                pathways[pathway.ec_number] = pathway
 
-                if len(po_list.keys()) >= bulk_size:
-                    PO.save_all(po_list.values())
-                    po_list = {}
+                if len(pathways.keys()) >= bulk_size:
+                    EnzymePathway.save_all(pathways.values())
+                    pathways = {}
 
-        if len(po_list) > 0:
-            PO.save_all(po_list.values())
+        if len(pathways) > 0:
+            EnzymePathway.save_all(pathways.values())
 
 
 class EnzymeBTO(PWModel):

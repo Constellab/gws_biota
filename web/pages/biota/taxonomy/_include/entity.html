@@ -1,34 +1,20 @@
-{% if response.status and response.data != None %}
-
-{% set taxonomy = response.data %}
-
-<h1 class="mdc-typography--headline5 gws-page-title">
-    <span class="fas fa-bacteria"></span> &nbsp;
-    {% if taxonomy.get_title() %}
-        {{ taxonomy.get_title() }}
-    {% else %}
-        No title
-    {% endif %}
-</h1>
+{% set taxonomy = entity %}
 
 <div class="gview:card" data-class="" data-style="min-width:372px; width: 100%">
     <div title>
-        {% if taxonomy.get_title() %}
-            {{ taxonomy.get_title() }}
-        {% else %}
-            No title
-        {% endif %}
+            {{ taxonomy.get_title('No title') }}
     </div>
     <div body>
+        <span class="gws-multiline gws-multiline--secondary">TaxID: {{ taxonomy.tax_id }} </span>
         <span class="gws-multiline gws-multiline--secondary">Division: {{ taxonomy.division }} </span>
         <span class="gws-multiline gws-multiline--secondary">Rank: {{ taxonomy.rank }} </span>
-        <span class="gws-multiline gws-multiline--secondary">Ancestors: {{ taxonomy.get_ancestors() }} </span>
-        <span class="gws-multiline gws-multiline--secondary">Taxonomy URI: {{ taxonomy.uri }} </span>
+        {% if taxonomy.ancestors|length > 0 %}
+            <hr>
+            {% for ancestor in taxonomy.ancestors %}
+            <span class="gws-multiline gws-multiline--secondary">Ancestor: {{ ancestor.get_title() }}, Rank:{{ ancestor.rank }}, TaxID:{{ ancestor.tax_id }} </span>
+            {% endfor %}
+        {% endif %}
+        <hr>
+        <span class="gws-multiline gws-multiline--secondary">URI: {{ taxonomy.uri }} </span>
     </div>
 </div>
-
-{% else %}
-
-    No taxonomy found
-
-{% endif %}

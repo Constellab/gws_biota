@@ -1,13 +1,4 @@
-{% extends 'biota/_base/base.html' %}
+{% set title_icon = '<i class="fas fa-project-diagram"></i>' %}
+{% set title = 'Enzymes' %}
 
-{% block biota_title %}
-    Enzymes
-{% endblock %}
-
-{% block biota_content %}
-    {% include 'biota/enzyme/_include/list.html' %}
-{% endblock %}
-
-{% block biota_script %}
-    {% include 'biota/enzyme/_include/script.html' %}
-{% endblock %}
+{% include 'biota/_base/list.html' %}

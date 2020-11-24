@@ -35,5 +35,5 @@ class TestGO(unittest.TestCase):
             ncbi_citation_file = "citations.dmp"
         )
         Taxonomy.create_taxonomy_db(**params)
-        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'ancestor': '71', 'title': 'Unspecified'})
-        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'title': 'root', 'ancestor': '1'})
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'title': 'Unspecified'})
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'title': 'root'})

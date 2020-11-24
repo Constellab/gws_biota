@@ -28,6 +28,21 @@ class ECO(Ontology):
 
     eco_id = CharField(null=True, index=True)
     _table_name = 'eco'
+    _ancestors = None
+
+    # -- A --
+
+    @property
+    def ancestors(self):
+        if not self._ancestors is None:
+            return self._ancestors
+
+        self._ancestors = []
+        Q = ECOAncestor.select().where(ECOAncestor.eco == self.id)
+        for q in Q:
+            self._ancestors.append(q.ancestor)
+        
+        return self._ancestors
 
     # -- C --
 
@@ -102,7 +117,8 @@ class ECO(Ontology):
         """
         return self.definition
         """
-        return self.data["definition"]
+        definition = self.data["definition"]
+        return ". ".join(i.capitalize() for i in definition.split(". "))
 
     @classmethod
     def drop_table(cls, *arg, **kwargs):

@@ -6,7 +6,6 @@ from gws.controller import Controller
 from gws.settings import Settings
 from biota.db.enzyme import Enzyme
 from biota.db.bto import BTO
-from biota.db.po import PO
 
 
 settings = Settings.retrieve()
@@ -16,14 +15,12 @@ class TestEnzyme(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        PO.drop_table()
         Enzyme.drop_table()
         Enzyme.create_table()
         pass
    
     @classmethod
     def tearDownClass(cls):
-        PO.drop_table()
         Enzyme.drop_table()
         BTO.drop_table()
         pass

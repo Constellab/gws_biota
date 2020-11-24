@@ -6,7 +6,6 @@ import asyncio
 from biota.db.enzyme import EnzymeStatistics, StatisticsExtractor
 from biota.db.compound import Compound
 from biota.db.enzyme import Enzyme
-from biota.db.po import PO                                    
 
 class TestProcess(unittest.TestCase):
 
@@ -24,7 +23,6 @@ class TestProcess(unittest.TestCase):
         StatisticsExtractor.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
-        PO.drop_table()
         pass
 
     def test_process(self):
