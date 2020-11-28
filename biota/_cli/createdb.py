@@ -61,7 +61,6 @@ def createdb(ctx, user=None, fts=False):
     for k in params:
         db_creator.set_param(k, params[k])
 
-    e = Experiment()
     protocol = Protocol(
         name = 'biota_db_creation',
         processes = { 'db_creator': db_creator },
@@ -69,7 +68,7 @@ def createdb(ctx, user=None, fts=False):
         interfaces = {},
         outerfaces = {}
     )
-    protocol.set_active_experiment(e)
-
+    e = protocol.create_experiment()
+    
     import asyncio
-    asyncio.run( protocol.run() )
+    asyncio.run( e.run() )

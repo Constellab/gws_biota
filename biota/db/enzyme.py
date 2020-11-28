@@ -278,8 +278,8 @@ class Enzyme(Base):
                     ec_number = ec,
                     data = {
                         'RN': d['RN'],
-                        'SN': d['SN'],
-                        'SY': d['SY']
+                        'SN': d.get('SN',''),
+                        'SY': d.get('SY','')
                     }
                 )
 
@@ -646,7 +646,7 @@ class EnzymeStatistics(Resource):
 
     def set_uniprots_referenced(self, uniprots):
         self.data['uniprots_referenced'] = uniprots
-
+        
 class StatisticsExtractor(Process):
     """
     The class allows the biota module to get statistics informations about enzymes in the biota database

@@ -82,9 +82,16 @@ class Compound(Base):
             chebi.inchi = chebi.data["inchi"]
             chebi.inchikey = chebi.data["inchikey"]
             chebi.smiles = chebi.data["smiles"]
-            chebi.mass = float(chebi.data["mass"])
-            chebi.monoisotopic_mass = float(chebi.data["monoisotopic_mass"])
-            chebi.charge = float(chebi.data["charge"])
+
+            if not chebi.data["mass"] is None:
+                chebi.mass = float(chebi.data["mass"])
+            
+            if not chebi.data["monoisotopic_mass"] is None:
+                chebi.monoisotopic_mass = float(chebi.data["monoisotopic_mass"])
+            
+            if not chebi.data["charge"] is None:
+                chebi.charge = float(chebi.data["charge"])
+                
             chebi.chebi_star = chebi.data["subsets"]
             
             if "kegg" in chebi.data["xref"]:

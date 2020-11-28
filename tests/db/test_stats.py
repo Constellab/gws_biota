@@ -25,14 +25,13 @@ class TestProcess(unittest.TestCase):
         Enzyme.drop_table()
         pass
 
-    def test_process(self):
-        asyncio.run( self._process() )
-
     async def _process(self):
         s = StatisticsExtractor()
         s.set_param('global_informations', True)
         s.set_param('organism', "Octopus vulgaris")
-        await s.run()
+
+        e = s.create_experiment()
+        await e.run()
 
         s.output['EnzymeStatistics'].save()
         self.assertTrue( s.is_saved() )
