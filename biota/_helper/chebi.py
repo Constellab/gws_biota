@@ -91,12 +91,12 @@ class Chebi():
             dict_term['alt_id'] = list(term.alternate_ids)
             dict_term['subsets'] = subsets
             dict_term['ancestors'] = []
-            dict_term['inchikey'] = ''
-            dict_term['inchi'] = ''
-            dict_term['smiles'] = ''
-            dict_term['charge'] = ''
-            dict_term['mass'] = ''
-            dict_term['monoisotopic_mass'] = ''
+            dict_term['inchikey'] = None
+            dict_term['inchi'] = None
+            dict_term['smiles'] = None
+            dict_term['charge'] = None
+            dict_term['mass'] = None
+            dict_term['monoisotopic_mass'] = None
 
             for pv in term.annotations:
                 if '/inchikey' in pv.property:

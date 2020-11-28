@@ -1,0 +1,16 @@
+{% set reaction = entity %}
+<div class="gview:card" data-class="" data-style="min-width:372px; width: 100%">
+    <div title>
+        {{ reaction.definition }}
+    </div>
+    <div body>
+        <span class="gws-multiline gws-multiline--secondary">Type: {{ reaction.type }}</span>
+        <span class="gws-multiline gws-multiline--secondary">URI: {{ reaction.uri }}</span>
+        <span class="gws-multiline gws-multiline--secondary"> 
+            {% for e in reaction.enzymes %}
+                Enzyme {{ e.ec_number }} Taxonomy {{ e.tax_id }} <br>
+            {% endfor %}
+            </span>
+        <span class="gws-multiline gws-multiline--secondary">Xref: {{ reaction.rhea_id }}, {{ reaction.kegg_id }}</span>
+    </div>
+</div>

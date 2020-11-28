@@ -77,7 +77,8 @@ class Controller(BaseController):
 
     @classmethod
     def fetch_compound_list(cls, page=1, name=""):            
-        Q = Compound.select().where(Compound.mass > 0) #.order_by(Reaction.ec_number.desc())
+        Q = Compound.select().where((Compound.mass.is_null(False)) & (Compound.mass > 0.0)) #.order_by(Reaction.ec_number.desc())
+        print(Q)
         return Paginator(Q, page=page).as_model_list()
 
     # -- G --

@@ -185,6 +185,11 @@ class Reaction(Entity):
         ReactionEnzyme.drop_table()
         super().drop_table(*args, **kwargs)
 
+    # -- G --
+
+    def get_title(self, default=None):
+        return self.definition
+
     # -- I -- 
 
     def is_charge_balanced(self):
@@ -210,8 +215,6 @@ class Reaction(Entity):
             total_product_mass = total_product_mass + p.mass
 
         return total_substrate_mass == total_product_mass
-
-    
 
     # -- S -- 
 

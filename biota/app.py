@@ -46,6 +46,12 @@ class Page:
         page = request.query_params.get('page',1)
         return Controller.fetch_compound_list(page=page)
 
+    @staticmethod
+    # URL: ./page/biota/compound/entity
+    async def compound_entity(request: Request):
+        uri = request.query_params.get('uri')
+        return Controller.fetch_entity(uri, model_type="compound")
+
     # -- E -- 
     
     @staticmethod
@@ -108,6 +114,12 @@ class Page:
     async def reaction_list(request: Request):
         page = request.query_params.get('page',1)
         return Controller.fetch_reaction_list(page=page)
+
+    @staticmethod
+    # URL: ./page/biota/reaction/entity
+    async def reaction_entity(request: Request):
+        uri = request.query_params.get('uri')
+        return Controller.fetch_entity(uri, model_type="reaction")
 
     # -- S --
 

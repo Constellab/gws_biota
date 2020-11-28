@@ -1,13 +1,4 @@
-{% extends 'biota/_base/base.html' %}
+{% set title_icon = '<i class="fas fa-project-diagram"></i>' %}
+{% set title = 'Reactions' %}
 
-{% block biota_title %}
-    Reactions
-{% endblock %}
-
-{% block biota_content %}
-    {% include 'biota/reaction/_include/list.html' %}
-{% endblock %}
-
-{% block biota_script %}
-    {% include 'biota/reaction/_include/script.html' %}
-{% endblock %}
+{% include 'biota/_base/list.html' %}
