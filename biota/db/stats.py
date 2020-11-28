@@ -10,7 +10,6 @@ from biota.db.base import Base
 from biota.db.bto import BTO
 from biota.db.eco import ECO
 from biota.db.sbo import SBO
-from biota.db.po import PO
 from biota.db.taxonomy import Taxonomy
 from biota.db.enzyme import Enzyme
 from biota.db.reaction import Reaction
@@ -36,7 +35,6 @@ class Stats(Base):
                     "eco": ECO.select().count(),
                     "bto": BTO.select().count(),
                     "sbo": SBO.select().count(),
-                    "po": PO.select().count()
                 }
             stats.save()
             return stats

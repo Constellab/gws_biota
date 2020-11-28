@@ -66,7 +66,7 @@ class Controller(BaseController):
         return Paginator(Q, page=page).as_model_list()
 
     @classmethod
-    def fetch_enzyme_list(cls, page=1, name=""):            
+    def fetch_enzyme_list(cls, page=1, name=""):     
         Q = Enzyme.select() #.order_by(Enzyme.ec_number.desc())
         return Paginator(Q, page=page).as_model_list()
 

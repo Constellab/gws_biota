@@ -68,6 +68,12 @@ class Page:
     # -- E --
     
     @staticmethod
+    # URL: ./page/biota/eco/enzyme
+    async def enzyme_entity(request: Request):
+        uri = request.query_params.get('uri')
+        return Controller.fetch_entity(uri, model_type="enzyme")
+
+    @staticmethod
     # URL: ./page/biota/enzyme/[index]
     async def enzyme_index(request: Request):
         return await Page.enzyme_list(request)

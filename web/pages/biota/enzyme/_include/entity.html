@@ -5,13 +5,17 @@
     </div>
     <div body>
         <span class="gws-multiline gws-multiline--secondary">{{ enzyme.definition }}</span>
-        <span class="gws-multiline gws-multiline--secondary">SBO ID: {{ enzyme.enzyme_id }} </span>
-        {% if enzyme.ancestors|length > 0 %}
-            <hr>
-            {% for ancestor in enzyme.ancestors %}
-                <span class="gws-multiline gws-multiline--secondary">Ancestor: {{ ancestor.get_title() }} </span>
+        <span class="gws-multiline gws-multiline--secondary">EC {{ enzyme.ec_number }}</span>
+        <span class="gws-multiline gws-multiline--secondary">Taxonomy: ID{{ enzyme.taxonomy.tax_id }}, {{ enzyme.taxonomy.get_title() }} </span>
+        <span class="gws-multiline gws-multiline--secondary">Pathway:
+            <ul>
+            {% for k in enzyme.pathway.data %}
+                <li> {{ k }} : {{ enzyme.pathway.data[k] }}</li>
             {% endfor %}
-        {% endif %}
+            </ul>
+        </span>
+        <hr>
+        <span class="gws-multiline gws-multiline--secondary">Sequence: {{ enzyme.fasta.sequence }} </span>
         <hr>
         <span class="gws-multiline gws-multiline--secondary">URI: {{ enzyme.uri }} </span>
     </div>

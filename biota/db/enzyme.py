@@ -171,11 +171,28 @@ class Params():
 
 class EnzymePathway(Base):
     """
-    This class represents enzyme ortholog.
+    This class represents enzyme pathway.
     """
 
     ec_number = CharField(null=True, index=True)
     _table_name = 'enzyme_pathway'
+
+class Enzo(Base):
+    """
+    This class represents enzyme ortholog.
+    """
+
+    ec_number = CharField(null=True, index=True, unique=True)
+    pathway = ForeignKeyField(EnzymePathway, backref = 'enzos', null = True)
+    _table_name = 'enzo'
+
+    @property   
+    def enzymes( self, tax_id: str = None, tax_name: str = None ):
+        Q = Enzyme.select().where(Enzyme.ec_number == self.self.ec_number)
+        if not tax_id is None:
+            Q = Q.where(Enzyme.tax_id == tax_id)
+ 
+        return Q
 
 
 class Enzyme(Base):
@@ -209,7 +226,7 @@ class Enzyme(Base):
     :type uniprot_id: class:`peewee.CharField`
     """
     
-    pathway = ForeignKeyField(EnzymePathway, backref = 'enzymes', null = True)
+    #pathway = ForeignKeyField(EnzymePathway, backref = 'enzymes', null = True)
     ec_number = CharField(null=True, index=True)
     uniprot_id = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
@@ -252,6 +269,26 @@ class Enzyme(Base):
                 
         EnzymePathway.save_all(pathways.values())
 
+        # save Enzo
+        enzos = {}
+        for d in list_of_enzymes:
+            ec = d['ec']
+            if not ec in enzos:
+                enzos[ec] = Enzo(
+                    ec_number = ec,
+                    data = {
+                        'RN': d['RN'],
+                        'SN': d['SN'],
+                        'SY': d['SY']
+                    }
+                )
+
+                if not job is None:
+                    enzos[ec]._set_job(job)
+                    enzos[ec].pathway = pathways[ec]
+                
+        Enzo.save_all(enzos.values())
+
         # save Enzymes
         enzymes = []
         for d in list_of_enzymes:
@@ -264,10 +301,9 @@ class Enzyme(Base):
 
             if not job is None:
                 enz._set_job(job)
-                enz.pathway = pathways[ec]
+                #enz.pathway = pathways[ec]
 
             #del d["RN"]
-            #del d["protein_id"]
             del d["ec"]
             del d["uniprot"]
 
