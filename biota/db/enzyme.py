@@ -325,6 +325,7 @@ class Enzyme(Base):
         Extra parameters are passed to :meth:`create_table`
         """
         EnzymePathway.create_table()
+        Enzo.create_table()
         super().create_table(*args, **kwargs)
         EnzymeBTO.create_table()
 
