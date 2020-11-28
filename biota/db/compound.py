@@ -41,6 +41,7 @@ class Compound(Base):
     chebi_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
     metacyc_id = CharField(null=True, index=True)
+    formula = CharField(null=True, index=True)
     charge = FloatField(null=True, index=True)
     mass = FloatField(null=True, index=True)
     monoisotopic_mass = FloatField(null=True, index=True)
@@ -77,6 +78,7 @@ class Compound(Base):
         for chebi in chebis:
             chebi.set_name(chebi.data["title"])
             chebi.chebi_id = chebi.data["id"]
+            chebi.formula = chebi.data["formula"]
             chebi.inchi = chebi.data["inchi"]
             chebi.inchikey = chebi.data["inchikey"]
             chebi.smiles = chebi.data["smiles"]
@@ -95,6 +97,7 @@ class Compound(Base):
 
             del chebi.data["id"]
             del chebi.data["inchi"]
+            del chebi.data["formula"]
             del chebi.data["inchikey"]
             del chebi.data["smiles"]
             del chebi.data["mass"]
