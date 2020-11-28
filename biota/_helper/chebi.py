@@ -94,6 +94,7 @@ class Chebi():
             dict_term['inchikey'] = None
             dict_term['inchi'] = None
             dict_term['smiles'] = None
+            dict_term['formula'] = None
             dict_term['charge'] = None
             dict_term['mass'] = None
             dict_term['monoisotopic_mass'] = None
