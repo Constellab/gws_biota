@@ -11,7 +11,7 @@ from biota.db.bto import BTO
 from biota.db.eco import ECO
 from biota.db.sbo import SBO
 from biota.db.taxonomy import Taxonomy
-from biota.db.enzyme import Enzyme
+from biota.db.enzyme import Enzyme, Enzo
 from biota.db.reaction import Reaction
 from biota.db.compound import Compound
 from biota.db.fasta import Fasta
@@ -30,6 +30,7 @@ class Stats(Base):
                     "taxonomy": Taxonomy.select().count(),
                     "compound": Compound.select().count(),
                     "reaction": Reaction.select().count(),
+                    "enzo": Enzo.select().count(),
                     "enzyme": Enzyme.select().count(),
                     "fasta": Fasta.select().count(),
                     "eco": ECO.select().count(),

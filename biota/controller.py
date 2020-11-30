@@ -13,7 +13,7 @@ from biota.db.bto import BTO
 from biota.db.eco import ECO
 from biota.db.sbo import SBO
 from biota.db.taxonomy import Taxonomy
-from biota.db.enzyme import Enzyme
+from biota.db.enzyme import Enzyme, Enzo, EnzymeStatistics, EnzymeStatisticsExtractor
 from biota.db.reaction import Reaction
 from biota.db.compound import Compound
 
@@ -32,6 +32,8 @@ class Controller(BaseController):
                 return ECO.get(ECO.uri == uri)
             elif model_type == "sbo":
                 return SBO.get(SBO.uri == uri)
+            elif model_type == "enzo":
+                return Enzo.get(Enzo.uri == uri)
             elif model_type == "enzyme":
                 return Enzyme.get(Enzyme.uri == uri)
             elif model_type == "reaction":
@@ -69,6 +71,26 @@ class Controller(BaseController):
     def fetch_enzyme_list(cls, page=1, name=""):     
         Q = Enzyme.select() #.order_by(Enzyme.ec_number.desc())
         return Paginator(Q, page=page).as_model_list()
+
+    @classmethod
+    def fetch_enzo_list(cls, page=1, name=""):     
+        Q = Enzo.select() #.order_by(Enzyme.ec_number.desc())
+        return Paginator(Q, page=page).as_model_list()
+
+
+    @classmethod
+    def fetch_enzyme_stats(cls, page=1, name=""):     
+        if EnzymeStatistics.select().count() == 0:
+            enzyme_extractor = EnzymeStatisticsExtractor()
+            e = enzyme_extractor.create_experiment()
+            e.run()
+
+        print("xxxxx")
+        print(EnzymeStatistics.select().count())
+
+        return EnzymeStatistics.get_by_id(24) #.order_by(Enzyme.ec_number.desc())
+        #return Paginator(Q, page=page).as_model_list()
+
 
     @classmethod
     def fetch_reaction_list(cls, page=1, name=""):            

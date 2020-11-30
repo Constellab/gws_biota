@@ -186,14 +186,38 @@ class Enzo(Base):
     pathway = ForeignKeyField(EnzymePathway, backref = 'enzos', null = True)
     _table_name = 'enzo'
 
+    # -- E --
+
     @property   
     def enzymes( self, tax_id: str = None, tax_name: str = None ):
-        Q = Enzyme.select().where(Enzyme.ec_number == self.self.ec_number)
+        Q = Enzyme.select().where(Enzyme.ec_number == self.ec_number)
         if not tax_id is None:
             Q = Q.where(Enzyme.tax_id == tax_id)
  
-        return Q
+        return Q.order_by(Enzyme.data['RN'].desc())
 
+    # -- G --
+
+    def get_title(self, default=""):
+        """
+        Name of the enzyme orthologue
+
+        :returns: The name of the enzyme ortholog
+        :rtype: str
+        """
+        return self.data.get("RN", [default])[0].capitalize()
+
+    # -- N --
+
+    @property
+    def synomyms(self):
+        """
+        Name of the enzyme orthologue
+
+        :returns: The name of the enzyme orthologue
+        :rtype: str
+        """
+        return ",".join([ sn.capitalize() for sn in self.data.get("SN", ['']) ])
 
 class Enzyme(Base):
     """
@@ -286,9 +310,8 @@ class Enzyme(Base):
                 if not job is None:
                     enzos[ec]._set_job(job)
                     enzos[ec].pathway = pathways[ec]
-                
         Enzo.save_all(enzos.values())
-
+        
         # save Enzymes
         enzymes = []
         for d in list_of_enzymes:
@@ -339,12 +362,14 @@ class Enzyme(Base):
         Extra parameters are passed to :meth:`peewee.Model.drop_table`
         """
         
+        Enzo.drop_table()
         EnzymePathway.drop_table(*args, **kwargs)
         EnzymeBTO.drop_table(*args, **kwargs)
         super().drop_table(*args, **kwargs)
     
     # -- F --
     
+    @property
     def fasta(self):
         try:
             return Fasta.get(Fasta.uniprot_id == self.uniprot_id)
@@ -360,7 +385,7 @@ class Enzyme(Base):
         :returns: The name of the enzyme ortholog
         :rtype: str
         """
-        return self.data.get("RN", [default])[0]
+        return self.data.get("RN", [default])[0].capitalize()
 
     # -- N --
 
@@ -372,7 +397,7 @@ class Enzyme(Base):
         :returns: The name of the enzyme orthologue
         :rtype: str
         """
-        return self.data["SN"]
+        return ",".join([ sn.capitalize() for sn in self.data.get("SN", ['']) ])
 
     # -- O --
 
@@ -384,7 +409,7 @@ class Enzyme(Base):
         :returns: The name of the organism associated to the enzyme function
         :rtype: str
         """
-        return self.data["organism"]
+        return self.data["organism"].capitalize()
 
     # -- P --
 
@@ -412,7 +437,7 @@ class Enzyme(Base):
         from peewee import JOIN
         Q = Reaction.select() \
                     .join(ReactionEnzyme) \
-                    .where(ReactionEnzyme.enzyme == self)        
+                    .where(ReactionEnzyme.enzyme == self)       
         return Q
 
     # -- S --
@@ -428,6 +453,8 @@ class Enzyme(Base):
     @property
     def taxonomy(self):
         try:
+            print("xxxx")
+            print(self.tax_id)
             return BiotaTaxo.get(BiotaTaxo.tax_id == self.tax_id)
         except:
             return None
@@ -646,8 +673,8 @@ class EnzymeStatistics(Resource):
 
     def set_uniprots_referenced(self, uniprots):
         self.data['uniprots_referenced'] = uniprots
-        
-class StatisticsExtractor(Process):
+
+class EnzymeStatisticsExtractor(Process):
     """
     The class allows the biota module to get statistics informations about enzymes in the biota database
     It browses enyme table to collect and process statistics informations
@@ -663,166 +690,97 @@ class StatisticsExtractor(Process):
     }
 
     def task(self): 
-        params = self.config.data
-
         se = EnzymeStatistics()
 
-        if (self.get_param('global_informations')): # Case if the user want only global information about the Enzyme table
-            dict_entries = {}
-            dict_enz_funyme_functions_classes = {}
-            dict_organisms = {}
-            dict_organism_number_by_ec_group = {}
-            dict_params = {}
-            dict_proportion_ec_group = {}
-            dict_references = {}
-            dict_size_ec_group = {}
-            list_infos = ['ac','cf','cl','cr','en','exp','gi','gs','ic50','in','lo','me','mw','nsp','os','oss',
-        'pho','phr','phs','pi','pm','pu','ren','sa','sn','sy','su','to','tr','ts','st','kkm','ki','km','tn']
-            proportions_params = {}
-            uniprot_id_number = 0
+        dict_entries = {}
+        dict_enz_funyme_functions_classes = {}
+        dict_organisms = {}
+        dict_organism_number_by_ec_group = {}
+        dict_params = {}
+        dict_proportion_ec_group = {}
+        dict_references = {}
+        dict_size_ec_group = {}
+        list_infos = ['ac','cf','cl','cr','en','exp','gi','gs','ic50','in','lo','me','mw','nsp','os','oss',
+    'pho','phr','phs','pi','pm','pu','ren','sa','sn','sy','su','to','tr','ts','st','kkm','ki','km','tn']
+        proportions_params = {}
+        uniprot_id_number = 0
+    
+        #print('Extract total number of enzyme')
+        enzymes = Enzyme.select()
+        enzyme_count = Enzyme.select().count()
+        se.set_enzyme_count(enzyme_count)
+
+        #print('Extract organisms by ec_group, references number, uniprots referenced number')
+
+        for i in range(1,8):
+            #group = Enzyme.select().where(Enzyme.data['ec_group'] == str(i))
+            group = Enzyme.select().where(Enzyme.ec_number.startswith(str(i)))
+            dict_size_ec_group[i] = group.count()
+            dict_group = {}
+            for enzyme in group:
+
+                if(enzyme.organism not in dict_group.keys()):
+                    dict_group[enzyme.organism] = 1
+                else:
+                    dict_group[enzyme.organism] += 1
+
+                if(enzyme.organism not in dict_organisms.keys()):
+                    dict_organisms[enzyme.organism] = 1
+                else:
+                    dict_organisms[enzyme.organism] += 1
+
+                if(enzyme.ec not in dict_enz_funyme_functions_classes.keys()):
+                    dict_enz_funyme_functions_classes[enzyme.ec] =1
+                else:
+                    dict_enz_funyme_functions_classes[enzyme.ec] += 1
+
+                if ('refs' in enzyme.data.keys()):
+                    for j in range(0, len(enzyme.data['refs'])):
+                        if(enzyme.data['refs'][j] not in dict_references.keys()):
+                            dict_references[enzyme.data['refs'][j]] = 1
+                        else:
+                            dict_references[enzyme.data['refs'][j]] += 1
+
+                if(enzyme.uniprot_id):
+                    uniprot_id_number += 1
+
+                dict_organism_number_by_ec_group[i] = len(dict_group)
+                dict_proportion_ec_group[i] = str(dict_size_ec_group[i]*100/enzyme_count) + ' %'
         
-            #print('Extract total number of enzyme')
-            enzymes = Enzyme.select()
-            size = len(enzymes)
-            se.set_enzyme_count(len(enzymes))
-
-            #print('Extract organisms by ec_group, references number, uniprots referenced number')
-
-            for i in range(1,8):
-                group = Enzyme.select().where(Enzyme.data['ec_group'] == str(i))
-                dict_size_ec_group[i] = len(group)
-                dict_group = {}
-                for enzyme in group:
-
-                    if(enzyme.organism not in dict_group.keys()):
-                        dict_group[enzyme.organism] = 1
+        #print('Extraction of proportion of parameters referenced and number of entries in the table')
+        for enzyme in enzymes:
+            for i in range(0, len(list_infos)):
+                if (list_infos[i] in enzyme.data.keys()):
+                    if (list_infos[i] not in dict_params.keys()):
+                        dict_params[list_infos[i]] = 1
+                        dict_entries[list_infos[i]] = 1
                     else:
-                        dict_group[enzyme.organism] += 1
+                        dict_params[list_infos[i]] += 1
+                        dict_entries[list_infos[i]] += 1
 
-                    if(enzyme.organism not in dict_organisms.keys()):
-                        dict_organisms[enzyme.organism] = 1
-                    else:
-                        dict_organisms[enzyme.organism] += 1
+                    if(type(enzyme.data[list_infos[i]]) == list):
+                        if(len(enzyme.data[list_infos[i]]) > 1):
+                            for j in range(0, len(enzyme.data[list_infos[i]])-1):
+                                dict_entries[list_infos[i]] += 1
+                    proportions_params[list_infos[i]] = str(dict_params[list_infos[i]]*100/len(enzymes)) + ' %'
 
-                    if(enzyme.ec not in dict_enz_funyme_functions_classes.keys()):
-                        dict_enz_funyme_functions_classes[enzyme.ec] =1
-                    else:
-                        dict_enz_funyme_functions_classes[enzyme.ec] += 1
-
-                    if ('refs' in enzyme.data.keys()):
-                        for j in range(0, len(enzyme.data['refs'])):
-                            if(enzyme.data['refs'][j] not in dict_references.keys()):
-                                dict_references[enzyme.data['refs'][j]] = 1
-                            else:
-                                dict_references[enzyme.data['refs'][j]] += 1
-
-                    if(enzyme.uniprot_id):
-                        uniprot_id_number += 1
-
-                    dict_organism_number_by_ec_group[i] = len(dict_group)
-                    dict_proportion_ec_group[i] = str(dict_size_ec_group[i]*100/size) + ' %'
-            
-            #print('Extraction of proportion of parameters referenced and number of entries in the table')
-            for enzyme in enzymes:
-                for i in range(0, len(list_infos)):
-                    if (list_infos[i] in enzyme.data.keys()):
-                        if (list_infos[i] not in dict_params.keys()):
-                            dict_params[list_infos[i]] = 1
-                            dict_entries[list_infos[i]] = 1
-                        else:
-                            dict_params[list_infos[i]] += 1
-                            dict_entries[list_infos[i]] += 1
-
-                        if(type(enzyme.data[list_infos[i]]) == list):
-                            if(len(enzyme.data[list_infos[i]]) > 1):
-                                for j in range(0, len(enzyme.data[list_infos[i]])-1):
-                                    dict_entries[list_infos[i]] += 1
-                        proportions_params[list_infos[i]] = str(dict_params[list_infos[i]]*100/len(enzymes)) + ' %'
-
-            se.set_enzymes_by_ec_group(dict_size_ec_group)
-            se.set_number_of_ec_class(len(dict_enz_funyme_functions_classes))
-            se.set_number_of_entries(dict_entries)
-            se.set_number_of_organisms(len(dict_organisms))
-            se.set_number_of_references(len(dict_references))
-            se.set_organisms_by_ec_group(dict_organism_number_by_ec_group)
-            se.set_proportion_by_ec_group(dict_proportion_ec_group)
-            se.set_proportion_of_params(proportions_params)
-            se.set_uniprots_referenced(uniprot_id_number)
-                    
-        else: # Case if the user want informations about an organism
-            dict_entries = {}
-            dict_enz_funyme_functions_classes = {}
-            dict_organism_number_by_ec_group = {}
-            dict_params = {}
-            dict_proportion_ec_group = {}
-            proportions_params = {}
-            dict_references = {}
-            dict_size_ec_group = {}
-            list_infos = ['ac','cf','cr','en','exp','gs','ic50','in','lo','me','mw','nsp','os','oss',
-                    'pho','phr','phs','pi','pm','sn','sy','su','to','tr','ts','st','kkm','ki','km','tn']
-            size = len(Enzyme.select())
-            uniprot_id_number = 0
-            
-            #print('Extract the proportion of the organism in the table')
-            try:
-                enzymes_organism = Enzyme.select().where(Enzyme.organism == params['organism'])
-                proportion = (len(enzymes_organism)*100)/size
-                se.set_proportion_in_table(str(proportion) + ' %')
-            except:
-                pass
-                #print("Organism " + params['organism'] + " not found in the table")
-
-            
-            for i in range(1,8):
-                group = Enzyme.select().where((Enzyme.organism == params['organism']) & (Enzyme.data['ec_group'] == str(i)))
-                dict_size_ec_group[i] = len(group)
-                dict_proportion_ec_group[i] = ''
-                for enzyme in group:
-                    if(enzyme.ec not in dict_enz_funyme_functions_classes.keys()):
-                        dict_enz_funyme_functions_classes[enzyme.ec] =1
-                    else:
-                        dict_enz_funyme_functions_classes[enzyme.ec] += 1
-                    
-                    if ('refs' in enzyme.data.keys()):
-                        for j in range(0, len(enzyme.data['refs'])):
-                            if(enzyme.data['refs'][j] not in dict_references.keys()):
-                                dict_references[enzyme.data['refs'][j]] = 1
-                            else:
-                                dict_references[enzyme.data['refs'][j]] += 1
-
-                    if(enzyme.uniprot_id):
-                        uniprot_id_number += 1
-                    
-                    if(proportion):
-                        dict_proportion_ec_group[i] = str(dict_size_ec_group[i]*100/len(enzymes_organism)) + ' %'
-            
-            #print('Extraction of proportion of parameters referenced and number of entries in the table')
-            for enzyme in enzymes_organism:
-                for i in range(0, len(list_infos)):
-                    if (list_infos[i] in enzyme.data.keys()):
-                        if (list_infos[i] not in dict_params.keys()):
-                            dict_params[list_infos[i]] = 1
-                            dict_entries[list_infos[i]] = 1
-                        else:
-                            dict_params[list_infos[i]] += 1
-                            dict_entries[list_infos[i]] += 1
-
-                        if(type(enzyme.data[list_infos[i]]) == list):
-                            if(len(enzyme.data[list_infos[i]]) > 1):
-                                for j in range(0, len(enzyme.data[list_infos[i]])-1):
-                                    dict_entries[list_infos[i]] += 1
-                        proportions_params[list_infos[i]] = str(dict_params[list_infos[i]]*100/len(enzymes_organism)) + ' %'
-
-            
-            se.set_enzymes_by_ec_group(dict_size_ec_group)
-            se.set_number_of_ec_class(len(dict_enz_funyme_functions_classes))
-            se.set_number_of_entries(dict_entries)
-            se.set_number_of_references(len(dict_references))
-            se.set_proportion_by_ec_group(dict_proportion_ec_group)
-            se.set_proportion_of_params(proportions_params)
-            se.set_enzyme_count(len(enzymes_organism))
-            se.set_uniprots_referenced(uniprot_id_number) 
+        se.set_enzymes_by_ec_group(dict_size_ec_group)
+        se.set_number_of_ec_class(len(dict_enz_funyme_functions_classes))
+        se.set_number_of_entries(dict_entries)
+        se.set_number_of_organisms(len(dict_organisms))
+        se.set_number_of_references(len(dict_references))
+        se.set_organisms_by_ec_group(dict_organism_number_by_ec_group)
+        se.set_proportion_by_ec_group(dict_proportion_ec_group)
+        se.set_proportion_of_params(proportions_params)
+        se.set_uniprots_referenced(uniprot_id_number)
 
         self.output['EnzymeStatistics'] = se
+
+class EnzymeStatistics2(Resource):
+    pass
+
+class EnzymeStatisticsExtractor2(Process):
+    pass
+
 
 EnzymeBTODeffered.set_model(EnzymeBTO)

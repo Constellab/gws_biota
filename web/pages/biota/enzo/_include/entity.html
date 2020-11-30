@@ -1,0 +1,39 @@
+{% set enzo = entity %}
+<div class="gview:card" data-class="" data-style="min-width:372px; width: 100%">
+    <div title>
+        {{ enzo.get_title('No title') }}
+    </div>
+    <div body>
+        <span class="gws-multiline gws-multiline--secondary">{{ enzo.get_title() }}</span>
+        <span class="gws-multiline gws-multiline--secondary">EC: {{ enzo.ec_number }}</span>
+        <hr>
+        <span class="gws-multiline gws-multiline--secondary">URI: {{ enzo.uri }} </span>
+    </div>
+</div>
+
+<br>
+
+<h1 class="mdc-typography--headline6 gws-headline"> 
+    <i class="fas fa-info-circle"></i> &nbsp;
+    EC Nomenclature
+</h1>
+<a href="https://en.wikipedia.org/wiki/Enzyme_Commission_number" target="_blank">Learn more</a><br>
+
+<ul>
+    <li>EC 1 Oxidoreductases</li>
+    <li>EC 2 Transferases</li>
+    <li>EC 3 Hydrolases</li>
+    <li>EC 4 Lyases</li>
+    <li>EC 5 Isomerases</li>
+    <li>EC 6 Ligases</li>
+    <li>EC 7 Translocases</li>
+</ul>
+
+<br>
+
+<h1 class="mdc-typography--headline6 gws-headline">
+    <span class="fas fa-bacteria"></span> &nbsp;
+    Taxonomy
+</h1>
+
+{% include 'biota/enzo/_include/enzyme_list.html' %}

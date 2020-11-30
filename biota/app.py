@@ -74,7 +74,7 @@ class Page:
     # -- E --
     
     @staticmethod
-    # URL: ./page/biota/eco/enzyme
+    # URL: ./page/biota/enzyme
     async def enzyme_entity(request: Request):
         uri = request.query_params.get('uri')
         return Controller.fetch_entity(uri, model_type="enzyme")
@@ -89,6 +89,29 @@ class Page:
     async def enzyme_list(request: Request):
         page = request.query_params.get('page',1)
         return Controller.fetch_enzyme_list(page=page)
+
+    @staticmethod
+    # URL: ./page/biota/enzyme/stats
+    async def enzyme_stats(request: Request):
+        return Controller.fetch_enzyme_stats()
+
+    
+    @staticmethod
+    # URL: ./page/biota/enzo/
+    async def enzo_entity(request: Request):
+        uri = request.query_params.get('uri')
+        return Controller.fetch_entity(uri, model_type="enzo")
+
+    @staticmethod
+    # URL: ./page/biota/enzo/[index]
+    async def enzo_index(request: Request):
+        return await Page.enzo_list(request)
+
+    @staticmethod
+    # URL: ./page/biota/enzo/list
+    async def enzo_list(request: Request):
+        page = request.query_params.get('page',1)
+        return Controller.fetch_enzo_list(page=page)
 
     # -- I --
 

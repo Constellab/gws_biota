@@ -1,0 +1,44 @@
+{% if response.results and response.resuls != None %}
+
+    {% set stats = response.results %}
+    
+    <h1 class="mdc-typography--headline5">
+        <i class="fas fa-project-diagram"></i> Enzyme statistics
+    </h1>
+
+    <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8">
+                
+                <div class="gview:card" data-class="" data-style="min-width:372px; width: 100%">
+                    <div title>
+                        Statistics
+                    </div>
+                    <div body>
+                        <span class="gws-multiline gws-multiline--secondary">Number of entries: {{ stats.number_of_entries }}</span>
+                        <span class="gws-multiline gws-multiline--secondary">Number of EC class: {{ stats.number_of_ec_class }}</span>
+                        <span class="gws-multiline gws-multiline--secondary">Enzyme per EC class: {{ stats.enzymes_by_ec_group }}</span>
+                        <span class="gws-multiline gws-multiline--secondary">Number of organisms: {{ stats.number_of_organisms }}</span>
+                        <span class="gws-multiline gws-multiline--secondary">Number of references: {{ stats.number_of_references }}</span>
+                        <span class="gws-multiline gws-multiline--secondary">Number of organisms per EC class: {{ stats.organisms_by_ec_group }}</span>
+                
+                
+                        <span class="gws-multiline gws-multiline--secondary">proportion_by_ec_group: {{ stats.proportion_by_ec_group }}</span>
+                        <span class="gws-multiline gws-multiline--secondary">proportion_in_table: {{ stats.proportion_in_table }}</span>
+                        <span class="gws-multiline gws-multiline--secondary">proportion_of_params: {{ stats.proportion_of_params }}</span>        
+                    </div>
+                </div>
+
+            </div>
+        
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+                {% include 'biota/_base/sidebar.html' %}
+            </div>
+        </div>
+    </div>
+
+{% else %}
+    
+    {% include 'biota/_base/not_found.html' %}
+
+{% endif %}
