@@ -77,7 +77,7 @@ class Params():
     _data = None
     _full_refs = None
 
-    __whats = dict(
+    _whats = dict(
         AC = "activating compound",
         AP = "application",
         CF = "cofactor",
@@ -143,7 +143,7 @@ class Params():
                 if isinstance(self._data[index], str):
                     return Param(
                         data = {'data': self._data[index]},
-                        what = self.__whats[self._name]
+                        what = self._whats[self._name]
                     )
                 elif isinstance(self._data[index], dict):
                     return Param(
@@ -151,7 +151,7 @@ class Params():
                         refs = self._data[index].get("refs", None),
                         full_refs = self._full_refs,
                         comments = self._data[index].get("comment", None),
-                        what = self.__whats[self._name]
+                        what = self._whats[self._name]
                     )
                 else:
                     return Param()    
@@ -555,124 +555,87 @@ class EnzymeStatistics(Resource):
     The aim of this class is to gather statistics about enzymes in biota database.
     
     :property : number of enzymes by ec group
-    :type enzymes_by_ec_group: dict
+    :type count_of_enzymes_per_ec_group: dict
     :property number_of_ec_class: total number of ec class 
     :type number_of_ec_class: int
-    :property number_of_entries: dictionnary where keys are a kinetic or chemical 
+    :property counts_of_parameters: dictionnary where keys are a kinetic or chemical 
     information and values are number of enzyme with this parameter entered
-    :type number_of_entries: dict
+    :type counts_of_parameters: dict
     :property set_number_of_organisms: total number of organism
     :type set_number_of_organisms: int
-    :property proportion_by_ec_group: dictionnary that contains proportion (%) of enzymes 
+    :property proportions_of_enzyme_per_ec_group: dictionnary that contains proportion (%) of enzymes 
     number by ec group in the table
-    :type proportion_by_ec_group: dictionnary
-    :property proportion_in_table: proportion of enzyme that refer to a specific organism in the table
-    :type proportion_in_table: str 
-    :property proportion_of_params: dictionnary where keys are a kinetic or chemical information 
+    :type proportions_of_enzyme_per_ec_group: dictionnary
+    :property parameter_proportions: dictionnary where keys are a kinetic or chemical information 
     and values are proportion of enzyme with this parameter entered in the table
-    :type proportion_of_params: dict
-    :property enzyme_count: total number of enzyme in the table
-    :type enzyme_count: int
+    :type parameter_proportions: dict
+    :property count_of_enzymes: total number of enzyme in the table
+    :type count_of_enzymes: int
     :property uniprots_referenced: total number of enzyme with a uniprot identifiers 
     referenced in the table
     :type uniprots_referenced: int
     """
+
+    _table_name = 'enzyme_statistics'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.data = {
-            'enzymes_by_ec_group': 0,
-            'number_of_ec_class': 0,
-            'number_of_entries': 0,
-            'number_of_organisms': 0,
-            'number_of_references': 0,
-            'organisms_by_ec_group': 0,
-            'proportion_by_ec_group': 0,
-            'proportion_in_table': 0,
-            'proportion_of_params': 0,
-            'enzyme_count': 0,
-            'uniprots_referenced': 0     
-        }
+
+        if not self.id:
+            self.data = {
+                'count_of_enzymes_per_ec_group': 0,
+                'number_of_ec_class': 0,
+                'counts_of_parameters': 0,
+                'number_of_organisms': 0,
+                'count_of_references': 0,
+                'count_of_organisms': 0,
+                'proportions_of_enzyme_per_ec_group': 0,
+                'parameter_proportions': 0,
+                'count_of_enzymes': 0,
+                'uniprots_referenced': 0     
+            }
     
     #-------- Accessors --------#
 
     @property
-    def enzymes_by_ec_group(self):
-        return self.data['enzymes_by_ec_group']
+    def count_of_enzymes_per_ec_group(self):
+        return self.data['count_of_enzymes_per_ec_group']
 
     @property
     def number_of_ec_class(self):
         return self.data['number_of_ec_class']
     
     @property
-    def number_of_entries(self):
-        return self.data['number_of_entries']
+    def counts_of_parameters(self):
+        return self.data['counts_of_parameters']
 
     @property
     def number_of_organisms(self):
         return self.data['number_of_organisms']
 
     @property
-    def number_of_references(self):
-        return self.data['number_of_references']
+    def count_of_references(self):
+        return self.data['count_of_references']
 
     @property
-    def organisms_by_ec_group(self):
-        return self.data['organisms_by_ec_group']   
+    def count_of_organisms(self):
+        return self.data['count_of_organisms']   
 
     @property
-    def proportion_by_ec_group(self):
-        return self.data['proportion_by_ec_group']
+    def proportions_of_enzyme_per_ec_group(self):
+        return self.data['proportions_of_enzyme_per_ec_group']
 
     @property
-    def proportion_in_table(self):
-        return self.data['proportion_in_table']
+    def parameter_proportions(self):
+        return self.data['parameter_proportions']
 
     @property
-    def proportion_of_params(self):
-        return self.data['proportion_of_params']
-
-    @property
-    def enzyme_count(self):
-        return self.data['enzyme_count']
+    def count_of_enzymes(self):
+        return self.data['count_of_enzymes']
  
     @property
     def uniprots_referenced(self):
         return self.data['uniprots_referenced']
-    
-    #-------- Setters --------#
-
-    def set_enzymes_by_ec_group(self, enzymes):
-        self.data['enzymes_by_ec_group'] = enzymes
-    
-    def set_number_of_ec_class(self, classes):
-        self.data['number_of_ec_class'] = classes
-    
-    def set_number_of_entries(self, uniprots):
-        self.data['number_of_entries'] = uniprots
-    
-    def set_number_of_organisms(self, organisms):
-        self.data['number_of_organisms'] = organisms
-    
-    def set_number_of_references(self, refs):
-        self.data['number_of_references'] = refs
-    
-    def set_proportion_by_ec_group(self, proportions):
-        self.data['proportion_by_ec_group'] = proportions
-    
-    def set_proportion_in_table(self, proportion):
-        self.data['proportion_in_table'] = proportion
-    
-    def set_proportion_of_params(self, params):
-        self.data['proportion_of_params'] = params
-    
-    def set_organisms_by_ec_group(self, organism):
-        self.data['organisms_by_ec_group'] = organism
-
-    def set_enzyme_count(self, number):
-        self.data['enzyme_count'] = number
-
-    def set_uniprots_referenced(self, uniprots):
-        self.data['uniprots_referenced'] = uniprots
 
 class EnzymeStatisticsExtractor(Process):
     """
@@ -692,95 +655,151 @@ class EnzymeStatisticsExtractor(Process):
     def task(self): 
         se = EnzymeStatistics()
 
-        dict_entries = {}
-        dict_enz_funyme_functions_classes = {}
+        counts_of_parameters = {}
         dict_organisms = {}
-        dict_organism_number_by_ec_group = {}
-        dict_params = {}
-        dict_proportion_ec_group = {}
+        counts_of_non_redundant_parameters = {}
+        proportions_of_enzyme_per_ec_group = {}
         dict_references = {}
-        dict_size_ec_group = {}
-        list_infos = ['ac','cf','cl','cr','en','exp','gi','gs','ic50','in','lo','me','mw','nsp','os','oss',
-    'pho','phr','phs','pi','pm','pu','ren','sa','sn','sy','su','to','tr','ts','st','kkm','ki','km','tn']
-        proportions_params = {}
+        count_of_enzymes_per_ec_group = {}
+
+        counts_of_fasta_by_parameter = {}
+        proportions_of_fasta_by_parameter = {}
+
+        list_infos = Params._whats.keys()
+        for k in list_infos:
+            counts_of_parameters[k] = 0
+            counts_of_non_redundant_parameters[k] = 0
+            counts_of_fasta_by_parameter[k] = 0
+        
+        proportions_of_non_redundant_parameters = {}
+        counts_of_non_redundant_parameters_per_ec_group = {}
+        proportions_of_non_redundant_parameters_per_ec_group = {}
+
+        counts_of_parameters_per_ec_group = {}
+        
+        counts_of_fasta_per_ec_group_and_by_parameter = {}
+        proportions_of_fasta_per_ec_group_and_by_parameter = {}
+
         uniprot_id_number = 0
-    
-        #print('Extract total number of enzyme')
-        enzymes = Enzyme.select()
-        enzyme_count = Enzyme.select().count()
-        se.set_enzyme_count(enzyme_count)
+        count_of_enzymes = Enzyme.select().count()
 
-        #print('Extract organisms by ec_group, references number, uniprots referenced number')
-
+        print("\nExtract ec group information")
         for i in range(1,8):
-            #group = Enzyme.select().where(Enzyme.data['ec_group'] == str(i))
-            group = Enzyme.select().where(Enzyme.ec_number.startswith(str(i)))
-            dict_size_ec_group[i] = group.count()
-            dict_group = {}
+            ec_group_prefix = str(i)+"."
+            print(f"... ec group {ec_group_prefix}")
+
+            group = Enzyme.select().where(Enzyme.ec_number.startswith(ec_group_prefix))
+            count_of_enzymes_per_ec_group[i] = group.count()
+            count_of_organisms_per_ec_group = {}
+
+            counts_of_parameters_per_ec_group[i] = {}
+            counts_of_non_redundant_parameters_per_ec_group[i] = {}
+            proportions_of_non_redundant_parameters_per_ec_group[i] = {}
+            
+            counts_of_fasta_per_ec_group_and_by_parameter[i] = {}
+            proportions_of_fasta_per_ec_group_and_by_parameter[i] = {}
+
+            for info in list_infos:
+                counts_of_parameters_per_ec_group[i][info] = 0
+                counts_of_non_redundant_parameters_per_ec_group[i][info] = 0
+                proportions_of_non_redundant_parameters_per_ec_group[i][info] = 0
+
+                counts_of_fasta_per_ec_group_and_by_parameter[i][info] = 0
+                proportions_of_fasta_per_ec_group_and_by_parameter[i][info] = 0
+
             for enzyme in group:
-
-                if(enzyme.organism not in dict_group.keys()):
-                    dict_group[enzyme.organism] = 1
+                organism = enzyme.data.get("organism","")
+                if organism not in count_of_organisms_per_ec_group:
+                    count_of_organisms_per_ec_group[organism] = 1
                 else:
-                    dict_group[enzyme.organism] += 1
+                    count_of_organisms_per_ec_group[organism] += 1
 
-                if(enzyme.organism not in dict_organisms.keys()):
-                    dict_organisms[enzyme.organism] = 1
+                if organism not in dict_organisms:
+                    dict_organisms[organism] = 1
                 else:
-                    dict_organisms[enzyme.organism] += 1
+                    dict_organisms[organism] += 1
 
-                if(enzyme.ec not in dict_enz_funyme_functions_classes.keys()):
-                    dict_enz_funyme_functions_classes[enzyme.ec] =1
-                else:
-                    dict_enz_funyme_functions_classes[enzyme.ec] += 1
-
-                if ('refs' in enzyme.data.keys()):
+                if 'refs' in enzyme.data:
                     for j in range(0, len(enzyme.data['refs'])):
-                        if(enzyme.data['refs'][j] not in dict_references.keys()):
+                        if enzyme.data['refs'][j] not in dict_references:
                             dict_references[enzyme.data['refs'][j]] = 1
                         else:
                             dict_references[enzyme.data['refs'][j]] += 1
 
-                if(enzyme.uniprot_id):
+                if enzyme.uniprot_id:
                     uniprot_id_number += 1
 
-                dict_organism_number_by_ec_group[i] = len(dict_group)
-                dict_proportion_ec_group[i] = str(dict_size_ec_group[i]*100/enzyme_count) + ' %'
-        
-        #print('Extraction of proportion of parameters referenced and number of entries in the table')
-        for enzyme in enzymes:
-            for i in range(0, len(list_infos)):
-                if (list_infos[i] in enzyme.data.keys()):
-                    if (list_infos[i] not in dict_params.keys()):
-                        dict_params[list_infos[i]] = 1
-                        dict_entries[list_infos[i]] = 1
-                    else:
-                        dict_params[list_infos[i]] += 1
-                        dict_entries[list_infos[i]] += 1
+                fasta = enzyme.fasta
+                for info in list_infos:
+                    if info in enzyme.data:
+                        counts_of_non_redundant_parameters_per_ec_group[i][info] += 1
 
-                    if(type(enzyme.data[list_infos[i]]) == list):
-                        if(len(enzyme.data[list_infos[i]]) > 1):
-                            for j in range(0, len(enzyme.data[list_infos[i]])-1):
-                                dict_entries[list_infos[i]] += 1
-                    proportions_params[list_infos[i]] = str(dict_params[list_infos[i]]*100/len(enzymes)) + ' %'
+                        param_values = enzyme.data[info]
+                        if type(param_values) == list:
+                            counts_of_parameters_per_ec_group[i][info] += len(param_values) 
+                        else:
+                            counts_of_parameters_per_ec_group[i][info] += 1
 
-        se.set_enzymes_by_ec_group(dict_size_ec_group)
-        se.set_number_of_ec_class(len(dict_enz_funyme_functions_classes))
-        se.set_number_of_entries(dict_entries)
-        se.set_number_of_organisms(len(dict_organisms))
-        se.set_number_of_references(len(dict_references))
-        se.set_organisms_by_ec_group(dict_organism_number_by_ec_group)
-        se.set_proportion_by_ec_group(dict_proportion_ec_group)
-        se.set_proportion_of_params(proportions_params)
-        se.set_uniprots_referenced(uniprot_id_number)
+                        if fasta:
+                            counts_of_fasta_per_ec_group_and_by_parameter[i][info] += 1
 
+            proportions_of_enzyme_per_ec_group[i] = str(count_of_enzymes_per_ec_group[i]*100/count_of_enzymes)[0:5] + ' %'
+
+            for info in list_infos:
+                proportions_of_non_redundant_parameters_per_ec_group[i][info] = str(counts_of_non_redundant_parameters_per_ec_group[i][info]*100/count_of_enzymes)[0:5] + ' %'
+                proportions_of_fasta_per_ec_group_and_by_parameter[i][info] = str(counts_of_fasta_per_ec_group_and_by_parameter[i][info]*100/count_of_enzymes)[0:5] + ' %'
+
+        print("Extract parameter information")
+        page = 1
+        number_of_items_per_page = 5000
+        Q = Enzyme.select().paginate(page, number_of_items_per_page)
+        while len(Q):
+            print(f"... enzyme page {page}")
+            for enzyme in Q:
+                fasta = enzyme.fasta
+                for info in list_infos:
+                    if info in enzyme.data:
+                        counts_of_non_redundant_parameters[info] += 1
+
+                        param_values = enzyme.data[info]
+                        if type(param_values) == list:
+                            counts_of_parameters[info] += len(param_values) 
+                        else:
+                            counts_of_parameters[info] += 1
+
+                    if fasta:
+                        counts_of_fasta_by_parameter[info] += 1
+
+            page = page + 1
+            Q = Enzyme.select().paginate(page, number_of_items_per_page)
+            #Q = []
+
+        for info in list_infos:
+            proportions_of_non_redundant_parameters[info] = str(counts_of_non_redundant_parameters[info]*100/count_of_enzymes)[0:5] + ' %'
+            proportions_of_fasta_by_parameter[info] = str(counts_of_fasta_by_parameter[info]*100/count_of_enzymes)[0:5] + ' %'
+
+        se.data = {
+            'count_of_enzymes': count_of_enzymes,
+            'count_of_ec_classes': Enzo.select().count(),
+            'count_of_references': len(dict_references),
+            'count_of_organisms': len(count_of_organisms_per_ec_group),
+
+            'count_of_enzymes_per_ec_group': count_of_enzymes_per_ec_group,
+            'proportions_of_enzyme_per_ec_group': proportions_of_enzyme_per_ec_group,
+
+            'counts_of_parameters_per_ec_group': counts_of_parameters_per_ec_group,
+            'counts_of_non_redundant_parameters_per_ec_group': counts_of_non_redundant_parameters_per_ec_group,
+
+            'counts_of_parameters': counts_of_parameters,
+            'counts_of_non_redundant_parameters': counts_of_non_redundant_parameters,
+            'proportions_of_non_redundant_parameters': proportions_of_non_redundant_parameters,
+
+            'counts_of_fasta_by_parameter': counts_of_fasta_by_parameter,
+            'counts_of_fasta_per_ec_group_and_by_parameter': counts_of_fasta_per_ec_group_and_by_parameter,
+
+            'uniprots_referenced': uniprot_id_number     
+         }
+ 
         self.output['EnzymeStatistics'] = se
-
-class EnzymeStatistics2(Resource):
-    pass
-
-class EnzymeStatisticsExtractor2(Process):
-    pass
-
 
 EnzymeBTODeffered.set_model(EnzymeBTO)
