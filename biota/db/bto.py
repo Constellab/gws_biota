@@ -25,8 +25,9 @@ class BTO(Ontology):
     :type name: class:`peewee.CharField` 
     """
     bto_id = CharField(null=True, index=True)
-    _table_name = 'bto'
     _ancestors = None
+
+    _table_name = 'bto'
 
     # -- A --
 

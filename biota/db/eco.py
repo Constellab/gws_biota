@@ -27,9 +27,10 @@ class ECO(Ontology):
     """
 
     eco_id = CharField(null=True, index=True)
-    _table_name = 'eco'
     _ancestors = None
 
+    _table_name = 'eco'
+    
     # -- A --
 
     @property
