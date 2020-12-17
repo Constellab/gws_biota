@@ -15,7 +15,7 @@ from gws.model import Config, Process, Resource
 from biota.db.base import Base, DbManager
 from biota.db.taxonomy import Taxonomy as BiotaTaxo
 from biota.db.bto import BTO as BiotaBTO
-from biota.db.fasta import Fasta
+from biota.db.protein import Protein
 
 
 EnzymeBTODeffered = DeferredThroughModel()
@@ -370,9 +370,9 @@ class Enzyme(Base):
     # -- F --
     
     @property
-    def fasta(self):
+    def protein(self):
         try:
-            return Fasta.get(Fasta.uniprot_id == self.uniprot_id)
+            return Protein.get(Protein.uniprot_id == self.uniprot_id)
         except:
             return None
 
@@ -729,7 +729,7 @@ class EnzymeStatisticsExtractor(Process):
                 if enzyme.uniprot_id:
                     uniprot_id_number += 1
 
-                fasta = enzyme.fasta
+                protein = enzyme.protein
                 for info in list_infos:
                     if info in enzyme.data:
                         counts_of_non_redundant_parameters_per_ec_group[i][info] += 1
@@ -740,7 +740,7 @@ class EnzymeStatisticsExtractor(Process):
                         else:
                             counts_of_parameters_per_ec_group[i][info] += 1
 
-                        if fasta:
+                        if protein:
                             counts_of_fasta_per_ec_group_and_by_parameter[i][info] += 1
 
             proportions_of_enzyme_per_ec_group[i] = str(count_of_enzymes_per_ec_group[i]*100/count_of_enzymes)[0:5] + ' %'
@@ -756,7 +756,7 @@ class EnzymeStatisticsExtractor(Process):
         while len(Q):
             print(f"... enzyme page {page}")
             for enzyme in Q:
-                fasta = enzyme.fasta
+                protein = enzyme.protein
                 for info in list_infos:
                     if info in enzyme.data:
                         counts_of_non_redundant_parameters[info] += 1
@@ -767,7 +767,7 @@ class EnzymeStatisticsExtractor(Process):
                         else:
                             counts_of_parameters[info] += 1
 
-                    if fasta:
+                    if protein:
                         counts_of_fasta_by_parameter[info] += 1
 
             page = page + 1

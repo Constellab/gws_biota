@@ -1,0 +1,17 @@
+{% set protein = entity %}
+<div class="gview:card" data-class="" data-style="min-width:372px; width: 100%">
+    <div title>
+        {{ protein.get_title('No title') }}
+    </div>
+    <div body>
+        <span class="gws-multiline gws-multiline--secondary">{{ protein.get_title() }}</span>
+        <span class="gws-multiline gws-multiline--secondary">Taxonomy ID:{{ protein.tax_id }}, {{ protein.taxonomy.get_title() }} </span>
+        <span class="gws-multiline gws-multiline--secondary">Uniprot ID: {{ protein.uniprot_id }} </span>
+        <span class="gws-multiline gws-multiline--secondary">Uniprot Gene: {{ protein.uniprot_gene }} </span>
+        <hr>
+        <span class="gws-multiline gws-multiline--secondary">Sequence:</span>
+        <div style="width:100%; overflow: auto; height: 50px">{{ protein.sequence }}</div>
+        <hr>
+        <span class="gws-multiline gws-multiline--secondary">URI: {{ protein.uri }} </span>
+    </div>
+</div>

@@ -36,7 +36,7 @@ def createdb(ctx, user=None, fts=False):
         bto_file        = "./brenda/bto/bto.json",
         pwo_file        = "./pwo/pwo.obo",
         brenda_file     = "./brenda/brenda/brenda_download.txt",
-        fasta_file      = "./uniprot/uniprot_sprot.fasta",
+        protein_file      = "./uniprot/uniprot_sprot.fasta",
         bkms_file       = "./bkms/Reactions_BKMS.csv",
         ncbi_node_file          = "./ncbi/taxdump/nodes.dmp",
         ncbi_name_file          = "./ncbi/taxdump/names.dmp",

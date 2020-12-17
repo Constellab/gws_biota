@@ -17,7 +17,7 @@ from biota.db.taxonomy import Taxonomy
 from biota.db.compound import Compound
 from biota.db.enzyme import Enzyme
 from biota.db.reaction import Reaction
-from biota.db.fasta import Fasta
+from biota.db.protein import Protein
 
 class DbCreator(Process):
 
@@ -32,7 +32,7 @@ class DbCreator(Process):
         "pwo_file"                  : {"type": str, "default": "./pwo/pwo.obo"},
         "brenda_file"               : {"type": str, "default": "./brenda/brenda/brenda_download.txt"},
         "bkms_file"                 : {"type": str, "default": "./bkms/Reactions_BKMS.csv"},
-        "fasta_file"                : {"type": str, "default": "./uniprot/uniprot_sprot.fasta"},
+        "protein_file"                : {"type": str, "default": "./uniprot/uniprot_sprot.fasta"},
         "ncbi_node_file"            : {"type": str, "default": "./ncbi/taxdump/nodes.dmp"},
         "ncbi_name_file"            : {"type": str, "default": "./ncbi/taxdump/names.dmp"},
         "ncbi_division_file"        : {"type": str, "default": "./ncbi/taxdump/division.dmp"},
@@ -158,14 +158,14 @@ class DbCreator(Process):
         elapsed_time = time.time() - start_time
         Logger.info("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
 
-        # ---------------- Create Fasta --------------- #
+        # ---------------- Create Protein --------------- #
         i=i+1
-        Logger.info(f"Step {i} | Saving chebi fasta...")
+        Logger.info(f"Step {i} | Saving proteins...")
         start_time = time.time()
-        Fasta.create_fasta_db(biodata_dir, **params)
-        len_fasta = Fasta.select().count()
+        Protein.create_protein_db(biodata_dir, **params)
+        len_protein = Protein.select().count()
         elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} min for #fasta = {} ".format(elapsed_time/60, len_fasta))
+        Logger.info("... done in {:10.2f} min for #protein = {} ".format(elapsed_time/60, len_protein))
 
 
         # ------------------ Create Enzyme --------------- #
