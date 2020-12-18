@@ -453,8 +453,6 @@ class Enzyme(Base):
     @property
     def taxonomy(self):
         try:
-            print("xxxx")
-            print(self.tax_id)
             return BiotaTaxo.get(BiotaTaxo.tax_id == self.tax_id)
         except:
             return None
