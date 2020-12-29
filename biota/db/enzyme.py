@@ -765,8 +765,8 @@ class EnzymeStatisticsExtractor(Process):
                         else:
                             counts_of_parameters[info] += 1
 
-                    if protein:
-                        counts_of_fasta_by_parameter[info] += 1
+                        if protein:
+                            counts_of_fasta_by_parameter[info] += 1
 
             page = page + 1
             Q = Enzyme.select().paginate(page, number_of_items_per_page)

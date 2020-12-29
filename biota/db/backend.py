@@ -6,7 +6,7 @@
 import os
 import time
 from gws.model import Process
-from gws.logger import Logger
+from gws.logger import Error
 
 from biota.db.go import GO
 from biota.db.sbo import SBO
@@ -53,7 +53,7 @@ class DbCreator(Process):
     def task( self ):
 
         if GO.table_exists():
-            Logger.error(Exception("DbCreator", "task", "Biodata databases already exist"))
+            raise Error("DbCreator", "task", "Biodata databases already exist")
 
         # drop tables
         GO.drop_table()
@@ -90,7 +90,7 @@ class DbCreator(Process):
             if k.endswith("_file"):
                 file_path = os.path.join(biodata_dir, params[k])
                 if not os.path.exists(file_path):
-                    Logger.error(Exception(f"Biodata file {file_path} does not exist"))
+                    raise Error(f"Biodata file {file_path} does not exist")
 
         # ------------- Create GO ------------- #
         i = 1

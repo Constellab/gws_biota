@@ -37,5 +37,5 @@ class TestCompound(unittest.TestCase):
         )
 
         Compound.create_compound_db(**params)
-        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:24431').get_name(), "Chemical entity")
-        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:17051').get_name(), 'Fluoride')
+        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:24431').get_name(), "chemical entity")
+        self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:17051').get_name(), 'fluoride')

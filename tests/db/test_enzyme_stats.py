@@ -25,12 +25,4 @@ class TestEnzymeStatistics(unittest.TestCase):
         pass
 
     def test_db_object(self):
-        def _on_end(*args, **kwargs):
-            stats = EnzymeStatistics.get_by_id(1)
-            print(f"Count = {EnzymeStatistics.select().count()}")
-            print(stats.data)
-
-        proc = EnzymeStatisticsExtractor()
-        proc.on_end(_on_end)
-        e = proc.create_experiment()
-        asyncio.run( e.run() )
+        pass
