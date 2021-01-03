@@ -50,7 +50,7 @@ class DbCreator(Process):
         "biota:testdata_dir"        : {"type": str},
     }
 
-    def task( self ):
+    async def task( self ):
 
         if GO.table_exists():
             raise Error("DbCreator", "task", "Biodata databases already exist")

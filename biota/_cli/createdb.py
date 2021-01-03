@@ -5,7 +5,8 @@
 
 import click
 from gws.settings import Settings
-from gws.logger import Logger
+from gws.logger import Info, Warning, Error
+
 from biota.db.backend import DbCreator
 from gws.model import Protocol, Experiment
 
@@ -14,19 +15,15 @@ from gws.model import Protocol, Experiment
     allow_extra_args=True
 ))
 @click.pass_context
-@click.option('--user', default=None, help='User name')
+@click.option('--user', default="Gencoverer", help='User name')
 @click.option('--fts', is_flag=True, help='Activate Fulltext Search')
-def createdb(ctx, user=None, fts=False):
+def createdb(ctx, user="Gencoverer", fts=False):
     settings = Settings.retrieve()
-
-    if user is None:
-        user = "Gencoverer"
-
     settings.activate_fts(fts)
     settings.save()
 
-    Logger.info(f"Hello {user}")
-    Logger.info(f"Creating tables ...")
+    Info(f"Hello {user}")
+    Info(f"Creating tables ...")
 
     params = dict(
         go_file         = "./go/go.obo",
