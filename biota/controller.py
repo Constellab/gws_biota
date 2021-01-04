@@ -13,11 +13,9 @@ from biota.db.bto import BTO
 from biota.db.eco import ECO
 from biota.db.sbo import SBO
 from biota.db.taxonomy import Taxonomy
-from biota.db.enzyme import Enzyme, Enzo, EnzymeStatistics, EnzymeStatisticsExtractor
+from biota.db.enzyme import Enzyme, Enzo
 from biota.db.reaction import Reaction
 from biota.db.compound import Compound
-
-from biota.db.stats import Stats
 
 class Controller(BaseController):
     
@@ -77,21 +75,6 @@ class Controller(BaseController):
         Q = Enzo.select() #.order_by(Enzyme.ec_number.desc())
         return Paginator(Q, page=page).as_model_list()
 
-
-    @classmethod
-    def fetch_enzyme_stats(cls, page=1, name=""):     
-        if EnzymeStatistics.select().count() == 0:
-            enzyme_extractor = EnzymeStatisticsExtractor()
-            e = enzyme_extractor.create_experiment()
-            e.run()
-
-        print("xxxxx")
-        print(EnzymeStatistics.select().count())
-
-        return EnzymeStatistics.get_by_id(24) #.order_by(Enzyme.ec_number.desc())
-        #return Paginator(Q, page=page).as_model_list()
-
-
     @classmethod
     def fetch_reaction_list(cls, page=1, name=""):            
         Q = Reaction.select().where(Reaction.direction == 'UN') #.order_by(Reaction.ec_number.desc())
@@ -102,10 +85,3 @@ class Controller(BaseController):
         Q = Compound.select().where(Compound.inchi != '') #.order_by(Reaction.ec_number.desc())
         print(Q)
         return Paginator(Q, page=page).as_model_list()
-
-    # -- G --
-
-    @classmethod
-    def fetch_last_stats(cls):
-        return Stats.get_stats(renew=False) 
-        
