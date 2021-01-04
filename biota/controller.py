@@ -17,6 +17,8 @@ from biota.db.enzyme import Enzyme, Enzo
 from biota.db.reaction import Reaction
 from biota.db.compound import Compound
 
+from biota.db.stats import Stats
+
 class Controller(BaseController):
     
     # -- F --
@@ -85,3 +87,10 @@ class Controller(BaseController):
         Q = Compound.select().where(Compound.inchi != '') #.order_by(Reaction.ec_number.desc())
         print(Q)
         return Paginator(Q, page=page).as_model_list()
+
+    # -- G --
+
+    @classmethod
+    def fetch_last_stats(cls):
+        return Stats.get_stats(renew=False) 
+        
