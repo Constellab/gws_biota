@@ -3,6 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+import asyncio
 import click
 from gws.settings import Settings
 from gws.logger import Info, Warning, Error
@@ -55,9 +56,7 @@ def createdb(ctx, user="Gencoverer", fts=False):
             params[k] = dirs[k]
 
     db_creator = DbCreator()
-    for k in params:
-        db_creator.set_param(k, params[k])
-
+    
     protocol = Protocol(
         name = 'biota_db_creation',
         processes = { 'db_creator': db_creator },
@@ -65,7 +64,9 @@ def createdb(ctx, user="Gencoverer", fts=False):
         interfaces = {},
         outerfaces = {}
     )
-    e = protocol.create_experiment()
     
-    import asyncio
+    for k in params:
+        db_creator.set_param(k, params[k])
+        
+    e = protocol.create_experiment()
     asyncio.run( e.run() )
