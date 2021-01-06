@@ -26,7 +26,7 @@ class TestEnzyme(unittest.TestCase):
         Enzo.drop_table()
         BTO.drop_table()
         pass
-
+    
     def test_db_object(self):
         params = dict(
             biodata_dir = testdata_path,

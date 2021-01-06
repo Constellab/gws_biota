@@ -306,7 +306,9 @@ class Enzyme(Base):
                         'SY': d.get('SY','')
                     }
                 )
-
+                
+                enzos[ec].set_name(d['RN'])
+                
                 if not job is None:
                     enzos[ec]._set_job(job)
                     enzos[ec].pathway = pathways[ec]

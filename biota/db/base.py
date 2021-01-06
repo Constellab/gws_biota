@@ -14,6 +14,10 @@ from gws.settings import Settings
 settings = Settings.retrieve()
 db_dir = settings.get_dir("biota:db_dir")
 db_name = settings.get_data("db_name")
+
+if settings.get_data("biota_prod_db"):
+    db_name = "db.sqlite3" #force to use to production db
+    
 biota_db_path = os.path.join(db_dir, db_name)
 if not os.path.exists(db_dir):
     os.makedirs(db_dir)
