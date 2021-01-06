@@ -29,7 +29,7 @@ class DbManager(BaseDbManager):
 
     db = SqliteDatabase(biota_db_path)  #redirect to a separate defautl db
 
-class Base(Resource):
+class Base:
     
     _fts_fields = { 'title': 2.0 }
 
