@@ -21,8 +21,9 @@
 # The licensor cannot revoke these freedoms as long as you follow the license terms.
 # https://creativecommons.org/licenses/by/4.0/.
 
-from peewee import CharField, FloatField, IntegerField
-from biota.db.base import Base
+from peewee import CharField, FloatField, IntegerField, ForeignKeyField
+from biota.db.base import Base, DbManager
+from peewee import Model as PWModel
 
 class Compound(Base):
     """
@@ -49,10 +50,39 @@ class Compound(Base):
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
     chebi_star = CharField(null=True, index=True)
-
+    
+    _ancestors = None
     _fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
     _table_name = 'compound'
+    
+    # -- A --
 
+    @property
+    def ancestors(self):
+        if not self._ancestors is None:
+            return self._ancestors
+
+        self._ancestors = []
+        Q = CompoundAncestor.select().where(CompoundAncestor.compound == self.id)
+        for q in Q:
+            self._ancestors.append(q.ancestor)
+        
+        return self._ancestors
+    
+    # -- C --
+    
+    # -- C --
+
+    @classmethod
+    def create_table(cls, *args, **kwargs):
+        """
+        Creates `Compound` table and related tables.
+
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
+        """
+        super().create_table(*args, **kwargs)
+        CompoundAncestor.create_table()
+        
     @classmethod
     def create_compound_db(cls, biodata_dir = None, **kwargs):
         """
@@ -72,48 +102,118 @@ class Compound(Base):
 
         onto = ChebiHelper.create_ontology_from_file(data_dir, corrected_file_name)
         list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
-        chebis = [cls(data = dict_) for dict_ in list_chebi]
+        compounds = [cls(data = dict_) for dict_ in list_chebi]
         job = kwargs.get('job',None)
         
-        for chebi in chebis:
-            chebi.set_name(chebi.data["title"])
-            chebi.chebi_id = chebi.data["id"]
-            chebi.formula = chebi.data["formula"]
-            chebi.inchi = chebi.data["inchi"]
-            chebi.inchikey = chebi.data["inchikey"]
-            chebi.smiles = chebi.data["smiles"]
+        for comp in compounds:
+            comp.set_name(comp.data["title"])
+            comp.chebi_id = comp.data["id"]
+            comp.formula = comp.data["formula"]
+            comp.inchi = comp.data["inchi"]
+            comp.inchikey = comp.data["inchikey"]
+            comp.smiles = comp.data["smiles"]
 
-            if not chebi.data["mass"] is None:
-                chebi.mass = float(chebi.data["mass"])
+            if not comp.data["mass"] is None:
+                comp.mass = float(comp.data["mass"])
             
-            if not chebi.data["monoisotopic_mass"] is None:
-                chebi.monoisotopic_mass = float(chebi.data["monoisotopic_mass"])
+            if not comp.data["monoisotopic_mass"] is None:
+                comp.monoisotopic_mass = float(comp.data["monoisotopic_mass"])
             
-            if not chebi.data["charge"] is None:
-                chebi.charge = float(chebi.data["charge"])
+            if not comp.data["charge"] is None:
+                comp.charge = float(comp.data["charge"])
                 
-            chebi.chebi_star = chebi.data["subsets"]
+            comp.chebi_star = comp.data["subsets"]
             
-            if "kegg" in chebi.data["xref"]:
-                chebi.kegg_id = chebi.data["xref"]["kegg"]
-                del chebi.data["xref"]["kegg"]
+            if "kegg" in comp.data["xref"]:
+                comp.kegg_id = comp.data["xref"]["kegg"]
+                del comp.data["xref"]["kegg"]
 
-            if "metacyc" in chebi.data["xref"]:
-                chebi.metacyc_id = chebi.data["xref"]["metacyc"]
-                del chebi.data["xref"]["metacyc"]
+            if "metacyc" in comp.data["xref"]:
+                comp.metacyc_id = comp.data["xref"]["metacyc"]
+                del comp.data["xref"]["metacyc"]
 
-            del chebi.data["id"]
-            del chebi.data["inchi"]
-            del chebi.data["formula"]
-            del chebi.data["inchikey"]
-            del chebi.data["smiles"]
-            del chebi.data["mass"]
-            del chebi.data["monoisotopic_mass"]
-            del chebi.data["charge"]
-            del chebi.data["subsets"]
+            del comp.data["id"]
+            del comp.data["inchi"]
+            del comp.data["formula"]
+            del comp.data["inchikey"]
+            del comp.data["smiles"]
+            del comp.data["mass"]
+            del comp.data["monoisotopic_mass"]
+            del comp.data["charge"]
+            del comp.data["subsets"]
 
             if not job is None:
-                chebi._set_job(job)
+                comp._set_job(job)
 
-        cls.save_all(chebis)
-        return(list_chebi)
+        cls.save_all(compounds)
+        
+        # save ancestors
+        
+        vals = []
+        bulk_size = 100
+
+        with DbManager.db.atomic() as transaction:
+            try:
+                for compound in compounds:
+                    if 'ancestors' in compound.data.keys():
+                        val = compound._get_ancestors_query()
+                        if len(val) != 0:
+                            for v in val:
+                                vals.append(v)
+                                if len(vals) == bulk_size:
+                                    CompoundAncestor.insert_many(vals).execute()
+                                    vals = []
+                            
+                            if len(vals) != 0:
+                                CompoundAncestor.insert_many(vals).execute()
+                                vals = []
+                
+            except:
+                transaction.rollback()
+    
+    @classmethod
+    def drop_table(cls, *arg, **kwargs):
+        """
+        Drops `Compound` table and related tables.
+
+        Extra parameters are passed to :meth:`peewee.Model.drop_table`
+        """
+        CompoundAncestor.drop_table()
+        super().drop_table(*arg, **kwargs)
+        
+    # -- G --
+
+    def _get_ancestors_query(self):
+        """
+        Look for the compound term ancestors and returns all ancetors relations in a list 
+
+        :returns: a list of dictionnaries inf the following format: {'compound': self.id, 'ancestor': ancestor.id}
+        :rtype: list
+        """
+        vals = []
+        for i in range(0, len(self.data['ancestors'])):
+            if(self.data['ancestors'][i] != self.chebi_id):
+                val = {'compound': self.id, 'ancestor': Compound.get(Compound.chebi_id == self.data['ancestors'][i]).id }
+                vals.append(val)
+        return(vals)
+
+    
+class CompoundAncestor(PWModel):
+    """
+    This class defines the many-to-many relationship between the compound terms and theirs ancestors
+
+    :type compound: CharField 
+    :property compound: id of the concerned compound term
+    :type ancestor: CharField 
+    :property ancestor: ancestor of the concerned compound term
+    """
+    
+    compound = ForeignKeyField(Compound)
+    ancestor = ForeignKeyField(Compound)
+    
+    class Meta:
+        table_name = 'compound_ancestors'
+        database = DbManager.db
+        indexes = (
+            (('compound', 'ancestor'), True),
+        )

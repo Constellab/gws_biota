@@ -39,3 +39,9 @@ class TestCompound(unittest.TestCase):
         Compound.create_compound_db(**params)
         self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:24431').get_name(), "chemical entity")
         self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:17051').get_name(), 'fluoride')
+        
+        comp = Compound.get(Compound.chebi_id == 'CHEBI:49499')
+        self.assertEqual(comp.get_name(), 'beryllium difluoride')
+        
+        self.assertEqual(len(comp.ancestors), 1)
+        self.assertEqual(comp.ancestors[0].get_name(), 'fluoride salt')
