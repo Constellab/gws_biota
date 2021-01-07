@@ -37,6 +37,10 @@ class TestEnzyme(unittest.TestCase):
         Enzyme.create_enzyme_db(**params)        
         enzyme = Enzyme.select().where(Enzyme.ec_number == '1.4.3.7')
         self.assertEqual(enzyme[0].organism, 'Candida boidinii')
+<<<<<<< HEAD
+=======
+        self.assertEqual(enzyme[0].name, 'D-glutamate oxidase')
+>>>>>>> master
 
         self.assertEqual(len(enzyme[0].params('CF')), 1)
         self.assertEqual(enzyme[0].params('CF')[0].value, "FAD")
@@ -74,4 +78,14 @@ class TestEnzyme(unittest.TestCase):
         self.assertEqual(enzyme[0].params('UknownParam')[1000].value, None)
 
         enzyme = Enzyme.select().where(Enzyme.ec_number == '3.5.1.43')
+<<<<<<< HEAD
         self.assertEqual(enzyme[0].organism, 'Bacillus circulans')
+=======
+        self.assertEqual(enzyme[0].organism, 'Bacillus circulans')
+
+        Q = Enzyme.search_by_name("glutaminase")
+        self.assertEqual(len(Q), 0)        
+        Q = Enzyme.search_by_name("%glutaminase")
+        self.assertEqual(len(Q), 1)
+        self.assertEqual(Q[0].name, 'peptidyl-glutaminase')
+>>>>>>> master
