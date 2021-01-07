@@ -302,12 +302,12 @@ class Enzyme(Base):
                     ec_number = ec,
                     data = {
                         'RN': d['RN'],
-                        'SN': d.get('SN',''),
-                        'SY': d.get('SY','')
+                        'SN': d.get('SN', []),
+                        'SY': d.get('SY', [])
                     }
                 )
-                
-                enzos[ec].set_name(d['RN'])
+                 
+                enzos[ec].set_name(d['RN'][0])
                 
                 if not job is None:
                     enzos[ec]._set_job(job)
@@ -323,7 +323,9 @@ class Enzyme(Base):
                 uniprot_id = d["uniprot"],
                 data = d
             )
-
+            
+            enz.set_name(d['RN'][0])
+            
             if not job is None:
                 enz._set_job(job)
                 #enz.pathway = pathways[ec]

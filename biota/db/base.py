@@ -5,6 +5,7 @@
 
 import os
 from peewee import SqliteDatabase, Proxy
+from peewee import CharField
 
 from gws.base import DbManager as BaseDbManager
 from gws.model import Resource
@@ -31,6 +32,7 @@ class DbManager(BaseDbManager):
 
 class Base(Resource):
     
+    name = CharField(null=True, index=True)
     _fts_fields = { 'title': 2.0 }
 
     @classmethod
@@ -55,7 +57,14 @@ class Base(Resource):
         :param: name: The name
         :type name: str
         """
+        self.name = name
         self.set_title(name)
+    
+
+    @classmethod
+    def search_by_name(cls, name, page: int=1, number_of_items_per_page:int=50):
+        Q = cls.select().where( cls.name ** name ).paginate(page, number_of_items_per_page)
+        return Q
     
     class Meta:
         database = DbManager.db
