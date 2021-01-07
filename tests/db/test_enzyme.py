@@ -33,9 +33,20 @@ class TestEnzyme(unittest.TestCase):
             brenda_file = "brenda_test.txt",
             bkms_file   = "bkms_test.csv",
         )
-
+    
+        bto = BTO(bto_id = 'BTO_0000214')
+        bto.save()
+        
         Enzyme.create_enzyme_db(**params)        
         enzyme = Enzyme.select().where(Enzyme.ec_number == '1.4.3.7')
+        
+        n = len(enzyme[0].params('ST'))
+        bto_ids = []
+        for i in range(0,n):
+            bto_ids.append( enzyme[0].params('ST')[i].get("bto") )
+        
+        self.assertEqual(enzyme[0].bto[0].bto_id, 'BTO_0000214')
+        
         self.assertEqual(enzyme[0].organism, 'Candida boidinii')
         self.assertEqual(enzyme[0].name, 'D-glutamate oxidase')
 
@@ -82,3 +93,5 @@ class TestEnzyme(unittest.TestCase):
         Q = Enzyme.search_by_name("%glutaminase")
         self.assertEqual(len(Q), 1)
         self.assertEqual(Q[0].name, 'peptidyl-glutaminase')
+        
+        

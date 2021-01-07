@@ -550,3 +550,6 @@ class EnzymeBTO(PWModel):
     class Meta:
          table_name = 'enzyme_btos'
          database = DbManager.db
+
+# Resolve dependencies.
+EnzymeBTODeffered.set_model(EnzymeBTO)
