@@ -17,10 +17,10 @@ from gws.model import Protocol, Experiment
 ))
 @click.pass_context
 @click.option('--user', default="Gencoverer", help='User name')
-@click.option('--fts', is_flag=True, help='Activate Fulltext Search')
-def createdb(ctx, user="Gencoverer", fts=False):
+@click.option('--no-fts', is_flag=True, help='Activate Fulltext Search')
+def createdb(ctx, user="Gencoverer", no_fts=False):
     settings = Settings.retrieve()
-    settings.activate_fts(fts)
+    settings.activate_fts(not no_fts)
     settings.save()
 
     Info(f"Hello {user}")
