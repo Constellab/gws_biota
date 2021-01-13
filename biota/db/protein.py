@@ -22,7 +22,7 @@ class Protein(Entity):
     tax_id = CharField(null=True, index=True)
 
     _fts_fields = { **Entity._fts_fields, 'description': 1.0 }
-    _table_name = 'protein'
+    _table_name = 'biota_protein'
 
     @classmethod
     def create_protein_db(cls, biodata_dir = None, **kwargs):

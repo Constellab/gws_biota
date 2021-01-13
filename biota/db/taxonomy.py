@@ -33,7 +33,7 @@ class Taxonomy(Ontology):
     #ancestor = ForeignKeyField('self', backref='children', null = True)
     
     _fts_fields = { **Ontology._fts_fields }
-    _table_name = 'taxonomy'
+    _table_name = 'biota_taxonomy'
 
     _children = None
     _siblings = None

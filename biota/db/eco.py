@@ -29,7 +29,7 @@ class ECO(Ontology):
     eco_id = CharField(null=True, index=True)
     _ancestors = None
 
-    _table_name = 'eco'
+    _table_name = 'biota_eco'
     
     # -- A --
 
@@ -170,7 +170,7 @@ class ECOAncestor(PWModel):
     ancestor = ForeignKeyField(ECO)
     
     class Meta:
-        table_name = 'eco_ancestors'
+        table_name = 'biota_eco_ancestors'
         database = DbManager.db
         indexes = (
             (('eco', 'ancestor'), True),

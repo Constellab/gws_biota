@@ -16,7 +16,7 @@ class Entity(Base):
     """
 
     go_id = CharField(null=True, index=True)
-    _table_name = 'entity'
+    _table_name = 'biota_entity'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

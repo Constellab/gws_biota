@@ -18,7 +18,7 @@ from biota.db.protein import Protein
 
 
 class Stats(Base):
-    _table_name = 'stats'
+    _table_name = 'biota_stats'
 
     @classmethod
     def get_stats(cls, renew = False):

@@ -18,7 +18,7 @@ class Organism(Base):
 
     name = CharField(null=True, index=True)
     taxonomy = ForeignKeyField(Taxonomy, backref = 'organisms', null = True)
-    _table_name = 'organism'
+    _table_name = 'biota_organism'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

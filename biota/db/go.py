@@ -29,7 +29,7 @@ class GO(Ontology):
     namespace = CharField(null=True, index=True)
     
     _fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
-    _table_name = 'go'
+    _table_name = 'biota_go'
 
     # -- C -- 
     
@@ -178,7 +178,7 @@ class GOAncestor(PWModel):
     ancestor = ForeignKeyField(GO)
     
     class Meta:
-        table_name = 'go_ancestors'
+        table_name = 'biota_go_ancestors'
         database = DbManager.db
         indexes = (
             (('go', 'ancestor'), True),
