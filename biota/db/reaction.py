@@ -62,7 +62,7 @@ class Reaction(Entity):
     enzymes = ManyToManyField(Enzyme, through_model = ReactionEnzymeDeferred)
 
     _fts_fields = { **Entity._fts_fields, 'definition': 2.0 }
-    _table_name = 'reaction'
+    _table_name = 'biota_reaction'
 
     # -- A --
 
@@ -446,7 +446,7 @@ class ReactionSubstrate(PWModel):
     reaction = ForeignKeyField(Reaction)
     
     class Meta:
-        table_name = 'reaction_subsrates'
+        table_name = 'biota_reaction_substrates'
         database = DbManager.db
 
 
@@ -463,7 +463,7 @@ class ReactionProduct(PWModel):
     reaction = ForeignKeyField(Reaction)
     
     class Meta:
-        table_name = 'reaction_products'
+        table_name = 'biota_reaction_products'
         database = DbManager.db
 
 class ReactionEnzyme(PWModel):
@@ -480,7 +480,7 @@ class ReactionEnzyme(PWModel):
     reaction = ForeignKeyField(Reaction)
     
     class Meta:
-        table_name = 'reaction_enzymes'
+        table_name = 'biota_reaction_enzymes'
         database = DbManager.db
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)

@@ -33,7 +33,7 @@ class PWO(Ontology):
     metacyc_id = CharField(null=True, index=True)
 
     _fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
-    _table_name = 'pwo'
+    _table_name = 'biota_pwo'
 
     # -- C --
 
@@ -165,7 +165,7 @@ class PWOAncestor(PWModel):
     ancestor = ForeignKeyField(PWO)
     
     class Meta:
-        table_name = 'pwo_ancestors'
+        table_name = 'biota_pwo_ancestors'
         database = DbManager.db
         indexes = (
             (('pwo', 'ancestor'), True),

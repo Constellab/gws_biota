@@ -13,7 +13,7 @@ class Ontology(Base):
     This class represents base ontology class.
     """
 
-    _table_name = 'ontology'
+    _table_name = 'biota_ontology'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

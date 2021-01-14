@@ -178,7 +178,7 @@ class EnzymePathway(Base):
     """
 
     ec_number = CharField(null=True, index=True)
-    _table_name = 'enzyme_pathway'
+    _table_name = 'biota_enzyme_pathway'
 
 class Enzo(Base):
     """
@@ -187,7 +187,7 @@ class Enzo(Base):
 
     ec_number = CharField(null=True, index=True, unique=True)
     pathway = ForeignKeyField(EnzymePathway, backref = 'enzos', null = True)
-    _table_name = 'enzo'
+    _table_name = 'biota_enzo'
 
     # -- E --
 
@@ -262,7 +262,7 @@ class Enzyme(Base):
     bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
     
     _fts_fields = { **Base._fts_fields, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0 }
-    _table_name = 'enzymes'
+    _table_name = 'biota_enzymes'
 
     # -- C --
 
@@ -559,7 +559,7 @@ class EnzymeBTO(PWModel):
     bto = ForeignKeyField(BiotaBTO)
 
     class Meta:
-        table_name = 'enzyme_btos'
+        table_name = 'biota_enzyme_btos'
         database = DbManager.db
 
 # Resolve dependencies.

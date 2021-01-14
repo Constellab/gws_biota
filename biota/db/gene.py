@@ -12,7 +12,7 @@ class Gene(Entity):
     """
 
     KO = CharField(null=True, index=True)
-    _table_name = 'gene'
+    _table_name = 'biota_gene'
 
     def set_KO(self, ko):
         self.KO = ko

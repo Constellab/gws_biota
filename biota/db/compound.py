@@ -53,7 +53,7 @@ class Compound(Base):
     
     _ancestors = None
     _fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
-    _table_name = 'compound'
+    _table_name = 'biota_compound'
     
     # -- A --
 
@@ -212,7 +212,7 @@ class CompoundAncestor(PWModel):
     ancestor = ForeignKeyField(Compound)
     
     class Meta:
-        table_name = 'compound_ancestors'
+        table_name = 'biota_compound_ancestors'
         database = DbManager.db
         indexes = (
             (('compound', 'ancestor'), True),

@@ -28,7 +28,7 @@ class SBO(Ontology):
     sbo_id = CharField(null=True, index=True)
     
     _fts_fields = { **Ontology._fts_fields }
-    _table_name = 'sbo'
+    _table_name = 'biota_sbo'
     _ancestors = None
 
     # -- A --
@@ -172,7 +172,7 @@ class SBOAncestor(PWModel):
     ancestor = ForeignKeyField(SBO)
     
     class Meta:
-        table_name = 'sbo_ancestors'
+        table_name = 'biota_sbo_ancestors'
         database = DbManager.db
         indexes = (
             (('sbo', 'ancestor'), True),
