@@ -37,3 +37,7 @@ class TestGO(unittest.TestCase):
         Taxonomy.create_taxonomy_db(**params)
         self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'title': 'Unspecified'})
         self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'title': 'root'})
+        
+        
+        Q = Taxonomy.search("methylotrophus")
+        self.assertEqual(Q[0].title, "Methylophilus methylotrophus")

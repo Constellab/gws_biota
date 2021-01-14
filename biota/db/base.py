@@ -16,8 +16,8 @@ settings = Settings.retrieve()
 db_dir = settings.get_dir("biota:db_dir")
 db_name = settings.get_data("db_name")
 
-if settings.get_data("biota_prod_db"):
-    db_name = "db.sqlite3" #force to use to production db
+if settings.get_data("prod_biota_db"):
+    db_name = "db.sqlite3" #force to use the production biota db
     
 biota_db_path = os.path.join(db_dir, db_name)
 if not os.path.exists(db_dir):
@@ -25,10 +25,12 @@ if not os.path.exists(db_dir):
 
 class DbManager(BaseDbManager):
     """
-    DbManager class. Provides backend feature for managing databases. 
+    DbManager class. 
+    
+    Provides backend features for managing databases. 
     """
 
-    db = SqliteDatabase(biota_db_path)  #redirect to a separate defautl db
+    db = SqliteDatabase(biota_db_path)
 
 class Base(Resource):
     
@@ -43,16 +45,17 @@ class Base(Resource):
 
     def get_name(self) -> str:
         """
-        Get the name. Alias of `:meth:get_title`
+        Get the name. Alias of :meth:`get_title`
 
         :param: name: The name
         :type name: str
         """
+        
         return self.get_title()
 
     def set_name(self, name: str):
         """
-        Set the name. Alias of `:meth:set_title`
+        Set the name. Alias of :meth:`set_title`
 
         :param: name: The name
         :type name: str
@@ -63,7 +66,7 @@ class Base(Resource):
     
 
     @classmethod
-    def search_by_name(cls, name, page: int=1, number_of_items_per_page:int=50):
+    def search_by_name(cls, name, page: int=1, number_of_items_per_page: int=50):
         Q = cls.select().where( cls.name ** name ).paginate(page, number_of_items_per_page)
         return Q
     

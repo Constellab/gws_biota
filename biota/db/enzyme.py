@@ -161,7 +161,10 @@ class Params():
             return Param()
 
     def __str__(self):
-        """String representation. """
+        """
+        String representation. 
+        """
+        
         from pprint import pformat
         return pformat({
             "name" : self._name,
@@ -205,6 +208,7 @@ class Enzo(Base):
         :returns: The name of the enzyme ortholog
         :rtype: str
         """
+        
         return self.data.get("RN", [default])[0].capitalize()
 
     # -- N --
@@ -217,6 +221,7 @@ class Enzo(Base):
         :returns: The name of the enzyme orthologue
         :rtype: str
         """
+        
         return ",".join([ sn.capitalize() for sn in self.data.get("SN", ['']) ])
 
 class Enzyme(Base):
@@ -351,6 +356,7 @@ class Enzyme(Base):
 
         Extra parameters are passed to :meth:`create_table`
         """
+        
         EnzymePathway.create_table()
         Enzo.create_table()
         super().create_table(*args, **kwargs)
@@ -389,6 +395,7 @@ class Enzyme(Base):
         :returns: The name of the enzyme ortholog
         :rtype: str
         """
+        
         return self.data.get("RN", [default])[0].capitalize()
 
     # -- N --
@@ -401,6 +408,7 @@ class Enzyme(Base):
         :returns: The name of the enzyme orthologue
         :rtype: str
         """
+        
         return ",".join([ sn.capitalize() for sn in self.data.get("SN", ['']) ])
 
     # -- O --
@@ -426,6 +434,7 @@ class Enzyme(Base):
         :returns: Parameters
         :rtype: ParamList
         """
+        
         return Params(name, self.data)
 
     # -- R --
@@ -437,6 +446,7 @@ class Enzyme(Base):
         :returns: List of reactions
         :rtype: Query rows
         """
+        
         from biota.db.reaction import Reaction, ReactionEnzyme
         from peewee import JOIN
         Q = Reaction.select() \
@@ -544,12 +554,13 @@ class EnzymeBTO(PWModel):
     :type bto: BTO 
     :property bto: tissue location
     """
+    
     enzyme = ForeignKeyField(Enzyme)
     bto = ForeignKeyField(BiotaBTO)
 
     class Meta:
-         table_name = 'enzyme_btos'
-         database = DbManager.db
+        table_name = 'enzyme_btos'
+        database = DbManager.db
 
 # Resolve dependencies.
 EnzymeBTODeffered.set_model(EnzymeBTO)
