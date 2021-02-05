@@ -18,7 +18,9 @@ db_name = settings.get_data("db_name")
 
 if settings.get_data("prod_biota_db"):
     db_name = "db.sqlite3" #force to use the production biota db
-    
+
+is_prod_db = (db_name == "db.sqlite3")
+
 biota_db_path = os.path.join(db_dir, db_name)
 if not os.path.exists(db_dir):
     os.makedirs(db_dir)
@@ -42,7 +44,26 @@ class Base(Resource):
         _FTSModel = super().fts_model()
         _FTSModel._meta.database = DbManager.db
         return _FTSModel
-
+    
+    # -- C --
+    
+    @classmethod
+    def create_table(cls, *arg, **kwargs):
+        if is_prod_db:
+            raise Error("biota.db.Base", "create_table", "Cannot alter the prodution database")
+        super().create_table(*arg, **kwargs)
+    
+    # -- D --
+    
+    @classmethod
+    def drop_table(cls, *arg, **kwargs):
+        if is_prod_db:
+            raise Error("biota.db.Base", "create_table", "Cannot alter the prodution database")
+            
+        super().drop_table(*arg, **kwargs)
+    
+    # -- G --
+    
     def get_name(self) -> str:
         """
         Get the name. Alias of :meth:`get_title`
@@ -52,7 +73,9 @@ class Base(Resource):
         """
         
         return self.get_title()
-
+    
+    # -- S --
+    
     def set_name(self, name: str):
         """
         Set the name. Alias of :meth:`set_title`
@@ -69,6 +92,12 @@ class Base(Resource):
     def search_by_name(cls, name, page: int=1, number_of_items_per_page: int=50):
         Q = cls.select().where( cls.name ** name ).paginate(page, number_of_items_per_page)
         return Q
+    
+    #def save(self, *arg, **kwargs):
+    #    if is_prod_db:
+    #        raise Error("biota.db.Base", "create_table", "Cannot alter the prodution database")
+    #    
+    #    return super().save(*arg, **kwargs)
     
     class Meta:
         database = DbManager.db
