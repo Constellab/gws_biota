@@ -16,9 +16,10 @@ from biota.db.reaction import Reaction
 from biota.db.compound import Compound
 from biota.db.protein import Protein
 
+from gws.model import Resource
 
-class Stats(Base):
-    _table_name = 'biota_stats'
+class Stats(Resource):
+    _table_name = 'gws_biota_stats'
 
     @classmethod
     def get_stats(cls, renew = False):

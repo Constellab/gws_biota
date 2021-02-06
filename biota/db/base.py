@@ -11,6 +11,7 @@ from gws.base import DbManager as BaseDbManager
 from gws.model import Resource
 
 from gws.settings import Settings
+from gws.logger import Error
 
 settings = Settings.retrieve()
 db_dir = settings.get_dir("biota:db_dir")
