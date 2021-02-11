@@ -22,23 +22,5 @@
 
     "dependencies" : [
         "gws"
-    ],
-    
-    "app":{
-        "title"         : "Biota, GWS biological databases",
-        "description"   : "The collection of manually-curated public biological data",
-        "statics"       : {
-            "/static/biota"   : "./web/static"
-        },
-        "scripts": [],
-        "modules": [],
-        "styles": [
-            "/static/biota/index.css"
-        ],
-        "buttons":{
-            "biota": {
-                "label": "Biota", "icon": "fas fa-database", "position": 9997, "url": "/page/biota/"
-            }
-        }
-    }
+    ]
 }
