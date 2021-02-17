@@ -24,16 +24,16 @@ class Param():
     """
     Adpater class that represents a BRENDA parameter
 
-    :property what : Description of the parameter
-    :type what : srt
-    :property value : Value of the parameter
-    :type value : srt
-    :property refs : References numbers associated with the parameter value
-    :type refs : list
-    :property full_refs : Full references (pubmed id, or description) associated with the parameter value
-    :type full_refs : list
-    :property comments : Short comments extracted from the references 
-    :type comments : str
+    :property what: Description of the parameter
+    :type what: str
+    :property value: Value of the parameter
+    :type value: str
+    :property refs: References numbers associated with the parameter value
+    :type refs: list
+    :property full_refs: Full references (pubmed id, or description) associated with the parameter value
+    :type full_refs: list
+    :property comments: Short comments extracted from the references 
+    :type comments: str
     """
 
     what: str = None
@@ -226,8 +226,21 @@ class Enzo(Base):
 
 class Enzyme(Base):
     """
-    This class represents enzymes extracted from open databases
+    This class represents enzymes extracted from open databases.
 
+    :property go_id: GO term id
+    :type go_id: str
+    :property name: name of the compound
+    :type name: str
+    :property ec: ec accession number
+    :type ec: str
+    :property taxonomy: taxonomy id that gives the organism
+    :type taxonomy: str
+    :property bto: bto id that gives the tissue location 
+    :type bto: class:biota.db.BTO
+    :property uniprot_id: uniprot id of the enzyme
+    :type uniprot_id: str
+    
     * Uniprot:
 
     * Brenda:
@@ -240,19 +253,6 @@ class Enzyme(Base):
         containing known enzyme-catalyzed and spontaneous reactions. 
         Biochemical reactions collected from BRENDA, KEGG, MetaCyc and 
         SABIO-RK were matched and integrated by aligning substrates and products.
-
-    :property go_id : GO term id
-    :type go_id : class:`peewee.CharField`
-    :property name: name of the compound
-    :type name: class:`peewee.CharField`
-    :property ec: ec accession number
-    :type ec: class:`peewee.CharField`
-    :property taxonomy: taxonomy id that gives the organism
-    :type taxonomy: class:`biota.db.Taxonomy`
-    :property bto: bto id that gives the tissue location 
-    :type bto: class:`biota.db.BTO`
-    :property uniprot_id: uniprot id of the enzyme
-    :type uniprot_id: class:`peewee.CharField`
     """
     
     #pathway = ForeignKeyField(EnzymePathway, backref = 'enzymes', null = True)
