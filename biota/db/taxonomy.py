@@ -32,7 +32,7 @@ class Taxonomy(Ontology):
     ancestor_tax_id = CharField(null=True, index=True)
     #ancestor = ForeignKeyField('self', backref='children', null = True)
     
-    _fts_fields = { **Ontology._fts_fields }
+    _fts_fields = { **Ontology._fts_fields, 'tax_id': 2.0, 'rank': 2.0, 'division': 2.0 }
     _table_name = 'biota_taxonomy'
 
     _children = None
@@ -134,9 +134,9 @@ class Taxonomy(Ontology):
                 if not job is None:
                     tax._set_job(job)
 
-                del tax.data['tax_id']
-                del tax.data['rank']
-                del tax.data['division']
+                #del tax.data['tax_id']
+                #del tax.data['rank']
+                #del tax.data['division']
                 del tax.data['ancestor']
 
             cls.save_all(taxa)

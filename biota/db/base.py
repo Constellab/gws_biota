@@ -42,7 +42,7 @@ class Base(Resource):
     
     name = CharField(null=True, index=True)
     _fts_fields = { 'title': 2.0 }
-
+    
     @classmethod
     def fts_model(cls):
         _FTSModel = super().fts_model()

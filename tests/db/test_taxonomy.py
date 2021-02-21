@@ -35,9 +35,10 @@ class TestGO(unittest.TestCase):
             ncbi_citation_file = "citations.dmp"
         )
         Taxonomy.create_taxonomy_db(**params)
-        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'title': 'Unspecified'})
-        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'title': 'root'})
+ 
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'rank': 'species', 'division': 'Bacteria', 'title': 'Unspecified'})
+        self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'tax_id': '1', 'title': 'root', 'rank': 'no rank', 'division': 'Unassigned'})
         
         
         Q = Taxonomy.search("methylotrophus")
-        self.assertEqual(Q[0].title, "Methylophilus methylotrophus")
+        self.assertEqual(Q[0].get_related().title, "Methylophilus methylotrophus")

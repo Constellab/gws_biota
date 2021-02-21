@@ -58,7 +58,7 @@ class Param():
 
     def exists(self) -> bool:
         """
-        Returns True if the parameter exists (i.e. :property:`value` is not `None`) 
+        Returns True if the parameter exists (i.e. `value` is not `None`) 
         and False otherwise.
         
         :rtype: bool
@@ -242,12 +242,14 @@ class Enzyme(Base):
     :type uniprot_id: str
     
     * Uniprot:
-
+        The Universal Protein Resource (UniProt) is a comprehensive resource for protein sequence and annotation data. 
+        The UniProt databases are the UniProt Knowledgebase (UniProtKB), the UniProt Reference Clusters (UniRef), 
+        and the UniProt Archive (UniParc). The UniProt consortium and host institutions EMBL-EBI, SIB and PIR are 
+        committed to the long-term preservation of the UniProt databases.
     * Brenda:
         BRENDA is the main collection of enzyme functional data available to the scientific community 
         (https://www.brenda-enzymes.org/). BRENDA data are available under the Creative 
         Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
-
     * BKMS:
         BKMS-react is an integrated and non-redundant biochemical reaction database 
         containing known enzyme-catalyzed and spontaneous reactions. 
@@ -261,9 +263,18 @@ class Enzyme(Base):
     tax_id = CharField(null=True, index=True)
     bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
     
-    _fts_fields = { **Base._fts_fields, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0 }
+    _fts_fields = { **Base._fts_fields, 'ec': 2.0, 'uniprot': 2.0, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0, 'tax_ancestor_ids': 1.0, 'tax_ancestor_names': 1.0 }
     _table_name = 'biota_enzymes'
-
+    
+    # -- A --
+    
+    def as_json(self, jsonifiable_data_keys: list=['title', 'description'], **kwargs):
+        
+        return super().as_json(
+            jsonifiable_data_keys=jsonifiable_data_keys, 
+            **kwargs
+        )
+    
     # -- C --
 
     @classmethod
@@ -334,10 +345,21 @@ class Enzyme(Base):
             if not job is None:
                 enz._set_job(job)
                 #enz.pathway = pathways[ec]
-
+            
+            enz.data["tax_ancestor_ids"] = []
+            enz.data["tax_ancestor_names"] = []
+            if 'taxonomy' in enz.data:
+                try:
+                    Q = BiotaTaxo.get(BiotaTaxo.tax_id == enz.data["taxonomy"])
+                    for t in Q:  
+                        enz.data["tax_ancestor_ids"].append(t.tax_id)
+                        enz.data["tax_ancestor_names"].append(t.title)
+                except:
+                    pass
+                
             #del d["RN"]
-            del d["ec"]
-            del d["uniprot"]
+            #del d["ec"]
+            #del d["uniprot"]
 
             enzymes.append(enz)
 
