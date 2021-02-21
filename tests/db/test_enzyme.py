@@ -4,9 +4,10 @@ import unittest
 
 from gws.controller import Controller
 from gws.settings import Settings
+
 from biota.db.enzyme import Enzyme, Enzo
 from biota.db.bto import BTO
-
+from biota.db.taxonomy import Taxonomy
 
 settings = Settings.retrieve()
 testdata_path = settings.get_dir("biota:testdata_dir")

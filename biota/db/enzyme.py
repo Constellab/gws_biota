@@ -260,10 +260,24 @@ class Enzyme(Base):
     #pathway = ForeignKeyField(EnzymePathway, backref = 'enzymes', null = True)
     ec_number = CharField(null=True, index=True)
     uniprot_id = CharField(null=True, index=True)
+    
+    tax_superkingdom = CharField(null=True, index=True)
+    tax_clade = CharField(null=True, index=True)
+    tax_kingdom = CharField(null=True, index=True)
+    tax_subkingdom = CharField(null=True, index=True)
+    tax_class = CharField(null=True, index=True)    
+    tax_phylum = CharField(null=True, index=True)
+    tax_subphylum = CharField(null=True, index=True)
+    tax_order = CharField(null=True, index=True)
+    tax_genus = CharField(null=True, index=True)
+    tax_family = CharField(null=True, index=True)
+    tax_species = CharField(null=True, index=True)
+    
     tax_id = CharField(null=True, index=True)
+    
     bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
     
-    _fts_fields = { **Base._fts_fields, 'ec': 2.0, 'uniprot': 2.0, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0, 'tax_ancestor_ids': 1.0, 'tax_ancestor_names': 1.0 }
+    _fts_fields = { **Base._fts_fields, 'ec': 2.0, 'uniprot': 2.0, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0 }
     _table_name = 'biota_enzymes'
     
     # -- A --
@@ -345,15 +359,15 @@ class Enzyme(Base):
             if not job is None:
                 enz._set_job(job)
                 #enz.pathway = pathways[ec]
+
+            fields = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
             
-            enz.data["tax_ancestor_ids"] = []
-            enz.data["tax_ancestor_names"] = []
             if 'taxonomy' in enz.data:
                 try:
-                    Q = BiotaTaxo.get(BiotaTaxo.tax_id == enz.data["taxonomy"])
+                    Q = BiotaTaxo.get(BiotaTaxo.tax_id == enz.data["taxonomy"]).ancestors
                     for t in Q:  
-                        enz.data["tax_ancestor_ids"].append(t.tax_id)
-                        enz.data["tax_ancestor_names"].append(t.title)
+                        if t.rank in fields:
+                            setattr(self, "tax_"+t.rank, t.tax_id)
                 except:
                     pass
                 
