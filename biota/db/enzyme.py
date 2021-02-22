@@ -359,18 +359,7 @@ class Enzyme(Base):
             if not job is None:
                 enz._set_job(job)
                 #enz.pathway = pathways[ec]
-
-            fields = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
-            
-            if 'taxonomy' in enz.data:
-                try:
-                    Q = BiotaTaxo.get(BiotaTaxo.tax_id == enz.data["taxonomy"]).ancestors
-                    for t in Q:  
-                        if t.rank in fields:
-                            setattr(self, "tax_"+t.rank, t.tax_id)
-                except:
-                    pass
-                
+    
             #del d["RN"]
             #del d["ec"]
             #del d["uniprot"]
@@ -524,10 +513,18 @@ class Enzyme(Base):
         the enzyme and its taxonomy by adding the related tax_id from the taxonomy 
         table to the taxonomy property of the enzyme
         """
-
+        
+        fields = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
+        
         if 'taxonomy' in self.data:
             try:
                 self.tax_id = str(self.data['taxonomy'])
+                
+                tax = BiotaTaxo.get(BiotaTaxo.tax_id == self.tax_id)
+                for t in tax.ancestors:  
+                    if t.rank in fields:
+                        setattr(self, "tax_"+t.rank, t.tax_id)
+                            
                 del self.data['taxonomy']
             except:
                 pass
