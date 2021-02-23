@@ -513,16 +513,14 @@ class Enzyme(Base):
         the enzyme and its taxonomy by adding the related tax_id from the taxonomy 
         table to the taxonomy property of the enzyme
         """
-        
-        fields = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
-        
+  
         if 'taxonomy' in self.data:
             try:
                 self.tax_id = str(self.data['taxonomy'])
                 
                 tax = BiotaTaxo.get(BiotaTaxo.tax_id == self.tax_id)
                 for t in tax.ancestors:  
-                    if t.rank in fields:
+                    if t.rank in BiotaTaxo._tax_tree:
                         setattr(self, "tax_"+t.rank, t.tax_id)
                             
                 del self.data['taxonomy']

@@ -32,6 +32,8 @@ class Taxonomy(Ontology):
     ancestor_tax_id = CharField(null=True, index=True)
     #ancestor = ForeignKeyField('self', backref='children', null = True)
     
+    _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
+    
     _fts_fields = { **Ontology._fts_fields, 'tax_id': 2.0, 'rank': 2.0, 'division': 2.0 }
     _table_name = 'biota_taxonomy'
 
@@ -72,7 +74,6 @@ class Taxonomy(Ontology):
             self._ancestors.append(tax.ancestor)
             tax = tax.ancestor
 
-        self._ancestors.reverse()
         return self._ancestors
 
     # -- C --
