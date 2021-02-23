@@ -519,6 +519,8 @@ class Enzyme(Base):
                 self.tax_id = str(self.data['taxonomy'])
                 
                 tax = BiotaTaxo.get(BiotaTaxo.tax_id == self.tax_id)
+                setattr(self, "tax_"+tax.rank, tax.tax_id)
+                
                 for t in tax.ancestors:  
                     if t.rank in BiotaTaxo._tax_tree:
                         setattr(self, "tax_"+t.rank, t.tax_id)
