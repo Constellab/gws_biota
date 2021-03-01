@@ -1339,3 +1339,233 @@ KKM	#4# 0.0000008 (#4# cosubstrate NAD+, mutant G206D/R207I/R208N, pH 8.8,
 	40°C <13>) <13>
 
 ///
+ID	1.1.1.109 (transferred to EC 1.3.1.28)
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+RECOMMENDED_NAME
+RN	2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase
+
+
+SYSTEMATIC_NAME
+SN	
+
+
+///
+ID	1.3.1.28
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+PROTEIN
+PR	#1# Escherichia coli   <2,3,4,6,7,8>
+PR	#2# Klebsiella aerogenes   <1>
+PR	#3# Pseudomonas putida   <5>
+PR	#4# Streptomyces sp. NTK 937   <9>
+
+RECOMMENDED_NAME
+RN	2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase
+
+
+SYSTEMATIC_NAME
+SN	(2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate:NAD+ oxidoreductase
+
+
+SYNONYMS
+SY	 dehydrogenase, 2,3-dihydro-2,3-dihydroxybenzoate
+SY	 EC 1.1.1.109
+SY	 2,3-DHB dehydrogenase
+SY	 Cold shock protein CSI14
+SY	#1# EntA <7,8>
+SY	#1# 2,3-dihydro-2,3-dihydroxybenzoic acid dehydrogenase <7>
+SY	#4# cbxG (#4# gene name <9>) <9>
+
+REACTION
+RE	(2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	2,3-dihydroxybenzoate + NADH + H+ (#1# enzyme functions as an alcohol
+	dehydrogenase which oxidizes the C3-hydroxylgroup of the substrate, the
+	transient intermediate 2-hydroxy-3-oxo-4,6-cyclohexadiene-1-carboxylate
+	undergoes rapid aromatization to give 2,3-dihydroxybenzoate <3>)
+
+REACTION_TYPE
+RT	redox reaction
+RT	oxidation
+RT	reduction
+
+NATURAL_SUBSTRATE_PRODUCT
+NSP	#4# (2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	2,3-dihydroxybenzoate + NADH + H+ {r} <9>
+NSP	#4# (2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	2,3-dihydroxybenzoate + NADH + H+ <9>
+
+SUBSTRATE_PRODUCT
+SP	#1# trans-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	2,3-dihydroxybenzoate + NADH (#1# genetic results suggest that the
+	enzyme may also have isochorismate synthase activity <6>) {ir} <3,6>
+SP	#1# trans-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	2,3-dihydroxybenzoate + NADH (#1# genetic results suggest that the
+	enzyme may also have isochorismate synthase activity <6>) <3,6>
+SP	#1# 3-hydroxy-4-cyclohexene-1-carboxylate =
+	3-oxo-4-cyclohexene-1-carboxylate + NADH (#1# reversible only with
+	3-keto compounds, not with 2-keto compounds <3>) {r} <3>
+SP	#1# methyl-2,3-dihydro-3-hydroxybenzoate + NAD+ = 3-hydroxybenzoate +
+	NADH {r} <3>
+SP	#1# methyl-3-hydroxy-1,4-cyclohexadien-1-carboxylate + NAD+ =
+	3-hydroxybenzoate + NADH {r} <3>
+SP	#1# cis-3-hydroxy-cyclohexane-1-carboxylate + NAD+ =
+	3-oxo-cyclohexane-1-carboxylate + NADH {r} <3>
+SP	#1# trans-3-hydroxy-cyclohexane-1-carboxylate + NAD+ =
+	3-oxo-cyclohexane-1-carboxylate + NADH {r} <3>
+SP	#1# cis-1,3-cyclohexadiene-5,6-diol + NAD+ = ? {r} <3>
+SP	#1# trans-1,3-cyclohexadiene-5,6-diol + NAD+ = ? {r} <3>
+SP	#1# 2-cyclohexen-1-ol + NAD+ = 1-oxo-2-cyclohexene + NADH {r} <3>
+SP	#1# cis-3-hydroxy-4-cyclohexene-1-carboxylate + NAD+ =
+	3-oxo-4-cyclohexene-1-carboxylate + NADH + H+ {r} <3>
+SP	#1# cis-3,5-cyclohexadiene-1,2-diol + NAD+ = ? {r} <3>
+SP	#1# methyl 2,3-dihydro-2,3-dihydroxybenzoate + NAD+ = ? {r} <3>
+SP	#1# trans-3-hydroxy-2-cyclohexene-1-carboxylate + NAD+ = ? {r} <3>
+SP	#1# trans-3-hydroxycyclohexane-1-carboxylic acid + NAD+ =
+	3-oxo-cyclohexane-1-carboxylate + NADH + H+ {r} <3>
+SP	#1,4# (2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	2,3-dihydroxybenzoate + NADH + H+ {r} <3,4,9>
+SP	#1,4# (2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	2,3-dihydroxybenzoate + NADH + H+ <3,4,9>
+SP	#3# 4-trifluoromethyl-2,3-dihydro-2,3-dihydroxybenzoate + NAD+ =
+	4-trifluoromethyl-2,3-dihydroxybenzoate + NADH (#3# low turnover <5>)
+	<5>
+SP	#3# 4-isopropyl-2,3-dihydroxybenzoate + NAD+ = ? <5>
+
+TURNOVER_NUMBER
+TN	#1# 1 {2-Cyclohexen-1-ol}  <3>
+TN	#1# 1 {trans-3,5-cyclohexadiene-1,2-diol}  <3>
+TN	#1# 3 {methyl-3-hydroxy-1,4-cyclohexadiene-1-carboxylate}  <3>
+TN	#1# 16.7 {cis-3,5-cyclohexadiene-1,2-diol}  <3>
+TN	#1# 5 {trans-3-hydroxy-2-cyclohexene-1-carboxylate}  <3>
+TN	#1# 5 {cis-3-hydroxycyclohexane-1-carboxylic acid}  <3>
+TN	#1# 23 {cis-3-hydroxy-4-cyclohexene-1-carboxylate}  <3>
+TN	#1# 17.5 {methyl 2,3-dihydro-2,3-dihydroxybenzoate}  <3>
+TN	#1# 0.733 {trans-3-hydroxycyclohexane-1-carboxylic acid}  <3>
+TN	#1# 92.5 {trans-2,3-dihydro-2,3-dihydroxy-benzoate}  <3>
+TN	#1# 25.3 {(2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate}  <4>
+
+KM_VALUE
+KM	#1# 0.3 {(2S,3S)-2,3-dihydro-2,3-dihydroxybenzoate}  <3>
+KM	#1# 0.26 {methyl 2,3-dihydro-2,3-dihydroxybenzoate}  <3>
+KM	#1# 1.7 {methyl-3-hydroxy-1,4-cyclohexadiene-1-carboxylate}  <3>
+KM	#1# 1.9 {trans-3-hydroxy-2-cyclohexene-1-carboxylate}  <3>
+KM	#1# 2.8 {cis-3-hydroxy-4-cyclohexene-1-carboxylate}  <3>
+KM	#1# 4.1 {cis-3-hydroxycyclohexane-1-carboxylic acid}  <3>
+KM	#1# 168 {cis-3,5-cyclohexadiene-1,2-diol}  <3>
+KM	#1# 16.5 {trans-3,5-cyclohexadiene-1,2-diol}  <3>
+KM	#1# 25.2 {trans-3-hydroxycyclohexane-1-carboxylic acid}  <3>
+KM	#1# 83.3 {2-Cyclohexen-1-ol}  <3>
+KM	#3# 0.017 {4-isopropyl-2,3-dihydroxybenzoate}  <5>
+KM	#3# 0.037 {NAD+}  (#3# substrate 4-isopropyl-2,3-dihydroxybenzoate <5>)
+	<5>
+
+SPECIFIC_ACTIVITY
+SA	#1# 66.0 <3>
+SA	#1# 58.0 <4>
+SA	#2# 0.0046 (#2# enzyme activity in crude extracts of cells grown in the
+	presence of 0.002 mM iron, enzyme is repressed by high iron
+	concentrations <1>) <1>
+
+COFACTOR
+CF	#1,2,4# NAD+ (#2# absolutely required <1>) <1,4,9>
+
+INHIBITORS
+IN	#1# cis-2-hydroxy-3-cyclohexen-1-carboxylate <3>
+IN	#1# cis-2-hydroxycyclohexane-1-carboxylate <3>
+IN	#1# trans-2-hydroxycyclohexane-1-carboxylate <3>
+IN	#3# 4-Trifluoromethyl-2,3-dihydro-2,3-dihydroxybenzoate (#3#
+	competitive inhibition <5>) <5>
+
+MOLECULAR_WEIGHT
+MW	#1# 210000 (#1# gel filtration <4>) <4>
+MW	#1# 26000 (#1# x * 26000, deduced from nucleotide sequence <2>) <2>
+
+SUBUNITS
+SU	#1# ? (#1# x * 26000, deduced from nucleotide sequence <2>) <2>
+SU	#1# tetramer <7>
+SU	#1# More (#1# enzyme can form a specific complex with
+	2,3-dihydroxybenzoate-AMP ligase EntE. Cross-linked product with a
+	molecular mass of more than 250 kDa, suggesting a complex stoichiometry
+	of one EntA tetramer and four EntE monomers. Addition of a 4-fold
+	excess of EntA to an EntE assay mixture results in a 6fold stimulation
+	of EntE activity <8>; #1# enzyme undergoes concentration-dependent
+	dimer-tetramer self-association with a KD value of 12.3 microM,
+	analytical ultracentrifugation <8>) <8>
+SU	#1# octamer (#1# 8 * 26249-26253, deduced from nucleotide sequence
+	<4,6>) <4,6>
+
+CLONED
+CL	#1# <2,4,6>
+CL	#1# (into vector pET15b and expressed in Escherichia coli BL21(DE3)) <7>
+
+CRYSTALLIZATION
+CR	#1# (to 2.0 A resolution by hanging-drop method) <7>
+
+PURIFICATION
+PU	#1# <4>
+PU	#1# (by two IMAC chromatography steps) <7>
+
+GENERAL_STABILITY
+GS	#2# (unstable after chromatography on DEAE cellulose) <1>
+
+REFERENCE
+RF	<1> Young, I.G.; Gibson, F.: Regulation of the enzymes involved in the
+	biosynthesis of 2,3-dihydroxybenzoic acid in Aerobacter aerogenes and
+	Escherichia coli. Biochim. Biophys. Acta (1969) 177, 401-411.
+	{Pubmed:4306838} (c)
+RF	<2> Nahlik, M.S.; Fleming, T.P.; McIntosh, M.A.: Cluster of genes
+	controlling synthesis and activation of 2,3-dihydroxybenzoic acid in
+	production of enterobactin in Escherichia coli. J. Bacteriol. (1987)
+	169, 4163-4170. {Pubmed:3040680} (a)
+RF	<3> Sakaitani, M.; Rusnak, F.; Quinn, N.R.; Tu, C.; Frigo, R.B.;
+	Berchtold, G.A.; Walsh, C.T.: Mechanistic studies on
+	trans-2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase (Ent A) in the
+	biosynthesis of the iron chelator enterobactin. Biochemistry (1990) 29,
+	6789-6798. {Pubmed:2144454}
+RF	<4> Liu, J.; Duncan, K.; Walsh, C.T: Nucleotide sequence of a cluster
+	of Escherichia coli enterobactin biosynthesis genes: identification of
+	entA and purification of its product 2,3-dihydro-2,3-dihydroxybenzoate
+	dehydrogenase. J. Bacteriol. (1989) 171, 791-798. {Pubmed:2521622}
+RF	<5> Engesser, K.H.; Rubio, M.A.; Ribbons, D.W.: Bacterial metabolism of
+	side chain fluorinated aromatics: cometabolism of
+	4-trifluoromethyl(TFM)-benzoate by 4-isopropylbenzoate grown
+	Pseudomonas putida JT strains. Arch. Microbiol. (1988) 149, 198-206.
+	{Pubmed:3365097}
+RF	<6> Schrodt Nahlik, M.; Brickman, T.J.; Ozenberger, B.A.; McIntosh,
+	M.A.: Nucleotide sequence and transcriptional organization of the
+	Escherichia coli enterobactin biosynthesis cistrons entB and entA. J.
+	Bacteriol. (1989) 171, 784-790. {Pubmed:2521621}
+RF	<7> Sundlov, J.A.; Garringer, J.A.; Carney, J.M.; Reger, A.S.; Drake,
+	E.J.; Duax, W.L.; Gulick, A.M.: Determination of the crystal structure
+	of EntA, a 2,3-dihydro-2,3-dihydroxybenzoic acid dehydrogenase from
+	Escherichia coli. Acta Crystallogr. Sect. D (2006) D62, 734-740.
+	{Pubmed:16790929}
+RF	<8> Khalil, S.; Pawelek, P.D.: Enzymatic adenylation of
+	2,3-dihydroxybenzoate is enhanced by a protein-protein interaction
+	between Escherichia coli 2,3-dihydro-2,3-dihydroxybenzoate
+	dehydrogenase (EntA) and 2,3-dihydroxybenzoate-AMP ligase (EntE).
+	Biochemistry (2011) 50, 533-545. {Pubmed:21166461}
+RF	<9> Losada, A.A.; Cano-Prieto, C.; Garcia-Salcedo, R.; Brana, A.F.;
+	Mendez, C.; Salas, J.A.; Olano, C.: Caboxamycin biosynthesis pathway
+	and identification of novel benzoxazoles produced by cross-talk in
+	Streptomyces sp. NTK 937. Microb. Biotechnol. (2017) 10, 873-885.
+	{Pubmed:28417606}
+
+KI_VALUE
+KI	#1# 3.3 {cis-2-hydroxycyclohexane-1-carboxylate}  <3>
+KI	#1# 2.3 {trans-2-hydroxycyclohexane-1-carboxylate}  <3>
+KI	#1# 1.4 {cis-2-hydroxy-3-cyclohexen-1-carboxylate}  <3>
+KI	#3# 0.012 {4-Trifluoromethyl-2,3-dihydro-2,3-dihydroxybenzoate}  <5>
+
+///

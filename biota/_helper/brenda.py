@@ -28,8 +28,13 @@ class Brenda():
         :rtype: list
         """
         list_proteins = []
+        list_deprecated_ec = []
         for ec in self.parser.keys():
-            proteins = self.parser.get_proteins(ec)
+            proteins, deprecated_ec = self.parser.get_all_proteins(ec)
+            
+            if deprecated_ec:
+                list_deprecated_ec.append(deprecated_ec)
+                
             for p in proteins.values():
                 for k in p.data:
                     if isinstance(p.data[k], set):
@@ -45,5 +50,5 @@ class Brenda():
                                 p.data[k][idx] =  p.data[k][idx]["info"]
 
                 list_proteins.append(p.data)
-
-        return(list_proteins)
+                    
+        return list_proteins, list_deprecated_ec

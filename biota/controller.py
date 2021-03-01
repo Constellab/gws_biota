@@ -9,15 +9,15 @@ from fastapi.requests import Request
 
 from gws.query import Query, Paginator
 from gws.controller import Controller as BaseController
-from biota.db.bto import BTO
-from biota.db.eco import ECO
-from biota.db.sbo import SBO
-from biota.db.taxonomy import Taxonomy
-from biota.db.enzyme import Enzyme, Enzo
-from biota.db.reaction import Reaction
-from biota.db.compound import Compound
+from biota.bto import BTO
+from biota.eco import ECO
+from biota.sbo import SBO
+from biota.taxonomy import Taxonomy
+from biota.enzyme import Enzyme, Enzo
+from biota.reaction import Reaction
+from biota.compound import Compound
 
-from biota.db.stats import Stats
+from biota.stats import Stats
 
 class Controller(BaseController):
     

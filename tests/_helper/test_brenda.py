@@ -20,7 +20,8 @@ class TestBrenda(unittest.TestCase):
         testdata_path = os.path.join(settings.get_dir("biota:testdata_dir"),'../_helper/data/')
         brenda = Brenda(os.path.join(testdata_path, "brenda_test.txt"))
         
-        list_proteins = brenda.parse_all_enzyme_to_dict()
+        list_proteins, _ = brenda.parse_all_enzyme_to_dict()
     
+
         self.assertEqual(list_proteins[0]['organism'], 'Pseudomonas sp.')
         self.assertEqual(list_proteins[6]['ec'], '1.13.11.38')

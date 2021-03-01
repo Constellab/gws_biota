@@ -1,0 +1,46 @@
+R-BTA-73843	5-Phosphoribose 1-diphosphate biosynthesis	Bos taurus
+R-BTA-1971475	A tetrasaccharide linker sequence is required for GAG synthesis	Bos taurus
+R-BTA-1369062	ABC transporters in lipid homeostasis	Bos taurus
+R-BTA-382556	ABC-family proteins mediated transport	Bos taurus
+R-BTA-9033807	ABO blood group biosynthesis	Bos taurus
+R-BTA-418592	ADP signalling through P2Y purinoceptor 1	Bos taurus
+R-BTA-392170	ADP signalling through P2Y purinoceptor 12	Bos taurus
+R-BTA-211163	AKT-mediated inactivation of FOXO1A	Bos taurus
+R-BTA-163680	AMPK inhibits chREBP transcriptional activation activity	Bos taurus
+R-BTA-174143	APC/C-mediated degradation of cell cycle proteins	Bos taurus
+R-BTA-170984	ARMS-mediated activation	Bos taurus
+R-BTA-1296025	ATP sensitive Potassium channels	Bos taurus
+R-BTA-450408	AUF1 (hnRNP D0) binds and destabilizes mRNA	Bos taurus
+R-BTA-2161541	Abacavir metabolism	Bos taurus
+R-BTA-2161517	Abacavir transmembrane transport	Bos taurus
+R-BTA-2161522	Abacavir transport and metabolism	Bos taurus
+R-BTA-156582	Acetylation	Bos taurus
+R-BTA-264642	Acetylcholine Neurotransmitter Release Cycle	Bos taurus
+R-BTA-181431	Acetylcholine binding and downstream events	Bos taurus
+R-BTA-1300645	Acrosome Reaction and Sperm:Oocyte Membrane Binding	Bos taurus
+R-BTA-9603381	Activated NTRK3 signals through PI3K	Bos taurus
+R-BTA-9034793	Activated NTRK3 signals through PLCG1	Bos taurus
+R-BTA-111452	Activation and oligomerization of BAK protein	Bos taurus
+R-BTA-165158	Activation of AKT2	Bos taurus
+R-BTA-176187	Activation of ATR in response to replication stress	Bos taurus
+R-BTA-111447	Activation of BAD and translocation to mitochondria 	Bos taurus
+R-BTA-114452	Activation of BH3-only proteins	Bos taurus
+R-BTA-111446	Activation of BIM and translocation to mitochondria 	Bos taurus
+R-BTA-139910	Activation of BMF and translocation to mitochondria	Bos taurus
+R-BTA-451308	Activation of Ca-permeable Kainate Receptor	Bos taurus
+R-BTA-991365	Activation of GABAB receptors	Bos taurus
+R-BTA-936964	Activation of IRF3/IRF7 mediated by TBK1/IKK epsilon	Bos taurus
+R-BTA-1592389	Activation of Matrix Metalloproteinases	Bos taurus
+R-BTA-2980767	Activation of NIMA Kinases NEK9, NEK6, NEK7	Bos taurus
+R-BTA-442755	Activation of NMDA receptors and postsynaptic events	Bos taurus
+R-BTA-111448	Activation of NOXA and translocation to mitochondria	Bos taurus
+R-BTA-9619229	Activation of RAC1 downstream of NMDARs	Bos taurus
+R-BTA-1169092	Activation of RAS in B cells	Bos taurus
+R-BTA-187015	Activation of TRKA receptors	Bos taurus
+R-BTA-451326	Activation of kainate receptors upon glutamate binding	Bos taurus
+R-BTA-450341	Activation of the AP-1 family of transcription factors	Bos taurus
+R-BTA-8866907	Activation of the TFAP2 (AP-2) family of transcription factors	Bos taurus
+R-BTA-72662	Activation of the mRNA upon binding of the cap-binding complex and eIFs, and subsequent binding to 43S	Bos taurus
+R-BTA-6806664	Metabolism of vitamin K	Bos taurus
+R-SSC-6806664	Metabolism of vitamin K	Sus scrofa
+R-BTA-71336	Pentose phosphate pathway	Bos taurus

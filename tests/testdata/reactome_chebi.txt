@@ -1,0 +1,58 @@
+10033	R-BTA-6806664	https://reactome.org/PathwayBrowser/#/R-BTA-6806664	Metabolism of vitamin K	IEA	Bos taurus
+10033	R-CFA-6806664	https://reactome.org/PathwayBrowser/#/R-CFA-6806664	Metabolism of vitamin K	IEA	Canis familiaris
+10033	R-DME-6806664	https://reactome.org/PathwayBrowser/#/R-DME-6806664	Metabolism of vitamin K	IEA	Drosophila melanogaster
+10033	R-DRE-6806664	https://reactome.org/PathwayBrowser/#/R-DRE-6806664	Metabolism of vitamin K	IEA	Danio rerio
+10033	R-HSA-6806664	https://reactome.org/PathwayBrowser/#/R-HSA-6806664	Metabolism of vitamin K	TAS	Homo sapiens
+10033	R-MMU-6806664	https://reactome.org/PathwayBrowser/#/R-MMU-6806664	Metabolism of vitamin K	IEA	Mus musculus
+10033	R-RNO-6806664	https://reactome.org/PathwayBrowser/#/R-RNO-6806664	Metabolism of vitamin K	IEA	Rattus norvegicus
+10033	R-SSC-6806664	https://reactome.org/PathwayBrowser/#/R-SSC-6806664	Metabolism of vitamin K	IEA	Sus scrofa
+10036	R-BTA-2142753	https://reactome.org/PathwayBrowser/#/R-BTA-2142753	Arachidonic acid metabolism	IEA	Bos taurus
+10036	R-BTA-9640463	https://reactome.org/PathwayBrowser/#/R-BTA-9640463	Wax biosynthesis	IEA	Bos taurus
+10036	R-CEL-2142753	https://reactome.org/PathwayBrowser/#/R-CEL-2142753	Arachidonic acid metabolism	IEA	Caenorhabditis elegans
+10036	R-CEL-9640463	https://reactome.org/PathwayBrowser/#/R-CEL-9640463	Wax biosynthesis	IEA	Caenorhabditis elegans
+10036	R-CFA-2142753	https://reactome.org/PathwayBrowser/#/R-CFA-2142753	Arachidonic acid metabolism	IEA	Canis familiaris
+10036	R-CFA-9640463	https://reactome.org/PathwayBrowser/#/R-CFA-9640463	Wax biosynthesis	IEA	Canis familiaris
+10036	R-DDI-2142753	https://reactome.org/PathwayBrowser/#/R-DDI-2142753	Arachidonic acid metabolism	IEA	Dictyostelium discoideum
+10036	R-DDI-9640463	https://reactome.org/PathwayBrowser/#/R-DDI-9640463	Wax biosynthesis	IEA	Dictyostelium discoideum
+10036	R-DRE-2142753	https://reactome.org/PathwayBrowser/#/R-DRE-2142753	Arachidonic acid metabolism	IEA	Danio rerio
+10036	R-DRE-9640463	https://reactome.org/PathwayBrowser/#/R-DRE-9640463	Wax biosynthesis	IEA	Danio rerio
+10036	R-GGA-2142753	https://reactome.org/PathwayBrowser/#/R-GGA-2142753	Arachidonic acid metabolism	IEA	Gallus gallus
+10036	R-GGA-9640463	https://reactome.org/PathwayBrowser/#/R-GGA-9640463	Wax biosynthesis	IEA	Gallus gallus
+10036	R-HSA-2142753	https://reactome.org/PathwayBrowser/#/R-HSA-2142753	Arachidonic acid metabolism	TAS	Homo sapiens
+10036	R-HSA-9640463	https://reactome.org/PathwayBrowser/#/R-HSA-9640463	Wax biosynthesis	TAS	Homo sapiens
+10036	R-MMU-2142753	https://reactome.org/PathwayBrowser/#/R-MMU-2142753	Arachidonic acid metabolism	IEA	Mus musculus
+10036	R-MMU-9640463	https://reactome.org/PathwayBrowser/#/R-MMU-9640463	Wax biosynthesis	IEA	Mus musculus
+10036	R-RNO-2142753	https://reactome.org/PathwayBrowser/#/R-RNO-2142753	Arachidonic acid metabolism	IEA	Rattus norvegicus
+10036	R-RNO-9640463	https://reactome.org/PathwayBrowser/#/R-RNO-9640463	Wax biosynthesis	IEA	Rattus norvegicus
+10036	R-SCE-2142753	https://reactome.org/PathwayBrowser/#/R-SCE-2142753	Arachidonic acid metabolism	IEA	Saccharomyces cerevisiae
+10036	R-SCE-9640463	https://reactome.org/PathwayBrowser/#/R-SCE-9640463	Wax biosynthesis	IEA	Saccharomyces cerevisiae
+10036	R-SPO-2142753	https://reactome.org/PathwayBrowser/#/R-SPO-2142753	Arachidonic acid metabolism	IEA	Schizosaccharomyces pombe
+10036	R-SPO-9640463	https://reactome.org/PathwayBrowser/#/R-SPO-9640463	Wax biosynthesis	IEA	Schizosaccharomyces pombe
+10036	R-SSC-2142753	https://reactome.org/PathwayBrowser/#/R-SSC-2142753	Arachidonic acid metabolism	IEA	Sus scrofa
+10036	R-SSC-9640463	https://reactome.org/PathwayBrowser/#/R-SSC-9640463	Wax biosynthesis	IEA	Sus scrofa
+10036	R-XTR-2142753	https://reactome.org/PathwayBrowser/#/R-XTR-2142753	Arachidonic acid metabolism	IEA	Xenopus tropicalis
+10036	R-XTR-9640463	https://reactome.org/PathwayBrowser/#/R-XTR-9640463	Wax biosynthesis	IEA	Xenopus tropicalis
+10049	R-CEL-74259	https://reactome.org/PathwayBrowser/#/R-CEL-74259	Purine catabolism	IEA	Caenorhabditis elegans
+10049	R-CFA-74259	https://reactome.org/PathwayBrowser/#/R-CFA-74259	Purine catabolism	IEA	Canis familiaris
+10049	R-DDI-74259	https://reactome.org/PathwayBrowser/#/R-DDI-74259	Purine catabolism	IEA	Dictyostelium discoideum
+10049	R-DME-74259	https://reactome.org/PathwayBrowser/#/R-DME-74259	Purine catabolism	IEA	Drosophila melanogaster
+10049	R-DRE-74259	https://reactome.org/PathwayBrowser/#/R-DRE-74259	Purine catabolism	IEA	Danio rerio
+10049	R-GGA-74259	https://reactome.org/PathwayBrowser/#/R-GGA-74259	Purine catabolism	IEA	Gallus gallus
+10049	R-HSA-74259	https://reactome.org/PathwayBrowser/#/R-HSA-74259	Purine catabolism	TAS	Homo sapiens
+10049	R-MMU-74259	https://reactome.org/PathwayBrowser/#/R-MMU-74259	Purine catabolism	IEA	Mus musculus
+10049	R-PFA-74259	https://reactome.org/PathwayBrowser/#/R-PFA-74259	Purine catabolism	IEA	Plasmodium falciparum
+10049	R-RNO-74259	https://reactome.org/PathwayBrowser/#/R-RNO-74259	Purine catabolism	IEA	Rattus norvegicus
+10049	R-SCE-74259	https://reactome.org/PathwayBrowser/#/R-SCE-74259	Purine catabolism	IEA	Saccharomyces cerevisiae
+10049	R-SPO-74259	https://reactome.org/PathwayBrowser/#/R-SPO-74259	Purine catabolism	IEA	Schizosaccharomyces pombe
+10049	R-SSC-74259	https://reactome.org/PathwayBrowser/#/R-SSC-74259	Purine catabolism	IEA	Sus scrofa
+10055	R-DME-390696	https://reactome.org/PathwayBrowser/#/R-DME-390696	Adrenoceptors	IEA	Drosophila melanogaster
+10055	R-DRE-390696	https://reactome.org/PathwayBrowser/#/R-DRE-390696	Adrenoceptors	IEA	Danio rerio
+10055	R-GGA-390696	https://reactome.org/PathwayBrowser/#/R-GGA-390696	Adrenoceptors	IEA	Gallus gallus
+10055	R-HSA-390696	https://reactome.org/PathwayBrowser/#/R-HSA-390696	Adrenoceptors	TAS	Homo sapiens
+10055	R-MMU-390696	https://reactome.org/PathwayBrowser/#/R-MMU-390696	Adrenoceptors	IEA	Mus musculus
+10055	R-RNO-390696	https://reactome.org/PathwayBrowser/#/R-RNO-390696	Adrenoceptors	IEA	Rattus norvegicus
+10093	R-BTA-418594	https://reactome.org/PathwayBrowser/#/R-BTA-418594	G alpha (i) signalling events	IEA	Bos taurus
+10093	R-BTA-420499	https://reactome.org/PathwayBrowser/#/R-BTA-420499	Class C/3 (Metabotropic glutamate/pheromone receptors)	IEA	Bos taurus
+16027	R-BTA-73843	https://reactome.org/PathwayBrowser/#/R-BTA-73843	5-Phosphoribose 1-diphosphate biosynthesis	IEA	Bos taurus
+16284	R-BTA-73843	https://reactome.org/PathwayBrowser/#/R-BTA-73843	5-Phosphoribose 1-diphosphate biosynthesis	IEA	Bos taurus
+17111	R-BTA-73843	https://reactome.org/PathwayBrowser/#/R-BTA-73843	5-Phosphoribose 1-diphosphate biosynthesis	IEA	Bos taurus
