@@ -52,8 +52,7 @@ class Compound(Base):
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
     chebi_star = CharField(null=True, index=True)
-    reactome_patwhay_id = CharField(null=True, index=True)
-    
+
     _ancestors = None
     _fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
     _table_name = 'biota_compound'
@@ -200,7 +199,7 @@ class Compound(Base):
     # -- R --
     
     @property
-    def reactome_patwhay(self):
+    def reactome_pathway(self):
         from biota.pathway import Pathway
         try:
             return Pathway.get(Pathway.reactome_id == self.reactome_patwhay_id)

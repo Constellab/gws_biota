@@ -71,8 +71,9 @@ class ECO(Ontology):
         """
 
         from biota._helper.ontology import Onto as OntoHelper
-
-        onto_eco = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['eco_file'])
+        
+        data_dir, corrected_file_name = OntoHelper.correction_of_eco_file(biodata_dir, kwargs['eco_file'])
+        onto_eco = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
         list_eco = OntoHelper.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [cls(data = dict_) for dict_ in list_eco]
         job = kwargs.get('job',None)

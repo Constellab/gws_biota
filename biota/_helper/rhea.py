@@ -52,7 +52,7 @@ class Rhea():
         """
         Parses a rhea-kegg.reaction file of biological reactions and returns a list of dictionaries
 
-        This tool accepts only the formated rhea-kegg.reaction file on which reaction are 
+        This tool accepts only the formated reaction file on which reaction are 
         described this way:
 
         ENTRY       RHEA:10022
@@ -165,58 +165,6 @@ class Rhea():
                     list_reaction.append(dict__)
         return(list_reaction)
 
-    @staticmethod
-    def parse_compound_from_file(path, file):
-
-        """
-        Parses a rhea-kegg.compound file of biological compounds and returns a list of dictionaries
-
-        This tool accepts only the formated rhea-kegg.compound file on which compounds are 
-        described this way:
-
-        ENTRY       CHEBI:7
-        NAME        (+)-car-3-ene
-        FORMULA     C10H16
-        REACTION    32539 32540 32541 32542
-        ENZYME      4.2.3.107
-
-        and compounds are separated by the "///" symbol
-
-        :type path: str
-        :param path: location of the file
-        :type file: str
-        :param file: name of the file
-        :returns: list of dictionnaries reapresenting compounds
-        :rtype: list
-        """
-
-        file_path = os.path.join(path, file)
-        with open(file_path) as fh:
-            contents = fh.read()
-            list_content = contents.split('///')
-            list_dict = []
-            for cont in list_content:
-                dict__ = {}
-                for infos in cont.split('\n'):
-                    m = re.findall(' {2,12}', infos)
-                    if (len(m) > 0):
-                        list_infos = infos.split(m[0])
-                        if (list_infos[0] not in dict__.keys() and list_infos[0] != '' and list_infos[0] != "ENZYME"):
-                            dict__[list_infos[0].lower()] = list_infos[1]
-                        elif (list_infos[0] == ''):
-                            if('enzymes' not in dict__.keys()):
-                                dict__['reaction'] += " "+ list_infos[1]
-                        elif (list_infos[0] == 'ENZYME'):
-                            list_enzyme = []
-                            for j in range(1, len(list_infos)):
-                                list_enzyme.append(list_infos[j])
-                            dict__['enzymes'] = list_enzyme
-                        #### convert dict__['REACTION'] in a list ###
-                if('reaction' in dict__.keys()):
-                    str_reaction = dict__['reaction']
-                    dict__['reaction'] = str_reaction.split(' ')
-                    list_dict.append(dict__)
-        return(list_dict)
     
     @staticmethod
     def get_columns_from_lines(list_lines):

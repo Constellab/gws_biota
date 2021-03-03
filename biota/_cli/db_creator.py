@@ -12,7 +12,6 @@ from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
 from biota.eco import ECO
-from biota.pwo import PWO
 from biota.taxonomy import Taxonomy
 from biota.compound import Compound
 from biota.enzyme import Enzyme
@@ -41,7 +40,9 @@ class DbCreator(Process):
         "ncbi_division_file"        : {"type": str, "default": "./ncbi/taxdump/division.dmp"},
         "ncbi_citation_file"        : {"type": str, "default": "./ncbi/taxdump/citations.dmp"},
         
-        "rhea_kegg_reaction_file"   : {"type": str, "default": "./rhea/kegg/rhea-kegg.reaction"},
+        "expasy_enzclass_file"      : {"type": str, "default": "./expasy/enzclass.txt"},
+        
+        "rhea_reaction_file"        : {"type": str, "default": "./rhea/rhea-reactions.txt"},
         "rhea_direction_file"       : {"type": str, "default": "./rhea/tsv/rhea-directions.tsv"},
         "rhea2ecocyc_file"          : {"type": str, "default": "./rhea/tsv/rhea2ecocyc.tsv"},
         "rhea2metacyc_file"         : {"type": str, "default": "./rhea/tsv/rhea2metacyc.tsv"},
@@ -69,7 +70,6 @@ class DbCreator(Process):
         SBO.drop_table()
         BTO.drop_table()
         ECO.drop_table()
-        PWO.drop_table()
         Taxonomy.drop_table()
         Compound.drop_table()
         Enzyme.drop_table()
@@ -81,7 +81,6 @@ class DbCreator(Process):
         SBO.create_table()
         BTO.create_table()
         ECO.create_table()
-        PWO.create_table()
         Taxonomy.create_table()
         Compound.create_table()
         Enzyme.create_table()
@@ -100,9 +99,20 @@ class DbCreator(Process):
                 file_path = os.path.join(biodata_dir, params[k])
                 if not os.path.exists(file_path):
                     raise Error(f"Biodata file {file_path} does not exist")
-
+        
+        i = 0
+        
+        # ------------------- Create ECO ----------------- #
+        i=i+1
+        Info(f"Step {i} | Saving eco and eco_ancestors...")
+        start_time = time.time()
+        ECO.create_eco_db(biodata_dir, **params)
+        len_eco = ECO.select().count()
+        elapsed_time = time.time() - start_time
+        Info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
+        
         # ------------- Create GO ------------- #
-        i = 1
+        i = i+1
         Info(f"Step {i} | Saving go and go_ancestors...")
         start_time = time.time()
         
@@ -129,14 +139,7 @@ class DbCreator(Process):
         elapsed_time = time.time() - start_time
         Info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
         
-        # ------------------- Create ECO ----------------- #
-        i=i+1
-        Info(f"Step {i} | Saving eco and eco_ancestors...")
-        start_time = time.time()
-        ECO.create_eco_db(biodata_dir, **params)
-        len_eco = ECO.select().count()
-        elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
+        
         
         # ---------------- Create Compound --------------- #
         i=i+1

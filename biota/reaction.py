@@ -97,7 +97,7 @@ class Reaction(Entity):
         from biota._helper.rhea import Rhea
 
         job = kwargs.get('job',None)
-        list_of_reactions = Rhea.parse_reaction_from_file(biodata_dir, kwargs['rhea_kegg_reaction_file'])
+        list_of_reactions = Rhea.parse_reaction_from_file(biodata_dir, kwargs['rhea_reaction_file'])
         cls.__create_reactions(list_of_reactions, job=job)
 
         list_of_directions = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea_direction_file'])

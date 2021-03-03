@@ -31,7 +31,7 @@ class TestReaction(unittest.TestCase):
 
         params = dict(
             biodata_dir = testdata_path,
-            rhea_kegg_reaction_file =  'rhea-kegg_test.reaction',
+            rhea_reaction_file =  'rhea-reactions_test.txt',
             rhea_direction_file = 'rhea-directions-test.tsv',
             rhea2ecocyc_file = 'rhea2ecocyc-test.tsv',
             rhea2metacyc_file = 'rhea2metacyc-test.tsv',

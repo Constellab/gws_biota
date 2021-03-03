@@ -8,7 +8,7 @@ import click
 from gws.settings import Settings
 from gws.logger import Info, Warning, Error
 
-from biota.db.backend import DbCreator
+from biota._cli.db_creator import DbCreator
 from gws.model import Protocol, Experiment
 
 @click.command(context_settings=dict(
@@ -40,14 +40,21 @@ def createdb(ctx, user="Gencoverer", no_fts=False):
         ncbi_name_file          = "./ncbi/taxdump/names.dmp",
         ncbi_division_file      = "./ncbi/taxdump/division.dmp",
         ncbi_citation_file      = "./ncbi/taxdump/citations.dmp",
-        rhea_kegg_reaction_file = './rhea/kegg/rhea-kegg.reaction',
+    
+        expasy_enzclass_file    = "./expasy/enzclass.txt",
+        
+        rhea_reaction_file      = './rhea/rhea-reactions.txt',
         rhea_direction_file     = './rhea/tsv/rhea-directions.tsv',
         rhea2ecocyc_file        = './rhea/tsv/rhea2ecocyc.tsv',
         rhea2metacyc_file       = './rhea/tsv/rhea2metacyc.tsv',
         rhea2macie_file         = './rhea/tsv/rhea2macie.tsv',
         rhea2kegg_reaction_file = './rhea/tsv/rhea2kegg_reaction.tsv',
         rhea2ec_file            = './rhea/tsv/rhea2ec.tsv',
-        rhea2reactome_file      = './rhea/tsv/rhea2reactome.tsv'
+        rhea2reactome_file      = './rhea/tsv/rhea2reactome.tsv',
+        
+        reactome_pathways_file          = './reactome/ReactomePathways.txt',
+        reactome_pathway_relations_file = './reactome/ReactomePathwaysRelation.txt',
+        reactome_chebi_pathways_file    = './reactome/ChEBI2Reactome.txt'
     )
 
     dirs = settings.get_data("dirs")

@@ -45,3 +45,5 @@ class TestGO(unittest.TestCase):
         
         Q = Taxonomy.search("methylotrophus")
         self.assertEqual(Q[0].get_related().title, "Methylophilus methylotrophus")
+        self.assertEqual(Q[0].get_related().name, "Methylophilus methylotrophus")
+        

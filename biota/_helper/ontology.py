@@ -21,6 +21,33 @@ class Onto():
     """
     
     @staticmethod
+    def correction_of_eco_file(path, file):
+        in_file = os.path.join(path, file)
+        
+        tab = in_file.split("/")
+        n = len(tab)
+        path = ("/").join(tab[0:n-1])
+        in_filename = tab[-1]
+
+        out_filename = 'corrected_'+in_filename
+        out_file = os.path.join(path, out_filename)
+
+        with open(in_file,'rt') as file: 
+            with open(out_file,'wt') as outfile:
+                for line in file.readlines():
+                    if line.startswith('def: '):
+                        tokens = line.split("def: ")
+                        if ': ' in tokens[1]:
+                            tokens[1] = tokens[1].replace(': ', ':')
+                            line = "def: " + tokens[1]
+                        
+                        outfile.write(line)
+                    else:
+                        outfile.write(line)
+
+        return path, out_filename
+    
+    @staticmethod
     def correction_of_sbo_file(path, file):
         """
         Correct the initial sbo.obo file which contained syntax errors which prevented to use 

@@ -11,13 +11,21 @@ from gws.model import Resource
 
 from biota.base import Base, DbManager
 from biota.ontology import Ontology
+from biota.taxonomy import Taxonomy
+
+class PathwayCompounds(Base):
+    reactome_pathway_id = CharField(null=True, index=True)
+    chebi_id = CharField(null=True, index=True)
+    species = CharField(null=True, index=True)
+    #species_tax_id = CharField(null=True, index=True)
+    _table_name = 'biota_pathway_copounds'
 
 class Pathway(Ontology):
     """
     This class represents reactome Pathways 
     """
-
-    reactome_id = CharField(null=True, index=True)
+    
+    reactome_pathway_id = CharField(null=True, index=True)
     _ancestors = None
     
     _fts_fields = { **Ontology._fts_fields, 'title': 1.0 }
@@ -59,7 +67,7 @@ class Pathway(Ontology):
         pathways = []
         for _pw in pathway_dict:
             pw = Pathway(
-                reactome_id = _pw["reactome_pathway_id"],
+                reactome_pathway_id = _pw["reactome_pathway_id"],
                 data = {
                     "title": _pw["title"],
                     "species": _pw["species"]
@@ -76,9 +84,6 @@ class Pathway(Ontology):
         with DbManager.db.atomic() as transaction:
             try:
                 ancestor_vals = cls.__query_vals_of_ancestors(pathway_rels)  
-                
-                print(ancestor_vals)
-                
                 while True:
                     vals = ancestor_vals[k:min(k+bulk_size,len(ancestor_vals))]
                     if not len(vals):
@@ -87,28 +92,35 @@ class Pathway(Ontology):
                     PathwayAncestor.insert_many(vals).execute()
                     k = k+bulk_size
             except:
-                raise "Aie"
                 transaction.rollback()
     
         
         # insert chebi pathways
         from biota.compound import Compound
         chebi_pathways = Reactome.parse_chebi_pathway_to_dict(biodata_dir, kwargs['reactome_chebi_pathways_file'])
-        comps = []
+        pathways_comps = []
         for cpw in chebi_pathways:
             chebi_id = "CHEBI:"+cpw["chebi_id"]
-            reactome_pathway_id = cpw["reactome_pathway_id"]
-
-            comp = Compound.get(Compound.chebi_id == chebi_id)
-            comp.reactome_patwhay_id = reactome_pathway_id
-            comps.append(comp)
+            pc = PathwayCompounds(
+                chebi_id = chebi_id, 
+                reactome_pathway_id = cpw["reactome_pathway_id"],
+                species = cpw["species"]
+            )
             
-            if len(comps) >= 500:
-                Compound.save_all(comps)
-                comps = []
+            #try
+            #    tax = Taxonomy.get((Taxonomy.rank == "species") & (Taxonomy.name == species)) 
+            #    pc.species_tax_id = tax.tax_id
+            #except:
+            #    pass
+            
+            pathways_comps.append(pc)
+            
+            if len(pathways_comps) >= 500:
+                PathwayCompounds.save_all(pathways_comps)
+                pathways_comps = []
         
-        if len(comps):
-            Compound.save_all(comps)
+        if len(pathways_comps):
+            PathwayCompounds.save_all(pathways_comps)
 
     @classmethod
     def create_table(cls, *args, **kwargs):
@@ -140,8 +152,8 @@ class Pathway(Ontology):
         for _pw in pathway_rels:
             try:
                 val = {
-                        'pathway': Pathway.get(Pathway.reactome_id == _pw["reactome_pathway_id"]).id,
-                        'ancestor': Pathway.get(Pathway.reactome_id == _pw["ancestor"]).id 
+                        'pathway': Pathway.get(Pathway.reactome_pathway_id == _pw["reactome_pathway_id"]).id,
+                        'ancestor': Pathway.get(Pathway.reactome_pathway_id == _pw["ancestor"]).id 
                     }
                 vals.append(val)
             except:
