@@ -18,8 +18,27 @@ class PathwayCompounds(Base):
     chebi_id = CharField(null=True, index=True)
     species = CharField(null=True, index=True)
     #species_tax_id = CharField(null=True, index=True)
-    _table_name = 'biota_pathway_copounds'
-
+    _table_name = 'biota_pathway_compounds'
+    
+    @property
+    def compound(self):
+        try:
+            c = Compound.get(Compound.chebi_id == self.chebi_id)
+            c.species = self.species
+            return c
+        except:
+            return None
+    
+    @property
+    def pathway(self):
+        try:
+            pw = Pathway.get(Pathway.reactome_pathway_id == self.reactome_pathway_id)
+            pw.species = self.species
+            return pw
+        except:
+            return None
+    
+    
 class Pathway(Ontology):
     """
     This class represents reactome Pathways 

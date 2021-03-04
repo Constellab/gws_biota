@@ -196,13 +196,20 @@ class Compound(Base):
                 vals.append(val)
         return(vals)
     
-    # -- R --
+    # -- P --
     
     @property
-    def reactome_pathway(self):
-        from biota.pathway import Pathway
+    def pathways(self):
+        from biota.pathway import PathwayCompounds
         try:
-            return Pathway.get(Pathway.reactome_id == self.reactome_patwhay_id)
+            pcomps = PathwayCompounds.select().where(PathwayCompounds.chebi_id == self.chebi_id)
+            pathways = []
+            for pc in pcomps:
+                pw = pc.pathway
+                if pw:
+                    pathways.append(pc.pathway)
+            
+            return pathways
         except:
             return None
     

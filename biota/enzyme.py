@@ -534,7 +534,14 @@ class Enzyme(Base):
         return self.data["organism"].capitalize()
 
     # -- P --
-
+    
+    @property
+    def pathway(self):
+        try:
+            return EnzymePathway.get(EnzymePathway.ec_number == self.ec_number)
+        except:
+            return None
+    
     def params(self, name) -> Params:
         """
         Returns the list of parameters associated with `name`
