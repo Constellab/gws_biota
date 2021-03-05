@@ -30,14 +30,14 @@ disjoint_from: ECO:0000217 ! assertion method
 id: ECO:0000001
 name: inference from background scientific knowledge
 def: "A type of curator inference where conclusions are drawn based on the background scientific knowledge of the curator." [ECO:SN]
-is_a: ECO:0000205 ! curator inference
+is_a: ECO:0000000 ! curator inference
 
 [Term]
 id: ECO:0000002
 name: direct assay evidence
 alt_id: ECO:0005006
 def: "A type of experimental evidence resulting from the direct measurement of some aspect of a biological feature." [ECO:SN]
-is_a: ECO:0000006 ! experimental evidence
+is_a: ECO:0000001 ! experimental evidence
 
 [Term]
 id: ECO:0000003
@@ -51,7 +51,7 @@ name: cell fractionation evidence
 def: "A type of fractionation evidence where sub-cellular components are separated based on their physical properties such as density in a sucrose density gradient." [ECO:KIM, TAIR:TED]
 comment: If using this term for Gene Ontology annotation, it would be used most typically for annotations to the cellular component ontology.
 synonym: "cell fractionation" RELATED []
-is_a: ECO:0000100 ! fractionation evidence
+is_a: ECO:0000001 ! fractionation evidence
 
 [Term]
 id: ECO:0000005
@@ -76,7 +76,7 @@ id: ECO:0000007
 name: immunofluorescence evidence
 def: "A type of protein detection assay evidence where a fluorescently labeled antibody is used to detect the presence or localization of a biomolecule within a cell." [ECO:MCC, TAIR:TED]
 synonym: "immunofluorescence" RELATED []
-is_a: ECO:0005517 ! protein detection assay evidence
+is_a: ECO:0000002 ! protein detection assay evidence
 
 [Term]
 id: ECO:0000008
@@ -92,20 +92,20 @@ name: transcript expression evidence
 alt_id: ECO:0000048
 def: "A type of expression pattern evidence where abundance of a transcript is analyzed." [ECO:RCT]
 synonym: "transcript expression level evidence" EXACT []
-is_a: ECO:0000008 ! expression pattern evidence
+is_a: ECO:0000002 ! expression pattern evidence
 
 [Term]
 id: ECO:0000010
 name: protein expression evidence
 def: "A type of expression pattern evidence resulting from protein abundance quantification techniques." [PMC:4029002, url:https\://www.thermofisher.com/us/en/home/life-science/protein-biology/protein-biology-learning-center/protein-biology-resource-library/pierce-protein-methods/overview-protein-expression-systems.html]
-is_a: ECO:0000008 ! expression pattern evidence
+is_a: ECO:0000002 ! expression pattern evidence
 
 [Term]
 id: ECO:0000011
 name: genetic interaction evidence
 def: "A type of experimental phenotypic evidence resulting from the effect that a given gene has on another gene or genes, and the products." [ECO:RCT, PMID:11822023]
 xref: TAIR:TED
-is_a: ECO:0000059 ! experimental phenotypic evidence
+is_a: ECO:0000010 ! experimental phenotypic evidence
 
 [Term]
 id: ECO:0000012
@@ -128,7 +128,7 @@ name: mutant phenotype evidence
 def: "A type of experimental phenotypic evidence in which an observable phenotypic difference results from a change or mutation in DNA, reflecting a different form of an allele." [GO:IMP]
 comment: Note that mutations need not be negative.  Changes to DNA sequence (mutations) may be detrimental, have no impact, or be beneficial.
 comment: The allele that encodes the phenotype most common in a particular natural population is referred to as the wild type allele, while any other form of that allele is known as the mutant form.
-is_a: ECO:0000059 ! experimental phenotypic evidence
+is_a: ECO:0000010 ! experimental phenotypic evidence
 property_value: IAO:0000112 "Indeed, the GroEL protein appears to be more abundant in the LM3 wild type strain compared to the LM3-2 mutant strain, suggesting the involvement of the CcpA protein in the positive regulation of its expression." xsd:string {xref="PMID:17129387"}
 
 [Term]
@@ -142,7 +142,7 @@ id: ECO:0000017
 name: ectopic expression evidence
 def: "A type of experimental phenotypic evidence where a transgenic strain carrying the construct of a promoter cDNA fusion in which a gene of interest is driven by a defined promoter or enhancer is ectopically expressed in the defined pattern to characterize potential cellular properties and functions of a protein of interest." [PMID:10948520, PMID:19301619]
 synonym: "analysis of overexpression/ectopic expression phenotype" RELATED []
-is_a: ECO:0000059 ! experimental phenotypic evidence
+is_a: ECO:0000010 ! experimental phenotypic evidence
 
 [Term]
 id: ECO:0000018
@@ -180,7 +180,7 @@ name: co-purification evidence
 def: "A type of physical interaction evidence where a cellular component subunit is isolated as part of purification of its larger complex." [TAIR:TED]
 synonym: "co-purification" RELATED []
 xref: MI:0025 "copurification"
-is_a: ECO:0000021 ! physical interaction evidence
+is_a: ECO:0000017 ! physical interaction evidence
 
 [Term]
 id: ECO:0000023
@@ -188,13 +188,13 @@ name: affinity evidence
 def: "A type of physical interaction evidence that depends on the strength of the interaction between two entities." [ECO:MCC, PSI-MI:MI\:0400]
 synonym: "ligand binding evidence" NARROW []
 xref: MI:0400 "affinity technology"
-is_a: ECO:0000021 ! physical interaction evidence
+is_a: ECO:0000017 ! physical interaction evidence
 
 [Term]
 id: ECO:0000024
 name: protein binding evidence
 def: "A type of affinity evidence resulting from the binding of a molecule to a protein or protein complex." [GO:0005515, url:https\://en.wikipedia.org/wiki/Mutation]
-is_a: ECO:0000023 ! affinity evidence
+is_a: ECO:0000017 ! affinity evidence
 
 [Term]
 id: ECO:0000025
@@ -202,4 +202,4 @@ name: hybrid interaction evidence
 def: "A type of affinity evidence where proteins of interest (bait and prey) are covalently linked to incomplete fragments of a third protein (reporter) and expressed in vivo, at which time interaction between bait and prey proteins brings reporter fragments in close enough proximity to allow them to reform and become a functional reporter protein." [ECO:MCC, PSI-MI:MI\:0090]
 comment: Typically enzymes which confer resistance to antibiotics, such as Dihydrofolate reductase or Beta-lactamase, or proteins that give colorimetric or fluorescent signals are used. The Bait protein is generally the protein under study and the methods are readily adaptable to highthroughput mode.
 xref: MI:0090 "protein complementation assay"
-is_a: ECO:0000023 ! affinity evidence
+is_a: ECO:0000017 ! affinity evidence

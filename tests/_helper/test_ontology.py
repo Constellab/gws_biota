@@ -21,7 +21,7 @@ class TestOntology(unittest.TestCase):
         self.assertEqual(len(list_go), 14)
         self.assertEqual(list_go[0]['id'], 'GO:0000001')
         self.assertEqual(list_go[1]['id'], 'GO:0000002')
-        self.assertEqual(len(list_go[9]['ancestors']), 2)
+        self.assertEqual(len(list_go[9]['ancestors']), 1)
         
         #### Test sbo parser ####
         file = "sbo_test.obo"
@@ -45,7 +45,8 @@ class TestOntology(unittest.TestCase):
         list_eco = Onto.parse_eco_terms_from_ontoloy(ontology)
         self.assertEqual(len(list_eco), 25)
         self.assertEqual(list_eco[0], {'id': 'ECO:0000000', 'title': 'evidence', 'definition': 'A type of information that is used to support an assertion.'})
-        self.assertEqual(list_eco[10], {'id': 'ECO:0000010', 'title': 'protein expression evidence', 'definition': 'A type of expression pattern evidence resulting from protein abundance quantification techniques.', 'ancestors': ['ECO:0000008']})
+
+        self.assertEqual(list_eco[10], {'id': 'ECO:0000010', 'title': 'protein expression evidence', 'definition': 'A type of expression pattern evidence resulting from protein abundance quantification techniques.', 'ancestors': ['ECO:0000002']})
       
         #### Test pwo parser ####
         file = "pwo_test.obo"

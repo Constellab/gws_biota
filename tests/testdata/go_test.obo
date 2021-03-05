@@ -32,15 +32,15 @@ name: mitochondrion inheritance
 namespace: biological_process
 def: "The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton." [GOC:mcc, PMID:10873824, PMID:11389764]
 synonym: "mitochondrial inheritance" EXACT []
-is_a: GO:0048308 ! organelle inheritance
-is_a: GO:0048311 ! mitochondrion distribution
+is_a: GO:0000001 ! organelle inheritance
+is_a: GO:0000001 ! mitochondrion distribution
 
 [Term]
 id: GO:0000002
 name: mitochondrial genome maintenance
 namespace: biological_process
 def: "The maintenance of the structure and integrity of the mitochondrial genome; includes replication and segregation of the mitochondrial chromosome." [GOC:ai, GOC:vw]
-is_a: GO:0007005 ! mitochondrion organization
+is_a: GO:0000001 ! mitochondrion organization
 
 [Term]
 id: GO:0000003
@@ -57,7 +57,7 @@ subset: goslim_pir
 subset: goslim_plant
 synonym: "reproductive physiological process" EXACT []
 xref: Wikipedia:Reproduction
-is_a: GO:0008150 ! biological_process
+is_a: GO:0000001 ! biological_process
 disjoint_from: GO:0044848 ! biological phase
 
 [Term]
@@ -79,14 +79,14 @@ namespace: molecular_function
 def: "Enables the transfer of zinc ions (Zn2+) from one side of a membrane to the other, probably powered by proton motive force. In high-affinity transport the transporter is able to bind the solute even if it is only present at very low concentrations." [TC:2.A.5.1.1]
 synonym: "high affinity zinc uptake transmembrane transporter activity" EXACT []
 synonym: "high-affinity zinc uptake transmembrane transporter activity" RELATED []
-is_a: GO:0005385 ! zinc ion transmembrane transporter activity
+is_a: GO:0000003 ! zinc ion transmembrane transporter activity
 
 [Term]
 id: GO:0000007
 name: low-affinity zinc ion transmembrane transporter activity
 namespace: molecular_function
 def: "Enables the transfer of a solute or solutes from one side of a membrane to the other according to the reaction: Zn2+ = Zn2+, probably powered by proton motive force. In low-affinity transport the transporter is able to bind the solute only if it is present at very high concentrations." [GOC:mtg_transport, ISBN:0815340729]
-is_a: GO:0005385 ! zinc ion transmembrane transporter activity
+is_a: GO:0000003 ! zinc ion transmembrane transporter activity
 
 [Term]
 id: GO:0000008
@@ -108,7 +108,7 @@ def: "Catalysis of the transfer of a mannose residue to an oligosaccharide, form
 synonym: "1,6-alpha-mannosyltransferase activity" EXACT []
 xref: EC:2.4.1.232
 xref: Reactome:R-HSA-449718 "Addition of a third mannose to the N-glycan precursor by ALG2"
-is_a: GO:0000030 ! mannosyltransferase activity
+is_a: GO:0000007 ! mannosyltransferase activity
 
 [Term]
 id: GO:0000010
@@ -117,7 +117,7 @@ namespace: molecular_function
 def: "Catalysis of the reaction: all-trans-hexaprenyl diphosphate + isopentenyl diphosphate = all-trans-heptaprenyl diphosphate + diphosphate." [PMID:9708911]
 xref: KEGG_REACTION:R05612
 xref: RHEA:20836
-is_a: GO:0016765 ! transferase activity, transferring alkyl or aryl (other than methyl) groups
+is_a: GO:0000007 ! transferase activity, transferring alkyl or aryl (other than methyl) groups
 
 [Term]
 id: GO:0005385
@@ -143,8 +143,8 @@ xref: Reactome:R-HSA-442405 "hZIP5 mediates zinc uptake by cells"
 xref: Reactome:R-HSA-442422 "SLC39A1-4 transports Zn2+ from extracellular region to cytosol"
 xref: Reactome:R-HSA-5654125 "Defective SLC39A4 does not transport Zn2+ from extracellular region to cytosol"
 xref: RHEA:29351
-is_a: GO:0046915 ! transition metal ion transmembrane transporter activity
-is_a: GO:0072509 ! divalent inorganic cation transmembrane transporter activity
+is_a: GO:0000007 ! transition metal ion transmembrane transporter activity
+is_a: GO:0000007 ! divalent inorganic cation transmembrane transporter activity
 relationship: part_of GO:0071577 ! zinc ion transmembrane transport
 
 [Term]
@@ -152,7 +152,7 @@ id: GO:0046915
 name: transition metal ion transmembrane transporter activity
 namespace: molecular_function
 def: "Enables the transfer of transition metal ions from one side of a membrane to the other. A transition metal is an element whose atom has an incomplete d-subshell of extranuclear electrons, or which gives rise to a cation or cations with an incomplete d-subshell. Transition metals often have more than one valency state. Biologically relevant transition metals include vanadium, manganese, iron, copper, cobalt, nickel, molybdenum and silver." [ISBN:0198506732]
-is_a: GO:0046873 ! metal ion transmembrane transporter activity
+is_a: GO:0005385 ! metal ion transmembrane transporter activity
 relationship: part_of GO:0000041 ! transition metal ion transport
 
 [Term]
@@ -160,7 +160,7 @@ id: GO:0072509
 name: divalent inorganic cation transmembrane transporter activity
 namespace: molecular_function
 def: "Enables the transfer of inorganic cations with a valency of two from one side of a membrane to the other. Inorganic cations are atoms or small molecules with a positive charge that do not contain carbon in covalent linkage." [GOC:mah]
-is_a: GO:0022890 ! inorganic cation transmembrane transporter activity
+is_a: GO:0005385 ! inorganic cation transmembrane transporter activity
 relationship: part_of GO:0072511 ! divalent inorganic cation transport
 created_by: mah
 creation_date: 2010-12-16T04:01:36Z
@@ -176,7 +176,7 @@ synonym: "heavy metal ion:hydrogen symporter activity" NARROW []
 synonym: "heavy metal-exporting ATPase activity" NARROW []
 synonym: "high affinity metal ion uptake transporter activity" NARROW []
 synonym: "low affinity metal ion uptake transporter activity" NARROW []
-is_a: GO:0022890 ! inorganic cation transmembrane transporter activity
+is_a: GO:0005385 ! inorganic cation transmembrane transporter activity
 relationship: part_of GO:0030001 ! metal ion transport
 
 [Term]
@@ -186,8 +186,8 @@ namespace: molecular_function
 alt_id: GO:0015082
 def: "Enables the transfer of inorganic cations from one side of a membrane to the other. Inorganic cations are atoms or small molecules with a positive charge that do not contain carbon in covalent linkage." [GOC:ai, GOC:mtg_transport, ISBN:0815340729]
 synonym: "di-, tri-valent inorganic cation transmembrane transporter activity" NARROW [GOC:mah]
-is_a: GO:0008324 ! cation transmembrane transporter activity
-is_a: GO:0015318 ! inorganic molecular entity transmembrane transporter activity
+is_a: GO:0005385 ! cation transmembrane transporter activity
+is_a: GO:0046873 ! inorganic molecular entity transmembrane transporter activity
 
 
 

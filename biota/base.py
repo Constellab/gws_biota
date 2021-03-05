@@ -14,20 +14,10 @@ from gws.settings import Settings
 from gws.logger import Error
 
 settings = Settings.retrieve()
-
+use_prod_db = settings.get_data("use_prod_biota_db")
 db_dir = settings.get_dir("biota:db_dir")
-if not db_dir:
-    db_dir = os.path.join(settings.get_root_dir(), "./gws/data/biota/db/")
-    
-db_name = settings.get_data("db_name")
-if settings.get_data("prod_biota_db"):
-    db_name = "db.sqlite3" #force to use the production biota db
+db_path = settings.build_db_path(db_dir=db_dir, force_production_db=use_prod_db)
 
-biota_db_path = os.path.join(db_dir, db_name)
-if not os.path.exists(db_dir):
-    os.makedirs(db_dir)
-
-is_prod_db = (db_name == "db.sqlite3")
 
 class DbManager(BaseDbManager):
     """
@@ -36,7 +26,7 @@ class DbManager(BaseDbManager):
     Provides backend features for managing databases. 
     """
 
-    db = SqliteDatabase(biota_db_path)
+    db = SqliteDatabase(db_path)
 
 class Base(Resource):
     

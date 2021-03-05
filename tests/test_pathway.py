@@ -38,15 +38,11 @@ class TestPatwhays(unittest.TestCase):
         )
         Pathway.create_pathway_db(**params)
         
-        
-        c = Compound.get(Compound.chebi_id == "CHEBI:10033")
-        self.assertEqual( c.reactome_patwhay_id, "R-SSC-6806664" )
-        self.assertEqual( c.reactome_patwhay.title, "Metabolism of vitamin K" )
-        
-        p = Pathway.get(Pathway.reactome_id == "R-BTA-1296025")
+    
+        p = Pathway.get(Pathway.reactome_pathway_id == "R-BTA-1296025")
         self.assertEqual( p.title, "ATP sensitive Potassium channels" )
         
-        p = Pathway.get(Pathway.reactome_id == "R-BTA-73843")
+        p = Pathway.get(Pathway.reactome_pathway_id == "R-BTA-73843")
         self.assertEqual( p.title, "5-Phosphoribose 1-diphosphate biosynthesis" )
         self.assertEqual( len(p.ancestors), 1 )
         self.assertEqual( p.ancestors[0].title, "Pentose phosphate pathway" )

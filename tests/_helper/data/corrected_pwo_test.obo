@@ -50,7 +50,7 @@ name: Ras superfamily mediated signaling pathway
 def: "The Ras superfamily consists of a diverse group of small, monomeric G proteins that function as molecular switches alternating between the GDP-inactive and the GTP-active bound state. The GTP-bound form can interact with many downstream effectors. Ras superfamily controls a broad spectrum of processes; deregulation of Ras cascades has been linked to several forms of cancer. The superfamily is structurally classified in five families." [GO:0007265, PMID:11027944, PMID:11152757]
 comment: Numerous articles contributed to this definition, too many to cite independently.
 synonym: "monomeric G protein mediated signaling pathway" RELATED []
-is_a: PW:0000125 ! G protein mediated signaling pathway
+is_a: PW:0000005 ! G protein mediated signaling pathway
 
 [Term]
 id: PW:0000007
@@ -59,15 +59,15 @@ def: "The mitogen -activated protein kinase pathway groups several serine/threon
 synonym: "KEGG:04010" RELATED []
 synonym: "MAPK signaling pathway" RELATED []
 is_a: PW:0000003 ! signaling pathway
-is_a: PW:0001194 ! serine/threonine-specific kinase mediated signaling pathway
+is_a: PW:0000005 ! serine/threonine-specific kinase mediated signaling pathway
 
 [Term]
 id: PW:0000008
 name: Wnt signaling pathway
 def: "The secreted glycoproteins of the Wnt family regulate a wide spectrum of developmental processes and they are also playing important roles in the adult organism. Deregulation of Wnt cascades has oncogenic effects and is responsible for tumorigenesis in adults." [PMID:12573432, PMID:15001769, PMID:15041171]
 synonym: "KEGG:04310" RELATED []
-is_a: PW:0000650 ! signaling pathway pertinent to development
-is_a: PW:0000656 ! glycoprotein signaling pathway
+is_a: PW:0000001 ! signaling pathway pertinent to development
+is_a: PW:0000005 ! glycoprotein signaling pathway
 
 [Term]
 id: PW:0000009
@@ -76,7 +76,7 @@ def: "Apoptosis is a programmed cell death pathway that is characterized by part
 synonym: "KEGG:04210" RELATED []
 synonym: "programmed cell death pathway" RELATED []
 synonym: "Reactome:R-HSA-109581" EXACT []
-is_a: PW:0001557 ! programmed cell death pathway
+is_a: PW:0000005 ! programmed cell death pathway
 
 [Term]
 id: PW:0000010
@@ -108,7 +108,7 @@ id: PW:0000014
 name: neurodegenerative pathway
 def: "Neurodegenerative diseases group together a number of conditions of various and many times poorly understood origins that are characterized by the progressive loss of particular neurons, the formation of particular structures such as plaques and fibrils, and protein aggregates. Proteosomal degradation, programmed cell death and oxidative stress are among a number of pathways thought to be disrupted." [inHouse:InHouse-PW-dictionary]
 synonym: "neurodegenerative disease pathway" EXACT []
-is_a: PW:0001412 ! nervous system disease pathway
+is_a: PW:0000005 ! nervous system disease pathway
 
 [Term]
 id: PW:0000015
@@ -135,7 +135,7 @@ synonym: "HD pathway" EXACT []
 synonym: "Huntington's chorea pathway" EXACT []
 synonym: "Huntington disease pathway" EXACT []
 synonym: "KEGG:05016" RELATED []
-is_a: PW:0000171 ! polyglutamine repeat pathway
+is_a: PW:0000005 ! polyglutamine repeat pathway
 
 [Term]
 id: PW:0000018
@@ -212,8 +212,8 @@ name: glutamic acid/glutamate metabolic pathway
 def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation glutamic acid/glutamate. Glutamate is the major excitatory neurotransmitter." [OneLook:www.onelook.com]
 comment: Definition compiled based on the information available for glutamate at OneLook
 synonym: "SMP:00072" RELATED []
-is_a: PW:0000445 ! excitatory neurotransmitter metabolic pathway
-is_a: PW:0001075 ! hydrophilic amino acid metabolic pathway
+is_a: PW:0000025 ! excitatory neurotransmitter metabolic pathway
+is_a: PW:0000026 ! hydrophilic amino acid metabolic pathway
 
 [Term]
 id: PW:0000028
@@ -221,7 +221,7 @@ name: alanine, aspartate and glutamate metabolic pathway
 def: "Those metabolic reactions involved in the synthesis, utilization and/or degradation of alanine, aspartate and glutamate." [OneLook:www.onelook.com]
 comment: The definition was compiled based on the information on alanine and aspartate available at OneLook.
 synonym: "KEGG:00250" RELATED []
-is_a: PW:0001077 ! amino acid metabolic pathway (KEGG)
+is_a: PW:0000026 ! amino acid metabolic pathway (KEGG)
 
 [Term]
 id: PW:0000029
@@ -230,7 +230,7 @@ alt_id: PW:0000030
 def: "Acetyl-CoA, the starting material for fatty acid biosynthesis, can be derived from amino acid and lipid degradation or the oxidative decarboxylation of pyruvate. Fatty acid biosynthesis involves the condensation of C2 units; it requires seven enzymatic reactions which are carried out by the multifunctional enzyme fatty acid synthase." [PMID:11248039, PMID:8001737]
 synonym: "KEGG:00061" RELATED []
 synonym: "SMP:00456" RELATED []
-is_a: PW:0000058 ! fatty acid metabolic pathway
+is_a: PW:0000026 ! fatty acid metabolic pathway
 
 [Term]
 id: PW:0000031
