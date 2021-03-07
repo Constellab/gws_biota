@@ -443,13 +443,20 @@ class Enzyme(Base):
         # saved all deprecated enzymes
         deprecated_enzymes = []
         for dep_ec in list_deprecated_ec:
-            t_enz = DeprecatedEnzyme(
-                ec_number=dep_ec["old_ec"], 
-                new_ec_number=dep_ec["new_ec"],
-                data = dep_ec["data"]
-            )
-            
-            deprecated_enzymes.append(t_enz)
+            if dep_ec["new_ec"]:
+                for ne in dep_ec["new_ec"]:
+                    t_enz = DeprecatedEnzyme(
+                        ec_number=dep_ec["old_ec"], 
+                        new_ec_number=ne,
+                        data = dep_ec["data"]
+                    )
+                    deprecated_enzymes.append(t_enz)
+            else:
+                t_enz = DeprecatedEnzyme(
+                    ec_number=dep_ec["old_ec"], 
+                    data = dep_ec["data"]
+                )
+                deprecated_enzymes.append(t_enz)
         
         if deprecated_enzymes:
             DeprecatedEnzyme.save_all(deprecated_enzymes)

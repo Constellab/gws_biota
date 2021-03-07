@@ -97,12 +97,21 @@ class TestEnzyme(unittest.TestCase):
         self.assertEqual(Q[0].name, 'peptidyl-glutaminase')
         
         # test deprecated ids
-        trans_enzyme = DeprecatedEnzyme.get(DeprecatedEnzyme.ec_number == '1.1.1.109')
+        Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == '1.1.1.109')
         
-        print(trans_enzyme.data)
-        self.assertEqual(trans_enzyme.ec_number, '1.1.1.109')
-        self.assertEqual(trans_enzyme.new_ec_number, '1.3.1.28')
-        self.assertEqual(trans_enzyme.reason, 'transferred')
+        self.assertEqual(len(Q), 2)
+        
+        
+        print(Q[0].data)
+        print(Q[1].data)
+        
+        self.assertEqual(Q[0].ec_number, '1.1.1.109')
+        self.assertEqual(Q[0].new_ec_number, '1.3.1.28')
+        self.assertEqual(Q[0].reason, 'transferred')
+        
+        self.assertEqual(Q[1].ec_number, '1.1.1.109')
+        self.assertEqual(Q[1].new_ec_number, '1.1.1.119')
+        self.assertEqual(Q[1].reason, 'transferred')
         
         
         enzyme_class = EnzymeClass.get(EnzymeClass.ec_number == '1.1.-.-')
