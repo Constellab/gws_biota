@@ -30,7 +30,7 @@ from gws.logger import Error
 class Compound(Base):
     """
     This class represents ChEBI Ontology terms.
-    
+
     Chemical Entities of Biological Interest (ChEBI) includes an ontological classification, whereby the 
     relationships between molecular entities or classes of entities and their parents and/or children are 
     specified (https://www.ebi.ac.uk/chebi/). ChEBI data are available under the Creative Commons License (CC BY 4.0),

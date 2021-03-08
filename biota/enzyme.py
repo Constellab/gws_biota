@@ -275,13 +275,6 @@ class DeprecatedEnzyme(Base):
         except:
             return None
         
-    @property
-    def old_enzyme(self):
-        try:
-            return Enzyme.get(Enzyme.ec_number == self.old_ec_number)
-        except:
-            return None
-        
         
 class Enzyme(Base):
     """
@@ -332,6 +325,8 @@ class Enzyme(Base):
     tax_family = CharField(null=True, index=True)
     tax_species = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
+    
+    related_deprecated_enzyme = None  #dyamically added if by method select_and_follow_if_deprecated
     
     bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
     
@@ -579,7 +574,37 @@ class Enzyme(Base):
         return Q
 
     # -- S --
-
+    
+    @classmethod
+    def select_and_follow_if_deprecated(self, ec_number, tax_id = None):
+        if tax_id:
+            try:
+                tax = Taxonomy.get(Taxonomy.tax_id == tax_id)
+            except:
+                return []
+            
+            tax_field = getattr(Enzyme, "tax_"+tax.rank)
+            Q = Enzyme.select().where((Enzyme.ec_number == ec_number) & (tax_field == tax_id))
+        else:
+            Q = Enzyme.select().where(Enzyme.ec_number == ec_number)
+        
+        if not len(Q):
+            Q = []
+            depre_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == ec_number)
+            for deprecated_enzyme in depre_Q:
+                new_enzyme = deprecated_enzyme.new_enzyme
+                new_enzyme.related_deprecated_enzyme = deprecated_enzyme
+                
+                if tax_id:
+                    if new_enzyme.tax_id == tax_id:
+                        Q.append(new_enzyme)
+                else:
+                    Q.append(new_enzyme)
+        
+        return Q
+                
+                
+            
     def save(self, *arg, **kwargs):
         if isinstance(self.data, OrderedDict):
             self.data = dict(self.data)

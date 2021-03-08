@@ -100,15 +100,9 @@ class TestEnzyme(unittest.TestCase):
         Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == '1.1.1.109')
         
         self.assertEqual(len(Q), 2)
-        
-        
-        print(Q[0].data)
-        print(Q[1].data)
-        
         self.assertEqual(Q[0].ec_number, '1.1.1.109')
         self.assertEqual(Q[0].new_ec_number, '1.3.1.28')
         self.assertEqual(Q[0].reason, 'transferred')
-        
         self.assertEqual(Q[1].ec_number, '1.1.1.109')
         self.assertEqual(Q[1].new_ec_number, '1.1.1.119')
         self.assertEqual(Q[1].reason, 'transferred')
@@ -116,4 +110,14 @@ class TestEnzyme(unittest.TestCase):
         
         enzyme_class = EnzymeClass.get(EnzymeClass.ec_number == '1.1.-.-')
         self.assertEqual(enzyme_class.title, 'Acting on the CH-OH group of donors')
+        
+        
+        # follow deprecated enzymes
+        Q = Enzyme.select_and_follow_if_deprecated( ec_number = '1.1.1.109' )
+        self.assertEqual(len(Q), 2)
+        self.assertEqual(Q[0].ec_number, '1.3.1.28')
+        self.assertEqual(Q[1].ec_number, '1.1.1.119')
+        
+        self.assertEqual(Q[0].related_deprecated_enzyme.ec_number, '1.1.1.109')
+        self.assertEqual(Q[1].related_deprecated_enzyme.ec_number, '1.1.1.109')
         
