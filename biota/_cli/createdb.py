@@ -9,7 +9,7 @@ from gws.settings import Settings
 from gws.logger import Info, Warning, Error
 
 from biota._cli.db_creator import DbCreator
-from gws.model import Protocol, Experiment
+from gws.model import Protocol, Experiment, Study
 
 @click.command(context_settings=dict(
     ignore_unknown_options=True,
@@ -34,7 +34,7 @@ def createdb(ctx, user="Gencoverer", no_fts=False):
         bto_file        = "./brenda/bto/bto.json",
         pwo_file        = "./pwo/pwo.obo",
         brenda_file     = "./brenda/brenda/brenda_download.txt",
-        protein_file      = "./uniprot/uniprot_sprot.fasta",
+        protein_file    = "./uniprot/uniprot_sprot.fasta",
         bkms_file       = "./bkms/Reactions_BKMS.csv",
         ncbi_node_file          = "./ncbi/taxdump/nodes.dmp",
         ncbi_name_file          = "./ncbi/taxdump/names.dmp",
@@ -74,6 +74,8 @@ def createdb(ctx, user="Gencoverer", no_fts=False):
     
     for k in params:
         db_creator.set_param(k, params[k])
-        
-    e = protocol.create_experiment()
+    
+    #create a defaut study
+    study = Study.get_default_instance()
+    e = protocol.create_experiment(study=study)
     asyncio.run( e.run() )

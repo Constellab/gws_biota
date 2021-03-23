@@ -3,18 +3,15 @@
     "authors"       : "Gencovery",
     "version"       : "0.1",
     "log_dir"       : "../../logs",
-    "db_dir"        : "../../data/db/",
+    "data_dir"      : "../../data/",
     "db_name"       : "db.sqlite3",
     
     "dirs"          : {
         "biota:testdata_dir"            : "./tests/testdata",
-        "biota:db_dir"                  : "../../data/biota/db/",
-        "biota:biodata_dir"             : "../../data/biota/biodata/"
+        "biota:biodata_dir"             : "../../data/prod/biota/biodata/"
     },
 
-    "urls":{
-        "biota:quickgo_api_url"         : "https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?selectedFields=geneProductId&selectedFields=symbol&selectedFields=qualifier&selectedFields=goId&selectedFields=goAspect&selectedFields=evidenceCode&selectedFields=goEvidence&selectedFields=reference&selectedFields=withFrom&selectedFields=taxonId&selectedFields=assignedBy&selectedFields=synonyms&selectedFields=name&geneProductId="
-    },
+    "urls":{},
 
     "externs" : [
         "brenda-py"
