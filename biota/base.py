@@ -15,7 +15,8 @@ from gws.logger import Error
 
 settings = Settings.retrieve()
 use_prod_db = settings.get_data("use_prod_biota_db")
-db_path = settings.build_db_path(brick="biota", force_production_db=use_prod_db)
+brick_data_dir = settings.get_dir("biota:data_dir")
+db_path = settings.build_db_path(brick="biota", brick_data_dir=brick_data_dir, force_production_db=use_prod_db)
 
 class DbManager(BaseDbManager):
     """
