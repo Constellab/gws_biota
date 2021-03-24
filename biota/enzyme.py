@@ -686,10 +686,16 @@ class Enzyme(Base):
             for pathway in Q:
                 for k in dbs:
 
-                    if bkms.get(k+'_pathway_name',"") != "":
-                        pwy_id = bkms.get(k+'_pathway_id', "ID")
+                    if bkms.get(k+'_pathway_name'):
+                        #pwy_id = bkms.get(k+'_pathway_id', "ID")
+                        #pwy_name = bkms[k+'_pathway_name']
+                        #pathway.data[k+'_pathway'] = { pwy_id : pwy_name }
+                        pwy_id = bkms.get(k+'_pathway_id', "")
                         pwy_name = bkms[k+'_pathway_name']
-                        pathway.data[k+'_pathway'] = { pwy_id : pwy_name }
+                        pathway.data[k] = { 
+                            "id": pwy_id,
+                            "name": pwy_name 
+                        }
 
                 pathways[pathway.ec_number] = pathway
 
