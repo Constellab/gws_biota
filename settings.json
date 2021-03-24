@@ -8,8 +8,8 @@
     
     "dirs"          : {
         "biota:data_dir"             : "../../data/",
-        "biota:testdata_dir"            : "./tests/testdata",
-        "biota:biodata_dir"             : "../../data/prod/biota/biodata/"
+        "biota:testdata_dir"         : "./tests/testdata",
+        "biota:biodata_dir"          : "../../data/prod/biota/biodata/"
     },
 
     "urls":{},

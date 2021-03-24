@@ -55,7 +55,7 @@ class DbCreator(Process):
         "reactome_pathway_relations_file" : {"type": str, "default": "./reactome/ReactomePathwaysRelation.txt"},
         "reactome_chebi_pathways_file"    : {"type": str, "default": "./reactome/ChEBI2Reactome.txt"},
         
-        "biota:db_dir"              : {"type": str},
+        "biota:data_dir"            : {"type": str},
         "biota:biodata_dir"         : {"type": str},
         "biota:testdata_dir"        : {"type": str},
     }
