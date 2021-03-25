@@ -579,7 +579,7 @@ class Enzyme(Base):
     def select_and_follow_if_deprecated(self, ec_number, tax_id = None):
         if tax_id:
             try:
-                tax = Taxonomy.get(Taxonomy.tax_id == tax_id)
+                tax = BiotaTaxo.get(BiotaTaxo.tax_id == tax_id)
             except:
                 return []
             
