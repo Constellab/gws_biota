@@ -586,24 +586,9 @@ class Enzyme(Base):
         return Q
 
     # -- S --
-    
-    @classmethod
-    def select_and_follow_if_deprecated(self, ec_number):
-        Q = Enzyme.select().where(Enzyme.ec_number == ec_number)
-        if not len(Q):
-            Q = []
-            depre_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == ec_number)
 
-            for deprecated_enzyme in depre_Q:
-                Q_selected = deprecated_enzyme.select_new_enzymes()
-                for new_enzyme in Q_selected:
-                    new_enzyme.related_deprecated_enzyme = deprecated_enzyme
-                    Q.append(new_enzyme)  
-                
-        return Q
-    
     @classmethod
-    def select_and_follow_if_deprecated_OLD(self, ec_number, tax_id = None):
+    def select_and_follow_if_deprecated(self, ec_number, tax_id = None):
         if tax_id:
             try:
                 tax = BiotaTaxo.get(BiotaTaxo.tax_id == tax_id)
@@ -624,8 +609,8 @@ class Enzyme(Base):
                 Q_selected = deprecated_enzyme.select_new_enzymes()
                 for new_enzyme in Q_selected:
                     if tax_id:
-                        
-                        print("======")
+
+                        print("===>")
                         print(tax.rank)
                         print(tax_id)
                         print(getattr(new_enzyme, "tax_"+tax.rank))
