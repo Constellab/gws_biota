@@ -610,11 +610,6 @@ class Enzyme(Base):
                 for new_enzyme in Q_selected:
                     if tax_id:
 
-                        print("===>")
-                        print(tax.rank)
-                        print(tax_id)
-                        print(getattr(new_enzyme, "tax_"+tax.rank))
-                        
                         if getattr(new_enzyme, "tax_"+tax.rank) == tax_id:
                             new_enzyme.related_deprecated_enzyme = deprecated_enzyme
                             Q.append(new_enzyme)
