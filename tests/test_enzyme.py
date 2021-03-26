@@ -95,7 +95,7 @@ class TestEnzyme(unittest.TestCase):
         Q = Enzyme.search_by_name("%glutaminase")
         self.assertEqual(len(Q), 1)
         self.assertEqual(Q[0].name, 'peptidyl-glutaminase')
-        
+
         # test deprecated ids
         Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == '1.1.1.109')
         
@@ -114,10 +114,13 @@ class TestEnzyme(unittest.TestCase):
         
         # follow deprecated enzymes
         Q = Enzyme.select_and_follow_if_deprecated( ec_number = '1.1.1.109' )
-        self.assertEqual(len(Q), 2)
-        self.assertEqual(Q[0].ec_number, '1.3.1.28')
-        self.assertEqual(Q[1].ec_number, '1.1.1.119')
+        self.assertEqual(len(Q), 15)
+ 
+        for e in Q:
+            self.assertTrue(e.ec_number in ['1.1.1.119', '1.3.1.28'])
+            self.assertEqual(e.related_deprecated_enzyme.ec_number, '1.1.1.109')
         
-        self.assertEqual(Q[0].related_deprecated_enzyme.ec_number, '1.1.1.109')
-        self.assertEqual(Q[1].related_deprecated_enzyme.ec_number, '1.1.1.109')
-        
+        # follow deprecated enzymes with selected tax_id
+        #tax_id = Q[0].tax_id
+        #Q = Enzyme.select_and_follow_if_deprecated( ec_number = '1.1.1.109', tax_id = tax_id )
+        #self.assertEqual(len(Q), 15)

@@ -11,6 +11,7 @@ from peewee import Model as PWModel
 
 from gws.controller import Controller
 from gws.model import Config, Process, Resource
+from gws.logger import Error
 
 from biota.base import Base, DbManager
 from biota.taxonomy import Taxonomy as BiotaTaxo
@@ -268,12 +269,18 @@ class DeprecatedEnzyme(Base):
     def reason(self):
         return self.data["reason"]
     
-    @property
-    def new_enzyme(self):
+    def select_new_enzymes(self):
         try:
-            return Enzyme.get(Enzyme.ec_number == self.new_ec_number)
+            return Enzyme.select().where(Enzyme.ec_number == self.new_ec_number)
         except:
             return None
+        
+    #@property
+    #def new_enzyme(self):
+    #    try:
+    #        return Enzyme.get(Enzyme.ec_number == self.new_ec_number)
+    #    except:
+    #        return None
         
         
 class Enzyme(Base):
@@ -472,6 +479,11 @@ class Enzyme(Base):
         super().create_table(*args, **kwargs)
         EnzymeBTO.create_table()
 
+    @property
+    def classification(self):
+        ec_class = ".".join(self.ec_number.split(".")[0:-1]) + ".-"
+        return EnzymeClass.get(EnzymeClass.ec_number == ec_class)
+        
     # -- D -- 
 
     @classmethod
@@ -581,7 +593,8 @@ class Enzyme(Base):
             try:
                 tax = BiotaTaxo.get(BiotaTaxo.tax_id == tax_id)
             except:
-                return []
+                raise Error("Enzyme", "select_and_follow_if_deprecated", f"Taxonomy ID {tax_id} not found")
+                #return []
             
             tax_field = getattr(Enzyme, "tax_"+tax.rank)
             Q = Enzyme.select().where((Enzyme.ec_number == ec_number) & (tax_field == tax_id))
@@ -591,16 +604,19 @@ class Enzyme(Base):
         if not len(Q):
             Q = []
             depre_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == ec_number)
+
             for deprecated_enzyme in depre_Q:
-                new_enzyme = deprecated_enzyme.new_enzyme
-                new_enzyme.related_deprecated_enzyme = deprecated_enzyme
+                Q_selected = deprecated_enzyme.select_new_enzymes()
+                for new_enzymes in Q_selected:
+                    if tax_id:
+                        if getattr(new_enzymes, "tax_"+tax.rank) == tax_id:
+                            new_enzymes.related_deprecated_enzyme = deprecated_enzyme
+                            Q.append(new_enzymes)
+                    else:
+                        new_enzymes.related_deprecated_enzyme = deprecated_enzyme
+                    
+                    Q.append(new_enzymes)  
                 
-                if tax_id:
-                    if new_enzyme.tax_id == tax_id:
-                        Q.append(new_enzyme)
-                else:
-                    Q.append(new_enzyme)
-        
         return Q
                 
                 
