@@ -9,7 +9,7 @@ from gws.settings import Settings
 from gws.logger import Info, Warning, Error
 
 from biota._cli.db_creator import DbCreator
-from gws.model import Protocol, Experiment, Study
+from gws.model import Protocol, Experiment, Study, User
 
 @click.command(context_settings=dict(
     ignore_unknown_options=True,
@@ -77,5 +77,5 @@ def createdb(ctx, user="Gencoverer", no_fts=False):
     
     #create a defaut study
     study = Study.get_default_instance()
-    e = protocol.create_experiment(study=study)
+    e = protocol.create_experiment(study=study, user=User.get_sysuser())
     asyncio.run( e.run() )
