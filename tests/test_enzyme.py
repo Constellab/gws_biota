@@ -95,10 +95,17 @@ class TestEnzyme(unittest.TestCase):
         Q = Enzyme.search_by_name("%glutaminase")
         self.assertEqual(len(Q), 1)
         self.assertEqual(Q[0].name, 'peptidyl-glutaminase')
-
-        # test deprecated ids
-        Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == '1.1.1.109')
         
+        # Show all deprecated
+        print("\nDeprecated enzymes map")
+        Q = DeprecatedEnzyme.select()
+        for e in Q:
+            print(f"deprecated = {e.ec_number} -> {e.new_ec_number}")
+        
+        # Test deprecated ids
+        # enzyme 1.1.1.109 is tranferred to {1.3.1.28 and 1.1.1.119}
+        print("Deprecated enzymes")
+        Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == '1.1.1.109')
         self.assertEqual(len(Q), 2)
         self.assertEqual(Q[0].ec_number, '1.1.1.109')
         self.assertEqual(Q[0].new_ec_number, '1.3.1.28')
@@ -107,20 +114,34 @@ class TestEnzyme(unittest.TestCase):
         self.assertEqual(Q[1].new_ec_number, '1.1.1.119')
         self.assertEqual(Q[1].reason, 'transferred')
         
-        
+        # Test enzyme class
         enzyme_class = EnzymeClass.get(EnzymeClass.ec_number == '1.1.-.-')
         self.assertEqual(enzyme_class.title, 'Acting on the CH-OH group of donors')
         
-        
-        # follow deprecated enzymes
+        # Follow deprecated enzymes
+        print("\nResolve deprecated enzymes")
         Q = Enzyme.select_and_follow_if_deprecated( ec_number = '1.1.1.109' )
         self.assertEqual(len(Q), 15)
- 
         for e in Q:
+            print(e.ec_number)
             self.assertTrue(e.ec_number in ['1.1.1.119', '1.3.1.28'])
             self.assertEqual(e.related_deprecated_enzyme.ec_number, '1.1.1.109')
         
-        # follow deprecated enzymes with selected tax_id
-        #tax_id = Q[0].tax_id
-        #Q = Enzyme.select_and_follow_if_deprecated( ec_number = '1.1.1.109', tax_id = tax_id )
+        # Multiple deprecated
+        print("\nFollow multiple deprecated enzymes")
+        Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == '1.1.0.10')
+        for e in Q:
+            for ne in e.select_new_enzymes():
+                print(f"deprecated = {e.ec_number} -> {ne.ec_number}")
+        
+        # Multiple deprecated
+        # These fake enzymes are deprecated: 1.1.0.10 -> 1.3.1.45 -> 1.3.1.18 -> {1.3.1.28 and 1.1.1.119}
+        print("\nResolve multiple deprecated enzymes")
+        Q = Enzyme.select().where(Enzyme.ec_number.in_(['1.1.0.10', '1.3.1.45', '1.3.1.18']))
+        self.assertEqual(len(Q), 0)
+        Q = Enzyme.select_and_follow_if_deprecated( ec_number = '1.1.0.10' )
         #self.assertEqual(len(Q), 15)
+        for e in Q:
+            print(e.ec_number)
+            #self.assertTrue(e.ec_number in ['1.1.1.119', '1.3.1.28'])
+            #self.assertEqual(e.related_deprecated_enzyme.ec_number, '1.1.1.109')

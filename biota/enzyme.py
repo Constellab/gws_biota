@@ -281,21 +281,21 @@ class DeprecatedEnzyme(Base):
         return self.data["reason"]
     
     def select_new_enzymes(self):
-        Q = []
+        Q = {}
         if self.new_ec_number:
             tmp_Q = Enzyme.select().where(Enzyme.ec_number == self.new_ec_number)        
             if tmp_Q:
                 for e in tmp_Q:
-                    Q.append(e)
+                    Q[e.uri] = e
             else:
-                Q = []
+                Q = {}
                 # if the new enzyme if also deprecated, we follow the deprecation chain
                 deprec_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == self.new_ec_number)
                 for deprec in deprec_Q:
                     for e in deprec.select_new_enzymes():
-                        Q.append(e)
-                    
-        return Q
+                        Q[e.uri] = e
+        
+        return list(Q.values())
 
 class Enzyme(Base):
     """
@@ -389,6 +389,28 @@ class Enzyme(Base):
         brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
         list_of_enzymes, list_deprecated_ec = brenda.parse_all_enzyme_to_dict()
         
+        # saved all deprecated enzymes
+        deprecated_enzymes = []
+        for dep_ec in list_deprecated_ec:
+            if dep_ec["new_ec"]:
+                for ne in dep_ec["new_ec"]:
+                    t_enz = DeprecatedEnzyme(
+                        ec_number=dep_ec["old_ec"], 
+                        new_ec_number=ne,
+                        data = dep_ec["data"]
+                    )
+                    deprecated_enzymes.append(t_enz)
+            else:
+                t_enz = DeprecatedEnzyme(
+                    ec_number=dep_ec["old_ec"], 
+                    data = dep_ec["data"]
+                )
+                deprecated_enzymes.append(t_enz)
+            
+        if deprecated_enzymes:
+            DeprecatedEnzyme.save_all(deprecated_enzymes)
+            
+            
         # save EnzymePathway
         pathways = {}
         for d in list_of_enzymes:
@@ -455,28 +477,6 @@ class Enzyme(Base):
             list_of_bkms = BKMS.parse_csv_from_file(biodata_dir, kwargs['bkms_file'])
             cls.__update_pathway_from_bkms(list_of_bkms)
         
-        
-        # saved all deprecated enzymes
-        deprecated_enzymes = []
-        for dep_ec in list_deprecated_ec:
-            if dep_ec["new_ec"]:
-                for ne in dep_ec["new_ec"]:
-                    t_enz = DeprecatedEnzyme(
-                        ec_number=dep_ec["old_ec"], 
-                        new_ec_number=ne,
-                        data = dep_ec["data"]
-                    )
-                    deprecated_enzymes.append(t_enz)
-            else:
-                t_enz = DeprecatedEnzyme(
-                    ec_number=dep_ec["old_ec"], 
-                    data = dep_ec["data"]
-                )
-                deprecated_enzymes.append(t_enz)
-        
-        if deprecated_enzymes:
-            DeprecatedEnzyme.save_all(deprecated_enzymes)
-            
         
     @classmethod
     def create_table(cls, *args, **kwargs):
