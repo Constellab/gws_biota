@@ -149,6 +149,7 @@ class Pathway(Ontology):
         """
         super().create_table(*args, **kwargs)
         PathwayAncestor.create_table()
+        PathwayCompounds.create_table()
 
     # -- D --
 
@@ -160,6 +161,7 @@ class Pathway(Ontology):
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         PathwayAncestor.drop_table()
+        PathwayCompounds.drop_table()
         super().drop_table(*arg, **kwargs)
 
     # -- S -- 
