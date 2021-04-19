@@ -5,3 +5,4 @@
 # About us: https://gencovery.com
 
 nohup python3 manage.py --cli biota.cli.createdb --no-fts &
+#python3 manage.py --cli biota.cli.createdb --no-fts

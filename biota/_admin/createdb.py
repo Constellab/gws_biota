@@ -7,26 +7,29 @@ import asyncio
 import click
 from gws.settings import Settings
 from gws.logger import Info, Warning, Error
-
-from biota._cli.db_creator import DbCreator
+from gws.controller import Controller
 from gws.model import Protocol, Experiment, Study, User
+from biota._admin.db_creator import DbCreator
+from biota.base import Base
 
-@click.command(context_settings=dict(
-    ignore_unknown_options=True,
-    allow_extra_args=True
-))
-@click.pass_context
-@click.option('--user', default="Gencoverer", help='User name')
-@click.option('--no-fts', is_flag=True, help='Activate Fulltext Search')
-def createdb(ctx, user="Gencoverer", no_fts=False):
-    settings = Settings.retrieve()
-    settings.activate_fts(not no_fts)
-    settings.save()
-
-    Info(f"Hello {user}")
+    
+def create_experiment(user=None, fts=True) -> Experiment:
+ 
+    if not user:
+        try:
+            user = Controller.get_current_user()
+        except:
+            user = User.get_sysuser()
+    
+    if not User.authenticate(uri=user.uri, console_token=user.console_token):
+        raise Error("createdb" "Cannot authenticate the user")
+    
+    Info(f"Hello {user.full_name}")
     Info(f"Creating tables ...")
 
     params = dict(
+        activate_fts    = bool(fts),
+        
         go_file         = "./go/go.obo",
         sbo_file        = "./sbo/sbo.obo",
         eco_file        = "./eco/eco.obo",
@@ -56,7 +59,8 @@ def createdb(ctx, user="Gencoverer", no_fts=False):
         reactome_pathway_relations_file = './reactome/ReactomePathwaysRelation.txt',
         reactome_chebi_pathways_file    = './reactome/ChEBI2Reactome.txt'
     )
-
+    
+    settings = Settings.retrieve()
     dirs = settings.get_data("dirs")
     for k in dirs:
         if k.startswith("biota:"):
@@ -77,5 +81,10 @@ def createdb(ctx, user="Gencoverer", no_fts=False):
     
     #create a defaut study
     study = Study.get_default_instance()
-    e = protocol.create_experiment(study=study, user=User.get_sysuser())
-    asyncio.run( e.run() )
+    e = protocol.create_experiment(study=study, user=user)
+    return e
+
+def createdb(user=None, fts=True) -> Experiment:
+    e = create_experiment(user, fts)
+    asyncio.run( e.run(user=user) )
+    return e

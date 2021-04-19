@@ -8,6 +8,8 @@ import time
 from gws.model import Process
 from gws.logger import Info, Error
 
+from biota.base import Base
+
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
@@ -23,7 +25,8 @@ class DbCreator(Process):
 
     input_specs = {}
     output_specs = {}
-    config_specs =  {
+    config_specs =  { 
+        "activate_fts"             : {"type": bool, "default": True, "description": "True to active full-text search, False otherwise. Defaults to True"},
         "go_file"                   : {"type": str, "default": "./go/go.obo"},
         "sbo_file"                  : {"type": str, "default": "./sbo/sbo.obo"},
         "eco_file"                  : {"type": str, "default": "./eco/eco.obo"},
@@ -61,9 +64,13 @@ class DbCreator(Process):
     }
 
     async def task( self ):
-
-        if GO.table_exists():
-            raise Error("DbCreator", "task", "Biodata databases already exist")
+        
+        # deactivate full_text_search functionalitie is required
+        Base._is_fts_active = self.get_param("activate_fts") 
+    
+        if ECO.table_exists():
+            if ECO.select().count():
+                raise Error("DbCreator", "task", "An none empty biota database already exists")
 
         # drop tables
         GO.drop_table()
@@ -89,7 +96,6 @@ class DbCreator(Process):
         Info("Start creating biota_db...")
 
         params = (self.config.params).copy()    #get a copy
-        params['job'] = self.job
 
         # check that all paths exists
         Info("Check that all biodata files exist...")

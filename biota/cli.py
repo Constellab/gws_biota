@@ -15,7 +15,9 @@ import click
     allow_extra_args=True
 ))
 @click.pass_context
-@click.option('--user', '-u', help='User name')
-def createdb(ctx, user):
-    from biota._cli.createdb import createdb as do_createdb
-    do_createdb(user)
+@click.option('--no-fts', is_flag=True, help='Activate full-text search')
+def createdb(ctx, no_fts=False):
+    from biota._admin.createdb import createdb as _admin_createdb    
+    
+    fts = not no_fts
+    _admin_createdb(fts=fts)
