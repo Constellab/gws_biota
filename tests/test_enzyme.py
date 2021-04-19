@@ -143,5 +143,4 @@ class TestEnzyme(unittest.TestCase):
         #self.assertEqual(len(Q), 15)
         for e in Q:
             print(e.ec_number)
-            #self.assertTrue(e.ec_number in ['1.1.1.119', '1.3.1.28'])
-            #self.assertEqual(e.related_deprecated_enzyme.ec_number, '1.1.1.109')
+            self.assertTrue(e.ec_number in ['1.1.1.119', '1.3.1.28'])
