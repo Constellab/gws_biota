@@ -17,7 +17,7 @@ from gws.logger import Error
 
 settings = Settings.retrieve()
 
-if Controller.is_http_context:
+if Controller.is_http_context():
     use_prod_db = True
 else:
     use_prod_db = settings.get_data("use_prod_biota_db")
