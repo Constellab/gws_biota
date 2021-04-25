@@ -213,6 +213,22 @@ class Compound(Base):
         except:
             return None
     
+    # -- R --
+    
+    @property
+    def reactions(self):
+        from biota.reaction import ReactionSubstrate, ReactionProduct
+        rxns = []
+        Q = ReactionSubstrate.select().where(ReactionSubstrate.compound == self)
+        for r in Q:
+            rxns.append(r.reaction)
+            
+        Q = ReactionProduct.select().where(ReactionProduct.compound == self)
+        for r in Q:
+            rxns.append(r.reaction)
+            
+        return rxns
+    
 class CompoundAncestor(PWModel):
     """
     This class defines the many-to-many relationship between the compound terms and theirs ancestors
