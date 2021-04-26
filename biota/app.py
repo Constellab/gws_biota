@@ -30,4 +30,4 @@ class API:
         
         job = Job(user=user, experiment=e)
         Queue.add(job, auto_start=True)            
-        return e.as_json()
+        return e.to_json()
