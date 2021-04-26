@@ -26,6 +26,7 @@ ENTRY       RHEA:10028
 DEFINITION  D-glutamate + H2O + O2 = 2-oxoglutarate + H2O2 + NH4(+)
 EQUATION    CHEBI:29986 + CHEBI:15377 + CHEBI:15379 = CHEBI:16810 + CHEBI:16240 + CHEBI:28938
 ENZYME      1.4.3.7         1.4.3.15
+            1.4.3.14
 ///
 ENTRY       RHEA:10029
 DEFINITION  D-glutamate + H2O + O2 => 2-oxoglutarate + H2O2 + NH4(+)

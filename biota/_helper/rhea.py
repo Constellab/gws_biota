@@ -75,34 +75,32 @@ class Rhea():
             list_content = contents.split('///')
             list_reaction = []
             for cont in list_content:
+                m1 = re.search("ENTRY\s+(.*)", cont)
+                m2 = re.search("DEFINITION\s+(.*)", cont)
+                m3 = re.search("EQUATION\s+(.*)", cont)
+                m4 = re.search("ENZYME\s+(.*)", cont, flags=re.DOTALL)
                 dict__ = {}
-                infos_reaction = cont.split('\n)\n')
-                part_one = infos_reaction[0]
-                for infos in part_one.split('\n'):
-                    m = re.findall(' {2,12}', infos)
-                    if (len(m) > 0):
-                        list_infos = infos.split(m[0])
-                        if (list_infos[0] not in dict__.keys() and list_infos[0] != 'ENZYME'):
-                            dict__[list_infos[0].lower()] = list_infos[1]
-                        elif (list_infos[0] == 'ENZYME'):
-                            list_enzyme = []
-                            for j in range(1, len(list_infos)):
-                                n = re.findall(' {1,4}', list_infos[j])
-                                if(len(n) > 0):
-                                    list_enzyme.append(list_infos[j].replace(n[0], ''))
-                                else:
-                                    list_enzyme.append(list_infos[j])
-                            dict__['enzymes'] = list_enzyme
+                if m1:
+                    dict__["entry"] = m1[1]
                 
-                if('equation' in dict__.keys()):
+                if m2:
+                    dict__["definition"] = m2[1]
+                    
+                if m3:
+                    dict__["equation"] = m3[1]
+                    
+                if m4:
+                    dict__["enzymes"] = m4[1].split()
+                
+                if 'equation' in dict__.keys():
                     dict__['source_equation'] = dict__['equation']   
-                    if (len(re.findall(' =>', dict__['equation'])) > 0):
+                    if len(re.findall(' =>', dict__['equation'])) > 0:
                         list_compound  = dict__['equation'].split(" => ")
 
-                    elif(len(re.findall('<=>', dict__['equation'])) > 0):
+                    elif len(re.findall('<=>', dict__['equation'])) > 0:
                         list_compound  = dict__['equation'].split(" <=> ")
 
-                    elif(len(re.findall(' = ', dict__['equation'])) > 0):
+                    elif len(re.findall(' = ', dict__['equation'])) > 0:
                         list_compound  = dict__['equation'].split(" = ")
                 
                 reagents = list_compound[0]
@@ -124,7 +122,7 @@ class Rhea():
                 
                 dict_substrates = {}
                 for i in range(0, len(list_substrates)):
-                    if (' ' in list_substrates[i]):
+                    if ' ' in list_substrates[i]:
                         coeff_compound = re.split(' ', list_substrates[i])
                         compound = coeff_compound[1]
                         coeff = coeff_compound[0]
@@ -135,12 +133,11 @@ class Rhea():
                         list_dict_s.append(list_substrates[i])
 
                 dict__['substrates'] = list_dict_s
-                
                 dict__['equation']["substrates"] = dict_substrates
                 
                 dict_products = {}
                 for i in range(0, len(list_products)):
-                    if (' ' in list_products[i]):
+                    if ' ' in list_products[i]:
                         coeff_compound = re.split(' ', list_products[i])
                         compound = coeff_compound[1]
                         coeff = coeff_compound[0]
@@ -151,19 +148,12 @@ class Rhea():
                         list_dict_p.append(list_products[i])
                 
                 dict__['products'] = list_dict_p
-
                 dict__['equation']['products'] = dict_products
             
-                if(len(infos_reaction) >= 2):
-                    part_two = infos_reaction[1]
-                    m = re.findall(' {2,12}', part_two)
-                    if (len(m) > 0):
-                        list_infos = part_two.split(m[0])
-                        if (list_infos[0] not in dict__.keys()):
-                            dict__[list_infos[0]] = list_infos[1]
-                if(dict__ != {}):           
+                if dict__:           
                     list_reaction.append(dict__)
-        return(list_reaction)
+        
+        return list_reaction
 
     
     @staticmethod
