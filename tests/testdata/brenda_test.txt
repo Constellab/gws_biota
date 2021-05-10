@@ -1625,3 +1625,31 @@ KI	#1# 1.4 {cis-2-hydroxy-3-cyclohexen-1-carboxylate}  <3>
 KI	#3# 0.012 {4-Trifluoromethyl-2,3-dihydro-2,3-dihydroxybenzoate}  <5>
 
 ///
+
+ID	2.4.1.370
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+RECOMMENDED_NAME
+RN	inositol phosphorylceramide mannosyltransferase
+
+
+SYSTEMATIC_NAME
+SN	GDP-alpha-D-mannose:inositol phospho-(2'R)-2'-hydroxyphytoceramide
+	mannosyltransferase
+
+
+SYNONYMS
+SY	 SUR1
+SY	 CSH1
+
+REACTION
+RE	GDP-alpha-D-mannose + a very-long-chain inositol
+	phospho-(2'R)-2'-hydroxyphytoceramide = a very-long-chain
+	mannosylinositol phospho-(2'R)-2'-hydroxyphytoceramide + GDP
+    
+///

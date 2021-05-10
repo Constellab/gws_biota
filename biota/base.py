@@ -11,19 +11,10 @@ from gws.base import DbManager as BaseDbManager
 from gws.model import Resource
 from gws.controller import Controller
 
-
 from gws.settings import Settings
 from gws.logger import Error
 
 settings = Settings.retrieve()
-
-if Controller.is_http_context():
-    use_prod_db = True
-else:
-    use_prod_db = settings.get_data("use_prod_biota_db")
-     
-brick_data_dir = settings.get_dir("biota:data_dir")
-db_path = settings.build_db_path(brick="biota", brick_data_dir=brick_data_dir, force_production_db=use_prod_db)
 
 class DbManager(BaseDbManager):
     """
@@ -31,8 +22,19 @@ class DbManager(BaseDbManager):
     
     Provides backend features for managing databases. 
     """
+    
+    db = Proxy()
+    
+    @classmethod
+    def use_prod_db(cls, tf):
+        brick_data_dir = settings.get_dir("biota:data_dir")
+        db_path = settings.build_db_path(
+            brick="biota", 
+            brick_data_dir=brick_data_dir, 
+            force_production_db=tf
+        )
+        cls.db.initialize( SqliteDatabase(db_path) )
 
-    db = SqliteDatabase(db_path)
 
 class Base(Resource):
     
@@ -101,3 +103,7 @@ class Base(Resource):
     
     class Meta:
         database = DbManager.db
+
+# initialize db path
+tf = Controller.is_http_context()
+DbManager.use_prod_db(tf)
