@@ -7,7 +7,6 @@ import asyncio
 import click
 from gws.settings import Settings
 from gws.logger import Info, Warning, Error
-from gws.controller import Controller
 from gws.model import Protocol, Experiment, Study, User
 from biota._admin.db_creator import DbCreator
 from biota.base import Base
@@ -17,7 +16,8 @@ def create_experiment(user=None, fts=True) -> Experiment:
  
     if not user:
         try:
-            user = Controller.get_current_user()
+            from gws.service.user_service import UserService
+            user = UserService.get_current_user()
         except:
             user = User.get_sysuser()
     
