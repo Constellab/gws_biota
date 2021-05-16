@@ -9,7 +9,6 @@ from biota.reaction import Reaction
 from biota.compound import Compound
 from biota.enzyme import Enzyme
 
-
 settings = Settings.retrieve()
 testdata_path = settings.get_dir("biota:testdata_dir")
 

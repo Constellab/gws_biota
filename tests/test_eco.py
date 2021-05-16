@@ -2,7 +2,6 @@ import sys
 import os
 import unittest
 
-from gws.controller import Controller
 from gws.settings import Settings
 from biota.eco import ECO
 

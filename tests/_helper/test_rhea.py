@@ -4,7 +4,6 @@ import re
 import unittest
 
 from gws.settings import Settings
-from gws.controller import Controller
 
 from biota._helper.rhea import Rhea
 from pronto import Ontology

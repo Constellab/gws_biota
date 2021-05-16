@@ -9,7 +9,6 @@ from peewee import CharField
 
 from gws.base import DbManager as BaseDbManager
 from gws.model import Resource
-from gws.controller import Controller
 
 from gws.settings import Settings
 from gws.logger import Error
@@ -105,5 +104,9 @@ class Base(Resource):
         database = DbManager.db
 
 # initialize db path
-tf = Controller.is_http_context()
-DbManager.use_prod_db(tf)
+def init_db_path(): 
+    from gws.service.http_service import HTTPService
+    tf = HTTPService.is_http_context()
+    DbManager.use_prod_db(tf)
+
+init_db_path()

@@ -4,11 +4,9 @@
 # About us: https:/gencovery.com
 
 from biota._admin.createdb import create_experiment as create_db_experiment
-from gws.controller import Controller
 from gws.http import *
 from fastapi import Request
 from gws.queue import Queue, Job
-from gws.app import check_is_admin
 
 class API:
 
@@ -22,9 +20,8 @@ class API:
         :rtype: `dict`
         """
         
-        #check_is_admin()
-        
-        user = Controller.get_current_user()
+        from gws.service.user_service import UserService
+        user = UserService.get_current_user()
         fts = data.get("fts", True)
         e = create_db_experiment(user, fts=fts)
         

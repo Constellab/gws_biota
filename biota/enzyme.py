@@ -9,7 +9,6 @@ from collections import OrderedDict
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PWModel
 
-from gws.controller import Controller
 from gws.model import Config, Process, Resource
 from gws.logger import Error
 

@@ -6,7 +6,6 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
-from gws.controller import Controller
 from biota.base import Base, DbManager
 from biota.ontology import Ontology
 

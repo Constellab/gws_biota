@@ -5,7 +5,6 @@
 
 from peewee import CharField, ForeignKeyField
 
-from gws.controller import Controller
 from gws.model import Resource
 
 from biota.base import Base
