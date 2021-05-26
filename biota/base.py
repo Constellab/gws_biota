@@ -7,7 +7,7 @@ import os
 from peewee import SqliteDatabase, Proxy
 from peewee import CharField
 
-from gws.base import DbManager as BaseDbManager
+from gws.db.model import DbManager as BaseDbManager
 from gws.model import Resource
 
 from gws.settings import Settings
