@@ -115,7 +115,7 @@ class TestEnzyme(unittest.TestCase):
         
         # Test enzyme class
         enzyme_class = EnzymeClass.get(EnzymeClass.ec_number == '1.1.-.-')
-        self.assertEqual(enzyme_class.title, 'Acting on the CH-OH group of donors')
+        self.assertEqual(enzyme_class.get_name(), 'Acting on the CH-OH group of donors')
         
         # Follow deprecated enzymes
         print("\nResolve deprecated enzymes")

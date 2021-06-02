@@ -79,7 +79,7 @@ class ECO(Ontology):
 
         for eco in ecos:
             eco.set_eco_id( eco.data["id"] )
-            eco.set_name( eco.data["title"] )
+            eco.set_name( eco.data["name"] )
 
             del eco.data["id"]
             

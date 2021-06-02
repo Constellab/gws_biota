@@ -45,7 +45,7 @@ class Pathway(Ontology):
     reactome_pathway_id = CharField(null=True, index=True)
     _ancestors = None
     
-    _fts_fields = { **Ontology._fts_fields, 'title': 1.0 }
+    #_fts_fields = { **Ontology._fts_fields, 'title': 1.0 }
     _table_name = 'biota_pathways'
 
     # -- A --
@@ -84,9 +84,10 @@ class Pathway(Ontology):
         pathways = []
         for _pw in pathway_dict:
             pw = Pathway(
+                name = _pw["name"],
                 reactome_pathway_id = _pw["reactome_pathway_id"],
                 data = {
-                    "title": _pw["title"],
+                    #"name": _pw["name"],
                     "species": _pw["species"]
                 }
             )

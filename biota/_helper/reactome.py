@@ -32,7 +32,7 @@ class Reactome():
     @staticmethod
     def parse_pathways_to_dict(path, file) -> list:
 
-        fieldnames = ["reactome_pathway_id", "title", "species"]
+        fieldnames = ["reactome_pathway_id", "name", "species"]
         return Reactome.parse_to_dict(path, file, fieldnames=fieldnames)
         
     

@@ -54,7 +54,7 @@ class Compound(Base):
     chebi_star = CharField(null=True, index=True)
 
     _ancestors = None
-    _fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
+    #_fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
     _table_name = 'biota_compound'
     
     # -- A --
@@ -106,7 +106,7 @@ class Compound(Base):
         job = kwargs.get('job',None)
         
         for comp in compounds:
-            comp.set_name(comp.data["title"])
+            comp.set_name(comp.data["name"])
             comp.chebi_id = comp.data["id"]
             comp.formula = comp.data["formula"]
             comp.inchi = comp.data["inchi"]

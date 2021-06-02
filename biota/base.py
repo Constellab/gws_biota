@@ -38,12 +38,13 @@ class DbManager(BaseDbManager):
 class Base(Resource):
     
     name = CharField(null=True, index=True)
-    _fts_fields = { 'title': 2.0 }
+    #_fts_fields = { 'title': 2.0 }
     
     @classmethod
     def fts_model(cls):
         _FTSModel = super().fts_model()
-        _FTSModel._meta.database = DbManager.db
+        if _FTSModel:
+            _FTSModel._meta.database = DbManager.db
         return _FTSModel
     
     # -- C --
@@ -73,20 +74,19 @@ class Base(Resource):
         :type name: str
         """
         
-        return self.get_title()
+        return self.name
     
     # -- S --
     
     def set_name(self, name: str):
         """
-        Set the name. Alias of :meth:`set_title`
+        Set the name.
 
         :param: name: The name
         :type name: str
         """
         
         self.name = name
-        self.set_title(name)
     
 
     @classmethod

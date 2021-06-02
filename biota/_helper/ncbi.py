@@ -60,7 +60,7 @@ class Taxonomy():
                 dict_single_tax['tax_id'] = infos[0]
    
                 if infos[0] in dict_ncbi_names.keys():
-                    dict_single_tax['title'] = dict_ncbi_names[infos[0]]
+                    dict_single_tax['name'] = dict_ncbi_names[infos[0]]
 
                 dict_single_tax['ancestor'] = infos[1]
                 dict_single_tax['rank'] = infos[2]

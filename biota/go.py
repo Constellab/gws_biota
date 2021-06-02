@@ -28,7 +28,7 @@ class GO(Ontology):
     go_id = CharField(null=True, index=True)
     namespace = CharField(null=True, index=True)
     
-    _fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
+    #_fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
     _table_name = 'biota_go'
 
     # -- C -- 
@@ -65,7 +65,7 @@ class GO(Ontology):
         gos = [cls(data = dict_) for dict_ in list_go]
         for go in gos:
             go.set_go_id(go.data["id"])
-            go.set_name(go.data["title"])
+            go.set_name(go.data["name"])
             go.set_namespace(go.data["namespace"])
 
             del go.data["id"]

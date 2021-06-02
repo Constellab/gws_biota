@@ -30,7 +30,7 @@ class Expasy():
                     list__.append({
                         'ec_number': found.group(1).replace(" ", ""),
                         'data': {
-                            'title': found.group(2).strip(".")
+                            'name': found.group(2).strip(".")
                         }
                     })
         return list__

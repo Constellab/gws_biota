@@ -40,9 +40,9 @@ class TestPatwhays(unittest.TestCase):
         
     
         p = Pathway.get(Pathway.reactome_pathway_id == "R-BTA-1296025")
-        self.assertEqual( p.title, "ATP sensitive Potassium channels" )
+        self.assertEqual( p.get_name(), "ATP sensitive Potassium channels" )
         
         p = Pathway.get(Pathway.reactome_pathway_id == "R-BTA-73843")
-        self.assertEqual( p.title, "5-Phosphoribose 1-diphosphate biosynthesis" )
+        self.assertEqual( p.get_name(), "5-Phosphoribose 1-diphosphate biosynthesis" )
         self.assertEqual( len(p.ancestors), 1 )
-        self.assertEqual( p.ancestors[0].title, "Pentose phosphate pathway" )
+        self.assertEqual( p.ancestors[0].get_name(), "Pentose phosphate pathway" )

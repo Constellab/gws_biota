@@ -202,7 +202,9 @@ class EnzymeClass(Base):
                 ec_number = enzc["ec_number"],
                 data = enzc["data"]
             )
+            ec.set_name( enzc["data"]["name"] )
             enz_classes.append(ec)
+            
             
         EnzymeClass.save_all(enz_classes)
         
@@ -236,15 +238,15 @@ class Enzo(Base):
 
     # -- G --
 
-    def get_title(self, default=""):
-        """
-        Name of the enzyme orthologue
+    # def get_title(self, default=""):
+    #     """
+    #     Name of the enzyme orthologue
 
-        :returns: The name of the enzyme ortholog
-        :rtype: str
-        """
+    #     :returns: The name of the enzyme ortholog
+    #     :rtype: str
+    #     """
         
-        return self.data.get("RN", [default])[0].capitalize()
+    #     return self.data.get("RN", [default])[0].capitalize()
 
     # -- N --
 
@@ -350,12 +352,12 @@ class Enzyme(Base):
     
     bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
     
-    _fts_fields = { **Base._fts_fields, 'ec': 2.0, 'uniprot': 2.0, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0 }
+    #_fts_fields = { **Base._fts_fields, 'ec': 2.0, 'uniprot': 2.0, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0 }
     _table_name = 'biota_enzymes'
     
     # -- A --
     
-    def as_json(self, jsonifiable_data_keys: list=['title', 'description'], **kwargs):
+    def as_json(self, jsonifiable_data_keys: list=['name', 'description'], **kwargs):
         
         return super().as_json(
             jsonifiable_data_keys=jsonifiable_data_keys, 
@@ -525,15 +527,15 @@ class Enzyme(Base):
 
     # -- G --
 
-    def get_title(self, default=""):
-        """
-        Name of the enzyme orthologue
+    # def get_title(self, default=""):
+    #     """
+    #     Name of the enzyme orthologue
 
-        :returns: The name of the enzyme ortholog
-        :rtype: str
-        """
+    #     :returns: The name of the enzyme ortholog
+    #     :rtype: str
+    #     """
         
-        return self.data.get("RN", [default])[0].capitalize()
+    #     return self.data.get("RN", [default])[0].capitalize()
 
     # -- N --
 

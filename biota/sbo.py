@@ -27,7 +27,7 @@ class SBO(Ontology):
 
     sbo_id = CharField(null=True, index=True)
     
-    _fts_fields = { **Ontology._fts_fields }
+    #_fts_fields = { **Ontology._fts_fields }
     _table_name = 'biota_sbo'
     _ancestors = None
 
@@ -70,7 +70,7 @@ class SBO(Ontology):
         sbos = [cls(data = dict_) for dict_ in list_sbo]
         for sbo in sbos:
             sbo.set_sbo_id(sbo.data["id"])
-            sbo.set_name(sbo.data["title"])
+            sbo.set_name(sbo.data["name"])
             if not job is None:
                 sbo._set_job(job)
 

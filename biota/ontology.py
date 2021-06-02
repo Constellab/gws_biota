@@ -4,8 +4,6 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
-
-from gws.model import Resource
 from biota.base import Base
 
 class Ontology(Base):

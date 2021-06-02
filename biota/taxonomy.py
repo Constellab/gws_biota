@@ -34,7 +34,7 @@ class Taxonomy(Ontology):
     
     _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
     
-    _fts_fields = { **Ontology._fts_fields, 'tax_id': 2.0, 'rank': 2.0, 'division': 2.0 }
+    #_fts_fields = { **Ontology._fts_fields, 'tax_id': 2.0, 'rank': 2.0, 'division': 2.0 }
     _table_name = 'biota_taxonomy'
 
     _children = None
@@ -123,12 +123,10 @@ class Taxonomy(Ontology):
             for tax in taxa:
                 tax.tax_id = tax.data['tax_id']
                 
-                if 'title' in tax.data.keys():
-                    tax.set_name(tax.data['title'])
-                    tax.name = tax.data['title']
+                if 'name' in tax.data.keys():
+                    tax.set_name(tax.data['name'])
                 else:
                     tax.set_name("Unspecified")
-                    tax.name = "Unspecified"
 
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']

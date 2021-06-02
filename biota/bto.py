@@ -74,7 +74,7 @@ class BTO(Ontology):
 
         for bto in btos:
             bto.set_bto_id( bto.data["id"] )
-            bto.set_name( bto.data["title"] )
+            bto.set_name( bto.data["name"] )
 
             del bto.data["id"]
             

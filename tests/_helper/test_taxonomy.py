@@ -30,4 +30,4 @@ class TestModel(unittest.TestCase):
         dict_taxons = NCBITaxonomy.get_all_taxonomy(testdata_path, dict_ncbi_names, **files)
 
         self.assertEqual(dict_taxons['72'], {'tax_id': '72', 'ancestor': '71', 'rank': 'species', 'division': 'Bacteria'})
-        self.assertEqual(dict_taxons['1'], {'tax_id': '1', 'title': 'root', 'ancestor': '1', 'rank': 'no rank', 'division': 'Unassigned'})
+        self.assertEqual(dict_taxons['1'], {'tax_id': '1', 'name': 'root', 'ancestor': '1', 'rank': 'no rank', 'division': 'Unassigned'})
