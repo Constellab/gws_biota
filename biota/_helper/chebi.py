@@ -179,9 +179,9 @@ class Chebi():
         
         return path, out_filename
 
-    @staticmethod
-    def read_sdf(path, file):
-        file_path = os.path.join(path, file)
-        with open(file_path, 'r') as f:
-            ctf = ctfile.load(f)
-            return ctf
+    # @staticmethod
+    # def read_sdf(path, file):
+    #     file_path = os.path.join(path, file)
+    #     with open(file_path, 'r') as f:
+    #         ctf = ctfile.load(f)
+    #         return ctf
