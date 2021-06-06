@@ -71,7 +71,7 @@ if __name__ == "__main__":
     # pull sqlite3db
     url = _json["urls"].get("biota:sqlite3db","")
     if url:
-        dest_dir = "/data/" #os.path.join(_cwd_, "../../../data/prod/biota/db/")
+        dest_dir = os.path.join(_cwd_, "../../../data/sqlite3/prod/biota/db/")
         dest_filename = "db.sqlite3.zip"
         if not os.path.exists(os.path.join(dest_dir,dest_filename)):
             download(url, dest_dir, dest_filename)

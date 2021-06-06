@@ -2,25 +2,17 @@
     "name"          : "biota",
     "authors"       : "Gencovery",
     "version"       : "0.1",
-    "log_dir"       : "../../logs",
-    "data_dir"      : "../../data/",
-    "db_name"       : "db.sqlite3",
-    
     "dirs"          : {
-        "biota:data_dir"             : "../../data/",
-        "biota:testdata_dir"         : "./tests/testdata",
-        "biota:biodata_dir"          : "../../data/prod/biota/biodata/"
+        "biota:biodata_dir"          : "/data/biota/biodata/",
+        "biota:testdata_dir"         : "./tests/testdata"
     },
-
     "urls":{
         "biota:sqlite3db": "https://share.gencovery.com/s/Eo34Y8sxgqSdSMz/download",
         "biota:mariadb": ""
     },
-
     "externs" : {
         "brenda-py": "DEFAULT_ORIGIN"
     },
-
     "dependencies" : {
         "gws": "DEFAULT_ORIGIN"
     }
