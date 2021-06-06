@@ -12,13 +12,16 @@
         "biota:biodata_dir"          : "../../data/prod/biota/biodata/"
     },
 
-    "urls":{},
+    "urls":{
+        "biota:sqlite3db": "https://share.gencovery.com/s/Eo34Y8sxgqSdSMz/download",
+        "biota:mariadb": ""
+    },
 
-    "externs" : [
-        "brenda-py"
-    ],
+    "externs" : {
+        "brenda-py": "DEFAULT_ORIGIN"
+    },
 
-    "dependencies" : [
-        "gws"
-    ]
+    "dependencies" : {
+        "gws": "DEFAULT_ORIGIN"
+    }
 }

@@ -4,36 +4,44 @@
 # About us: https://gencovery.com
 
 import os
-from peewee import SqliteDatabase, Proxy
+import pymysql
+from peewee import SqliteDatabase, MySQLDatabase, DatabaseProxy
 from peewee import CharField
+from playhouse.sqlite_ext import JSONField as SQLiteJSONField
+from playhouse.mysql_ext import JSONField as MySQLJSONField
 
-from gws.db.model import DbManager as BaseDbManager
+from gws.db.model import AbstractDbManager
 from gws.model import Resource
-
 from gws.settings import Settings
 from gws.logger import Error
 
 settings = Settings.retrieve()
 
-class DbManager(BaseDbManager):
+# ####################################################################
+#
+# DbManager class
+#
+# ####################################################################
+
+class DbManager(AbstractDbManager):
     """
     DbManager class. 
     
     Provides backend features for managing databases. 
     """
     
-    db = Proxy()
-    
-    @classmethod
-    def use_prod_db(cls, tf):
-        brick_data_dir = settings.get_dir("biota:data_dir")
-        db_path = settings.build_db_path(
-            brick="biota", 
-            brick_data_dir=brick_data_dir, 
-            force_production_db=tf
-        )
-        cls.db.initialize( SqliteDatabase(db_path) )
+    db = DatabaseProxy()
+    JSONField = None
+    _engine = None
+    _db_name = "biota"
 
+DbManager.init()
+
+# ####################################################################
+#
+# Base class
+#
+# ####################################################################
 
 class Base(Resource):
     
@@ -102,11 +110,3 @@ class Base(Resource):
     
     class Meta:
         database = DbManager.db
-
-# initialize db path
-def init_db_path(): 
-    from gws.service.http_service import HTTPService
-    tf = HTTPService.is_http_context()
-    DbManager.use_prod_db(tf)
-
-init_db_path()
