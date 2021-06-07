@@ -71,8 +71,8 @@ if __name__ == "__main__":
     # pull sqlite3db
     url = _json["urls"].get("biota:sqlite3db","")
     if url:
-        dest_dir = os.path.join(_cwd_, "../../../data/sqlite3/prod/biota/db/")
-        dest_filename = "db.sqlite3.zip"
+        dest_dir = "/prod-data/sqlite3/"         #/!\ Do not change: see settings.py
+        dest_filename = "biota.sqlite3.zip"      #/!\ Do not change: see settings.py and gws.db.manager.py
         if not os.path.exists(os.path.join(dest_dir,dest_filename)):
             download(url, dest_dir, dest_filename)
 
