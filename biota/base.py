@@ -35,6 +35,13 @@ class DbManager(AbstractDbManager):
     _engine = None
     _db_name = "biota"
 
+    @classmethod
+    def use_prod_db(cls, tf:bool):
+        if tf:
+            DbManager.init(mode="prod")
+        else:
+            DbManager.init(mode="dev")
+
 DbManager.init()
 
 # ####################################################################
