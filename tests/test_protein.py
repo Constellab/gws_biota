@@ -14,12 +14,10 @@ class TestGO(unittest.TestCase):
     def setUpClass(cls):
         Protein.drop_table()
         Protein.create_table()
-        pass
    
     @classmethod
     def tearDownClass(cls):
         Protein.drop_table()
-        pass
     
     def test_db_object(self):
         params = dict(

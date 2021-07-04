@@ -12,7 +12,8 @@ from gws.db.model import AbstractDbManager
 from gws.model import Resource
 from gws.logger import Error
 
-BIOTA_DB_ENGINE = "mariadb"
+#BIOTA_DB_ENGINE = "mariadb"
+BIOTA_DB_ENGINE="sqlite3"
 
 # ####################################################################
 #

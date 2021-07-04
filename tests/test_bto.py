@@ -2,7 +2,6 @@ import sys
 import os
 import unittest
 
-from gws.unittest import GTest
 from gws.settings import Settings
 from biota.bto import BTO
 
@@ -13,14 +12,12 @@ class TestBTO(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        GTest.drop_tables()
-        GTest.create_tables()
-        GTest.init()
+        BTO.drop_table()
+        BTO.create_table()
         
     @classmethod
     def tearDownClass(cls):
-        GTest.drop_tables()
-        pass
+        BTO.drop_table()
     
     def test_db_object(self):
         params = dict(

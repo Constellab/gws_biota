@@ -21,8 +21,8 @@ class TestReaction(unittest.TestCase):
         Compound.drop_table()
         
         Reaction.create_table()
-        Enzyme.drop_table()
-        Compound.drop_table()
+        Enzyme.create_table()
+        Compound.create_table()
         
     @classmethod
     def tearDownClass(cls):

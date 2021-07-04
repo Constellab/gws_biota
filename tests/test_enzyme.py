@@ -17,8 +17,10 @@ class TestEnzyme(unittest.TestCase):
     def setUpClass(cls):
         Enzyme.drop_table()
         Enzo.drop_table()
+
         Enzyme.create_table()
-        pass
+        Enzo.create_table()
+        BTO.create_table()
    
     @classmethod
     def tearDownClass(cls):

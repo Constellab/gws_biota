@@ -16,10 +16,16 @@ from biota.base import Base
 
 class DbService(BaseService):
 
-
     @classmethod
-    def create_biota_db(cls, user=None) -> Experiment:
+    def build_biota_db(cls, user=None, clean: bool=True) -> Experiment:
+        """
+        Build biota db
+        """
+
         from gws.user_service import UserService
+
+        if clean:
+            cls.clean_biota_db()
 
         db_creator = DbCreator()
         study = Study.get_default_instance()
@@ -35,46 +41,4 @@ class DbService(BaseService):
         except Exception as err:
             raise HTTPInternalServerError(detail=f"An error occured.", debug_error=err) from err
 
-    # -- D --
-
-    @classmethod
-    def dump_biota_db(cls, url):
-        from gws.mysql import MySQLDump
-        dest_dir = "/data/backup/mariadb/biota/"
-
-        load = MySQLDump()
-        load.user="biota"
-        load.password="gencovery"
-        load.db_name="biota"
-        load.table_prefix="biota_"
-        load.output_dir=dest_dir
-        load.host="biota_prod_db"
-        load.run()
-
-    # -- L --
-
-    @classmethod
-    def load_biota_db(cls, url):
-        from gws.mysql import MySQLLoad
-        dest_dir = "/data/backup/mariadb/biota/"
-
-        Requests.download(url, dest_dir=dest_dir)
-
-        load = MySQLLoad()
-        load.user="biota"
-        load.password="gencovery"
-        load.db_name="biota"
-        load.table_prefix="biota_"
-        load.output_dir=dest_dir
-        load.host="biota_prod_db"
-        load.run()
-
-    # -- R --
-
-    @classmethod
-    def remove_biota_db(cls):
-        from gws.model import ModelService
-        ModelService.drop_tables(instance_type=Base)
-        ModelService.create_tables(instance_type=Base)
-    
 

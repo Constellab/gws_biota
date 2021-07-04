@@ -12,14 +12,14 @@ class API:
 
     # -- C --
 
-    async def create_db() -> dict:
+    async def build_db() -> dict:
         """
-        Create biota db
+        Build biota db
         """
         
         from biota.service.db_service import DbService
 
-        e = DbService.create_biota_db()           
+        e = DbService.build_biota_db()           
         return e.to_json()
 
     # -- D --
@@ -29,9 +29,9 @@ class API:
         Dump biota db
         """
 
-        from biota.service.db_service import DbService
+        from gws.service.mysql_service import MySQLService
 
-        DbService.dump_biota_db()           
+        MySQLService.dump_db("biota")           
         return True
     
     # -- L --
@@ -41,19 +41,7 @@ class API:
         Load biota db
         """
 
-        from biota.service.db_service import DbService
+        from gws.service.mysql_service import MySQLService
 
-        DbService.load_biota_db(url=data["url"])           
-        return True
-
-    # -- R --
-
-    async def remove_db( data: dict ) -> dict:
-        """
-        Drop biota db
-        """
-
-        from biota.service.db_service import DbService
-
-        DbService.remove_biota_db()           
+        MySQLService.load_db("biota", remote_file_url=data["url"])           
         return True

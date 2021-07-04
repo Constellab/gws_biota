@@ -17,7 +17,8 @@ class TestPatwhays(unittest.TestCase):
     def setUpClass(cls):
         Compound.drop_table()
         Pathway.drop_table()
-        
+        Pathway.create_table()
+
     @classmethod
     def tearDownClass(cls):
         Compound.drop_table()

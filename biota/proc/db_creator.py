@@ -33,16 +33,12 @@ class DbCreator(Process):
         "pwo_file"                  : {"type": str, "default": "./pwo/pwo.obo"},
         "brenda_file"               : {"type": str, "default": "./brenda/brenda/brenda_download.txt"},
         "bkms_file"                 : {"type": str, "default": "./bkms/Reactions_BKMS.csv"},
-        
-        "protein_file"                : {"type": str, "default": "./uniprot/uniprot_sprot.fasta"},
-        
+        "protein_file"              : {"type": str, "default": "./uniprot/uniprot_sprot.fasta"},
         "ncbi_node_file"            : {"type": str, "default": "./ncbi/taxdump/nodes.dmp"},
         "ncbi_name_file"            : {"type": str, "default": "./ncbi/taxdump/names.dmp"},
         "ncbi_division_file"        : {"type": str, "default": "./ncbi/taxdump/division.dmp"},
         "ncbi_citation_file"        : {"type": str, "default": "./ncbi/taxdump/citations.dmp"},
-        
         "expasy_enzclass_file"      : {"type": str, "default": "./expasy/enzclass.txt"},
-        
         "rhea_reaction_file"        : {"type": str, "default": "./rhea/rhea-reactions.txt"},
         "rhea_direction_file"       : {"type": str, "default": "./rhea/tsv/rhea-directions.tsv"},
         "rhea2ecocyc_file"          : {"type": str, "default": "./rhea/tsv/rhea2ecocyc.tsv"},
@@ -51,7 +47,6 @@ class DbCreator(Process):
         "rhea2kegg_reaction_file"   : {"type": str, "default": "./rhea/tsv/rhea2kegg_reaction.tsv"},
         "rhea2ec_file"              : {"type": str, "default": "./rhea/tsv/rhea2ec.tsv"},
         "rhea2reactome_file"        : {"type": str, "default": "./rhea/tsv/rhea2reactome.tsv"},
-        
         "reactome_pathways_file"          : {"type": str, "default": "./reactome/ReactomePathways.txt"},
         "reactome_pathway_relations_file" : {"type": str, "default": "./reactome/ReactomePathwaysRelation.txt"},
         "reactome_chebi_pathways_file"    : {"type": str, "default": "./reactome/ChEBI2Reactome.txt"},        

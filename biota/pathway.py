@@ -22,6 +22,7 @@ class PathwayCompounds(Base):
     @property
     def compound(self):
         try:
+            from biota.compound import Compound
             c = Compound.get(Compound.chebi_id == self.chebi_id)
             c.species = self.species
             return c
@@ -146,6 +147,10 @@ class Pathway(Ontology):
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
+        from biota.compound import Compound
+        if not Compound.table_exists():
+            Compound.create_table()
+
         super().create_table(*args, **kwargs)
         PathwayAncestor.create_table()
         PathwayCompounds.create_table()
