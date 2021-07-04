@@ -28,7 +28,6 @@ class GO(Ontology):
     go_id = CharField(null=True, index=True)
     namespace = CharField(null=True, index=True)
     
-    #_fts_fields = { **Ontology._fts_fields, 'definition': 1.0 }
     _table_name = 'biota_go'
 
     # -- C -- 

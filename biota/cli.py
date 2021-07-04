@@ -15,9 +15,6 @@ import click
     allow_extra_args=True
 ))
 @click.pass_context
-@click.option('--no-fts', is_flag=True, help='Activate full-text search')
 def createdb(ctx, no_fts=False):
     from biota._admin.createdb import createdb as _admin_createdb    
-    
-    fts = not no_fts
-    _admin_createdb(fts=fts)
+    _admin_createdb()

@@ -3,8 +3,8 @@
     "authors"       : "Gencovery",
     "version"       : "0.1",
     "dirs"          : {
-        "biota:biodata_dir"          : "/data/biota/biodata/",
-        "biota:testdata_dir"         : "./tests/testdata"
+        "biota:biodata_dir"         : "/data/biota/biodata/",
+        "biota:testdata_dir"        : "./tests/testdata"
     },
     "urls":{
         "biota:sqlite3db": "https://share.gencovery.com/s/Eo34Y8sxgqSdSMz/download",

@@ -7,9 +7,9 @@ import os
 import time
 from gws.model import Process
 from gws.logger import Info, Error
+from gws.settings import Settings
 
 from biota.base import Base
-
 from biota.go import GO
 from biota.sbo import SBO
 from biota.bto import BTO
@@ -22,11 +22,9 @@ from biota.protein import Protein
 from biota.pathway import Pathway
 
 class DbCreator(Process):
-
     input_specs = {}
     output_specs = {}
     config_specs =  { 
-        "activate_fts"             : {"type": bool, "default": True, "description": "True to active full-text search, False otherwise. Defaults to True"},
         "go_file"                   : {"type": str, "default": "./go/go.obo"},
         "sbo_file"                  : {"type": str, "default": "./sbo/sbo.obo"},
         "eco_file"                  : {"type": str, "default": "./eco/eco.obo"},
@@ -56,50 +54,31 @@ class DbCreator(Process):
         
         "reactome_pathways_file"          : {"type": str, "default": "./reactome/ReactomePathways.txt"},
         "reactome_pathway_relations_file" : {"type": str, "default": "./reactome/ReactomePathwaysRelation.txt"},
-        "reactome_chebi_pathways_file"    : {"type": str, "default": "./reactome/ChEBI2Reactome.txt"},
-        
-        "biota:data_dir"            : {"type": str},
-        "biota:biodata_dir"         : {"type": str},
-        "biota:testdata_dir"        : {"type": str},
+        "reactome_chebi_pathways_file"    : {"type": str, "default": "./reactome/ChEBI2Reactome.txt"},        
     }
 
+    _allowed_user = Process.USER_ADMIN
+
     async def task( self ):
-        
         # deactivate full_text_search functionalitie is required
-        Base._is_fts_active = self.get_param("activate_fts") 
-    
         if ECO.table_exists():
             if ECO.select().count():
                 raise Error("DbCreator", "task", "An none empty biota database already exists")
-
-        # drop tables
-        GO.drop_table()
-        SBO.drop_table()
-        BTO.drop_table()
-        ECO.drop_table()
-        Taxonomy.drop_table()
-        Compound.drop_table()
-        Enzyme.drop_table()
-        Reaction.drop_table()
-        #EnzymeAnnotation.drop_table()
-
-        # create tables
-        GO.create_table()
-        SBO.create_table()
-        BTO.create_table()
-        ECO.create_table()
-        Taxonomy.create_table()
-        Compound.create_table()
-        Enzyme.create_table()
-        Reaction.create_table()
+        else:
+            from gws.service import ModelService
+            ModelService.create_tables(instance_type=Base)
 
         Info("Start creating biota_db...")
 
-        params = (self.config.params).copy()    #get a copy
+        params = self.config.params.copy()    #get a copy
+
+        settings = Settings.retrieve()
+        dirs = settings.get_data("dirs")
+        biodata_dir = dirs["biota:biodata_dir"]
+        
 
         # check that all paths exists
         Info("Check that all biodata files exist...")
-        biodata_dir = self.get_param("biota:biodata_dir")
         for k in params:
             if k.endswith("_file"):
                 file_path = os.path.join(biodata_dir, params[k])

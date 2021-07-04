@@ -350,9 +350,7 @@ class Enzyme(Base):
     
     related_deprecated_enzyme = None  #dyamically added if by method select_and_follow_if_deprecated
     
-    bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)
-    
-    #_fts_fields = { **Base._fts_fields, 'ec': 2.0, 'uniprot': 2.0, 'RN': 2.0, "SN": 2.0, "SY": 2.0, 'organism': 1.0 }
+    bto = ManyToManyField(BiotaBTO, through_model = EnzymeBTODeffered)    
     _table_name = 'biota_enzymes'
     
     # -- A --

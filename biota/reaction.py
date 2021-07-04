@@ -61,7 +61,6 @@ class Reaction(Entity):
     products = ManyToManyField(Compound, through_model = ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, through_model = ReactionEnzymeDeferred)
 
-    #_fts_fields = { **Entity._fts_fields, 'definition': 2.0 }
     _table_name = 'biota_reaction'
 
     # -- A --

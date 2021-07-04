@@ -23,7 +23,6 @@ class Protein(Entity):
     evidence_score = IntegerField(null=True, index=True)  #1, 2, 3, 4, 5
     tax_id = CharField(null=True, index=True)
 
-    #_fts_fields = { **Entity._fts_fields, 'description': 1.0 }
     _table_name = 'biota_protein'
     _evidence_score_description = {
          0: "No evidence score",

@@ -54,7 +54,6 @@ class Compound(Base):
     chebi_star = CharField(null=True, index=True)
 
     _ancestors = None
-    #_fts_fields = { **Base._fts_fields, 'synonyms': 2.0, 'definition': 1.0}
     _table_name = 'biota_compound'
     
     # -- A --

@@ -27,7 +27,6 @@ class SBO(Ontology):
 
     sbo_id = CharField(null=True, index=True)
     
-    #_fts_fields = { **Ontology._fts_fields }
     _table_name = 'biota_sbo'
     _ancestors = None
 
