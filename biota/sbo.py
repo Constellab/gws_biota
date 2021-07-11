@@ -4,10 +4,10 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PWModel
+from peewee import Model as PeeweeModel
 
-from biota.base import Base, DbManager
-from biota.ontology import Ontology
+from .base import Base, DbManager
+from .ontology import Ontology
 
 class SBO(Ontology):
     """
@@ -59,7 +59,7 @@ class SBO(Ontology):
         :rtype: None
         """
 
-        from biota._helper.ontology import Onto as OntoHelper
+        from ._helper.ontology import Onto as OntoHelper
 
         job = kwargs.get('job',None)
         data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(biodata_dir, kwargs['sbo_file'])
@@ -158,7 +158,7 @@ class SBO(Ontology):
                 vals.append(val)
         return(vals)
 
-class SBOAncestor(PWModel):
+class SBOAncestor(PeeweeModel):
     """
     This class defines the many-to-many relationship between the sbo terms and theirs ancestors
 

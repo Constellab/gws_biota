@@ -4,9 +4,7 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-
-from gws.model import Resource
-from biota.ontology import Ontology
+from .ontology import Ontology
 
 class Taxonomy(Ontology):
     """
@@ -98,7 +96,7 @@ class Taxonomy(Ontology):
         :rtype: None
         """
 
-        from biota._helper.ncbi import Taxonomy as NCBITaxonomyHelper
+        from ._helper.ncbi import Taxonomy as NCBITaxonomyHelper
 
         job = kwargs.get('job',None)
         dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)

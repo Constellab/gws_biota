@@ -16,5 +16,5 @@ import click
 ))
 @click.pass_context
 def createdb(ctx, no_fts=False):
-    from biota._admin.createdb import createdb as _admin_createdb    
+    from ._admin.createdb import createdb as _admin_createdb    
     _admin_createdb()

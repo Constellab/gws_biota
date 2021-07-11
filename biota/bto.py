@@ -6,8 +6,8 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
-from biota.ontology import Ontology
-from biota.base import Base, DbManager
+from .ontology import Ontology
+from .base import Base, DbManager
 
 class BTO(Ontology):
     """
@@ -66,7 +66,7 @@ class BTO(Ontology):
         :type kwargs: dict
         """
 
-        from biota._helper.ontology import Onto as OntoHelper
+        from ._helper.ontology import Onto as OntoHelper
 
         list_bto = OntoHelper.parse_bto_from_json(biodata_dir, kwargs['bto_file'])
         btos = [cls(data = dict_) for dict_ in list_bto]

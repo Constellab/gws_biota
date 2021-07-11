@@ -4,7 +4,7 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
-from biota.entity import Entity
+from .entity import Entity
 
 class Gene(Entity):
     """

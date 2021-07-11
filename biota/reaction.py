@@ -4,12 +4,12 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
-from peewee import Model as PWModel
+from peewee import Model as PeeweeModel
 
-from biota.base import Base, DbManager
-from biota.entity import Entity
-from biota.compound import Compound
-from biota.enzyme import Enzyme
+from .base import Base, DbManager
+from .entity import Entity
+from .compound import Compound
+from .enzyme import Enzyme
 
 ####################################################################################
 #
@@ -93,7 +93,7 @@ class Reaction(Entity):
         :rtype: None
         """
 
-        from biota._helper.rhea import Rhea
+        from ._helper.rhea import Rhea
 
         job = kwargs.get('job',None)
         list_of_reactions = Rhea.parse_reaction_from_file(biodata_dir, kwargs['rhea_reaction_file'])
@@ -273,7 +273,7 @@ class Reaction(Entity):
         """
         Set enzymes from `data`
         """
-        from biota.enzyme import Enzyme
+        from .enzyme import Enzyme
         Q = Enzyme.select().where(Enzyme.ec_number << self.data['enzymes'])
         for enz in Q:
             self.enzymes.add(enz)
@@ -432,7 +432,7 @@ class Reaction(Entity):
 
 
 
-class ReactionSubstrate(PWModel):
+class ReactionSubstrate(PeeweeModel):
     """
     This class defines the many-to-many relationship between susbtrates and reactions.
 
@@ -449,7 +449,7 @@ class ReactionSubstrate(PWModel):
         database = DbManager.db
 
 
-class ReactionProduct(PWModel):
+class ReactionProduct(PeeweeModel):
     """
     This class defines the many-to-many relationship between products and reactions.
 
@@ -465,7 +465,7 @@ class ReactionProduct(PWModel):
         table_name = 'biota_reaction_products'
         database = DbManager.db
 
-class ReactionEnzyme(PWModel):
+class ReactionEnzyme(PeeweeModel):
     """
     This class defines the many-to-many relationship between enzymes and reactions.
 

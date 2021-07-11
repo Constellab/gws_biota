@@ -22,9 +22,9 @@
 # https://creativecommons.org/licenses/by/4.0/.
 
 from peewee import CharField, FloatField, IntegerField, ForeignKeyField
-from peewee import Model as PWModel
+from peewee import Model as PeeweeModel
 
-from biota.base import Base, DbManager
+from .base import Base, DbManager
 from gws.logger import Error
 
 class Compound(Base):
@@ -95,7 +95,7 @@ class Compound(Base):
         :rtype: None
         """
 
-        from biota._helper.chebi import Chebi as ChebiHelper
+        from ._helper.chebi import Chebi as ChebiHelper
 
         data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(biodata_dir, kwargs['chebi_file'])
 
@@ -199,7 +199,7 @@ class Compound(Base):
     
     @property
     def pathways(self):
-        from biota.pathway import PathwayCompounds
+        from .pathway import PathwayCompounds
         try:
             pcomps = PathwayCompounds.select().where(PathwayCompounds.chebi_id == self.chebi_id)
             pathways = []
@@ -216,7 +216,7 @@ class Compound(Base):
     
     @property
     def reactions(self):
-        from biota.reaction import ReactionSubstrate, ReactionProduct
+        from .reaction import ReactionSubstrate, ReactionProduct
         rxns = []
         Q = ReactionSubstrate.select().where(ReactionSubstrate.compound == self)
         for r in Q:
@@ -228,7 +228,7 @@ class Compound(Base):
             
         return rxns
     
-class CompoundAncestor(PWModel):
+class CompoundAncestor(PeeweeModel):
     """
     This class defines the many-to-many relationship between the compound terms and theirs ancestors
 

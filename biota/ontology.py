@@ -4,7 +4,7 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
-from biota.base import Base
+from .base import Base
 
 class Ontology(Base):
     """

@@ -4,19 +4,18 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PWModel
 
-from biota.base import Base
-from biota.bto import BTO
-from biota.eco import ECO
-from biota.sbo import SBO
-from biota.taxonomy import Taxonomy
-from biota.enzyme import Enzyme, Enzo
-from biota.reaction import Reaction
-from biota.compound import Compound
-from biota.protein import Protein
+from .base import Base
+from .bto import BTO
+from .eco import ECO
+from .sbo import SBO
+from .taxonomy import Taxonomy
+from .enzyme import Enzyme, Enzo
+from .reaction import Reaction
+from .compound import Compound
+from .protein import Protein
 
-from gws.model import Resource
+from gws.resource import Resource
 
 class Stats(Resource):
     _table_name = 'gws_biota_stats'

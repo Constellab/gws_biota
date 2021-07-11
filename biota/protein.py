@@ -5,12 +5,11 @@
 
 import os
 import re
-
 from peewee import CharField, TextField, IntegerField
 from Bio import SeqIO
 
-from biota.entity import Entity
-from biota.taxonomy import Taxonomy as BiotaTaxo
+from .entity import Entity
+from .taxonomy import Taxonomy as BiotaTaxo
 
 class Protein(Entity):
     """

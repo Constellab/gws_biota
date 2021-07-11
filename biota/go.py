@@ -4,10 +4,10 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PWModel
+from peewee import Model as PeeweeModel
 
-from biota.base import Base, DbManager
-from biota.ontology import Ontology
+from .base import Base, DbManager
+from .ontology import Ontology
 
 class GO(Ontology):
     """
@@ -55,7 +55,7 @@ class GO(Ontology):
         :rtype: None
         """
 
-        from biota._helper.ontology import Onto as OntoHelper
+        from ._helper.ontology import Onto as OntoHelper
 
         job = kwargs.get('job',None)
         onto_go = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['go_file'])
@@ -162,7 +162,7 @@ class GO(Ontology):
         return(vals)
 
 
-class GOAncestor(PWModel):
+class GOAncestor(PeeweeModel):
     """
     This class defines the many-to-many relationship between the go terms and theirs ancestors
 

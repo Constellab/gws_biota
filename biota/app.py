@@ -3,10 +3,11 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https:/gencovery.com
 
-from biota.service.db_service import create_experiment as create_db_experiment
-from gws.http import *
 from fastapi import Request
+
 from gws.queue import Queue, Job
+from gws.http import *
+from .service.db_service import create_experiment as create_db_experiment
 
 class API:
 
@@ -17,7 +18,7 @@ class API:
         Build biota db
         """
         
-        from biota.service.db_service import DbService
+        from .service.db_service import DbService
 
         e = DbService.build_biota_db()           
         return e.to_json()

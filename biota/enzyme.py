@@ -7,15 +7,14 @@ import os
 from collections import OrderedDict
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
-from peewee import Model as PWModel
+from peewee import Model as PeeweeModel
 
-from gws.model import Config, Process, Resource
 from gws.logger import Error
 
-from biota.base import Base, DbManager
-from biota.taxonomy import Taxonomy as BiotaTaxo
-from biota.bto import BTO as BiotaBTO
-from biota.protein import Protein
+from .base import Base, DbManager
+from .taxonomy import Taxonomy as BiotaTaxo
+from .bto import BTO as BiotaBTO
+from .protein import Protein
 
 
 EnzymeBTODeffered = DeferredThroughModel()
@@ -192,7 +191,7 @@ class EnzymeClass(Base):
         :rtype: None
         """
       
-        from biota._helper.expasy import Expasy
+        from ._helper.expasy import Expasy
         
         list_of_enzclasses = Expasy.parse_all_enzclasses_to_dict(biodata_dir, kwargs['expasy_enzclass_file'])
         
@@ -381,8 +380,8 @@ class Enzyme(Base):
         EnzymeClass.create_enzyme_class_db(biodata_dir, **kwargs)
         
         # add enzymes
-        from biota._helper.brenda import Brenda
-        from biota._helper.bkms import BKMS
+        from ._helper.brenda import Brenda
+        from ._helper.bkms import BKMS
 
         job = kwargs.get('job',None)
         brenda = Brenda(os.path.join(biodata_dir, kwargs['brenda_file']))
@@ -472,7 +471,7 @@ class Enzyme(Base):
         
         # save bkms data
         if 'bkms_file' in kwargs:
-            from biota._helper.bkms import BKMS
+            from ._helper.bkms import BKMS
             list_of_bkms = BKMS.parse_csv_from_file(biodata_dir, kwargs['bkms_file'])
             cls.__update_pathway_from_bkms(list_of_bkms)
         
@@ -591,8 +590,7 @@ class Enzyme(Base):
         :rtype: Query rows
         """
         
-        from biota.reaction import Reaction, ReactionEnzyme
-        from peewee import JOIN
+        from .reaction import Reaction, ReactionEnzyme
         Q = Reaction.select() \
                     .join(ReactionEnzyme) \
                     .where(ReactionEnzyme.enzyme == self)       
@@ -736,7 +734,7 @@ class Enzyme(Base):
             EnzymePathway.save_all(pathways.values())
 
 
-class EnzymeBTO(PWModel):
+class EnzymeBTO(PeeweeModel):
     """
     This class refers to tissues of brenda enzymes
     EnzymeBTO entities are created by the __update_tissues() method of the Enzyme class

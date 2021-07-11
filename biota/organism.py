@@ -5,10 +5,8 @@
 
 from peewee import CharField, ForeignKeyField
 
-from gws.model import Resource
-
-from biota.base import Base
-from biota.taxonomy import Taxonomy
+from .base import Base
+from .taxonomy import Taxonomy
 
 class Organism(Base):
     """

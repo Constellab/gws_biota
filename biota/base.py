@@ -9,7 +9,7 @@ from peewee import SqliteDatabase, MySQLDatabase, DatabaseProxy
 from peewee import CharField
 
 from gws.db.model import AbstractDbManager
-from gws.model import Resource
+from gws.resource import Resource
 from gws.logger import Error
 
 #BIOTA_DB_ENGINE = "mariadb"

@@ -4,13 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PWModel
+from peewee import Model as PeeweeModel
 
-from gws.model import Resource
-
-from biota.base import Base, DbManager
-from biota.ontology import Ontology
-from biota.taxonomy import Taxonomy
+from .base import Base, DbManager
+from .ontology import Ontology
+from .taxonomy import Taxonomy
 
 class PathwayCompounds(Base):
     reactome_pathway_id = CharField(null=True, index=True)
@@ -22,7 +20,7 @@ class PathwayCompounds(Base):
     @property
     def compound(self):
         try:
-            from biota.compound import Compound
+            from .compound import Compound
             c = Compound.get(Compound.chebi_id == self.chebi_id)
             c.species = self.species
             return c
@@ -77,7 +75,7 @@ class Pathway(Ontology):
         :rtype: None
         """
 
-        from biota._helper.reactome import Reactome
+        from ._helper.reactome import Reactome
         
         # insert patwhays
         pathway_dict = Reactome.parse_pathways_to_dict(biodata_dir, kwargs['reactome_pathways_file'])
@@ -114,7 +112,7 @@ class Pathway(Ontology):
     
         
         # insert chebi pathways
-        from biota.compound import Compound
+        from .compound import Compound
         chebi_pathways = Reactome.parse_chebi_pathway_to_dict(biodata_dir, kwargs['reactome_chebi_pathways_file'])
         pathways_comps = []
         for cpw in chebi_pathways:
@@ -147,7 +145,7 @@ class Pathway(Ontology):
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
-        from biota.compound import Compound
+        from .compound import Compound
         if not Compound.table_exists():
             Compound.create_table()
 
@@ -186,7 +184,7 @@ class Pathway(Ontology):
         return(vals)
 
 
-class PathwayAncestor(PWModel):
+class PathwayAncestor(PeeweeModel):
     """
     This class defines the many-to-many relationship between the pathway and theirs ancestors
 

@@ -4,10 +4,10 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PWModel
+from peewee import Model as PeeweeModel
 
-from biota.base import Base, DbManager
-from biota.ontology import Ontology
+from .base import Base, DbManager
+from .ontology import Ontology
 
 class ECO(Ontology):
     """
@@ -69,7 +69,7 @@ class ECO(Ontology):
         :rtype: None
         """
 
-        from biota._helper.ontology import Onto as OntoHelper
+        from ._helper.ontology import Onto as OntoHelper
         
         data_dir, corrected_file_name = OntoHelper.correction_of_eco_file(biodata_dir, kwargs['eco_file'])
         onto_eco = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
@@ -155,7 +155,7 @@ class ECO(Ontology):
         """
         self.eco_id = id
 
-class ECOAncestor(PWModel):
+class ECOAncestor(PeeweeModel):
     """
     This class defines the many-to-many relationship between the eco terms and theirs ancestors
 
