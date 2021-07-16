@@ -1,8 +1,6 @@
 pronto==2.1.0
-numpy
 ujson
-pandas
 pyparsing
 owlready2
-xlrd >= 1.0.0
-biopython
+# xlrd >= 1.0.0
+# biopython
