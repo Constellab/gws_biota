@@ -3,6 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
+from gws.unittest import GTest
 from biota.taxonomy import Taxonomy
 
 ############################################################################################
@@ -17,16 +18,15 @@ class TestGO(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Taxonomy.drop_table()
-        Taxonomy.create_table()
-   
+        GTest.drop_tables()
+        GTest.create_tables()
+        
     @classmethod
     def tearDownClass(cls):
-        Taxonomy.drop_table()
-        pass
+        GTest.drop_tables()
     
     def test_db_object(self):
-
+        GTest.print('Taxonomy')
         params = dict(
             biodata_dir = testdata_path,
             ncbi_node_file = "nodes_test.dmp",

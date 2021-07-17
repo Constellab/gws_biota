@@ -5,6 +5,7 @@ import copy
 import asyncio
 
 from gws.settings import Settings
+from gws.unittest import GTest
 from biota.pathway import Pathway
 from biota.compound import Compound
 
@@ -15,17 +16,15 @@ class TestPatwhays(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Compound.drop_table()
-        Pathway.drop_table()
-        Pathway.create_table()
-
+        GTest.drop_tables()
+        GTest.create_tables()
+        
     @classmethod
     def tearDownClass(cls):
-        Compound.drop_table()
-        Pathway.drop_table()
-        pass
+        GTest.drop_tables()
     
     def test_db_object(self):
+        GTest.print("Pathway")
         cid = ["10033", "10036", "10049", "10055", "10093", "16027", "16284", "17111"]
         for _id in cid:
             c = Compound(chebi_id="CHEBI:"+_id)
@@ -39,7 +38,6 @@ class TestPatwhays(unittest.TestCase):
         )
         Pathway.create_pathway_db(**params)
         
-    
         p = Pathway.get(Pathway.reactome_pathway_id == "R-BTA-1296025")
         self.assertEqual( p.get_name(), "ATP sensitive Potassium channels" )
         

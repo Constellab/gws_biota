@@ -3,6 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
+from gws.unittest import GTest
 from biota.eco import ECO
 
 settings = Settings.retrieve()
@@ -11,18 +12,16 @@ testdata_path = settings.get_dir("biota:testdata_dir")
 
 class TestECO(unittest.TestCase):
     @classmethod
-    
     def setUpClass(cls):
-        ECO.drop_table()
-        ECO.create_table()
-        pass
-   
+        GTest.drop_tables()
+        GTest.create_tables()
+        
     @classmethod
     def tearDownClass(cls):
-        ECO.drop_table()
-        pass
+        GTest.drop_tables()
     
     def test_db_object(self):
+        GTest.print("ECO")
         params = dict(
             biodata_dir = testdata_path,
             eco_file = "eco_test.obo",

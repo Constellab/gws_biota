@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-
+from gws.unittest import GTest
 from biota.enzyme import Enzyme, Enzo, DeprecatedEnzyme, EnzymeClass
 from biota.bto import BTO
 from biota.taxonomy import Taxonomy
@@ -15,31 +15,24 @@ class TestEnzyme(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Enzyme.drop_table()
-        Enzo.drop_table()
-
-        Enzyme.create_table()
-        Enzo.create_table()
-        BTO.create_table()
-   
+        GTest.drop_tables()
+        GTest.create_tables()
+        
     @classmethod
     def tearDownClass(cls):
-        Enzyme.drop_table()
-        Enzo.drop_table()
-        BTO.drop_table()
-        pass
-    
+        GTest.drop_tables()
+
     def test_enzyme(self):
+        GTest.print("Enzyme")
         params = dict(
             biodata_dir = testdata_path,
             brenda_file = "brenda_test.txt",
             bkms_file   = "bkms_test.csv",
             expasy_enzclass_file = "enzclass_test.txt",
         )
-    
         bto = BTO(bto_id = 'BTO_0000214')
         bto.save()
-        
+
         Enzyme.create_enzyme_db(**params)        
         enzyme = Enzyme.select().where(Enzyme.ec_number == '1.4.3.7')
         

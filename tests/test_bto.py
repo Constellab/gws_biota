@@ -3,6 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
+from gws.unittest import GTest
 from biota.bto import BTO
 
 settings = Settings.retrieve()
@@ -12,14 +13,16 @@ class TestBTO(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        BTO.drop_table()
-        BTO.create_table()
+        GTest.drop_tables()
+        GTest.create_tables()
         
     @classmethod
     def tearDownClass(cls):
-        BTO.drop_table()
+        GTest.drop_tables()
     
+ 
     def test_db_object(self):
+        GTest.print("BTO")
         params = dict(
             biodata_dir = testdata_path,
             bto_file = "bto_test.json",

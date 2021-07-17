@@ -3,6 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
+from gws.unittest import GTest
 from biota.sbo import SBO
 
 settings = Settings.retrieve()
@@ -12,15 +13,15 @@ class TestSBO(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        SBO.drop_table()
-        SBO.create_table()
-   
+        GTest.drop_tables()
+        GTest.create_tables()
+        
     @classmethod
     def tearDownClass(cls):
-        SBO.drop_table()
-        pass
+        GTest.drop_tables()
     
     def test_db_object(self):
+        GTest.print("SBO")
         params = dict(
             biodata_dir = testdata_path,
             sbo_file = "sbo_test.obo",

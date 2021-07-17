@@ -14,7 +14,7 @@ from gws.logger import Error
 
 #BIOTA_DB_ENGINE = "mariadb"
 #BIOTA_DB_ENGINE="sqlite3"
-BIOTA_DB_ENGINE = os.getenv("DB_ENGINE", "sqlite3")
+BIOTA_DB_ENGINE = os.getenv("LAB_DB_ENGINE", "sqlite3")
 
 # ####################################################################
 #

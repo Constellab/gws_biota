@@ -3,7 +3,7 @@ import os
 import unittest
 
 from gws.settings import Settings
-
+from gws.unittest import GTest
 from biota.compound import Compound
 
 ############################################################################################
@@ -20,16 +20,15 @@ testdata_path = os.path.join(
 class TestCompound(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        Compound.drop_table()
-        Compound.create_table()
-   
+        GTest.drop_tables()
+        GTest.create_tables()
+        
     @classmethod
     def tearDownClass(cls):
-        Compound.drop_table()
-        pass
+        GTest.drop_tables()
 
     def test_db_object(self):
-
+        GTest.print("Compound")
         params = dict(
             biodata_dir = testdata_path,
             chebi_file = "chebi_test.obo",

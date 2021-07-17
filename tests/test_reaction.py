@@ -5,6 +5,8 @@ import copy
 import asyncio
 
 from gws.settings import Settings
+from gws.unittest import GTest
+
 from biota.reaction import Reaction
 from biota.compound import Compound
 from biota.enzyme import Enzyme
@@ -16,23 +18,15 @@ class TestReaction(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Reaction.drop_table()
-        Enzyme.drop_table()
-        Compound.drop_table()
-        
-        Reaction.create_table()
-        Enzyme.create_table()
-        Compound.create_table()
+        GTest.drop_tables()
+        GTest.create_tables()
         
     @classmethod
     def tearDownClass(cls):
-        Reaction.drop_table()
-        Compound.drop_table()
-        Enzyme.drop_table()
-        pass
+        GTest.drop_tables()
     
     def test_db_object(self):
-
+        GTest.print("Reaction")
         params = dict(
             biodata_dir = testdata_path,
             rhea_reaction_file =  'rhea-reactions_test.txt',
