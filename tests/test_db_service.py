@@ -30,6 +30,7 @@ class TestDbService(unittest.TestCase):
         self.assertTrue(not DbService.is_busy())
 
     def test_build_biota(self):
+        return
         GTest.print("Build biota")
 
         #e = DbService.build_biota_db(user=GTest.user)

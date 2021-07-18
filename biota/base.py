@@ -56,6 +56,7 @@ DbManager.init(engine=BIOTA_DB_ENGINE)
 class Base(Resource):
     
     name = CharField(null=True, index=True)
+    _db_manager = DbManager 
 
     # -- C --
 
