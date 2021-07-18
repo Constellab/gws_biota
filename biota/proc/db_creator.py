@@ -5,7 +5,7 @@
 
 import os
 import time
-from gws.model import Process
+from gws.process import Process
 from gws.logger import Info, Error
 from gws.settings import Settings
 
@@ -28,7 +28,7 @@ class DbCreator(Process):
         "go_file"                   : {"type": str, "default": "./go/go.obo"},
         "sbo_file"                  : {"type": str, "default": "./sbo/sbo.obo"},
         "eco_file"                  : {"type": str, "default": "./eco/eco.obo"},
-        "chebi_file"                : {"type": str, "default": "../chebi/obo/chebi.obo"},
+        "chebi_file"                : {"type": str, "default": "./chebi/obo/chebi.obo"},
         "bto_file"                  : {"type": str, "default": "./brenda/bto/bto.json"},
         "pwo_file"                  : {"type": str, "default": "./pwo/pwo.obo"},
         "brenda_file"               : {"type": str, "default": "./brenda/brenda/brenda_download.txt"},
@@ -52,6 +52,7 @@ class DbCreator(Process):
         "reactome_chebi_pathways_file"    : {"type": str, "default": "./reactome/ChEBI2Reactome.txt"},        
     }
 
+    #only allow admin user to run this process
     _allowed_user = Process.USER_ADMIN
 
     async def task( self ):
@@ -60,119 +61,111 @@ class DbCreator(Process):
             if ECO.select().count():
                 raise Error("DbCreator", "task", "An none empty biota database already exists")
         else:
-            from gws.service import ModelService
-            ModelService.create_tables(instance_type=Base)
+            from gws.service.model_service import ModelService
+            ModelService.create_tables(model_type=Base)
 
-        Info("Start creating biota_db...")
-
+        self.progress_bar.add_message("Start creating biota_db...", show_info=True)
         params = self.config.params.copy()    #get a copy
-
         settings = Settings.retrieve()
         dirs = settings.get_data("dirs")
         biodata_dir = dirs["biota:biodata_dir"]
-        
 
         # check that all paths exists
-        Info("Check that all biodata files exist...")
+        self.progress_bar.add_message("Check that all biodata files exist...", show_info=True)
         for k in params:
             if k.endswith("_file"):
                 file_path = os.path.join(biodata_dir, params[k])
                 if not os.path.exists(file_path):
                     raise Error(f"Biodata file {file_path} does not exist")
-        
         i = 0
         
         # ------------------- Create ECO ----------------- #
         i=i+1
-        Info(f"Step {i} | Saving eco and eco_ancestors...")
+        self.progress_bar.set_value(2, f"Step {i} | Saving eco and eco_ancestors...", show_info=True)
         start_time = time.time()
         ECO.create_eco_db(biodata_dir, **params)
         len_eco = ECO.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
-        
+        self.progress_bar.set_value(3, "... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco), show_info=True)
+
         # ------------- Create GO ------------- #
         i = i+1
-        Info(f"Step {i} | Saving go and go_ancestors...")
+        self.progress_bar.set_value(4, f"Step {i} | Saving go and go_ancestors...", show_info=True)
         start_time = time.time()
         
         GO.create_go_db(biodata_dir, **params)
         len_go = GO.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
+        self.progress_bar.set_value(6, "... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go), show_info=True)
 
         # ------------- Create SBO ------------- #
         i=i+1
-        Info(f"Step {i} | Saving sbo and sbo_ancestors...")
+        self.progress_bar.set_value(7, f"Step {i} | Saving sbo and sbo_ancestors...", show_info=True)
         start_time = time.time()
         SBO.create_sbo_db(biodata_dir, **params)
         len_sbo = SBO.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
-        
+        self.progress_bar.set_value(9, "... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo), show_info=True)
+
         # ------------------- Create BTO ----------------- #
         i=i+1
-        Info(f"Step {i} | Saving bto and bto_ancestors...")
+        self.progress_bar.set_value(10, f"Step {i} | Saving bto and bto_ancestors...", show_info=True)
         start_time = time.time()
         BTO.create_bto_db(biodata_dir, **params)
         len_bto = BTO.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
-        
-        
-        
+        self.progress_bar.set_value(12, "... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto), show_info=True)
+
         # ---------------- Create Compound --------------- #
         i=i+1
-        Info(f"Step {i} | Saving chebi compounds...")
+        self.progress_bar.set_value(13, f"Step {i} | Saving chebi compounds...", show_info=True)
         start_time = time.time()
         Compound.create_compound_db(biodata_dir, **params)
         len_compound = Compound.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
-        
+        self.progress_bar.set_value(20, "... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound), show_info=True)
+
         # ---------------- Create Pathway --------------- #
         i=i+1
-        Info(f"Step {i} | Saving pathways...")
+        self.progress_bar.set_value(21, f"Step {i} | Saving pathways...", show_info=True)
         start_time = time.time()
         Pathway.create_pathway_db(biodata_dir, **params)
         len_pathways = Pathway.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} min for #pathway = {} ".format(elapsed_time/60, len_pathways))
-        
-        
+        self.progress_bar.set_value(25, "... done in {:10.2f} min for #pathway = {} ".format(elapsed_time/60, len_pathways), show_info=True)
+
         # ---------------- Create Taxonomy --------------- #
         i=i+1
-        Info(f"Step {i} | Saving ncbi taxonomy...")
+        self.progress_bar.set_value(26, f"Step {i} | Saving ncbi taxonomy...", show_info=True)
         start_time = time.time()
         Taxonomy.create_taxonomy_db(biodata_dir, **params)
         len_taxonomy = Taxonomy.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
+        self.progress_bar.set_value(60, "... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy), show_info=True)
 
         # ---------------- Create Protein --------------- #
         i=i+1
-        Info(f"Step {i} | Saving proteins...")
+        self.progress_bar.set_value(61, f"Step {i} | Saving proteins...", show_info=True)
         start_time = time.time()
         Protein.create_protein_db(biodata_dir, **params)
         len_protein = Protein.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} min for #protein = {} ".format(elapsed_time/60, len_protein))
-
+        self.progress_bar.set_value(75, "... done in {:10.2f} min for #protein = {} ".format(elapsed_time/60, len_protein), show_info=True)
 
         # ------------------ Create Enzyme --------------- #
         i=i+1
-        Info(f"Step {i} | Saving brenda enzymes and enzyme_btos...")
+        self.progress_bar.set_value(76, f"Step {i} | Saving brenda enzymes and enzyme_btos...", show_info=True)
         start_time = time.time()
         Enzyme.create_enzyme_db(biodata_dir, **params)
         len_enzyme = Enzyme.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
-        
+        self.progress_bar.set_value(85, "... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme), show_info=True)
+
         # ---------------- Create Reactions -------------- #
         i=i+1
-        Info(f"Step {i} | Saving rhea reactions...")
+        self.progress_bar.set_value(86, f"Step {i} | Saving rhea reactions...", show_info=True)
         start_time = time.time()
         Reaction.create_reaction_db(biodata_dir, **params)
         len_rhea = Reaction.select().count()
         elapsed_time = time.time() - start_time
-        Info("... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))
+        self.progress_bar.set_value(95, "... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea), show_info=True)
