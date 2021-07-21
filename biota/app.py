@@ -13,6 +13,7 @@ class API:
 
     # -- C --
 
+    @staticmethod
     async def build_db() -> dict:
         """
         Build biota db
@@ -25,6 +26,7 @@ class API:
 
     # -- D --
 
+    @staticmethod
     async def dump_db( data: dict ) -> dict:
         """
         Dump biota db
@@ -37,6 +39,7 @@ class API:
     
     # -- L --
 
+    @staticmethod
     async def load_db( data: dict ) -> dict:
         """
         Load biota db
