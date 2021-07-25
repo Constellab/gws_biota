@@ -9,7 +9,7 @@ from collections import OrderedDict
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PeeweeModel
 
-from gws.logger import Error
+from gws.exception.bad_request_exception import BadRequestException
 
 from .base import Base, DbManager
 from .taxonomy import Taxonomy as BiotaTaxo
@@ -604,8 +604,7 @@ class Enzyme(Base):
             try:
                 tax = BiotaTaxo.get(BiotaTaxo.tax_id == tax_id)
             except:
-                raise Error("Enzyme", "select_and_follow_if_deprecated", f"Taxonomy ID {tax_id} not found")
-                #return []
+                raise BadRequestException(f"Taxonomy ID {tax_id} not found")
             
             tax_field = getattr(Enzyme, "tax_"+tax.rank)
             Q = Enzyme.select().where((Enzyme.ec_number == ec_number) & (tax_field == tax_id))

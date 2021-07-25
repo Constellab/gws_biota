@@ -6,14 +6,14 @@
 import os
 
 from gws.settings import Settings
-from gws.logger import Info, Warning, Error
 from gws.protocol import Protocol
 from gws.experiment import Experiment
 from gws.study import Study
 from gws.service.base_service import BaseService
-from gws.http import HTTPInternalServerError
 from gws.queue import Queue, Job
 from gws.requests import Requests
+
+from gws.exception.bad_request_exception import BadRequestException
 
 from ..proc.db_creator import DbCreator
 from ..base import Base
@@ -40,7 +40,7 @@ class DbService(BaseService):
             q.add(job, auto_start=True)
             return e
         except Exception as err:
-            raise HTTPInternalServerError(detail=f"An error occured.", debug_error=err) from err
+            raise BadRequestException(f"An error occured while adding the experiment to the job queue") from err
     
     @classmethod
     def dump_biota_db(cls) -> bool:

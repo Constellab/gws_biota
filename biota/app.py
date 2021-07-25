@@ -6,7 +6,6 @@
 from fastapi import Request
 
 from gws.queue import Queue, Job
-from gws.http import *
 from .service.db_service import create_experiment as create_db_experiment
 
 class API:

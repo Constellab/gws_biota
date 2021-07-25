@@ -6,8 +6,8 @@
 import os
 import time
 from gws.process import Process
-from gws.logger import Info, Error
 from gws.settings import Settings
+from gws.exception.bad_request_exception import BadRequestException
 
 from biota.base import Base
 from biota.go import GO
@@ -59,7 +59,7 @@ class DbCreator(Process):
         # deactivate full_text_search functionalitie is required
         if ECO.table_exists():
             if ECO.select().count():
-                raise Error("DbCreator", "task", "An none empty biota database already exists")
+                raise BadRequestException("An none empty biota database already exists")
         else:
             from gws.service.model_service import ModelService
             ModelService.create_tables(model_type=Base)
@@ -76,7 +76,7 @@ class DbCreator(Process):
             if k.endswith("_file"):
                 file_path = os.path.join(biodata_dir, params[k])
                 if not os.path.exists(file_path):
-                    raise Error(f"Biodata file {file_path} does not exist")
+                    raise BadRequestException(f"Biodata file '{file_path}'' does not exist")
         i = 0
         
         # ------------------- Create ECO ----------------- #

@@ -10,7 +10,6 @@ from peewee import CharField
 
 from gws.db.model import AbstractDbManager
 from gws.resource import Resource
-from gws.logger import Error
 
 #BIOTA_DB_ENGINE = "mariadb"
 BIOTA_DB_ENGINE="sqlite3"

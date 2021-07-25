@@ -25,7 +25,7 @@ from peewee import CharField, FloatField, IntegerField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
 from .base import Base, DbManager
-from gws.logger import Error
+from gws.exception.bad_request_exception import BadRequestException
 
 class Compound(Base):
     """
@@ -166,8 +166,7 @@ class Compound(Base):
                                 vals = []
                 
             except:
-                raise Error("Compound", "create_compound_db", "Cannot save all chebi ancestors")
-                #transaction.rollback()
+                raise BadRequestException("Cannot save all chebi ancestors")
     
     @classmethod
     def drop_table(cls, *arg, **kwargs):
