@@ -5,7 +5,9 @@
 
 from peewee import CharField
 from .base import Base
+from gws_core import ResourceDecorator
 
+@ResourceDecorator("Entity", hide=True)
 class Entity(Base):
     """
     This class represents base molecular entities

@@ -6,10 +6,12 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
+from gws_core import ResourceDecorator
 from .base import Base, DbManager
 from .ontology import Ontology
 from .taxonomy import Taxonomy
 
+@ResourceDecorator("PathwayCompounds")
 class PathwayCompounds(Base):
     reactome_pathway_id = CharField(null=True, index=True)
     chebi_id = CharField(null=True, index=True)
@@ -35,7 +37,8 @@ class PathwayCompounds(Base):
             return pw
         except:
             return None
-        
+
+@ResourceDecorator("Pathway")
 class Pathway(Ontology):
     """
     This class represents reactome Pathways 

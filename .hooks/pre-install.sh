@@ -6,8 +6,8 @@
 
 # Pre-installation script executed before server installation
 
-data_dir="/data/biota/sqlite3"
-sqlite3_file="${data_dir}/biota.sqlite3"
+data_dir="/data/gws_biota/sqlite3"
+sqlite3_file="${data_dir}/gws_biota.sqlite3"
 
 if [ ! -f "$sqlite3_file" ]; then
     if [ ! -d "$data_dir" ]; then

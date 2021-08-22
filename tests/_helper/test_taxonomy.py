@@ -1,8 +1,8 @@
 
 import os
 import unittest
-from gws.settings import Settings
-from biota._helper.ncbi import Taxonomy as NCBITaxonomy
+from gws_core import Settings
+from gws_biota._helper.ncbi import Taxonomy as NCBITaxonomy
 
 ####################################################################################
 #
@@ -15,7 +15,7 @@ class TestModel(unittest.TestCase):
     def test_db_object(self):        
         settings = Settings.retrieve()
         testdata_path = os.path.join(
-            settings.get_dir("biota:testdata_dir"),
+            settings.get_variable("gws_biota:testdata_dir"),
             '../_helper/data/'
         )
 

@@ -8,8 +8,9 @@ import pymysql
 from peewee import SqliteDatabase, MySQLDatabase, DatabaseProxy
 from peewee import CharField
 
-from gws.db.model import AbstractDbManager
-from gws.resource import Resource
+from gws_core.core.db.manager import AbstractDbManager
+from gws_core import BadRequestException
+from gws_core import Resource, Settings
 
 #BIOTA_DB_ENGINE = "mariadb"
 BIOTA_DB_ENGINE="sqlite3"
@@ -21,7 +22,7 @@ BIOTA_DB_ENGINE="sqlite3"
 #
 # ####################################################################
 
-
+settings = Settings.retrieve()
 class DbManager(AbstractDbManager):
     """
     DbManager class. 
@@ -32,17 +33,17 @@ class DbManager(AbstractDbManager):
     db = DatabaseProxy()
     _engine = None
     _mariadb_config = {
-        "user": "biota",
+        "user": "gws_biota",
         "password": "gencovery"
     }
-    _db_name = "biota"
+    _db_name = "gws_biota"
 
     @classmethod
-    def use_prod_db(cls, tf:bool):
+    def use_test_db(cls, tf:bool = True):
         if tf:
-            DbManager.init(engine=BIOTA_DB_ENGINE, mode="prod")
+            DbManager.init(engine=BIOTA_DB_ENGINE, test=True)
         else:
-            DbManager.init(engine=BIOTA_DB_ENGINE, mode="dev")
+            DbManager.init(engine=BIOTA_DB_ENGINE, test=False)
 
 DbManager.init(engine=BIOTA_DB_ENGINE)
 
@@ -59,7 +60,19 @@ class Base(Resource):
 
     # -- C --
 
+    @classmethod
+    def create_table(cls, *args, **kwargs):
+        if settings.is_test and settings.is_prod:
+            raise BadRequestException("Cannot create the tables of the production Bitoa DB during unit testing")
+        super().create_table(*args, **kwargs)
+
     # -- D --
+
+    @classmethod
+    def drop_table(cls, *args, **kwargs):
+        if settings.is_test and settings.is_prod:
+            raise BadRequestException("Cannot drop the tables of the production Biota DB during unit testing")
+        super().drop_table(*args, **kwargs)
 
     # -- G --
     

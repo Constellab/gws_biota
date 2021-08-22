@@ -4,8 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
+
+from gws_core import ResourceDecorator
 from .base import Base
 
+@ResourceDecorator("Ontology", hide=True)
 class Ontology(Base):
     """
     This class represents base ontology class.

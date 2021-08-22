@@ -2,14 +2,11 @@ import sys
 import os
 import unittest
 
-from gws.settings import Settings
-from gws.unittest import GTest
-from biota.enzyme import Enzyme, Enzo, DeprecatedEnzyme, EnzymeClass
-from biota.bto import BTO
-from biota.taxonomy import Taxonomy
+from gws_core import Settings, GTest
+from gws_biota import Enzyme, Enzo, DeprecatedEnzyme, EnzymeClass, BTO, Taxonomy
 
 settings = Settings.retrieve()
-testdata_path = settings.get_dir("biota:testdata_dir")
+testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
 class TestEnzyme(unittest.TestCase):
 

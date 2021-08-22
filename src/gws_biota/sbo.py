@@ -6,9 +6,11 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
+from gws_core import ResourceDecorator
 from .base import Base, DbManager
 from .ontology import Ontology
 
+@ResourceDecorator("SBO")
 class SBO(Ontology):
     """
     This class represents SBO terms.

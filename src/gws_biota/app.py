@@ -5,8 +5,8 @@
 
 from fastapi import Request
 
-from gws.queue import Queue, Job
-from .service.db_service import create_experiment as create_db_experiment
+from gws_core import MySQLService, Queue, Job
+from .service.db_service import DbService
 
 class API:
 
@@ -17,9 +17,7 @@ class API:
         """
         Build biota db
         """
-        
-        from .service.db_service import DbService
-
+    
         e = DbService.build_biota_db()           
         return e.to_json()
 
@@ -30,9 +28,6 @@ class API:
         """
         Dump biota db
         """
-
-        from gws.service.mysql_service import MySQLService
-
         MySQLService.dump_db("biota")           
         return True
     
@@ -43,8 +38,6 @@ class API:
         """
         Load biota db
         """
-
-        from gws.service.mysql_service import MySQLService
 
         MySQLService.load_db("biota", remote_file_url=data["url"])           
         return True

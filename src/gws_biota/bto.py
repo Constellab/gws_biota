@@ -6,9 +6,11 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
+from gws_core import ResourceDecorator
 from .ontology import Ontology
 from .base import Base, DbManager
 
+@ResourceDecorator("BTO")
 class BTO(Ontology):
     """
     This class represents BTO terms.

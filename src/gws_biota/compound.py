@@ -24,9 +24,10 @@
 from peewee import CharField, FloatField, IntegerField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
+from gws_core import BadRequestException, ResourceDecorator
 from .base import Base, DbManager
-from gws.exception.bad_request_exception import BadRequestException
 
+@ResourceDecorator("Compound")
 class Compound(Base):
     """
     This class represents ChEBI Ontology terms.

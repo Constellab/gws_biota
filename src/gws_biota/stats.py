@@ -5,6 +5,7 @@
 
 from peewee import CharField, ForeignKeyField
 
+from gws_core import ResourceDecorator
 from .base import Base
 from .bto import BTO
 from .eco import ECO
@@ -15,8 +16,9 @@ from .reaction import Reaction
 from .compound import Compound
 from .protein import Protein
 
-from gws.resource import Resource
+from gws_core import Resource
 
+@ResourceDecorator("Stats")
 class Stats(Resource):
     _table_name = 'gws_biota_stats'
 

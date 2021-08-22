@@ -4,15 +4,11 @@ import unittest
 import copy
 import asyncio
 
-from gws.settings import Settings
-from gws.unittest import GTest
-
-from biota.reaction import Reaction
-from biota.compound import Compound
-from biota.enzyme import Enzyme
+from gws_core import Settings, GTest
+from gws_biota import Reaction, Compound, Enzyme
 
 settings = Settings.retrieve()
-testdata_path = settings.get_dir("biota:testdata_dir")
+testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
 class TestReaction(unittest.TestCase):
 

@@ -2,12 +2,11 @@ import sys
 import os
 import unittest
 
-from gws.settings import Settings
-from gws.unittest import GTest
-from biota.bto import BTO
+from gws_core import Settings, GTest
+from gws_biota import BTO
 
 settings = Settings.retrieve()
-testdata_path = settings.get_dir("biota:testdata_dir")
+testdata_path = settings.get_variable("gws_biota:testdata_dir")
  
 class TestBTO(unittest.TestCase):
 

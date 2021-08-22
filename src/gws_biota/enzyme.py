@@ -9,7 +9,7 @@ from collections import OrderedDict
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PeeweeModel
 
-from gws.exception.bad_request_exception import BadRequestException
+from gws_core import BadRequestException, ResourceDecorator
 
 from .base import Base, DbManager
 from .taxonomy import Taxonomy as BiotaTaxo
@@ -171,6 +171,7 @@ class Params():
             "full_refs" : self._full_refs
         })
 
+@ResourceDecorator("EnzymeClass")
 class EnzymeClass(Base):
     
     ec_number = CharField(null=True, index=True, unique=True)
@@ -207,7 +208,7 @@ class EnzymeClass(Base):
             
         EnzymeClass.save_all(enz_classes)
         
-    
+@ResourceDecorator("EnzymePathway")
 class EnzymePathway(Base):
     """
     This class represents enzyme def pathpathway.
@@ -216,6 +217,7 @@ class EnzymePathway(Base):
     ec_number = CharField(null=True, index=True)
     _table_name = 'biota_enzyme_pathway'
 
+@ResourceDecorator("Enzo")
 class Enzo(Base):
     """
     This class represents enzyme ortholog.
@@ -259,7 +261,8 @@ class Enzo(Base):
         """
         
         return ",".join([ sn.capitalize() for sn in self.data.get("SN", ['']) ])
-        
+
+@ResourceDecorator("DeprecatedEnzyme")
 class DeprecatedEnzyme(Base):
     """
     This class represents depreacted EC numbers of enzymes. 
@@ -297,6 +300,7 @@ class DeprecatedEnzyme(Base):
         
         return list(Q.values())
 
+@ResourceDecorator("Enzyme")
 class Enzyme(Base):
     """
     This class represents enzymes extracted from open databases.

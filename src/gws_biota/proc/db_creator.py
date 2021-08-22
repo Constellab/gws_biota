@@ -5,22 +5,12 @@
 
 import os
 import time
-from gws.process import Process
-from gws.settings import Settings
-from gws.exception.bad_request_exception import BadRequestException
+from gws_core import Process, Settings, BadRequestException, ModelService, ProcessDecorator
+from gws_biota import GO, SBO, BTO, ECO, Taxonomy, Compound, Enzyme, Reaction, Protein, Pathway
+from gws_biota.base import Base
 
-from biota.base import Base
-from biota.go import GO
-from biota.sbo import SBO
-from biota.bto import BTO
-from biota.eco import ECO
-from biota.taxonomy import Taxonomy
-from biota.compound import Compound
-from biota.enzyme import Enzyme
-from biota.reaction import Reaction
-from biota.protein import Protein
-from biota.pathway import Pathway
 
+@ProcessDecorator("DbCreator")
 class DbCreator(Process):
     input_specs = {}
     output_specs = {}
@@ -53,22 +43,12 @@ class DbCreator(Process):
     }
 
     #only allow admin user to run this process
-    _allowed_user = Process.USER_ADMIN
-
     async def task( self ):
-        # deactivate full_text_search functionalitie is required
-        if ECO.table_exists():
-            if ECO.select().count():
-                raise BadRequestException("An none empty biota database already exists")
-        else:
-            from gws.service.model_service import ModelService
-            ModelService.create_tables(model_type=Base)
-
         self.progress_bar.add_message("Start creating biota_db...", show_info=True)
         params = self.config.params.copy()    #get a copy
         settings = Settings.retrieve()
         dirs = settings.get_data("dirs")
-        biodata_dir = dirs["biota:biodata_dir"]
+        biodata_dir = dirs["gws_biota:biodata_dir"]
 
         # check that all paths exists
         self.progress_bar.add_message("Check that all biodata files exist...", show_info=True)

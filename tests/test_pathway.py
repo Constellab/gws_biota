@@ -4,13 +4,11 @@ import unittest
 import copy
 import asyncio
 
-from gws.settings import Settings
-from gws.unittest import GTest
-from biota.pathway import Pathway
-from biota.compound import Compound
+from gws_core import Settings, GTest
+from gws_biota import Pathway, Compound
 
 settings = Settings.retrieve()
-testdata_path = settings.get_dir("biota:testdata_dir")
+testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
 class TestPatwhays(unittest.TestCase):
 

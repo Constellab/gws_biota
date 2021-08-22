@@ -8,9 +8,11 @@ import re
 from peewee import CharField, TextField, IntegerField
 from Bio import SeqIO
 
+from gws_core import ResourceDecorator
 from .entity import Entity
 from .taxonomy import Taxonomy as BiotaTaxo
 
+@ResourceDecorator("Protein")
 class Protein(Entity):
     """
     This class represents genes

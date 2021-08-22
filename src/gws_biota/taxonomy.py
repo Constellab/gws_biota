@@ -6,6 +6,9 @@
 from peewee import CharField, ForeignKeyField
 from .ontology import Ontology
 
+from gws_core import ResourceDecorator
+
+@ResourceDecorator("Taxonomy")
 class Taxonomy(Ontology):
     """
     This class represents the NCBI taxonomy terms.

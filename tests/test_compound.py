@@ -2,9 +2,8 @@ import sys
 import os
 import unittest
 
-from gws.settings import Settings
-from gws.unittest import GTest
-from biota.compound import Compound
+from gws_core import Settings, GTest
+from gws_biota import Compound
 
 ############################################################################################
 #
@@ -13,7 +12,7 @@ from biota.compound import Compound
 ############################################################################################
 settings = Settings.retrieve()
 testdata_path = os.path.join(
-    settings.get_dir("biota:testdata_dir"),
+    settings.get_variable("gws_biota:testdata_dir"),
     '../_helper/data/'
 )
 

@@ -6,9 +6,11 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
+from gws_core import ResourceDecorator
 from .base import Base, DbManager
 from .ontology import Ontology
 
+@ResourceDecorator("GO")
 class GO(Ontology):
     """
     This class represents GO terms.

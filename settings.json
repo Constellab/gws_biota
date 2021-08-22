@@ -1,19 +1,37 @@
 {
-    "name"          : "biota",
-    "authors"       : "Gencovery",
-    "version"       : "0.1",
-    "dirs"          : {
-        "biota:biodata_dir"         : "/data/biota/biodata/",
-        "biota:testdata_dir"        : "./tests/testdata"
+    "name"          : "gws_biota",
+    "author"       : "Gencovery",
+    "version"       : "0.1.0",
+    "variables":{
+        "gws_biota:biodata_dir"     : "/data/{CURRENT_BRICK}/biodata/",
+        "gws_biota:testdata_dir"    : "{CURRENT_DIR}/tests/testdata",
+        "gws_biota:sqlite3db_url"   : "https://share.gencovery.com/s/Eo34Y8sxgqSdSMz/download",
+        "gws_biota:mariadb_url"     : ""
     },
-    "urls":{
-        "biota:sqlite3db": "https://share.gencovery.com/s/Eo34Y8sxgqSdSMz/download",
-        "biota:mariadb": ""
-    },
-    "externs" : {
-        "brenda-py": "DEFAULT_ORIGIN"
-    },
-    "dependencies" : {
-        "gws": "DEFAULT_ORIGIN"
+    "environment":{
+        "pip":[
+            {
+                "source": "https://pypi.python.org/simple",
+                "packages":[]
+            },
+            {
+                "source": "https://$GWS_PIP_PACKAGE_TOKEN@gitlab.com/api/v4/projects/27171024/packages/pypi",
+                "packages":[]
+            }
+        ],
+        "git":[
+            {
+                "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/",
+                "packages":[
+                    "gws_core[commit=latest, branch=djo]",
+                    "brenda-py"
+                ]
+            }
+        ],
+        "variables":{
+            "GWS_GIT_LOGIN": "",
+            "GWS_GIT_PWD": "",
+            "GWS_PIP_PACKAGE_TOKEN": ""
+        }
     }
 }

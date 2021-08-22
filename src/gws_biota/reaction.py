@@ -6,6 +6,7 @@
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PeeweeModel
 
+from gws_core import ResourceDecorator
 from .base import Base, DbManager
 from .entity import Entity
 from .compound import Compound
@@ -21,6 +22,7 @@ ReactionSubstrateDeferred = DeferredThroughModel()
 ReactionProductDeferred = DeferredThroughModel()
 ReactionEnzymeDeferred = DeferredThroughModel()
 
+@ResourceDecorator("Reaction")
 class Reaction(Entity):
     """
     This class represents metabolic reactions extracted from Rhea database.

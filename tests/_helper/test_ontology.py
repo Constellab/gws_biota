@@ -1,15 +1,15 @@
 import os
 import json
 import unittest
-from biota._helper.ontology import Onto
-from gws.settings import Settings
+from gws_core import Settings
+from gws_biota._helper.ontology import Onto
 
 class TestOntology(unittest.TestCase):
     
     def test_db_object(self):
         settings = Settings.retrieve()
         testdata_path = os.path.join(
-            settings.get_dir("biota:testdata_dir"),
+            settings.get_variable("gws_biota:testdata_dir"),
             '../_helper/data/'
         )
 

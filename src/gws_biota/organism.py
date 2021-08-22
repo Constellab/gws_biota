@@ -5,9 +5,11 @@
 
 from peewee import CharField, ForeignKeyField
 
+from gws_core import ResourceDecorator
 from .base import Base
 from .taxonomy import Taxonomy
 
+@ResourceDecorator("Organism")
 class Organism(Base):
     """
     This class represents living organisms

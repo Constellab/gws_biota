@@ -6,6 +6,9 @@
 from peewee import CharField
 from .entity import Entity
 
+from gws_core import ResourceDecorator
+
+@ResourceDecorator("Gene")
 class Gene(Entity):
     """
     This class represents genes
