@@ -21,10 +21,15 @@
         ],
         "git":[
             {
-                "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/",
+                "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/core",
                 "packages":[
                     "gws_core[commit=latest, branch=djo]",
-                    "brenda-py"
+                ]
+            },
+            {
+                "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/lib",
+                "packages":[
+                    "brendapy"
                 ]
             }
         ],
