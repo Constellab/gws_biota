@@ -12,9 +12,6 @@ from gws_core.core.db.manager import AbstractDbManager
 from gws_core import BadRequestException
 from gws_core import Resource, Settings
 
-#BIOTA_DB_ENGINE = "mariadb"
-BIOTA_DB_ENGINE="sqlite3"
-#BIOTA_DB_ENGINE = os.getenv("LAB_DB_ENGINE", "sqlite3")
 
 # ####################################################################
 #
@@ -37,15 +34,7 @@ class DbManager(AbstractDbManager):
         "password": "gencovery"
     }
     _db_name = "gws_biota"
-
-    @classmethod
-    def use_test_db(cls, tf:bool = True):
-        if tf:
-            DbManager.init(engine=BIOTA_DB_ENGINE, test=True)
-        else:
-            DbManager.init(engine=BIOTA_DB_ENGINE, test=False)
-
-DbManager.init(engine=BIOTA_DB_ENGINE)
+    _DEFAULT_DB_ENGINE = "sqlite3"
 
 # ####################################################################
 #

@@ -1,6 +1,6 @@
 {
     "name"          : "gws_biota",
-    "author"       : "Gencovery",
+    "author"        : "Gencovery",
     "version"       : "0.1.0",
     "variables":{
         "gws_biota:biodata_dir"     : "/data/{CURRENT_BRICK}/biodata/",

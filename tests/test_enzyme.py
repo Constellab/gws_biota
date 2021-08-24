@@ -5,9 +5,6 @@ import unittest
 from gws_core import Settings, GTest
 from gws_biota import Enzyme, Enzo, DeprecatedEnzyme, EnzymeClass, BTO, Taxonomy
 
-settings = Settings.retrieve()
-testdata_path = settings.get_variable("gws_biota:testdata_dir")
-
 class TestEnzyme(unittest.TestCase):
 
     @classmethod
@@ -21,6 +18,9 @@ class TestEnzyme(unittest.TestCase):
 
     def test_enzyme(self):
         GTest.print("Enzyme")
+
+        settings = Settings.retrieve()
+        testdata_path = settings.get_variable("gws_biota:testdata_dir")
         params = dict(
             biodata_dir = testdata_path,
             brenda_file = "brenda_test.txt",
