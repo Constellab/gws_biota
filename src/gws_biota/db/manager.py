@@ -26,13 +26,15 @@ class DbManager(AbstractDbManager):
     """
     
     db = DatabaseProxy()
+    _DEFAULT_DB_ENGINE = "sqlite3"
+    _DEFAULT_DB_NAME = "gws_biota"
     _engine = None
     _mariadb_config = {
-        "user": "gws_biota",
+        "user": _DEFAULT_DB_NAME,
         "password": "gencovery"
     }
-    _db_name = "gws_biota"
-    _DEFAULT_DB_ENGINE = "sqlite3"
+    _db_name = _DEFAULT_DB_NAME
+    
 
     @classmethod
     def init_biota_db(cls, test=False) -> None:
