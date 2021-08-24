@@ -35,8 +35,3 @@ class DbManager(AbstractDbManager):
     }
     _db_name = _DEFAULT_DB_NAME
     
-
-    @classmethod
-    def init_biota_db(cls, test=False) -> None:
-        """ Initialize the biota db """
-        cls.init(test=test)
