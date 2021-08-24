@@ -3,38 +3,12 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import os
-import pymysql
-from peewee import SqliteDatabase, MySQLDatabase, DatabaseProxy
 from peewee import CharField
 
-from gws_core.core.db.manager import AbstractDbManager
 from gws_core import BadRequestException
 from gws_core import Resource, Settings
 
-
-# ####################################################################
-#
-# DbManager class
-#
-# ####################################################################
-
-settings = Settings.retrieve()
-class DbManager(AbstractDbManager):
-    """
-    DbManager class. 
-    
-    Provides backend features for managing databases. 
-    """
-    
-    db = DatabaseProxy()
-    _engine = None
-    _mariadb_config = {
-        "user": "gws_biota",
-        "password": "gencovery"
-    }
-    _db_name = "gws_biota"
-    _DEFAULT_DB_ENGINE = "sqlite3"
+from .db.manager import DbManager
 
 # ####################################################################
 #
@@ -51,6 +25,7 @@ class Base(Resource):
 
     @classmethod
     def create_table(cls, *args, **kwargs):
+        settings = Settings.retrieve()
         if settings.is_test and settings.is_prod:
             raise BadRequestException("Cannot create the tables of the production Bitoa DB during unit testing")
         super().create_table(*args, **kwargs)
@@ -59,6 +34,7 @@ class Base(Resource):
 
     @classmethod
     def drop_table(cls, *args, **kwargs):
+        settings = Settings.retrieve()
         if settings.is_test and settings.is_prod:
             raise BadRequestException("Cannot drop the tables of the production Biota DB during unit testing")
         super().drop_table(*args, **kwargs)
