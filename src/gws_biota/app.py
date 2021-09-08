@@ -6,7 +6,7 @@
 from fastapi import Request
 
 from gws_core import MySQLService, Queue, Job
-from .service.db_service import DbService
+from .db.db_service import DbService
 
 class API:
 

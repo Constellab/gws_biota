@@ -7,7 +7,7 @@ import os
 import csv
 import click
 
-from .service.db_service import DbService
+from .db.db_service import DbService
 from gws_core import User, Study, ModelService, UserService, BadRequestException, Logger
 from gws_biota import ECO
 # Create db
@@ -26,7 +26,7 @@ def createdb(ctx):
     ModelService.create_tables()
     ModelService.register_all_processes_and_resources()
     Study.create_default_instance()
-    UserService.create_owner_and_sysuser()
+    UserService.create_sysuser()
 
     try:
         DbService.build_biota_db()

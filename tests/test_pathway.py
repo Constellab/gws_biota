@@ -1,26 +1,12 @@
-import sys
-import os
-import unittest
-import copy
-import asyncio
-
-from gws_core import Settings, GTest
+from gws_core import Settings, GTest, BaseTestCase
 from gws_biota import Pathway, Compound
+from gws_biota.pathway.pathway_service import PathwayService
 
 settings = Settings.retrieve()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
-class TestPatwhays(unittest.TestCase):
+class TestPatwhays(BaseTestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        GTest.drop_tables()
-        GTest.create_tables()
-        
-    @classmethod
-    def tearDownClass(cls):
-        GTest.drop_tables()
-    
     def test_db_object(self):
         GTest.print("Pathway")
         cid = ["10033", "10036", "10049", "10055", "10093", "16027", "16284", "17111"]
@@ -34,7 +20,7 @@ class TestPatwhays(unittest.TestCase):
             reactome_pathway_relations_file = 'reactome_pathway_relations.txt',
             reactome_chebi_pathways_file = 'reactome_chebi.txt',
         )
-        Pathway.create_pathway_db(**params)
+        PathwayService.create_pathway_db(**params)
         
         p = Pathway.get(Pathway.reactome_pathway_id == "R-BTA-1296025")
         self.assertEqual( p.get_name(), "ATP sensitive Potassium channels" )

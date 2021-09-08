@@ -1,24 +1,12 @@
-import sys
-import os
-import unittest
-
-from gws_core import Settings, GTest
+from gws_core import Settings, GTest, BaseTestCase
 from gws_biota import SBO
+from gws_biota.sbo.sbo_service import SBOService
 
 settings = Settings.retrieve()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
-class TestSBO(unittest.TestCase):
-    
-    @classmethod
-    def setUpClass(cls):
-        GTest.drop_tables()
-        GTest.create_tables()
-        
-    @classmethod
-    def tearDownClass(cls):
-        GTest.drop_tables()
-    
+class TestSBO(BaseTestCase):
+
     def test_db_object(self):
         GTest.print("SBO")
         params = dict(
@@ -26,7 +14,7 @@ class TestSBO(unittest.TestCase):
             sbo_file = "sbo_test.obo",
         )
     
-        SBO.create_sbo_db(**params)
+        SBOService.create_sbo_db(**params)
         self.assertEqual(SBO.get(SBO.sbo_id == 'SBO:0000000').get_name(), 'systems biology representation')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000005").get_name(), 'obsolete mathematical expression')
         self.assertEqual(SBO.get(SBO.sbo_id == "SBO:0000004").get_name(), 'modelling framework')

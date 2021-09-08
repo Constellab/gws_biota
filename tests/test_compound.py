@@ -1,9 +1,7 @@
-import sys
 import os
-import unittest
-
-from gws_core import Settings, GTest
+from gws_core import Settings, GTest, BaseTestCase
 from gws_biota import Compound
+from gws_biota.compound.compound_service import CompoundService
 
 ############################################################################################
 #
@@ -16,15 +14,7 @@ testdata_path = os.path.join(
     '../_helper/data/'
 )
 
-class TestCompound(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        GTest.drop_tables()
-        GTest.create_tables()
-        
-    @classmethod
-    def tearDownClass(cls):
-        GTest.drop_tables()
+class TestCompound(BaseTestCase):
 
     def test_db_object(self):
         GTest.print("Compound")
@@ -32,8 +22,7 @@ class TestCompound(unittest.TestCase):
             biodata_dir = testdata_path,
             chebi_file = "chebi_test.obo",
         )
-
-        Compound.create_compound_db(**params)
+        CompoundService.create_compound_db(**params)
         self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:24431').get_name(), "chemical entity")
         self.assertEqual(Compound.get(Compound.chebi_id == 'CHEBI:17051').get_name(), 'fluoride')
         

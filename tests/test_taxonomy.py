@@ -1,29 +1,12 @@
-import sys
-import os
-import unittest
-
-from gws_core import Settings, GTest
+from gws_core import Settings, GTest, BaseTestCase
 from gws_biota import Taxonomy
+from gws_biota.taxonomy.taxonomy_service import TaxonomyService
 
-############################################################################################
-#
-#                                        TestTaxonomy
-#                                         
-############################################################################################
 settings = Settings.retrieve()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
-class TestGO(unittest.TestCase):
+class TestTaxonomy(BaseTestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        GTest.drop_tables()
-        GTest.create_tables()
-        
-    @classmethod
-    def tearDownClass(cls):
-        GTest.drop_tables()
-    
     def test_db_object(self):
         GTest.print('Taxonomy')
         params = dict(
@@ -33,8 +16,7 @@ class TestGO(unittest.TestCase):
             ncbi_division_file = "division.dmp",
             ncbi_citation_file = "citations.dmp"
         )
-        Taxonomy.create_taxonomy_db(**params)
- 
+        TaxonomyService.create_taxonomy_db(**params)
         self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 72).data, {'tax_id': '72', 'rank': 'species', 'division': 'Bacteria'})
         self.assertEqual(Taxonomy.get(Taxonomy.tax_id == 1).data, {'tax_id': '1', 'name': 'root', 'rank': 'no rank', 'division': 'Unassigned'})
         

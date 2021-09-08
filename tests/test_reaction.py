@@ -1,26 +1,12 @@
-import sys
-import os
-import unittest
-import copy
-import asyncio
-
-from gws_core import Settings, GTest
-from gws_biota import Reaction, Compound, Enzyme
+from gws_core import Settings, GTest, BaseTestCase
+from gws_biota import Reaction
+from gws_biota.reaction.reaction_service import ReactionService
 
 settings = Settings.retrieve()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
-class TestReaction(unittest.TestCase):
+class TestReaction(BaseTestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        GTest.drop_tables()
-        GTest.create_tables()
-        
-    @classmethod
-    def tearDownClass(cls):
-        GTest.drop_tables()
-    
     def test_db_object(self):
         GTest.print("Reaction")
         params = dict(
@@ -35,6 +21,6 @@ class TestReaction(unittest.TestCase):
             rhea2reactome_file = 'rhea2reactome_test.tsv'
         )
 
-        Reaction.create_reaction_db(**params)
+        ReactionService.create_reaction_db(**params)
         self.assertEqual(Reaction.get(Reaction.rhea_id == 'RHEA:10022').master_id, '10020')
         self.assertEqual(Reaction.get(Reaction.rhea_id == 'RHEA:10031').kegg_id, 'R00279')

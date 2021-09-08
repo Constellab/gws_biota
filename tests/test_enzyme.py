@@ -1,24 +1,11 @@
-import sys
-import os
-import unittest
+from gws_core import Settings, GTest, BaseTestCase
+from gws_biota import Enzyme, DeprecatedEnzyme, EnzymeClass, BTO
+from gws_biota.enzyme.enzyme_service import EnzymeService
 
-from gws_core import Settings, GTest
-from gws_biota import Enzyme, Enzo, DeprecatedEnzyme, EnzymeClass, BTO, Taxonomy
-
-class TestEnzyme(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        GTest.drop_tables()
-        GTest.create_tables()
-        
-    @classmethod
-    def tearDownClass(cls):
-        GTest.drop_tables()
+class TestEnzyme(BaseTestCase):
 
     def test_enzyme(self):
         GTest.print("Enzyme")
-
         settings = Settings.retrieve()
         testdata_path = settings.get_variable("gws_biota:testdata_dir")
         params = dict(
@@ -30,7 +17,7 @@ class TestEnzyme(unittest.TestCase):
         bto = BTO(bto_id = 'BTO_0000214')
         bto.save()
 
-        Enzyme.create_enzyme_db(**params)        
+        EnzymeService.create_enzyme_db(**params)        
         enzyme = Enzyme.select().where(Enzyme.ec_number == '1.4.3.7')
         
         n = len(enzyme[0].params('ST'))
