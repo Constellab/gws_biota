@@ -5,9 +5,9 @@
 
 import os
 import time
-from gws_core import (Process, Settings, BadRequestException, 
+from gws_core import (Task, Settings, BadRequestException, 
                         ModelService, Resource, resource_decorator, 
-                        process_decorator, ConfigParams, ProcessInputs, ProcessOutputs)
+                        task_decorator, ConfigParams, TaskInputs, TaskOutputs, StrParam)
 
 from gws_biota import (GO, SBO, BTO, ECO, Taxonomy, Compound, Enzyme, Reaction, Protein, Pathway)
 
@@ -24,40 +24,40 @@ from gws_biota.pathway.pathway_service import PathwayService
 
 from ..base.base import Base
 
-@process_decorator("DbCreator")
-class DbCreator(Process):
+@task_decorator("DbCreator")
+class DbCreator(Task):
     input_specs = {}
     output_specs = {}
     config_specs =  { 
-        "go_file"                   : {"type": str, "default": "./go/go.obo"},
-        "sbo_file"                  : {"type": str, "default": "./sbo/sbo.obo"},
-        "eco_file"                  : {"type": str, "default": "./eco/eco.obo"},
-        "chebi_file"                : {"type": str, "default": "./chebi/obo/chebi.obo"},
-        "bto_file"                  : {"type": str, "default": "./brenda/bto/bto.json"},
-        "pwo_file"                  : {"type": str, "default": "./pwo/pwo.obo"},
-        "brenda_file"               : {"type": str, "default": "./brenda/brenda/brenda_download.txt"},
-        "bkms_file"                 : {"type": str, "default": "./bkms/Reactions_BKMS.csv"},
-        "protein_file"              : {"type": str, "default": "./uniprot/uniprot_sprot.fasta"},
-        "ncbi_node_file"            : {"type": str, "default": "./ncbi/taxdump/nodes.dmp"},
-        "ncbi_name_file"            : {"type": str, "default": "./ncbi/taxdump/names.dmp"},
-        "ncbi_division_file"        : {"type": str, "default": "./ncbi/taxdump/division.dmp"},
-        "ncbi_citation_file"        : {"type": str, "default": "./ncbi/taxdump/citations.dmp"},
-        "expasy_enzclass_file"      : {"type": str, "default": "./expasy/enzclass.txt"},
-        "rhea_reaction_file"        : {"type": str, "default": "./rhea/rhea-reactions.txt"},
-        "rhea_direction_file"       : {"type": str, "default": "./rhea/tsv/rhea-directions.tsv"},
-        "rhea2ecocyc_file"          : {"type": str, "default": "./rhea/tsv/rhea2ecocyc.tsv"},
-        "rhea2metacyc_file"         : {"type": str, "default": "./rhea/tsv/rhea2metacyc.tsv"},
-        "rhea2macie_file"           : {"type": str, "default": "./rhea/tsv/rhea2macie.tsv"},
-        "rhea2kegg_reaction_file"   : {"type": str, "default": "./rhea/tsv/rhea2kegg_reaction.tsv"},
-        "rhea2ec_file"              : {"type": str, "default": "./rhea/tsv/rhea2ec.tsv"},
-        "rhea2reactome_file"        : {"type": str, "default": "./rhea/tsv/rhea2reactome.tsv"},
-        "reactome_pathways_file"          : {"type": str, "default": "./reactome/ReactomePathways.txt"},
-        "reactome_pathway_relations_file" : {"type": str, "default": "./reactome/ReactomePathwaysRelation.txt"},
-        "reactome_chebi_pathways_file"    : {"type": str, "default": "./reactome/ChEBI2Reactome.txt"},        
+        "go_file"                   : StrParam(default_value="./go/go.obo"),
+        "sbo_file"                  : StrParam(default_value="./sbo/sbo.obo"),
+        "eco_file"                  : StrParam(default_value="./eco/eco.obo"),
+        "chebi_file"                : StrParam(default_value="./chebi/obo/chebi.obo"),
+        "bto_file"                  : StrParam(default_value="./brenda/bto/bto.json"),
+        "pwo_file"                  : StrParam(default_value="./pwo/pwo.obo"),
+        "brenda_file"               : StrParam(default_value="./brenda/brenda/brenda_download.txt"),
+        "bkms_file"                 : StrParam(default_value="./bkms/Reactions_BKMS.csv"),
+        "protein_file"              : StrParam(default_value="./uniprot/uniprot_sprot.fasta"),
+        "ncbi_node_file"            : StrParam(default_value="./ncbi/taxdump/nodes.dmp"),
+        "ncbi_name_file"            : StrParam(default_value="./ncbi/taxdump/names.dmp"),
+        "ncbi_division_file"        : StrParam(default_value="./ncbi/taxdump/division.dmp"),
+        "ncbi_citation_file"        : StrParam(default_value="./ncbi/taxdump/citations.dmp"),
+        "expasy_enzclass_file"      : StrParam(default_value="./expasy/enzclass.txt"),
+        "rhea_reaction_file"        : StrParam(default_value="./rhea/rhea-reactions.txt"),
+        "rhea_direction_file"       : StrParam(default_value="./rhea/tsv/rhea-directions.tsv"),
+        "rhea2ecocyc_file"          : StrParam(default_value="./rhea/tsv/rhea2ecocyc.tsv"),
+        "rhea2metacyc_file"         : StrParam(default_value="./rhea/tsv/rhea2metacyc.tsv"),
+        "rhea2macie_file"           : StrParam(default_value="./rhea/tsv/rhea2macie.tsv"),
+        "rhea2kegg_reaction_file"   : StrParam(default_value="./rhea/tsv/rhea2kegg_reaction.tsv"),
+        "rhea2ec_file"              : StrParam(default_value="./rhea/tsv/rhea2ec.tsv"),
+        "rhea2reactome_file"        : StrParam(default_value="./rhea/tsv/rhea2reactome.tsv"),
+        "reactome_pathways_file"          : StrParam(default_value="./reactome/ReactomePathways.txt"),
+        "reactome_pathway_relations_file" : StrParam(default_value="./reactome/ReactomePathwaysRelation.txt"),
+        "reactome_chebi_pathways_file"    : StrParam(default_value="./reactome/ChEBI2Reactome.txt"),        
     }
 
     #only allow admin user to run this process
-    async def task(self, config: ConfigParams, inputs: ProcessInputs) -> ProcessOutputs:
+    async def run(self, config: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
         self.add_progress_message("Start creating biota_db...")
         settings = Settings.retrieve()
         biodata_dir = settings.get_variable("gws_biota:biodata_dir")

@@ -7,8 +7,8 @@ import os
 
 from gws_core import (Settings, Protocol, Experiment, Study, Queue, Job, Requests, 
                         BaseService, MySQLBase, MySQLService, BadRequestException,
-                        Experiment, ProcessService, ExperimentService, UserService, 
-                        CurrentUserService, QueueService, ProcessModel)
+                        Experiment, TaskService, ExperimentService, UserService, 
+                        CurrentUserService, QueueService, TaskModel)
 from .db_creator import DbCreator
 
 class DbService(BaseService):
@@ -29,9 +29,9 @@ class DbService(BaseService):
             CurrentUserService.set_current_user(user)
 
         
-        db_creator_model: ProcessModel = ProcessService.create_process_model_from_type(process_type=DbCreator)
-        experiment: Experiment =  ExperimentService.create_experiment_from_process_model(
-            process_model=db_creator_model,
+        db_creator_model: TaskModel = TaskService.create_task_model_from_type(task_type=DbCreator)
+        experiment: Experiment =  ExperimentService.create_experiment_from_task_model(
+            task_model=db_creator_model,
             study = Study.get_default_instance()
         ) 
         experiment.save()
