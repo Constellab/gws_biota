@@ -6,10 +6,12 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PWModel
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..ontology.ontology import Ontology
 from ..base.base import Base
 from ..db.db_manager import DbManager
 
+@typing_registrator(unique_name="BTO", object_type="MODEL", hide=True)
 class BTO(Ontology):
     """
     This class represents BTO terms.

@@ -5,9 +5,11 @@
 
 from peewee import CharField, ForeignKeyField
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..base.base import Base
 from .enzyme_pathway import EnzymePathway
 
+@typing_registrator(unique_name="EnzymeOrtholog", object_type="MODEL", hide=True)
 class EnzymeOrtholog(Base):
     """
     This class represents enzyme ortholog.

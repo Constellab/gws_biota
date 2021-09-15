@@ -4,8 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
+
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..ontology.ontology import Ontology
 
+@typing_registrator(unique_name="Taxonomy", object_type="MODEL", hide=True)
 class Taxonomy(Ontology):
     """
     This class represents the NCBI taxonomy terms.

@@ -6,7 +6,7 @@
 from gws_core import transaction
 from .._helper.reactome import Reactome as ReactomeHelper
 from .pathway import Pathway, PathwayAncestor
-from .pathway_compounds import PathwayCompounds
+from .pathway_compound import PathwayCompound
 
 class PathwayService:
     
@@ -57,17 +57,17 @@ class PathwayService:
         pathways_comps = []
         for cpw in chebi_pathways:
             chebi_id = "CHEBI:"+cpw["chebi_id"]
-            pc = PathwayCompounds(
+            pc = PathwayCompound(
                 chebi_id = chebi_id, 
                 reactome_pathway_id = cpw["reactome_pathway_id"],
                 species = cpw["species"]
             )
             pathways_comps.append(pc)
             if len(pathways_comps) >= 500:
-                PathwayCompounds.save_all(pathways_comps)
+                PathwayCompound.save_all(pathways_comps)
                 pathways_comps = []
         if len(pathways_comps):
-            PathwayCompounds.save_all(pathways_comps)
+            PathwayCompound.save_all(pathways_comps)
 
     @classmethod
     def __query_vals_of_ancestors(self, pathway_rels):

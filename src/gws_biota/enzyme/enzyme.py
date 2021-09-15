@@ -9,6 +9,7 @@ from collections import OrderedDict
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PeeweeModel
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException
 from ..db.db_manager import DbManager
 from ..base.base import Base
@@ -23,7 +24,7 @@ from .enzyme_ortholog import EnzymeOrtholog
 
 EnzymeBTODeffered = DeferredThroughModel()
 
-
+@typing_registrator(unique_name="Enzyme", object_type="MODEL", hide=True)
 class Enzyme(Base):
     """
     This class represents enzymes extracted from open databases.

@@ -4,9 +4,12 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
+
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..base.base import Base
 
-class PathwayCompounds(Base):
+@typing_registrator(unique_name="PathwayCompound", object_type="MODEL", hide=True)
+class PathwayCompound(Base):
     reactome_pathway_id = CharField(null=True, index=True)
     chebi_id = CharField(null=True, index=True)
     species = CharField(null=True, index=True)

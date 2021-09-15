@@ -6,6 +6,7 @@
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
 from peewee import Model as PeeweeModel
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..base.base import Base
 from ..db.db_manager import DbManager
 from ..compound.compound import Compound
@@ -22,6 +23,7 @@ ReactionSubstrateDeferred = DeferredThroughModel()
 ReactionProductDeferred = DeferredThroughModel()
 ReactionEnzymeDeferred = DeferredThroughModel()
 
+@typing_registrator(unique_name="Reaction", object_type="MODEL", hide=True)
 class Reaction(Base):
     """
     This class represents metabolic reactions extracted from Rhea database.

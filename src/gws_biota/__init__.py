@@ -10,7 +10,7 @@ from .enzyme.deprecated_enzyme import DeprecatedEnzyme
 from .go.go import GO
 from .ontology.ontology import Ontology
 from .organism.organism import Organism
-from .pathway.pathway import Pathway, PathwayCompounds
+from .pathway.pathway import Pathway, PathwayCompound
 from .protein.protein import Protein
 from .reaction.reaction import Reaction
 from .sbo.sbo import SBO

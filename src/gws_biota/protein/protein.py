@@ -5,9 +5,11 @@
 
 from peewee import CharField, TextField, IntegerField
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..base.base import Base
 from ..taxonomy.taxonomy import Taxonomy
 
+@typing_registrator(unique_name="Protein", object_type="MODEL", hide=True)
 class Protein(Base):
     """
     This class represents genes

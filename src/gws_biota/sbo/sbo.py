@@ -6,10 +6,12 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..db.db_manager import DbManager
 from ..base.base import Base
 from ..ontology.ontology import Ontology
 
+@typing_registrator(unique_name="SBO", object_type="MODEL", hide=True)
 class SBO(Ontology):
     """
     This class represents SBO terms.

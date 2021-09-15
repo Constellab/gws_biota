@@ -4,9 +4,12 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
+
+from gws_core.model.typing_register_decorator import typing_registrator
 from .._helper.expasy import Expasy
 from ..base.base import Base
 
+@typing_registrator(unique_name="EnzymeClass", object_type="MODEL", hide=True)
 class EnzymeClass(Base):
     
     ec_number = CharField(null=True, index=True, unique=True)

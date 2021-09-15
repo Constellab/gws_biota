@@ -5,11 +5,14 @@
 
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PeeweeModel
+
+from gws_core.model.typing_register_decorator import typing_registrator
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base import Base
 from ..db.db_manager import DbManager
 from ..ontology.ontology import Ontology
 
+@typing_registrator(unique_name="ECO", object_type="MODEL", hide=True)
 class ECO(Ontology):
     """
     This class represents Evidence ECO terms.

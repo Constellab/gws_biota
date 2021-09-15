@@ -6,13 +6,15 @@
 from peewee import CharField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..db.db_manager import DbManager
 from ..base.base import Base
 from ..ontology.ontology import Ontology
 from ..taxonomy.taxonomy import Taxonomy
 from ..compound.compound import Compound
-from .pathway_compounds import PathwayCompounds
+from .pathway_compound import PathwayCompound
 
+@typing_registrator(unique_name="Pathway", object_type="MODEL", hide=True)
 class Pathway(Ontology):
     """
     This class represents reactome Pathways 
@@ -49,7 +51,7 @@ class Pathway(Ontology):
             Compound.create_table()
         super().create_table(*args, **kwargs)
         PathwayAncestor.create_table()
-        PathwayCompounds.create_table()
+        PathwayCompound.create_table()
 
     # -- D --
 
@@ -61,7 +63,7 @@ class Pathway(Ontology):
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
         PathwayAncestor.drop_table()
-        PathwayCompounds.drop_table()
+        PathwayCompound.drop_table()
         super().drop_table(*arg, **kwargs)
 
 class PathwayAncestor(PeeweeModel):

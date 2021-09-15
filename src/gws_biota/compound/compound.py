@@ -24,10 +24,12 @@
 from peewee import CharField, FloatField, IntegerField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException
 from ..base.base import Base
 from ..db.db_manager import DbManager
 
+@typing_registrator(unique_name="Compound", object_type="MODEL", hide=True)
 class Compound(Base):
     """
     This class represents ChEBI Ontology terms.
@@ -102,9 +104,9 @@ class Compound(Base):
     
     @property
     def pathways(self):
-        from .pathway import PathwayCompounds
+        from .pathway import PathwayCompound
         try:
-            pcomps = PathwayCompounds.select().where(PathwayCompounds.chebi_id == self.chebi_id)
+            pcomps = PathwayCompound.select().where(PathwayCompound.chebi_id == self.chebi_id)
             pathways = []
             for pc in pcomps:
                 pw = pc.pathway

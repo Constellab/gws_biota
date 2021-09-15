@@ -4,8 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField
+
+from gws_core.model.typing_register_decorator import typing_registrator
 from ..base.base import Base
 
+@typing_registrator(unique_name="DeprecatedEnzyme", object_type="MODEL", hide=True)
 class DeprecatedEnzyme(Base):
     """
     This class represents depreacted EC numbers of enzymes. 
