@@ -1,3 +1,4 @@
+# > DB
 from .bto.bto import BTO
 from .compound.compound import Compound
 from .eco.eco import ECO
@@ -14,3 +15,5 @@ from .protein.protein import Protein
 from .reaction.reaction import Reaction
 from .sbo.sbo import SBO
 from .taxonomy.taxonomy import Taxonomy
+# > TestCase
+from .base.test_case import BaseTestCaseUsingFullBiotaDB

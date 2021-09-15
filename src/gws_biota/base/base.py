@@ -27,7 +27,7 @@ class Base(Model):
     def create_table(cls, *args, **kwargs):
         settings = Settings.retrieve()
         if settings.is_test and settings.is_prod:
-            raise BadRequestException("Cannot create the tables of the production Bitoa DB during unit testing")
+            raise BadRequestException("Cannot create the tables of the production Biota DB during unit testing")
         super().create_table(*args, **kwargs)
 
     # -- D --
