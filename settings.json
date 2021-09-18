@@ -5,7 +5,7 @@
     "variables":{
         "gws_biota:biodata_dir"     : "/data/{CURRENT_BRICK}/biodata/",
         "gws_biota:testdata_dir"    : "{CURRENT_DIR}/tests/testdata",
-        "gws_biota:sqlite3db_url"   : "https://share.gencovery.com/s/Eo34Y8sxgqSdSMz/download",
+        "gws_biota:sqlite3db_url"   : "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/opendata/biodata/20210223-biodata.zip",
         "gws_biota:mariadb_url"     : ""
     },
     "environment":{

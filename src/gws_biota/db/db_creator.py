@@ -57,16 +57,16 @@ class DbCreator(Task):
     }
 
     #only allow admin user to run this process
-    async def run(self, config: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+    async def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
         self.add_progress_message("Start creating biota_db...")
         settings = Settings.retrieve()
         biodata_dir = settings.get_variable("gws_biota:biodata_dir")
 
         # check that all paths exists
         self.add_progress_message("Check that all biodata files exist...")
-        for k in config:
+        for k in params:
             if k.endswith("_file"):
-                file_path = os.path.join(biodata_dir, config[k])
+                file_path = os.path.join(biodata_dir, params[k])
                 if not os.path.exists(file_path):
                     raise BadRequestException(f"Biodata file '{file_path}'' does not exist")
         i = 0
@@ -75,7 +75,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(2, f"Step {i} | Saving eco and eco_ancestors...")
         start_time = time.time()
-        ECOService.create_eco_db(biodata_dir, **config)
+        ECOService.create_eco_db(biodata_dir, **params)
         len_eco = ECO.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(3, "... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
@@ -85,7 +85,7 @@ class DbCreator(Task):
         self.update_progress_value(4, f"Step {i} | Saving go and go_ancestors...")
         start_time = time.time()
         
-        GOService.create_go_db(biodata_dir, **config)
+        GOService.create_go_db(biodata_dir, **params)
         len_go = GO.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(6, "... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
@@ -94,7 +94,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(7, f"Step {i} | Saving sbo and sbo_ancestors...")
         start_time = time.time()
-        SBOService.create_sbo_db(biodata_dir, **config)
+        SBOService.create_sbo_db(biodata_dir, **params)
         len_sbo = SBO.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(9, "... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
@@ -103,7 +103,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(10, f"Step {i} | Saving bto and bto_ancestors...")
         start_time = time.time()
-        BTOService.create_bto_db(biodata_dir, **config)
+        BTOService.create_bto_db(biodata_dir, **params)
         len_bto = BTO.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(12, "... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
@@ -112,7 +112,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(13, f"Step {i} | Saving chebi compounds...")
         start_time = time.time()
-        CompoundService.create_compound_db(biodata_dir, **config)
+        CompoundService.create_compound_db(biodata_dir, **params)
         len_compound = Compound.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(20, "... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
@@ -121,7 +121,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(21, f"Step {i} | Saving pathways...")
         start_time = time.time()
-        PathwayService.create_pathway_db(biodata_dir, **config)
+        PathwayService.create_pathway_db(biodata_dir, **params)
         len_pathways = Pathway.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(25, "... done in {:10.2f} min for #pathway = {} ".format(elapsed_time/60, len_pathways))
@@ -130,7 +130,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(26, f"Step {i} | Saving ncbi taxonomy...")
         start_time = time.time()
-        TaxonomyService.create_taxonomy_db(biodata_dir, **config)
+        TaxonomyService.create_taxonomy_db(biodata_dir, **params)
         len_taxonomy = Taxonomy.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(60, "... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
@@ -139,7 +139,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(61, f"Step {i} | Saving proteins...")
         start_time = time.time()
-        ProteinService.create_protein_db(biodata_dir, **config)
+        ProteinService.create_protein_db(biodata_dir, **params)
         len_protein = Protein.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(75, "... done in {:10.2f} min for #protein = {} ".format(elapsed_time/60, len_protein))
@@ -148,7 +148,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(76, f"Step {i} | Saving brenda enzymes and enzyme_btos...")
         start_time = time.time()
-        EnzymeService.create_enzyme_db(biodata_dir, **config)
+        EnzymeService.create_enzyme_db(biodata_dir, **params)
         len_enzyme = Enzyme.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(85, "... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
@@ -157,7 +157,7 @@ class DbCreator(Task):
         i=i+1
         self.update_progress_value(86, f"Step {i} | Saving rhea reactions...")
         start_time = time.time()
-        ReactionService.create_reaction_db(biodata_dir, **config)
+        ReactionService.create_reaction_db(biodata_dir, **params)
         len_rhea = Reaction.select().count()
         elapsed_time = time.time() - start_time
         self.update_progress_value(95, "... done in {:10.2f} min for #rhea = {}".format(elapsed_time/60, len_rhea))

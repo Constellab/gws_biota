@@ -6,15 +6,17 @@
 
 # Pre-installation script executed before server installation
 
+apt-get -y install jq
 data_dir="/data/gws_biota/sqlite3"
 sqlite3_file="${data_dir}/gws_biota.sqlite3"
+sqlite3_db_url=`jq '.variables."gws_biota:sqlite3db_url"' ${PWD}/../settings.json | sed -e 's/^"//' -e 's/"$//'`
 
 if [ ! -f "$sqlite3_file" ]; then
     if [ ! -d "$data_dir" ]; then
         mkdir -p $data_dir
     fi
 
-    curl https://share.gencovery.com/s/Eo34Y8sxgqSdSMz/download -o "${sqlite3_file}.zip"
+    curl $sqlite3_db_url -o "${sqlite3_file}.zip"
     unzip -p "${sqlite3_file}.zip" > "${sqlite3_file}"
     rm -f "${sqlite3_file}.zip"
 fi
