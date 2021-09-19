@@ -1,4 +1,4 @@
-from gws_core import Settings, GTest, BaseTestCase
+from gws_core import Settings, BaseTestCase
 from gws_biota import GO
 from gws_biota.go.go_service import GOService
 

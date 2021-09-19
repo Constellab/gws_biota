@@ -1,4 +1,4 @@
-from gws_core import Settings, GTest, BaseTestCase
+from gws_core import Settings, BaseTestCase
 from gws_biota import SBO
 from gws_biota.sbo.sbo_service import SBOService
 
@@ -8,7 +8,7 @@ testdata_path = settings.get_variable("gws_biota:testdata_dir")
 class TestSBO(BaseTestCase):
 
     def test_db_object(self):
-        GTest.print("SBO")
+        self.print("SBO")
         params = dict(
             biodata_dir = testdata_path,
             sbo_file = "sbo_test.obo",

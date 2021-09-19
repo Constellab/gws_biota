@@ -1,4 +1,4 @@
-from gws_core import Settings, GTest, BaseTestCase
+from gws_core import Settings, BaseTestCase
 from gws_biota import Pathway, Compound
 from gws_biota.pathway.pathway_service import PathwayService
 
@@ -8,7 +8,7 @@ testdata_path = settings.get_variable("gws_biota:testdata_dir")
 class TestPatwhays(BaseTestCase):
 
     def test_db_object(self):
-        GTest.print("Pathway")
+        self.print("Pathway")
         cid = ["10033", "10036", "10049", "10055", "10093", "16027", "16284", "17111"]
         for _id in cid:
             c = Compound(chebi_id="CHEBI:"+_id)

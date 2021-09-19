@@ -1,4 +1,4 @@
-from gws_core import Settings, GTest, BaseTestCase
+from gws_core import Settings, BaseTestCase
 from gws_biota import Reaction
 from gws_biota.reaction.reaction_service import ReactionService
 
@@ -8,7 +8,7 @@ testdata_path = settings.get_variable("gws_biota:testdata_dir")
 class TestReaction(BaseTestCase):
 
     def test_db_object(self):
-        GTest.print("Reaction")
+        self.print("Reaction")
         params = dict(
             biodata_dir = testdata_path,
             rhea_reaction_file =  'rhea-reactions_test.txt',

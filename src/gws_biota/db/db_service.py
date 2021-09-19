@@ -19,9 +19,7 @@ class DbService(BaseService):
         Build biota db
         """
 
-        #study = Study.get_default_instance()
         if not user:
-            # user = CurrentUserService.get_current_user()
             user = UserService.get_sysuser()
             user.is_http_authenticated = True
             user.is_console_authenticated = True
@@ -31,8 +29,7 @@ class DbService(BaseService):
         
         db_creator_model: TaskModel = TaskService.create_task_model_from_type(task_type=DbCreator)
         experiment: Experiment =  ExperimentService.create_experiment_from_task_model(
-            task_model=db_creator_model,
-            study = Study.get_default_instance()
+            task_model=db_creator_model
         ) 
         experiment.save()
         experiment.set_title("Creation of biota database")

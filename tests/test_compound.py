@@ -1,5 +1,5 @@
 import os
-from gws_core import Settings, GTest, BaseTestCase
+from gws_core import Settings, BaseTestCase
 from gws_biota import Compound
 from gws_biota.compound.compound_service import CompoundService
 
@@ -17,7 +17,7 @@ testdata_path = os.path.join(
 class TestCompound(BaseTestCase):
 
     def test_db_object(self):
-        GTest.print("Compound")
+        self.print("Compound")
         params = dict(
             biodata_dir = testdata_path,
             chebi_file = "chebi_test.obo",

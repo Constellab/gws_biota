@@ -25,7 +25,7 @@ def createdb(ctx):
     ModelService.drop_tables()
     ModelService.create_tables()
     ModelService.register_all_processes_and_resources()
-    Study.create_default_instance()
+    #Study.create_default_instance()
     UserService.create_sysuser()
 
     try:

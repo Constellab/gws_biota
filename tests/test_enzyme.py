@@ -1,11 +1,11 @@
-from gws_core import Settings, GTest, BaseTestCase
+from gws_core import Settings, BaseTestCase
 from gws_biota import Enzyme, DeprecatedEnzyme, EnzymeClass, BTO
 from gws_biota.enzyme.enzyme_service import EnzymeService
 
 class TestEnzyme(BaseTestCase):
 
     def test_enzyme(self):
-        GTest.print("Enzyme")
+        self.print("Enzyme")
         settings = Settings.retrieve()
         testdata_path = settings.get_variable("gws_biota:testdata_dir")
         params = dict(

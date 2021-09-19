@@ -1,4 +1,4 @@
-from gws_core import Settings, GTest, BaseTestCase
+from gws_core import Settings, BaseTestCase
 from gws_biota import ECO
 from gws_biota.eco.eco_service import ECOService
 
@@ -9,7 +9,7 @@ testdata_path = settings.get_variable("gws_biota:testdata_dir")
 class TestECO(BaseTestCase):
 
     def test_db_object(self):
-        GTest.print("ECO")
+        self.print("ECO")
         params = dict(
             biodata_dir = testdata_path,
             eco_file = "eco_test.obo",
