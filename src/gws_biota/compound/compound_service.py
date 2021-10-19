@@ -3,11 +3,22 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+import math
 from gws_core import transaction
 from ..compound.compound import Compound, CompoundAncestor
 from .._helper.chebi import Chebi as ChebiHelper
 
 class CompoundService:
+
+    @staticmethod(f)
+    def _to_float(val):
+        try:
+            val = float(val)
+        except:
+            return None
+        if math.isnan(val):
+            val = None
+        return val
 
     @classmethod
     @transaction()
@@ -35,11 +46,11 @@ class CompoundService:
             comp.inchikey = comp.data["inchikey"]
             comp.smiles = comp.data["smiles"]
             if not comp.data["mass"] is None:
-                comp.mass = float(comp.data["mass"])
+                comp.mass = self._to_float(comp.data["mass"])
             if not comp.data["monoisotopic_mass"] is None:
-                comp.monoisotopic_mass = float(comp.data["monoisotopic_mass"])
+                comp.monoisotopic_mass = self._to_float(comp.data["monoisotopic_mass"])
             if not comp.data["charge"] is None:
-                comp.charge = float(comp.data["charge"])
+                comp.charge = self._to_float(comp.data["charge"])
             comp.chebi_star = comp.data["subsets"]
             if "kegg" in comp.data["xref"]:
                 comp.kegg_id = comp.data["xref"]["kegg"]
