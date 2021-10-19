@@ -90,7 +90,13 @@ class EnzymeService:
             enz = Enzyme(
                 ec_number = ec,
                 uniprot_id = d["uniprot"],
-                data = d
+                data = d,
+                ft_names= str([ 
+                    ec,
+                    *d['RN'], 
+                    *d.get('SN', []), 
+                    *d.get('SY', [])
+                ])
             )
             enz.set_name(d['RN'][0])
             enzymes.append(enz)

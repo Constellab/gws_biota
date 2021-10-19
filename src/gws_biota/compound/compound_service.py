@@ -46,11 +46,11 @@ class CompoundService:
             comp.inchikey = comp.data["inchikey"]
             comp.smiles = comp.data["smiles"]
             if not comp.data["mass"] is None:
-                comp.mass = self._to_float(comp.data["mass"])
+                comp.mass = cls._to_float(comp.data["mass"])
             if not comp.data["monoisotopic_mass"] is None:
-                comp.monoisotopic_mass = self._to_float(comp.data["monoisotopic_mass"])
+                comp.monoisotopic_mass = cls._to_float(comp.data["monoisotopic_mass"])
             if not comp.data["charge"] is None:
-                comp.charge = self._to_float(comp.data["charge"])
+                comp.charge = cls._to_float(comp.data["charge"])
             comp.chebi_star = comp.data["subsets"]
             if "kegg" in comp.data["xref"]:
                 comp.kegg_id = comp.data["xref"]["kegg"]

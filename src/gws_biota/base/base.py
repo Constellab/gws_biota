@@ -19,6 +19,7 @@ from ..db.db_manager import DbManager
 class Base(Model):
     
     name = CharField(null=True, index=True)
+    _default_full_text_column = "name"
     _db_manager = DbManager 
 
     # -- C --
@@ -62,7 +63,6 @@ class Base(Model):
         """
         
         self.name = name
-    
 
     @classmethod
     def search_by_name(cls, name, page: int=1, number_of_items_per_page: int=50):

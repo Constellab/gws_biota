@@ -95,9 +95,11 @@ class ReactionService:
         """
         
         Q = Enzyme.select().where(Enzyme.ec_number << react.data['enzymes'])
+        tab = []
         for enz in Q:
+            tab.append( enz.ft_names )
             react.enzymes.add(enz)
-
+        react.ft_names = "\n".join(tab)
     # -- U --
 
     @classmethod

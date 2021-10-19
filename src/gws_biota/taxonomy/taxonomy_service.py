@@ -44,6 +44,8 @@ class TaxonomyService:
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
                 tax.ancestor_tax_id = tax.data['ancestor']
+                tax.ft_names = str([tax.tax_id, tax.name])
+
                 del tax.data['ancestor']
             Taxonomy.save_all(taxa)
             start = stop

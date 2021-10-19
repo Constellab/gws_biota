@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ForeignKeyField
+from peewee import CharField, ForeignKeyField, TextField
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..ontology.ontology import Ontology
@@ -32,6 +32,8 @@ class Taxonomy(Ontology):
     division = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     ancestor_tax_id = CharField(null=True, index=True)
+    ft_names = TextField(null=True, index=False)
+    _default_full_text_column = "ft_names"
     _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
     _table_name = 'biota_taxonomy'
     _children = None

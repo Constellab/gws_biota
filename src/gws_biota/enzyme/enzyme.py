@@ -6,7 +6,7 @@
 import os
 from collections import OrderedDict
 
-from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
+from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel, TextField
 from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
@@ -74,6 +74,9 @@ class Enzyme(Base):
     tax_id = CharField(null=True, index=True)
     related_deprecated_enzyme = None  #dyamically added if by method select_and_follow_if_deprecated
     bto = ManyToManyField(BTO, through_model = EnzymeBTODeffered)    
+
+    ft_names = TextField(null=True, index=True)
+    _default_full_text_column = "ft_names"
     _table_name = 'biota_enzymes'
     
     # -- A --

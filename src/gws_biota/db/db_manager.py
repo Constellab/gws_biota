@@ -26,7 +26,7 @@ class DbManager(AbstractDbManager):
     """
     
     db = DatabaseProxy()
-    _DEFAULT_DB_ENGINE = "sqlite3"
+    _DEFAULT_DB_ENGINE = "mariadb"
     _DEFAULT_DB_NAME = "gws_biota"
     _engine = None
     _mariadb_config = {

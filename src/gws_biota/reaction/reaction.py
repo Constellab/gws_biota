@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel
+from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel, TextField
 from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
@@ -61,6 +61,9 @@ class Reaction(Base):
     substrates = ManyToManyField(Compound, through_model = ReactionSubstrateDeferred)
     products = ManyToManyField(Compound, through_model = ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, through_model = ReactionEnzymeDeferred)
+
+    ft_names = TextField(null=True, index=False)
+    _default_full_text_column = "ft_names"
     _table_name = 'biota_reaction'
 
     # -- A --

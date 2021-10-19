@@ -24,6 +24,7 @@ class TestTaxonomy(BaseTestCase):
         #for t in Q:
         #    print(t.title)
         
-        #Q = Taxonomy.search("methylotrophus")
-        #self.assertEqual(Q[0].get_related().name, "Methylophilus methylotrophus")
+        Q = Taxonomy.search("methylotrophus")
+        print(len(Q))
+        self.assertEqual(Q[0].name, "Methylophilus methylotrophus")
         
