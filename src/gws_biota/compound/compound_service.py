@@ -10,7 +10,7 @@ from .._helper.chebi import Chebi as ChebiHelper
 
 class CompoundService:
 
-    @staticmethod(f)
+    @staticmethod
     def _to_float(val):
         try:
             val = float(val)
