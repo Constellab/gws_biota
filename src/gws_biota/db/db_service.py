@@ -34,12 +34,8 @@ class DbService(BaseService):
         experiment.save()
         experiment.set_title("Creation of biota database")
         try:
-            ExperimentService.run_through_cli(experiment=experiment, user=user)
-            #experiment.run_through_cli()
-            # q = Queue()
-            # job = Job(user=user, experiment=experiment)
-            # QueueService.add_job(job, auto_start=True)
-            # return experiment
+            QueueService.add_experiment_to_queue(
+                    experiment_uri=experiment.uri)
         except Exception as err:
             raise BadRequestException(f"An error occured while adding the experiment to the job queue") from err
     

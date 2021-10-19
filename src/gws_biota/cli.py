@@ -20,7 +20,7 @@ from gws_biota import ECO
 def createdb(ctx):
     if ECO.table_exists():
         if ECO.select().count():
-            raise BadRequestException("An none empty biota database already exists")
+            raise BadRequestException("A none empty biota database already exists")
 
     ModelService.drop_tables()
     ModelService.create_tables()

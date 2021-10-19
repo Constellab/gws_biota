@@ -1,14 +1,7 @@
-# Biota brick
+# Biota
 
-This software brick is the core library to manage Gencovery knowledge databases. <br />
-
-The purpose of Biota is to collect biological data from official open biological databases to create a reference database for Gencovery Web Services. <br />
-
-### Prequesities
-Before launching anything with Biota, ensure that you have downloaded all the necessary data
-
-### Documentation:
-You can find documentation about prism and helper package of biota on the following brick in the ./docs/ folder
+Biota is a unified and structured collection of omics data from official open European biological databases.
+It is dedicated to Gencovery Web Services for the conception and use of digital twins of cell metabolism.
 
 # License
 

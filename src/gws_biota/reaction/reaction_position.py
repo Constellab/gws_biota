@@ -5,12 +5,13 @@
 
 from peewee import CharField, FloatField
 from gws_core.model.typing_register_decorator import typing_registrator
-from gws_core import BadRequestException
+from gws_core import BadRequestException, JSONField
 from ..base.base import Base
 
-@typing_registrator(unique_name="CompoundPosition", object_type="MODEL", hide=True)
-class CompoundPosition(Base):
-    chebi_id = CharField(null=True, index=True)
+@typing_registrator(unique_name="ReactionPosition", object_type="MODEL", hide=True)
+class ReactionPosition(Base):
+    rhea_id = CharField(null=True, index=True)
     x = FloatField(null=True, index=True)
     y = FloatField(null=True, index=True)
     z = FloatField(null=True, index=True)
+    line = JSONField(null=True, index=False)

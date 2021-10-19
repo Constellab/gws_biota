@@ -4,4 +4,4 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-nohup python3 manage.py --cli biota.cli.createdb &
+nohup python3 manage.py --cli gws_biota.cli.createdb &

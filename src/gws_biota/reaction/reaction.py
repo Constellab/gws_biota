@@ -135,6 +135,15 @@ class Reaction(Base):
             total_product_mass = total_product_mass + p.mass
         return total_substrate_mass == total_product_mass
 
+    # -- L --
+
+    @property
+    def position(self):
+        from .reaction_position import ReactionPosition
+        try:
+            return ReactionPosition.get(ReactionPosition.rhea_id == self.rhea_id)
+        except:
+            return None
     # -- S -- 
 
     def set_direction(self, direction):

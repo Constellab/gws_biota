@@ -103,6 +103,14 @@ class Compound(Base):
     # -- P --
     
     @property
+    def position(self):
+        from .compound_position import CompoundPosition
+        try:
+            return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
+        except:
+            return None
+
+    @property
     def pathways(self):
         from .pathway import PathwayCompound
         try:
