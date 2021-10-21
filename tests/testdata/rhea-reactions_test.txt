@@ -48,3 +48,13 @@ ENZYME      3.5.1.43
 ENTRY       RHEA:10041
 DEFINITION  adenosine 3',5'-bisphosphate + H2O => AMP + phosphate
 EQUATION    CHEBI:58343 + CHEBI:15377 => CHEBI:456215 + CHEBI:43474
+///
+ENTRY       RHEA:46520
+DEFINITION  2 [Fe(II)-cytochrome b5] + an N-(1,2 saturated acyl)-(4R)-hydroxysphinganine + 2 H(+) + O2 = 2 [Fe(III)-cytochrome b5] + an N-(2R-hydroxyacyl)-4R-hydroxysphinganine + H2O
+EQUATION    2 CHEBI:29033 + CHEBI:86275 + 2 CHEBI:15378 + CHEBI:15379 = 2 CHEBI:29034 + CHEBI:86274 + CHEBI:15377
+ENZYME      1.14.18.6
+///
+ENTRY       RHEA:58156
+DEFINITION  ATP + H2O + 4 Na(+)(in) = ADP + H(+) + 4 Na(+)(out) + phosphate
+EQUATION    CHEBI:30616 + CHEBI:15377 + 4 CHEBI:29101 = CHEBI:456216 + CHEBI:15378 + 4 CHEBI:29101 + CHEBI:43474
+ENZYME      7.2.2.1

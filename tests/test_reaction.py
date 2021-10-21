@@ -24,3 +24,6 @@ class TestReaction(BaseTestCase):
         ReactionService.create_reaction_db(**params)
         self.assertEqual(Reaction.get(Reaction.rhea_id == 'RHEA:10022').master_id, '10020')
         self.assertEqual(Reaction.get(Reaction.rhea_id == 'RHEA:10031').kegg_id, 'R00279')
+
+        rxn=Reaction.get(Reaction.rhea_id == 'RHEA:58156')
+        print(rxn.data)

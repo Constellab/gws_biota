@@ -14,4 +14,4 @@ class ReactionPosition(Base):
     x = FloatField(null=True, index=True)
     y = FloatField(null=True, index=True)
     z = FloatField(null=True, index=True)
-    line = JSONField(null=True, index=False)
+    points = JSONField(null=True, index=False)

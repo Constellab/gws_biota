@@ -38,7 +38,9 @@ class DbService(BaseService):
                     experiment_uri=experiment.uri)
         except Exception as err:
             raise BadRequestException(f"An error occured while adding the experiment to the job queue") from err
-    
+
+        return experiment
+        
     @classmethod
     def dump_biota_db(cls) -> bool:
         MySQLService.dump_db("biota", force=True, wait=False)
