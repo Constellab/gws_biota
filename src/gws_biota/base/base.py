@@ -1,12 +1,10 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField
-
-from gws_core import BadRequestException
-from gws_core import Model, Settings
+from gws_core import BadRequestException, Model, Settings
+from peewee import CharField, ModelSelect
 
 from ..db.db_manager import DbManager
 
@@ -16,11 +14,12 @@ from ..db.db_manager import DbManager
 #
 # ####################################################################
 
+
 class Base(Model):
-    
+
     name = CharField(null=True, index=True)
     _default_full_text_column = "name"
-    _db_manager = DbManager 
+    _db_manager = DbManager
 
     # -- C --
 
@@ -41,7 +40,7 @@ class Base(Model):
         super().drop_table(*args, **kwargs)
 
     # -- G --
-    
+
     def get_name(self) -> str:
         """
         Get the name. Alias of :meth:`get_title`
@@ -49,11 +48,11 @@ class Base(Model):
         :param: name: The name
         :type name: str
         """
-        
+
         return self.name
-    
+
     # -- S --
-    
+
     def set_name(self, name: str):
         """
         Set the name.
@@ -61,13 +60,17 @@ class Base(Model):
         :param: name: The name
         :type name: str
         """
-        
+
         self.name = name
 
     @classmethod
-    def search_by_name(cls, name, page: int=1, number_of_items_per_page: int=50):
-        Q = cls.select().where( cls.name ** name ).paginate(page, number_of_items_per_page)
+    def search_by_name(cls, name, page: int = 1, number_of_items_per_page: int = 50):
+        Q = cls.select().where(cls.name ** name).paginate(page, number_of_items_per_page)
         return Q
-    
+
+    @classmethod
+    def search(cls, phrase: str, in_boolean_mode: bool = False) -> ModelSelect:
+        return super().search(phrase, in_boolean_mode).order_by(cls.name)
+
     class Meta:
         database = DbManager.db
