@@ -58,12 +58,12 @@ class DbCreator(Task):
 
     #only allow admin user to run this process
     async def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
-        self.add_progress_message("Start creating biota_db...")
+        self.log_info_message("Start creating biota_db...")
         settings = Settings.retrieve()
         biodata_dir = settings.get_variable("gws_biota:biodata_dir")
 
         # check that all paths exists
-        self.add_progress_message("Check that all biodata files exist...")
+        self.log_info_message("Check that all biodata files exist...")
         for k in params:
             if k.endswith("_file"):
                 file_path = os.path.join(biodata_dir, params[k])
