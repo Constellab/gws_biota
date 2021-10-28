@@ -34,4 +34,10 @@ class DbManager(AbstractDbManager):
         "password": "gencovery"
     }
     _db_name = _DEFAULT_DB_NAME
-    
+
+# Activate the biota db if we are in a notebook
+try:
+    get_ipython
+    DbManager.init_db(test=False)
+except:
+    pass

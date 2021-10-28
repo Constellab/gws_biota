@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import BadRequestException, Model, Settings
+from gws_core import BadRequestException, Model, Settings, Logger
 from peewee import CharField, ModelSelect
 
 from ..db.db_manager import DbManager
@@ -14,6 +14,12 @@ from ..db.db_manager import DbManager
 #
 # ####################################################################
 
+IS_IPYTHON_ACTIVE = False
+try:
+    get_ipython
+    IS_IPYTHON_ACTIVE = True
+except:
+    pass
 
 class Base(Model):
 
@@ -21,22 +27,42 @@ class Base(Model):
     _default_full_text_column = "name"
     _db_manager = DbManager
 
+    __settings = None
     # -- C --
 
     @classmethod
     def create_table(cls, *args, **kwargs):
-        settings = Settings.retrieve()
-        if settings.is_test and settings.is_prod:
-            raise BadRequestException("Cannot create the tables of the production Biota DB during unit testing")
+        if IS_IPYTHON_ACTIVE:
+            Logger.warning("Cannot create Biota tables of in ipython notebooks")
+            return
+        if not Base.__settings:
+            Base.__settings = Settings.retrieve()
+        if Base.__settings.is_test and Base.__settings.is_prod:
+            raise BadRequestException("Cannot create Biota tables of the production Biota DB during unit testing")
         super().create_table(*args, **kwargs)
 
     # -- D --
 
+    def delete(self, *args, **kwargs):
+        if IS_IPYTHON_ACTIVE:
+            Logger.warning("Cannot delete Biota entries in ipython notebooks")
+            return False
+        
+        if not Base.__settings:
+            Base.__settings = Settings.retrieve()
+        if Base.__settings.is_test and Base.__settings.is_prod:
+            raise BadRequestException("Cannot delete Biota entries of the production Biota DB during unit testing")
+        return super().delete(*args, **kwargs)
+
     @classmethod
     def drop_table(cls, *args, **kwargs):
-        settings = Settings.retrieve()
-        if settings.is_test and settings.is_prod:
-            raise BadRequestException("Cannot drop the tables of the production Biota DB during unit testing")
+        if IS_IPYTHON_ACTIVE:
+            Logger.warning("Cannot drop Biota tables in ipython notebooks")
+            return
+        if not Base.__settings:
+            Base.__settings = Settings.retrieve()
+        if Base.__settings.is_test and Base.__settings.is_prod:
+            raise BadRequestException("Cannot drop Biota tables of the production Biota DB during unit testing")
         super().drop_table(*args, **kwargs)
 
     # -- G --
@@ -52,6 +78,16 @@ class Base(Model):
         return self.name
 
     # -- S --
+    
+    def save(self, *args, **kwargs):
+        if IS_IPYTHON_ACTIVE:
+            Logger.warning("Cannot save Biota entries in ipython notebooks")
+            return False
+        if not Base.__settings:
+            Base.__settings = Settings.retrieve()
+        if Base.__settings.is_test and Base.__settings.is_prod:
+            raise BadRequestException("Cannot save Biota entries of the production Biota DB during unit testing")
+        return super().save(*args, **kwargs)
 
     def set_name(self, name: str):
         """
