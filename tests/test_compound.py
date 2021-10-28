@@ -31,3 +31,7 @@ class TestCompound(BaseTestCase):
         
         self.assertEqual(len(comp.ancestors), 1)
         self.assertEqual(comp.ancestors[0].get_name(), 'fluoride salt')
+
+        pos = comp.position
+        print(pos.x)
+        print(pos.y)

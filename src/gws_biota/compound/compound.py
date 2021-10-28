@@ -21,7 +21,7 @@
 # The licensor cannot revoke these freedoms as long as you follow the license terms.
 # https://creativecommons.org/licenses/by/4.0/.
 
-from peewee import CharField, FloatField, IntegerField, ForeignKeyField
+from peewee import CharField, DecimalField, IntegerField, ForeignKeyField
 from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
@@ -48,9 +48,9 @@ class Compound(Base):
     kegg_id = CharField(null=True, index=True)
     metacyc_id = CharField(null=True, index=True)
     formula = CharField(null=True, index=True)
-    charge = FloatField(null=True, index=True)
-    mass = FloatField(null=True, index=True)
-    monoisotopic_mass = FloatField(null=True, index=True)
+    charge = DecimalField(null=True, index=True)
+    mass = DecimalField(null=True, index=True)
+    monoisotopic_mass = DecimalField(null=True, index=True)
     inchi = CharField(null=True, index=True)
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
@@ -98,15 +98,14 @@ class Compound(Base):
         
     # -- G --
 
-    
-    
     # -- P --
     
     @property
     def position(self):
         from .compound_position import CompoundPosition
         try:
-            return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
+            #return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
+            return CompoundPosition.get_by_chebi_id(chebi_id = self.chebi_id)
         except:
             return None
 

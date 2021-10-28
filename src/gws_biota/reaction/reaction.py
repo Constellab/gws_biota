@@ -144,7 +144,8 @@ class Reaction(Base):
     def position(self):
         from .reaction_position import ReactionPosition
         try:
-            return ReactionPosition.get(ReactionPosition.rhea_id == self.rhea_id)
+            #return ReactionPosition.get(ReactionPosition.rhea_id == self.rhea_id)
+            return ReactionPosition.get_by_rhea_id(rhea_id = self.rhea_id)
         except:
             return None
     # -- S -- 
