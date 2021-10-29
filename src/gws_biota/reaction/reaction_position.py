@@ -23,8 +23,8 @@ class ReactionPosition(Base):
         if pos:
             rxn_pos = ReactionPosition(
                 chebi_id=chebi_id,
-                x=pos["x"],
-                y=pos["y"],
+                x=pos["x"] * 20,
+                y=pos["y"] * 20,
                 z=None,
                 points=pos["points"],
             )

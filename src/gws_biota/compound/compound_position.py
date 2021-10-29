@@ -23,8 +23,8 @@ class CompoundPosition(Base):
         if pos:
             comp_pos = CompoundPosition(
                 chebi_id=chebi_id,
-                x=pos["x"],
-                y=pos["y"],
+                x=pos["x"] * 20,
+                y=pos["y"] * 20,
                 z=None
             )
             return comp_pos
