@@ -1,6 +1,6 @@
 import time
 
-from gws_core import Settings, GTest, Experiment, BaseTestCase
+from gws_core import Settings, GTest, Experiment, BaseTestCase, ExperimentService
 from gws_biota.db.db_service import DbService, DbCreator, QueueService
 
 settings = Settings.retrieve()
@@ -17,6 +17,10 @@ class TestDbService(BaseTestCase):
         self.print("Build biota")
         
         experiment = DbService.build_biota_db()
+        
+        print("Wating 10 sec for the experiment to start ...")
+        time.sleep(5)
+        experiment.refresh()
         self.assertTrue(experiment.pid > 0)        
  
         print("Wating 10 sec before killing experiment ...")

@@ -39,6 +39,7 @@ class DbService(BaseService):
         except Exception as err:
             raise BadRequestException(f"An error occured while adding the experiment to the job queue") from err
 
+        experiment.refresh()
         return experiment
         
     @classmethod
