@@ -17,12 +17,17 @@ class ReactionPosition(Base):
     z = DecimalField(null=True, index=True)
     points = JSONField(null=True, index=False)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.points is None:
+            self.points = {}
+        
     @classmethod
     def get_by_rhea_id(cls, rhea_id: str):
         pos = REACTION_POSITION_DATA.get(rhea_id)
         if pos:
             rxn_pos = ReactionPosition(
-                chebi_id=chebi_id,
+                rhea_id=rhea_id,
                 x=pos["x"] * 20,
                 y=pos["y"] * 20,
                 z=None,
