@@ -28,12 +28,15 @@ class Base(Model):
     _db_manager = DbManager
 
     __settings = None
+    __is_table_warning_printed = False
     # -- C --
 
     @classmethod
     def create_table(cls, *args, **kwargs):
         if IS_IPYTHON_ACTIVE:
-            Logger.warning("Cannot create Biota tables of in ipython notebooks")
+            if not Base.__is_table_warning_printed:
+                Logger.warning("Cannot create Biota tables of in ipython notebooks")
+                Base.__is_table_warning_printed = True
             return
         if not Base.__settings:
             Base.__settings = Settings.retrieve()
@@ -45,7 +48,9 @@ class Base(Model):
 
     def delete(self, *args, **kwargs):
         if IS_IPYTHON_ACTIVE:
-            Logger.warning("Cannot delete Biota entries in ipython notebooks")
+            if not Base.__is_table_warning_printed:
+                Logger.warning("Cannot delete Biota entries in ipython notebooks")
+                Base.__is_table_warning_printed = True
             return False
         
         if not Base.__settings:
@@ -57,7 +62,9 @@ class Base(Model):
     @classmethod
     def drop_table(cls, *args, **kwargs):
         if IS_IPYTHON_ACTIVE:
-            Logger.warning("Cannot drop Biota tables in ipython notebooks")
+            if not Base.__is_table_warning_printed:
+                Logger.warning("Cannot drop Biota tables in ipython notebooks")
+                Base.__is_table_warning_printed = True
             return
         if not Base.__settings:
             Base.__settings = Settings.retrieve()
@@ -81,7 +88,9 @@ class Base(Model):
     
     def save(self, *args, **kwargs):
         if IS_IPYTHON_ACTIVE:
-            Logger.warning("Cannot save Biota entries in ipython notebooks")
+            if not Base.__is_table_warning_printed:
+                Logger.warning("Cannot save Biota entries in ipython notebooks")
+                Base.__is_table_warning_printed = True
             return False
         if not Base.__settings:
             Base.__settings = Settings.retrieve()
