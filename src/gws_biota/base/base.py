@@ -48,10 +48,6 @@ class Base(Model):
         return True
 
     @classmethod
-    def _check_protection(cls):
-        return True
-
-    @classmethod
     def create_table(cls, *args, **kwargs):
         if cls._check_protection():
             super().create_table(*args, **kwargs)
