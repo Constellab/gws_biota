@@ -4,11 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base import Base
+from ..base.protected_model import ProtectedModel
 from ..db.db_manager import DbManager
 from ..ontology.ontology import Ontology
 
@@ -89,7 +89,7 @@ class ECO(Ontology):
         """
         self.eco_id = id
 
-class ECOAncestor(PeeweeModel):
+class ECOAncestor(ProtectedModel):
     """
     This class defines the many-to-many relationship between the eco terms and theirs ancestors
 

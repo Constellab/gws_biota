@@ -6,11 +6,12 @@
 from peewee import CharField, FloatField
 from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException, JSONField
-from ..base.base import Base
+
+from ..db.db_manager import DbManager
+from ..base.protected_model import ProtectedModel
 from .reaction_position_data import REACTION_POSITION_DATA
 
-@typing_registrator(unique_name="ReactionPosition", object_type="MODEL", hide=True)
-class ReactionPosition(Base):
+class ReactionPosition(ProtectedModel):
     rhea_id = CharField(null=True, index=True)
     x = FloatField(null=True, index=True)
     y = FloatField(null=True, index=True)
@@ -36,3 +37,7 @@ class ReactionPosition(Base):
             return rxn_pos
         else:
             return ReactionPosition()
+
+    class Meta:
+        table_name = 'biota_reaction_position'
+        database = DbManager.db

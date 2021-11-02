@@ -22,12 +22,12 @@
 # https://creativecommons.org/licenses/by/4.0/.
 
 from peewee import CharField, FloatField, DoubleField, IntegerField, ForeignKeyField
-from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException
 from ..base.base import Base
 from ..db.db_manager import DbManager
+from ..base.protected_model import ProtectedModel
 
 @typing_registrator(unique_name="Compound", object_type="MODEL", hide=True)
 class Compound(Base):
@@ -140,7 +140,7 @@ class Compound(Base):
             
         return rxns
     
-class CompoundAncestor(PeeweeModel):
+class CompoundAncestor(ProtectedModel):
     """
     This class defines the many-to-many relationship between the compound terms and theirs ancestors
 

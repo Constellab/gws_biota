@@ -6,12 +6,12 @@
 from peewee import CharField, FloatField
 from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException
-from ..base.base import Base
 
+from ..db.db_manager import DbManager
+from ..base.protected_model import ProtectedModel
 from .compound_position_data import COMPOUND_POSITION_DATA
 
-@typing_registrator(unique_name="CompoundPosition", object_type="MODEL", hide=True)
-class CompoundPosition(Base):
+class CompoundPosition(ProtectedModel):
     chebi_id = CharField(null=True, index=True)
     x = FloatField(null=True, index=True)
     y = FloatField(null=True, index=True)
@@ -30,3 +30,7 @@ class CompoundPosition(Base):
             return comp_pos
         else:
             return CompoundPosition()
+
+    class Meta:
+        table_name = 'biota_compound_position'
+        database = DbManager.db

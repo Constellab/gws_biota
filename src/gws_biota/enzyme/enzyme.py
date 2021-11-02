@@ -7,12 +7,12 @@ import os
 from collections import OrderedDict
 
 from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel, TextField
-from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException
 from ..db.db_manager import DbManager
 from ..base.base import Base
+from ..base.protected_model import ProtectedModel
 from ..protein.protein import Protein
 from ..taxonomy.taxonomy import Taxonomy
 from ..bto.bto import BTO
@@ -248,7 +248,7 @@ class Enzyme(Base):
     # -- U --
 
 
-class EnzymeBTO(PeeweeModel):
+class EnzymeBTO(ProtectedModel):
     """
     This class refers to tissues of brenda enzymes
     EnzymeBTO entities are created by the __update_tissues() method of the Enzyme class

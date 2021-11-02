@@ -4,11 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..db.db_manager import DbManager
 from ..base.base import Base
+from ..base.protected_model import ProtectedModel
 from ..ontology.ontology import Ontology
 
 @typing_registrator(unique_name="SBO", object_type="MODEL", hide=True)
@@ -93,7 +93,7 @@ class SBO(Ontology):
         """
         self.sbo_id = sbo_id
 
-class SBOAncestor(PeeweeModel):
+class SBOAncestor(ProtectedModel):
     """
     This class defines the many-to-many relationship between the sbo terms and theirs ancestors
 

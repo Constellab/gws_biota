@@ -4,11 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PeeweeModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..db.db_manager import DbManager
 from ..base.base import Base
+from ..base.protected_model import ProtectedModel
 from ..ontology.ontology import Ontology
 from ..taxonomy.taxonomy import Taxonomy
 from ..compound.compound import Compound
@@ -66,7 +66,7 @@ class Pathway(Ontology):
         PathwayCompound.drop_table()
         super().drop_table(*arg, **kwargs)
 
-class PathwayAncestor(PeeweeModel):
+class PathwayAncestor(ProtectedModel):
     """
     This class defines the many-to-many relationship between the pathway and theirs ancestors
 

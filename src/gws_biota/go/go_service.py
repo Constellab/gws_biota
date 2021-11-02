@@ -4,7 +4,6 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PeeweeModel
 
 from gws_core import transaction
 from ..db.db_manager import DbManager

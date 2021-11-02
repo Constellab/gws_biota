@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import BadRequestException, Model, Settings, Logger
+from gws_core import BadRequestException, Settings, Logger, Model
 from peewee import CharField, ModelSelect
 
 from ..db.db_manager import DbManager
@@ -29,48 +29,46 @@ class Base(Model):
 
     __settings = None
     __is_table_warning_printed = False
+    
     # -- C --
 
     @classmethod
-    def create_table(cls, *args, **kwargs):
+    def _check_protection(cls):
         if IS_IPYTHON_ACTIVE:
             if not Base.__is_table_warning_printed:
-                Logger.warning("Cannot create Biota tables of in ipython notebooks")
+                Logger.warning("Cannot alter Biota tables of in ipython notebooks")
                 Base.__is_table_warning_printed = True
-            return
+            return False
+
         if not Base.__settings:
             Base.__settings = Settings.retrieve()
         if Base.__settings.is_test and Base.__settings.is_prod:
-            raise BadRequestException("Cannot create Biota tables of the production Biota DB during unit testing")
-        super().create_table(*args, **kwargs)
+            raise BadRequestException("Cannot alter Biota tables of the production Biota DB during unit testing")
+        
+        return True
+
+    @classmethod
+    def _check_protection(cls):
+        return True
+
+    @classmethod
+    def create_table(cls, *args, **kwargs):
+        if cls._check_protection():
+            super().create_table(*args, **kwargs)
 
     # -- D --
 
-    def delete(self, *args, **kwargs):
-        if IS_IPYTHON_ACTIVE:
-            if not Base.__is_table_warning_printed:
-                Logger.warning("Cannot delete Biota entries in ipython notebooks")
-                Base.__is_table_warning_printed = True
+    @classmethod
+    def delete(cls, *args, **kwargs):
+        if cls._check_protection():
+            return super().delete(*args, **kwargs)
+        else:
             return False
-        
-        if not Base.__settings:
-            Base.__settings = Settings.retrieve()
-        if Base.__settings.is_test and Base.__settings.is_prod:
-            raise BadRequestException("Cannot delete Biota entries of the production Biota DB during unit testing")
-        return super().delete(*args, **kwargs)
 
     @classmethod
     def drop_table(cls, *args, **kwargs):
-        if IS_IPYTHON_ACTIVE:
-            if not Base.__is_table_warning_printed:
-                Logger.warning("Cannot drop Biota tables in ipython notebooks")
-                Base.__is_table_warning_printed = True
-            return
-        if not Base.__settings:
-            Base.__settings = Settings.retrieve()
-        if Base.__settings.is_test and Base.__settings.is_prod:
-            raise BadRequestException("Cannot drop Biota tables of the production Biota DB during unit testing")
-        super().drop_table(*args, **kwargs)
+        if cls._check_protection():
+            super().drop_table(*args, **kwargs)
 
     # -- G --
 
@@ -85,18 +83,6 @@ class Base(Model):
         return self.name
 
     # -- S --
-    
-    def save(self, *args, **kwargs):
-        if IS_IPYTHON_ACTIVE:
-            if not Base.__is_table_warning_printed:
-                Logger.warning("Cannot save Biota entries in ipython notebooks")
-                Base.__is_table_warning_printed = True
-            return False
-        if not Base.__settings:
-            Base.__settings = Settings.retrieve()
-        if Base.__settings.is_test and Base.__settings.is_prod:
-            raise BadRequestException("Cannot save Biota entries of the production Biota DB during unit testing")
-        return super().save(*args, **kwargs)
 
     def set_name(self, name: str):
         """
@@ -116,6 +102,12 @@ class Base(Model):
     @classmethod
     def search(cls, phrase: str, in_boolean_mode: bool = False) -> ModelSelect:
         return super().search(phrase, in_boolean_mode).order_by(cls.name)
+
+    def save(self, *args, **kwargs):
+        if self._check_protection():
+            return super().save(*args, **kwargs)
+        else:
+            return False
 
     class Meta:
         database = DbManager.db
