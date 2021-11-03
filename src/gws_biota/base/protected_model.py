@@ -24,15 +24,15 @@ class ProtectedModel(Model):
     @classmethod
     def _check_protection(cls):
         if IS_IPYTHON_ACTIVE:
-            if not cls.__is_table_warning_printed:
-                Logger.warning("Cannot alter Biota tables of in ipython notebooks")
-                cls.__is_table_warning_printed = True
+            if not ProtectedModel.__is_table_warning_printed:
+                Logger.warning("Cannot alter Biota db of in ipython notebooks")
+                ProtectedModel.__is_table_warning_printed = True
             return False
 
-        if not cls.__settings:
-            cls.__settings = Settings.retrieve()
-        if cls.__settings.is_test and cls.__settings.is_prod:
-            raise BadRequestException("Cannot alter Biota tables of the production Biota DB during unit testing")
+        if not ProtectedModel.__settings:
+            ProtectedModel.__settings = Settings.retrieve()
+        if ProtectedModel.__settings.is_test and ProtectedModel.__settings.is_prod:
+            raise BadRequestException("Cannot alter production Biota db during unit tests")
         
         return True
 
