@@ -36,7 +36,7 @@ class Base(Model):
     def _check_protection(cls):
         if IS_IPYTHON_ACTIVE:
             if not Base.__is_table_warning_printed:
-                Logger.warning("Cannot alter Biota db of in ipython notebooks")
+                Logger.warning("Cannot alter Biota db in ipython notebooks")
                 Base.__is_table_warning_printed = True
             return False
 
