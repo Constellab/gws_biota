@@ -1,14 +1,14 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 #
 # ChEBI Copyright Notice and License:
 # ChEBI data are available under the Creative Commons License (CC BY 4.0).
-# The Creative Commons Attribution License CC BY 4.0 
-# is applied to all copyrightable parts of BRENDA. 
-# The copyrightable parts of BRENDA are copyright-protected by Prof. Dr. D. Schomburg, Technische 
-# Universität Braunschweig, BRICS,Department of Bioinformatics and Biochemistry, 
+# The Creative Commons Attribution License CC BY 4.0
+# is applied to all copyrightable parts of BRENDA.
+# The copyrightable parts of BRENDA are copyright-protected by Prof. Dr. D. Schomburg, Technische
+# Universität Braunschweig, BRICS,Department of Bioinformatics and Biochemistry,
 # Rebenring 56, 38106 Braunschweig, Germany.
 # https://www.brenda-enzymes.org
 #
@@ -21,21 +21,22 @@
 # The licensor cannot revoke these freedoms as long as you follow the license terms.
 # https://creativecommons.org/licenses/by/4.0/.
 
-from peewee import CharField, FloatField, DoubleField, IntegerField, ForeignKeyField
-
-from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException
+from gws_core.model.typing_register_decorator import typing_registrator
+from peewee import CharField, DoubleField, FloatField, ForeignKeyField, IntegerField
+
 from ..base.base import Base
-from ..db.db_manager import DbManager
 from ..base.protected_model import ProtectedModel
+from ..db.db_manager import DbManager
+
 
 @typing_registrator(unique_name="Compound", object_type="MODEL", hide=True)
 class Compound(Base):
     """
     This class represents ChEBI Ontology terms.
 
-    Chemical Entities of Biological Interest (ChEBI) includes an ontological classification, whereby the 
-    relationships between molecular entities or classes of entities and their parents and/or children are 
+    Chemical Entities of Biological Interest (ChEBI) includes an ontological classification, whereby the
+    relationships between molecular entities or classes of entities and their parents and/or children are
     specified (https://www.ebi.ac.uk/chebi/). ChEBI data are available under the Creative Commons License (CC BY 4.0),
     https://creativecommons.org/licenses/by/4.0/
 
@@ -57,8 +58,8 @@ class Compound(Base):
     chebi_star = CharField(null=True, index=True)
 
     _ancestors = None
-    _table_name = 'biota_compound'
-    
+    _table_name = "biota_compound"
+
     # -- A --
 
     @property
@@ -70,7 +71,7 @@ class Compound(Base):
         Q = CompoundAncestor.select().where(CompoundAncestor.compound == self.id)
         for q in Q:
             self._ancestors.append(q.ancestor)
-        
+
         return self._ancestors
 
     # -- C --
@@ -84,8 +85,7 @@ class Compound(Base):
         """
         super().create_table(*args, **kwargs)
         CompoundAncestor.create_table()
-        
-    
+
     @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
@@ -95,67 +95,71 @@ class Compound(Base):
         """
         CompoundAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
-        
+
     # -- G --
 
     # -- P --
-    
+
     @property
     def position(self):
         from .compound_position import CompoundPosition
+
         try:
-            #return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
-            return CompoundPosition.get_by_chebi_id(chebi_id = self.chebi_id)
+            # return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
+            return CompoundPosition.get_by_chebi_id(chebi_id=self.chebi_id)
         except:
             return None
 
     @property
     def pathways(self):
         from .pathway import PathwayCompound
+
         try:
-            pcomps = PathwayCompound.select().where(PathwayCompound.chebi_id == self.chebi_id)
+            pcomps = PathwayCompound.select().where(
+                PathwayCompound.chebi_id == self.chebi_id
+            )
             pathways = []
             for pc in pcomps:
                 pw = pc.pathway
                 if pw:
                     pathways.append(pc.pathway)
-            
+
             return pathways
         except:
             return None
-    
+
     # -- R --
-    
+
     @property
     def reactions(self):
-        from .reaction import ReactionSubstrate, ReactionProduct
+        from .reaction import ReactionProduct, ReactionSubstrate
+
         rxns = []
         Q = ReactionSubstrate.select().where(ReactionSubstrate.compound == self)
         for r in Q:
             rxns.append(r.reaction)
-            
+
         Q = ReactionProduct.select().where(ReactionProduct.compound == self)
         for r in Q:
             rxns.append(r.reaction)
-            
+
         return rxns
-    
+
+
 class CompoundAncestor(ProtectedModel):
     """
     This class defines the many-to-many relationship between the compound terms and theirs ancestors
 
-    :type compound: CharField 
+    :type compound: CharField
     :property compound: id of the concerned compound term
-    :type ancestor: CharField 
+    :type ancestor: CharField
     :property ancestor: ancestor of the concerned compound term
     """
-    
+
     compound = ForeignKeyField(Compound)
     ancestor = ForeignKeyField(Compound)
-    
+
     class Meta:
-        table_name = 'biota_compound_ancestors'
+        table_name = "biota_compound_ancestors"
         database = DbManager.db
-        indexes = (
-            (('compound', 'ancestor'), True),
-        )
+        indexes = ((("compound", "ancestor"), True),)

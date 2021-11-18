@@ -25,7 +25,7 @@ class TestDbService(BaseTestCase):
  
         print("Wating 10 sec before killing experiment ...")
         time.sleep(10)
-        ExperimentService.stop_experiment(uri=experiment.uri)
+        ExperimentService.stop_experiment(experiment.id)
         experiment.refresh()
         self.assertFalse(experiment.is_running)
         self.assertTrue(experiment.pid == 0)        

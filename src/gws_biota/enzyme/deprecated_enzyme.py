@@ -36,13 +36,13 @@ class DeprecatedEnzyme(Base):
             tmp_Q = Enzyme.select().where(Enzyme.ec_number == self.new_ec_number)        
             if tmp_Q:
                 for e in tmp_Q:
-                    Q[e.uri] = e
+                    Q[e.id] = e
             else:
                 Q = {}
                 # if the new enzyme if also deprecated, we follow the deprecation chain
                 deprec_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == self.new_ec_number)
                 for deprec in deprec_Q:
                     for e in deprec.select_new_enzymes():
-                        Q[e.uri] = e
+                        Q[e.id] = e
         
         return list(Q.values())

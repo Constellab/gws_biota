@@ -23,8 +23,8 @@ class CompoundPosition(ProtectedModel):
         if pos:
             comp_pos = CompoundPosition(
                 chebi_id=chebi_id,
-                x=pos["x"] * 20,
-                y=pos["y"] * 20,
+                x=pos["x"] * 15,
+                y=pos["y"] * -15,
                 z=None
             )
             return comp_pos

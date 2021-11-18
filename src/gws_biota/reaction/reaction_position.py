@@ -29,8 +29,8 @@ class ReactionPosition(ProtectedModel):
         if pos:
             rxn_pos = ReactionPosition(
                 rhea_id=rhea_id,
-                x=pos["x"] * 20,
-                y=pos["y"] * 20,
+                x=pos["x"] * 15,
+                y=pos["y"] * -15,
                 z=None,
                 points=pos["points"],
             )
