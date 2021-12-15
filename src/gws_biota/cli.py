@@ -1,5 +1,5 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
@@ -9,6 +9,7 @@ import click
 
 from .db.db_service import DbService
 from gws_core import User, Study, ModelService, UserService, BadRequestException, Logger
+from gws_core.extra import BaseModelService
 from gws_biota import ECO
 # Create db
 
@@ -22,10 +23,9 @@ def createdb(ctx):
         if ECO.select().count():
             raise BadRequestException("A none empty biota database already exists")
 
-    ModelService.drop_tables()
-    ModelService.create_tables()
+    BaseModelService.drop_tables()
+    BaseModelService.create_tables()
     ModelService.register_all_processes_and_resources()
-    #Study.create_default_instance()
     UserService.create_sysuser()
 
     try:
