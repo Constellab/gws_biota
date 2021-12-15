@@ -30,7 +30,6 @@ class DbService(BaseService):
             task_model=db_creator_model
         )
         experiment.save()
-        experiment.set_title("Creation of biota database")
         try:
             QueueService.add_experiment_to_queue(
                     experiment_id=experiment.id)
