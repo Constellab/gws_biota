@@ -26,7 +26,7 @@ from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, DoubleField, FloatField, ForeignKeyField, IntegerField
 
 from ..base.base import Base
-from ..base.protected_model import ProtectedModel
+from ..base.simple_base_model import SimpleBaseModel
 from ..db.db_manager import DbManager
 
 
@@ -146,7 +146,7 @@ class Compound(Base):
         return rxns
 
 
-class CompoundAncestor(ProtectedModel):
+class CompoundAncestor(SimpleBaseModel):
     """
     This class defines the many-to-many relationship between the compound terms and theirs ancestors
 

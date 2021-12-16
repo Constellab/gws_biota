@@ -3,7 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import BadRequestException, Settings, Logger, Model
+from gws_core import BadRequestException, Logger, Model, Settings
+from gws_core.extra import SystemService
 from peewee import CharField, ModelSelect
 
 from ..db.db_manager import DbManager
@@ -21,6 +22,7 @@ try:
 except:
     pass
 
+
 class Base(Model):
 
     name = CharField(null=True, index=True)
@@ -29,22 +31,23 @@ class Base(Model):
 
     __settings = None
     __is_table_warning_printed = False
-    
+
     # -- C --
 
     @classmethod
     def _check_protection(cls):
         if IS_IPYTHON_ACTIVE:
             if not Base.__is_table_warning_printed:
-                Logger.warning("Cannot alter Biota db in ipython notebooks")
+                Logger.warning("Cannot alter BIOTA db in ipython notebooks")
                 Base.__is_table_warning_printed = True
             return False
 
         if not Base.__settings:
             Base.__settings = Settings.retrieve()
-        if Base.__settings.is_test and Base.__settings.is_prod:
-            raise BadRequestException("Cannot alter production Biota db during unit tests")
-        
+        # if Base.__settings.is_test and Base.__settings.is_prod:
+        if Base.__settings.is_prod:
+            raise BadRequestException("Cannot alter the production BIOTA db")
+
         return True
 
     @classmethod

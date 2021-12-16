@@ -22,7 +22,7 @@ def createdb(ctx):
     if ECO.table_exists():
         if ECO.select().count():
             raise BadRequestException("A none empty biota database already exists")
-
+    
     BaseModelService.drop_tables()
     BaseModelService.create_tables()
     ModelService.register_all_processes_and_resources()

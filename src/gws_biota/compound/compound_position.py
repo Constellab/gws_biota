@@ -8,10 +8,10 @@ from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException
 
 from ..db.db_manager import DbManager
-from ..base.protected_model import ProtectedModel
+from ..base.simple_base_model import SimpleBaseModel
 from .compound_position_data import COMPOUND_POSITION_DATA
 
-class CompoundPosition(ProtectedModel):
+class CompoundPosition(SimpleBaseModel):
     chebi_id = CharField(null=True, index=True)
     x = FloatField(null=True, index=True)
     y = FloatField(null=True, index=True)

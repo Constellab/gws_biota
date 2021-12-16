@@ -7,7 +7,7 @@ from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughM
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..base.base import Base
-from ..base.protected_model import ProtectedModel
+from ..base.simple_base_model import SimpleBaseModel
 from ..db.db_manager import DbManager
 from ..compound.compound import Compound
 from ..enzyme.enzyme import Enzyme
@@ -187,7 +187,7 @@ class Reaction(Base):
         self.master_id = master_id
 
 
-class ReactionSubstrate(ProtectedModel):
+class ReactionSubstrate(SimpleBaseModel):
     """
     This class defines the many-to-many relationship between susbtrates and reactions.
 
@@ -204,7 +204,7 @@ class ReactionSubstrate(ProtectedModel):
         database = DbManager.db
 
 
-class ReactionProduct(ProtectedModel):
+class ReactionProduct(SimpleBaseModel):
     """
     This class defines the many-to-many relationship between products and reactions.
 
@@ -220,7 +220,7 @@ class ReactionProduct(ProtectedModel):
         table_name = 'biota_reaction_products'
         database = DbManager.db
 
-class ReactionEnzyme(ProtectedModel):
+class ReactionEnzyme(SimpleBaseModel):
     """
     This class defines the many-to-many relationship between enzymes and reactions.
 

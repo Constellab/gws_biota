@@ -8,10 +8,10 @@ from gws_core.model.typing_register_decorator import typing_registrator
 from gws_core import BadRequestException, JSONField
 
 from ..db.db_manager import DbManager
-from ..base.protected_model import ProtectedModel
+from ..base.simple_base_model import SimpleBaseModel
 from .reaction_position_data import REACTION_POSITION_DATA
 
-class ReactionPosition(ProtectedModel):
+class ReactionPosition(SimpleBaseModel):
     rhea_id = CharField(null=True, index=True)
     x = FloatField(null=True, index=True)
     y = FloatField(null=True, index=True)
