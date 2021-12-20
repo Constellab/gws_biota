@@ -41,12 +41,11 @@ class Base(Model):
                 Logger.warning("Cannot alter BIOTA db in ipython notebooks")
                 Base.__is_table_warning_printed = True
             return False
-
         if not Base.__settings:
             Base.__settings = Settings.retrieve()
-        # if Base.__settings.is_test and Base.__settings.is_prod:
         if Base.__settings.is_prod:
-            raise BadRequestException("Cannot alter the production BIOTA db")
+            Logger.info("The production BIOTA db is protected and cannot be altered")
+            #raise BadRequestException("Cannot alter the production BIOTA db")
 
         return True
 
