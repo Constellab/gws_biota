@@ -44,7 +44,7 @@ class Base(Model):
         if not Base.__settings:
             Base.__settings = Settings.retrieve()
         if Base.__settings.is_prod:
-            Logger.info("The production BIOTA db is protected and cannot be altered")
+            Logger.warning("The production BIOTA db is protected and cannot be altered")
             #raise BadRequestException("Cannot alter the production BIOTA db")
 
         return True

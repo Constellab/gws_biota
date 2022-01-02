@@ -3,13 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import os
+from gws_core import (BadRequestException, BaseService, CurrentUserService,
+                      Experiment, ExperimentService, Job, MySQLBase,
+                      MySQLService, Protocol, Queue, QueueService, Requests,
+                      Settings, TaskModel, TaskService, UserService)
 
-from gws_core import (Settings, Protocol, Experiment, Study, Queue, Job, Requests,
-                        BaseService, MySQLBase, MySQLService, BadRequestException,
-                        Experiment, TaskService, ExperimentService, UserService,
-                        CurrentUserService, QueueService, TaskModel)
 from .db_creator import DbCreator
+
 
 class DbService(BaseService):
 
@@ -24,15 +24,14 @@ class DbService(BaseService):
             user.save()
             CurrentUserService.set_current_user(user)
 
-
         db_creator_model: TaskModel = TaskService.create_task_model_from_type(task_type=DbCreator)
-        experiment: Experiment =  ExperimentService.create_experiment_from_task_model(
+        experiment: Experiment = ExperimentService.create_experiment_from_task_model(
             task_model=db_creator_model
         )
         experiment.save()
         try:
             QueueService.add_experiment_to_queue(
-                    experiment_id=experiment.id)
+                experiment_id=experiment.id)
         except Exception as err:
             raise BadRequestException(f"An error occured while adding the experiment to the job queue") from err
 

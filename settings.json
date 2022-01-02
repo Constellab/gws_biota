@@ -13,10 +13,10 @@
             {
                 "source": "https://pypi.python.org/simple",
                 "packages":[
-                    "pronto==2.1.0",
-                    "ujson",
-                    "pyparsing",
-                    "owlready2"
+                    {"name":"pronto", "version":"2.1.0"},
+                    {"name":"ujson", "version":""},
+                    {"name":"pyparsing", "version":""},
+                    {"name":"owlready2", "version":""}
                 ]
             },
             {
@@ -28,13 +28,13 @@
             {
                 "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/core",
                 "packages":[
-                    "gws_core[commit=latest, branch=develop]"
+                    {"name": "gws_core", "commit": "latest", "branch": "", "is_brick": true}
                 ]
             },
             {
                 "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/lib",
                 "packages":[
-                    "brendapy"
+                    {"name": "brendapy"}
                 ]
             }
         ],
