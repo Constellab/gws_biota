@@ -54,4 +54,4 @@ class EnzymeOrtholog(Base):
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.name), phrase, modifier=modifier))
+        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
