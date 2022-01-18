@@ -22,14 +22,12 @@ class EnzymeOrtholog(Base):
 
     ft_names = TextField(null=True, index=True)
 
-
-*
- _table_name = "biota_enzo"
+    table_name = "biota_enzo"
 
   # -- E --
 
-  @property
-   def enzymes(self, tax_id: str = None, tax_name: str = None):
+    @property
+    def enzymes(self, tax_id: str = None, tax_name: str = None):
         from .enzyme import Enzyme
 
         Q = Enzyme.select().where(Enzyme.ec_number == self.ec_number)
