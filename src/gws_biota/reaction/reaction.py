@@ -1,17 +1,18 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ForeignKeyField, ManyToManyField, DeferredThroughModel, TextField
-
 from gws_core.model.typing_register_decorator import typing_registrator
+from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
+                    ManyToManyField, ModelSelect, TextField)
+from playhouse.mysql_ext import Match
+
 from ..base.base import Base
 from ..base.simple_base_model import SimpleBaseModel
-from ..db.db_manager import DbManager
 from ..compound.compound import Compound
+from ..db.db_manager import DbManager
 from ..enzyme.enzyme import Enzyme
-
 
 ####################################################################################
 #
@@ -23,21 +24,22 @@ ReactionSubstrateDeferred = DeferredThroughModel()
 ReactionProductDeferred = DeferredThroughModel()
 ReactionEnzymeDeferred = DeferredThroughModel()
 
+
 @typing_registrator(unique_name="Reaction", object_type="MODEL", hide=True)
 class Reaction(Base):
     """
     This class represents metabolic reactions extracted from Rhea database.
 
-    Rhea is an expert curated resource of biochemical reactions designed for the 
+    Rhea is an expert curated resource of biochemical reactions designed for the
     annotation of enzymes and genome-scale metabolic networks and models (https://www.rhea-db.org/).
-    Rhea data are available under the Creative 
+    Rhea data are available under the Creative
     Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
 
     :property rhea_id: rhea accession number
     :type rhea_id: CharField
     :property master_id: master id of the reaction
     :type master_id: CharField
-    :property direction: direction of the reaction 
+    :property direction: direction of the reaction
     :type direction: CharField (UN = undirected, LR = left-right, RL = right-left, BI = bidirectionnal)
     :property biocyc_ids: reaction identifier in the biocyc database
     :type biocyc_ids: CharField
@@ -58,12 +60,11 @@ class Reaction(Base):
     metacyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
     sabio_rk_id = CharField(null=True, index=True)
-    substrates = ManyToManyField(Compound, through_model = ReactionSubstrateDeferred)
-    products = ManyToManyField(Compound, through_model = ReactionProductDeferred)
-    enzymes = ManyToManyField(Enzyme, through_model = ReactionEnzymeDeferred)
+    substrates = ManyToManyField(Compound, through_model=ReactionSubstrateDeferred)
+    products = ManyToManyField(Compound, through_model=ReactionProductDeferred)
+    enzymes = ManyToManyField(Enzyme, through_model=ReactionEnzymeDeferred)
 
     ft_names = TextField(null=True, index=False)
-    _default_full_text_column = "ft_names"
     _table_name = 'biota_reaction'
 
     # -- A --
@@ -95,7 +96,7 @@ class Reaction(Base):
         ReactionProduct.create_table()
         ReactionEnzyme.create_table()
 
-    # -- D -- 
+    # -- D --
 
     @property
     def definition(self):
@@ -113,12 +114,20 @@ class Reaction(Base):
         ReactionEnzyme.drop_table()
         super().drop_table(*args, **kwargs)
 
+    @classmethod
+    def after_table_creation(cls) -> None:
+        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_REACTION')
+
+    @classmethod
+    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+        return cls.select().where(Match((cls.name), phrase, modifier=modifier))
+
     # -- G --
 
     def get_title(self, default=None):
         return self.definition
 
-    # -- I -- 
+    # -- I --
 
     def is_charge_balanced(self):
         total_substrate_charge = 0
@@ -144,11 +153,11 @@ class Reaction(Base):
     def position(self):
         from .reaction_position import ReactionPosition
         try:
-            #return ReactionPosition.get(ReactionPosition.rhea_id == self.rhea_id)
-            return ReactionPosition.get_by_rhea_id(rhea_id = self.rhea_id)
+            # return ReactionPosition.get(ReactionPosition.rhea_id == self.rhea_id)
+            return ReactionPosition.get_by_rhea_id(rhea_id=self.rhea_id)
         except:
             return None
-    # -- S -- 
+    # -- S --
 
     def set_direction(self, direction):
         """
@@ -158,7 +167,7 @@ class Reaction(Base):
         :type direction: str
         """
         self.direction = direction
-            
+
     def set_kegg_id(self, kegg_id):
         """
         Set the KEGG id the reaction
@@ -167,7 +176,7 @@ class Reaction(Base):
         :type kegg_id: str
         """
         self.kegg_id = kegg_id
-    
+
     def set_rhea_id(self, kegg_id):
         """
         Set the RHEA id the reaction
@@ -191,14 +200,14 @@ class ReactionSubstrate(SimpleBaseModel):
     """
     This class defines the many-to-many relationship between susbtrates and reactions.
 
-    :type compound: Compound 
+    :type compound: Compound
     :property compound: subtrate of the reaction
-    :type reaction: Reaction 
+    :type reaction: Reaction
     :property reaction: concerned reaction
     """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
-    
+
     class Meta:
         table_name = 'biota_reaction_substrates'
         database = DbManager.db
@@ -209,33 +218,35 @@ class ReactionProduct(SimpleBaseModel):
     This class defines the many-to-many relationship between products and reactions.
 
     :property compound: product of the reaction
-    :type compound: Compound 
-    :property reaction: concerned reaction 
-    :type reaction: Reaction 
+    :type compound: Compound
+    :property reaction: concerned reaction
+    :type reaction: Reaction
     """
     compound = ForeignKeyField(Compound)
     reaction = ForeignKeyField(Reaction)
-    
+
     class Meta:
         table_name = 'biota_reaction_products'
         database = DbManager.db
+
 
 class ReactionEnzyme(SimpleBaseModel):
     """
     This class defines the many-to-many relationship between enzymes and reactions.
 
     :property enzyme: enzyme of the reaction
-    :type enzyme: Enzyme 
-    
+    :type enzyme: Enzyme
+
     :property reaction: concerned reaction
-    :type reaction: Reaction 
+    :type reaction: Reaction
     """
     enzyme = ForeignKeyField(Enzyme)
     reaction = ForeignKeyField(Reaction)
-    
+
     class Meta:
         table_name = 'biota_reaction_enzymes'
         database = DbManager.db
+
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)
 ReactionProductDeferred.set_model(ReactionProduct)

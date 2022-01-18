@@ -4,7 +4,8 @@
 # About us: https://gencovery.com
 
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import CharField, ForeignKeyField, TextField
+from peewee import CharField, ForeignKeyField, ModelSelect, TextField
+from playhouse.mysql_ext import Match
 
 from ..base.base import Base
 from .enzyme_pathway import EnzymePathway
@@ -20,14 +21,15 @@ class EnzymeOrtholog(Base):
     pathway = ForeignKeyField(EnzymePathway, backref="enzos", null=True)
 
     ft_names = TextField(null=True, index=True)
-    _default_full_text_column = "ft_names"
 
-    _table_name = "biota_enzo"
 
-    # -- E --
+*
+ _table_name = "biota_enzo"
 
-    @property
-    def enzymes(self, tax_id: str = None, tax_name: str = None):
+  # -- E --
+
+  @property
+   def enzymes(self, tax_id: str = None, tax_name: str = None):
         from .enzyme import Enzyme
 
         Q = Enzyme.select().where(Enzyme.ec_number == self.ec_number)
@@ -47,3 +49,11 @@ class EnzymeOrtholog(Base):
         """
 
         return ",".join([sn.capitalize() for sn in self.data.get("SN", [""])])
+
+    @classmethod
+    def after_table_creation(cls) -> None:
+        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_ENZORT')
+
+    @classmethod
+    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+        return cls.select().where(Match((cls.name), phrase, modifier=modifier))

@@ -1,40 +1,42 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ForeignKeyField, TextField
-
 from gws_core.model.typing_register_decorator import typing_registrator
+from peewee import CharField, ModelSelect, TextField
+from playhouse.mysql_ext import Match
+
 from ..ontology.ontology import Ontology
+
 
 @typing_registrator(unique_name="Taxonomy", object_type="MODEL", hide=True)
 class Taxonomy(Ontology):
     """
     This class represents the NCBI taxonomy terms.
 
-    The NCBI Taxonomy Database is a curated classification and nomenclature for 
-    all of the organisms in the public sequence databases. NCBI Website and Data Usage 
+    The NCBI Taxonomy Database is a curated classification and nomenclature for
+    all of the organisms in the public sequence databases. NCBI Website and Data Usage
     Policies and Disclaimers (https://www.ncbi.nlm.nih.gov/home/about/policies/).
 
     :property tax_id: taxonomy id in the ncbi taxonomy
     :type tax_id: CharField
-    :property rank: bioologic rank 
+    :property rank: bioologic rank
     :type rank: CharField
     :property division: the biological division (Bacteria, Eukaryota, Viruses, etc..)
     :type division: CharField
     :property ancestor: parentin the ncbi taxonomy
     :type ancestor: Taxonomy
     """
-    
+
     tax_id = CharField(null=True, index=True)
     rank = CharField(null=True, index=True)
     division = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     ancestor_tax_id = CharField(null=True, index=True)
     ft_names = TextField(null=True, index=False)
-    _default_full_text_column = "ft_names"
-    _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class', 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
+    _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class',
+                 'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
     _table_name = 'biota_taxonomy'
     _children = None
     _siblings = None
@@ -51,7 +53,7 @@ class Taxonomy(Ontology):
         self._ancestor_checked = True
         try:
             if self.tax_id == self.ancestor_tax_id:
-                return None   
+                return None
             self._ancestor = Taxonomy.get(Taxonomy.tax_id == self.ancestor_tax_id)
             return self._ancestor
         except:
@@ -63,13 +65,13 @@ class Taxonomy(Ontology):
             return self._ancestors
         tax = self
         self._ancestors = []
-        while not tax.ancestor is None: 
+        while not tax.ancestor is None:
             self._ancestors.append(tax.ancestor)
             tax = tax.ancestor
         return self._ancestors
 
     # -- C --
-    
+
     @property
     def children(self):
         if not self._children is None:
@@ -103,3 +105,11 @@ class Taxonomy(Ontology):
         :type rank: str
         """
         self.rank = rank
+
+    @classmethod
+    def after_table_creation(cls) -> None:
+        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_TAXONOMY')
+
+    @classmethod
+    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+        return cls.select().where(Match((cls.name), phrase, modifier=modifier))

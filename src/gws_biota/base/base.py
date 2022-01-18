@@ -3,9 +3,9 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import BadRequestException, Logger, Model, Settings
-from gws_core.extra import SystemService
+from gws_core import Logger, Model, Settings
 from peewee import CharField, ModelSelect
+from playhouse.mysql_ext import Match
 
 from ..db.db_manager import DbManager
 
@@ -26,7 +26,6 @@ except:
 class Base(Model):
 
     name = CharField(null=True, index=True)
-    _default_full_text_column = "name"
     _db_manager = DbManager
 
     __settings = None
@@ -68,6 +67,13 @@ class Base(Model):
         if cls._check_protection():
             super().drop_table(*args, **kwargs)
 
+    @classmethod
+    def after_table_creation(cls) -> None:
+        cls.create_full_text_index(['name'], 'I_F_BIOTA_BASE')
+
+    @classmethod
+    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+        return cls.select().where(Match((cls.name), phrase, modifier=modifier))
     # -- G --
 
     def get_name(self) -> str:
@@ -96,10 +102,6 @@ class Base(Model):
     def search_by_name(cls, name, page: int = 1, number_of_items_per_page: int = 50):
         Q = cls.select().where(cls.name ** name).paginate(page, number_of_items_per_page)
         return Q
-
-    @classmethod
-    def search(cls, phrase: str, in_boolean_mode: bool = False) -> ModelSelect:
-        return super().search(phrase, in_boolean_mode).order_by(cls.name)
 
     def save(self, *args, **kwargs):
         if self._check_protection():
