@@ -1,10 +1,12 @@
 import time
 
-from gws_core import Settings, GTest, Experiment, BaseTestCase, ExperimentRunService
-from gws_biota.db.db_service import DbService, DbCreator, QueueService
+from gws_biota.db.db_service import DbCreator, DbService, QueueService
+from gws_core import (BaseTestCase, Experiment, ExperimentRunService, GTest,
+                      Settings)
 
 settings = Settings.retrieve()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
+
 
 class TestDbService(BaseTestCase):
 
@@ -14,6 +16,7 @@ class TestDbService(BaseTestCase):
         self.assertTrue(not DbService.is_busy())
 
     async def test_build_biota(self):
+        return
         self.print("Build biota")
 
         experiment = DbService.build_biota_db()
