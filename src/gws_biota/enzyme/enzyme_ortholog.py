@@ -22,7 +22,7 @@ class EnzymeOrtholog(Base):
 
     ft_names = TextField(null=True, index=True)
 
-    table_name = "biota_enzo"
+    _table_name = "biota_enzo"
 
   # -- E --
 
