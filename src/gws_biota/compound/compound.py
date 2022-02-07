@@ -23,7 +23,8 @@
 
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import CharField, DoubleField, FloatField, ForeignKeyField, IntegerField
+from peewee import (CharField, DoubleField, FloatField, ForeignKeyField,
+                    IntegerField)
 
 from ..base.base import Base
 from ..base.simple_base_model import SimpleBaseModel
@@ -104,11 +105,11 @@ class Compound(Base):
     def position(self):
         from .compound_position import CompoundPosition
 
-        try:
-            # return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
-            return CompoundPosition.get_by_chebi_id(chebi_id=self.chebi_id)
-        except:
-            return None
+        # try:
+        # return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
+        return CompoundPosition.get_by_chebi_id(chebi_id=self.chebi_id)
+        # except:
+        #    return None
 
     @property
     def pathways(self):

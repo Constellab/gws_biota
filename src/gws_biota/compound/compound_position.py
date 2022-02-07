@@ -18,14 +18,18 @@ class CompoundPosition:
     y: float = None
     z: float = None
     is_major: bool = None
-    _position_data: dict = {}
+    _position_data: dict = None
 
     @classmethod
     def get_position_data(cls):
-        if not cls._position_data:
+        if cls._position_data is None:
             cls._position_data = {}
             for key, val in COMPOUND_POSITION_DATA.items():
-                pos = {"x": val["x"], "y": val["y"]}
+                pos = {
+                    "x": val["x"],
+                    "y": val["y"],
+                    "is_major": val.get("is_major", False)
+                }
                 cls._position_data[key] = pos
                 alt = val.get("alt", [])
                 for alt_key in alt:
@@ -38,10 +42,16 @@ class CompoundPosition:
         if pos:
             comp_pos = CompoundPosition()
             comp_pos.chebi_id = chebi_id
-            comp_pos.x = pos["x"] * 15
-            comp_pos.y = pos["y"] * -15
+            if pos.get("x") is None:
+                comp_pos.x = pos["x"] * 15
+            else:
+                comp_pos.x = None
+            if pos.get("y") is None:
+                comp_pos.y = pos["y"] * -15
+            else:
+                comp_pos.y = None
             comp_pos.z = None
-            comp_pos.is_major = pos.get("is_major", False)
+            comp_pos.is_major = pos["is_major"]
             return comp_pos
         else:
             return CompoundPosition()
