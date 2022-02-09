@@ -42,11 +42,11 @@ class CompoundPosition:
         if pos:
             comp_pos = CompoundPosition()
             comp_pos.chebi_id = chebi_id
-            if pos.get("x") is None:
+            if pos.get("x") is not None:
                 comp_pos.x = pos["x"] * 15
             else:
                 comp_pos.x = None
-            if pos.get("y") is None:
+            if pos.get("y") is not None:
                 comp_pos.y = pos["y"] * -15
             else:
                 comp_pos.y = None
