@@ -11,7 +11,7 @@ POS = {
     # ***
 
     # beta-D-glucose, D-glucose
-    "CHEBI:15903": {"x": 10,     "y": 90, "is_major": True, "alt": ["CHEBI:17634", "CHEBI:12965", "CHEBI:20999", "CHEBI:41140", "CHEBI:12373", "CHEBI:22795", "CHEBI:10397"]},
+    "CHEBI:15903": {"x": 10,     "y": 90, "is_major": True, "alt": ["CHEBI:4167", "CHEBI:17634", "CHEBI:12965", "CHEBI:20999", "CHEBI:41140", "CHEBI:12373", "CHEBI:22795", "CHEBI:10397"]},
     # alpha-D-glucose
     "CHEBI:17925": {"x": 0,     "y": 90, "is_major": True, "alt": ["CHEBI:40557", "CHEBI:42802", "CHEBI:10242", "CHEBI:12318", "CHEBI:22386"]},
     # alpha-D-glucose 6-phosphate(2-), alpha-D-glucose 6-phosphate

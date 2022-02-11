@@ -25,7 +25,7 @@ POS = {
     # sedoheptulose 7-phosphate
     "CHEBI:4244": {"x": 30,     "y": 40, "is_major": True, "alt": ["CHEBI:15073", "CHEBI:15721", "CHEBI:26621", "CHEBI:9083", "CHEBI:15074", "CHEBI:57483"]},
     # D-erythrose 4-phosphate(2-)
-    "CHEBI:16897": {"x": 30,     "y": 40, "is_major": True, "alt": ["CHEBI:4114", "CHEBI:20927", "CHEBI:12921", "CHEBI:48153", "CHEBI:16897", "CHEBI:42349"]},
+    "CHEBI:16897": {"x": 20,     "y": 40, "is_major": True, "alt": ["CHEBI:4114", "CHEBI:20927", "CHEBI:12921", "CHEBI:48153", "CHEBI:16897", "CHEBI:42349"]},
     # aldehydo-D-ribose 5-phosphate(2-)
     "CHEBI:58273": {"x": 40,     "y": 70, "is_major": True},
 }
