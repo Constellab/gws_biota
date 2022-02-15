@@ -1,7 +1,9 @@
 {
     "name"          : "gws_biota",
     "author"        : "Gencovery",
+    "author_email"  : "admin@gencovery.com",
     "version"       : "0.1.0",
+    "description"   : "The Biological and Omics Database for Gencovery Web Services",
     "variables":{
         "gws_biota:biodata_dir"     : "/data/${CURRENT_BRICK}/biodata/",
         "gws_biota:testdata_dir"    : "${CURRENT_DIR}/tests/testdata",
