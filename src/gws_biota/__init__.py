@@ -2,6 +2,7 @@
 # > TestCase
 from .base.test_case import BaseTestCaseUsingFullBiotaDB
 from .bto.bto import BTO
+from .compound.cofactor import Cofactor
 from .compound.compound import Compound
 from .compound.compound_position import CompoundPosition
 from .eco.eco import ECO

@@ -14,16 +14,19 @@ POS = {
     "CHEBI:15903": {"x": 10,     "y": 90, "is_major": True, "alt": ["CHEBI:4167", "CHEBI:17634", "CHEBI:12965", "CHEBI:20999", "CHEBI:41140", "CHEBI:12373", "CHEBI:22795", "CHEBI:10397"]},
     # alpha-D-glucose
     "CHEBI:17925": {"x": 0,     "y": 90, "is_major": True, "alt": ["CHEBI:40557", "CHEBI:42802", "CHEBI:10242", "CHEBI:12318", "CHEBI:22386"]},
+
     # alpha-D-glucose 6-phosphate(2-), alpha-D-glucose 6-phosphate
     "CHEBI:58225": {"x": 0,     "y": 80, "is_major": True, "alt": ["CHEBI:17665", "CHEBI:10245", "CHEBI:42748", "CHEBI:12321", "CHEBI:22389"]},
+    # D-glucose 6-phosphate
+    "CHEBI:61548": {"x": 0,     "y": 80, "is_major": True, "alt": ["CHEBI:4170", "14314"]},
 
     # beta-D-fructofuranose 6-phosphate(2-)
     "CHEBI:57634": {"x": 0,     "y": 70, "is_major": True, "alt": ["CHEBI:16084", "CHEBI:42378", "CHEBI:10375", "CHEBI:12352", "CHEBI:22768"]},
     # beta-D-fructofuranose 1,6-bisphosphate
-    "CHEBI:28013": {"x": 0,    "y": 60, "is_major": True, "alt": ["CHEBI:42553", "CHEBI:41014", "CHEBI:22767", "CHEBI:10374"]},
+    "CHEBI:28013": {"x": 0,    "y": 60, "is_major": True, "alt": ["CHEBI:42553", "CHEBI:41014", "CHEBI:22767", "CHEBI:10374", "CHEBI:37736", "49299"]},
 
     # D-glyceraldehyde 3-phosphate(2-)
-    "CHEBI:59776": {"x": 0,     "y": 50, "is_major": True},
+    "CHEBI:59776": {"x": 0,     "y": 50, "is_major": True, "alt": ["	CHEBI:29052", "CHEBI:181", "CHEBI:12983", "CHEBI:12984", "CHEBI:21026", "CHEBI:18324", "CHEBI:14333", "CHEBI:17138", "CHEBI:5446", "CHEBI:58027"]},
     # 3-phosphonato-D-glyceroyl phosphate(4-), 3-Phospho-D-glyceroyl phosphate
     "CHEBI:57604": {"x": 0,     "y": 40, "is_major": True, "alt": ["CHEBI:20189", "CHEBI:11881", "CHEBI:16001", "CHEBI:1658"]},
     # 3-phosphonato-D-glycerate(3−), 3-Phospho-D-glycerate

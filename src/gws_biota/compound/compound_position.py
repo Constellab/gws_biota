@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+import random
+
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import BooleanField, CharField, FloatField
@@ -19,6 +21,11 @@ class CompoundPosition:
     z: float = None
     is_major: bool = None
     _position_data: dict = None
+    _compartment_offset = {
+
+    }
+
+    FACTOR = 10
 
     @classmethod
     def get_position_data(cls):
@@ -37,22 +44,36 @@ class CompoundPosition:
         return cls._position_data
 
     @classmethod
-    def get_by_chebi_id(cls, chebi_id: str):
+    def get_by_chebi_id(cls, chebi_id: str, compartment=None):
+        def rnd_offset():
+            rnd_num = random.uniform(0, 1)
+            return 10 if rnd_num >= 0.5 else -10
+
         pos = cls.get_position_data().get(chebi_id)
         if pos:
             comp_pos = CompoundPosition()
             comp_pos.chebi_id = chebi_id
             if pos.get("x") is not None:
-                comp_pos.x = pos["x"] * 15
+                comp_pos.x = pos["x"] * cls.FACTOR
             else:
                 comp_pos.x = None
             if pos.get("y") is not None:
-                comp_pos.y = pos["y"] * -15
+                comp_pos.y = -pos["y"] * cls.FACTOR
             else:
                 comp_pos.y = None
             comp_pos.z = None
             comp_pos.is_major = pos["is_major"]
+
+            # add offset of compartment
+            if compartment == "e":
+                comp_pos.x += rnd_offset() * cls.FACTOR
+                comp_pos.y += rnd_offset() * cls.FACTOR
+            elif compartment != "c":
+                comp_pos.x += rnd_offset() * cls.FACTOR
+                comp_pos.y += rnd_offset() * cls.FACTOR
+
             return comp_pos
+
         else:
             return CompoundPosition()
 
