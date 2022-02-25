@@ -14,7 +14,7 @@ class Cofactor:
         # hydrogenphosphate
         "CHEBI:43474": {"alt": ["CHEBI:43470", "CHEBI:29139"]},
         # diphosphate
-        "CHEBI:33019": {"alt": ["45212", "CHEBI:45208", "CHEBI:33018", "CHEBI:33017", "CHEBI:35782"]},
+        "CHEBI:33019": {"alt": ["CHEBI:45212", "CHEBI:45208", "CHEBI:33018", "CHEBI:33017", "CHEBI:35782"]},
         # phosphate
         "CHEBI:26078": {"alt": ["CHEBI:26078", "CHEBI:18367", "CHEBI:29139", "CHEBI:39739", "CHEBI:43470", "CHEBI:35780", "CHEBI:43474", "CHEBI:26020", "CHEBI:45024", "CHEBI:39745", "CHEBI:29137", "CHEBI:14791", "CHEBI:7793"]},
         # NAD

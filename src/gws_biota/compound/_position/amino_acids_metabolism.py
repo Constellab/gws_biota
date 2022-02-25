@@ -204,7 +204,7 @@ POS = {
     # but-2-enoyl-CoA
     "CHEBI:36926": {"x": 150,    "y": 0, "is_major": True, "alt": ["CHEBI:11531, CHEBI:13921"]},
     # acetyl-CoA
-    "CHEBI:15351": {"x": 150,    "y": 0, "is_major": True, "alt": ["CHEBI:40470, CHEBI:2408, CHEBI:13712, CHEBI:22192"]},
+    # "CHEBI:15351": {"x": 150,    "y": 0, "is_major": True, "alt": ["CHEBI:40470, CHEBI:2408, CHEBI:13712, CHEBI:22192"]},
     # homocitric acid
     "CHEBI:17852": {"x": 150,    "y": 0, "is_major": True, "alt": ["CHEBI:1147, CHEBI:24609"]},
     # homocitrate(3−)
