@@ -21,6 +21,7 @@ class SimpleBaseModel(Model):
 
     __settings = None
     __is_table_warning_printed = False
+    _db_manager = DbManager
 
     # -- C --
 
@@ -31,11 +32,12 @@ class SimpleBaseModel(Model):
                 Logger.warning("Cannot alter BIOTA db in ipython notebooks")
                 SimpleBaseModel.__is_table_warning_printed = True
             return False
-        if not SimpleBaseModel.__settings:
-            SimpleBaseModel.__settings = Settings.retrieve()
-        if SimpleBaseModel.__settings.is_prod:
-            Logger.warning("The production BIOTA db is protected and cannot be altered")
-            #raise BadRequestException("Cannot alter production production BIOTA db")
+
+        if cls._db_manager.mode != "test":
+            if not SimpleBaseModel.__is_table_warning_printed:
+                Logger.warning("The dev and prod BIOTA db are protected and cannot be altered")
+                SimpleBaseModel.__is_table_warning_printed = True
+            return False
 
         return True
 

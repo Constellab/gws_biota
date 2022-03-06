@@ -11,9 +11,9 @@ class BaseTestCaseUsingFullBiotaDB(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        BiotaDbManager.init(mode='test')
+        BiotaDbManager.init(mode="dev")
 
     @classmethod
     def tearDownClass(cls):
-        BiotaDbManager.init(mode='test')
+        BiotaDbManager.init(mode="test")
         super().tearDownClass()

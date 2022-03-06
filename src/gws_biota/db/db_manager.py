@@ -63,6 +63,6 @@ class DbManager(AbstractDbManager):
 # Activate the biota db if we are in a notebook
 try:
     get_ipython
-    DbManager.init_db(test=False)
+    DbManager.init(mode='dev')
 except:
     pass
