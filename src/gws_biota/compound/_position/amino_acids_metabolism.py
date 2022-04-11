@@ -21,17 +21,17 @@ POS = {
     # ===================================================================================
 
     # L-aspartate(1-)
-    "CHEBI:29991": {"x": 100,     "y": 0, "is_major": True},
+    "CHEBI:29991": {"x": 100,     "y": 5, "is_major": True},
     # 3-phosphonatooxypyruvate(3−)
-    "CHEBI:18110": {"x": 100,    "y": 0, "is_major": True, "alt": ["CHEBI:11883", "CHEBI:11884", "CHEBI:20191"]},
+    "CHEBI:18110": {"x": 100,    "y": 10, "is_major": True, "alt": ["CHEBI:11883", "CHEBI:11884", "CHEBI:20191"]},
     # 3-phosphonooxypyruvic acid
-    "CHEBI:30933": {"x": 100,    "y": 0, "is_major": True, "alt": ["CHEBI:1661, CHEBI:20192"]},
+    "CHEBI:30933": {"x": 100,    "y": 15, "is_major": True, "alt": ["CHEBI:1661, CHEBI:20192"]},
     # L-serine
-    "CHEBI:17115": {"x": 100,    "y": 0, "is_major": True, "alt": ["CHEBI:45440, CHEBI:45451, CHEBI:45677, CHEBI:45590, CHEBI:45597, CHEBI:13167, CHEBI:21387, CHEBI:6301"]},
+    "CHEBI:17115": {"x": 105,    "y": 0, "is_major": True, "alt": ["CHEBI:45440, CHEBI:45451, CHEBI:45677, CHEBI:45590, CHEBI:45597, CHEBI:13167, CHEBI:21387, CHEBI:6301"]},
     # O-phospho-L-homoserine
-    "CHEBI:15961": {"x": 100,    "y": 0, "is_major": True, "alt": ["CHEBI:12717, CHEBI:7691, CHEBI:12693, CHEBI:21965"]},
+    "CHEBI:15961": {"x": 110,    "y": 0, "is_major": True, "alt": ["CHEBI:12717, CHEBI:7691, CHEBI:12693, CHEBI:21965"]},
     # L-homoserine
-    "CHEBI:15699": {"x": 100,    "y": 0, "is_major": True, "alt": ["CHEBI:43131, CHEBI:6246, CHEBI:13123, CHEBI:21330"]},
+    "CHEBI:15699": {"x": 115,    "y": 0, "is_major": True, "alt": ["CHEBI:43131, CHEBI:6246, CHEBI:13123, CHEBI:21330"]},
     # L-aspartate 4-semialdehyde
     "CHEBI:13086": {"x": 100,    "y": 0, "is_major": True},
     # L-aspartic 4-semialdehyde
@@ -121,33 +121,33 @@ POS = {
     # ===================================================================================
 
     # D-citramalic acid
-    "CHEBI:15586": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:315, CHEBI:18563"]},
+    "CHEBI:15586": {"x": 150,    "y": 45, "is_major": True, "alt": ["CHEBI:315, CHEBI:18563"]},
     # D-citramalate(2−)
     "CHEBI:30934": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:10977, CHEBI:18562"]},
     # citraconic acid
-    "CHEBI:17626": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:1207, CHEBI:19703, CHEBI:19704, CHEBI:11623"]},
+    "CHEBI:17626": {"x": 150,    "y": 55, "is_major": True, "alt": ["CHEBI:1207, CHEBI:19703, CHEBI:19704, CHEBI:11623"]},
     # (2S)-2-hydroxy-2-methyl-3-oxobutanoic acid
-    "CHEBI:18409": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:11033, CHEBI:374, CHEBI:18731"]},
+    "CHEBI:18409": {"x": 145,    "y": 50, "is_major": True, "alt": ["CHEBI:11033, CHEBI:374, CHEBI:18731"]},
     # (R)-2,3-dihydroxy-3-methylbutanoic acid
     "CHEBI:15684": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:10966, CHEBI:305, CHEBI:18645"]},
     # (R)-2,3-dihydroxy-3-methylbutanoate
-    "CHEBI:49072": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:10966, CHEBI:305, CHEBI:18645"]},
+    "CHEBI:49072": {"x": 155,    "y": 50, "is_major": True, "alt": ["CHEBI:10966, CHEBI:305, CHEBI:18645"]},
     # D-erythro-3-methylmalic acid
-    "CHEBI:27394": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:4271, CHEBI:20924"]},
+    "CHEBI:27394": {"x": 150,    "y": 40, "is_major": True, "alt": ["CHEBI:4271, CHEBI:20924"]},
     # L-threonine
-    "CHEBI:16857": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:45843, CHEBI:42083, CHEBI:45983, CHEBI:13175, CHEBI:6308, CHEBI:21403"]},
+    "CHEBI:16857": {"x": 150,    "y": 60, "is_major": True, "alt": ["CHEBI:45843, CHEBI:42083, CHEBI:45983, CHEBI:13175, CHEBI:6308, CHEBI:21403"]},
     # (2S)-2-isopropylmalate(2−)
-    "CHEBI:1178": {"x": 150,    "y": 50, "is_major": True, "alt": []},
+    "CHEBI:1178": {"x": 140,    "y": 60, "is_major": True, "alt": []},
     # (2S)-2-isopropylmalic acid
-    "CHEBI:35128": {"x": 150,    "y": 50, "is_major": True, "alt": []},
+    "CHEBI:35128": {"x": 160,    "y": 50, "is_major": True, "alt": []},
     # 3-methyl-2-oxobutanoate
-    "CHEBI:11851": {"x": 150,    "y": 50, "is_major": True, "alt": []},
+    "CHEBI:11851": {"x": 150,    "y": 35, "is_major": True, "alt": []},
     # 3-methyl-2-oxobutanoic acid
-    "CHEBI:16530": {"x": 150,    "y": 50, "is_major": True, "alt": []},
+    "CHEBI:16530": {"x": 150,    "y": 65, "is_major": True, "alt": []},
     # (S)-2-acetyl-2-hydroxybutanoic acid
-    "CHEBI:27681": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:373, CHEBI:18730"]},
+    "CHEBI:27681": {"x": 135,    "y": 50, "is_major": True, "alt": ["CHEBI:373, CHEBI:18730"]},
     # (S)-2-acetyl-2-hydroxybutanoate
-    "CHEBI:49256": {"x": 150,    "y": 50, "is_major": True, "alt": []},
+    "CHEBI:49256": {"x": 165,    "y": 50, "is_major": True, "alt": []},
     # (2R,3S)-3-isopropylmalate(2−)
     "CHEBI:35121": {"x": 150,    "y": 50, "is_major": True, "alt": ["CHEBI:35120, CHEBI:1565"]},
     # (2R,3S)-3-isopropylmalic acid
@@ -521,7 +521,42 @@ POS = {
     #  Other amino acid metabolism
     # ===================================================================================
 
-
+    # 2,5-dioxopentanoic acid
+    "CHEBI:17415": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:11454, CHEBI:938, CHEBI:19385"]},
+    # 4-hydroxy-1-pyrroline-2-carboxylic acid
+    "CHEBI:16352": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:684, CHEBI:11296, CHEBI:19094"]},
+    # cis-4-hydroxy-D-proline
+    "CHEBI:16231": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:10479, CHEBI:12797, CHEBI:23300"]},
+    # L-tyrosine
+    "CHEBI:17895": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:46070, CHEBI:46161, CHEBI:6313, CHEBI:13181, CHEBI:21411"]},
+    # D-histidine
+    "CHEBI:27947": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:42063, CHEBI:4197, CHEBI:21039"]},
+    # glycine
+    "CHEBI:15428": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:14344, CHEBI:42964, CHEBI:5460, CHEBI:10792, CHEBI:24368"]},
+    # D-arginine
+    "CHEBI:15816": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:41855, CHEBI:4106, CHEBI:12917, CHEBI:20917"]},
+    # 5-guanidino-2-oxopentanoate
+    "CHEBI:18253": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:20572, CHEBI:12129"]},
+    # 5-guanidino-2-oxopentanoic acid
+    "CHEBI:28116": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:2060, CHEBI:1249, CHEBI:19740"]},
+    # trans-4-hydroxy-L-proline
+    "CHEBI:18095": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:43318, CHEBI:43172, CHEBI:43210, CHEBI:43227, CHEBI:49360, CHEBI:10714, CHEBI:27060, CHEBI:12864"]},
+    # glutathione
+    "CHEBI:16856": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:42873, CHEBI:43049, CHEBI:5437, CHEBI:12402, CHEBI:14327, CHEBI:24334"]},
+    # L-γ-glutamyl-L-cysteine
+    "CHEBI:17515": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:39975, CHEBI:10566, CHEBI:10570, CHEBI:12400, CHEBI:12404, CHEBI:17971, CHEBI:24185, CHEBI:24194"]},
+    # succinic semialdehyde
+    "CHEBI:16265": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:15126, CHEBI:9305, CHEBI:26804"]},
+    # (S)-4-hydroxymandelonitrile β-D-glucoside
+    "CHEBI:27826": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:11051, CHEBI:407, CHEBI:4475, CHEBI:18760"]},
+    # (S)-4-hydroxymandelonitrile
+    "CHEBI:16660": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:41985, CHEBI:406, CHEBI:11053, CHEBI:18759"]},
+    # (E)-(4-hydroxyphenyl)acetaldehyde oxime
+    "CHEBI:15666": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:18628, CHEBI:278, CHEBI:10953"]},
+    # N,N-dihydroxy-L-tyrosine
+    "CHEBI:12532": {"x": 200,     "y": 50, "is_major": True, "alt": []},
+    # N-hydroxytyrosine
+    "CHEBI:28089": {"x": 200,     "y": 50, "is_major": True, "alt": ["CHEBI:7297, CHEBI:90351, CHEBI:12512, CHEBI:12602, CHEBI:21737"]},
 
 
     "CHEBI:60039": {"x": -100,     "y": 60, "is_major": True},  # L-proline zwitterion

@@ -4,11 +4,11 @@
 # About us: https://gencovery.com
 
 from peewee import CharField, ForeignKeyField
-from peewee import Model as PWModel
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..ontology.ontology import Ontology
 from ..db.db_manager import DbManager
+from ..base.simple_base_model import SimpleBaseModel
 
 @typing_registrator(unique_name="BTO", object_type="MODEL", hide=True)
 class BTO(Ontology):
@@ -83,7 +83,7 @@ class BTO(Ontology):
         """
         self.bto_id = bto_id
 
-class BTOAncestor(PWModel):
+class BTOAncestor(SimpleBaseModel):
     """
     This class defines the many-to-many relationship between the bto terms and their ancestors
 
