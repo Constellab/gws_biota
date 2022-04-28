@@ -3,9 +3,10 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
+
 N = None
 POS = {
-
     # ***
     # Sterol metabolism
     # ***
@@ -69,11 +70,13 @@ POS = {
     # Vitamin D3
     "CHEBI:28940": {"x": -125,     "y": -70, "is_major": True, "alt": ["CHEBI:46283", "CHEBI:10008", "CHEBI:23170"]},
 
-
-    # Pregnenolone
-    "CHEBI:": {"x": -115,     "y": -50, "is_major": True, "alt": [""]},
-    # --
-    "CHEBI:": {"x": -115,     "y": -50, "is_major": True, "alt": [""]},
-    # --
-    "CHEBI:": {"x": -115,     "y": -50, "is_major": True, "alt": [""]},
+    # # Pregnenolone
+    # "CHEBI:": {"x": -115,     "y": -50, "is_major": True, "alt": [""]},
+    # # --
+    # "CHEBI:": {"x": -115,     "y": -50, "is_major": True, "alt": [""]},
+    # # --
+    # "CHEBI:": {"x": -115,     "y": -50, "is_major": True, "alt": [""]}
 }
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)

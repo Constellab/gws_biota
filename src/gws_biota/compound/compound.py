@@ -107,7 +107,7 @@ class Compound(Base):
 
         # try:
         # return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
-        return CompoundPosition.get_by_chebi_id(chebi_id=self.chebi_id)
+        return CompoundPosition.get_by_chebi_id(chebi_ids=[self.chebi_id])
         # except:
         #    return None
 

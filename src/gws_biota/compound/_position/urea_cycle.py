@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
+
 N = None
 POS = {
 
@@ -19,3 +21,6 @@ POS = {
     # L-argininium(1+)
     "CHEBI:32682": {"x": -40,   "y": -60, "is_major": True, "alt": ["CHEBI:133495", "CHEBI:32696"]},
 }
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)

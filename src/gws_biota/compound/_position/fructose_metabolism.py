@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
+
 N = None
 POS = {
 
@@ -18,3 +20,6 @@ POS = {
     # alpha-D-fructofuranose 1-phosphate(2-), D-fructofuranose 1-phosphate
     "CHEBI:138881": {"x": -10,    "y": 70, "is_major": True, "alt": ["CHEBI:37515", "CHEBI:20930", "CHEBI:5174"]},
 }
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)

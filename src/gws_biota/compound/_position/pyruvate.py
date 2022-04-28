@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
+
 N = None
 POS = {
 
@@ -29,3 +31,6 @@ POS = {
     # acetoacetate
     "CHEBI:13705": {"x": -20,     "y": -20, "is_major": True},
 }
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)

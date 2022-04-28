@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
+
 N = None
 POS = {
 
@@ -33,3 +35,6 @@ POS = {
     # glyoxylate
     "CHEBI:36655": {"x": 0,    "y": -30, "is_major": True, "alt": ["CHEBI:24420", "CHEBI:14368", "CHEBI:24421", "CHEBI:42767", "CHEBI:16891", "CHEBI:35977", "CHEBI:5509"]},
 }
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)

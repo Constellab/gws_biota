@@ -4,6 +4,7 @@
 # About us: https://gencovery.com
 
 import random
+from typing import List, Union
 
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
@@ -11,7 +12,10 @@ from peewee import BooleanField, CharField, FloatField
 
 from ..base.simple_base_model import SimpleBaseModel
 from ..db.db_manager import DbManager
-from .compound_position_data import COMPOUND_POSITION_DATA
+from ._layout.layout import Layout
+from ._position.all import *
+
+COMPOUND_POSITION_DATA = Layout.generate()
 
 
 class CompoundPosition:
@@ -21,9 +25,7 @@ class CompoundPosition:
     z: float = None
     is_major: bool = None
     _position_data: dict = None
-    _compartment_offset = {
-
-    }
+    _compartment_offset = {}
 
     FACTOR = 10
 
@@ -44,12 +46,20 @@ class CompoundPosition:
         return cls._position_data
 
     @classmethod
-    def get_by_chebi_id(cls, chebi_id: str, compartment=None):
+    def get_by_chebi_id(cls, chebi_ids: Union[str, List[str]], compartment=None):
         def rnd_offset():
             rnd_num = random.uniform(0, 1)
             return 10 if rnd_num >= 0.5 else -10
 
-        pos = cls.get_position_data().get(chebi_id)
+        if isinstance(chebi_ids, str):
+            pos = cls.get_position_data().get(chebi_ids)
+        else:
+            for c_id in chebi_ids:
+                pos = cls.get_position_data().get(c_id)
+                chebi_id = c_id
+                if pos:
+                    break
+
         if pos:
             comp_pos = CompoundPosition()
             comp_pos.chebi_id = chebi_id

@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
+
 N = None
 POS = {
 
@@ -68,7 +70,7 @@ POS = {
     "CHEBI:18435": {"x": -310,     "y": 80, "is_major": True, "alt": []},
     # (-)-Jasmonic acid
     "CHEBI:181431": {"x": -310,     "y": 80, "is_major": True, "alt": ["CHEBI:18292", "CHEBI:95", "CHEBI:14486", "CHEBI:18487"]},
-    
+
     # 11-Dehydro-thromboxane B2
     "CHEBI:28667": {"x": -285,     "y": 90, "is_major": True, "alt": ["CHEBI:710", "CHEBI:19122"]},
     # Thromboxane B2;
@@ -77,7 +79,7 @@ POS = {
     "CHEBI:15627": {"x": -285,     "y": 70, "is_major": True, "alt": ["CHEBI:18589", "CHEBI:10915", "CHEBI:9575", "CHEBI:26993"]},
     # Prostaglandin F2alpha
     "CHEBI:15553": {"x": -300,     "y": 70, "is_major": True, "alt": ["CHEBI:10913", "CHEBI:8516", "CHEBI:26327", "CHEBI:187232"]},
-    
+
     # Prostaglandin E2;
     "CHEBI:15551": {"x": -300,     "y": 60, "is_major": True, "alt": ["CHEBI:26323", "CHEBI:10910", "CHEBI:10911", "CHEBI:4625", "CHEBI:114125", "CHEBI:8512", "CHEBI:174978", "CHEBI:174980", "CHEBI:174982", "CHEBI:174983", "CHEBI:174985"]},
     # Prostaglandin A2;
@@ -101,7 +103,7 @@ POS = {
     "CHEBI:27485": {"x": -295,     "y": 60, "is_major": True, "alt": ["CHEBI:8521", "CHEBI:26332"]},
     # Delta-12-Prostaglandin J2;
     "CHEBI:28130": {"x": -295,     "y": 50, "is_major": True, "alt": ["CHEBI:23604", "CHEBI:10537"]},
-    
+
 
 
     # sn-Glycerol 3-phosphate
@@ -116,7 +118,7 @@ POS = {
     "CHEBI:16826": {"x": -130,     "y": 30, "is_major": True, "alt": ["CHEBI:37559", "CHEBI:13246", "CHEBI:2454", "CHEBI:13725", "CHEBI:22222"]},
     # Acyl-[acyl-carrier protein]
     "CHEBI:16018": {"x": -130,     "y": 20, "is_major": False, "alt": ["CHEBI:2457", "CHEBI:13728"]},
-    
+
     # Phosphatidyl-N-dimethylethanolamine
     "CHEBI:17152": {"x": -140,     "y": 50, "is_major": True, "alt": ["CHEBI:14798", "CHEBI:52332", "CHEBI:8125", "CHEBI:26026"]},
     # CDP-choline;
@@ -125,7 +127,7 @@ POS = {
     "CHEBI:18132": {"x": -160,     "y": 50, "is_major": True, "alt": ["CHEBI:3667", "CHEBI:44707", "CHEBI:12720", "CHEBI:23214", "CHEBI:13986"]},
     # Choline
     "CHEBI:15354": {"x": -170,     "y": 50, "is_major": True, "alt": ["CHEBI:41524", "CHEBI:3665", "CHEBI:13985", "CHEBI:23212"]},
-   
+
 
 
     # 1,2-diacyl-sn-glycero-3-phosphoethanolamine, phosphatidyl-ethanolamine
@@ -135,3 +137,6 @@ POS = {
 
     #
 }
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)

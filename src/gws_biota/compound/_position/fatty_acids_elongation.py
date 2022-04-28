@@ -3,6 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
 N = None
 POS = {
 
@@ -82,3 +83,7 @@ POS = {
     # Hexadecanedioate
     "CHEBI:76276": {"x": -125,     "y": -20, "is_major": False},
 }
+
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)

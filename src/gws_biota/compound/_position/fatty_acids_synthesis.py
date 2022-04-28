@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from .._layout.layout import Cluster, Layout
+
 N = None
 POS = {
 
@@ -108,3 +110,6 @@ POS = {
     # (10Z,13Z,16Z,19Z,22Z)-Octacosapentaenoyl-CoA
     # "CHEBI:": {"x": -190,    "y": -20, "alt": [""]},
 }
+
+c = Cluster(POS, position={"x": 0, "y": 0})
+Layout.add_cluster(c)
