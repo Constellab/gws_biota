@@ -29,6 +29,7 @@ from peewee import (CharField, DoubleField, FloatField, ForeignKeyField,
 from ..base.base import Base
 from ..base.simple_base_model import SimpleBaseModel
 from ..db.db_manager import DbManager
+from .compound_layout import CompoundLayout, CompoundLayoutDict
 
 
 @typing_registrator(unique_name="Compound", object_type="MODEL", hide=True)
@@ -99,17 +100,15 @@ class Compound(Base):
 
     # -- G --
 
+    # def select_by_chebi_ids(self, chebi_ids: list):
+    #     pass
+
     # -- P --
 
     @property
-    def position(self):
-        from .compound_position import CompoundPosition
-
-        # try:
-        # return CompoundPosition.get(CompoundPosition.chebi_id == self.chebi_id)
-        return CompoundPosition.get_by_chebi_id(chebi_ids=[self.chebi_id])
-        # except:
-        #    return None
+    def layout(self) -> CompoundLayoutDict:
+        alt_chebi_ids = self.data.get("alt", [])
+        return CompoundLayout.get_layout_by_chebi_id(synonym_chebi_ids=[self.chebi_id, *alt_chebi_ids])
 
     @property
     def pathways(self):
@@ -126,7 +125,7 @@ class Compound(Base):
                     pathways.append(pc.pathway)
 
             return pathways
-        except:
+        except Exception as _:
             return None
 
     # -- R --
@@ -145,6 +144,21 @@ class Compound(Base):
             rxns.append(r.reaction)
 
         return rxns
+
+
+# class CompoundAlternative(Base):
+#     """
+#     This class defines the many-to-many relationship between the compound and it alterntive ids
+
+#     :type main_compound_chebi_id: CharField
+#     :property main_compound_chebi_id: id of the concerned compound term
+#     :type alt_compound_chebi_id: CharField
+#     :property alt_compound_chebi_id: alternative of the concerned compound term
+#     """
+
+#     main_compound_chebi_id = CharField(null=True, index=True)
+#     alt_compound_chebi_id = CharField(null=True, index=True)
+#     _table_name = "biota_compound_alternatives"
 
 
 class CompoundAncestor(SimpleBaseModel):

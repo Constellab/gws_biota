@@ -1,12 +1,15 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
 import math
+
 from gws_core import transaction
-from ..compound.compound import Compound, CompoundAncestor
+
 from .._helper.chebi import Chebi as ChebiHelper
+from ..compound.compound import Compound, CompoundAncestor
+
 
 class CompoundService:
 
@@ -14,7 +17,7 @@ class CompoundService:
     def _to_float(val):
         try:
             val = float(val)
-        except:
+        except Exception as _:
             return None
         if math.isnan(val):
             val = None
@@ -22,7 +25,7 @@ class CompoundService:
 
     @classmethod
     @transaction()
-    def create_compound_db(cls, biodata_dir = None, **kwargs):
+    def create_compound_db(cls, biodata_dir=None, **kwargs):
         """
         Creates and fills the `chebi_ontology` database
 
@@ -37,7 +40,7 @@ class CompoundService:
         data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(biodata_dir, kwargs['chebi_file'])
         onto = ChebiHelper.create_ontology_from_file(data_dir, corrected_file_name)
         list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
-        compounds = [Compound(data = dict_) for dict_ in list_chebi]
+        compounds = [Compound(data=dict_) for dict_ in list_chebi]
         for comp in compounds:
             comp.set_name(comp.data["name"])
             comp.chebi_id = comp.data["id"]
@@ -68,12 +71,12 @@ class CompoundService:
             del comp.data["charge"]
             del comp.data["subsets"]
         Compound.save_all(compounds)
-        
+
         # save ancestors
         vals = []
         bulk_size = 100
         for compound in compounds:
-            if 'ancestors' in compound.data.keys():
+            if 'ancestors' in compound.data:
                 val = cls._get_ancestors_query(compound)
                 if len(val) != 0:
                     for v in val:
@@ -84,11 +87,27 @@ class CompoundService:
                     if len(vals) != 0:
                         CompoundAncestor.insert_many(vals).execute()
                         vals = []
-    
+
+        # # save alternatives
+        # vals = []
+        # bulk_size = 100
+        # for compound in compounds:
+        #     if 'alt_id' in compound.data:
+        #         alt_ids = compound.data['alt_id']
+        #         for c_id in alt_ids:
+        #             c = CompoundAlternative(main_compound_chebi_id=compound.id, alt_compound_chebi_id=c_id)
+        #             vals.append(c)
+        #             if len(vals) == bulk_size:
+        #                 CompoundAncestor.save_all(vals)
+        #                 vals = []
+        #         if len(vals) != 0:
+        #             CompoundAncestor.save_all(vals)
+        #             vals = []
+
     @classmethod
     def _get_ancestors_query(cls, compound):
         """
-        Look for the compound term ancestors and returns all ancetors relations in a list 
+        Look for the compound term ancestors and returns all ancetors relations in a list
 
         :returns: a list of dictionnaries inf the following format: {'compound': self.id, 'ancestor': ancestor.id}
         :rtype: list
@@ -96,6 +115,7 @@ class CompoundService:
         vals = []
         for i in range(0, len(compound.data['ancestors'])):
             if(compound.data['ancestors'][i] != compound.chebi_id):
-                val = {'compound': compound.id, 'ancestor': Compound.get(Compound.chebi_id == compound.data['ancestors'][i]).id }
+                val = {'compound': compound.id, 'ancestor': Compound.get(
+                    Compound.chebi_id == compound.data['ancestors'][i]).id}
                 vals.append(val)
         return(vals)

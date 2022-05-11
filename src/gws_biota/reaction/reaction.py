@@ -13,6 +13,7 @@ from ..base.simple_base_model import SimpleBaseModel
 from ..compound.compound import Compound
 from ..db.db_manager import DbManager
 from ..enzyme.enzyme import Enzyme
+from .reaction_layout import ReactionLayout, ReactionLayoutDict
 
 ####################################################################################
 #
@@ -150,12 +151,11 @@ class Reaction(Base):
     # -- L --
 
     @property
-    def position(self):
-        from .reaction_position import ReactionPosition
+    def layout(self) -> ReactionLayoutDict:
         try:
             # return ReactionPosition.get(ReactionPosition.rhea_id == self.rhea_id)
-            return ReactionPosition.get_by_rhea_id(rhea_id=self.rhea_id)
-        except:
+            return ReactionLayout.get_layout_by_rhea_id(rhea_id=self.rhea_id)
+        except Exception as _:
             return None
     # -- S --
 

@@ -1,0 +1,8 @@
+{  
+    "parent": "carbohydrate metabolism",
+    "name": "ethanol metabolism",
+    "data": {
+        "CHEBI:15343": {"x": 20, "y": 0, "is_major": true, "name": "acetaldehyde", "alt": ["CHEBI:40533", "CHEBI:13703", "CHEBI:2383", "CHEBI:22158"]},
+        "CHEBI:16236": {"x": 30, "y": 0, "is_major": true, "name": "ethanol", "alt": ["CHEBI:44594", "CHEBI:42377", "CHEBI:4879", "CHEBI:14222", "CHEBI:23978", "CHEBI:30878", "CHEBI:30880"]}
+    }
+}

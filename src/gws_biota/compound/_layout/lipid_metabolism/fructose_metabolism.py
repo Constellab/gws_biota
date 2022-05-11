@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from .._layout.layout import Cluster, Layout
+from ..._layout.layout import Cluster, Layout
 
 N = None
 POS = {
