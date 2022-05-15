@@ -200,7 +200,7 @@ class Enzyme(Base):
     # -- S --
 
     @classmethod
-    def select_and_follow_if_deprecated(self, ec_number, tax_id=None):
+    def select_and_follow_if_deprecated(self, ec_number, tax_id=None, select_only_one=False):
         if tax_id:
             try:
                 tax = Taxonomy.get(Taxonomy.tax_id == tax_id)
@@ -212,12 +212,17 @@ class Enzyme(Base):
         else:
             Q = Enzyme.select().where(Enzyme.ec_number == ec_number)
 
+        if select_only_one:
+            Q = Q.limit(1)
+
         if not len(Q):
             Q = []
             depre_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == ec_number)
+            if select_only_one:
+                depre_Q = depre_Q.limit(1)
 
             for deprecated_enzyme in depre_Q:
-                Q_selected = deprecated_enzyme.select_new_enzymes()
+                Q_selected = deprecated_enzyme.select_new_enzymes(select_only_one=select_only_one)
                 for new_enzyme in Q_selected:
                     if tax_id:
 
