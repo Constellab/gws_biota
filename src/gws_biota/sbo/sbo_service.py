@@ -57,8 +57,10 @@ class SBOService:
         :rtype: list
         """
         vals = []
-        for i in range(0, len(sbo.data['ancestors'])):
-            if(sbo.data['ancestors'][i] != sbo.sbo_id):
-                val = {'sbo': sbo.id, 'ancestor': SBO.get(SBO.sbo_id == sbo.data['ancestors'][i]).id }
+        if 'ancestors' not in sbo.data:
+            return vals
+        for ancestor in sbo.data['ancestors']:
+            if(ancestor != sbo.sbo_id):
+                val = {'sbo': sbo.id, 'ancestor': SBO.get(SBO.sbo_id == ancestor).id }
                 vals.append(val)
         return(vals)

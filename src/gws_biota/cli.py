@@ -12,18 +12,24 @@ from gws_core import (BadRequestException, Logger, ModelService, User,
 from gws_core.extra import BaseModelService
 
 from gws_biota import ECO
+from .eco.eco import ECOAncestor
 
 from .db.db_service import DbService
 
 # Create db
-
-
 @click.command(context_settings=dict(
     ignore_unknown_options=True,
     allow_extra_args=True
 ))
 @click.pass_context
 def createdb(ctx):
+    from .db.db_manager import DbManager
+    DbManager.init(mode="dev")
+    DbManager._DEACTIVATE_PROTECTION_ = True
+
+    if ECO.table_exists():
+        BaseModelService.drop_tables()
+    
     if ECO.table_exists():
         if ECO.select().count():
             raise BadRequestException("A none empty biota database already exists")
@@ -32,6 +38,12 @@ def createdb(ctx):
     BaseModelService.create_tables()
     ModelService.register_all_processes_and_resources()
     UserService.create_sysuser()
+    
+    if not ECO.table_exists():
+        raise BadRequestException("Cannot create tables")
+    
+    if not ECOAncestor.table_exists():
+        raise BadRequestException("Cannot create ancestor tables")
 
     try:
         DbService.build_biota_db()

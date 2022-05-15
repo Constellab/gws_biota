@@ -27,7 +27,4 @@ class TestReaction(BaseTestCase):
 
         rxn=Reaction.get(Reaction.rhea_id == 'RHEA:58156')
         print(rxn.data)
-
-        pos = rxn.position
-        print(pos.x)
-        print(pos.y)
+        print(rxn.layout)

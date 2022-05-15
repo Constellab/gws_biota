@@ -19,7 +19,6 @@ class EnzymeOrtholog(Base):
 
     ec_number = CharField(null=True, index=True, unique=True)
     pathway = ForeignKeyField(EnzymePathway, backref="enzos", null=True)
-
     ft_names = TextField(null=True, index=True)
 
     _table_name = "biota_enzo"
@@ -27,12 +26,14 @@ class EnzymeOrtholog(Base):
   # -- E --
 
     @property
-    def enzymes(self, tax_id: str = None, tax_name: str = None):
+    def enzymes(self, tax_id: str = None, tax_name: str = None, limit=None):
         from .enzyme import Enzyme
 
         Q = Enzyme.select().where(Enzyme.ec_number == self.ec_number)
         if not tax_id is None:
             Q = Q.where(Enzyme.tax_id == tax_id)
+        if limit:
+            Q = Q.limit(limit)
         return Q.order_by(Enzyme.data["RN"].desc())
 
     # -- N --

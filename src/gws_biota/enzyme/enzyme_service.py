@@ -77,7 +77,7 @@ class EnzymeService:
                 enzos[ec] = EnzymeOrtholog(
                     ec_number=ec,
                     data={"RN": rn, "SN": sn, "SY": sy},
-                    ft_names="\n".join([ec, *rn, *sn, *sy]),
+                    ft_names=";".join([ec.replace(".",""), *rn, *sn, *sy]),
                 )
                 enzos[ec].set_name(d["RN"][0])
                 enzos[ec].pathway = pathways[ec]
@@ -91,11 +91,14 @@ class EnzymeService:
             sn = d.get("SN", [])
             sy = [k.get("data", "") for k in d.get("SY", [])]
             organism = d.get("organism")
+
+            dep_enz = DeprecatedEnzyme
+            
             enz = Enzyme(
                 ec_number=ec,
                 uniprot_id=d["uniprot"],
                 data=d,
-                ft_names="\n".join([ec, *rn, *sn, *sy, organism]),
+                ft_names=";".join([ec.replace(".",""), *rn, *sn, *sy, organism]),
             )
             enz.set_name(d["RN"][0])
             enzymes.append(enz)
@@ -108,7 +111,7 @@ class EnzymeService:
         if "bkms_file" in kwargs:
             list_of_bkms = BKMS.parse_csv_from_file(biodata_dir, kwargs["bkms_file"])
             cls.__update_pathway_from_bkms(list_of_bkms)
-
+        
     # -- U --
 
     @classmethod

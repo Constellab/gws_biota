@@ -30,22 +30,22 @@ class ECOService:
         for eco in ecos:
             eco.set_eco_id( eco.data["id"] )
             eco.set_name( eco.data["name"] )
+            eco.ft_names=";".join(list(set([ eco.data["name"], eco.eco_id.replace("ECO:", "")]))),
             del eco.data["id"]
         ECO.save_all(ecos)
+        
         vals = []
-        bulk_size = 100
+        bulk_size = 500
         for eco in ecos:
-            if 'ancestors' in eco.data.keys():
-                val = cls._get_ancestors_query(eco)
-                if len(val):
-                    for v in val:
-                        vals.append(v)
-                        if len(vals) == bulk_size:
-                            ECOAncestor.insert_many(vals).execute()
-                            vals = []
-                    if len(vals) != 0:
-                        ECOAncestor.insert_many(vals).execute()
-                        vals = []
+            val = cls._get_ancestors_query(eco)
+            for v in val:
+                vals.append(v)
+            if len(vals) >= bulk_size:
+                ECOAncestor.insert_many(vals).execute()
+                vals = []
+        if len(vals) != 0:
+            ECOAncestor.insert_many(vals).execute()
+            vals = []
 
     # -- G --
 
@@ -58,8 +58,10 @@ class ECOService:
         :rtype: list
         """
         vals = []
-        for i in range(0, len(eco.data['ancestors'])):
-            if(eco.data['ancestors'][i] != eco.eco_id):
-                val = {'eco': eco.id, 'ancestor': ECO.get(ECO.eco_id == eco.data['ancestors'][i]).id }
+        if 'ancestors' not in eco.data:
+            return vals
+        for ancestor in eco.data['ancestors']:
+            if ancestor != eco.eco_id:
+                val = {'eco': eco.id, 'ancestor': ECO.get(ECO.eco_id == ancestor).id }
                 vals.append(val)
         return(vals)

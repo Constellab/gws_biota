@@ -61,6 +61,13 @@ class CompoundService:
             if "metacyc" in comp.data["xref"]:
                 comp.metacyc_id = comp.data["xref"]["metacyc"]
                 del comp.data["xref"]["metacyc"]
+
+            all_ids = [comp.chebi_id, *comp.alt_chebi_ids]
+            if comp.kegg_id is not None:
+                all_ids.append(comp.kegg_id)
+            all_ids_trimed = [ elt.replace("CHEBI:", "") for elt in all_ids ]            
+            comp.ft_names=";".join(list(set([ comp.data["name"], *all_ids_trimed])))
+
             del comp.data["id"]
             del comp.data["inchi"]
             del comp.data["formula"]
@@ -74,35 +81,32 @@ class CompoundService:
 
         # save ancestors
         vals = []
-        bulk_size = 100
+        bulk_size = 500
         for compound in compounds:
-            if 'ancestors' in compound.data:
-                val = cls._get_ancestors_query(compound)
-                if len(val) != 0:
-                    for v in val:
-                        vals.append(v)
-                        if len(vals) == bulk_size:
-                            CompoundAncestor.insert_many(vals).execute()
-                            vals = []
-                    if len(vals) != 0:
-                        CompoundAncestor.insert_many(vals).execute()
-                        vals = []
-
+            val = cls._get_ancestors_query(compound)
+            for v in val:
+                vals.append(v)
+            if len(vals) >= bulk_size:
+                CompoundAncestor.insert_many(vals).execute()
+                vals = []
+        if len(vals):
+            CompoundAncestor.insert_many(vals).execute()
+            vals = []
+ 
         # # save alternatives
         # vals = []
-        # bulk_size = 100
         # for compound in compounds:
         #     if 'alt_id' in compound.data:
         #         alt_ids = compound.data['alt_id']
         #         for c_id in alt_ids:
         #             c = CompoundAlternative(main_compound_chebi_id=compound.id, alt_compound_chebi_id=c_id)
         #             vals.append(c)
-        #             if len(vals) == bulk_size:
-        #                 CompoundAncestor.save_all(vals)
-        #                 vals = []
-        #         if len(vals) != 0:
-        #             CompoundAncestor.save_all(vals)
-        #             vals = []
+        #     if len(vals) >= bulk_size:
+        #         CompoundAlternative.save_all(vals)
+        #         vals = []
+        # if len(vals):
+        #     CompoundAlternative.save_all(vals)
+        #     vals = []
 
     @classmethod
     def _get_ancestors_query(cls, compound):
@@ -113,9 +117,11 @@ class CompoundService:
         :rtype: list
         """
         vals = []
-        for i in range(0, len(compound.data['ancestors'])):
-            if(compound.data['ancestors'][i] != compound.chebi_id):
+        if 'ancestors' not in compound.data:
+            return vals
+        for ancestor in compound.data['ancestors']:
+            if ancestor != compound.chebi_id :
                 val = {'compound': compound.id, 'ancestor': Compound.get(
-                    Compound.chebi_id == compound.data['ancestors'][i]).id}
+                    Compound.chebi_id == ancestor).id}
                 vals.append(val)
-        return(vals)
+        return vals

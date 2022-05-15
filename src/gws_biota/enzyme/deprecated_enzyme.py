@@ -29,11 +29,13 @@ class DeprecatedEnzyme(Base):
     def reason(self):
         return self.data["reason"]
     
-    def select_new_enzymes(self):
+    def select_new_enzymes(self, select_only_one=False):
         from .enzyme import Enzyme
         Q = {}
         if self.new_ec_number:
-            tmp_Q = Enzyme.select().where(Enzyme.ec_number == self.new_ec_number)        
+            tmp_Q = Enzyme.select().where(Enzyme.ec_number == self.new_ec_number)   
+            if select_only_one:
+                tmp_Q = tmp_Q.limit(1)     
             if tmp_Q:
                 for e in tmp_Q:
                     Q[e.id] = e
@@ -41,6 +43,8 @@ class DeprecatedEnzyme(Base):
                 Q = {}
                 # if the new enzyme if also deprecated, we follow the deprecation chain
                 deprec_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == self.new_ec_number)
+                if select_only_one:
+                    deprec_Q = deprec_Q.limit(1)
                 for deprec in deprec_Q:
                     for e in deprec.select_new_enzymes():
                         Q[e.id] = e

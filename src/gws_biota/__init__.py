@@ -21,3 +21,4 @@ from .reaction.reaction import Reaction
 from .reaction.reaction_layout import ReactionLayout, ReactionLayoutDict
 from .sbo.sbo import SBO
 from .taxonomy.taxonomy import Taxonomy
+from .biomass_reaction.biomass_reaction import BiomassReaction
