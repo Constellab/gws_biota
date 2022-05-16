@@ -21,10 +21,13 @@
 # The licensor cannot revoke these freedoms as long as you follow the license terms.
 # https://creativecommons.org/licenses/by/4.0/.
 
+from typing import Union
+
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import (CharField, DoubleField, FloatField, ForeignKeyField,
-                    IntegerField)
+                    IntegerField, ModelSelect, TextField)
+from playhouse.mysql_ext import Match
 
 from ..base.base import Base
 from ..base.simple_base_model import SimpleBaseModel
@@ -58,6 +61,7 @@ class Compound(Base):
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
     chebi_star = CharField(null=True, index=True)
+    # ft_names = TextField(null=True)
 
     _ancestors = None
     _table_name = "biota_compound"
@@ -75,6 +79,10 @@ class Compound(Base):
             self._ancestors.append(q.ancestor)
 
         return self._ancestors
+
+    @property
+    def alt_chebi_ids(self) -> list:
+        return sorted(self.data.get("alt_id"))
 
     # -- C --
 
@@ -100,14 +108,17 @@ class Compound(Base):
 
     # -- G --
 
-    # def select_by_chebi_ids(self, chebi_ids: list):
-    #     pass
+    # @classmethod
+    # def search_by_chebi_ids(cls, chebi_ids: Union[list, str]):
+    #     if isinstance(chebi_ids, list):
+    #         chebi_ids = " ".join(chebi_ids)
+    #     return cls.search(chebi_ids)
 
     # -- P --
 
     @property
     def layout(self) -> CompoundLayoutDict:
-        alt_chebi_ids = self.data.get("alt", [])
+        alt_chebi_ids = self.alt_chebi_ids
         return CompoundLayout.get_layout_by_chebi_id(synonym_chebi_ids=[self.chebi_id, *alt_chebi_ids])
 
     @property
@@ -144,6 +155,14 @@ class Compound(Base):
             rxns.append(r.reaction)
 
         return rxns
+
+    # @classmethod
+    # def after_table_creation(cls) -> None:
+    #     cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_CMP')
+
+    # @classmethod
+    # def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+    #     return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
 
 # class CompoundAlternative(Base):

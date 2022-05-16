@@ -29,7 +29,6 @@ class DeprecatedEnzyme(Base):
     @property
     def reason(self):
         return self.data["reason"]
-
     def select_new_enzymes(self, select_only_one=False):
         from .enzyme import Enzyme
         Q = {}

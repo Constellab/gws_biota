@@ -8,6 +8,8 @@ import os
 import random
 from typing import Dict, List, TypedDict, Union
 
+from gws_core import Logger
+
 GRID_SCALE = 10
 GRID_INTERVAL = 10
 
@@ -83,7 +85,12 @@ class CompoundLayout:
     """ CompoundLayout """
 
     _clusters: List[CompoundCluster] = []
-    __flat_data = {}
+
+    __data: dict = {}
+    __flat_data: dict = {}
+
+    __is_flattened = False
+    __is_generated = False
 
     @ classmethod
     def add_cluster(cls, cluster):
@@ -93,29 +100,40 @@ class CompoundLayout:
         cls._clusters.append(cluster)
 
     @ classmethod
-    def generate(cls, db_path: str = None):
+    def generate(cls, db_path: str = None, force: bool = False):
         """ Generate positions """
+
+        if not force and cls.__is_generated:
+            return cls.__data
+
         if not db_path:
             db_path = os.path.join("./_layout/", os.path.dirname(os.path.abspath(__file__)))
 
-        # loads for all .json files
-        for root, _, files in os.walk(db_path):
-            for file in files:
-                if file.endswith(".json"):
-                    cluster = CompoundCluster.from_file(os.path.join(root, file))
-                    cls._clusters.append(cluster)
-
         data = {}
-        for cluster in cls._clusters:
-            data.update(cluster.generate())
+        try:
+            # loads for all .json files
+            for root, _, files in os.walk(db_path):
+                for file in files:
+                    if file.endswith(".json"):
+                        cluster = CompoundCluster.from_file(os.path.join(root, file))
+                        cls._clusters.append(cluster)
+
+            for cluster in cls._clusters:
+                data.update(cluster.generate())
+        except Exception as err:
+            Logger.warning(f"An error occur when parsing layout files. Message {err}")
+
+        cls.__is_generated = True
+        cls.__data = data
         return data
 
     @classmethod
-    def get_flat_data(cls):
+    def get_flat_data(cls, force: bool = False):
         """ Get layout data """
-        if cls.__flat_data:
+        if not force and cls.__is_flattened:
             return cls.__flat_data
 
+        cls.__flat_data = {}
         data = CompoundLayout.generate()
         for key, val in data.items():
             if key not in cls.__flat_data:
@@ -135,6 +153,7 @@ class CompoundLayout:
 
                 cls.__flat_data[alt_key][cluster_name] = pos
 
+        cls.__is_flattened = True
         return cls.__flat_data
 
     @classmethod

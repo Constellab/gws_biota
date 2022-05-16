@@ -128,6 +128,9 @@ class Reaction(Base):
     def get_title(self, default=None):
         return self.definition
 
+    def has_enzymes(self):
+        return self.enzymes.count() > 0
+
     # -- I --
 
     def is_charge_balanced(self):

@@ -4,6 +4,7 @@
 # About us: https://gencovery.com
 
 class Cofactor:
+    """ List of cofactors """
     COFACTORS = {
         # hydron, H+
         "CHEBI:15378": {"alt": ["CHEBI:5584", "CHEBI:10744", "CHEBI:13357"]},
@@ -124,8 +125,27 @@ class Cofactor:
         "CHEBI:29969": {"alt": []},
     }
 
+    COFACTOR_NAME_PATTERNS = ["residue"]
+    _unfolded_cofactor_list = None
+
     @classmethod
     def get_factors_as_list(cls) -> list:
-        k = list(cls.COFACTORS.keys())
-        v = [idx for v in cls.COFACTORS.values() for idx in v["alt"]]
-        return list(set([*k, *v]))
+        """ Get factor list """
+        if cls._unfolded_cofactor_list is None:
+            ids = list(cls.COFACTORS.keys())
+            alt = [idx for data in cls.COFACTORS.values() for idx in data["alt"]]
+            cls._unfolded_cofactor_list = list(set([*ids, *alt]))
+        return cls._unfolded_cofactor_list
+
+    @classmethod
+    def is_cofactor(cls, chebi_id: str, name: str = None, use_name_pattern=False):
+        """
+        Returns True if the compound is a cofactor, Fals otherwise
+        """
+
+        if name and use_name_pattern:
+            for pattern in cls.COFACTOR_NAME_PATTERNS:
+                if pattern in name:
+                    return True
+
+        return chebi_id in cls.get_factors_as_list()

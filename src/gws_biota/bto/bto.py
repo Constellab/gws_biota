@@ -3,7 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ForeignKeyField
+from peewee import CharField, ForeignKeyField, TextField, ModelSelect
+from playhouse.mysql_ext import Match
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..ontology.ontology import Ontology
@@ -27,8 +28,9 @@ class BTO(Ontology):
     :type name: class:`peewee.CharField`
     """
     bto_id = CharField(null=True, index=True)
-    _ancestors = None
+    ft_names = TextField(null=True)
 
+    _ancestors = None
     _table_name = 'biota_bto'
 
     # -- A --
@@ -82,6 +84,14 @@ class BTO(Ontology):
         :type bto_id: str
         """
         self.bto_id = bto_id
+
+    @classmethod
+    def after_table_creation(cls) -> None:
+        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_BTO')
+
+    @classmethod
+    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
 class BTOAncestor(SimpleBaseModel):
     """

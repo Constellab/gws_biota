@@ -38,20 +38,18 @@ class GOService:
             del go.data["id"]
         GO.save_all(gos)
         vals = []
-        bulk_size = 750
+        bulk_size = 500
         for go in gos:
             if 'ancestors' in go.data.keys():
                 val = cls.__build_insert_query_vals_of_ancestors(go)
-                if len(val) != 0:
-                    for v in val:
-                        vals.append(v)
-                        if len(vals) == bulk_size:
-                            GOAncestor.insert_many(vals).execute()
-                            vals = []
-                    
-                    if len(vals) != 0:
-                        GOAncestor.insert_many(vals).execute()
-                        vals = []
+                for v in val:
+                    vals.append(v)
+            if len(vals) >= bulk_size:
+                GOAncestor.insert_many(vals).execute()
+                vals = []
+        if len(vals):
+            GOAncestor.insert_many(vals).execute()
+            vals = []
     
     @classmethod
     def __build_insert_query_vals_of_ancestors(self, go):
@@ -62,8 +60,10 @@ class GOService:
         :rtype: list
         """
         vals = []
-        for i in range(0, len(go.data['ancestors'])):
-            if(go.data['ancestors'][i] != go.go_id):
-                val = {'go': go.id, 'ancestor': GO.get(GO.go_id == go.data['ancestors'][i]).id }
+        if 'ancestors' not in go.data:
+            return vals
+        for ancestor in go.data['ancestors']:
+            if ancestor != go.go_id:
+                val = {'go': go.id, 'ancestor': GO.get(GO.go_id == ancestor).id }
                 vals.append(val)
         return(vals)

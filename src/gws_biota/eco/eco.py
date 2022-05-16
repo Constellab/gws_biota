@@ -3,7 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ForeignKeyField
+from peewee import CharField, ForeignKeyField, TextField, ModelSelect
+from playhouse.mysql_ext import Match
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from .._helper.ontology import Onto as OntoHelper
@@ -30,8 +31,9 @@ class ECO(Ontology):
     """
 
     eco_id = CharField(null=True, index=True)
-    _ancestors = None
+    ft_names = TextField(null=True)
 
+    _ancestors = None
     _table_name = 'biota_eco'
     
     # -- A --
@@ -88,6 +90,14 @@ class ECO(Ontology):
         set self.eco_id
         """
         self.eco_id = id
+
+    @classmethod
+    def after_table_creation(cls) -> None:
+        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_ECO')
+
+    @classmethod
+    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
 class ECOAncestor(SimpleBaseModel):
     """

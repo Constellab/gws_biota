@@ -34,6 +34,24 @@ class TestCompound(BaseTestCase):
         self.assertEqual(len(comp.ancestors), 1)
         self.assertEqual(comp.ancestors[0].get_name(), 'fluoride salt')
 
-        pos = comp.position
-        print(pos["x"])
-        print(pos["y"])
+        comp = Compound.get(Compound.chebi_id == 'CHEBI:17051')
+        self.assertEqual(comp.alt_chebi_ids, ['CHEBI:14271', 'CHEBI:49593', 'CHEBI:5113'])
+        print(comp.alt_chebi_ids)
+
+        Q = Compound.search('17051')
+        self.assertEqual(len(Q), 1)
+        self.assertEqual(Q[0].name, "fluoride")
+
+        Q = Compound.search('17051 14271')
+        self.assertEqual(len(Q), 1)
+        self.assertEqual(Q[0].name, "fluoride")
+
+        Q = Compound.search('CHEBI:49593')
+        self.assertEqual(len(Q), 1)
+        self.assertEqual(Q[0].name, "fluoride")
+
+        Q = Compound.search('CHEBI:')
+        self.assertEqual(len(Q), 0)
+
+        Q = Compound.search_by_chebi_ids('49593 24431')
+        self.assertEqual(len(Q), 2)

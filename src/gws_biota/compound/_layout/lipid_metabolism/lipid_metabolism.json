@@ -1,0 +1,29 @@
+{  
+    "name": "lipid metabolism",
+    "data": {
+        "CHEBI:15345": {"x": -135, "y": 20, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173"]},
+        "CHEBI:15351": {"x": -135, "y": 20, "level": 1, "name": "acetyl-CoA", "alt": ["CHEBI:40470, CHEBI:2408, CHEBI:13712, CHEBI:22192"]},
+        "CHEBI:10983": {"x": -135, "y": 20, "level": 1, "name": "(R)-3-hydroxybutyrate", "alt": []},
+        "CHEBI:17066": {"x": -135, "y": 20, "level": 1, "name": "(R)-3-hydroxybutyric acid", "alt": ["CHEBI:322, CHEBI:18666"]},
+        "CHEBI:13705": {"x": -135, "y": 20, "level": 1, "name": "acetoacetate", "alt": []},
+        "CHEBI:15344": {"x": -135, "y": 20, "level": 1, "name": "acetoacetic acid", "alt": ["CHEBI:40507, CHEBI:2391, CHEBI:22172"]},
+        "CHEBI:15467": {"x": -135, "y": 20, "level": 1, "name": "(3S)-3-hydroxy-3-methylglutaryl-CoA", "alt": ["CHEBI:61659, CHEBI:392, CHEBI:11045, CHEBI:18747"]},
+        "CHEBI:17855": {"x": -135, "y": 20, "level": 1, "name": "triglyceride", "alt": ["CHEBI:9664, CHEBI:15255, CHEBI:27085"]},
+        "CHEBI:16975": {"x": -135, "y": 20, "level": 1, "name": "1-acyl-sn-glycerol 3-phosphate", "alt": ["CHEBI:590, CHEBI:11227, CHEBI:18993"]},
+        "CHEBI:15978": {"x": -135, "y": 20, "level": 1, "name": "sn-glycerol 3-phosphate", "alt": ["CHEBI:12848, CHEBI:42793, CHEBI:10648, CHEBI:12843, CHEBI:26705"]},
+        "CHEBI:17754": {"x": -135, "y": 20, "level": 1, "name": "glycerol", "alt": ["CHEBI:42998, CHEBI:131422, CHEBI:5448, CHEBI:14334, CHEBI:24351"]},
+        "CHEBI:15354": {"x": -135, "y": 20, "level": 1, "name": "choline", "alt": ["CHEBI:41524, CHEBI:3665, CHEBI:13985, CHEBI:23212"]},
+        "CHEBI:18132": {"x": -135, "y": 20, "level": 1, "name": "phosphocholine", "alt": ["CHEBI:3667, CHEBI:44707, CHEBI:12720, CHEBI:23214, CHEBI:13986"]},
+        "CHEBI:16436": {"x": -135, "y": 20, "level": 1, "name": "CDP-choline", "alt": ["CHEBI:41440, CHEBI:13268, CHEBI:3268, CHEBI:20867"]},
+        "CHEBI:16110": {"x": -135, "y": 20, "level": 1, "name": "1,2-diacyl-sn-glycero-3-phosphocholine(1+)", "alt": ["CHEBI:44694, CHEBI:1681, CHEBI:11148, CHEBI:11753, CHEBI:17046, CHEBI:26029, CHEBI:23660, CHEBI:20200, CHEBI:18878, CHEBI:8128"]},
+        "CHEBI:49183": {"x": -135, "y": 20, "level": 1, "name": "phosphatidylcholine(1+)", "alt": ["CHEBI:36705, CHEBI:14802"]},
+        "CHEBI:16000": {"x": -135, "y": 20, "level": 1, "name": "ethanolamine", "alt": ["CHEBI:42323, CHEBI:272066, CHEBI:14223, CHEBI:23979, CHEBI:4880"]},
+        "CHEBI:17553": {"x": -135, "y": 20, "level": 1, "name": "O-phosphoethanolamine", "alt": ["CHEBI:14224, CHEBI:44681, CHEBI:4881, CHEBI:14814, CHEBI:23980, CHEBI:12694"]},
+        "CHEBI:16732": {"x": -135, "y": 20, "level": 1, "name": "CDP-ethanolamine", "alt": ["CHEBI:3270, CHEBI:13270, CHEBI:13257, CHEBI:20869"]},
+        "CHEBI:16038": {"x": -135, "y": 20, "level": 1, "name": "phosphatidylethanolamine", "alt": ["CHEBI:8129, CHEBI:14803, CHEBI:12701, CHEBI:7661, CHEBI:26030, CHEBI:26031"]},
+        "CHEBI:11750": {"x": -135, "y": 20, "level": 1, "name": "3-sn-phosphatidyl-L-serine", "alt": ["CHEBI:64388"]},
+        "CHEBI:18303": {"x": -135, "y": 20, "level": 1, "name": "phosphatidyl-L-serine", "alt": ["CHEBI:14801, CHEBI:26041, CHEBI:8137"]},
+        "CHEBI:17962": {"x": -135, "y": 20, "level": 1, "name": "CDP-diacylglycerol", "alt": ["CHEBI:20868, CHEBI:13256, CHEBI:13269, CHEBI:3269"]},
+        "CHEBI:16337": {"x": -135, "y": 20, "level": 1, "name": "phosphatidic acid", "alt": ["CHEBI:14795, CHEBI:26023, CHEBI:8122"]}
+    }
+}

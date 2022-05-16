@@ -99,7 +99,7 @@ class ReactionService:
         for enz in Q:
             tab.append( enz.ft_names )
             react.enzymes.add(enz)
-        react.ft_names = "\n".join(tab)
+        react.ft_names = ",".join(tab)
     # -- U --
 
     @classmethod
