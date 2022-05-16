@@ -19,14 +19,14 @@ class TestUnicell(BaseTestCaseUsingFullBiotaDB):
         # print(len(Q))
         # uc = Q[0]
 
-        print(uc.get_compound_id_list())
-        print(uc.get_reaction_id_list())
+        # print(uc.get_compound_id_list())
+        # print(uc.get_reaction_id_list())
 
-        for _id in uc.get_compound_id_list():
-            if "CHEBI:15361" == _id:
-                print(id)
+        # for _id in uc.get_compound_id_list():
+        #     if "CHEBI:15361" == _id:
+        #         print(id)
 
-            if "CHEBI:15361" == _id:
-                print(id)
+        #     if "CHEBI:15361" == _id:
+        #         print(id)
 
-        uc.are_connected()
+        # uc.are_connected()
