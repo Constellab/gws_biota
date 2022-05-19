@@ -6,8 +6,9 @@
 from gws_core import transaction
 from .._helper.ontology import Onto as OntoHelper
 from .bto import BTO, BTOAncestor
+from ..base.base_service import BaseService
 
-class BTOService:
+class BTOService(BaseService):
     
     @classmethod
     @transaction()
@@ -32,12 +33,11 @@ class BTOService:
 
         BTO.save_all(btos)
         vals = []
-        bulk_size = 500
         for bto in btos:
             val = cls.__build_insert_query_vals_of_ancestors(bto)
             for v in val:
                 vals.append(v)
-            if len(vals) >= bulk_size:
+            if len(vals) >= cls.BULK_SIZE:
                 BTOAncestor.insert_many(vals).execute()
                 vals = []
         if len(vals):

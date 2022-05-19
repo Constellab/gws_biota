@@ -16,9 +16,9 @@ from .enzyme import Enzyme
 from .enzyme_class import EnzymeClass
 from .enzyme_ortholog import EnzymeOrtholog
 from .enzyme_pathway import EnzymePathway
+from ..base.base_service import BaseService
 
-
-class EnzymeService:
+class EnzymeService(BaseService):
     @classmethod
     @transaction()
     def create_enzyme_db(cls, biodata_dir=None, **kwargs):
@@ -38,25 +38,6 @@ class EnzymeService:
         # add enzymes
         brenda = Brenda(os.path.join(biodata_dir, kwargs["brenda_file"]))
         list_of_enzymes, list_deprecated_ec = brenda.parse_all_enzyme_to_dict()
-        # saved all deprecated enzymes
-        deprecated_enzymes = []
-        for dep_ec in list_deprecated_ec:
-            if dep_ec["new_ec"]:
-                for ne in dep_ec["new_ec"]:
-                    t_enz = DeprecatedEnzyme(
-                        ec_number=dep_ec["old_ec"],
-                        new_ec_number=ne,
-                        data=dep_ec["data"],
-                    )
-                    deprecated_enzymes.append(t_enz)
-            else:
-                t_enz = DeprecatedEnzyme(
-                    ec_number=dep_ec["old_ec"], data=dep_ec["data"]
-                )
-                deprecated_enzymes.append(t_enz)
-
-        if deprecated_enzymes:
-            DeprecatedEnzyme.save_all(deprecated_enzymes)
 
         # save EnzymePathway
         pathways = {}
@@ -103,8 +84,59 @@ class EnzymeService:
             enz.set_name(d["RN"][0])
             enzymes.append(enz)
         Enzyme.save_all(enzymes)
+    
+        
+        def _get_new_enzyme_info(old_ec_numner):
+            info = []
+            for dep_ec in list_deprecated_ec:
+                if dep_ec["old_ec"] == old_ec_numner:
+                    if dep_ec["new_ec"]:
+                        for new_ec in dep_ec["new_ec"]:
+                            count = EnzymeOrtholog.select().where(EnzymeOrtholog.ec_number == new_ec).count()
+                            if count:
+                                info.append({
+                                    "new_ec": new_ec,
+                                    "data": dep_ec["data"]
+                                })
+                            else:
+                                current_info = _get_new_enzyme_info(new_ec)
+                                info.extends(current_info)
+                        break
+                break
+            return info
 
-        # save taxonomy and t
+        # saved all deprecated enzymes
+        deprecated_enzymes = []
+        for dep_ec in list_deprecated_ec:
+            old_ec = dep_ec["old_ec"]
+            all_info = _get_new_enzyme_info(old_ec)
+            for info in all_info:
+                t_enz = DeprecatedEnzyme(
+                    ec_number=old_ec,
+                    new_ec_number=info["new_ec"],
+                    data=info["data"],
+                )
+                deprecated_enzymes.append(t_enz)
+
+        # for dep_ec in list_deprecated_ec:
+        #     if dep_ec["new_ec"]:
+        #         for ne in dep_ec["new_ec"]:
+        #             t_enz = DeprecatedEnzyme(
+        #                 ec_number=dep_ec["old_ec"],
+        #                 new_ec_number=ne,
+        #                 data=dep_ec["data"],
+        #             )
+        #             deprecated_enzymes.append(t_enz)
+        #     else:
+        #         t_enz = DeprecatedEnzyme(
+        #             ec_number=dep_ec["old_ec"], data=dep_ec["data"]
+        #         )
+        #         deprecated_enzymes.append(t_enz)
+
+        if deprecated_enzymes:
+            DeprecatedEnzyme.save_all(deprecated_enzymes)
+            
+        # save taxonomy
         cls.__update_tax_tissue(enzymes)
 
         # save bkms data
@@ -166,7 +198,6 @@ class EnzymeService:
         """
 
         pathways = {}
-        bulk_size = 750
         dbs = ["brenda", "kegg", "metacyc"]
         for bkms in list_of_bkms:
             ec_number = bkms["ec_number"]
@@ -182,7 +213,7 @@ class EnzymeService:
                         pwy_name = bkms[k + "_pathway_name"]
                         pathway.data[k] = {"id": pwy_id, "name": pwy_name}
                 pathways[pathway.ec_number] = pathway
-                if len(pathways.keys()) >= bulk_size:
+                if len(pathways.keys()) >= cls.BULK_SIZE:
                     EnzymePathway.save_all(pathways.values())
                     pathways = {}
         if len(pathways) > 0:

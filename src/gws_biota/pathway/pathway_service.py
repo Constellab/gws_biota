@@ -7,8 +7,9 @@ from gws_core import transaction
 from .._helper.reactome import Reactome as ReactomeHelper
 from .pathway import Pathway, PathwayAncestor
 from .pathway_compound import PathwayCompound
+from ..base.base_service import BaseService
 
-class PathwayService:
+class PathwayService(BaseService):
     
     @classmethod
     @transaction()
@@ -42,14 +43,13 @@ class PathwayService:
         # insert pathways ancestors
         pathway_rels = ReactomeHelper.parse_pathway_relations_to_dict(biodata_dir, kwargs['reactome_pathway_relations_file'])      
         k = 0
-        bulk_size = 100
         ancestor_vals = cls.__query_vals_of_ancestors(pathway_rels)  
         while True:
-            vals = ancestor_vals[k:min(k+bulk_size,len(ancestor_vals))]
+            vals = ancestor_vals[k:min(k+cls.BULK_SIZE,len(ancestor_vals))]
             if not len(vals):
                 break
             PathwayAncestor.insert_many(vals).execute()
-            k = k+bulk_size
+            k = k+cls.BULK_SIZE
     
         
         # insert chebi pathways

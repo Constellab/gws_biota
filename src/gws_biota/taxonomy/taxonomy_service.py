@@ -6,8 +6,9 @@
 from gws_core import transaction
 from .._helper.ncbi import Taxonomy as NCBITaxonomyHelper
 from .taxonomy import Taxonomy
+from ..base.base_service import BaseService
 
-class TaxonomyService:
+class TaxonomyService(BaseService):
     
     @classmethod
     @transaction()
@@ -25,9 +26,8 @@ class TaxonomyService:
 
         dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)
         dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
-        bulk_size = 750
         start = 0
-        stop = start+bulk_size
+        stop = start+cls.BULK_SIZE
         dict_keys = list(dict_taxons.keys())
         while True:
             #step 2
@@ -49,4 +49,4 @@ class TaxonomyService:
                 del tax.data['ancestor']
             Taxonomy.save_all(taxa)
             start = stop
-            stop = start+bulk_size
+            stop = start+cls.BULK_SIZE

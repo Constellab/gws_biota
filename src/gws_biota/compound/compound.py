@@ -61,7 +61,7 @@ class Compound(Base):
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
     chebi_star = CharField(null=True, index=True)
-    # ft_names = TextField(null=True)
+    ft_names = TextField(null=True)
 
     _ancestors = None
     _table_name = "biota_compound"
@@ -108,11 +108,11 @@ class Compound(Base):
 
     # -- G --
 
-    # @classmethod
-    # def search_by_chebi_ids(cls, chebi_ids: Union[list, str]):
-    #     if isinstance(chebi_ids, list):
-    #         chebi_ids = " ".join(chebi_ids)
-    #     return cls.search(chebi_ids)
+    @classmethod
+    def search_by_chebi_ids(cls, chebi_ids: Union[list, str]):
+        if isinstance(chebi_ids, list):
+            chebi_ids = " ".join(chebi_ids)
+        return cls.search(chebi_ids)
 
     # -- P --
 
@@ -156,13 +156,13 @@ class Compound(Base):
 
         return rxns
 
-    # @classmethod
-    # def after_table_creation(cls) -> None:
-    #     cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_CMP')
+    @classmethod
+    def after_table_creation(cls) -> None:
+        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_CMP')
 
-    # @classmethod
-    # def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-    #     return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
+    @classmethod
+    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
+        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
 
 # class CompoundAlternative(Base):

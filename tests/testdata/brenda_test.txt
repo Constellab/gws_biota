@@ -1651,5 +1651,5 @@ REACTION
 RE	GDP-alpha-D-mannose + a very-long-chain inositol
 	phospho-(2'R)-2'-hydroxyphytoceramide = a very-long-chain
 	mannosylinositol phospho-(2'R)-2'-hydroxyphytoceramide + GDP
-    
+
 ///

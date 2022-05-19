@@ -11,8 +11,9 @@ from ..base.base import Base
 from ..ontology.ontology import Ontology
 from .._helper.ontology import Onto as OntoHelper
 from .go import GO, GOAncestor
+from ..base.base_service import BaseService
 
-class GOService:
+class GOService(BaseService):
 
     @classmethod
     @transaction()
@@ -38,13 +39,11 @@ class GOService:
             del go.data["id"]
         GO.save_all(gos)
         vals = []
-        bulk_size = 500
         for go in gos:
-            if 'ancestors' in go.data.keys():
-                val = cls.__build_insert_query_vals_of_ancestors(go)
-                for v in val:
-                    vals.append(v)
-            if len(vals) >= bulk_size:
+            val = cls.__build_insert_query_vals_of_ancestors(go)
+            for v in val:
+                vals.append(v)
+            if len(vals) >= cls.BULK_SIZE:
                 GOAncestor.insert_many(vals).execute()
                 vals = []
         if len(vals):

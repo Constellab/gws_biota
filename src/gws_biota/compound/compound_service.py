@@ -9,9 +9,9 @@ from gws_core import transaction
 
 from .._helper.chebi import Chebi as ChebiHelper
 from ..compound.compound import Compound, CompoundAncestor
+from ..base.base_service import BaseService
 
-
-class CompoundService:
+class CompoundService(BaseService):
 
     @staticmethod
     def _to_float(val):
@@ -81,12 +81,11 @@ class CompoundService:
 
         # save ancestors
         vals = []
-        bulk_size = 500
         for compound in compounds:
             val = cls._get_ancestors_query(compound)
             for v in val:
                 vals.append(v)
-            if len(vals) >= bulk_size:
+            if len(vals) >= cls.BULK_SIZE:
                 CompoundAncestor.insert_many(vals).execute()
                 vals = []
         if len(vals):
@@ -101,7 +100,7 @@ class CompoundService:
         #         for c_id in alt_ids:
         #             c = CompoundAlternative(main_compound_chebi_id=compound.id, alt_compound_chebi_id=c_id)
         #             vals.append(c)
-        #     if len(vals) >= bulk_size:
+        #     if len(vals) >= cls.BULK_SIZE:
         #         CompoundAlternative.save_all(vals)
         #         vals = []
         # if len(vals):

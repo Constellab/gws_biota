@@ -8,8 +8,9 @@ from .._helper.rhea import Rhea
 from ..compound.compound import Compound
 from .reaction import Reaction
 from ..enzyme.enzyme import Enzyme
+from ..base.base_service import BaseService
 
-class ReactionService:
+class ReactionService(BaseService):
     
     @classmethod
     @transaction()
@@ -119,9 +120,8 @@ class ReactionService:
             rhea_ids.append(rhea_id)
             master_ids[rhea_id] = dict__['master_id']
             biocyc_ids[rhea_id] = dict__['id']
-        bulk_size = 750
         start = 0
-        stop = start + bulk_size
+        stop = start + cls.BULK_SIZE
         while True:
             if start >= len(rhea_ids):
                 break
@@ -130,7 +130,7 @@ class ReactionService:
                 if reaction.rhea_id in biocyc_ids:
                     reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
             start = stop
-            stop = start + bulk_size
+            stop = start + cls.BULK_SIZE
             Reaction.save_all(Q)
 
     @classmethod
@@ -151,9 +151,8 @@ class ReactionService:
             master_ids[rhea_id] = dict__['master_id']
             biocyc_ids[rhea_id] = dict__['id']
 
-        bulk_size = 750
         start = 0
-        stop = start + bulk_size
+        stop = start + cls.BULK_SIZE
         while True:
             if start >= len(rhea_ids):
                 break
@@ -164,7 +163,7 @@ class ReactionService:
                 if reaction.rhea_id in biocyc_ids:
                     reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
             start = stop - 1
-            stop = start + bulk_size
+            stop = start + cls.BULK_SIZE
             Reaction.save_all(q)
 
     @classmethod
@@ -184,9 +183,8 @@ class ReactionService:
             rhea_ids.append(rhea_id)
             master_ids[rhea_id] = dict__['master_id']
             kegg_ids[rhea_id] = dict__['id']
-        bulk_size = 750
         start = 0
-        stop = start + bulk_size
+        stop = start + cls.BULK_SIZE
         while True:
             if start >= len(rhea_ids):
                 break
@@ -197,7 +195,7 @@ class ReactionService:
                 if reaction.rhea_id in kegg_ids:
                     reaction.set_kegg_id(kegg_ids[reaction.rhea_id])
             start = stop - 1
-            stop = start + bulk_size
+            stop = start + cls.BULK_SIZE
             Reaction.save_all(q)
 
     @classmethod
@@ -215,9 +213,8 @@ class ReactionService:
         rhea_ids = []
         for s in list_direction:
             rhea_ids.append('RHEA:'+s)
-        bulk_size = 750
         start = 0
-        stop = start + bulk_size
+        stop = start + cls.BULK_SIZE
         while True:
             if start >= len(rhea_ids):
                 break
@@ -225,5 +222,5 @@ class ReactionService:
             for reaction in q:
                 reaction.set_direction(direction)
             start = stop - 1
-            stop = start + bulk_size
+            stop = start + cls.BULK_SIZE
             Reaction.save_all(q)

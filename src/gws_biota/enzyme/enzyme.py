@@ -225,7 +225,6 @@ class Enzyme(Base):
                 Q_selected = deprecated_enzyme.select_new_enzymes(select_only_one=select_only_one)
                 for new_enzyme in Q_selected:
                     if tax_id:
-
                         if getattr(new_enzyme, "tax_"+tax.rank) == tax_id:
                             new_enzyme.related_deprecated_enzyme = deprecated_enzyme
                             Q.append(new_enzyme)

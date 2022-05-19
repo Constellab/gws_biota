@@ -6,8 +6,9 @@
 from gws_core import transaction
 from .._helper.ontology import Onto as OntoHelper
 from ..eco.eco import ECO, ECOAncestor
+from ..base.base_service import BaseService
 
-class ECOService:
+class ECOService(BaseService):
 
     @classmethod
     @transaction()
@@ -35,12 +36,11 @@ class ECOService:
         ECO.save_all(ecos)
         
         vals = []
-        bulk_size = 500
         for eco in ecos:
             val = cls._get_ancestors_query(eco)
             for v in val:
                 vals.append(v)
-            if len(vals) >= bulk_size:
+            if len(vals) >= cls.BULK_SIZE:
                 ECOAncestor.insert_many(vals).execute()
                 vals = []
         if len(vals) != 0:

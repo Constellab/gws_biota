@@ -10,8 +10,9 @@ from Bio import SeqIO
 from gws_core import transaction
 from ..base.base import Base
 from .protein import Protein
+from ..base.base_service import BaseService
 
-class ProteinService(Base):
+class ProteinService(BaseService):
 
     @classmethod
     @transaction()
@@ -37,5 +38,5 @@ class ProteinService(Base):
                     Protein.save_all(proteins)
                     proteins = []
             if len(proteins) > 0:
-                cls.save_all(proteins)
+                Protein.save_all(proteins)
                 proteins = []
