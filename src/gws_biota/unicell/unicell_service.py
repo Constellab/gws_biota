@@ -10,6 +10,7 @@ import numpy
 from gws_core import Logger, transaction
 from scipy import sparse
 
+from ..compound.compound_layout import CompoundLayout
 from .unicell import Unicell
 
 
@@ -26,7 +27,12 @@ class UnicellService:
 
         Logger.info(f"Data size: ({nb_comps}, {nb_rxn})")
 
+        flat_layout = CompoundLayout.get_flat_data()
+
         compound_id_list = []
+        compound_x_list = []
+        compound_y_list = []
+
         #compound_name_list = []
         reaction_id_list = []
         #reaction_name_list = []
@@ -53,6 +59,10 @@ class UnicellService:
                     if chebi_id not in compound_id_list:
                         comp_count = len(compound_id_list)
                         compound_id_list.append(chebi_id)
+                        layout = CompoundLayout.get_layout_by_chebi_id(synonym_chebi_ids=chebi_id)
+                        compound_x_list.append(layout["x"])
+                        compound_y_list.append(layout["y"])
+                        # compound_cluster_list = layout["cluster"]
                         # compound_name_list.append(name)
                         stoich = eqn["substrates"][chebi_id]
                         stochiometric_matrix[comp_count, rxn_count] = -int(stoich)
@@ -61,6 +71,10 @@ class UnicellService:
                     if chebi_id not in compound_id_list:
                         comp_count = len(compound_id_list)
                         compound_id_list.append(chebi_id)
+                        layout = CompoundLayout.get_layout_by_chebi_id(synonym_chebi_ids=chebi_id)
+                        compound_x_list.append(layout["x"])
+                        compound_y_list.append(layout["y"])
+                        # compound_cluster_list = layout["cluster"]
                         # compound_name_list.append(name)
                         stoich = eqn["products"][chebi_id]
                         stochiometric_matrix[comp_count, rxn_count] = int(stoich)
@@ -75,8 +89,13 @@ class UnicellService:
         stochiometric_matrix = stochiometric_matrix[nz_idx]
         stochiometric_matrix = sparse.csr_array(stochiometric_matrix)
         Logger.info(f"Data size: {stochiometric_matrix.shape}")
-
         compound_id_list = [compound_id_list[i] for i in range(0, len(nz_idx)) if nz_idx[i]]
+
+        # sort by position
+        # x = numpy.array(compound_x_list)
+        # sort_x_index = numpy.argsort(x).tolist()
+        # y = numpy.array(compound_y_list)
+        # sort_y_index = numpy.argsort(y).tolist()
 
         # print(len(comp_index_to_chebi))
         # print(len(compound_id_list))

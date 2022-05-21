@@ -106,7 +106,8 @@ class Enzyme(Base):
 
     @property
     def classification(self):
-        ec_class = ".".join(self.ec_number.split(".")[0:-1]) + ".-"
+        ec: str = self.ec_number
+        ec_class = ".".join(ec.split(".")[0:-1]) + ".-"
         return EnzymeClass.get(EnzymeClass.ec_number == ec_class)
 
     # -- D --

@@ -123,6 +123,13 @@ class Cofactor:
         "CHEBI:29950": {"alt": []},
         # L-lysinium residue
         "CHEBI:29969": {"alt": []},
+
+        # Coblat 2-
+        "CHEBI:48828": {"alt": ["CHEBI:48827", "CHEBI:23337"]},
+        # Magnesium
+        "CHEBI:18420": {"alt": ["CHEBI:49736", "CHEBI:6635", "CHEBI:13379", "CHEBI:25112"]},
+        # Zinc 2+
+        "CHEBI:29105": {"alt": ["CHEBI:49972", "CHEBI:49982", "CHEBI:10113", "CHEBI:27368"]},
     }
 
     COFACTOR_NAME_PATTERNS = ["residue"]

@@ -1,0 +1,18 @@
+{  
+    "parent": "vitamins and cofactors metabolism",
+    "name": "biotin metabolism",
+    "data": {
+        "CHEBI:18019": {"x": -220, "y": -141, "level": 1, "name": "L-Lysine", "alt": ["CHEBI:6264", "CHEBI:13135", "CHEBI:21351", "CHEBI:43950"]},
+        "CHEBI:16199": {"x": 106, "y": -189, "level": 1, "name": "Urea", "alt": ["CHEBI:46379", "CHEBI:15292", "CHEBI:27218", "CHEBI:9888"]},
+        "CHEBI:15956": {"x": -61, "y": -31, "level": 1, "name": "Biotin", "alt": ["CHEBI:41236", "CHEBI:22884", "CHEBI:22882", "CHEBI:13905", "CHEBI:3108"]},
+        "CHEBI:2247": {"x": -35, "y": 0, "level": 1, "name": "7,8-Diaminononanoate", "alt": []},
+        "CHEBI:15504": {"x": 21, "y": 0, "level": 1, "name": "6-Carboxyhexanoyl-CoA", "alt": ["CHEBI:14838", "CHEBI:26131", "CHEBI:2176", "CHEBI:12210"]},
+        "CHEBI:15830": {"x": 0, "y": 0, "level": 1, "name": "8-Amino-7-oxononanoate", "alt": ["CHEBI:2308", "CHEBI:20808"]},
+        "CHEBI:16691": {"x": -61, "y": 0, "level": 1, "name": "Dethiobiotin", "alt": ["CHEBI:4457", "CHEBI:23649", "CHEBI:14132"]},
+        "CHEBI:30531": {"x": 45, "y": 0, "level": 1, "name": "Pimelate", "alt": ["CHEBI:24517", "CHEBI:44980", "CHEBI:20709"]},
+        "CHEBI:27870": {"x": -23, "y": -45, "level": 1, "name": "Biocytin", "alt": ["CHEBI:21872", "CHEBI:21882", "CHEBI:7415"]},
+        "CHEBI:3110": {"x": -33, "y": -31, "level": 1, "name": "Biotinyl-5'-AMP", "alt": []},
+        "CHEBI:62193": {"x": -74, "y": -31, "level": 1, "name": "Biotin sulfoxide", "alt": []},
+        "CHEBI:17330": {"x": -103, "y": 29, "level": 1, "name": "Malonyl-[acyl-carrier protein]", "alt": ["CHEBI:14566", "CHEBI:6662"]}
+    }
+}

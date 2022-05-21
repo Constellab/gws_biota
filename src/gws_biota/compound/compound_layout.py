@@ -8,7 +8,7 @@ import os
 import random
 from typing import Dict, List, TypedDict, Union
 
-from gws_core import Logger
+from gws_core import BadRequestException, Logger
 
 GRID_SCALE = 10
 GRID_INTERVAL = 10
@@ -36,13 +36,18 @@ class CompoundCluster:
 
     def __init__(self, name, data: Dict, centroid: Dict = None):
         if not isinstance(data, dict):
-            raise Exception("The data must be a dict")
+            raise BadRequestException("The data must be a dict")
         self._name = name
         self._data = data
-        if centroid is None:
+        if not centroid:
             self._centroid = {"x": 0, "y": 0}
         else:
             self._centroid = centroid
+
+        if not isinstance(self._centroid["x"], (float, int)):
+            self._centroid["x"] = 0
+        if not isinstance(self._centroid["y"], (float, int)):
+            self._centroid["y"] = 0
 
     @property
     def name(self):
@@ -78,33 +83,36 @@ class CompoundCluster:
                 cdata = json.load(fp)
                 return CompoundCluster(name=cdata["name"], data=cdata["data"], centroid=cdata.get("centroid"))
             except Exception as err:
-                raise Exception(f'Cannot load JSON file "{file_path}"') from err
+                raise BadRequestException(f'Cannot load JSON file "{file_path}"') from err
 
 
 class CompoundLayout:
     """ CompoundLayout """
 
+    X_LIMIT = 2000
+    Y_LIMIT = 2000
+
     _clusters: List[CompoundCluster] = []
 
-    __data: dict = {}
-    __flat_data: dict = {}
-
-    __is_flattened = False
-    __is_generated = False
+    _data: dict = {}
+    _flat_data: dict = {}
+    _is_flattened = False
+    _is_generated = False
 
     @ classmethod
     def add_cluster(cls, cluster):
         """ Add cluster """
         if not isinstance(cluster, CompoundCluster):
-            raise Exception("The cluster must be CompoundCluster")
+            raise BadRequestException("The cluster must be CompoundCluster")
         cls._clusters.append(cluster)
 
     @ classmethod
     def generate(cls, db_path: str = None, force: bool = False):
         """ Generate positions """
 
-        if not force and cls.__is_generated:
-            return cls.__data
+        if cls._is_generated:
+            if not force:
+                return cls._data
 
         if not db_path:
             db_path = os.path.join("./_layout/", os.path.dirname(os.path.abspath(__file__)))
@@ -123,38 +131,39 @@ class CompoundLayout:
         except Exception as err:
             Logger.warning(f"An error occur when parsing layout files. Message {err}")
 
-        cls.__is_generated = True
-        cls.__data = data
+        cls._is_generated = True
+        cls._data = data
         return data
 
     @classmethod
     def get_flat_data(cls, force: bool = False):
         """ Get layout data """
-        if not force and cls.__is_flattened:
-            return cls.__flat_data
+        if cls._is_flattened:
+            if not force:
+                return cls._flat_data
 
-        cls.__flat_data = {}
+        cls._flat_data = {}
         data = CompoundLayout.generate()
         for key, val in data.items():
-            if key not in cls.__flat_data:
-                cls.__flat_data[key] = {}
+            if key not in cls._flat_data:
+                cls._flat_data[key] = {}
 
             cluster_name = val["cluster"]
             pos = {
                 "name": cluster_name,
-                "x": val["x"],
-                "y": val["y"],
+                "x": val.get("x"),
+                "y": val.get("y"),
                 "level": val.get("level", 2),
             }
-            cls.__flat_data[key][cluster_name] = pos
+            cls._flat_data[key][cluster_name] = pos
             for alt_key in val.get("alt", []):
-                if alt_key not in cls.__flat_data:
-                    cls.__flat_data[alt_key] = {}
+                if alt_key not in cls._flat_data:
+                    cls._flat_data[alt_key] = {}
 
-                cls.__flat_data[alt_key][cluster_name] = pos
+                cls._flat_data[alt_key][cluster_name] = pos
 
-        cls.__is_flattened = True
-        return cls.__flat_data
+        cls._is_flattened = True
+        return cls._flat_data
 
     @classmethod
     def get_layout_by_chebi_id(cls, synonym_chebi_ids: Union[str, List[str]], compartment=None) -> CompoundLayoutDict:
@@ -193,5 +202,10 @@ class CompoundLayout:
         if compartment and compartment != "c":
             position["x"] += rnd_offset() * GRID_SCALE
             position["y"] += rnd_offset() * GRID_SCALE
+
+        if position["x"] > cls.X_LIMIT or position["x"] < -cls.X_LIMIT:
+            position["x"] = None
+        if position["y"] > cls.Y_LIMIT or position["y"] < -cls.Y_LIMIT:
+            position["y"] = None
 
         return position

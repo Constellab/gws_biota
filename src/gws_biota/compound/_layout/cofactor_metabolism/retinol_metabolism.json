@@ -1,0 +1,19 @@
+{  
+    "parent": "vitamins and cofactors metabolism",
+    "name": "retinol metabolism",
+    "data": {
+        "CHEBI:17898": {"x": 0, "y": 0, "level": 1, "name": "Retinal", "alt": ["CHEBI:12776", "CHEBI:22348", "CHEBI:8814"]},
+        "CHEBI:17336": {"x": -21, "y": 0, "level": 1, "name": "Retinol", "alt": []},
+        "CHEBI:35291": {"x": 26, "y": 0, "level": 1, "name": "Retinoate", "alt": ["CHEBI:26535"]},
+        "CHEBI:16302": {"x": -54, "y": 0, "level": 1, "name": "11-cis-Retinol", "alt": ["CHEBI:11310", "CHEBI:728", "CHEBI:19120", "CHEBI:11312"]},
+        "CHEBI:63410": {"x": -37, "y": 0, "level": 1, "name": "Retinyl ester", "alt": []},
+        "CHEBI:17579": {"x": 0, "y": 17, "level": 1, "name": "beta-Carotene", "alt": []},
+        "CHEBI:16066": {"x": 0, "y": -14, "level": 1, "name": "11-cis-Retinal", "alt": ["CHEBI:727", "CHEBI:19119", "CHEBI:11311"]},
+        "CHEBI:16254": {"x": -71, "y": 0, "level": 1, "name": "11-cis-Retinyl palmitate", "alt": ["CHEBI:11313", "CHEBI:729", "CHEBI:19121"]},
+        "CHEBI:50648": {"x": 26, "y": -24, "level": 1, "name": "9-cis-Retinoic acid", "alt": []},
+        "CHEBI:63795": {"x": 47, "y": 0, "level": 1, "name": "all-trans-4-Hydroxyretinoic acid", "alt": []},
+        "CHEBI:80656": {"x": 67, "y": 0, "level": 1, "name": "all-trans-4-Oxoretinoic acid", "alt": []},
+        "CHEBI:78273": {"x": 0, "y": -24, "level": 1, "name": "9-cis-Retinal", "alt": []},
+        "CHEBI:78272": {"x": -21, "y": -24, "level": 1, "name": "9-cis-Retinol", "alt": []}
+    }
+}

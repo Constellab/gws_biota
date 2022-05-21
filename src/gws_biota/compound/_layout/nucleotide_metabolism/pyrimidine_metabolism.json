@@ -63,5 +63,6 @@
         "CHEBI:182625": {"x": -26, "y": 87, "level": 1, "name": "(R)-3-Ureidoisobutyrate", "alt": []},
         "CHEBI:16991": {"x": -16, "y": 66, "level": 1, "name": "DNA", "alt": ["CHEBI:33698", "CHEBI:4291", "CHEBI:13302", "CHEBI:21123"]},
         "CHEBI:33697": {"x": -47, "y": -40, "level": 1, "name": "RNA", "alt": []}
-    }
+    },
+    "centroid": {"x": 50, "y": 200}
 }

@@ -89,5 +89,6 @@
         "CHEBI:48000": {"x": -59, "y": -105, "level": 1, "name": "5-Carboxyamino-1-(5-phospho-D-ribosyl)imidazole", "alt": []},
         "CHEBI:16991": {"x": -19, "y": -103, "level": 1, "name": "DNA", "alt": ["CHEBI:33698", "CHEBI:4291", "CHEBI:13302", "CHEBI:21123"]},
         "CHEBI:33697": {"x": 203, "y": -150, "level": 1, "name": "RNA", "alt": []}
-    }
+    },
+    "centroid": {"x": 50, "y": 100}
 }

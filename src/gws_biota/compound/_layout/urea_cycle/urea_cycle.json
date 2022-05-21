@@ -2,9 +2,9 @@
     "parent": "urea cycle",
     "name": "urea cycle",
     "data": {
-        "CHEBI:16199": {"x": -60, "y": -70, "is_major": true, "name": "urea", "alt": ["CHEBI:46379", "CHEBI:9888", "CHEBI:15292", "CHEBI:27218"]},
-        "CHEBI:57743": {"x": -40, "y": -40, "is_major": true, "name": "L-citrulline zwitterion", "alt": ["CHEBI:16349", "CHEBI:41489", "CHEBI:6203", "CHEBI:13092", "CHEBI:21257"]},
-        "CHEBI:46911": {"x": -60, "y": -50, "is_major": true, "name": "L-ornithinium(1+)", "alt": ["CHEBI:46912"]},
-        "CHEBI:32682": {"x": -40, "y": -60, "is_major": true, "name": "L-argininium(1+)", "alt": ["CHEBI:133495", "CHEBI:32696"]}
+        "CHEBI:16199": {"x": -60, "y": -70, "level": 1, "name": "urea", "alt": ["CHEBI:46379", "CHEBI:9888", "CHEBI:15292", "CHEBI:27218"]},
+        "CHEBI:57743": {"x": -40, "y": -40, "level": 1, "name": "L-citrulline zwitterion", "alt": ["CHEBI:16349", "CHEBI:41489", "CHEBI:6203", "CHEBI:13092", "CHEBI:21257"]},
+        "CHEBI:46911": {"x": -60, "y": -50, "level": 1, "name": "L-ornithinium(1+)", "alt": ["CHEBI:46912"]},
+        "CHEBI:32682": {"x": -40, "y": -60, "level": 1, "name": "L-argininium(1+)", "alt": ["CHEBI:133495", "CHEBI:32696"]}
     }
 }

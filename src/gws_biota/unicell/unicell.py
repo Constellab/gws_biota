@@ -25,8 +25,12 @@ class Unicell(Base):
     ft_names = TextField(null=True, index=False)
     compound_id_list = BlobField()
     reaction_id_list = BlobField()
+    compound_x_list = BlobField()
+    compound_y_list = BlobField()
     stochiometric_matrix = BlobField()
 
+    _compound_x_list = None
+    _compound_y_list = None
     _compound_id_list = None
     _reaction_id_list = None
     _stochiometric_matrix = None

@@ -1,5 +1,5 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
@@ -11,7 +11,7 @@ import csv
 reg = re.compile("(\d+\.[\d\-\s]+\.[\d\-\s]+\.[\d\-\s]+)\s+(.+)")
 
 class Expasy():
-    
+
     @staticmethod
     def parse_all_enzclasses_to_dict(path, file) -> list:
         """
@@ -24,10 +24,10 @@ class Expasy():
         :returns: list of dictionnaries reapresenting rows of the spreadsheet
         :rtype: list
         """
-        
+
         file_path = os.path.join(path, file)
         list__ = []
-        with open(file_path, newline='') as fp:
+        with open(file_path, newline='', encoding="utf-8") as fp:
             tab = fp.readlines()
             for line in tab:
                 found = reg.search(line)

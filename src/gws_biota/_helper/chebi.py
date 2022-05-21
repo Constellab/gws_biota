@@ -1,5 +1,5 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
@@ -12,7 +12,7 @@ from pronto import Ontology
 
 class Chebi():
     """
-    This module allows to get list of dictionnaries where terms represents chebi chemical compounds and 
+    This module allows to get list of dictionnaries where terms represents chebi chemical compounds and
     to get list of dictionnaries where terms represents chebi ontology terms
     """
 
@@ -21,7 +21,7 @@ class Chebi():
         """
         Parses a chebi .tsv file of chemicals entities and returns a list of dictionaries
 
-        This method allows the user to get all informations in the spreadsheet. It is assumed that the firt row 
+        This method allows the user to get all informations in the spreadsheet. It is assumed that the firt row
         of the spreadsheet is the location of the columns
 
         This tool accepts tab (\t) separated value files (.csv) as well as excel
@@ -34,14 +34,14 @@ class Chebi():
         :returns: list of dictionnaries reapresenting rows of the spreadsheet
         :rtype: list
         """
-        
+
         file_path = os.path.join(path, file)
         list__ = []
         with open(file_path, newline='') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=delimiter, quoting=quoting)
             for row in reader:
                 list__.append( {key.lower() if type(key) == str else key: value for key, value in row.items()} )
-        
+
         return list__
 
     @staticmethod
@@ -62,7 +62,7 @@ class Chebi():
         file_path = os.path.join(path, file)
         onto = Ontology(file_path)
         return onto
-        
+
     @staticmethod
     def parse_onto_from_ontology(ontology):
         """
@@ -83,7 +83,7 @@ class Chebi():
             subsets = ''
             if len(term.subsets):
                 subsets = list(term.subsets)[0]
-                
+
             dict_term = {}
             dict_term['id'] = term.id
             dict_term['name'] = term.name.replace('\r', '')
@@ -144,7 +144,7 @@ class Chebi():
     @staticmethod
     def correction_of_chebi_file(path, file):
         """
-        Correct the initial chebi obo file which contained syntax errors which prevented to use 
+        Correct the initial chebi obo file which contained syntax errors which prevented to use
         the pronto package to parse the obo file
 
         This method read the initial obo file and create a corrected copy whose the name is given
@@ -165,7 +165,7 @@ class Chebi():
         out_filename = 'corrected_'+in_filename
         out_file = os.path.join(path, './', out_filename)
 
-        with open(in_file,'rt') as file: 
+        with open(in_file,'rt') as file:
             with open(out_file,'wt') as outfile:
                 for line in file.readlines():
                     m = re.search(r'xref: [a-zA-Z]+:([^\{\}\"]+) .*', line)
@@ -175,7 +175,7 @@ class Chebi():
                         outfile.write(line.replace(text, corrected_text))
                     else:
                         outfile.write(line)
-        
+
         return path, out_filename
 
     # @staticmethod

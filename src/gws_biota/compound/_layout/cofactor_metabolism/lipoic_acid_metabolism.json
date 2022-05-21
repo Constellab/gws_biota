@@ -1,0 +1,16 @@
+{  
+    "parent": "vitamins and cofactors metabolism",
+    "name": "lipoic acid metabolism",
+    "data": {
+        "CHEBI:15533": {"x": 160, "y": -53, "level": 1, "name": "Octanoyl-CoA", "alt": ["CHEBI:41542", "CHEBI:25651", "CHEBI:7724", "CHEBI:14681"]},
+        "CHEBI:15804": {"x": 69, "y": 9, "level": 1, "name": "Lipoylprotein", "alt": ["CHEBI:14523", "CHEBI:6500"]},
+        "CHEBI:18047": {"x": 25, "y": 2, "level": 1, "name": "Dihydrolipoate", "alt": ["CHEBI:4569", "CHEBI:23752"]},
+        "CHEBI:16194": {"x": -24, "y": 0, "level": 1, "name": "Dihydrolipoylprotein", "alt": ["CHEBI:4570", "CHEBI:14155"]},
+        "CHEBI:7725": {"x": 8, "y": -39, "level": 1, "name": "Octanoyl-[acp]", "alt": []},
+        "CHEBI:28837": {"x": 8, "y": -13, "level": 1, "name": "Octanoic acid", "alt": ["CHEBI:44501", "CHEBI:3373", "CHEBI:25648"]},
+        "CHEBI:80218": {"x": 58, "y": 2, "level": 1, "name": "Enzyme N6-(lipoyl)lysine", "alt": []},
+        "CHEBI:80219": {"x": 0, "y": 0, "level": 1, "name": "Enzyme N6-(dihydrolipoyl)lysine", "alt": []},
+        "CHEBI:55451": {"x": 77, "y": 2, "level": 1, "name": "Lipoyl-AMP", "alt": []},
+        "CHEBI:30314": {"x": 95, "y": 2, "level": 1, "name": "(R)-Lipoate", "alt": []}
+    }
+}
