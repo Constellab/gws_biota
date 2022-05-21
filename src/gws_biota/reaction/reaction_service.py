@@ -5,7 +5,7 @@
 
 from peewee import chunked
 
-from gws_core import transaction
+from gws_core import transaction, Logger
 from .._helper.rhea import Rhea
 from ..compound.compound import Compound
 from .reaction import Reaction, ReactionSubstrate, ReactionProduct, ReactionEnzyme
@@ -65,12 +65,20 @@ class ReactionService(BaseService):
         :returns: list of reactions entities
         :rtype: list
         """
-        reactions = [Reaction(data = dict) for dict in list_reaction]
-        for react in reactions:
-            if 'entry' in react.data.keys():
-                react.rhea_id = react.data['entry']
-                del react.data['entry']
-        Reaction.create_all(reactions)
+
+        rxn_count = len(list_reaction)
+        Logger.info(f"Saving {rxn_count} reactions ...")
+
+        i = 0
+        for chunk in chunked(list_reaction, cls.BATCH_SIZE):
+            i += 1
+            reactions = [Reaction(data = data) for data in chunk]
+            Logger.info(f"... saving taxa chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
+            for react in reactions:
+                if 'entry' in react.data.keys():
+                    react.rhea_id = react.data['entry']
+                    del react.data['entry']
+            Reaction.create_all(reactions)
         
         vals = []
         for react in reactions:
@@ -163,24 +171,13 @@ class ReactionService(BaseService):
 
         reaction_list = []
         #for rhea_id in rhea_ids:
-        for chunk in chunked(rhea_ids, cls.BULK_SIZE):
+        for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:
                 if reaction.rhea_id in biocyc_ids:
                     reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
                     reaction_list.append(reaction)
         Reaction.update_all(reaction_list, fields=['biocyc_ids'])
-
-        # while True:
-        #     if start >= len(rhea_ids):
-        #         break
-        #     Q = Reaction.select().where(Reaction.rhea_id << rhea_ids[start:stop])
-        #     for reaction in Q:
-        #         if reaction.rhea_id in biocyc_ids:
-        #             reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
-        #     start = stop
-        #     stop += cls.BULK_SIZE
-        #     Reaction.create_all(Q)
 
     @classmethod
     def __update_master_and_biocyc_ids_from_rhea2biocyc(cls, list_reaction_infos):
@@ -202,7 +199,7 @@ class ReactionService(BaseService):
         
         reaction_list = []
         #for rhea_id in rhea_ids:
-        for chunk in chunked(rhea_ids, cls.BULK_SIZE):
+        for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:
                 has_changed = False
@@ -217,7 +214,7 @@ class ReactionService(BaseService):
         Reaction.update_all(reaction_list, fields=['master_id', 'biocyc_ids'])
 
         # start = 0
-        # stop = start + cls.BULK_SIZE
+        # stop = start + cls.BATCH_SIZE
         # while True:
         #     if start >= len(rhea_ids):
         #         break
@@ -228,7 +225,7 @@ class ReactionService(BaseService):
         #         if reaction.rhea_id in biocyc_ids:
         #             reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
         #     start = stop
-        #     stop += cls.BULK_SIZE
+        #     stop += cls.BATCH_SIZE
         #     Reaction.update_all(q, fields=['master_id', 'biocyc_ids'])
 
     @classmethod
@@ -251,7 +248,7 @@ class ReactionService(BaseService):
         
         reaction_list = []
         #for rhea_id in rhea_ids:
-        for chunk in chunked(rhea_ids, cls.BULK_SIZE):
+        for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:
                 has_changed = False
@@ -266,7 +263,7 @@ class ReactionService(BaseService):
         Reaction.update_all(reaction_list, fields=['master_id', 'kegg_id'])
 
         # start = 0
-        # stop = cls.BULK_SIZE
+        # stop = cls.BATCH_SIZE
         # while True:
         #     if start >= len(rhea_ids):
         #         break
@@ -277,7 +274,7 @@ class ReactionService(BaseService):
         #         if reaction.rhea_id in kegg_ids:
         #             reaction.set_kegg_id(kegg_ids[reaction.rhea_id])
         #     start = stop
-        #     stop += cls.BULK_SIZE
+        #     stop += cls.BATCH_SIZE
         #     Reaction.update_all(q, fields=['master_id', 'kegg_id'])
 
     @classmethod
@@ -298,7 +295,7 @@ class ReactionService(BaseService):
 
         reaction_list = []
         #for rhea_id in rhea_ids:
-        for chunk in chunked(rhea_ids, cls.BULK_SIZE):
+        for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:
                 reaction.set_direction(direction)
@@ -306,7 +303,7 @@ class ReactionService(BaseService):
         Reaction.update_all(reaction_list, fields=['direction'])
 
         # start = 0
-        # stop = cls.BULK_SIZE
+        # stop = cls.BATCH_SIZE
         # while True:
         #     if start >= len(rhea_ids):
         #         break
@@ -314,5 +311,5 @@ class ReactionService(BaseService):
         #     for reaction in q:
         #         reaction.set_direction(direction)
         #     start = stop
-        #     stop += cls.BULK_SIZE
+        #     stop += cls.BATCH_SIZE
         #     Reaction.update_all(q, fields=['direction'])

@@ -20,7 +20,6 @@ class ProteinService(BaseService):
 
         Logger.info(f"Loading and saving uniprot data ...")
         file_path = os.path.join(biodata_dir, kwargs["protein_file"])
-        nb_saved = 0
         with open(file_path, "rU") as handle:
             proteins = []
             for record in SeqIO.parse(handle, "fasta"):

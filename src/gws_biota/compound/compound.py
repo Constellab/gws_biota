@@ -61,7 +61,7 @@ class Compound(Base):
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
     chebi_star = CharField(null=True, index=True)
-    ft_names = CharField(null=True)
+    ft_names = TextField(null=True)
 
     _ancestors = None
     _table_name = "biota_compound"

@@ -4,6 +4,7 @@
 # About us: https://gencovery.com
 
 import os
+from peewee import chunked
 
 from gws_core import transaction, Logger
 
@@ -70,21 +71,26 @@ class EnzymeService(BaseService):
         # save Enzymes
         Logger.info(f"Saving enzymes ...")
         enzymes = []
-        for d in list_of_enzymes:
-            ec = d["ec"]
-            rn = d["RN"]
-            sn = d.get("SN", [])
-            sy = [k.get("data", "") for k in d.get("SY", [])]
-            organism = d.get("organism")
-            enz = Enzyme(
-                ec_number=ec,
-                uniprot_id=d["uniprot"],
-                data=d,
-                ft_names=";".join([ec.replace(".",""), *rn, *sn, *sy, organism]),
-            )
-            enz.set_name(d["RN"][0])
-            enzymes.append(enz)
-        Enzyme.save_all(enzymes)
+        enz_count = len(list_of_enzymes)
+        i = 0
+        for chunk in chunked(list_of_enzymes, cls.BATCH_SIZE):
+            i += 1
+            Logger.info(f"... saving enzyme chunk {i}/{int(enz_count/cls.BATCH_SIZE)+1}")
+            for d in chunk:
+                ec = d["ec"]
+                rn = d["RN"]
+                sn = d.get("SN", [])
+                sy = [k.get("data", "") for k in d.get("SY", [])]
+                organism = d.get("organism")
+                enz = Enzyme(
+                    ec_number=ec,
+                    uniprot_id=d["uniprot"],
+                    data=d,
+                    ft_names=";".join([ec.replace(".",""), *rn, *sn, *sy, organism]),
+                )
+                enz.set_name(d["RN"][0])
+                enzymes.append(enz)
+            Enzyme.save_all(enzymes)
     
         
         def _get_new_enzyme_info(old_ec_numner):
@@ -185,7 +191,7 @@ class EnzymeService(BaseService):
         for i in range(0, n):
             bto_ids.append(enzyme.params("ST")[i].get("bto"))
         Q = BTO.select().where(BTO.bto_id << bto_ids)
-        
+
         vals = []
         for bto in Q:
             vals.append( {'bto': bto.id, 'enzyme': enzyme.id} )

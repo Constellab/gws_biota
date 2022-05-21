@@ -34,7 +34,7 @@ class Taxonomy(Ontology):
     division = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     ancestor_tax_id = CharField(null=True, index=True)
-    ft_names = CharField(null=True, index=False)
+    ft_names = TextField(null=True, index=False)
     _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class',
                  'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
     _table_name = 'biota_taxonomy'

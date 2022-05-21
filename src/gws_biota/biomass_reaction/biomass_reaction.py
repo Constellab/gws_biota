@@ -24,7 +24,7 @@ class BiomassReaction(Base):
     """
 
     biomass_rxn_id = CharField(null=True, index=True)
-    ft_names = CharField(null=True, index=False)
+    ft_names = TextField(null=True, index=False)
     _table_name = 'biota_biomass_reaction'
 
     @classmethod

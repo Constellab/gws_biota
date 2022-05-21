@@ -29,9 +29,13 @@ class TaxonomyService(BaseService):
         dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)
         dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
 
-        Logger.info(f"Saving taxa ...")
-        for chunk in chunked(dict_taxons.values(), cls.BULK_SIZE):
+        taxa_count = len(dict_taxons)
+        Logger.info(f"Saving {taxa_count} taxa ...")
+        i = 0
+        for chunk in chunked(dict_taxons.values(), cls.BATCH_SIZE):
+            i += 1
             taxa = [Taxonomy(data = data) for data in chunk]
+            Logger.info(f"... saving taxa chunk {i}/{int(taxa_count/cls.BATCH_SIZE)+1}")
             for tax in taxa:
                 tax.tax_id = tax.data['tax_id']
                 tax.set_name(tax.data.get('name', 'Unspecified'))
@@ -43,7 +47,7 @@ class TaxonomyService(BaseService):
             Taxonomy.create_all(taxa)
 
         # start = 0
-        # stop = start+cls.BULK_SIZE
+        # stop = start+cls.BATCH_SIZE
         # dict_keys = list(dict_taxons.keys())
         # while True:
         #     Logger.info(f"... {start} taxa saved")
@@ -63,4 +67,4 @@ class TaxonomyService(BaseService):
 
         #     Taxonomy.save_all(taxa)
         #     start = stop
-        #     stop += cls.BULK_SIZE
+        #     stop += cls.BATCH_SIZE

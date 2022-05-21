@@ -79,7 +79,7 @@ class Enzyme(Base):
     
     bto = ManyToManyField(BTO, through_model=EnzymeBTODeffered)
 
-    ft_names = CharField(null=True)
+    ft_names = TextField(null=True)
     _table_name = 'biota_enzymes'
 
     # -- A --

@@ -31,7 +31,7 @@ class ECO(Ontology):
     """
 
     eco_id = CharField(null=True, index=True)
-    ft_names = CharField(null=True)
+    ft_names = TextField(null=True)
 
     _ancestors = None
     _table_name = 'biota_eco'

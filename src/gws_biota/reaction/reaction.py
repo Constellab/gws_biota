@@ -65,7 +65,7 @@ class Reaction(Base):
     products = ManyToManyField(Compound, through_model=ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, through_model=ReactionEnzymeDeferred)
 
-    ft_names = CharField(null=True, index=False)
+    ft_names = TextField(null=True, index=False)
     _table_name = 'biota_reaction'
 
     # -- A --
