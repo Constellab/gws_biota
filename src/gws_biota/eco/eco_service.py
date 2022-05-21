@@ -31,7 +31,8 @@ class ECOService(BaseService):
         for eco in ecos:
             eco.set_eco_id( eco.data["id"] )
             eco.set_name( eco.data["name"] )
-            eco.ft_names=";".join(list(set([ eco.data["name"], eco.eco_id.replace("ECO:", "")]))),
+            ft_names = [ eco.data["name"], eco.eco_id.replace("ECO:", "")]
+            eco.ft_names=cls.format_ft_names(ft_names)
             del eco.data["id"]
         ECO.save_all(ecos)
         
@@ -40,13 +41,8 @@ class ECOService(BaseService):
             val = cls._get_ancestors_query(eco)
             for v in val:
                 vals.append(v)
-            if len(vals) >= cls.BULK_SIZE:
-                ECOAncestor.insert_many(vals).execute()
-                vals = []
-        if len(vals) != 0:
-            ECOAncestor.insert_many(vals).execute()
-            vals = []
-
+        ECOAncestor.insert_all(vals)
+        
     # -- G --
 
     @classmethod

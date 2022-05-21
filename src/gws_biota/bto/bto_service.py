@@ -27,22 +27,18 @@ class BTOService(BaseService):
         for bto in btos:
             bto.set_bto_id( bto.data["id"] )
             bto.set_name( bto.data["name"] )
-            bto.ft_names=";".join(list(set([ bto.data["name"], bto.bto_id.replace("BTO_", "")])))
+            ft_names = [ bto.data["name"], bto.bto_id.replace("BTO_", "")]
+            bto.ft_names=cls.format_ft_names(ft_names)
             del bto.data["id"]
+        BTO.create_all(btos)
 
-
-        BTO.save_all(btos)
         vals = []
         for bto in btos:
             val = cls.__build_insert_query_vals_of_ancestors(bto)
             for v in val:
                 vals.append(v)
-            if len(vals) >= cls.BULK_SIZE:
-                BTOAncestor.insert_many(vals).execute()
-                vals = []
-        if len(vals):
-            BTOAncestor.insert_many(vals).execute()
-            vals = []
+        BTOAncestor.insert_all(vals)
+
 
     @classmethod
     def __build_insert_query_vals_of_ancestors(self, bto):

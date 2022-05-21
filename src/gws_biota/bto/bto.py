@@ -9,7 +9,7 @@ from playhouse.mysql_ext import Match
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..ontology.ontology import Ontology
 from ..db.db_manager import DbManager
-from ..base.simple_base_model import SimpleBaseModel
+from ..base.protected_base_model import ProtectedBaseModel
 
 @typing_registrator(unique_name="BTO", object_type="MODEL", hide=True)
 class BTO(Ontology):
@@ -28,7 +28,7 @@ class BTO(Ontology):
     :type name: class:`peewee.CharField`
     """
     bto_id = CharField(null=True, index=True)
-    ft_names = TextField(null=True)
+    ft_names = CharField(null=True)
 
     _ancestors = None
     _table_name = 'biota_bto'
@@ -93,7 +93,7 @@ class BTO(Ontology):
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
         return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
-class BTOAncestor(SimpleBaseModel):
+class BTOAncestor(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between the bto terms and their ancestors
 

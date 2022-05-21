@@ -5,14 +5,14 @@
 
 import os
 
-from gws_core import transaction
+from gws_core import transaction, Logger
 
 from .._helper.bkms import BKMS
 from .._helper.brenda import Brenda
 from ..bto.bto import BTO
 from ..taxonomy.taxonomy import Taxonomy
 from .deprecated_enzyme import DeprecatedEnzyme
-from .enzyme import Enzyme
+from .enzyme import Enzyme, EnzymeBTO
 from .enzyme_class import EnzymeClass
 from .enzyme_ortholog import EnzymeOrtholog
 from .enzyme_pathway import EnzymePathway
@@ -34,12 +34,13 @@ class EnzymeService(BaseService):
         """
 
         # add enzyme classes
+        Logger.info(f"Loading BRENDA file ...")
         EnzymeClass.create_enzyme_class_db(biodata_dir, **kwargs)
-        # add enzymes
         brenda = Brenda(os.path.join(biodata_dir, kwargs["brenda_file"]))
         list_of_enzymes, list_deprecated_ec = brenda.parse_all_enzyme_to_dict()
-
+        
         # save EnzymePathway
+        Logger.info(f"Saving enzyme pathways ...")
         pathways = {}
         for d in list_of_enzymes:
             ec = d["ec"]
@@ -48,6 +49,7 @@ class EnzymeService(BaseService):
         EnzymePathway.save_all(pathways.values())
 
         # save EnzymeOrtholog
+        Logger.info(f"Saving enzyme orthologs ...")
         enzos = {}
         for d in list_of_enzymes:
             ec = d["ec"]
@@ -55,16 +57,18 @@ class EnzymeService(BaseService):
                 rn = d["RN"]
                 sn = d.get("SN", [])
                 sy = [k.get("data", "") for k in d.get("SY", [])]
+                ft_names = [ec.replace(".",""), *rn, *sn, *sy]
                 enzos[ec] = EnzymeOrtholog(
                     ec_number=ec,
                     data={"RN": rn, "SN": sn, "SY": sy},
-                    ft_names=";".join([ec.replace(".",""), *rn, *sn, *sy]),
+                    ft_names=cls.format_ft_names(ft_names),
                 )
                 enzos[ec].set_name(d["RN"][0])
                 enzos[ec].pathway = pathways[ec]
         EnzymeOrtholog.save_all(enzos.values())
 
         # save Enzymes
+        Logger.info(f"Saving enzymes ...")
         enzymes = []
         for d in list_of_enzymes:
             ec = d["ec"]
@@ -72,9 +76,6 @@ class EnzymeService(BaseService):
             sn = d.get("SN", [])
             sy = [k.get("data", "") for k in d.get("SY", [])]
             organism = d.get("organism")
-
-            dep_enz = DeprecatedEnzyme
-            
             enz = Enzyme(
                 ec_number=ec,
                 uniprot_id=d["uniprot"],
@@ -106,6 +107,7 @@ class EnzymeService(BaseService):
             return info
 
         # saved all deprecated enzymes
+        Logger.info(f"Saving deprecated enzymes ...")
         deprecated_enzymes = []
         for dep_ec in list_deprecated_ec:
             old_ec = dep_ec["old_ec"]
@@ -118,28 +120,18 @@ class EnzymeService(BaseService):
                 )
                 deprecated_enzymes.append(t_enz)
 
-        # for dep_ec in list_deprecated_ec:
-        #     if dep_ec["new_ec"]:
-        #         for ne in dep_ec["new_ec"]:
-        #             t_enz = DeprecatedEnzyme(
-        #                 ec_number=dep_ec["old_ec"],
-        #                 new_ec_number=ne,
-        #                 data=dep_ec["data"],
-        #             )
-        #             deprecated_enzymes.append(t_enz)
-        #     else:
-        #         t_enz = DeprecatedEnzyme(
-        #             ec_number=dep_ec["old_ec"], data=dep_ec["data"]
-        #         )
-        #         deprecated_enzymes.append(t_enz)
-
         if deprecated_enzymes:
             DeprecatedEnzyme.save_all(deprecated_enzymes)
             
         # save taxonomy
-        cls.__update_tax_tissue(enzymes)
+        Logger.info(f"Updating enzyme taxonomy ...")
+        cls.__update_taxonomy(enzymes)
+
+        Logger.info(f"Updating enzyme bto ...")
+        cls.__update_bto(enzymes)
 
         # save bkms data
+        Logger.info(f"Updating enzyme BKMS data ...")
         if "bkms_file" in kwargs:
             list_of_bkms = BKMS.parse_csv_from_file(biodata_dir, kwargs["bkms_file"])
             cls.__update_pathway_from_bkms(list_of_bkms)
@@ -147,14 +139,21 @@ class EnzymeService(BaseService):
     # -- U --
 
     @classmethod
-    def __update_tax_tissue(cls, enzymes):
+    def __update_taxonomy(cls, enzymes):
         for enz in enzymes:
-            cls.__update_taxonomy(enz)
-            cls.__update_tissues(enz)
-        Enzyme.save_all(enzymes)
+            cls.__set_taxonomy_data(enz)
+        fields = [ "tax_"+t for t in Taxonomy._tax_tree ]
+        Enzyme.update_all(enzymes, fields=[ "tax_id", *fields])
 
     @classmethod
-    def __update_taxonomy(self, enzyme):
+    def __update_bto(cls, enzymes):
+        vals = []
+        for enz in enzymes:
+            vals.extend( cls.__create_bto_values(enz) )
+        EnzymeBTO.insert_all(vals)
+        
+    @classmethod
+    def __set_taxonomy_data(self, enzyme):
         """
         See if there is any information about the enzyme taxonomy and if so, connects
         the enzyme and its taxonomy by adding the related tax_id from the taxonomy
@@ -174,7 +173,7 @@ class EnzymeService(BaseService):
                 pass
 
     @classmethod
-    def __update_tissues(self, enzyme):
+    def __create_bto_values(self, enzyme):
         """
         See if there is any information about the enzyme tissue locations and if so,
         connects the enzyme and tissues by adding an enzyme-tissues relation
@@ -186,8 +185,11 @@ class EnzymeService(BaseService):
         for i in range(0, n):
             bto_ids.append(enzyme.params("ST")[i].get("bto"))
         Q = BTO.select().where(BTO.bto_id << bto_ids)
+        
+        vals = []
         for bto in Q:
-            enzyme.bto.add(bto)
+            vals.append( {'bto': bto.id, 'enzyme': enzyme.id} )
+        return vals
 
     @classmethod
     def __update_pathway_from_bkms(cls, list_of_bkms):
@@ -204,17 +206,11 @@ class EnzymeService(BaseService):
             Q = EnzymePathway.select().where(EnzymePathway.ec_number == ec_number)
             for pathway in Q:
                 for k in dbs:
-
                     if bkms.get(k + "_pathway_name"):
-                        # pwy_id = bkms.get(k+'_pathway_id', "ID")
-                        # pwy_name = bkms[k+'_pathway_name']
-                        # pathway.data[k+'_pathway'] = { pwy_id : pwy_name }
                         pwy_id = bkms.get(k + "_pathway_id", "")
                         pwy_name = bkms[k + "_pathway_name"]
                         pathway.data[k] = {"id": pwy_id, "name": pwy_name}
+                
                 pathways[pathway.ec_number] = pathway
-                if len(pathways.keys()) >= cls.BULK_SIZE:
-                    EnzymePathway.save_all(pathways.values())
-                    pathways = {}
-        if len(pathways) > 0:
-            EnzymePathway.save_all(pathways.values())
+
+        EnzymePathway.update_all(pathways.values(), fields=['data'])

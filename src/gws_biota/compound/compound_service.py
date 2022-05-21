@@ -65,8 +65,9 @@ class CompoundService(BaseService):
             all_ids = [comp.chebi_id, *comp.alt_chebi_ids]
             if comp.kegg_id is not None:
                 all_ids.append(comp.kegg_id)
-            all_ids_trimed = [ elt.replace("CHEBI:", "") for elt in all_ids ]            
-            comp.ft_names=";".join(list(set([ comp.data["name"], *all_ids_trimed])))
+            all_ids_trimed = [ elt.replace("CHEBI:", "") for elt in all_ids ]     
+            ft_names = [ comp.data["name"], *all_ids_trimed]
+            comp.ft_names=cls.format_ft_names(ft_names)
 
             del comp.data["id"]
             del comp.data["inchi"]
@@ -85,27 +86,7 @@ class CompoundService(BaseService):
             val = cls._get_ancestors_query(compound)
             for v in val:
                 vals.append(v)
-            if len(vals) >= cls.BULK_SIZE:
-                CompoundAncestor.insert_many(vals).execute()
-                vals = []
-        if len(vals):
-            CompoundAncestor.insert_many(vals).execute()
-            vals = []
- 
-        # # save alternatives
-        # vals = []
-        # for compound in compounds:
-        #     if 'alt_id' in compound.data:
-        #         alt_ids = compound.data['alt_id']
-        #         for c_id in alt_ids:
-        #             c = CompoundAlternative(main_compound_chebi_id=compound.id, alt_compound_chebi_id=c_id)
-        #             vals.append(c)
-        #     if len(vals) >= cls.BULK_SIZE:
-        #         CompoundAlternative.save_all(vals)
-        #         vals = []
-        # if len(vals):
-        #     CompoundAlternative.save_all(vals)
-        #     vals = []
+        CompoundAncestor.insert_all(vals)
 
     @classmethod
     def _get_ancestors_query(cls, compound):

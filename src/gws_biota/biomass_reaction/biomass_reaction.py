@@ -24,12 +24,12 @@ class BiomassReaction(Base):
     """
 
     biomass_rxn_id = CharField(null=True, index=True)
-    ft_names = TextField(null=True, index=False)
+    ft_names = CharField(null=True, index=False)
     _table_name = 'biota_biomass_reaction'
 
     @classmethod
     def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_BIOMASSREACTION')
+        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_BIOMASSRXN')
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:

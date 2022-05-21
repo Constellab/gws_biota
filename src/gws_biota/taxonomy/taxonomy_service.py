@@ -3,7 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import transaction
+from peewee import chunked
+from gws_core import transaction, Logger
 from .._helper.ncbi import Taxonomy as NCBITaxonomyHelper
 from .taxonomy import Taxonomy
 from ..base.base_service import BaseService
@@ -24,29 +25,42 @@ class TaxonomyService(BaseService):
         :rtype: None
         """
 
+        Logger.info(f"Loading ncbi taxonomy file ...")
         dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)
         dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
-        start = 0
-        stop = start+cls.BULK_SIZE
-        dict_keys = list(dict_taxons.keys())
-        while True:
-            #step 2
-            taxa = [Taxonomy(data = dict_taxons[d]) for d in dict_keys[start:stop]]
-            if len(taxa) == 0:
-                break
-            #step 3
+
+        Logger.info(f"Saving taxa ...")
+        for chunk in chunked(dict_taxons.values(), cls.BULK_SIZE):
+            taxa = [Taxonomy(data = data) for data in chunk]
             for tax in taxa:
                 tax.tax_id = tax.data['tax_id']
-                if 'name' in tax.data.keys():
-                    tax.set_name(tax.data['name'])
-                else:
-                    tax.set_name("Unspecified")
+                tax.set_name(tax.data.get('name', 'Unspecified'))
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
                 tax.ancestor_tax_id = tax.data['ancestor']
-                tax.ft_names = str([tax.tax_id, tax.name])
-
+                tax.ft_names = cls.format_ft_names([tax.tax_id, tax.name])
                 del tax.data['ancestor']
-            Taxonomy.save_all(taxa)
-            start = stop
-            stop = start+cls.BULK_SIZE
+            Taxonomy.create_all(taxa)
+
+        # start = 0
+        # stop = start+cls.BULK_SIZE
+        # dict_keys = list(dict_taxons.keys())
+        # while True:
+        #     Logger.info(f"... {start} taxa saved")
+        #     #step 2
+        #     taxa = [Taxonomy(data = dict_taxons[d]) for d in dict_keys[start:stop]]
+        #     if len(taxa) == 0:
+        #         break
+        #     #step 3
+        #     for tax in taxa:
+        #         tax.tax_id = tax.data['tax_id']
+        #         tax.set_name(tax.data.get('name', 'Unspecified'))
+        #         tax.rank = tax.data['rank']
+        #         tax.division = tax.data['division']
+        #         tax.ancestor_tax_id = tax.data['ancestor']
+        #         tax.ft_names = cls.format_ft_names([tax.tax_id, tax.name])
+        #         del tax.data['ancestor']
+
+        #     Taxonomy.save_all(taxa)
+        #     start = stop
+        #     stop += cls.BULK_SIZE

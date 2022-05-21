@@ -32,21 +32,14 @@ class SBOService(BaseService):
             sbo.set_sbo_id(sbo.data["id"])
             sbo.set_name(sbo.data["name"])
             del sbo.data["id"]
-        SBO.save_all(sbos)
+        SBO.create_all(sbos)
+
         vals = []
         for sbo in sbos:
-            if 'ancestors' in sbo.data.keys():
-                val = cls.__build_insert_query_vals_of_ancestors(sbo)
-                if len(val) != 0:
-                    for v in val:
-                        vals.append(v)
-                        if len(vals) == cls.BULK_SIZE:
-                            SBOAncestor.insert_many(vals).execute()
-                            vals = []
-                    
-                    if len(vals) != 0:
-                        SBOAncestor.insert_many(vals).execute()
-                        vals = []
+            val = cls.__build_insert_query_vals_of_ancestors(sbo)
+            for v in val:
+                vals.append(v)
+        SBOAncestor.insert_all(vals)
     
     @classmethod
     def __build_insert_query_vals_of_ancestors(cls, sbo):

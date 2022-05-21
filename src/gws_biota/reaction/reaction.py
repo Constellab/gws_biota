@@ -9,7 +9,7 @@ from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
 from playhouse.mysql_ext import Match
 
 from ..base.base import Base
-from ..base.simple_base_model import SimpleBaseModel
+from ..base.protected_base_model import ProtectedBaseModel
 from ..compound.compound import Compound
 from ..db.db_manager import DbManager
 from ..enzyme.enzyme import Enzyme
@@ -65,7 +65,7 @@ class Reaction(Base):
     products = ManyToManyField(Compound, through_model=ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, through_model=ReactionEnzymeDeferred)
 
-    ft_names = TextField(null=True, index=False)
+    ft_names = CharField(null=True, index=False)
     _table_name = 'biota_reaction'
 
     # -- A --
@@ -77,11 +77,15 @@ class Reaction(Base):
         :param id: The id
         :type id: str
         """
-        try:
-            self.biocyc_ids.append(id)
-        except:
-            self.biocyc_ids = []
-            self.biocyc_ids.append(id)
+
+        if self.biocyc_ids is None:
+            self.biocyc_ids = ""
+
+        text = self.biocyc_ids
+        text = text.split(";")
+        text.append(id)
+        text = list(set(text))
+        self.biocyc_ids = ";".join(text)
 
     # -- C --
 
@@ -199,7 +203,7 @@ class Reaction(Base):
         self.master_id = master_id
 
 
-class ReactionSubstrate(SimpleBaseModel):
+class ReactionSubstrate(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between susbtrates and reactions.
 
@@ -216,7 +220,7 @@ class ReactionSubstrate(SimpleBaseModel):
         database = DbManager.db
 
 
-class ReactionProduct(SimpleBaseModel):
+class ReactionProduct(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between products and reactions.
 
@@ -233,7 +237,7 @@ class ReactionProduct(SimpleBaseModel):
         database = DbManager.db
 
 
-class ReactionEnzyme(SimpleBaseModel):
+class ReactionEnzyme(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between enzymes and reactions.
 
