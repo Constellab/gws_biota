@@ -5,14 +5,15 @@
 
 from peewee import CharField, ForeignKeyField
 
-from gws_core import transaction
+from gws_core import transaction, Logger
 from ..db.db_manager import DbManager
 from ..base.base import Base
 from ..ontology.ontology import Ontology
 from .._helper.ontology import Onto as OntoHelper
 from .go import GO, GOAncestor
+from ..base.base_service import BaseService
 
-class GOService:
+class GOService(BaseService):
 
     @classmethod
     @transaction()
@@ -28,28 +29,26 @@ class GOService:
         :rtype: None
         """
 
+        Logger.info(f"Loading GO file ...")
         onto_go = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['go_file'])
         list_go = OntoHelper.parse_obo_from_ontology(onto_go)
         gos = [GO(data = dict_) for dict_ in list_go]
+
+        Logger.info(f"Saving GO terms ...")
         for go in gos:
             go.set_go_id(go.data["id"])
             go.set_name(go.data["name"])
             go.set_namespace(go.data["namespace"])
             del go.data["id"]
-        GO.save_all(gos)
+        GO.create_all(gos)
+
+        Logger.info(f"Saving GO ancestors ...")
         vals = []
-        bulk_size = 500
         for go in gos:
-            if 'ancestors' in go.data.keys():
-                val = cls.__build_insert_query_vals_of_ancestors(go)
-                for v in val:
-                    vals.append(v)
-            if len(vals) >= bulk_size:
-                GOAncestor.insert_many(vals).execute()
-                vals = []
-        if len(vals):
-            GOAncestor.insert_many(vals).execute()
-            vals = []
+            val = cls.__build_insert_query_vals_of_ancestors(go)
+            for v in val:
+                vals.append(v)
+        GOAncestor.insert_all(vals)
     
     @classmethod
     def __build_insert_query_vals_of_ancestors(self, go):

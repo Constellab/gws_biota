@@ -3,11 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from typing import List
 from gws_core import BadRequestException, Logger, Model, Settings
 from peewee import CharField, DoesNotExist, ModelSelect
 from playhouse.mysql_ext import Match
 
 from ..db.db_manager import DbManager
+from .protected_base_model import ProtectedBaseModel
 
 # ####################################################################
 #
@@ -23,62 +25,12 @@ except:
     pass
 
 
-class Base(Model):
+class Base(Model,ProtectedBaseModel):
 
     name = CharField(null=True, index=True)
     _db_manager = DbManager
     _is_table_warning_printed = False
 
-    # -- C --
-
-    @classmethod
-    def _is_protected(cls):
-        # always protect in notebooks
-        if IS_IPYTHON_ACTIVE:
-            cls._print_warning("The BIOTA db is protected in notebooks")
-            return True
-
-        # always protect in prod mode
-        if cls._db_manager.mode == "prod":
-            cls._print_warning("The prod BIOTA db is protected and cannot be altered")
-            return True
-
-        # check protection in dev mode
-        if cls._db_manager.mode == "dev":
-            if hasattr(cls._db_manager, "_DEACTIVATE_PROTECTION_") and cls._db_manager._DEACTIVATE_PROTECTION_:
-                cls._print_warning("The BIOTA protection is DEACTIVATED")
-                return False
-            else:
-                cls._print_warning("The dev BIOTA db is protected and cannot be altered")
-                return True
-
-        return False
-
-    @classmethod
-    def _print_warning(cls, msg):
-        if not cls._is_table_warning_printed:
-            Logger.warning(msg)
-            cls._is_table_warning_printed = True
-
-    @classmethod
-    def create_table(cls, *args, **kwargs):
-        if cls._is_protected():
-            return
-        super().create_table(*args, **kwargs)
-
-    # -- D --
-
-    @classmethod
-    def delete(cls, *args, **kwargs):
-        if cls._is_protected():
-            return False
-        return super().delete(*args, **kwargs)
-
-    @classmethod
-    def drop_table(cls, *args, **kwargs):
-        if cls._is_protected():
-            return
-        super().drop_table(*args, **kwargs)
 
     @classmethod
     def after_table_creation(cls) -> None:
@@ -125,11 +77,6 @@ class Base(Model):
     def search_by_name(cls, name, page: int = 1, number_of_items_per_page: int = 50):
         Q = cls.select().where(cls.name ** name).paginate(page, number_of_items_per_page)
         return Q
-
-    def save(self, *args, **kwargs):
-        if self._is_protected():
-            return False
-        return super().save(*args, **kwargs)
 
     class Meta:
         database = DbManager.db

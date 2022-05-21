@@ -8,8 +8,9 @@ import os
 from gws_core import transaction
 from .biomass_reaction import BiomassReaction
 from .._helper.biomass_reaction import BiomassReaction as BiomassReactionHelper
+from ..base.base_service import BaseService
 
-class BiomassReactionService:
+class BiomassReactionService(BaseService):
     
     @classmethod
     @transaction()

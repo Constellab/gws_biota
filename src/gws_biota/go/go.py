@@ -8,7 +8,7 @@ from peewee import CharField, ForeignKeyField
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..db.db_manager import DbManager
 from ..base.base import Base
-from ..base.simple_base_model import SimpleBaseModel
+from ..base.protected_base_model import ProtectedBaseModel
 from ..ontology.ontology import Ontology
 
 @typing_registrator(unique_name="GO", object_type="MODEL", hide=True)
@@ -96,7 +96,7 @@ class GO(Ontology):
         self.namespace = namespace
 
 
-class GOAncestor(SimpleBaseModel):
+class GOAncestor(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between the go terms and theirs ancestors
 

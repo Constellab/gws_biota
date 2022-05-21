@@ -7,15 +7,18 @@ import os
 import re
 from Bio import SeqIO
 
-from gws_core import transaction
+from gws_core import transaction, Logger
 from ..base.base import Base
 from .protein import Protein
+from ..base.base_service import BaseService
 
-class ProteinService(Base):
+class ProteinService(BaseService):
 
     @classmethod
     @transaction()
     def create_protein_db(cls, biodata_dir = None, **kwargs):
+
+        Logger.info(f"Loading and saving uniprot data ...")
         file_path = os.path.join(biodata_dir, kwargs["protein_file"])
         with open(file_path, "rU") as handle:
             proteins = []
@@ -33,9 +36,4 @@ class ProteinService(Base):
                 prot.set_sequence(str(record.seq))
                 prot.set_description(record.description)
                 proteins.append(prot)
-                if len(proteins) >= 500:
-                    Protein.save_all(proteins)
-                    proteins = []
-            if len(proteins) > 0:
-                cls.save_all(proteins)
-                proteins = []
+            Protein.create_all(proteins)

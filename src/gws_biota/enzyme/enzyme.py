@@ -12,7 +12,7 @@ from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
 from playhouse.mysql_ext import Match
 
 from ..base.base import Base
-from ..base.simple_base_model import SimpleBaseModel
+from ..base.protected_base_model import ProtectedBaseModel
 from ..bto.bto import BTO
 from ..db.db_manager import DbManager
 from ..protein.protein import Protein
@@ -75,6 +75,8 @@ class Enzyme(Base):
     tax_species = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
     related_deprecated_enzyme = None  # dyamically added if by method select_and_follow_if_deprecated
+
+    
     bto = ManyToManyField(BTO, through_model=EnzymeBTODeffered)
 
     ft_names = TextField(null=True)
@@ -226,7 +228,6 @@ class Enzyme(Base):
                 Q_selected = deprecated_enzyme.select_new_enzymes(select_only_one=select_only_one)
                 for new_enzyme in Q_selected:
                     if tax_id:
-
                         if getattr(new_enzyme, "tax_"+tax.rank) == tax_id:
                             new_enzyme.related_deprecated_enzyme = deprecated_enzyme
                             Q.append(new_enzyme)
@@ -261,7 +262,7 @@ class Enzyme(Base):
     # -- U --
 
 
-class EnzymeBTO(SimpleBaseModel):
+class EnzymeBTO(ProtectedBaseModel):
     """
     This class refers to tissues of brenda enzymes
     EnzymeBTO entities are created by the __update_tissues() method of the Enzyme class

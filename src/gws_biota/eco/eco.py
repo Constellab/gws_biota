@@ -9,7 +9,7 @@ from playhouse.mysql_ext import Match
 from gws_core.model.typing_register_decorator import typing_registrator
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base import Base
-from ..base.simple_base_model import SimpleBaseModel
+from ..base.protected_base_model import ProtectedBaseModel
 from ..db.db_manager import DbManager
 from ..ontology.ontology import Ontology
 
@@ -99,7 +99,7 @@ class ECO(Ontology):
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
         return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
-class ECOAncestor(SimpleBaseModel):
+class ECOAncestor(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between the eco terms and theirs ancestors
 

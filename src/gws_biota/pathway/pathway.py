@@ -8,7 +8,7 @@ from peewee import CharField, ForeignKeyField
 from gws_core.model.typing_register_decorator import typing_registrator
 from ..db.db_manager import DbManager
 from ..base.base import Base
-from ..base.simple_base_model import SimpleBaseModel
+from ..base.protected_base_model import ProtectedBaseModel
 from ..ontology.ontology import Ontology
 from ..taxonomy.taxonomy import Taxonomy
 from ..compound.compound import Compound
@@ -66,7 +66,7 @@ class Pathway(Ontology):
         PathwayCompound.drop_table()
         super().drop_table(*arg, **kwargs)
 
-class PathwayAncestor(SimpleBaseModel):
+class PathwayAncestor(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between the pathway and theirs ancestors
 

@@ -3,9 +3,10 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from typing import List
 from gws_core import BadRequestException, Logger, Settings
 from gws_core.extra import SystemService
-from peewee import Model
+from peewee import Model, chunked
 
 from ..db.db_manager import DbManager
 
@@ -17,12 +18,58 @@ except:
     pass
 
 
-class SimpleBaseModel(Model):
+class ProtectedBaseModel(Model):
 
     _is_table_warning_printed = False
     _db_manager = DbManager
 
+    BATCH_SIZE = 10000
+
     # -- C --
+
+    @classmethod
+    def create_all(cls, model_list: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
+        """
+        Automically and safely save a list of models in the database. If an error occurs
+        during the operation, the whole transactions is rolled back.
+
+        :param model_list: List of models
+        :type model_list: list
+        :return: True if all the model are successfully saved, False otherwise.
+        :rtype: bool
+        """
+
+        db = cls._db_manager.db
+        with db.atomic():
+            cls.bulk_create(model_list,batch_size=batch_size)
+
+        return model_list
+
+    
+    @classmethod
+    def update_all(cls, model_list: List['ProtectedBaseModel'], fields: list, batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
+        """
+        Automically and safely save a list of models in the database. If an error occurs
+        during the operation, the whole transactions is rolled back.
+
+        :param model_list: List of models
+        :type model_list: list
+        :return: True if all the model are successfully saved, False otherwise.
+        :rtype: bool
+        """
+
+        db = cls._db_manager.db
+        with db.atomic():
+            cls.bulk_update(model_list,fields,batch_size=batch_size)
+
+        return model_list
+
+    @classmethod
+    def insert_all(cls, data: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
+        db = cls._db_manager.db
+        with db.atomic():
+            for batch in chunked(data, batch_size):
+                cls.insert_many(batch).execute()
 
     @classmethod
     def _is_protected(cls):

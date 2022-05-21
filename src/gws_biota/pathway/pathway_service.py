@@ -7,8 +7,9 @@ from gws_core import transaction
 from .._helper.reactome import Reactome as ReactomeHelper
 from .pathway import Pathway, PathwayAncestor
 from .pathway_compound import PathwayCompound
+from ..base.base_service import BaseService
 
-class PathwayService:
+class PathwayService(BaseService):
     
     @classmethod
     @transaction()
@@ -37,20 +38,12 @@ class PathwayService:
                 }
             )
             pathways.append(pw)
-        Pathway.save_all(pathways)
+        Pathway.create_all(pathways)
 
         # insert pathways ancestors
         pathway_rels = ReactomeHelper.parse_pathway_relations_to_dict(biodata_dir, kwargs['reactome_pathway_relations_file'])      
-        k = 0
-        bulk_size = 100
-        ancestor_vals = cls.__query_vals_of_ancestors(pathway_rels)  
-        while True:
-            vals = ancestor_vals[k:min(k+bulk_size,len(ancestor_vals))]
-            if not len(vals):
-                break
-            PathwayAncestor.insert_many(vals).execute()
-            k = k+bulk_size
-    
+        vals = cls.__query_vals_of_ancestors(pathway_rels)  
+        PathwayAncestor.insert_all(vals)
         
         # insert chebi pathways
         chebi_pathways = ReactomeHelper.parse_chebi_pathway_to_dict(biodata_dir, kwargs['reactome_chebi_pathways_file'])
@@ -63,21 +56,16 @@ class PathwayService:
                 species = cpw["species"]
             )
             pathways_comps.append(pc)
-            if len(pathways_comps) >= 500:
-                PathwayCompound.save_all(pathways_comps)
-                pathways_comps = []
-        if len(pathways_comps):
-            PathwayCompound.save_all(pathways_comps)
+        PathwayCompound.create_all(pathways_comps)
 
     @classmethod
     def __query_vals_of_ancestors(self, pathway_rels):
         vals = []
         for _pw in pathway_rels:
             try:
-                val = {
-                        'pathway': Pathway.get(Pathway.reactome_pathway_id == _pw["reactome_pathway_id"]).id,
-                        'ancestor': Pathway.get(Pathway.reactome_pathway_id == _pw["ancestor"]).id 
-                    }
+                pathway_id = Pathway.get(Pathway.reactome_pathway_id == _pw["reactome_pathway_id"]).id
+                ancestor_id = Pathway.get(Pathway.reactome_pathway_id == _pw["ancestor"]).id
+                val = { 'pathway': pathway_id, 'ancestor': ancestor_id }
                 vals.append(val)
             except:
                 pass

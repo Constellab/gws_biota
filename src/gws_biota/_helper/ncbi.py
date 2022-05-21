@@ -57,7 +57,6 @@ class Taxonomy():
         dict_taxons = {}
         
         with open(nodes_path) as fh:
-
             for line in fh:
                 dict_single_tax = {}
                 line = line.replace("\t|\n", "")
