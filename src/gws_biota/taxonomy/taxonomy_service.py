@@ -45,9 +45,6 @@ class TaxonomyService(BaseService):
                 tax.ft_names = cls.format_ft_names([tax.tax_id, tax.name])
                 del tax.data['ancestor']
             Taxonomy.create_all(taxa)
-
-            if i == 26:
-                break
         taxa = []
 
         # start = 0

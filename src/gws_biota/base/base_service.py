@@ -5,7 +5,7 @@
 
 
 class BaseService:
-    BATCH_SIZE = 10000
+    BATCH_SIZE = 50000
 
     @staticmethod
     def format_ft_names(text):
