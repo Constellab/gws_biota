@@ -17,7 +17,7 @@ class BTO(Ontology):
     This class represents BTO terms.
 
     The BTO (BRENDA Tissue Ontology) is a comprehensive structured
-    encyclopedia. It providies terms, classifications, and definitions of tissues, organs, anatomical structures,
+    encyclopedia. It provides terms, classifications, and definitions of tissues, organs, anatomical structures,
     plant parts, cell cultures, cell types, and cell lines of organisms from all taxonomic groups
     (animals, plants, fungis, protozoon) as enzyme sources (https://www.brenda-enzymes.org/).
     BRENDA data are available under the Creative Commons License (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.

@@ -1,5 +1,5 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
@@ -16,16 +16,16 @@ class SBO(Ontology):
     """
     This class represents SBO terms.
 
-    The SBO (Systems Biology Ontology) is a set of controlled, relational vocabularies 
+    The SBO (Systems Biology Ontology) is a set of controlled, relational vocabularies
     of terms commonly used in Systems Biology, and in particular in computational modelling.
-    It introduce a layer of semantic information into the standard description of a model, 
+    It introduces a layer of semantic information into the standard description of a model,
     or to annotate the results of biochemical experiments in order to facilitate their efficient reuse
     (http://www.ebi.ac.uk/sbo). SBO is under the Artistic License 2.0 (https://opensource.org/licenses/Artistic-2.0)
 
     :property sbo_id: id of the sbo term
-    :type sbo_id: class:`peewee.CharField` 
+    :type sbo_id: class:`peewee.CharField`
     :property name: name of the sbo term
-    :type name: class:`peewee.CharField` 
+    :type name: class:`peewee.CharField`
     """
 
     sbo_id = CharField(null=True, index=True)
@@ -43,7 +43,7 @@ class SBO(Ontology):
         Q = SBOAncestor.select().where(SBOAncestor.sbo == self.id)
         for q in Q:
             self._ancestors.append(q.ancestor)
-        
+
         return self._ancestors
 
     # -- C --
@@ -68,7 +68,7 @@ class SBO(Ontology):
         :returns: The definition
         :rtype: str
         """
-         
+
         definition = self.data["definition"]
         return ". ".join(i.capitalize() for i in definition.split(". "))
 
@@ -98,17 +98,16 @@ class SBOAncestor(ProtectedBaseModel):
     This class defines the many-to-many relationship between the sbo terms and theirs ancestors
 
     :property sbo: id of the concerned sbo term
-    :type sbo: CharField 
+    :type sbo: CharField
     :property ancestor: ancestor of the concerned sbo term
-    :type ancestor: CharField 
+    :type ancestor: CharField
     """
     sbo = ForeignKeyField(SBO)
     ancestor = ForeignKeyField(SBO)
-    
+
     class Meta:
         table_name = 'biota_sbo_ancestors'
         database = DbManager.db
         indexes = (
             (('sbo', 'ancestor'), True),
         )
-    
