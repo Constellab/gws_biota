@@ -242,8 +242,8 @@ class Enzyme(Base):
         return super().save(*arg, **kwargs)
 
     @classmethod
-    def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_ENZ')
+    def create_full_text_index(cls, *args) -> None:
+        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_ENZ')
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:

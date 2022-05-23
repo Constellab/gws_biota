@@ -120,8 +120,8 @@ class Reaction(Base):
         super().drop_table(*args, **kwargs)
 
     @classmethod
-    def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_REACTION')
+    def create_full_text_index(cls, *args) -> None:
+        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_REACTION')
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:

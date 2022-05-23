@@ -46,6 +46,10 @@ class TaxonomyService(BaseService):
                 del tax.data['ancestor']
             Taxonomy.create_all(taxa)
 
+            if i == 26:
+                break
+        taxa = []
+
         # start = 0
         # stop = start+cls.BATCH_SIZE
         # dict_keys = list(dict_taxons.keys())

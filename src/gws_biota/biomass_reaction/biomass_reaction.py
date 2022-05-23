@@ -28,9 +28,9 @@ class BiomassReaction(Base):
     _table_name = 'biota_biomass_reaction'
 
     @classmethod
-    def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_BIOMASSRXN')
-
+    def create_full_text_index(cls, *args) -> None:
+        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_BIOMASSRXN')
+    
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
         return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))

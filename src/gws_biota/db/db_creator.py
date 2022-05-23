@@ -70,60 +70,60 @@ class DbCreatorHelper:
         i = 0
         Logger.info("All biodata files found.")
 
-        # ------------------- Create ECO ----------------- #
-        i=i+1
-        Logger.info(f"Step {i} | Saving eco and eco_ancestors...")
-        start_time = time.time()
-        ECOService.create_eco_db(biodata_dir, **cls.params)
-        len_eco = ECO.select().count()
-        elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
+        # # ------------------- Create ECO ----------------- #
+        # i=i+1
+        # Logger.info(f"Step {i} | Saving eco and eco_ancestors...")
+        # start_time = time.time()
+        # ECOService.create_eco_db(biodata_dir, **cls.params)
+        # len_eco = ECO.select().count()
+        # elapsed_time = time.time() - start_time
+        # Logger.info("... done in {:10.2f} sec for #eco = {}".format(elapsed_time, len_eco))
 
-        # ------------- Create GO ------------- #
-        i = i+1
-        Logger.info(f"Step {i} | Saving go and go_ancestors...")
-        start_time = time.time()
+        # # ------------- Create GO ------------- #
+        # i = i+1
+        # Logger.info(f"Step {i} | Saving go and go_ancestors...")
+        # start_time = time.time()
         
-        GOService.create_go_db(biodata_dir, **cls.params)
-        len_go = GO.select().count()
-        elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
+        # GOService.create_go_db(biodata_dir, **cls.params)
+        # len_go = GO.select().count()
+        # elapsed_time = time.time() - start_time
+        # Logger.info("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
 
-        # ------------- Create SBO ------------- #
-        i=i+1
-        Logger.info(f"Step {i} | Saving sbo and sbo_ancestors...")
-        start_time = time.time()
-        SBOService.create_sbo_db(biodata_dir, **cls.params)
-        len_sbo = SBO.select().count()
-        elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
+        # # ------------- Create SBO ------------- #
+        # i=i+1
+        # Logger.info(f"Step {i} | Saving sbo and sbo_ancestors...")
+        # start_time = time.time()
+        # SBOService.create_sbo_db(biodata_dir, **cls.params)
+        # len_sbo = SBO.select().count()
+        # elapsed_time = time.time() - start_time
+        # Logger.info("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
 
-        # ------------------- Create BTO ----------------- #
-        i=i+1
-        Logger.info(f"Step {i} | Saving bto and bto_ancestors...")
-        start_time = time.time()
-        BTOService.create_bto_db(biodata_dir, **cls.params)
-        len_bto = BTO.select().count()
-        elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
+        # # ------------------- Create BTO ----------------- #
+        # i=i+1
+        # Logger.info(f"Step {i} | Saving bto and bto_ancestors...")
+        # start_time = time.time()
+        # BTOService.create_bto_db(biodata_dir, **cls.params)
+        # len_bto = BTO.select().count()
+        # elapsed_time = time.time() - start_time
+        # Logger.info("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
 
-        # ---------------- Create Compound --------------- #
-        i=i+1
-        Logger.info(f"Step {i} | Saving chebi compounds...")
-        start_time = time.time()
-        CompoundService.create_compound_db(biodata_dir, **cls.params)
-        len_compound = Compound.select().count()
-        elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
+        # # ---------------- Create Compound --------------- #
+        # i=i+1
+        # Logger.info(f"Step {i} | Saving chebi compounds...")
+        # start_time = time.time()
+        # CompoundService.create_compound_db(biodata_dir, **cls.params)
+        # len_compound = Compound.select().count()
+        # elapsed_time = time.time() - start_time
+        # Logger.info("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
 
-        # ---------------- Create Pathway --------------- #
-        i=i+1
-        Logger.info(f"Step {i} | Saving pathways...")
-        start_time = time.time()
-        PathwayService.create_pathway_db(biodata_dir, **cls.params)
-        len_pathways = Pathway.select().count()
-        elapsed_time = time.time() - start_time
-        Logger.info("... done in {:10.2f} min for #pathway = {} ".format(elapsed_time/60, len_pathways))
+        # # ---------------- Create Pathway --------------- #
+        # i=i+1
+        # Logger.info(f"Step {i} | Saving pathways...")
+        # start_time = time.time()
+        # PathwayService.create_pathway_db(biodata_dir, **cls.params)
+        # len_pathways = Pathway.select().count()
+        # elapsed_time = time.time() - start_time
+        # Logger.info("... done in {:10.2f} min for #pathway = {} ".format(elapsed_time/60, len_pathways))
 
         # ---------------- Create Taxonomy --------------- #
         i=i+1

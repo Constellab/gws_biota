@@ -96,9 +96,9 @@ class ProtectedBaseModel(Model):
 
     @classmethod
     def _print_warning(cls, msg):
-        if not cls._is_table_warning_printed:
+        if not ProtectedBaseModel._is_table_warning_printed:
             Logger.warning(msg)
-            cls._is_table_warning_printed = True
+            ProtectedBaseModel._is_table_warning_printed = True
 
     @classmethod
     def create_table(cls, *args, **kwargs):

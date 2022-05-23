@@ -107,8 +107,8 @@ class Taxonomy(Ontology):
         self.rank = rank
 
     @classmethod
-    def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_TAXONOMY')
+    def create_full_text_index(cls, *args) -> None:
+        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_TAXONOMY')
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
