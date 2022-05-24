@@ -71,6 +71,11 @@ class DbService(BaseService):
         BaseModelService.create_tables()
         ModelService.register_all_processes_and_resources()
 
+        # from ..reaction.reaction import Reaction
+        # Reaction.drop_table()
+        # Reaction.create_table()
+        # ModelService.register_all_processes_and_resources()
+
         if not ECO.table_exists():
             raise BadRequestException("Cannot create tables")
 

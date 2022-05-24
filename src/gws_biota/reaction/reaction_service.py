@@ -94,7 +94,9 @@ class ReactionService(BaseService):
         for react in reactions:
             vals.extend(cls.__create_enzymes_vals_and_set_ft_names_from_data(react))
         ReactionEnzyme.insert_all(vals)
-        Reaction.update_all(vals, fields=['ft_names'])
+        
+        # update reaction tf_names
+        Reaction.update_all(reactions, fields=['ft_names'])
 
         return reactions
 
@@ -145,7 +147,7 @@ class ReactionService(BaseService):
                 #react.enzymes.add(enz)
                 vals.append({
                     'reaction': react.id,
-                    'enzyme': comp.id
+                    'enzyme': enz.id
                 })
             react.ft_names = cls.format_ft_names(tab)
         return vals
