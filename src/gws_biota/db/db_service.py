@@ -26,6 +26,8 @@ from ..sbo.sbo import SBO
 from ..organism.organism import Organism
 from ..protein.protein import Protein
 from ..taxonomy.taxonomy import Taxonomy
+from ..pathway.pathway import Pathway
+from ..ontology.ontology import Ontology
 
 class DbService(BaseService):
 
@@ -39,58 +41,15 @@ class DbService(BaseService):
         DbCreatorHelper.run()
         
         cls_list = [ 
-            ECO, SBO, GO, Compound, Reaction, 
-            BiomassReaction, Enzyme, EnzymeOrtholog, 
-            DeprecatedEnzyme, EnzymeClass,
-            EnzymePathway, Organism, Protein, Taxonomy
+            BTO, BiomassReaction, Compound, ECO, 
+            DeprecatedEnzyme, EnzymeClass, EnzymeOrtholog, 
+            EnzymePathway, Enzyme, GO, Ontology, Organism, Pathway, 
+            Protein, Reaction, SBO, Taxonomy
         ]
         for c in cls_list:
-            Logger.info(f"Creating {c} ft index ...")
+            Logger.info(f"Creating {c.__name__} ft index ...")
             c.create_full_text_index()
         Logger.info("Done")
-
-        return
-
-    #     if not user:
-    #         user = UserService.get_sysuser()
-    #         user.save()
-    #         CurrentUserService.set_current_user(user)
-
-    #     db_creator_model: TaskModel = TaskService.create_task_model_from_type(task_type=DbCreator)
-    #     experiment: Experiment = ExperimentService.create_experiment_from_task_model(
-    #         task_model=db_creator_model
-    #     )
-    #     experiment.save()
-    #     try:
-    #         QueueService.add_experiment_to_queue(
-    #             experiment_id=experiment.id)
-    #     except Exception as err:
-    #         raise BadRequestException(f"An error occured while adding the experiment to the job queue") from err
-
-    #     experiment.refresh()
-    #     return experiment
-
-    # @classmethod
-    # def dump_biota_db(cls) -> bool:
-    #     MySQLService.dump_db("biota", force=True, wait=False)
-    #     return True
-
-    # @classmethod
-    # def is_busy(cls) -> bool:
-    #     base = MySQLBase()
-    #     base.set_default_config("biota")
-    #     return not base.is_ready()
-
-    # @classmethod
-    # def is_ready(cls) -> bool:
-    #     base = MySQLBase()
-    #     base.set_default_config("biota")
-    #     return base.is_ready()
-
-    # @classmethod
-    # def load_biota_db(cls) -> bool:
-    #     MySQLService.load_db("biota", force=True, wait=True)
-    #     return True
 
     @classmethod
     def create_tables(cls):
