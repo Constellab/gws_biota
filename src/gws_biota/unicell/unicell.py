@@ -4,6 +4,7 @@
 # About us: https://gencovery.com
 
 
+import hashlib
 import pickle
 
 import numpy
@@ -36,6 +37,11 @@ class Unicell(Base):
     _stochiometric_matrix = None
 
     _table_name = 'biota_unicell'
+
+    def _create_hash_object(self):
+        """ DEACTIVATE HASH """
+        hash_obj = hashlib.blake2b()
+        return hash_obj
 
     @property
     def nb_compounds(self):
