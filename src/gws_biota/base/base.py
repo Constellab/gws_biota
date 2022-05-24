@@ -29,12 +29,15 @@ class Base(Model,ProtectedBaseModel):
 
     name = CharField(null=True, index=True)
     _db_manager = DbManager
-    _is_table_warning_printed = False
-
 
     @classmethod
     def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['name'], 'I_F_BIOTA_BASE')
+        return
+        #cls.create_full_text_index(['name'], 'I_F_BIOTA_BASE')
+
+    @classmethod
+    def create_full_text_index(cls, *args) -> None:
+        super().create_full_text_index(['name'], 'I_F_BIOTA_BASE')
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:

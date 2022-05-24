@@ -73,7 +73,7 @@ class ReactionService(BaseService):
         for chunk in chunked(list_reaction, cls.BATCH_SIZE):
             i += 1
             reactions = [Reaction(data = data) for data in chunk]
-            Logger.info(f"... saving taxa chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
+            Logger.info(f"... saving reaction chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
             for react in reactions:
                 if 'entry' in react.data.keys():
                     react.rhea_id = react.data['entry']
@@ -94,7 +94,9 @@ class ReactionService(BaseService):
         for react in reactions:
             vals.extend(cls.__create_enzymes_vals_and_set_ft_names_from_data(react))
         ReactionEnzyme.insert_all(vals)
-        Reaction.update_all(vals, fields=['ft_names'])
+        
+        # update reaction tf_names
+        Reaction.update_all(reactions, fields=['ft_names'])
 
         return reactions
 
@@ -110,7 +112,7 @@ class ReactionService(BaseService):
             #react.substrates.add(comp)
             vals.append({
                 'reaction': react.id,
-                'substrate': comp.id
+                'compound': comp.id
             })
         return vals
     
@@ -126,7 +128,7 @@ class ReactionService(BaseService):
             #react.products.add(comp)
             vals.append({
                 'reaction': react.id,
-                'product': comp.id
+                'compound': comp.id
             })
         return vals
 
@@ -145,7 +147,7 @@ class ReactionService(BaseService):
                 #react.enzymes.add(enz)
                 vals.append({
                     'reaction': react.id,
-                    'enzyme': comp.id
+                    'enzyme': enz.id
                 })
             react.ft_names = cls.format_ft_names(tab)
         return vals

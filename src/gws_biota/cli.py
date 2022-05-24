@@ -7,14 +7,8 @@ import csv
 import os
 
 import click
-from gws_core import (BadRequestException, Logger, ModelService, User,
-                      UserService)
-from gws_core.extra import BaseModelService
-
-from gws_biota import ECO
-
+from gws_core import Logger
 from .db.db_service import DbService
-from .eco.eco import ECOAncestor
 
 
 # Create db
@@ -24,38 +18,9 @@ from .eco.eco import ECOAncestor
 ))
 @click.pass_context
 def createdb(ctx):
-    from .db.db_manager import DbManager
-    DbManager.init(mode="dev")
-    DbManager._DEACTIVATE_PROTECTION_ = True
-
-    if ECO.table_exists():
-        BaseModelService.drop_tables()
-
-    if ECO.table_exists():
-        if ECO.select().count():
-            raise BadRequestException("A none empty biota database already exists")
-
-    BaseModelService.drop_tables()
-    BaseModelService.create_tables()
-    ModelService.register_all_processes_and_resources()
-    UserService.create_sysuser()
-
-    if not ECO.table_exists():
-        raise BadRequestException("Cannot create tables")
-
-    if not ECOAncestor.table_exists():
-        raise BadRequestException("Cannot create ancestor tables")
-
-    try:
-        DbService.build_biota_db()
-    except Exception as err:
-        Logger.error(err)
-
+    DbService.build_biota_db()
 
 @click.pass_context
 def create_unicell_db(ctx):
     from .unicell.unicell_service import UnicellService
-    try:
-        UnicellService.create_unicell_db()
-    except Exception as err:
-        Logger.error(err)
+    UnicellService.create_unicell_db()

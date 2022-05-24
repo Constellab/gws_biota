@@ -45,6 +45,7 @@ class TaxonomyService(BaseService):
                 tax.ft_names = cls.format_ft_names([tax.tax_id, tax.name])
                 del tax.data['ancestor']
             Taxonomy.create_all(taxa)
+        taxa = []
 
         # start = 0
         # stop = start+cls.BATCH_SIZE

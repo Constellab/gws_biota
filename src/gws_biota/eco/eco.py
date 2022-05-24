@@ -92,8 +92,8 @@ class ECO(Ontology):
         self.eco_id = id
 
     @classmethod
-    def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_ECO')
+    def create_full_text_index(cls, *args) -> None:
+        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_ECO')
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:

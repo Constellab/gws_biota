@@ -22,6 +22,8 @@ class ProteinService(BaseService):
         file_path = os.path.join(biodata_dir, kwargs["protein_file"])
         with open(file_path, "rU") as handle:
             proteins = []
+            count = 0
+            batch = 0
             for record in SeqIO.parse(handle, "fasta"):
                 m = re.match(r".*OX=([0-9]+).*PE=(\d).*", record.description)
                 tax = m.group(1) if m else ""
@@ -36,4 +38,10 @@ class ProteinService(BaseService):
                 prot.set_sequence(str(record.seq))
                 prot.set_description(record.description)
                 proteins.append(prot)
-            Protein.create_all(proteins)
+                count += 1
+                if count >= cls.BATCH_SIZE:
+                    batch += 1
+                    Logger.info(f"Saving batch {batch} ...")
+                    Protein.create_all(proteins)
+                    proteins = []
+                    count = 0
