@@ -87,6 +87,7 @@ class ECO(Ontology):
         self.eco_id = id
 
 
+
 class ECOAncestor(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between the eco terms and theirs ancestors
