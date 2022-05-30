@@ -34,7 +34,6 @@ class Taxonomy(Ontology):
     division = CharField(null=True, index=True)
     name = CharField(null=True, index=True)
     ancestor_tax_id = CharField(null=True, index=True)
-    ft_names = TextField(null=True, index=False)
     _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class',
                  'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
     _table_name = 'biota_taxonomy'
@@ -105,11 +104,3 @@ class Taxonomy(Ontology):
         :type rank: str
         """
         self.rank = rank
-
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_TAXONOMY')
-
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))

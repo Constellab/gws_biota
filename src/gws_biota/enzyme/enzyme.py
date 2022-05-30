@@ -8,10 +8,9 @@ from collections import OrderedDict
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
-                    ManyToManyField, ModelSelect, TextField)
-from playhouse.mysql_ext import Match
+                    ManyToManyField)
 
-from ..base.base import Base
+from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
 from ..bto.bto import BTO
 from ..db.db_manager import DbManager
@@ -27,7 +26,7 @@ EnzymeBTODeffered = DeferredThroughModel()
 
 
 @typing_registrator(unique_name="Enzyme", object_type="MODEL", hide=True)
-class Enzyme(Base):
+class Enzyme(BaseFT):
     """
     This class represents enzymes extracted from open databases.
 
@@ -75,11 +74,8 @@ class Enzyme(Base):
     tax_species = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
     related_deprecated_enzyme = None  # dyamically added if by method select_and_follow_if_deprecated
-
-    
     bto = ManyToManyField(BTO, through_model=EnzymeBTODeffered)
 
-    ft_names = TextField(null=True)
     _table_name = 'biota_enzymes'
 
     # -- A --
@@ -241,14 +237,6 @@ class Enzyme(Base):
         if isinstance(self.data, OrderedDict):
             self.data = dict(self.data)
         return super().save(*arg, **kwargs)
-
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_ENZ')
-
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
     # -- T --
 

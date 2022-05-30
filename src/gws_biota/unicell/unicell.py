@@ -3,26 +3,24 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-
+import hashlib
 import pickle
 
 import numpy
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import BigBitField, BlobField, CharField, ModelSelect, TextField
-from playhouse.mysql_ext import Match
+from peewee import BigBitField, BlobField, CharField
 from scipy import sparse
 from scipy.sparse.linalg import expm
 
-from ..base.base import Base
+from ..base.base_ft import BaseFT
 
 
 @typing_registrator(unique_name="Unicell", object_type="MODEL", hide=True)
-class Unicell(Base):
+class Unicell(BaseFT):
     """
     The unicell
     """
 
-    ft_names = TextField(null=True, index=False)
     compound_id_list = BlobField()
     reaction_id_list = BlobField()
     compound_x_list = BlobField()
@@ -36,6 +34,11 @@ class Unicell(Base):
     _stochiometric_matrix = None
 
     _table_name = 'biota_unicell'
+
+    def _create_hash_object(self):
+        """ DEACTIVATE HASH """
+        hash_obj = hashlib.blake2b()
+        return hash_obj
 
     @property
     def nb_compounds(self):
@@ -94,14 +97,6 @@ class Unicell(Base):
         """ Get index of a reaction using its rhea_id """
         rxn_list = self.get_reaction_id_list()
         return rxn_list.index(rhea_id)
-
-    @classmethod
-    def after_table_creation(cls) -> None:
-        cls.create_full_text_index(['ft_names'], 'I_F_BIOTA_UNICELL')
-
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
     def write(self, **kwargs):
         """ write an entry """

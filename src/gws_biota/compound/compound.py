@@ -26,17 +26,16 @@ from typing import Union
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import (CharField, DoubleField, FloatField, ForeignKeyField,
-                    IntegerField, ModelSelect, TextField)
-from playhouse.mysql_ext import Match
+                    IntegerField)
 
-from ..base.base import Base
+from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
 from ..db.db_manager import DbManager
 from .compound_layout import CompoundLayout, CompoundLayoutDict
 
 
 @typing_registrator(unique_name="Compound", object_type="MODEL", hide=True)
-class Compound(Base):
+class Compound(BaseFT):
     """
     This class represents ChEBI Ontology terms.
 
@@ -61,7 +60,6 @@ class Compound(Base):
     inchikey = CharField(null=True, index=True)
     smiles = CharField(null=True, index=True)
     chebi_star = CharField(null=True, index=True)
-    ft_names = TextField(null=True)
 
     _ancestors = None
     _table_name = "biota_compound"
@@ -155,29 +153,6 @@ class Compound(Base):
             rxns.append(r.reaction)
 
         return rxns
-
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_CMP')
-
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
-
-
-# class CompoundAlternative(Base):
-#     """
-#     This class defines the many-to-many relationship between the compound and it alterntive ids
-
-#     :type main_compound_chebi_id: CharField
-#     :property main_compound_chebi_id: id of the concerned compound term
-#     :type alt_compound_chebi_id: CharField
-#     :property alt_compound_chebi_id: alternative of the concerned compound term
-#     """
-
-#     main_compound_chebi_id = CharField(null=True, index=True)
-#     alt_compound_chebi_id = CharField(null=True, index=True)
-#     _table_name = "biota_compound_alternatives"
 
 
 class CompoundAncestor(ProtectedBaseModel):

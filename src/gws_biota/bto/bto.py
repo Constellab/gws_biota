@@ -3,13 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ForeignKeyField, TextField, ModelSelect
-from playhouse.mysql_ext import Match
-
 from gws_core.model.typing_register_decorator import typing_registrator
-from ..ontology.ontology import Ontology
-from ..db.db_manager import DbManager
+from peewee import CharField, ForeignKeyField
+
 from ..base.protected_base_model import ProtectedBaseModel
+from ..db.db_manager import DbManager
+from ..ontology.ontology import Ontology
+
 
 @typing_registrator(unique_name="BTO", object_type="MODEL", hide=True)
 class BTO(Ontology):
@@ -28,7 +28,6 @@ class BTO(Ontology):
     :type name: class:`peewee.CharField`
     """
     bto_id = CharField(null=True, index=True)
-    ft_names = TextField(null=True)
 
     _ancestors = None
     _table_name = 'biota_bto'
@@ -59,7 +58,6 @@ class BTO(Ontology):
         super().create_table(*args, **kwargs)
         BTOAncestor.create_table()
 
-
     # -- D --
 
     @classmethod
@@ -85,13 +83,6 @@ class BTO(Ontology):
         """
         self.bto_id = bto_id
 
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_BTO')
-
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
 class BTOAncestor(ProtectedBaseModel):
     """

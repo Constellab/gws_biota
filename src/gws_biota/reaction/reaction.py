@@ -8,7 +8,7 @@ from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
                     ManyToManyField, ModelSelect, TextField)
 from playhouse.mysql_ext import Match
 
-from ..base.base import Base
+from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
 from ..compound.compound import Compound
 from ..db.db_manager import DbManager
@@ -27,7 +27,7 @@ ReactionEnzymeDeferred = DeferredThroughModel()
 
 
 @typing_registrator(unique_name="Reaction", object_type="MODEL", hide=True)
-class Reaction(Base):
+class Reaction(BaseFT):
     """
     This class represents metabolic reactions extracted from Rhea database.
 
@@ -65,7 +65,6 @@ class Reaction(Base):
     products = ManyToManyField(Compound, through_model=ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, through_model=ReactionEnzymeDeferred)
 
-    ft_names = TextField(null=True, index=False)
     _table_name = 'biota_reaction'
 
     # -- A --
@@ -118,14 +117,6 @@ class Reaction(Base):
         ReactionProduct.drop_table()
         ReactionEnzyme.drop_table()
         super().drop_table(*args, **kwargs)
-
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_REACTION')
-
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
 
     # -- G --
 

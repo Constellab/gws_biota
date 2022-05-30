@@ -7,19 +7,18 @@ from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField, ModelSelect, TextField
 from playhouse.mysql_ext import Match
 
-from ..base.base import Base
+from ..base.base_ft import BaseFT
 from .enzyme_pathway import EnzymePathway
 
 
 @typing_registrator(unique_name="EnzymeOrtholog", object_type="MODEL", hide=True)
-class EnzymeOrtholog(Base):
+class EnzymeOrtholog(BaseFT):
     """
     This class represents enzyme ortholog.
     """
 
     ec_number = CharField(null=True, index=True, unique=True)
     pathway = ForeignKeyField(EnzymePathway, backref="enzos", null=True)
-    ft_names = TextField(null=True, index=True)
 
     _table_name = "biota_enzo"
 
@@ -48,11 +47,3 @@ class EnzymeOrtholog(Base):
         """
 
         return ",".join([sn.capitalize() for sn in self.data.get("SN", [""])])
-
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_ENZORT')
-
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))

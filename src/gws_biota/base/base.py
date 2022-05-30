@@ -4,6 +4,7 @@
 # About us: https://gencovery.com
 
 from typing import List
+
 from gws_core import BadRequestException, Logger, Model, Settings
 from peewee import CharField, DoesNotExist, ModelSelect
 from playhouse.mysql_ext import Match
@@ -25,19 +26,14 @@ except:
     pass
 
 
-class Base(Model,ProtectedBaseModel):
+class Base(Model, ProtectedBaseModel):
 
     name = CharField(null=True, index=True)
     _db_manager = DbManager
 
     @classmethod
     def after_table_creation(cls) -> None:
-        return
-        #cls.create_full_text_index(['name'], 'I_F_BIOTA_BASE')
-
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['name'], 'I_F_BIOTA_BASE')
+        cls.create_full_text_index(['name'], 'name')
 
     @classmethod
     def search(cls, phrase: str, modifier: str = None) -> ModelSelect:

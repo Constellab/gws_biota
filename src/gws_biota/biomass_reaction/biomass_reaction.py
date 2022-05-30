@@ -1,16 +1,16 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, TextField, ModelSelect
-from playhouse.mysql_ext import Match
-
 from gws_core.model.typing_register_decorator import typing_registrator
-from ..base.base import Base
+from peewee import CharField
+
+from ..base.base_ft import BaseFT
+
 
 @typing_registrator(unique_name="Network", object_type="MODEL", hide=True)
-class BiomassReaction(Base):
+class BiomassReaction(BaseFT):
     """
     This class represents metabolic reactions extracted from Rhea database.
 
@@ -24,13 +24,4 @@ class BiomassReaction(Base):
     """
 
     biomass_rxn_id = CharField(null=True, index=True)
-    ft_names = TextField(null=True, index=False)
     _table_name = 'biota_biomass_reaction'
-
-    @classmethod
-    def create_full_text_index(cls, *args) -> None:
-        super().create_full_text_index(['ft_names'], 'I_F_BIOTA_BIOMASSRXN')
-    
-    @classmethod
-    def search(cls, phrase: str, modifier: str = None) -> ModelSelect:
-        return cls.select().where(Match((cls.ft_names), phrase, modifier=modifier))
