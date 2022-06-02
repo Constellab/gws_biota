@@ -1,0 +1,12 @@
+{  
+    "parent": "glycan metabolism",
+    "name": "glycosaminoglycan metabolism",
+    "data": {
+        "CHEBI:8572": {"x": 0, "y": 0, "level": 1, "name": "Protein serine", "alt": []},
+        "CHEBI:16082": {"x": 5, "y": 0, "level": 1, "name": "UDP-alpha-D-xylose", "alt": ["CHEBI:46260", "CHEBI:13490", "CHEBI:9813", "CHEBI:22105"]},
+        "CHEBI:18376": {"x": 0, "y": 5, "level": 1, "name": "dermatan sulfate", "alt": ["CHEBI:4440", "CHEBI:14127", "CHEBI:23644"]},
+        "CHEBI:28815": {"x": 5, "y": 5, "level": 1, "name": "heparan sulfate", "alt": ["CHEBI:24502", "CHEBI:24507", "CHEBI:5661"]},
+        "CHEBI:4139": {"x": 0, "y": -5, "level": 1, "name": "D-galactopyranose", "alt": []}
+    },
+    "centroid": {"x": 50, "y": 100}
+}

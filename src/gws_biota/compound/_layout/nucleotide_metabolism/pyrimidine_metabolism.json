@@ -54,15 +54,15 @@
         "CHEBI:53013": {"x": 52, "y": -9, "level": 1, "name": "3'-CMP", "alt": ["CHEBI:23517", "CHEBI:41615", "CHEBI:1335", "CHEBI:28929", "CHEBI:41345"]},
         "CHEBI:27791": {"x": -48, "y": -53, "level": 1, "name": "P1,P4-Bis(5'-uridyl) tetraphosphate", "alt": ["CHEBI:22000", "CHEBI:7877"]},
         "CHEBI:49049": {"x": 144, "y": 8, "level": 1, "name": "3-Oxo-3-ureidopropanoate", "alt": ["CHEBI:49048", "CHEBI:49047"]},
-        "CHEBI:59889": {"x": -66, "y": -66, "level": 1, "name": "(Z)-3-Ureidoacrylate peracid", "alt": []},
-        "CHEBI:59892": {"x": -66, "y": 46, "level": 1, "name": "(Z)-3-Peroxyaminoacrylate", "alt": []},
-        "CHEBI:59894": {"x": -66, "y": 167, "level": 1, "name": "Aminoacrylate", "alt": []},
-        "CHEBI:59891": {"x": -80, "y": -66, "level": 1, "name": "Ureidoacrylate", "alt": []},
-        "CHEBI:189756": {"x": -52, "y": 80, "level": 1, "name": "3-Oxo-3-ureidoisobutyrate", "alt": []},
-        "CHEBI:176874": {"x": -26, "y": 67, "level": 1, "name": "(R)-5,6-Dihydrothymine", "alt": []},
-        "CHEBI:182625": {"x": -26, "y": 87, "level": 1, "name": "(R)-3-Ureidoisobutyrate", "alt": []},
+        "CHEBI:59889": {"x": -66, "y": -66, "level": 1, "name": "(Z)-3-Ureidoacrylate peracid", "alt": [""]},
+        "CHEBI:59892": {"x": -66, "y": 46, "level": 1, "name": "(Z)-3-Peroxyaminoacrylate", "alt": [""]},
+        "CHEBI:59894": {"x": -66, "y": 167, "level": 1, "name": "Aminoacrylate", "alt": [""]},
+        "CHEBI:59891": {"x": -80, "y": -66, "level": 1, "name": "Ureidoacrylate", "alt": [""]},
+        "CHEBI:189756": {"x": -52, "y": 80, "level": 1, "name": "3-Oxo-3-ureidoisobutyrate", "alt": [""]},
+        "CHEBI:176874": {"x": -26, "y": 67, "level": 1, "name": "(R)-5,6-Dihydrothymine", "alt": [""]},
+        "CHEBI:182625": {"x": -26, "y": 87, "level": 1, "name": "(R)-3-Ureidoisobutyrate", "alt": [""]},
         "CHEBI:16991": {"x": -16, "y": 66, "level": 1, "name": "DNA", "alt": ["CHEBI:33698", "CHEBI:4291", "CHEBI:13302", "CHEBI:21123"]},
-        "CHEBI:33697": {"x": -47, "y": -40, "level": 1, "name": "RNA", "alt": []}
+        "CHEBI:33697": {"x": -47, "y": -40, "level": 1, "name": "RNA", "alt": [""]}
     },
     "centroid": {"x": 50, "y": 200}
 }

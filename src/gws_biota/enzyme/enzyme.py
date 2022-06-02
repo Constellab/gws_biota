@@ -214,7 +214,7 @@ class Enzyme(BaseFT):
         if select_only_one:
             Q = Q.limit(1)
 
-        if not len(Q):
+        if len(Q) == 0:
             Q = []
             depre_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == ec_number)
             if select_only_one:

@@ -4,7 +4,7 @@
         "CHEBI:15345": {"x": -135, "y": 20, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173"]},
         "CHEBI:15453": {"x": -135, "y": 10, "level": 1, "name": "(S)-3-Hydroxybutanoyl-CoA", "alt": ["CHEBI:39978", "CHEBI:394", "CHEBI:18749", "CHEBI:11048", "CHEBI:57316"]},
         "CHEBI:15473": {"x": -135, "y": 0, "level": 1, "name": "crotonoyl-CoA", "alt": ["CHEBI:41612", "CHEBI:14031", "CHEBI:14032", "CHEBI:23408", "CHEBI:3928", "CHEBI:57332"]},
-        "CHEBI:15517": {"x": -135, "y": -10, "level": 1, "name": "butanoyl-CoA", "alt": ["CHEBI:3235", "CHEBI:13926", "CHEBI:22953", "CHEBI:22973", "CHEBI:57371"]},
+        "CHEBI:15517": {"x": -135, "y": -10, "level": 1, "name": "butyryl-CoA", "alt": ["CHEBI:3235", "CHEBI:13926", "CHEBI:22953", "CHEBI:22973", "CHEBI:57371"]},
         "CHEBI:27648": {"x": -130, "y": 20, "level": 1, "name": "3-Oxohexanoyl-CoA", "alt": ["CHEBI:1641", "CHEBI:20172", "CHEBI:62418"]},
         "CHEBI:28276": {"x": -130, "y": 10, "level": 1, "name": "(S)-3-hydroxyhexanoyl-CoA", "alt": ["CHEBI:419", "CHEBI:18780"]},
         "CHEBI:28706": {"x": -130, "y": 0, "level": 1, "name": "trans-Hex-2-enoyl-CoA", "alt": ["CHEBI:10726", "CHEBI:27076", "CHEBI:62077"]},
@@ -24,14 +24,17 @@
         "CHEBI:28726": {"x": -110, "y": 20, "level": 1, "name": "3-oxotetradecanoyl-CoA", "alt": ["CHEBI:20183", "CHEBI:1654", "CHEBI:62543"]},
         "CHEBI:27466": {"x": -110, "y": 10, "level": 1, "name": "(S)-3-hydroxytetradecanoyl-CoA", "alt": ["CHEBI:400", "CHEBI:18754", "CHEBI:62614"]},
         "CHEBI:27721": {"x": -110, "y": 0, "level": 1, "name": "trans-Tetradec-2-enoyl-CoA", "alt": ["CHEBI:10734", "CHEBI:27079", "CHEBI:61405"]},
-        "CHEBI:15532": {"x": -110, "y": -10, "level": 1, "name": "tetradecanoyl-CoA, myristoyl-CoA", "alt": ["CHEBI:52969", "CHEBI:15218", "CHEBI:14637", "CHEBI:26898", "CHEBI:9475", "CHEBI:57385"]},
-        "CHEBI:15491": {"x": -105, "y": 20, "level": 1, "name": "3-Oxopalmitoyl-CoA", "alt": ["CHEBI:1647", "CHEBI:11875", "CHEBI:20176", "CHEBI:15491"]},
-        "CHEBI:27402": {"x": -105, "y": 10, "level": 1, "name": "(S)-3-Hydroxyhexadecanoyl-CoA", "alt": ["CHEBI:397", "CHEBI:18752", "CHEBI:15491"]},
+        "CHEBI:15532": {"x": -110, "y": -10, "level": 1, "name": "myristoyl-CoA", "alt": ["CHEBI:52969", "CHEBI:15218", "CHEBI:14637", "CHEBI:26898", "CHEBI:9475", "CHEBI:57385"]},
+        "CHEBI:15491": {"x": -105, "y": 20, "level": 1, "name": "3-Oxopalmitoyl-CoA", "alt": ["CHEBI:1647", "CHEBI:11875", "CHEBI:20176"]},
+        "CHEBI:27402": {"x": -105, "y": 10, "level": 1, "name": "(S)-3-hydroxypalmitoyl-CoA", "alt": ["CHEBI:397", "CHEBI:18752"]},
         "CHEBI:28935": {"x": -105, "y": 0, "level": 1, "name": "trans-Hexadec-2-enoyl-CoA", "alt": ["CHEBI:27047, CHEBI:10728", "CHEBI:61526"]},
         "CHEBI:15525": {"x": -105, "y": -10, "level": 1, "name": "palmitoyl-CoA", "alt": ["CHEBI:14732", "CHEBI:7898", "CHEBI:14397", "CHEBI:24543", "CHEBI:57379"]},
         "CHEBI:15756": {"x": -110, "y": -20, "level": 1, "name": "hexadecanoic acid, palmitate", "alt": ["CHEBI:24542", "CHEBI:35978", "CHEBI:24540", "CHEBI:24550", "CHEBI:44952", "CHEBI:233028", "CHEBI:14730", "CHEBI:24541", "CHEBI:29889"]},
         "CHEBI:55329": {"x": -115, "y": -20, "level": 2, "name": "16-hydroxyhexadecanoate"},
         "CHEBI:134195": {"x": -120, "y": -20, "level": 2, "name": "16-Oxopalmitate"},
-        "CHEBI:76276": {"x": -125, "y": -20, "level": 2, "name": "Hexadecanedioate"}
+        "CHEBI:76276": {"x": -125, "y": -20, "level": 2, "name": "Hexadecanedioate"},
+        "CHEBI:36926": {"x": -130, "y": -20, "level": 1, "name": "but-2-enoyl-CoA", "alt": ["CHEBI:11531", "CHEBI:13921"]},
+        "CHEBI:15531": {"x": -140, "y": 0, "level": 1, "name": "malonyl-CoA", "alt": ["CHEBI:43979", "CHEBI:6661", "CHEBI:14565", "CHEBI:25135"]}
+
     }
 }

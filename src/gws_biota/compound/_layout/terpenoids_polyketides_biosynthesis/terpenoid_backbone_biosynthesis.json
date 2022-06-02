@@ -1,0 +1,31 @@
+{  
+    "parent": "Metabolism of terpenoids and polyketides",
+    "name": "terpenoid backbone biosynthesis",
+    "data": {
+        "CHEBI:32816": {"x": 99, "y": -59, "level": 1, "name": "Pyruvate", "alt": ["CHEBI:8685", "CHEBI:26466", "CHEBI:45253"]},
+        "CHEBI:15351": {"x": 99, "y": -22, "level": 1, "name": "Acetyl-CoA", "alt": ["CHEBI:22192", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
+        "CHEBI:29052": {"x": 99, "y": -206, "level": 1, "name": "D-Glyceraldehyde 3-phosphate", "alt": ["CHEBI:21026", "CHEBI:181", "CHEBI:12984", "CHEBI:12983", "CHEBI:18324"]},
+        "CHEBI:16584": {"x": -275, "y": 6, "level": 1, "name": "Isopentenyl diphosphate", "alt": ["CHEBI:6037", "CHEBI:24907", "CHEBI:14473"]},
+        "CHEBI:16057": {"x": -312, "y": 6, "level": 1, "name": "Dimethylallyl diphosphate", "alt": ["CHEBI:8394", "CHEBI:23803", "CHEBI:14169", "CHEBI:26245", "CHEBI:14883", "CHEBI:42074", "CHEBI:341937", "CHEBI:12280", "CHEBI:4616"]},
+        "CHEBI:15345": {"x": -119, "y": -115, "level": 1, "name": "Acetoacetyl-CoA", "alt": ["CHEBI:11756", "CHEBI:13706", "CHEBI:2392", "CHEBI:22173", "CHEBI:41333"]},
+        "CHEBI:17211": {"x": -358, "y": 6, "level": 1, "name": "Geranyl diphosphate", "alt": ["CHEBI:24223", "CHEBI:5332", "CHEBI:14299", "CHEBI:42877"]},
+        "CHEBI:48861": {"x": -387, "y": 64, "level": 1, "name": "Geranylgeranyl diphosphate", "alt": ["CHEBI:5335", "CHEBI:42968", "CHEBI:19786"]},
+        "CHEBI:15467": {"x": 258, "y": -11, "level": 1, "name": "(S)-3-Hydroxy-3-methylglutaryl-CoA", "alt": ["CHEBI:392", "CHEBI:11045", "CHEBI:18747", "CHEBI:61659"]},
+        "CHEBI:36464": {"x": -161, "y": 14, "level": 1, "name": "(R)-Mevalonate", "alt": ["CHEBI:11005", "CHEBI:18690", "CHEBI:43870"]},
+        "CHEBI:17407": {"x": -387, "y": 31, "level": 1, "name": "trans,trans-Farnesyl diphosphate", "alt": ["CHEBI:19789", "CHEBI:10700", "CHEBI:11488", "CHEBI:12854", "CHEBI:12874", "CHEBI:42496", "CHEBI:11491"]},
+        "CHEBI:17436": {"x": -212, "y": 14, "level": 1, "name": "(R)-5-Phosphomevalonate", "alt": ["CHEBI:333", "CHEBI:10991", "CHEBI:10990", "CHEBI:18675"]},
+        "CHEBI:15899": {"x": -250, "y": 14, "level": 1, "name": "(R)-5-Diphosphomevalonate", "alt": ["CHEBI:332", "CHEBI:10989", "CHEBI:18674"]},
+        "CHEBI:18144": {"x": -377, "y": 74, "level": 1, "name": "all-trans-Nonaprenyl diphosphate", "alt": ["CHEBI:15091", "CHEBI:22345", "CHEBI:10193", "CHEBI:12780", "CHEBI:9186", "CHEBI:26719"]},
+        "CHEBI:75837": {"x": -387, "y": 78, "level": 1, "name": "Phytyl diphosphate", "alt": []},
+        "CHEBI:26199": {"x": -192, "y": -348, "level": 1, "name": "Polyprenol", "alt": ["CHEBI:8317"]},
+        "CHEBI:17764": {"x": -31, "y": 0, "level": 1, "name": "2-C-Methyl-D-erythritol 4-phosphate", "alt": ["CHEBI:11483", "CHEBI:1030"]},
+        "CHEBI:16578": {"x": -74, "y": 0, "level": 1, "name": "4-(Cytidine 5'-diphospho)-2-C-methyl-D-erythritol", "alt": ["CHEBI:11938", "CHEBI:1770"]},
+        "CHEBI:16840": {"x": -113, "y": 0, "level": 1, "name": "2-Phospho-4-(cytidine 5'-diphospho)-2-C-methyl-D-erythritol", "alt": ["CHEBI:11649", "CHEBI:1266", "CHEBI:11650"]},
+        "CHEBI:16493": {"x": 0, "y": 0, "level": 1, "name": "1-Deoxy-D-xylulose 5-phosphate", "alt": ["CHEBI:11254", "CHEBI:622"]},
+        "CHEBI:18425": {"x": -170, "y": 0, "level": 1, "name": "2-C-Methyl-D-erythritol 2,4-cyclodiphosphate", "alt": ["CHEBI:11481", "CHEBI:1029", "CHEBI:11482"]},
+        "CHEBI:15664": {"x": -209, "y": 0, "level": 1, "name": "1-Hydroxy-2-methyl-2-butenyl 4-diphosphate", "alt": ["CHEBI:10952", "CHEBI:632"]},
+        "CHEBI:65121": {"x": -212, "y": 37, "level": 1, "name": "Isopentenyl phosphate", "alt": []},
+        "CHEBI:83564": {"x": -161, "y": 37, "level": 1, "name": "(R)-Mevalonate 3-phosphate", "alt": []},
+        "CHEBI:83574": {"x": -186, "y": 37, "level": 1, "name": "(R)-Mevalonate 3,5-bisphosphate", "alt": []}
+    }
+}
