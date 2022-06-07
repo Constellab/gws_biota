@@ -1,0 +1,26 @@
+{  
+    "parent": "energy metabolism",
+    "name": "methane metabolism",
+    "data": {
+        "CHEBI:16848": {"x": 0, "y": 0, "level": 1, "name": "coenzyme γ-F420-2", "alt": ["CHEBI:14010", "CHEBI:3807", "CHEBI:14008", "CHEBI:23351"]},
+        "CHEBI:15823": {"x": 0, "y": 0, "level": 1, "name": "1,5-dihydrocoenzyme F420", "alt": ["CHEBI:8788", "CHEBI:15020", "CHEBI:15021", "CHEBI:26524"]},
+        "CHEBI:16568": {"x": 0, "y": 0, "level": 1, "name": "5,10-methylenetetrahydromethanopterin", "alt": ["CHEBI:12072", "CHEBI:1990", "CHEBI:12648", "CHEBI:20504"]},
+        "CHEBI:17975": {"x": 0, "y": 0, "level": 1, "name": "5,10-(methanylylidene)tetrahydromethanopterin", "alt": ["CHEBI:1988", "CHEBI:12070", "CHEBI:12067", "CHEBI:20501", "CHEBI:12647"]},
+        "CHEBI:17114": {"x": 0, "y": 0, "level": 1, "name": "N5-formyl-5,6,7,8-tetrahydromethanopterin", "alt": ["CHEBI:43134", "CHEBI:7398", "CHEBI:12652", "CHEBI:21846"]},
+        "CHEBI:16314": {"x": 0, "y": 0, "level": 1, "name": "N-formylmethanofuran", "alt": ["CHEBI:14283", "CHEBI:5157", "CHEBI:21718"]},
+        "CHEBI:17905": {"x": 0, "y": 0, "level": 1, "name": "coenzyme M", "alt": ["CHEBI:1185", "CHEBI:41549", "CHEBI:11608", "CHEBI:13366", "CHEBI:14011", "CHEBI:19673"]},
+        "CHEBI:17321": {"x": 0, "y": 0, "level": 1, "name": "5,6,7,8-tetrahydromethanopterin", "alt": ["CHEBI:12076", "CHEBI:1992"]},
+        "CHEBI:17827": {"x": 0, "y": 0, "level": 1, "name": "methyl-CoM", "alt": ["CHEBI:11478", "CHEBI:975", "CHEBI:19421"]},
+        "CHEBI:28890": {"x": 0, "y": 0, "level": 1, "name": "coenzyme B", "alt": ["CHEBI:12534", "CHEBI:12434", "CHEBI:29046", "CHEBI:46031", "CHEBI:7093", "CHEBI:14009", "CHEBI:23350", "CHEBI:21474"]},
+        "CHEBI:18209": {"x": 0, "y": 0, "level": 1, "name": "CoM-S-S-CoB", "alt": ["CHEBI:3809", "CHEBI:23353", "CHEBI:45485", "CHEBI:12619", "CHEBI:14012", "CHEBI:13299"]},
+        "CHEBI:16183": {"x": 0, "y": 0, "level": 1, "name": "methane", "alt": ["CHEBI:6811", "CHEBI:14585", "CHEBI:25220"]},
+        "CHEBI:17245": {"x": 0, "y": 0, "level": 1, "name": "carbon monoxide", "alt": ["CHEBI:41526", "CHEBI:3282", "CHEBI:13281", "CHEBI:23013"]},
+        "CHEBI:17790": {"x": 0, "y": 0, "level": 1, "name": "methanol", "alt": ["CHEBI:44553", "CHEBI:44080", "CHEBI:6816", "CHEBI:14588", "CHEBI:25227"]},
+        "CHEBI:17170": {"x": 0, "y": 0, "level": 1, "name": "dimethylamine", "alt": ["CHEBI:42136", "CHEBI:4618", "CHEBI:14170", "CHEBI:23805"]},
+        "CHEBI:16830": {"x": 0, "y": 0, "level": 1, "name": "methylamine", "alt": ["CHEBI:44374", "CHEBI:6864", "CHEBI:14595", "CHEBI:25402"]},
+        "CHEBI:18139": {"x": 0, "y": 0, "level": 1, "name": "trimethylamine", "alt": ["CHEBI:27125", "CHEBI:9732", "CHEBI:15261", "CHEBI:27127"]},
+        "CHEBI:18139": {"x": 0, "y": 0, "level": 1, "name": "trimethylamine", "alt": ["CHEBI:27125", "CHEBI:9732", "CHEBI:15261", "CHEBI:27127"]},
+
+    },
+    "centroid": {"x": 50, "y": 100}
+}

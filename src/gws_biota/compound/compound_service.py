@@ -4,12 +4,14 @@
 # About us: https://gencovery.com
 
 import math
+
+from gws_core import Logger, transaction
 from peewee import chunked
-from gws_core import transaction, Logger
 
 from .._helper.chebi import Chebi as ChebiHelper
-from ..compound.compound import Compound, CompoundAncestor
 from ..base.base_service import BaseService
+from ..compound.compound import Compound, CompoundAncestor
+
 
 class CompoundService(BaseService):
 
@@ -72,9 +74,9 @@ class CompoundService(BaseService):
                 all_ids = [comp.chebi_id, *comp.alt_chebi_ids]
                 if comp.kegg_id is not None:
                     all_ids.append(comp.kegg_id)
-                all_ids_trimed = [ elt.replace("CHEBI:", "") for elt in all_ids ]     
-                ft_names = [ comp.data["name"], *all_ids_trimed]
-                comp.ft_names=cls.format_ft_names(ft_names)
+                all_ids_trimed = [elt.replace("CHEBI:", "") for elt in all_ids]
+                ft_names = [comp.data["name"], *all_ids_trimed]
+                comp.ft_names = cls.format_ft_names(ft_names)
 
                 del comp.data["id"]
                 del comp.data["inchi"]
@@ -85,7 +87,7 @@ class CompoundService(BaseService):
                 del comp.data["monoisotopic_mass"]
                 del comp.data["charge"]
                 del comp.data["subsets"]
-            Compound.save_all(compounds)
+            Compound.create_all(compounds)
 
         # save ancestors
         vals = []
@@ -107,7 +109,7 @@ class CompoundService(BaseService):
         if 'ancestors' not in compound.data:
             return vals
         for ancestor in compound.data['ancestors']:
-            if ancestor != compound.chebi_id :
+            if ancestor != compound.chebi_id:
                 val = {'compound': compound.id, 'ancestor': Compound.get(
                     Compound.chebi_id == ancestor).id}
                 vals.append(val)

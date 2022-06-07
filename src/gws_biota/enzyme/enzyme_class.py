@@ -1,24 +1,25 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField
 
-from gws_core.model.typing_register_decorator import typing_registrator
 from .._helper.expasy import Expasy
 from ..base.base import Base
 
+
 @typing_registrator(unique_name="EnzymeClass", object_type="MODEL", hide=True)
 class EnzymeClass(Base):
-    
+
     ec_number = CharField(null=True, index=True, unique=True)
     _table_name = 'biota_enzyme_class'
-    
+
     # -- C --
 
     @classmethod
-    def create_enzyme_class_db(cls, biodata_dir = None, **kwargs):
+    def create_enzyme_class_db(cls, biodata_dir=None, **kwargs):
         """
         Creates and fills the `enzyme_class` database
 
@@ -34,9 +35,9 @@ class EnzymeClass(Base):
         enz_classes = []
         for enzc in list_of_enzclasses:
             ec = EnzymeClass(
-                ec_number = enzc["ec_number"],
-                data = enzc["data"]
+                ec_number=enzc["ec_number"],
+                data=enzc["data"]
             )
-            ec.set_name( enzc["data"]["name"] )
+            ec.set_name(enzc["data"]["name"])
             enz_classes.append(ec)
-        EnzymeClass.save_all(enz_classes)
+        EnzymeClass.create_all(enz_classes)

@@ -11,5 +11,6 @@
         "CHEBI:27470": {"x": -51, "y": 15, "level": 1, "name": "Folate", "alt": ["CHEBI:42610", "CHEBI:569217", "CHEBI:5140", "CHEBI:24075"]},
         "CHEBI:15639": {"x": 23, "y": 17, "level": 1, "name": "5-Formiminotetrahydrofolate", "alt": ["CHEBI:12126", "CHEBI:2056", "CHEBI:18603"]},
         "CHEBI:15640": {"x": 0, "y": 10, "level": 1, "name": "Folinic acid", "alt": ["CHEBI:2057", "CHEBI:18607", "CHEBI:12127"]}
-    }
+    },
+    "centroid": {"x": 100, "y": -100}
 }

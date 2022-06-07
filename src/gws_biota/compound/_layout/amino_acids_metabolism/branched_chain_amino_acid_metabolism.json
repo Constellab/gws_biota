@@ -36,5 +36,6 @@
         "CHEBI:80218": {"x": 150,    "y": 50, "level": 1, "name": "Enzyme N6-(lipoyl)lysine", "alt": []},
         "CHEBI:80219": {"x": 150,    "y": 50, "level": 1, "name": "Enzyme N6-(dihydrolipoyl)lysine", "alt": []},
         "CHEBI:16414": {"x": 150,    "y": 50, "level": 1, "name": "L-valine", "alt": ["CHEBI:46376", "CHEBI:46282", "CHEBI:46484", "CHEBI:46418", "CHEBI:13186", "CHEBI:21417", "CHEBI:6321"]}
-    }
+    },
+    "centroid": {"x": 100, "y": -50}
 }

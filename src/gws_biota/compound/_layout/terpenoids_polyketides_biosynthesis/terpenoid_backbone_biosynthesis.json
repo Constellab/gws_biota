@@ -27,5 +27,6 @@
         "CHEBI:65121": {"x": -212, "y": 37, "level": 1, "name": "Isopentenyl phosphate", "alt": []},
         "CHEBI:83564": {"x": -161, "y": 37, "level": 1, "name": "(R)-Mevalonate 3-phosphate", "alt": []},
         "CHEBI:83574": {"x": -186, "y": 37, "level": 1, "name": "(R)-Mevalonate 3,5-bisphosphate", "alt": []}
-    }
+    },
+    "centroid": {"x": 50, "y": 100}
 }

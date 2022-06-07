@@ -35,6 +35,6 @@
         "CHEBI:76276": {"x": -125, "y": -20, "level": 2, "name": "Hexadecanedioate"},
         "CHEBI:36926": {"x": -130, "y": -20, "level": 1, "name": "but-2-enoyl-CoA", "alt": ["CHEBI:11531", "CHEBI:13921"]},
         "CHEBI:15531": {"x": -140, "y": 0, "level": 1, "name": "malonyl-CoA", "alt": ["CHEBI:43979", "CHEBI:6661", "CHEBI:14565", "CHEBI:25135"]}
-
-    }
+    },
+    "centroid": {"x": 0, "y": 0}
 }

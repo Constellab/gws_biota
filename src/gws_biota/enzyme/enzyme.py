@@ -73,7 +73,6 @@ class Enzyme(BaseFT):
     tax_family = CharField(null=True, index=True)
     tax_species = CharField(null=True, index=True)
     tax_id = CharField(null=True, index=True)
-    related_deprecated_enzyme = None  # dyamically added if by method select_and_follow_if_deprecated
     bto = ManyToManyField(BTO, through_model=EnzymeBTODeffered)
 
     _table_name = 'biota_enzymes'
@@ -129,10 +128,8 @@ class Enzyme(BaseFT):
 
     @property
     def protein(self):
-        try:
-            return Protein.get(Protein.uniprot_id == self.uniprot_id)
-        except:
-            return None
+        """ Get proteins """
+        return Protein.get_or_none(Protein.uniprot_id == self.uniprot_id)
 
     # -- N --
 
@@ -163,10 +160,8 @@ class Enzyme(BaseFT):
 
     @property
     def pathway(self):
-        try:
-            return EnzymePathway.get(EnzymePathway.ec_number == self.ec_number)
-        except:
-            return None
+        """ Get pathways """
+        return EnzymePathway.get_or_none(EnzymePathway.ec_number == self.ec_number)
 
     def params(self, name) -> Params:
         """
@@ -183,6 +178,11 @@ class Enzyme(BaseFT):
     # -- R --
 
     @property
+    def related_deprecated_enzyme(self):
+        """ Returns depreacated enzymes related to this enzyme """
+        return DeprecatedEnzyme.get_or_none(DeprecatedEnzyme.new_ec_number == self.ec_number)
+
+    @property
     def reactions(self):
         """
         Returns the list of reactions associated with the enzyme function
@@ -191,47 +191,46 @@ class Enzyme(BaseFT):
         """
 
         from ..reaction.reaction import Reaction, ReactionEnzyme
-        Q = Reaction.select() \
-                    .join(ReactionEnzyme) \
-                    .where(ReactionEnzyme.enzyme == self)
-        return Q
+        query = Reaction.select() \
+            .join(ReactionEnzyme) \
+            .where(ReactionEnzyme.enzyme == self)
+        return query
 
     # -- S --
 
     @classmethod
-    def select_and_follow_if_deprecated(self, ec_number, tax_id=None, select_only_one=False):
+    def select_and_follow_if_deprecated(self, ec_number, tax_id=None, select_only_one=False, fields=None):
+        """ Select deprecated enzymes """
+        tax = None
         if tax_id:
             try:
                 tax = Taxonomy.get(Taxonomy.tax_id == tax_id)
-            except:
-                raise BadRequestException(f"Taxonomy ID {tax_id} not found")
+            except Exception as err:
+                raise BadRequestException(f"Taxonomy ID {tax_id} not found") from err
 
-            tax_field = getattr(Enzyme, "tax_"+tax.rank)
-            Q = Enzyme.select().where((Enzyme.ec_number == ec_number) & (tax_field == tax_id))
+        if fields:
+            fields = [getattr(Enzyme, f) for f in fields]
+            base_query = Enzyme.select(*fields)
         else:
-            Q = Enzyme.select().where(Enzyme.ec_number == ec_number)
+            base_query = Enzyme.select()
 
+        query = base_query.where(Enzyme.ec_number == ec_number)
+        if tax:
+            tax_field = getattr(Enzyme, "tax_"+tax.rank)
+            query = query.where(tax_field == tax_id)
         if select_only_one:
-            Q = Q.limit(1)
+            query = query.limit(1)
 
-        if len(Q) == 0:
-            Q = []
-            depre_Q = DeprecatedEnzyme.select().where(DeprecatedEnzyme.ec_number == ec_number)
+        if len(query) == 0:
+            query = base_query.join(DeprecatedEnzyme, on=(Enzyme.ec_number == DeprecatedEnzyme.new_ec_number))\
+                .where(DeprecatedEnzyme.ec_number == ec_number)
+            if tax:
+                tax_field = getattr(Enzyme, "tax_"+tax.rank)
+                query = query.where(tax_field == tax_id)
             if select_only_one:
-                depre_Q = depre_Q.limit(1)
+                query = query.limit(1)
 
-            for deprecated_enzyme in depre_Q:
-                Q_selected = deprecated_enzyme.select_new_enzymes(select_only_one=select_only_one)
-                for new_enzyme in Q_selected:
-                    if tax_id:
-                        if getattr(new_enzyme, "tax_"+tax.rank) == tax_id:
-                            new_enzyme.related_deprecated_enzyme = deprecated_enzyme
-                            Q.append(new_enzyme)
-                    else:
-                        new_enzyme.related_deprecated_enzyme = deprecated_enzyme
-                        Q.append(new_enzyme)
-
-        return Q
+        return query
 
     def save(self, *arg, **kwargs):
         if isinstance(self.data, OrderedDict):
@@ -242,10 +241,7 @@ class Enzyme(BaseFT):
 
     @property
     def taxonomy(self):
-        try:
-            return Taxonomy.get(Taxonomy.tax_id == self.tax_id)
-        except:
-            return None
+        return Taxonomy.get_or_none(Taxonomy.tax_id == self.tax_id)
 
     # -- U --
 

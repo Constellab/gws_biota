@@ -20,5 +20,6 @@
         "CHEBI:18336": {"x": 46, "y": 28, "level": 1, "name": "O-Phospho-4-hydroxy-L-threonine", "alt": ["CHEBI:21963", "CHEBI:11945", "CHEBI:7690"]},
         "CHEBI:64186": {"x": 86, "y": 28, "level": 1, "name": "2-Amino-3-oxo-4-phosphonooxybutyrate", "alt": []},
         "CHEBI:1449": {"x": 109, "y": 28, "level": 1, "name": "3-Amino-2-oxopropyl phosphate", "alt": []}
-    }
+    },
+    "centroid": {"x": 100, "y": -50}
 }

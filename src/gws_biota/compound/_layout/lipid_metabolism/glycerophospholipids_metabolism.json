@@ -56,5 +56,6 @@
         "CHEBI:15354": {"x": -170, "y": 50, "level": 1, "name": "Choline", "alt": ["CHEBI:41524", "CHEBI:3665", "CHEBI:13985", "CHEBI:23212"]},
         "CHEBI:64674": {"x": -140, "y": 50, "level": 1, "name": "1,2-diacyl-sn-glycero-3-phosphoethanolamine, phosphatidyl-ethanolamine", "alt": ["CHEBI:16038", "CHEBI:8129", "CHEBI:14803", "CHEBI:12701", "CHEBI:7661", "CHEBI:26030", "CHEBI:26031"]},
         "CHEBI:11750": {"x": -130, "y": 50, "level": 1, "name": "3-sn-phosphatidyl-L-serine, phosphatidyl-serine", "alt": ["CHEBI:8129", "CHEBI:14803", "CHEBI:12701", "CHEBI:7661", "CHEBI:26030", "CHEBI:26031"]}
-    }
+    },
+    "centroid": {"x": 0, "y": 0}
 }

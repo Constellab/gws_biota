@@ -17,5 +17,6 @@
         "CHEBI:17750": {"x": 100, "y": 0, "level": 1, "name": "glycine betaine", "alt": ["CHEBI:3073", "CHEBI:13895", "CHEBI:24370", "CHEBI:27128", "CHEBI:22858", "CHEBI:29050", "CHEBI:15264"]},
         "CHEBI:15710": {"x": 100, "y": 0, "level": 1, "name": "glycine betaine", "alt": ["CHEBI:3074", "CHEBI:41256", "CHEBI:22859", "CHEBI:13896"]},
         "CHEBI:15354": {"x": 100, "y": 0, "level": 1, "name": "choline", "alt": ["CHEBI:41524", "CHEBI:3665", "CHEBI:13985", "CHEBI:23212"]}
-    }
+    },
+    "centroid": {"x": 100, "y": -50}
 }

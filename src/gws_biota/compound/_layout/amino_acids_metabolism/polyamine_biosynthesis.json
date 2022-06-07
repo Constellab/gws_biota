@@ -15,5 +15,6 @@
         "CHEBI:30566": {"x": 155, "y": 95, "level": 1, "name": "gamma-aminobutyrate", "alt": ["CHEBI:20317", "CHEBI:11961"]},
         "CHEBI:11951": {"x": 155, "y": 100, "level": 1, "name": "4-acetamidobutanoate", "alt": []},
         "CHEBI:17645": {"x": 155, "y": 105, "level": 1, "name": "4-acetamidobutanoic acid", "alt": ["CHEBI:20303", "CHEBI:1777"]}
-    }
+    },
+    "centroid": {"x": 100, "y": -50}
 }

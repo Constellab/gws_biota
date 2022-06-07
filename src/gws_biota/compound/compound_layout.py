@@ -31,13 +31,16 @@ class CompoundCluster:
     """ CompoundCluster """
 
     _name: str = None
+    _parent: str = None
     _data: Dict[str, Dict] = None
     _centroid: dict = None
+    _level: int = 2
 
-    def __init__(self, name, data: Dict, centroid: Dict = None):
+    def __init__(self, parent, name, data: Dict, centroid: Dict = None):
         if not isinstance(data, dict):
             raise BadRequestException("The data must be a dict")
         self._name = name
+        self._parent = parent
         self._data = data
         if not centroid:
             self._centroid = {"x": 0, "y": 0}
@@ -68,11 +71,12 @@ class CompoundCluster:
     def generate(self):
         """ Generate positions """
         data = {}
-        for c_id, c_data in self._data.items():
-            c_data["x"] = GRID_SCALE * (c_data["x"] + self._centroid["x"])
-            c_data["y"] = - GRID_SCALE * (c_data["y"] + self._centroid["y"])
-            c_data["cluster"] = self._name
-            data[c_id] = c_data
+        for comp_id, comp_data in self._data.items():
+            comp_data["x"] = GRID_SCALE * (comp_data["x"] + self._centroid["x"])
+            comp_data["y"] = - GRID_SCALE * (comp_data["y"] + self._centroid["y"])
+            comp_data["parent"] = self._parent
+            comp_data["name"] = self._name
+            data[comp_id] = comp_data
         return data
 
     @ staticmethod
@@ -81,16 +85,22 @@ class CompoundCluster:
         with open(file_path, "r", encoding="utf-8") as fp:
             try:
                 cdata = json.load(fp)
-                return CompoundCluster(name=cdata["name"], data=cdata["data"], centroid=cdata.get("centroid"))
             except Exception as err:
                 raise BadRequestException(f'Cannot load JSON file "{file_path}"') from err
+
+            folder = (file_path.split("/"))[-2]
+            return CompoundCluster(
+                parent=cdata.get("parent", folder),
+                name=cdata["name"],
+                data=cdata["data"],
+                centroid=cdata.get("centroid"))
 
 
 class CompoundLayout:
     """ CompoundLayout """
 
     X_LIMIT = 2000
-    Y_LIMIT = 2000
+    Y_LIMIT = 4000
 
     _clusters: List[CompoundCluster] = []
 
@@ -125,11 +135,16 @@ class CompoundLayout:
                     if file.endswith(".json"):
                         cluster = CompoundCluster.from_file(os.path.join(root, file))
                         cls._clusters.append(cluster)
-
-            for cluster in cls._clusters:
-                data.update(cluster.generate())
         except Exception as err:
             Logger.warning(f"An error occur when parsing layout files. Message {err}")
+
+        for cluster in cls._clusters:
+            cluster_data = cluster.generate()
+            for comp_id in cluster_data:
+                if comp_id not in data:
+                    data[comp_id] = {}
+                cluster_name = cluster_data[comp_id]["name"]
+                data[comp_id][cluster_name] = cluster_data[comp_id]
 
         cls._is_generated = True
         cls._data = data
@@ -144,24 +159,15 @@ class CompoundLayout:
 
         cls._flat_data = {}
         data = CompoundLayout.generate()
-        for key, val in data.items():
-            if key not in cls._flat_data:
-                cls._flat_data[key] = {}
+        for comp_id, cluster_data in data.items():
+            cls._flat_data[comp_id] = cluster_data
+            # parse current cluster and gather all comp data
+            for current_cluster_data in cluster_data.values():
+                #current_cluster_data = cluster_name[cluster_name]
+                for alt_comp_id in current_cluster_data.get("alt", []):
+                    cls._flat_data[alt_comp_id] = cluster_data
 
-            cluster_name = val["cluster"]
-            pos = {
-                "name": cluster_name,
-                "x": val.get("x"),
-                "y": val.get("y"),
-                "level": val.get("level", 2),
-            }
-            cls._flat_data[key][cluster_name] = pos
-            for alt_key in val.get("alt", []):
-                if alt_key not in cls._flat_data:
-                    cls._flat_data[alt_key] = {}
-
-                cls._flat_data[alt_key][cluster_name] = pos
-
+            # cluster_data
         cls._is_flattened = True
         return cls._flat_data
 
@@ -195,6 +201,7 @@ class CompoundLayout:
         position: CompoundLayoutDict = {
             "x": default_position["x"],
             "y": default_position["y"],
+            "level": default_position.get("level", 2),
             "clusters": clusters,
         }
 
@@ -205,7 +212,11 @@ class CompoundLayout:
 
         if position["x"] > cls.X_LIMIT or position["x"] < -cls.X_LIMIT:
             position["x"] = None
-        if position["y"] > cls.Y_LIMIT or position["y"] < -cls.Y_LIMIT:
             position["y"] = None
+
+        if position["y"]:
+            if position["y"] > cls.Y_LIMIT or position["y"] < -cls.Y_LIMIT:
+                position["x"] = None
+                position["y"] = None
 
         return position

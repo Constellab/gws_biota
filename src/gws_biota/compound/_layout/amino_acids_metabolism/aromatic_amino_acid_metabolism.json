@@ -2,9 +2,9 @@
     "parent": "amino acid metabolism",
     "name": "aromatic amino acid metabolism",
     "data": {
-        "CHEBI:48153": {"x": 200, "y": 40, "level": 1, "name": "D-erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921"]},
-        "CHEBI:15765": {"x": 200, "y": 45, "level": 1, "name": "L-dopa", "alt": ["CHEBI:75987", "CHEBI:41871", "CHEBI:49933", "CHEBI:1377", "CHEBI:11693", "CHEBI:13098", "CHEBI:19825"]},
-        "CHEBI:18243": {"x": 200, "y": 50, "level": 1, "name": "dopamine", "alt": ["CHEBI:1764", "CHEBI:11695", "CHEBI:43686", "CHEBI:14203", "CHEBI:23886", "CHEBI:11930"]},
+        "CHEBI:48153": {"x": 0, "y": 0, "level": 1, "name": "D-erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921"]},
+        "CHEBI:15765": {"x": 5, "y": 45, "level": 1, "name": "L-dopa", "alt": ["CHEBI:75987", "CHEBI:41871", "CHEBI:49933", "CHEBI:1377", "CHEBI:11693", "CHEBI:13098", "CHEBI:19825"]},
+        "CHEBI:18243": {"x": 10, "y": 50, "level": 1, "name": "dopamine", "alt": ["CHEBI:1764", "CHEBI:11695", "CHEBI:43686", "CHEBI:14203", "CHEBI:23886", "CHEBI:11930"]},
         "CHEBI:18357": {"x": 200, "y": 55, "level": 1, "name": "(R)-noradrenaline", "alt": ["CHEBI:1", "CHEBI:25592", "CHEBI:43725", "CHEBI:14668", "CHEBI:258884"]},
         "CHEBI:28918": {"x": 200, "y": 60, "level": 1, "name": "(R)-adrenaline", "alt": ["CHEBI:1942", "CHEBI:23928"]},
         "CHEBI:17530": {"x": 195, "y": 40, "level": 1, "name": "L-arogenic acid", "alt": ["CHEBI:13081", "CHEBI:6190", "CHEBI:21238"]},
@@ -62,5 +62,6 @@
         "CHEBI:17205": {"x": 170, "y": 50, "level": 1, "name": "2-oxohept-3-enedioate", "alt": ["CHEBI:11639", "CHEBI:19750"]},
         "CHEBI:1162": {"x": 170, "y": 55, "level": 1, "name": "2-hydroxyhepta-2,4-dienedioic acid", "alt": []},
         "CHEBI:15924": {"x": 170, "y": 60, "level": 1, "name": "5-oxopent-3-ene-1,2,5-tricarboxylic acid", "alt": ["CHEBI:20622", "CHEBI:12112", "CHEBI:12155", "CHEBI:2039"]}
-    }
+    },
+    "centroid": {"x": 100, "y": -50}
 }

@@ -13,6 +13,7 @@
         "CHEBI:27870": {"x": -23, "y": -45, "level": 1, "name": "Biocytin", "alt": ["CHEBI:21872", "CHEBI:21882", "CHEBI:7415"]},
         "CHEBI:3110": {"x": -33, "y": -31, "level": 1, "name": "Biotinyl-5'-AMP", "alt": []},
         "CHEBI:62193": {"x": -74, "y": -31, "level": 1, "name": "Biotin sulfoxide", "alt": []},
-        "CHEBI:17330": {"x": -103, "y": 29, "level": 1, "name": "Malonyl-[acyl-carrier protein]", "alt": ["CHEBI:14566", "CHEBI:6662"]}
-    }
+        "CHEBI:17330": {"x": -103, "y": 29, "level": 2, "name": "Malonyl-[acyl-carrier protein]", "alt": ["CHEBI:14566", "CHEBI:6662"]}
+    },
+    "centroid": {"x": 100, "y": -100}
 }

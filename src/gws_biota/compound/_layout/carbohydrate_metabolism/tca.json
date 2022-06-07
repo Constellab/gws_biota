@@ -13,5 +13,6 @@
         "CHEBI:29806": {"x": -16.5, "y": -40.5, "level": 1, "name": "fumarate(2-)", "alt": ["CHEBI:24122", "CHEBI:42511", "CHEBI:14284", "CHEBI:36180", "CHEBI:37155", "CHEBI:5190", "CHEBI:18012", "CHEBI:42743", "CHEBI:22956", "CHEBI:22957", "CHEBI:24124", "CHEBI:37154", "CHEBI:22958"]},
         "CHEBI:15589": {"x": -17.5, "y": -30, "level": 1, "name": "malate, (S)-malate(2-)", "alt": ["CHEBI:30797", "CHEBI:423", "CHEBI:18784", "CHEBI:18785", "CHEBI:13140", "CHEBI:11066"]},
         "CHEBI:36655": {"x": 0, "y": -30, "level": 1, "name": "glyoxylate", "alt": ["CHEBI:24420", "CHEBI:14368", "CHEBI:24421", "CHEBI:42767", "CHEBI:16891", "CHEBI:35977", "CHEBI:5509"]}
-    }
+    },
+    "centroid": {"x": 0, "y": 0}
 }

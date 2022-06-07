@@ -32,5 +32,6 @@
         "CHEBI:47031": {"x": 150, "y": 0, "level": 1, "name": "LL-2,6-diaminopimelate(2-)", "alt": ["CHEBI:13192", "CHEBI:21428"]},
         "CHEBI:165894": {"x": 150, "y": 0, "level": 1, "name": "N-Succinyl-L,L-2,6-diaminopimelate", "alt": []},
         "CHEBI:17279": {"x": 150, "y": 0, "level": 1, "name": "N-succinyl-LL-2,6-diaminopimelic acid", "alt": ["CHEBI:7342", "CHEBI:12617", "CHEBI:21791", "CHEBI:12618", "CHEBI:21792"]}
-    }
+    },
+    "centroid": {"x": 100, "y": -50}
 }

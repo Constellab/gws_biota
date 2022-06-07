@@ -12,5 +12,6 @@
         "CHEBI:80219": {"x": 0, "y": 0, "level": 1, "name": "Enzyme N6-(dihydrolipoyl)lysine", "alt": []},
         "CHEBI:55451": {"x": 77, "y": 2, "level": 1, "name": "Lipoyl-AMP", "alt": []},
         "CHEBI:30314": {"x": 95, "y": 2, "level": 1, "name": "(R)-Lipoate", "alt": []}
-    }
+    },
+    "centroid": {"x": -100, "y": 0}
 }

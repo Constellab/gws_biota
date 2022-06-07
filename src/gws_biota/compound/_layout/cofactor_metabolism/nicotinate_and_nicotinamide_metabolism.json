@@ -38,5 +38,6 @@
         "CHEBI:37753": {"x": 91, "y": 0, "level": 1, "name": "Pseudooxynicotine", "alt": []},
         "CHEBI:87460": {"x": 106, "y": -140, "level": 1, "name": "5-(N-Methyl-4,5-dihydro-1H-pyrrol-2-yl)pyridin-2-ol", "alt": []},
         "CHEBI:190393": {"x": 91, "y": -134, "level": 1, "name": "N-Methylmyosmine", "alt": []}
-    }
+    },
+    "centroid": {"x": 150, "y": -100}
 }

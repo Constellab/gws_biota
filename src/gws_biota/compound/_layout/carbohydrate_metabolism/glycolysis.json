@@ -13,5 +13,6 @@
         "CHEBI:58272": {"x": 0, "y": 30, "level": 1, "name": "3-phosphonato-D-glycerate(3-), 3-Phospho-D-glycerate", "alt": ["CHEBI:11879", "CHEBI:11880", "CHEBI:17794", "CHEBI:21029", "CHEBI:1657", "CHEBI:58272", "CHEBI:12987"]},
         "CHEBI:58289": {"x": 0, "y": 20, "level": 1, "name": "2-phosphonato-D-glycerate(3-), D-Glycerate 2-phosphate", "alt": ["CHEBI:39868", "CHEBI:21028", "CHEBI:24344", "CHEBI:12986", "CHEBI:17835", "CHEBI:11651", "CHEBI:1267", "CHEBI:88350"]},
         "CHEBI:58702": {"x": 0, "y": 10, "level": 1, "name": "phosphonatoenolpyruvate", "alt": ["CHEBI:18021", "CHEBI:44894", "CHEBI:26054", "CHEBI:14812", "CHEBI:26055", "CHEBI:8147", "CHEBI:44897"]}
-    }
+    },
+    "centroid": {"x": 0, "y": 0}
 }

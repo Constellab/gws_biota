@@ -2,7 +2,7 @@
     "parent": "vitamins and cofactors metabolism",
     "name": "folate metabolism",
     "data": {
-        "CHEBI:15996": {"x": -62, "y": -66, "level": 1, "name": "GTP", "alt": ["CHEBI:24451", "CHEBI:42934", "CHEBI:13342", "CHEBI:5234"]},
+        "CHEBI:15996": {"x": -62, "y": -66, "level": 2, "name": "GTP", "alt": ["CHEBI:24451", "CHEBI:42934", "CHEBI:13342", "CHEBI:5234"]},
         "CHEBI:15635": {"x": 26, "y": 78, "level": 1, "name": "Tetrahydrofolate", "alt": ["CHEBI:18606", "CHEBI:12075", "CHEBI:10931", "CHEBI:15220", "CHEBI:9482", "CHEBI:46069"]},
         "CHEBI:17111": {"x": -490, "y": 177, "level": 1, "name": "5-Phospho-alpha-D-ribose 1-diphosphate", "alt": ["CHEBI:2121", "CHEBI:45139", "CHEBI:12160", "CHEBI:20625", "CHEBI:12159"]},
         "CHEBI:30763": {"x": -174, "y": 244, "level": 1, "name": "4-Hydroxybenzoate", "alt": ["CHEBI:20398", "CHEBI:44949", "CHEBI:1858"]},
@@ -42,5 +42,6 @@
         "CHEBI:132069": {"x": -62, "y": -108, "level": 1, "name": "(8S)-3',8-Cyclo-7,8-dihydroguanosine 5'-triphosphate", "alt": []},
         "CHEBI:71353": {"x": 6, "y": -90, "level": 1, "name": "Cytidylyl molybdenum cofactor", "alt": []},
         "CHEBI:83233": {"x": 6, "y": -122, "level": 1, "name": "Thio-molybdenum cofactor", "alt": []}
-    }
+    },
+    "centroid": {"x": 100, "y": 0}
 }

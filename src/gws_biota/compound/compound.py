@@ -108,7 +108,10 @@ class Compound(BaseFT):
 
     @classmethod
     def search_by_chebi_ids(cls, chebi_ids: Union[list, str]):
+        if isinstance(chebi_ids, str):
+            chebi_ids = [chebi_ids]
         if isinstance(chebi_ids, list):
+            chebi_ids = [_id.replace("CHEBI:", "") for _id in chebi_ids]
             chebi_ids = " ".join(chebi_ids)
         return cls.search(chebi_ids)
 
