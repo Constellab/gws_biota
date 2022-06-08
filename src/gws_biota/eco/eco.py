@@ -38,12 +38,12 @@ class ECO(Ontology):
 
     @property
     def ancestors(self):
-        if not self._ancestors is None:
+        if self._ancestors is not None:
             return self._ancestors
         self._ancestors = []
-        Q = ECOAncestor.select().where(ECOAncestor.eco == self.id)
-        for q in Q:
-            self._ancestors.append(q.ancestor)
+        query = ECOAncestor.select().where(ECOAncestor.eco == self.id)
+        for elt in query:
+            self._ancestors.append(elt.ancestor)
         return self._ancestors
 
     # -- C --
@@ -85,7 +85,6 @@ class ECO(Ontology):
         set self.eco_id
         """
         self.eco_id = id
-
 
 
 class ECOAncestor(ProtectedBaseModel):

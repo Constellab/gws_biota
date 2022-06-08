@@ -1,5 +1,5 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
@@ -9,7 +9,7 @@ from .bto import BTO, BTOAncestor
 from ..base.base_service import BaseService
 
 class BTOService(BaseService):
-    
+
     @classmethod
     @transaction()
     def create_bto_db(cls, biodata_dir = None, **kwargs):
@@ -54,8 +54,7 @@ class BTOService(BaseService):
         for ancestor in bto.data['ancestors']:
             if ancestor != bto.bto_id:
                 ancestors = BTO.select(BTO.id).where(BTO.bto_id == ancestor)
-                if ancestors:
+                if len(ancestors) > 0:
                     val = {'bto': bto.id, 'ancestor': ancestors[0].id }
                     vals.append(val)
         return vals
-        

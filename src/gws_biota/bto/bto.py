@@ -38,12 +38,10 @@ class BTO(Ontology):
     def ancestors(self):
         if not self._ancestors is None:
             return self._ancestors
-
         self._ancestors = []
-        Q = BTOAncestor.select().where(BTOAncestor.bto == self.id)
-        for q in Q:
-            self._ancestors.append(q.ancestor)
-
+        query = BTOAncestor.select().where(BTOAncestor.bto == self.id)
+        for elt in query:
+            self._ancestors.append(elt.ancestor)
         return self._ancestors
 
     # -- C --

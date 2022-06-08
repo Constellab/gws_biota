@@ -39,10 +39,8 @@ class PathwayService(BaseService):
                     "species": _pw["species"]
                 }
             )
-
             ft_names = [pw.name]
             pw.ft_names = cls.format_ft_names(ft_names)
-
             pathways.append(pw)
         Pathway.create_all(pathways)
 

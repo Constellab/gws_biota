@@ -39,16 +39,6 @@ class DbService(BaseService):
 
         cls.create_tables()
         DbCreatorHelper.run()
-
-        # cls_list = [
-        #     BTO, BiomassReaction, Compound, ECO,
-        #     DeprecatedEnzyme, EnzymeClass, EnzymeOrtholog,
-        #     EnzymePathway, Enzyme, GO, Ontology, Organism, Pathway,
-        #     Protein, Reaction, SBO, Taxonomy
-        # ]
-        # for c in cls_list:
-        #     Logger.info(f"Creating {c.__name__} ft index ...")
-        #     c.create_full_text_index()
         Logger.info("Done")
 
     @classmethod
@@ -70,11 +60,6 @@ class DbService(BaseService):
         BaseModelService.drop_tables()
         BaseModelService.create_tables()
         ModelService.register_all_processes_and_resources()
-
-        # from ..reaction.reaction import Reaction
-        # Reaction.drop_table()
-        # Reaction.create_table()
-        # ModelService.register_all_processes_and_resources()
 
         if not ECO.table_exists():
             raise BadRequestException("Cannot create tables")

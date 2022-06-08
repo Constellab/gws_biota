@@ -90,7 +90,7 @@ class CompoundCluster:
 
             folder = (file_path.split("/"))[-2]
             return CompoundCluster(
-                parent=cdata.get("parent", folder),
+                parent=folder,  # cdata.get("parent", folder),
                 name=cdata["name"],
                 data=cdata["data"],
                 centroid=cdata.get("centroid"))

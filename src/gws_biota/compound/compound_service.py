@@ -46,11 +46,11 @@ class CompoundService(BaseService):
         comp_count = len(list_chebi)
         Logger.info(f"Saving {comp_count} compounds ...")
         i = 0
-        for chunk in chunked(list_chebi, cls.BATCH_SIZE):
+        compounds = [Compound(data=data) for data in list_chebi]
+        for compound_chunk in chunked(compounds, cls.BATCH_SIZE):
             i += 1
-            compounds = [Compound(data=data) for data in chunk]
             Logger.info(f"... saving compound chunk {i}/{int(comp_count/cls.BATCH_SIZE)+1}")
-            for comp in compounds:
+            for comp in compound_chunk:
                 comp.set_name(comp.data["name"])
                 comp.chebi_id = comp.data["id"]
                 comp.formula = comp.data["formula"]
@@ -87,7 +87,7 @@ class CompoundService(BaseService):
                 del comp.data["monoisotopic_mass"]
                 del comp.data["charge"]
                 del comp.data["subsets"]
-            Compound.create_all(compounds)
+            Compound.create_all(compound_chunk)
 
         # save ancestors
         vals = []

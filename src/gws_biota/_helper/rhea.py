@@ -1,19 +1,19 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
 import sys
 import os
 import re
-import pronto 
+import pronto
 from pronto import Ontology
 import csv
 
 class Rhea():
     """
 
-    This module allows to get list of biological reactions from rhea files and informations about thoses 
+    This module allows to get list of biological reactions from rhea files and informations about thoses
     reactions, such as master id, equations, substrates, products, biocyc id, kegg id, etc...
 
     """
@@ -23,7 +23,7 @@ class Rhea():
         """
         Parses a .tsv file and returns a list of dictionaries
 
-        This method allows the user to get all informations in the spreadsheet. It is assumed that the firt row 
+        This method allows the user to get all informations in the spreadsheet. It is assumed that the firt row
         of the spreadsheet is the location of the columns
 
         This tool accepts tab (\t) separated value files (.csv) as well as excel
@@ -43,7 +43,7 @@ class Rhea():
             reader = csv.DictReader(csvfile, delimiter='\t', quoting=csv.QUOTE_NONE)
             for row in reader:
                 list__.append( {key.lower() if type(key) == str else key: value for key, value in row.items()} )
-        
+
         return list__
 
     @staticmethod
@@ -51,7 +51,7 @@ class Rhea():
         """
         Parses a rhea-kegg.reaction file of biological reactions and returns a list of dictionaries
 
-        This tool accepts only the formated reaction file on which reaction are 
+        This tool accepts only the formated reaction file on which reaction are
         described this way:
 
         ENTRY       RHEA:10022
@@ -81,18 +81,18 @@ class Rhea():
                 dict__ = {}
                 if m1:
                     dict__["entry"] = m1[1]
-                
+
                 if m2:
                     dict__["definition"] = m2[1]
-                    
+
                 if m3:
                     dict__["equation"] = m3[1]
-                    
+
                 if m4:
                     dict__["enzymes"] = m4[1].split()
-                
+
                 if 'equation' in dict__.keys():
-                    dict__['source_equation'] = dict__['equation']   
+                    dict__['source_equation'] = dict__['equation']
                     if len(re.findall(' =>', dict__['equation'])) > 0:
                         list_compound  = dict__['equation'].split(" => ")
 
@@ -101,7 +101,7 @@ class Rhea():
 
                     elif len(re.findall(' = ', dict__['equation'])) > 0:
                         list_compound  = dict__['equation'].split(" = ")
-                
+
                 reagents = list_compound[0]
                 products = list_compound[1]
                 delimiters = ","," + "
@@ -113,12 +113,12 @@ class Rhea():
 
                 for i in range(0, len(list_substrates)):
                     list_substrates[i] = re.sub(' $', '', list_substrates[i])
-                
+
                 for i in range(0, len(list_products)):
                     list_products[i] = re.sub(' $', '', list_products[i])
 
                 dict__['equation'] = {}
-                
+
                 dict_substrates = {}
                 for i in range(0, len(list_substrates)):
                     if ' ' in list_substrates[i]:
@@ -133,7 +133,7 @@ class Rhea():
 
                 dict__['substrates'] = list_dict_s
                 dict__['equation']["substrates"] = dict_substrates
-                
+
                 dict_products = {}
                 for i in range(0, len(list_products)):
                     if ' ' in list_products[i]:
@@ -145,16 +145,16 @@ class Rhea():
                     else:
                         dict_products[list_products[i]] = 1
                         list_dict_p.append(list_products[i])
-                
+
                 dict__['products'] = list_dict_p
                 dict__['equation']['products'] = dict_products
-            
-                if dict__:           
+
+                if dict__:
                     list_reaction.append(dict__)
-        
+
         return list_reaction
 
-    
+
     @staticmethod
     def get_columns_from_lines(list_lines):
         """
@@ -162,9 +162,9 @@ class Rhea():
         rhea-directions.tsv file.
 
         Each dictionnaries of the input list are formated this way:
-        {'rhea_id_master': rhea_id, 'rhea_id_lr': rhea_id, 'rhea_id_rl': rhea_id, 'rhea_id_bi': rhea_id} 
-        
-        Returns differents lists correponding to sets of reactions 
+        {'rhea_id_master': rhea_id, 'rhea_id_lr': rhea_id, 'rhea_id_rl': rhea_id, 'rhea_id_bi': rhea_id}
+
+        Returns differents lists correponding to sets of reactions
         directed in a specific direction.
 
         This method allows to separate reactions id by specific directions. rhea_master is the list
@@ -173,8 +173,8 @@ class Rhea():
         :type list_lines:
         :param list_lines:
         :returns: rhea_master, rhea_id_LR, rhea_id_RL, rhea_id_BI, lists of reactions id in a specific direction
-        :rtype: list 
-        
+        :rtype: list
+
         """
 
         cols = {

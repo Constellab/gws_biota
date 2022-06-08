@@ -47,7 +47,7 @@ class GOService(BaseService):
             del go.data["id"]
         GO.create_all(gos)
 
-        Logger.info(f"Saving GO ancestors ...")
+        Logger.info("Saving GO ancestors ...")
         vals = []
         for go in gos:
             val = cls.__build_insert_query_vals_of_ancestors(go)

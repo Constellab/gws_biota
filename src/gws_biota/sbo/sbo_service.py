@@ -33,10 +33,8 @@ class SBOService(BaseService):
         for sbo in sbos:
             sbo.set_sbo_id(sbo.data["id"])
             sbo.set_name(sbo.data["name"])
-
             ft_names = [sbo.data["name"], sbo.data["id"]]
             sbo.ft_names = cls.format_ft_names(ft_names)
-
             del sbo.data["id"]
         SBO.create_all(sbos)
 

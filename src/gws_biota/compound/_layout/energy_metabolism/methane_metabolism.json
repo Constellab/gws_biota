@@ -2,7 +2,7 @@
     "parent": "energy metabolism",
     "name": "methane metabolism",
     "data": {
-        "CHEBI:16848": {"x": 0, "y": 0, "level": 1, "name": "coenzyme γ-F420-2", "alt": ["CHEBI:14010", "CHEBI:3807", "CHEBI:14008", "CHEBI:23351"]},
+        "CHEBI:16848": {"x": 0, "y": 0, "level": 1, "name": "coenzyme gamma-F420-2", "alt": ["CHEBI:14010", "CHEBI:3807", "CHEBI:14008", "CHEBI:23351"]},
         "CHEBI:15823": {"x": 0, "y": 0, "level": 1, "name": "1,5-dihydrocoenzyme F420", "alt": ["CHEBI:8788", "CHEBI:15020", "CHEBI:15021", "CHEBI:26524"]},
         "CHEBI:16568": {"x": 0, "y": 0, "level": 1, "name": "5,10-methylenetetrahydromethanopterin", "alt": ["CHEBI:12072", "CHEBI:1990", "CHEBI:12648", "CHEBI:20504"]},
         "CHEBI:17975": {"x": 0, "y": 0, "level": 1, "name": "5,10-(methanylylidene)tetrahydromethanopterin", "alt": ["CHEBI:1988", "CHEBI:12070", "CHEBI:12067", "CHEBI:20501", "CHEBI:12647"]},
@@ -19,8 +19,19 @@
         "CHEBI:17170": {"x": 0, "y": 0, "level": 1, "name": "dimethylamine", "alt": ["CHEBI:42136", "CHEBI:4618", "CHEBI:14170", "CHEBI:23805"]},
         "CHEBI:16830": {"x": 0, "y": 0, "level": 1, "name": "methylamine", "alt": ["CHEBI:44374", "CHEBI:6864", "CHEBI:14595", "CHEBI:25402"]},
         "CHEBI:18139": {"x": 0, "y": 0, "level": 1, "name": "trimethylamine", "alt": ["CHEBI:27125", "CHEBI:9732", "CHEBI:15261", "CHEBI:27127"]},
-        "CHEBI:18139": {"x": 0, "y": 0, "level": 1, "name": "trimethylamine", "alt": ["CHEBI:27125", "CHEBI:9732", "CHEBI:15261", "CHEBI:27127"]},
-
+        "CHEBI:32896": {"x": 0, "y": 0, "level": 1, "name": "(2R)-O-phospho-3-sulfolactic acid", "alt": ["CHEBI:10859", "CHEBI:1265"]},
+        "CHEBI:48291": {"x": 0, "y": 0, "level": 1, "name": "(R)-3-sulfolactic acid", "alt": ["CHEBI:1667", "CHEBI:39945", "CHEBI:38022", "CHEBI:11890", "CHEBI:16071"]},
+        "CHEBI:16894": {"x": 0, "y": 0, "level": 1, "name": "3-sulfopyruvic acid", "alt": ["CHEBI:45736", "CHEBI:11891", "CHEBI:1669"]},
+        "CHEBI:17717": {"x": 0, "y": 0, "level": 1, "name": "sulfoacetaldehyde", "alt": ["CHEBI:9345", "CHEBI:11657", "CHEBI:15140", "CHEBI:26824"]},
+        "CHEBI:17852": {"x": 0, "y": 0, "level": 1, "name": "homocitric acid", "alt": ["CHEBI:1147", "CHEBI:24609"]},
+        "CHEBI:36457": {"x": 0, "y": 0, "level": 1, "name": "homocitrate(3-)", "alt": ["CHEBI:11593", "CHEBI:24608"]},
+        "CHEBI:52222": {"x": 0, "y": 0, "level": 1, "name": "(2R)-homocitric acid", "alt": [""]},
+        "CHEBI:17516": {"x": 0, "y": 0, "level": 1, "name": "but-1-ene-1,2,4-tricarboxylic acid", "alt": ["CHEBI:3226", "CHEBI:22935", "CHEBI:13920"]},
+        "CHEBI:15404": {"x": 0, "y": 0, "level": 1, "name": "(-)-homoisocitrate(3-)", "alt": ["CHEBI:10767", "CHEBI:18469"]},
+        "CHEBI:30903": {"x": 0, "y": 0, "level": 1, "name": "(-)-homoisocitric acid", "alt": ["CHEBI:5756"]},
+        "CHEBI:30904": {"x": 0, "y": 0, "level": 1, "name": "homoisocitrate(3-)", "alt": ["CHEBI:24617", "CHEBI:19972"]},
+        "CHEBI:15753": {"x": 0, "y": 0, "level": 1, "name": "2-oxoadipic acid", "alt": ["CHEBI:11635", "CHEBI:1247", "CHEBI:19737"]},
+        "CHEBI:72694": {"x": 0, "y": 0, "level": 1, "name": "(2R)-dihomocitric acid", "alt": [""]}
     },
     "centroid": {"x": 50, "y": 100}
 }

@@ -76,6 +76,7 @@ class EnzymeService(BaseService):
         i = 0
         for chunk in chunked(list_of_enzymes, cls.BATCH_SIZE):
             i += 1
+            enzyme_chunk = []
             Logger.info(f"... saving enzyme chunk {i}/{int(enz_count/cls.BATCH_SIZE)+1}")
             for d in chunk:
                 ec = d["ec"]
@@ -90,8 +91,9 @@ class EnzymeService(BaseService):
                     ft_names=";".join([ec.replace(".", ""), *rn, *sn, *sy, organism]),
                 )
                 enz.set_name(d["RN"][0])
-                enzymes.append(enz)
-            Enzyme.create_all(enzymes)
+                enzyme_chunk.append(enz)
+            Enzyme.create_all(enzyme_chunk)
+            enzymes.extend(enzyme_chunk)
 
         def _get_new_enzyme_info(old_ec_numner):
             info = []
@@ -201,7 +203,7 @@ class EnzymeService(BaseService):
                     if t.rank in Taxonomy._tax_tree:
                         setattr(enzyme, "tax_" + t.rank, t.tax_id)
                 del enzyme.data["taxonomy"]
-            except:
+            except Exception as _:
                 pass
 
     @classmethod

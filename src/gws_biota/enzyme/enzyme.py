@@ -241,6 +241,7 @@ class Enzyme(BaseFT):
 
     @property
     def taxonomy(self):
+        """ Returns taxonomy """
         return Taxonomy.get_or_none(Taxonomy.tax_id == self.tax_id)
 
     # -- U --

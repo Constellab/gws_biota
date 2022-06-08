@@ -1,22 +1,24 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from gws_core import Logger, transaction
 from peewee import chunked
 
-from gws_core import transaction, Logger
 from .._helper.rhea import Rhea
-from ..compound.compound import Compound
-from .reaction import Reaction, ReactionSubstrate, ReactionProduct, ReactionEnzyme
-from ..enzyme.enzyme import Enzyme
 from ..base.base_service import BaseService
+from ..compound.compound import Compound
+from ..enzyme.enzyme import Enzyme
+from .reaction import (Reaction, ReactionEnzyme, ReactionProduct,
+                       ReactionSubstrate)
+
 
 class ReactionService(BaseService):
-    
+
     @classmethod
     @transaction()
-    def create_reaction_db(cls, biodata_dir = None, **kwargs):
+    def create_reaction_db(cls, biodata_dir=None, **kwargs):
         """
         Creates and fills the `reaction` database
 
@@ -30,7 +32,7 @@ class ReactionService(BaseService):
 
         list_of_reactions = Rhea.parse_reaction_from_file(biodata_dir, kwargs['rhea_reaction_file'])
         cls.__create_reactions(list_of_reactions)
-        
+
         list_of_directions = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea_direction_file'])
         cols = Rhea.get_columns_from_lines(list_of_directions)
 
@@ -41,13 +43,13 @@ class ReactionService(BaseService):
         for k in biocyc_dbs:
             xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2'+k+'_file'])
             cls.__update_master_and_biocyc_ids_from_rhea2biocyc(xref_ids)
-        
+
         xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2kegg_reaction_file'])
         cls.__update_master_and_id_from_rhea2kegg(xref_ids)
-        
+
         xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2ec_file'])
         cls.__update_master_and_biocyc_ids_from_rhea2ec(xref_ids)
-        
+
         xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2reactome_file'])
         cls.__update_master_and_biocyc_ids_from_rhea2ec(xref_ids)
 
@@ -60,7 +62,7 @@ class ReactionService(BaseService):
         __create_substrate_vals_from_data(), __create_product_vals_from_data()
 
         :type list_reaction: list
-        :param list_reaction: list of dictionnaries where each element refers 
+        :param list_reaction: list of dictionnaries where each element refers
         to a rhea reaction
         :returns: list of reactions entities
         :rtype: list
@@ -68,18 +70,17 @@ class ReactionService(BaseService):
 
         rxn_count = len(list_reaction)
         Logger.info(f"Saving {rxn_count} reactions ...")
-
+        reactions = [Reaction(data=data) for data in list_reaction]
         i = 0
-        for chunk in chunked(list_reaction, cls.BATCH_SIZE):
+        for reaction_chunk in chunked(reactions, cls.BATCH_SIZE):
             i += 1
-            reactions = [Reaction(data = data) for data in chunk]
             Logger.info(f"... saving reaction chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
-            for react in reactions:
+            for react in reaction_chunk:
                 if 'entry' in react.data.keys():
                     react.rhea_id = react.data['entry']
                     del react.data['entry']
-            Reaction.create_all(reactions)
-        
+            Reaction.create_all(reaction_chunk)
+
         vals = []
         for react in reactions:
             vals.extend(cls.__create_substrate_vals_from_data(react))
@@ -94,7 +95,7 @@ class ReactionService(BaseService):
         for react in reactions:
             vals.extend(cls.__create_enzymes_vals_and_set_ft_names_from_data(react))
         ReactionEnzyme.insert_all(vals)
-        
+
         # update reaction tf_names
         Reaction.update_all(reactions, fields=['ft_names'])
 
@@ -109,13 +110,13 @@ class ReactionService(BaseService):
         vals = []
         Q = Compound.select().where(Compound.chebi_id << react.data['substrates'])
         for comp in Q:
-            #react.substrates.add(comp)
+            # react.substrates.add(comp)
             vals.append({
                 'reaction': react.id,
                 'compound': comp.id
             })
         return vals
-    
+
     @classmethod
     def __create_product_vals_from_data(cls, react):
         """
@@ -125,7 +126,7 @@ class ReactionService(BaseService):
         vals = []
         Q = Compound.select().where(Compound.chebi_id << react.data['products'])
         for comp in Q:
-            #react.products.add(comp)
+            # react.products.add(comp)
             vals.append({
                 'reaction': react.id,
                 'compound': comp.id
@@ -137,14 +138,14 @@ class ReactionService(BaseService):
         """
         Set enzymes from `data`
         """
-        
+
         vals = []
         if 'enzymes' in react.data:
             Q = Enzyme.select().where(Enzyme.ec_number << react.data['enzymes'])
             tab = []
             for enz in Q:
-                tab.append( enz.ft_names )
-                #react.enzymes.add(enz)
+                tab.append(enz.ft_names)
+                # react.enzymes.add(enz)
                 vals.append({
                     'reaction': react.id,
                     'enzyme': enz.id
@@ -172,7 +173,7 @@ class ReactionService(BaseService):
             biocyc_ids[rhea_id] = dict__['id']
 
         reaction_list = []
-        #for rhea_id in rhea_ids:
+        # for rhea_id in rhea_ids:
         for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:
@@ -198,9 +199,9 @@ class ReactionService(BaseService):
             rhea_ids.append(rhea_id)
             master_ids[rhea_id] = dict__['master_id']
             biocyc_ids[rhea_id] = dict__['id']
-        
+
         reaction_list = []
-        #for rhea_id in rhea_ids:
+        # for rhea_id in rhea_ids:
         for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:
@@ -247,9 +248,9 @@ class ReactionService(BaseService):
             rhea_ids.append(rhea_id)
             master_ids[rhea_id] = dict__['master_id']
             kegg_ids[rhea_id] = dict__['id']
-        
+
         reaction_list = []
-        #for rhea_id in rhea_ids:
+        # for rhea_id in rhea_ids:
         for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:
@@ -296,7 +297,7 @@ class ReactionService(BaseService):
             rhea_ids.append('RHEA:'+s)
 
         reaction_list = []
-        #for rhea_id in rhea_ids:
+        # for rhea_id in rhea_ids:
         for chunk in chunked(rhea_ids, cls.BATCH_SIZE):
             query = Reaction.select().where(Reaction.rhea_id << chunk)
             for reaction in query:

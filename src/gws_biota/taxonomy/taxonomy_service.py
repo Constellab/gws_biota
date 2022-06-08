@@ -27,7 +27,7 @@ class TaxonomyService(BaseService):
         :rtype: None
         """
 
-        Logger.info(f"Loading ncbi taxonomy file ...")
+        Logger.info("Loading ncbi taxonomy file ...")
         dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)
         dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
 

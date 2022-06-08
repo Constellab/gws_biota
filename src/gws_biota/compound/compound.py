@@ -68,18 +68,18 @@ class Compound(BaseFT):
 
     @property
     def ancestors(self):
-        if not self._ancestors is None:
+        """ Returns ancestors """
+        if self._ancestors is not None:
             return self._ancestors
-
         self._ancestors = []
-        Q = CompoundAncestor.select().where(CompoundAncestor.compound == self.id)
-        for q in Q:
-            self._ancestors.append(q.ancestor)
-
+        query = CompoundAncestor.select().where(CompoundAncestor.compound == self.id)
+        for elt in query:
+            self._ancestors.append(elt.ancestor)
         return self._ancestors
 
     @property
     def alt_chebi_ids(self) -> list:
+        """ Returns alternative chebi ids """
         return sorted(self.data.get("alt_id"))
 
     # -- C --
@@ -119,23 +119,21 @@ class Compound(BaseFT):
 
     @property
     def layout(self) -> CompoundLayoutDict:
+        """ Returns layout """
         alt_chebi_ids = self.alt_chebi_ids
         return CompoundLayout.get_layout_by_chebi_id(synonym_chebi_ids=[self.chebi_id, *alt_chebi_ids])
 
     @property
     def pathways(self):
+        """ Returns pathways """
         from .pathway import PathwayCompound
-
         try:
-            pcomps = PathwayCompound.select().where(
-                PathwayCompound.chebi_id == self.chebi_id
-            )
+            pcomps = PathwayCompound.select().where(PathwayCompound.chebi_id == self.chebi_id)
             pathways = []
             for pc in pcomps:
                 pw = pc.pathway
                 if pw:
                     pathways.append(pc.pathway)
-
             return pathways
         except Exception as _:
             return None
@@ -144,17 +142,15 @@ class Compound(BaseFT):
 
     @property
     def reactions(self):
+        """ Returns reactions """
         from .reaction import ReactionProduct, ReactionSubstrate
-
         rxns = []
         Q = ReactionSubstrate.select().where(ReactionSubstrate.compound == self)
         for r in Q:
             rxns.append(r.reaction)
-
         Q = ReactionProduct.select().where(ReactionProduct.compound == self)
         for r in Q:
             rxns.append(r.reaction)
-
         return rxns
 
 
