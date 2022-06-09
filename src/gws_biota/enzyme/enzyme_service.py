@@ -111,7 +111,7 @@ class EnzymeService(BaseService):
                                 current_info = _get_new_enzyme_info(new_ec)
                                 info.extend(current_info)
                         break
-                break
+                    break
             return info
 
         # saved all deprecated enzymes
