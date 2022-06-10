@@ -95,67 +95,58 @@ class EnzymeService(BaseService):
             Enzyme.create_all(enzyme_chunk)
             enzymes.extend(enzyme_chunk)
 
-        def _get_new_enzyme_info(old_ec_numner):
-            info = []
-            for dep_ec in list_deprecated_ec:
-                if dep_ec["old_ec"] == old_ec_numner:
-                    if dep_ec["new_ec"]:
-                        for new_ec in dep_ec["new_ec"]:
-                            count = EnzymeOrtholog.select().where(EnzymeOrtholog.ec_number == new_ec).count()
-                            if count:
-                                info.append({
-                                    "new_ec": new_ec,
-                                    "data": dep_ec["data"]
-                                })
-                            else:
-                                current_info = _get_new_enzyme_info(new_ec)
-                                info.extend(current_info)
-                        break
-                    break
-            return info
+        # flatten the list_deprecated_ec
+        all_old_ecs = [elt["old_ec"] for elt in list_deprecated_ec]
+        #list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec if len(elt["new_ec"]) > 0}
+        list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec}
+        is_nested = True
+        while is_nested:
+            is_nested = False
+            for dep_ec in list_deprecated_ec.values():
+                new_list = []
+                for new_ec in dep_ec["new_ec"]:
+                    if new_ec in all_old_ecs:
+                        # follow nested ...
+                        is_nested = True
+                        if new_ec == dep_ec["old_ec"]:
+                            # pathologic cyclic dependency
+                            dep_ec["new_ec"].remove(new_ec)
+                        if new_ec in list_deprecated_ec:
+                            # take the nested relation
+                            next_dep_ec = list_deprecated_ec[new_ec]
+                            # dep_ec["new_ec"] = next_dep_ec["new_ec"]  # follow the next
+                            new_list.extend(next_dep_ec["new_ec"])  # follow the next
+                            new_list = list(set(new_list))
+                            for key, val in next_dep_ec["data"].items():
+                                # concatenate the next data with the current one
+                                dep_ec["data"][key] += ";" + val
+                        else:
+                            # the next relation does not exist ... this deprecated enzyme was probably deleted
+                            dep_ec["data"]["reason"] += f"; {new_ec} probably deleted"
+                    else:
+                        new_list.append(new_ec)
+                        new_list = list(set(new_list))
+                dep_ec["new_ec"] = new_list
+
+        #list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec.values() if len(elt["new_ec"]) > 0}
 
         # saved all deprecated enzymes
         Logger.info("Saving deprecated enzymes ...")
         deprecated_enzymes = []
-        for dep_ec in list_deprecated_ec:
-            old_ec = dep_ec["old_ec"]
-            all_info = _get_new_enzyme_info(old_ec)
-            for info in all_info:
+        for old_ec, elt in list_deprecated_ec.items():
+            if len(elt["new_ec"]) == 0:
+                elt["new_ec"] = [None]
+
+            for new_ec in elt["new_ec"]:
                 t_enz = DeprecatedEnzyme(
                     ec_number=old_ec,
-                    new_ec_number=info["new_ec"],
-                    data=info["data"],
+                    new_ec_number=new_ec,
+                    data=elt["data"],
                 )
                 deprecated_enzymes.append(t_enz)
 
         if deprecated_enzymes:
             DeprecatedEnzyme.create_all(deprecated_enzymes)
-
-        # # update enzymes and enzo with deprecated info
-        # Logger.info("Updating enzyme and enzoes with depreacted data ...")
-        # enzos_to_update = []
-        # enzymes_to_update = []
-        # for dep_enz in deprecated_enzymes:
-        #     for enzo in enzos.values():
-        #         if enzo.ec_number == dep_enz.new_ec_number:
-        #             enzo.ft_names += dep_enz.new_ec_number.replace(".", "")
-        #             if "deprecated" not in enzo.data:
-        #                 enzo.data["deprecated"] = []
-        #             enzo.data["deprecated"].append(dep_enz.new_ec_number)
-        #             enzos_to_update.append(enzo)
-
-        #     for enzyme in list_of_enzymes:
-        #         if enzyme.ec_number == dep_enz.new_ec_number:
-        #             enzyme.ft_names += dep_enz.new_ec_number.replace(".", "")
-        #             if "deprecated" not in enzyme.data:
-        #                 enzyme.data["deprecated"] = []
-        #             enzyme.data["deprecated"].append(dep_enz.new_ec_number)
-        #             enzymes_to_update.append(enzyme)
-
-        # if enzymes_to_update:
-        #     Enzyme.update_all(enzymes_to_update, fields=['data', 'ft_names'])
-        # if enzos_to_update:
-        #     EnzymeOrtholog.update_all(enzos_to_update, fields=['data', 'ft_names'])
 
         # save taxonomy
         Logger.info("Updating enzyme taxonomy ...")

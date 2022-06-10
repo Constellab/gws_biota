@@ -1339,7 +1339,7 @@ KKM	#4# 0.0000008 (#4# cosubstrate NAD+, mutant G206D/R207I/R208N, pH 8.8,
 	40°C <13>) <13>
 
 ///
-ID	1.1.1.109 (transferred to EC 1.3.1.28, EC 1.1.1.119, and blabla)
+ID	1.1.1.109 (transferred to EC 1.3.1.28, EC 1.1.1.119, EC 1.1.1.109, and blabla)
 ********************************************************************************
 *                                                                              *
 * Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
@@ -1391,6 +1391,38 @@ PR	#4# Streptomyces sp. NTK 937   <9>
 
 RECOMMENDED_NAME
 RN	2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase
+
+
+SYSTEMATIC_NAME
+SN	
+
+///
+ID	1.17.98.1 (deleted, now known to be catalyzed by multiple enzymes)
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+RECOMMENDED_NAME
+RN	bile-acid 7alpha-dehydroxylase
+
+
+SYSTEMATIC_NAME
+SN	
+
+///
+ID	1.17.99.5 (transferred to EC 1.17.98.1)
+********************************************************************************
+*                                                                              *
+* Copyrighted by Dietmar Schomburg, Techn. University Braunschweig, GERMANY    *
+* Distributed under the License as stated at http:/www.brenda-enzymes.org      *
+*                                                                              *
+********************************************************************************
+
+RECOMMENDED_NAME
+RN	bile-acid 7alpha-dehydroxylase
 
 
 SYSTEMATIC_NAME
