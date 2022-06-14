@@ -8,5 +8,5 @@
         "CHEBI:28815": {"x": 909, "y": 79, "level": 1, "name": "heparan sulfate", "alt": ["CHEBI:24502", "CHEBI:24507", "CHEBI:5661"]},
         "CHEBI:4139": {"x": 623, "y": 269, "level": 1, "name": "D-galactopyranose", "alt": []}
     },
-    "centroid": {"x": 50, "y": 100}
+    "centroid": {"x": -1000, "y": 0}
 }

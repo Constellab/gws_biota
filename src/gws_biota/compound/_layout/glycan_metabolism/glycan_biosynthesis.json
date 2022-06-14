@@ -13,5 +13,5 @@
         "CHEBI:17677": {"x": 960, "y": 194, "level": 1, "name": "CTP", "alt": ["CHEBI:41675", "CHEBI:3285", "CHEBI:13286", "CHEBI:23522"]},
         "CHEBI:16749": {"x": 544, "y": 349, "level": 1, "name": "1-phosphatidyl-1D-myo-inositol", "alt": ["CHEBI:11283", "CHEBI:11291", "CHEBI:19086", "CHEBI:11292", "CHEBI:677", "CHEBI:679", "CHEBI:11280", "CHEBI:19088", "CHEBI:28601"]}
     },
-    "centroid": {"x": 50, "y": 100}
+    "centroid": {"x": -1000, "y": 0}
 }

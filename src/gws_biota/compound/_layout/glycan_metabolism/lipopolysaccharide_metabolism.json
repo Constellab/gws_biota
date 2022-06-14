@@ -27,5 +27,5 @@
         "CHEBI:16556": {"x": 0, "y": 0, "level": 1, "name": "CMP-N-acetyl-β-neuraminic acid", "alt": ["CHEBI:44441", "CHEBI:3278", "CHEBI:13279", "CHEBI:13276", "CHEBI:20875", "CHEBI:59434"]}
 
     },
-    "centroid": {"x": 50, "y": 100}
+    "centroid": {"x": -1000, "y": 0}
 }
