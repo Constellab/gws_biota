@@ -101,6 +101,9 @@ class CompoundLayout:
 
     X_LIMIT = 2000
     Y_LIMIT = 4000
+    GRID_SCALE = GRID_SCALE
+    GRID_INTERVAL = GRID_INTERVAL
+    BIOMASS_CLUSTER_CENTER = {"x": 100, "y": -50}
 
     _clusters: List[CompoundCluster] = []
 
@@ -220,3 +223,11 @@ class CompoundLayout:
                 position["y"] = None
 
         return position
+
+    @classmethod
+    def get_biomass_position(cls):
+        """ Format and returns biomass position """
+        return {
+            "x": cls.BIOMASS_CLUSTER_CENTER["x"] * cls.GRID_SCALE,
+            "y": -cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE
+        }

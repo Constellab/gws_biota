@@ -1,0 +1,13 @@
+{  
+    "parent": "energy metabolism",
+    "name": "nitrogen metabolism",
+    "data": {
+        "CHEBI:33539": {"x": 0, "y": 0, "level": 1, "name": "hydroxidodioxidosulfidosulfate(1−)", "alt": [""]},
+        "CHEBI:33541": {"x": 0, "y": 0, "level": 1, "name": "thiosulfate(1−)", "alt": [""]},
+        "CHEBI:17709": {"x": 0, "y": 0, "level": 1, "name": "5'-adenylyl sulfate", "alt": ["CHEBI:40562", "CHEBI:12059", "CHEBI:2486", "CHEBI:13741", "CHEBI:13743", "CHEBI:22247"]},
+        "CHEBI:48854": {"x": 0, "y": 0, "level": 1, "name": "sulfurous acid", "alt": ["CHEBI:9344", "CHEBI:26837"]},
+        "CHEBI:16136": {"x": 0, "y": 0, "level": 1, "name": "hydrogen sulfide", "alt": ["CHEBI:14414", "CHEBI:45489", "CHEBI:43058", "CHEBI:5787", "CHEBI:13356", "CHEBI:24639"]}
+
+    },
+    "centroid": {"x": 50, "y": 100}
+}

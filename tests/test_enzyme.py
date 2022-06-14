@@ -30,7 +30,7 @@ class TestEnzyme(BaseTestCase):
             bto_ids.append(enzyme.params('ST')[i].get("bto"))
 
         print(bto_ids)
-        
+
         self.assertEqual(enzyme.bto[0].bto_id, 'BTO_0000214')
 
         self.assertEqual(enzyme.organism, 'Candida boidinii')
