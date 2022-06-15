@@ -2,8 +2,8 @@
     "parent": "amino acid metabolism",
     "name": "branched-chain amino acid metabolism",
     "data": {
-        "CHEBI:15586": {"x": 150,    "y": 45, "level": 1, "name": "D-citramalic acid", "alt": ["CHEBI:315", "CHEBI:18563"]},
-        "CHEBI:30934": {"x": 150,    "y": 50, "level": 1, "name": "D-citramalate(2-)", "alt": ["CHEBI:10977", "CHEBI:18562"]},
+        "CHEBI:15586": {"x": 0,    "y": 0, "level": 2, "name": "D-citramalic acid", "alt": ["CHEBI:315", "CHEBI:18563"]},
+        "CHEBI:30934": {"x": 906,    "y": 475, "level": 1, "name": "D-citramalate(2-)", "alt": ["CHEBI:10977", "CHEBI:18562"]},
         "CHEBI:17626": {"x": 150,    "y": 55, "level": 1, "name": "citraconic acid", "alt": ["CHEBI:1207", "CHEBI:19703", "CHEBI:19704", "CHEBI:11623"]},
         "CHEBI:18409": {"x": 145,    "y": 50, "level": 1, "name": "(2S)-2-hydroxy-2-methyl-3-oxobutanoic acid", "alt": ["CHEBI:11033", "CHEBI:374", "CHEBI:18731"]},
         "CHEBI:15684": {"x": 150,    "y": 50, "level": 1, "name": "(R)-2,3-dihydroxy-3-methylbutanoic acid", "alt": ["CHEBI:10966", "CHEBI:305", "CHEBI:18645"]},
