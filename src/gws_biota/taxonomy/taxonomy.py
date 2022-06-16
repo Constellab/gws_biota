@@ -78,6 +78,12 @@ class Taxonomy(Ontology):
         self._children = Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.tax_id)
         return self._children
 
+    # -- G --
+
+    @classmethod
+    def get_tax_tree(cls):
+        return cls._tax_tree
+
     # -- S --
 
     @property

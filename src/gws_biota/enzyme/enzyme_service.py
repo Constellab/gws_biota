@@ -167,7 +167,7 @@ class EnzymeService(BaseService):
     def __update_taxonomy(cls, enzymes):
         for enz in enzymes:
             cls.__set_taxonomy_data(enz)
-        fields = ["tax_"+t for t in Taxonomy._tax_tree]
+        fields = ["tax_"+t for t in Taxonomy.get_tax_tree()]
         Enzyme.update_all(enzymes, fields=["tax_id", *fields])
 
     @classmethod
@@ -191,7 +191,7 @@ class EnzymeService(BaseService):
                 tax = Taxonomy.get(Taxonomy.tax_id == enzyme.tax_id)
                 setattr(enzyme, "tax_" + tax.rank, tax.tax_id)
                 for t in tax.ancestors:
-                    if t.rank in Taxonomy._tax_tree:
+                    if t.rank in Taxonomy.get_tax_tree():
                         setattr(enzyme, "tax_" + t.rank, t.tax_id)
                 del enzyme.data["taxonomy"]
             except Exception as _:
