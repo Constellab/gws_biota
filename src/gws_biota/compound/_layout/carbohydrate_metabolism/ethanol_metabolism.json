@@ -2,8 +2,8 @@
     "parent": "carbohydrate metabolism",
     "name": "ethanol metabolism",
     "data": {
-        "CHEBI:15343": {"x": 20, "y": 0, "level": 1, "name": "acetaldehyde", "alt": ["CHEBI:40533", "CHEBI:13703", "CHEBI:2383", "CHEBI:22158"]},
-        "CHEBI:16236": {"x": 30, "y": 0, "level": 1, "name": "ethanol", "alt": ["CHEBI:44594", "CHEBI:42377", "CHEBI:4879", "CHEBI:14222", "CHEBI:23978", "CHEBI:30878", "CHEBI:30880"]}
+        "CHEBI:15343": {"x": 763, "y": 497, "level": 1, "name": "acetaldehyde", "alt": ["CHEBI:40533", "CHEBI:13703", "CHEBI:2383", "CHEBI:22158"]},
+        "CHEBI:16236": {"x": 728, "y": 497, "level": 1, "name": "ethanol", "alt": ["CHEBI:44594", "CHEBI:42377", "CHEBI:4879", "CHEBI:14222", "CHEBI:23978", "CHEBI:30878", "CHEBI:30880"]}
     },
     "centroid": {"x": 0, "y": 0}
 }
