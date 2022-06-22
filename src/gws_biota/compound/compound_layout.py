@@ -231,3 +231,8 @@ class CompoundLayout:
             "x": cls.BIOMASS_CLUSTER_CENTER["x"] * cls.GRID_SCALE,
             "y": -cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE
         }
+
+    @classmethod
+    def get_empty_layout(cls) -> CompoundLayoutDict:
+        """ Get empty layout  """
+        return {"x": None, "y": None, "clusters": {}}
