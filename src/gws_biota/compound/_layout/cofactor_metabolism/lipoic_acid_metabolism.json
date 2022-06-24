@@ -13,5 +13,5 @@
         "CHEBI:55451": {"x": 77, "y": 2, "level": 1, "name": "Lipoyl-AMP", "alt": []},
         "CHEBI:30314": {"x": 95, "y": 2, "level": 1, "name": "(R)-Lipoate", "alt": []}
     },
-    "centroid": {"x": -100, "y": 0}
+    "centroid": {"x": 377, "y": 594}
 }

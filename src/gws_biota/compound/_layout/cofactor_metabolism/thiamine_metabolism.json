@@ -29,5 +29,5 @@
         "CHEBI:134399": {"x": 100, "y": -15, "level": 1, "name": "ADP-5-ethyl-4-methylthiazole-2-carboxylate", "alt": ["CHEBI:40688"]},
         "CHEBI:29052": {"x": -439, "y": 128, "level": 1, "name": "D-Glyceraldehyde 3-phosphate", "alt": ["CHEBI:21026", "CHEBI:181", "CHEBI:12984", "CHEBI:12983", "CHEBI:18324"]}
     },
-    "centroid": {"x": 100, "y": -30}
+    "centroid": {"x": 1158, "y": 238}
 }

@@ -26,5 +26,5 @@
         "CHEBI:18409": {"x": -126, "y": -44, "level": 1, "name": "(S)-2-Acetolactate", "alt": ["CHEBI:11033", "CHEBI:18731", "CHEBI:374"]},
         "CHEBI:61291": {"x": -34, "y": -10, "level": 1, "name": "(R)-4-Phosphopantoate", "alt": []}
     },
-    "centroid": {"x": 100, "y": -150}
+    "centroid": {"x": 1155, "y": 529}
 }

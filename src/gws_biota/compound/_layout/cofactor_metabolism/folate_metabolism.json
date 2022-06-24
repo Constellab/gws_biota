@@ -43,5 +43,5 @@
         "CHEBI:71353": {"x": 6, "y": -90, "level": 1, "name": "Cytidylyl molybdenum cofactor", "alt": []},
         "CHEBI:83233": {"x": 6, "y": -122, "level": 1, "name": "Thio-molybdenum cofactor", "alt": []}
     },
-    "centroid": {"x": 100, "y": 0}
+    "centroid": {"x": 1339, "y": 159}
 }

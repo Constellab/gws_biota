@@ -15,5 +15,5 @@
         "CHEBI:62193": {"x": -74, "y": -31, "level": 1, "name": "Biotin sulfoxide", "alt": []},
         "CHEBI:17330": {"x": -103, "y": 29, "level": 2, "name": "Malonyl-[acyl-carrier protein]", "alt": ["CHEBI:14566", "CHEBI:6662"]}
     },
-    "centroid": {"x": 100, "y": -100}
+    "centroid": {"x": 1096, "y": 785}
 }

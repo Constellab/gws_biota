@@ -21,5 +21,5 @@
         "CHEBI:64186": {"x": 86, "y": 28, "level": 1, "name": "2-Amino-3-oxo-4-phosphonooxybutyrate", "alt": []},
         "CHEBI:1449": {"x": 109, "y": 28, "level": 1, "name": "3-Amino-2-oxopropyl phosphate", "alt": []}
     },
-    "centroid": {"x": 100, "y": -50}
+    "centroid": {"x": 1119, "y": 321}
 }

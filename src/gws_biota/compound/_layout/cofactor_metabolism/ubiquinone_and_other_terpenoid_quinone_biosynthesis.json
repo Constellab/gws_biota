@@ -63,5 +63,5 @@
         "CHEBI:64260": {"x": 136, "y": 27, "level": 1, "name": "6-Amino-6-deoxyfutalosine", "alt": []},
         "CHEBI:88158": {"x": 87, "y": -93, "level": 1, "name": "2-Carboxy-1,4-naphthoquinone", "alt": []}
     },
-    "centroid": {"x": 100, "y": -70}
+    "centroid": {"x": 1165, "y": 464}
 }

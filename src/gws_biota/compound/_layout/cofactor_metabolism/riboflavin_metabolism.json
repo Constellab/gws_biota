@@ -22,5 +22,5 @@
         "CHEBI:11515": {"x": 196, "y": -117, "level": 1, "name": "2-Amino-5-formylamino-6-(5-phospho-D-ribosylamino)pyrimidin-4(3H)-one", "alt": ["CHEBI:59547"]},
         "CHEBI:52402": {"x": 186, "y": -75, "level": 1, "name": "2,5-Diamino-6-(5-phospho-D-ribitylamino)pyrimidin-4(3H)-one", "alt": ["CHEBI:52957"]}
     },
-    "centroid": {"x": 100, "y": -100}
+    "centroid": {"x": 1114, "y": 198}
 }

@@ -16,5 +16,5 @@
         "CHEBI:78273": {"x": 0, "y": -24, "level": 1, "name": "9-cis-Retinal", "alt": []},
         "CHEBI:78272": {"x": -21, "y": -24, "level": 1, "name": "9-cis-Retinol", "alt": []}
     },
-    "centroid": {"x": 100, "y": -150}
+    "centroid": {"x": 142, "y": 396}
 }

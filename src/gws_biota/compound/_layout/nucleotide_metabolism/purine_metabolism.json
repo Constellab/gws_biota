@@ -90,5 +90,5 @@
         "CHEBI:16991": {"x": -19, "y": -103, "level": 1, "name": "DNA", "alt": ["CHEBI:33698", "CHEBI:4291", "CHEBI:13302", "CHEBI:21123"]},
         "CHEBI:33697": {"x": 203, "y": -150, "level": 1, "name": "RNA", "alt": []}
     },
-    "centroid": {"x": 300, "y": 150}
+    "centroid": {"x": 1081, "y": 216}
 }
