@@ -5,7 +5,7 @@
         "CHEBI:15682": {"x": 1152, "y": 534, "level": 1, "name": "(N-omega-L-arginino)succinic acid", "alt": ["CHEBI:7098", "CHEBI:10960", "CHEBI:21475"]},
         "CHEBI:184023": {"x": 0, "y": 0, "level": 2, "name": "Argininosuccinic acid", "alt": []},
         "CHEBI:16349": {"x": 1113, "y": 575, "level": 1, "name": "L-citrulline", "alt": ["CHEBI:41489", "CHEBI:6203", "CHEBI:13092", "CHEBI:21257"]},
-        "CHEBI:16467": {"x": 1187, "y": 575, "level": 1, "name": "L-arginine", "alt": ["CHEBI:6185", "CHEBI:13077", "CHEBI:42927", "CHEBI:21235"]},        	
+        "CHEBI:16467": {"x": 1187, "y": 575, "level": 1, "name": "L-arginine", "alt": ["CHEBI:6185", "CHEBI:13077", "CHEBI:42927", "CHEBI:21235", "CHEBI:32683", "CHEBI:22616", "CHEBI:2643", "CHEBI:32681", "CHEBI:32682", "CHEBI:32696", "CHEBI:32695", "CHEBI:29016", "CHEBI:32697", "CHEBI:133495"]},        	
         "CHEBI:16344": {"x": 1252, "y": 575, "level": 1, "name": "guanidinoacetic acid", "alt": ["CHEBI:44474", "CHEBI:5560", "CHEBI:14369", "CHEBI:24438", "CHEBI:24440"]},        	
         "CHEBI:16919": {"x": 1271, "y": 575, "level": 1, "name": "creatine", "alt": ["CHEBI:23404", "CHEBI:41678", "CHEBI:3909", "CHEBI:14028"]},
         "CHEBI:49002": {"x": 1109, "y": 591, "level": 1, "name": "N-acetyl-L-citrulline", "alt": ["CHEBI:44544", "CHEBI:49001"]},        	
