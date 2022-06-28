@@ -20,11 +20,10 @@
         "CHEBI:17295": {"x": 930, "y": 380, "level": 1, "name": "L-phenylalanine", "alt": ["CHEBI:45079", "CHEBI:44851", "CHEBI:44885", "CHEBI:6282", "CHEBI:13151", "CHEBI:21370", "CHEBI:32505", "CHEBI:32504", "CHEBI:32486", "CHEBI:58095", "CHEBI:28044", "CHEBI:32487", "CHEBI:8089", "CHEBI:76052", "CHEBI:25984"]},
         "CHEBI:18005": {"x": 958, "y": 380, "level": 1, "name": "keto-phenylpyruvate", "alt": ["CHEBI:14784", "CHEBI:26007", "CHEBI:12821"]},
         "CHEBI:30851": {"x": 0, "y": 0, "level": 2, "name": "keto-phenylpyruvic acid", "alt": ["CHEBI:45005", "CHEBI:8105", "CHEBI:26009"]},
+        "CHEBI:29934": {"x": 992, "y": 380, "level": 1, "name": "(1s,4s)-prephenate(2-)", "alt": ["CHEBI:26256", "CHEBI:14884", "CHEBI:8399", "CHEBI:45028", "CHEBI:84387", "CHEBI:57852", "CHEBI:26257", "CHEBI:16666"]},
 
-        "CHEBI:29934": {"x": 992, "y": 380, "level": 1, "name": "(1s,4s)-prephenate(2-)", "alt": ["CHEBI:26256", "CHEBI:14884"]},
-
-        "CHEBI:84387": {"x": 0, "y": 0, "level": 2, "name": "(1s,4s)-prephenic acid", "alt": []},
         "CHEBI:17333": {"x": 992, "y": 410, "level": 1, "name": "chorismic acid", "alt": ["CHEBI:3677", "CHEBI:23227"]},
+
         "CHEBI:16567": {"x": 1019, "y": 410, "level": 1, "name": "anthranilate", "alt": ["CHEBI:22575", "CHEBI:13841"]},
         "CHEBI:30754": {"x": 0, "y": 0, "level": 2, "name": "anthranilic acid", "alt": ["CHEBI:40980", "CHEBI:2757", "CHEBI:22577", "CHEBI:22578"]},
         "CHEBI:29112": {"x": 1107, "y": 410, "level": 1, "name": "1-(2-carboxyphenylamino)-1-deoxy-D-ribulose 5-phosphate", "alt": ["CHEBI:565", "CHEBI:18959", "CHEBI:11186", "CHEBI:566", "CHEBI:28625"]},
