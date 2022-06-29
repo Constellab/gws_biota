@@ -20,18 +20,14 @@
         "CHEBI:15486": {"x": 933,    "y": 561, "level": 1, "name": "3-methylbut-2-enoyl-CoA", "alt": ["CHEBI:27728", "CHEBI:1599", "CHEBI:11853", "CHEBI:11858", "CHEBI:23802", "CHEBI:20128", "CHEBI:4615", "CHEBI:57344"]},
         "CHEBI:15487": {"x": 964,    "y": 561, "level": 1, "name": "isovaleryl-CoA", "alt": ["CHEBI:11856", "CHEBI:1598", "CHEBI:14481", "CHEBI:20126", "CHEBI:57345"]},
         "CHEBI:27512": {"x": 1019,    "y": 566, "level": 1, "name": "(2R,3R)-2,3-dihydroxy-3-methylpentanoic acid", "alt": ["CHEBI:306", "CHEBI:18646", "CHEBI:49258"]},
-
         "CHEBI:80221": {"x": 964,    "y": 575, "level": 1, "name": "[Dihydrolipoyllysine-residue (2-methylpropanoyl)transferase] S-(3-methylbutanoyl)dihydrolipoyllysine", "alt": []},
-
-        "CHEBI:17865": {"x": 1032,    "y": 575, "level": 1, "name": "4-methyl-2-oxopentanoate", "alt": ["CHEBI:20438", "CHEBI:12020"]},
-        "CHEBI:48430": {"x": 0,    "y": 0, "level": 2, "name": "4-methyl-2-oxopentanoic acid", "alt": ["CHEBI:41619", "CHEBI:1891"]},
-        "CHEBI:15614": {"x": 1019,    "y": 583, "level": 1, "name": "(S)-3-methyl-2-oxovaleric acid", "alt": ["CHEBI:401", "CHEBI:18567", "CHEBI:213"]},
-        "CHEBI:35146": {"x": 0,    "y": 0, "level": 2, "name": "(S)-3-methyl-2-oxovalerate", "alt": ["CHEBI:18755", "CHEBI:10888", "CHEBI:11049", "CHEBI:18568"]},
-        "CHEBI:15603": {"x": 1032,    "y": 591, "level": 1, "name": "L-leucine", "alt": ["CHEBI:43695", "CHEBI:43814", "CHEBI:43733", "CHEBI:43646", "CHEBI:10866", "CHEBI:6260", "CHEBI:13131", "CHEBI:21348"]},
-        "CHEBI:17191": {"x": 1019,    "y": 614, "level": 1, "name": "L-isoleucine", "alt": ["CHEBI:43290", "CHEBI:43342", "CHEBI:43366", "CHEBI:6255", "CHEBI:13127", "CHEBI:21344"]},
+        "CHEBI:17865": {"x": 1032,    "y": 575, "level": 1, "name": "4-methyl-2-oxopentanoate", "alt": ["CHEBI:20438", "CHEBI:12020", "CHEBI:48430", "CHEBI:41619", "CHEBI:1891"]},
+        "CHEBI:15614": {"x": 1019,    "y": 583, "level": 1, "name": "(S)-3-methyl-2-oxovaleric acid", "alt": ["CHEBI:401", "CHEBI:18567", "CHEBI:213", "CHEBI:35146", "CHEBI:18755", "CHEBI:10888", "CHEBI:11049", "CHEBI:18568"]},
+        "CHEBI:15603": {"x": 1032,    "y": 591, "level": 1, "name": "L-leucine", "alt": ["CHEBI:43695", "CHEBI:43814", "CHEBI:43733", "CHEBI:43646", "CHEBI:10866", "CHEBI:6260", "CHEBI:13131", "CHEBI:21348", "CHEBI:32620", "CHEBI:25017", "CHEBI:32628", "CHEBI:32627", "CHEBI:57427", "CHEBI:32619"]},
+        "CHEBI:17191": {"x": 1019,    "y": 614, "level": 1, "name": "L-isoleucine", "alt": ["CHEBI:43290", "CHEBI:43342", "CHEBI:43366", "CHEBI:6255", "CHEBI:13127", "CHEBI:21344", "CHEBI:32604", "CHEBI:32605", "CHEBI:32613", "CHEBI:32612", "CHEBI:24898", "CHEBI:58045"]},
         "CHEBI:80218": {"x": 435,    "y": 596, "level": 1, "name": "Enzyme N6-(lipoyl)lysine", "alt": []},
         "CHEBI:80219": {"x": 952,    "y": 611, "level": 1, "name": "Enzyme N6-(dihydrolipoyl)lysine", "alt": []},
-        "CHEBI:16414": {"x": 1055,    "y": 635, "level": 1, "name": "L-valine", "alt": ["CHEBI:46376", "CHEBI:46282", "CHEBI:46484", "CHEBI:46418", "CHEBI:13186", "CHEBI:21417", "CHEBI:6321"]}
+        "CHEBI:16414": {"x": 1055,    "y": 635, "level": 1, "name": "L-valine", "alt": ["CHEBI:46376", "CHEBI:46282", "CHEBI:46484", "CHEBI:46418", "CHEBI:13186", "CHEBI:21417", "CHEBI:6321", "CHEBI:32859", "CHEBI:57762", "CHEBI:32852", "CHEBI:32851", "CHEBI:87977", "CHEBI:32860", "CHEBI:27266"]}
     },
     "centroid": {"x": 100, "y": -50}
 }
