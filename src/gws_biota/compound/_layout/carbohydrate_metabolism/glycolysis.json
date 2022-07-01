@@ -3,6 +3,7 @@
     "name": "glycolysis",
     "data": {
         "CHEBI:15903": {"x": 796, "y": 263, "level": 1, "name": "beta-D-glucose, D-glucose", "alt": ["CHEBI:4167", "CHEBI:17634", "CHEBI:12965", "CHEBI:20999", "CHEBI:41140", "CHEBI:12373", "CHEBI:22795", "CHEBI:10397"]},
+
         "CHEBI:17925": {"x": 679, "y": 282, "level": 1, "name": "alpha-D-glucose", "alt": ["CHEBI:40557", "CHEBI:42802", "CHEBI:10242", "CHEBI:12318", "CHEBI:22386"]},
         "CHEBI:58225": {"x": 706, "y": 282, "level": 1, "name": "alpha-D-glucose 6-phosphate(2-), alpha-D-glucose 6-phosphate", "alt": ["CHEBI:17665", "CHEBI:10245", "CHEBI:42748", "CHEBI:12321", "CHEBI:22389"]},
         "CHEBI:61548": {"x": 593, "y": 396, "level": 1, "name": "D-glucose 6-phosphate", "alt": ["CHEBI:4170", "14314"]},
