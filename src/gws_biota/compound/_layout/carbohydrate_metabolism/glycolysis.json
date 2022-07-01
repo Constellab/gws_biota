@@ -3,12 +3,11 @@
     "name": "glycolysis",
     "data": {
         "CHEBI:15903": {"x": 796, "y": 263, "level": 1, "name": "beta-D-glucose, D-glucose", "alt": ["CHEBI:4167", "CHEBI:17634", "CHEBI:12965", "CHEBI:20999", "CHEBI:41140", "CHEBI:12373", "CHEBI:22795", "CHEBI:10397"]},
-
         "CHEBI:17925": {"x": 679, "y": 282, "level": 1, "name": "alpha-D-glucose", "alt": ["CHEBI:40557", "CHEBI:42802", "CHEBI:10242", "CHEBI:12318", "CHEBI:22386"]},
         "CHEBI:58225": {"x": 706, "y": 282, "level": 1, "name": "alpha-D-glucose 6-phosphate(2-), alpha-D-glucose 6-phosphate", "alt": ["CHEBI:17665", "CHEBI:10245", "CHEBI:42748", "CHEBI:12321", "CHEBI:22389"]},
         "CHEBI:61548": {"x": 593, "y": 396, "level": 1, "name": "D-glucose 6-phosphate", "alt": ["CHEBI:4170", "14314"]},
         "CHEBI:57634": {"x": 706, "y": 309, "level": 1, "name": "beta-D-fructofuranose 6-phosphate(2-)", "alt": ["CHEBI:16084", "CHEBI:42378", "CHEBI:10375", "CHEBI:12352", "CHEBI:22768"]},
-        "CHEBI:28013": {"x": 706, "y": 335, "level": 1, "name": "beta-D-fructofuranose 1,6-bisphosphate", "alt": ["CHEBI:42553", "CHEBI:41014", "CHEBI:22767", "CHEBI:10374", "CHEBI:37736", "49299"]},
+        "CHEBI:28013": {"x": 706, "y": 335, "level": 1, "name": "beta-D-fructofuranose 1,6-bisphosphate", "alt": ["CHEBI:42553", "CHEBI:41014", "CHEBI:22767", "CHEBI:10374", "CHEBI:37736", "CHEBI:49299"]},
         "CHEBI:59776": {"x": 719, "y": 366, "level": 1, "name": "D-glyceraldehyde 3-phosphate(2-)", "alt": ["CHEBI:29052", "CHEBI:181", "CHEBI:12983", "CHEBI:12984", "CHEBI:21026", "CHEBI:18324", "CHEBI:14333", "CHEBI:17138", "CHEBI:5446", "CHEBI:58027"]},
         "CHEBI:57604": {"x": 719, "y": 400, "level": 1, "name": "3-phosphonato-D-glyceroyl phosphate(4-), 3-Phospho-D-glyceroyl phosphate", "alt": ["CHEBI:20189", "CHEBI:11881", "CHEBI:16001", "CHEBI:1658"]},
         "CHEBI:58272": {"x": 719, "y": 424, "level": 1, "name": "3-phosphonato-D-glycerate(3-), 3-Phospho-D-glycerate", "alt": ["CHEBI:11879", "CHEBI:11880", "CHEBI:17794", "CHEBI:21029", "CHEBI:1657", "CHEBI:58272", "CHEBI:12987"]},
