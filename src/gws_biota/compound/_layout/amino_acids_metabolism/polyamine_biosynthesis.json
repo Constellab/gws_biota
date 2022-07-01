@@ -6,15 +6,15 @@
         "CHEBI:17768": {"x": 1212, "y": 624, "level": 1, "name": "N-acetylputrescine", "alt": ["CHEBI:7222", "CHEBI:21629", "CHEBI:12473"]},
         "CHEBI:48005": {"x": 1173, "y": 662, "level": 1, "name": "gamma-L-glutamylputrescine", "alt": []},
         "CHEBI:17509": {"x": 1139, "y": 670, "level": 1, "name": "5'-S-methyl-5'-thioadenosine", "alt": ["CHEBI:14605", "CHEBI:20494", "CHEBI:44181", "CHEBI:12064", "CHEBI:12771", "CHEBI:1966", "CHEBI:1986", "CHEBI:12055", "CHEBI:18175", "CHEBI:20491"]},
-        "CHEBI:180963": {"x": 0, "y": 0, "level": 2, "name": "beta-D-Ribofuranose, 1-(6-amino-9H-purin-9-yl)-1-deoxy-5-S-methyl-5-thio-", "alt": []},
+        "CHEBI:180963": {"x": null, "y": null, "level": 2, "name": "beta-D-Ribofuranose, 1-(6-amino-9H-purin-9-yl)-1-deoxy-5-S-methyl-5-thio-", "alt": []},
         "CHEBI:7386": {"x": 1212, "y": 685, "level": 1, "name": "4-acetamidobutanal", "alt": []},
         "CHEBI:61521": {"x": 1173, "y": 702, "level": 1, "name": "gamma-glutamyl-gamma-aminobutyraldehyde", "alt": []},
-        "CHEBI:178402": {"x": 0, "y": 0, "level": 2, "name": "L-N-(3-Carboxypropyl)glutamine", "alt": []},
+        "CHEBI:178402": {"x": null, "y": null, "level": 2, "name": "L-N-(3-Carboxypropyl)glutamine", "alt": []},
         "CHEBI:49260": {"x": 1173, "y": 729, "level": 1, "name": "4-(L-gamma-glutamylamino)butanoic acid", "alt": []},
         "CHEBI:16865": {"x": 145, "y": 110, "level": 1, "name": "gamma-aminobutyric acid", "alt": ["CHEBI:40483", "CHEBI:1786", "CHEBI:20318", "CHEBI:193777"]},
         "CHEBI:30566": {"x": 981, "y": 761, "level": 1, "name": "gamma-aminobutyrate", "alt": ["CHEBI:20317", "CHEBI:11961"]},
         "CHEBI:11951": {"x": 1212, "y": 760, "level": 1, "name": "4-acetamidobutanoate", "alt": []},
-        "CHEBI:17645": {"x": 0, "y": 0, "level": 2, "name": "4-acetamidobutanoic acid", "alt": ["CHEBI:20303", "CHEBI:1777"]}
+        "CHEBI:17645": {"x": null, "y": null, "level": 2, "name": "4-acetamidobutanoic acid", "alt": ["CHEBI:20303", "CHEBI:1777"]}
     },
     "centroid": {"x": 100, "y": -50}
 }

@@ -10,8 +10,8 @@ from typing import Dict, List, TypedDict, Union
 
 from gws_core import BadRequestException, Logger
 
-GRID_SCALE = 10
-GRID_INTERVAL = 10
+GRID_SCALE = 3
+GRID_INTERVAL = 100
 
 CompoundClusterDict = TypedDict("CompoundClusterDict", {
     "name": List[dict],
@@ -72,8 +72,10 @@ class CompoundCluster:
         """ Generate positions """
         data = {}
         for comp_id, comp_data in self._data.items():
-            comp_data["x"] = GRID_SCALE * (comp_data["x"] + self._centroid["x"])
-            comp_data["y"] = - GRID_SCALE * (comp_data["y"] + self._centroid["y"])
+            if comp_data["x"] is not None:
+                comp_data["x"] = GRID_SCALE * (comp_data["x"] + self._centroid["x"])
+            if comp_data["y"] is not None:
+                comp_data["y"] = GRID_SCALE * (comp_data["y"] + self._centroid["y"])
             comp_data["parent"] = self._parent
             comp_data["name"] = self._name
             data[comp_id] = comp_data
@@ -99,11 +101,11 @@ class CompoundCluster:
 class CompoundLayout:
     """ CompoundLayout """
 
-    X_LIMIT = 2000
+    X_LIMIT = 4000
     Y_LIMIT = 4000
     GRID_SCALE = GRID_SCALE
     GRID_INTERVAL = GRID_INTERVAL
-    BIOMASS_CLUSTER_CENTER = {"x": 100, "y": -50}
+    BIOMASS_CLUSTER_CENTER = {"x": 1000, "y": 1000}
 
     _clusters: List[CompoundCluster] = []
 
@@ -210,14 +212,18 @@ class CompoundLayout:
 
         # add offset for compartment
         if compartment and compartment != "c":
-            position["x"] += rnd_offset() * GRID_SCALE
-            position["y"] += rnd_offset() * GRID_SCALE
+            if position["x"] is not None:
+                position["x"] += rnd_offset() * GRID_SCALE
 
-        if position["x"] > cls.X_LIMIT or position["x"] < -cls.X_LIMIT:
-            position["x"] = None
-            position["y"] = None
+            if position["y"] is not None:
+                position["y"] += rnd_offset() * GRID_SCALE
 
-        if position["y"]:
+        if position["x"] is not None:
+            if position["x"] > cls.X_LIMIT or position["x"] < -cls.X_LIMIT:
+                position["x"] = None
+                position["y"] = None
+
+        if position["y"] is not None:
             if position["y"] > cls.Y_LIMIT or position["y"] < -cls.Y_LIMIT:
                 position["x"] = None
                 position["y"] = None
@@ -229,7 +235,7 @@ class CompoundLayout:
         """ Format and returns biomass position """
         return {
             "x": cls.BIOMASS_CLUSTER_CENTER["x"] * cls.GRID_SCALE,
-            "y": -cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE
+            "y": cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE
         }
 
     @classmethod

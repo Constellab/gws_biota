@@ -2,7 +2,7 @@
     "parent": "energy metabolism",
     "name": "sulfur metabolism",
     "data": {
-        "CHEBI:33539": {"x": 0, "y": 0, "level": 2, "name": "hydroxidodioxidosulfidosulfate(1-)", "alt": [""]},
+        "CHEBI:33539": {"x": null, "y": null, "level": 2, "name": "hydroxidodioxidosulfidosulfate(1-)", "alt": [""]},
         "CHEBI:33541": {"x": 895, "y": 373, "level": 1, "name": "thiosulfate(1−)", "alt": [""]},
         "CHEBI:17709": {"x": 926, "y": 390, "level": 1, "name": "5'-adenylyl sulfate", "alt": ["CHEBI:40562", "CHEBI:12059", "CHEBI:2486", "CHEBI:13741", "CHEBI:13743", "CHEBI:22247"]},
         "CHEBI:48854": {"x": 926, "y": 410, "level": 1, "name": "sulfurous acid", "alt": ["CHEBI:9344", "CHEBI:26837"]},

@@ -3,7 +3,7 @@
     "data": {
         "CHEBI:17378": {"x": 840, "y": 330, "level": 1, "name":"D-glyceraldehyde", "alt": ["CHEBI:12982", "CHEBI:39973", "CHEBI:21025", "CHEBI:4186"]},
         "CHEBI:58248": {"x": 0,   "y": 0, "level": 2, "name": "2,3-bisphosphonato-D-glycerate(5-)"},
-        "CHEBI:57642": {"x": 0, "y": 0, "level": 2, "name": "glycerone phosphate(2-), Dihydroxyacetone phosphate"},
+        "CHEBI:57642": {"x": null, "y": null, "level": 2, "name": "glycerone phosphate(2-), Dihydroxyacetone phosphate"},
         "CHEBI:16016": {"x": 612, "y": 309, "level": 1, "name": "glycerone, dihydroxyacetone,", "alt": ["CHEBI:39809", "CHEBI:5453", "CHEBI:14340", "CHEBI:24354"]},
         "CHEBI:17754": {"x": 562, "y": 309, "level": 1, "name": "glycerol, 1,2,3-trihydroxypropane", "alt": ["CHEBI:42998", "CHEBI:131422", "CHEBI:5448", "CHEBI:14334", "CHEBI:24351"]},
         "CHEBI:16110": {"x": 476, "y": 309, "level": 1, "name": "Phosphatidylcholine", "alt": ["CHEBI:49183", "CHEBI:44694", "CHEBI:1681", "CHEBI:11148", "CHEBI:11753", "CHEBI:17046", "CHEBI:26029", "CHEBI:23660", "CHEBI:20200", "CHEBI:18878", "CHEBI:8128", "CHEBI:36705", "CHEBI:14802"]},
@@ -14,7 +14,7 @@
         "CHEBI:17855": {"x": 494, "y": 291, "level": 1, "name": "Triacylglycerol", "alt": ["CHEBI:9664", "CHEBI:15255", "CHEBI:27085"]},
         "CHEBI:27432": {"x": 476, "y": 291, "level": 1, "name": "alpha-Linolenic acid", "alt": ["CHEBI:43891", "CHEBI:10298", "CHEBI:22462"]},
         "CHEBI:48905": {"x": 462, "y": 291, "level": 1, "name": "13(S)-HPOT", "alt": [""]},
-        "CHEBI:15653": {"x": 0, "y": 0, "level": 2, "name": "12,13(S)-EOT", "alt": ["CHEBI:262", "CHEBI:18616", "CHEBI:36438", "CHEBI:18615", "CHEBI:10939"]},
+        "CHEBI:15653": {"x": null, "y": null, "level": 2, "name": "12,13(S)-EOT", "alt": ["CHEBI:262", "CHEBI:18616", "CHEBI:36438", "CHEBI:18615", "CHEBI:10939"]},
         "CHEBI:15560": {"x": 432, "y": 291, "level": 1, "name": "12-OPDA", "alt": ["CHEBI:148", "CHEBI:10825", "CHEBI:19141", "CHEBI:19142"]},
         "CHEBI:15720": {"x": 417, "y": 291, "level": 1, "name": "8-[(1R,2R)-3-Oxo-2-{(Z)-pent-2-enyl}cyclopentyl]octanoate", "alt": ["CHEBI:2326", "CHEBI:20807", "CHEBI:12265", "CHEBI:165637"]},
         "CHEBI:80448": {"x": 403, "y": 291, "level": 1, "name": "OPC8-CoA", "alt": ["CHEBI:138396"]},

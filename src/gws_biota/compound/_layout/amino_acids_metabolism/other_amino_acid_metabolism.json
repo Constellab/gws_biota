@@ -9,7 +9,7 @@
         "CHEBI:27947": {"x": 1003, "y": 452, "level": 1, "name": "D-histidine", "alt": ["CHEBI:42063", "CHEBI:4197", "CHEBI:21039"]},
         "CHEBI:15428": {"x": 948, "y": 513, "level": 1, "name": "glycine", "alt": ["CHEBI:14344", "CHEBI:42964", "CHEBI:5460", "CHEBI:10792", "CHEBI:24368", "CHEBI:32508", "CHEBI:32507", "CHEBI:15428", "CHEBI:57305"]},
         "CHEBI:15816": {"x": 1222, "y": 609, "level": 1, "name": "D-arginine", "alt": ["CHEBI:41855", "CHEBI:4106", "CHEBI:12917", "CHEBI:20917"]},
-        "CHEBI:18253": {"x": 0, "y": 0, "level": 2, "name": "5-guanidino-2-oxopentanoate", "alt": ["CHEBI:20572", "CHEBI:12129"]},
+        "CHEBI:18253": {"x": null, "y": null, "level": 2, "name": "5-guanidino-2-oxopentanoate", "alt": ["CHEBI:20572", "CHEBI:12129"]},
         "CHEBI:28116": {"x": 1247, "y": 648, "level": 1, "name":"5-guanidino-2-oxopentanoic acid", "alt": ["CHEBI:2060", "CHEBI:1249", "CHEBI:19740"]},
         "CHEBI:18095": {"x": 1125, "y": 691, "level": 1, "name": "trans-4-hydroxy-L-proline", "alt": ["CHEBI:43318", "CHEBI:43172", "CHEBI:43210", "CHEBI:43227", "CHEBI:49360", "CHEBI:10714", "CHEBI:27060", "CHEBI:12864"]},
         "CHEBI:16856": {"x": 957, "y": 744, "level": 1, "name": "glutathione", "alt": ["CHEBI:42873", "CHEBI:43049", "CHEBI:5437", "CHEBI:12402", "CHEBI:14327", "CHEBI:24334"]},

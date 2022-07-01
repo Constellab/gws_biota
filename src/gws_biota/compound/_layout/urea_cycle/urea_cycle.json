@@ -3,15 +3,15 @@
     "name": "urea cycle",
     "data": {
         "CHEBI:15682": {"x": 1152, "y": 534, "level": 1, "name": "(N-omega-L-arginino)succinic acid", "alt": ["CHEBI:7098", "CHEBI:10960", "CHEBI:21475"]},
-        "CHEBI:184023": {"x": 0, "y": 0, "level": 2, "name": "Argininosuccinic acid", "alt": []},
+        "CHEBI:184023": {"x": null, "y": null, "level": 2, "name": "Argininosuccinic acid", "alt": []},
         "CHEBI:16467": {"x": 1187, "y": 575, "level": 1, "name": "L-arginine", "alt": ["CHEBI:6185", "CHEBI:13077", "CHEBI:42927", "CHEBI:21235", "CHEBI:32683", "CHEBI:22616", "CHEBI:2643", "CHEBI:32681", "CHEBI:32682", "CHEBI:32696", "CHEBI:32695", "CHEBI:29016", "CHEBI:32697", "CHEBI:133495"]},        	
         "CHEBI:16349": {"x": 1113, "y": 575, "level": 1, "name": "L-citrulline", "alt": ["CHEBI:57743", "CHEBI:41489", "CHEBI:6203", "CHEBI:13092", "CHEBI:21257"]},
         "CHEBI:15729": {"x": 1151, "y": 609, "level": 1, "name": "L-ornithine", "alt": ["CHEBI:6280", "CHEBI:21367", "CHEBI:13148"]},
         "CHEBI:16199": {"x": 1202, "y": 596, "level": 1, "name": "urea", "alt": ["CHEBI:46379", "CHEBI:9888", "CHEBI:15292", "CHEBI:27218"]},        	
         "CHEBI:17672": {"x": 1097, "y": 609, "level": 1, "name": "carbamoyl phosphate", "alt": ["CHEBI:41567", "CHEBI:3389", "CHEBI:13942", "CHEBI:23005"]},
         "CHEBI:16134": {"x": 1079, "y": 609, "level": 1, "name": "ammonia", "alt": ["CHEBI:44284", "CHEBI:44269", "CHEBI:44404", "CHEBI:13405", "CHEBI:13406", "CHEBI:13407", "CHEBI:13771", "CHEBI:7434", "CHEBI:22533"]},
-        "CHEBI:46911": {"x": 0, "y": 0, "level": 2, "name": "L-ornithinium(1+)", "alt": ["CHEBI:46912"]},
-        "CHEBI:32682": {"x": 0, "y": 0, "level": 2, "name": "L-argininium(1+)", "alt": ["CHEBI:133495", "CHEBI:32696"]}
+        "CHEBI:46911": {"x": null, "y": null, "level": 2, "name": "L-ornithinium(1+)", "alt": ["CHEBI:46912"]},
+        "CHEBI:32682": {"x": null, "y": null, "level": 2, "name": "L-argininium(1+)", "alt": ["CHEBI:133495", "CHEBI:32696"]}
     },
     "centroid": {"x": 0, "y": 0}
 }

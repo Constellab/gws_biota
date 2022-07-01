@@ -1,7 +1,7 @@
 {  
     "name": "fatty acids synthesis",
     "data": {
-        "CHEBI:57384": {"x": 0, "y": 0, "level": 2, "name": "malonyl-CoA(5-)"},
+        "CHEBI:57384": {"x": null, "y": null, "level": 2, "name": "malonyl-CoA(5-)"},
         "CHEBI:80386": {"x": 476, "y": 471, "level": 1, "name": "3-Oxostearoyl-[acp]"},
         "CHEBI:80387": {"x": 476, "y": 500, "level": 1, "name": "3-Hydroxyoctadecanoyl-[acp]"},
         "CHEBI:80388": {"x": 476, "y": 528, "level": 1, "name": "(2E)-Octadecenoyl-[acp]"},

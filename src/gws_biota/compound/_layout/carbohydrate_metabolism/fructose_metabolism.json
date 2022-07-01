@@ -4,7 +4,7 @@
     "data": {
         "CHEBI:37721": {"x": 588, "y": 297, "level": 1, "name": "fructofuranose, D-Fructose", "alt": ["CHEBI:47424", "CHEBI:4119", "CHEBI:47424", "CHEBI:28757", "CHEBI:24110", "CHEBI:20929", "CHEBI:4119", "CHEBI:15824", "CHEBI:5172", "CHEBI:24104", "CHEBI:12923", "CHEBI:4118", "CHEBI:37714", "CHEBI:37721", "CHEBI:48095"]},
         "CHEBI:49299": {"x": 753, "y": 843, "level": 1, "name": "D-Fructose 1,6-bisphosphate", "alt": ["CHEBI:78682", "CHEBI:37736"]},
-        "CHEBI:138881": {"x": 0,  "y": 0, "level": 2, "name": "alpha-D-fructofuranose 1-phosphate(2-), D-fructofuranose 1-phosphate", "alt": ["CHEBI:37515", "CHEBI:20930", "CHEBI:5174"]}
+        "CHEBI:138881": {"x": null,  "y": null, "level": 2, "name": "alpha-D-fructofuranose 1-phosphate(2-), D-fructofuranose 1-phosphate", "alt": ["CHEBI:37515", "CHEBI:20930", "CHEBI:5174"]}
     },
     "centroid": {"x": 0, "y": 0}
 }

@@ -6,7 +6,7 @@
         "CHEBI:16947": {"x": 739, "y": 593, "level": 1, "name": "citrate(3-), citrate", "alt": ["CHEBI:42563, CHEBI:13999, CHEBI:23321", "CHEBI:35808", "CHEBI:41523", "CHEBI:3727", "CHEBI:23322", "CHEBI:30769", "CHEBI:35802", "CHEBI:35804"]},
         "CHEBI:23306": {"x": 770, "y": 619, "level": 1, "name":"cis-aconitate", "alt": ["CHEBI:16383", "CHEBI:12798", "CHEBI:32805", "CHEBI:23308", "CHEBI:10482"]},
         "CHEBI:16087": {"x": 778, "y": 648, "level": 1, "name": "isocitrate, isocitrate(3-)", "alt": ["CHEBI:15562", "CHEBI:10827", "CHEBI:18510", "CHEBI:36454", "CHEBI:5998", "CHEBI:24886", "CHEBI:36453", "CHEBI:14465", "CHEBI:30887", "CHEBI:24884"]},
-        "CHEBI:15562": {"x": 0, "y": 0, "level": 2, "name": "D-threo-isocitrate(3-)", "alt": ["CHEBI:10827", "CHEBI:18510"]},
+        "CHEBI:15562": {"x": null, "y": null, "level": 2, "name": "D-threo-isocitrate(3-)", "alt": ["CHEBI:10827", "CHEBI:18510"]},
         "CHEBI:16810": {"x": 750, "y": 699, "level": 1, "name": "2-oxoglutarate(2-)", "alt": ["CHEBI:11638", "CHEBI:19748", "CHEBI:40661", "CHEBI:19749", "CHEBI:1253", "CHEBI:30915"]},
         "CHEBI:57292": {"x": 714, "y": 709, "level": 1, "name": "succinyl-CoA(5-)", "alt": ["CHEBI:57292", "CHEBI:10746", "CHEBI:15127", "CHEBI:15380", "CHEBI:9310", "CHEBI:45541", "CHEBI:26811"]},
         "CHEBI:30031": {"x": 675, "y": 691, "level": 1, "name": "succinate(2-)", "alt": ["CHEBI:22941", "CHEBI:26803", "CHEBI:15741", "CHEBI:132287", "CHEBI:45639", "CHEBI:30779", "CHEBI:15125", "CHEBI:22943", "CHEBI:26807", "CHEBI:9304", "CHEBI:90372"]},

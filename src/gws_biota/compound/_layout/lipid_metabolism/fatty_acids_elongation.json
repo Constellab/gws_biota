@@ -4,7 +4,7 @@
         "CHEBI:15345": {"x": 501, "y": 457, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173"]},
         "CHEBI:15453": {"x": 501, "y": 485, "level": 1, "name": "(S)-3-Hydroxybutanoyl-CoA", "alt": ["CHEBI:39978", "CHEBI:394", "CHEBI:18749", "CHEBI:11048", "CHEBI:57316"]},
         "CHEBI:15473": {"x": 501, "y": 513, "level": 1, "name": "crotonoyl-CoA", "alt": ["CHEBI:41612", "CHEBI:14031", "CHEBI:14032", "CHEBI:23408", "CHEBI:3928", "CHEBI:57332"]},
-        "CHEBI:36926": {"x": 0, "y": 0, "level": 2, "name": "but-2-enoyl-CoA", "alt": ["CHEBI:11531", "CHEBI:13921"]},
+        "CHEBI:36926": {"x": null, "y": null, "level": 2, "name": "but-2-enoyl-CoA", "alt": ["CHEBI:11531", "CHEBI:13921"]},
         "CHEBI:15517": {"x": 501, "y": 541, "level": 1, "name": "butyryl-CoA", "alt": ["CHEBI:3235", "CHEBI:13926", "CHEBI:22953", "CHEBI:22973", "CHEBI:57371"]},
         "CHEBI:27648": {"x": 519, "y": 457, "level": 1, "name": "3-Oxohexanoyl-CoA", "alt": ["CHEBI:1641", "CHEBI:20172", "CHEBI:62418"]},
         "CHEBI:28276": {"x": 519, "y": 485, "level": 1, "name": "(S)-3-hydroxyhexanoyl-CoA", "alt": ["CHEBI:419", "CHEBI:18780"]},
@@ -31,7 +31,7 @@
         "CHEBI:28935": {"x": 610, "y": 513, "level": 1, "name": "trans-Hexadec-2-enoyl-CoA", "alt": ["CHEBI:27047, CHEBI:10728", "CHEBI:61526"]},
         "CHEBI:15525": {"x": 610, "y": 541, "level": 1, "name": "palmitoyl-CoA", "alt": ["CHEBI:14732", "CHEBI:7898", "CHEBI:14397", "CHEBI:24543", "CHEBI:57379"]},
         "CHEBI:15756": {"x": 559, "y": 563, "level": 1, "name": "hexadecanoic acid, palmitate", "alt": ["CHEBI:24542", "CHEBI:35978", "CHEBI:24540", "CHEBI:24550", "CHEBI:44952", "CHEBI:233028", "CHEBI:14730", "CHEBI:24541", "CHEBI:29889"]},
-        "CHEBI:55329": {"x": 0, "y": 0, "level": 2, "name": "16-hydroxyhexadecanoate"},
+        "CHEBI:55329": {"x": null, "y": null, "level": 2, "name": "16-hydroxyhexadecanoate"},
         "CHEBI:134195": {"x": 588, "y": 580, "level": 2, "name": "16-Oxopalmitate"},
         "CHEBI:76276": {"x": 620, "y": 580, "level": 2, "name": "Hexadecanedioate", "alt": ["CHEBI:73722"]},
         "CHEBI:15531": {"x": 685, "y": 568, "level": 1, "name": "malonyl-CoA", "alt": ["CHEBI:43979", "CHEBI:6661", "CHEBI:14565", "CHEBI:25135"]}
