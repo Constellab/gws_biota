@@ -15,17 +15,15 @@
         "CHEBI:15746": {"x": -42, "y": 205, "level": 1, "name": "Spermine", "alt": ["CHEBI:45583", "CHEBI:15098", "CHEBI:26734", "CHEBI:9219", "CHEBI:45725"]},
         "CHEBI:16753": {"x": 44, "y": 33, "level": 1, "name": "Pantetheine", "alt": ["CHEBI:7913", "CHEBI:25843", "CHEBI:14734"]},
         "CHEBI:7916": {"x": -34, "y": 0, "level": 1, "name": "Pantothenate", "alt": ["CHEBI:29032", "CHEBI:44679", "CHEBI:25846", "CHEBI:16454", "CHEBI:18700", "CHEBI:11008", "CHEBI:18701", "CHEBI:46905", "CHEBI:14739"]},
-
-        "CHEBI:15468": {"x": 66, "y": 0, "level": 1, "name": "Dephospho-CoA", "alt": ["CHEBI:23642", "CHEBI:14124", "CHEBI:41614", "CHEBI:4436", "CHEBI:11793"]},
-
-        "CHEBI:11561": {"x": -80, "y": 0, "level": 1, "name": "2-Dehydropantoate", "alt": []},
-        "CHEBI:4222": {"x": 44, "y": 0, "level": 1, "name": "Pantetheine 4'-phosphate", "alt": ["CHEBI:45012"]},
-        "CHEBI:18261": {"x": -58, "y": -305, "level": 1, "name": "3-Ureidopropionate", "alt": ["CHEBI:21690", "CHEBI:1671", "CHEBI:12495", "CHEBI:46352"]},
-        "CHEBI:15905": {"x": 0, "y": 0, "level": 1, "name": "D-4'-Phosphopantothenate", "alt": ["CHEBI:18702", "CHEBI:4082"]},
-        "CHEBI:15684": {"x": -100, "y": -44, "level": 1, "name": "(R)-2,3-Dihydroxy-3-methylbutanoate", "alt": ["CHEBI:305", "CHEBI:10966", "CHEBI:18645"]},
-        "CHEBI:15769": {"x": 21, "y": 0, "level": 1, "name": "(R)-4'-Phosphopantothenoyl-L-cysteine", "alt": ["CHEBI:21461", "CHEBI:12438", "CHEBI:328", "CHEBI:10987"]},
-        "CHEBI:18090": {"x": -143, "y": 41, "level": 1, "name": "3-Aminopropanal", "alt": []},
-        "CHEBI:18409": {"x": -126, "y": -44, "level": 1, "name": "(S)-2-Acetolactate", "alt": ["CHEBI:11033", "CHEBI:18731", "CHEBI:374"]},
+        "CHEBI:15468": {"x": 66, "y": 0, "level": 1, "name": "Dephospho-CoA", "alt": ["CHEBI:23642", "CHEBI:14124", "CHEBI:41614", "CHEBI:4436", "CHEBI:11793", "CHEBI:57328"]},
+        "CHEBI:11561": {"x": -80, "y": 0, "level": 1, "name": "2-Dehydropantoate", "alt": ["CHEBI:1071", "CHEBI:19545", "CHEBI:17094"]},
+        "CHEBI:4222": {"x": 44, "y": 0, "level": 1, "name": "Pantetheine 4'-phosphate", "alt": ["CHEBI:45012", "CHEBI:14738", "CHEBI:11916", "CHEBI:14736", "CHEBI:7914", "CHEBI:14825", "CHEBI:47942", "CHEBI:14735", "CHEBI:29890", "CHEBI:61723", "CHEBI:16858", "CHEBI:25844"]},
+        "CHEBI:18261": {"x": -58, "y": -305, "level": 1, "name": "3-Ureidopropionate", "alt": ["CHEBI:21690", "CHEBI:1671", "CHEBI:12495", "CHEBI:46352", "CHEBI:11892"]},
+        "CHEBI:15905": {"x": 0, "y": 0, "level": 1, "name": "D-4'-Phosphopantothenate", "alt": ["CHEBI:18702", "CHEBI:4082", "CHEBI:20891", "CHEBI:12886", "CHEBI:10986"]},
+        "CHEBI:15684": {"x": -100, "y": -44, "level": 1, "name": "(R)-2,3-Dihydroxy-3-methylbutanoate", "alt": ["CHEBI:305", "CHEBI:10966", "CHEBI:18645", "CHEBI:49072"]},
+        "CHEBI:15769": {"x": 21, "y": 0, "level": 1, "name": "(R)-4'-Phosphopantothenoyl-L-cysteine", "alt": ["CHEBI:21461", "CHEBI:12438", "CHEBI:328", "CHEBI:10987", "CHEBI:57507", "CHEBI:59458"]},
+        "CHEBI:18090": {"x": -143, "y": 41, "level": 1, "name": "3-Aminopropanal", "alt": ["CHEBI:19966", "CHEBI:11758", "CHEBI:1455", "CHEBI:58374"]},
+        "CHEBI:18409": {"x": -126, "y": -44, "level": 1, "name": "(S)-2-Acetolactate", "alt": ["CHEBI:11033", "CHEBI:18731", "CHEBI:374", "CHEBI:58476"]},
         "CHEBI:61291": {"x": -34, "y": -10, "level": 1, "name": "(R)-4-Phosphopantoate", "alt": []}
     },
     "centroid": {"x": 1155, "y": 529}
