@@ -3,15 +3,15 @@
     "name": "glycan biosynthesis",
     "data": {
         "CHEBI:17950": {"x": 318, "y": 54, "level": 1, "name": "β-D-galactosyl-(1→4)-β-D-glucosyl-(1↔1)-N-acylsphingosine", "alt": ["CHEBI:29088", "CHEBI:14498", "CHEBI:10392", "CHEBI:12363", "CHEBI:12941", "CHEBI:12358", "CHEBI:25006", "CHEBI:20965", "CHEBI:22791"]},
-        "CHEBI:15809": {"x": null, "y": null, "level": 2, "name": "dolichyl D-mannosyl phosphate", "alt": ["CHEBI:23885", "CHEBI:14201", "CHEBI:4694", "CHEBI:14194"]},
-        "CHEBI:15812": {"x": 378, "y": 207, "level": 1, "name": "dolichyl β-D-glucosyl phosphate", "alt": ["CHEBI:23880", "CHEBI:4689", "CHEBI:14191"]},
+        "CHEBI:15809": {"x": null, "y": null, "level": 2, "name": "dolichyl D-mannosyl phosphate", "alt": ["CHEBI:23885", "CHEBI:14201", "CHEBI:4694", "CHEBI:14194", "CHEBI:57523"]},
+        "CHEBI:15812": {"x": 378, "y": 207, "level": 1, "name": "dolichyl β-D-glucosyl phosphate", "alt": ["CHEBI:23880", "CHEBI:4689", "CHEBI:14191", "CHEBI:57525"]},
         "CHEBI:172697": {"x": null, "y": null, "level": 2, "name": "Dolichyl b-D-glucosyl phosphate", "alt": []},
-        "CHEBI:15750": {"x": 457, "y": 172, "level": 1, "name": "dolichyl diphosphate", "alt": ["CHEBI:4691", "CHEBI:14197", "CHEBI:23876"]},
+        "CHEBI:15750": {"x": 457, "y": 172, "level": 1, "name": "dolichyl diphosphate", "alt": ["CHEBI:4691", "CHEBI:14197", "CHEBI:23876", "CHEBI:57497"]},
         "CHEBI:8572": {"x": 666, "y": 79, "level": 1, "name": "Protein serine", "alt": []},
-        "CHEBI:16022": {"x": 884, "y": 105, "level": 1, "name": "CDP-ribitol", "alt": ["CHEBI:13272", "CHEBI:3273", "CHEBI:20872"]},
-        "CHEBI:16246": {"x": 884, "y": 326, "level": 1, "name": "D-ribitol 5-phosphate", "alt": ["CHEBI:44693", "CHEBI:45310", "CHEBI:45311", "CHEBI:4231", "CHEBI:13009", "CHEBI:21075"]},
-        "CHEBI:17677": {"x": 960, "y": 194, "level": 1, "name": "CTP", "alt": ["CHEBI:41675", "CHEBI:3285", "CHEBI:13286", "CHEBI:23522"]},
-        "CHEBI:16749": {"x": 544, "y": 349, "level": 1, "name": "1-phosphatidyl-1D-myo-inositol", "alt": ["CHEBI:11283", "CHEBI:11291", "CHEBI:19086", "CHEBI:11292", "CHEBI:677", "CHEBI:679", "CHEBI:11280", "CHEBI:19088", "CHEBI:28601"]}
+        "CHEBI:16022": {"x": 884, "y": 105, "level": 1, "name": "CDP-ribitol", "alt": ["CHEBI:13272", "CHEBI:3273", "CHEBI:20872", "CHEBI:57608"]},
+        "CHEBI:16246": {"x": 884, "y": 326, "level": 1, "name": "D-ribitol 5-phosphate", "alt": ["CHEBI:44693", "CHEBI:45310", "CHEBI:45311", "CHEBI:4231", "CHEBI:13009", "CHEBI:21075", "CHEBI:57695"]},
+        "CHEBI:17677": {"x": 960, "y": 194, "level": 1, "name": "CTP", "alt": ["CHEBI:41675", "CHEBI:3285", "CHEBI:13286", "CHEBI:23522", "CHEBI:58231", "CHEBI:37563"]},
+        "CHEBI:16749": {"x": 544, "y": 349, "level": 1, "name": "1-phosphatidyl-1D-myo-inositol", "alt": ["CHEBI:11283", "CHEBI:11291", "CHEBI:19086", "CHEBI:11292", "CHEBI:677", "CHEBI:679", "CHEBI:11280", "CHEBI:19088", "CHEBI:28601", "CHEBI:57880"]}
     },
     "centroid": {"x": -1000, "y": 0}
 }

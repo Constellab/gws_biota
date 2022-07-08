@@ -2,14 +2,13 @@
     "parent": "energy metabolism",
     "name": "nitrogen metabolism",
     "data": {
-        "CHEBI:48107": {"x": null, "y": null, "level": 2, "name": "nitric acid", "alt": ["CHEBI:7580", "CHEBI:25545"]},
+        "CHEBI:48107": {"x": null, "y": null, "level": 2, "name": "nitric acid", "alt": ["CHEBI:7580", "CHEBI:25545", "CHEBI:44487", "CHEBI:14654", "CHEBI:71263", "CHEBI:17632"]},
         "CHEBI:16480": {"x": 1040, "y": 586, "level": 1, "name": "nitric oxide", "alt": ["CHEBI:14657", "CHEBI:44452", "CHEBI:25546", "CHEBI:7583"]},
         "CHEBI:17045": {"x": null, "y": null, "level": 2, "name": "dinitrogen oxide", "alt": ["CHEBI:44250", "CHEBI:7598", "CHEBI:14661", "CHEBI:25568"]},
         "CHEBI:17997": {"x": null, "y": null, "level": 2, "name": "dinitrogen", "alt": ["CHEBI:43128", "CHEBI:7593", "CHEBI:13388", "CHEBI:14660", "CHEBI:25365"]},
-        "CHEBI:16301": {"x": null, "y": null, "level": 2, "name": "nitrite", "alt": ["CHEBI:44396", "CHEBI:7585", "CHEBI:14658"]},
-        "CHEBI:25567": {"x": 1040, "y": 609, "level": 1, "name": "nitrous acid", "alt": [""]},
+        "CHEBI:25567": {"x": 1040, "y": 609, "level": 1, "name": "nitrous acid", "alt": ["CHEBI:16301", "CHEBI:44396", "CHEBI:7585", "CHEBI:14658"]},
         "CHEBI:15429": {"x": 1060, "y": 603, "level": 1, "name": "hydroxylamine", "alt": ["CHEBI:43221", "CHEBI:5806", "CHEBI:14421", "CHEBI:10793", "CHEBI:24708"]},
-        "CHEBI:16134": {"x": 1079, "y": 609, "level": 1, "name": "ammonia", "alt": ["CHEBI:44284", "CHEBI:44269", "CHEBI:44404", "CHEBI:13405", "CHEBI:13406", "CHEBI:13407", "CHEBI:13771", "CHEBI:7434", "CHEBI:22533"]}
+        "CHEBI:16134": {"x": 1079, "y": 609, "level": 1, "name": "ammonia", "alt": ["CHEBI:44284", "CHEBI:44269", "CHEBI:44404", "CHEBI:13405", "CHEBI:13406", "CHEBI:13407", "CHEBI:13771", "CHEBI:7434", "CHEBI:22533", "CHEBI:135980", "CHEBI:29337", "CHEBI:29340", "CHEBI:28938", "CHEBI:22534", "CHEBI:49783","CHEBI:7435"]},
 
     },
     "centroid": {"x": 50, "y": 100}
