@@ -13,6 +13,8 @@ from gws_core import BadRequestException, Logger
 GRID_SCALE = 3
 GRID_INTERVAL = 100
 
+GOLBAL_CENTER = {"x": 719, "y": 513}  # center on pyruvate
+
 CompoundClusterDict = TypedDict("CompoundClusterDict", {
     "name": List[dict],
     "x": str,
@@ -47,10 +49,10 @@ class CompoundCluster:
         else:
             self._centroid = centroid
 
-        if not isinstance(self._centroid["x"], (float, int)):
-            self._centroid["x"] = 0
-        if not isinstance(self._centroid["y"], (float, int)):
-            self._centroid["y"] = 0
+            if not isinstance(self._centroid["x"], (float, int)):
+                self._centroid["x"] = 0
+            if not isinstance(self._centroid["y"], (float, int)):
+                self._centroid["y"] = 0
 
     @property
     def name(self):
