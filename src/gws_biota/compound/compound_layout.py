@@ -44,14 +44,16 @@ class CompoundCluster:
         self._name = name
         self._parent = parent
         self._data = data
-        if not centroid:
-            self._centroid = {"x": 0, "y": 0}
-        else:
+        self._centroid = {"x": 0, "y": 0}
+        if centroid:
             self._centroid = centroid
-
-            if not isinstance(self._centroid["x"], (float, int)):
+            if isinstance(self._centroid["x"], (float, int)):
+                self._centroid["x"] = self._centroid["x"] - GOLBAL_CENTER["x"]
+            else:
                 self._centroid["x"] = 0
-            if not isinstance(self._centroid["y"], (float, int)):
+            if isinstance(self._centroid["y"], (float, int)):
+                self._centroid["y"] = self._centroid["y"] - GOLBAL_CENTER["y"]
+            else:
                 self._centroid["y"] = 0
 
     @property
@@ -107,7 +109,7 @@ class CompoundLayout:
     Y_LIMIT = 4000
     GRID_SCALE = GRID_SCALE
     GRID_INTERVAL = GRID_INTERVAL
-    BIOMASS_CLUSTER_CENTER = {"x": 1000, "y": 1000}
+    BIOMASS_CLUSTER_CENTER = {"x": 1000, "y": 200}
 
     _clusters: List[CompoundCluster] = []
 
@@ -188,7 +190,7 @@ class CompoundLayout:
 
         def rnd_offset():
             rnd_num = random.uniform(0, 1)
-            return GRID_INTERVAL if rnd_num >= 0.5 else -GRID_INTERVAL
+            return GRID_SCALE * (GRID_INTERVAL if rnd_num >= 0.5 else -GRID_INTERVAL)
 
         clusters: List[CompoundClusterDict] = {}
 
@@ -212,8 +214,18 @@ class CompoundLayout:
             "clusters": clusters,
         }
 
-        # add offset for compartment
+        # if compartment and compartment == "e":
+        #     position["cluster"] = {
+        #         "name": "extracellular exchanges",
+        #         "x": None,
+        #         "y": None,
+        #         "level": 2
+        #     }
+        #     position["x"] = None
+        #     position["y"] = None
+        # el
         if compartment and compartment != "c":
+            # add offset for compartment
             if position["x"] is not None:
                 position["x"] += rnd_offset() * GRID_SCALE
 

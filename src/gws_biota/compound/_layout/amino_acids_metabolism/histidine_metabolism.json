@@ -18,5 +18,5 @@
         "CHEBI:18327": {"x": 981, "y": 531, "level": 1, "name": "N-formimidoyl-L-glutamate(2-)", "alt": ["CHEBI:21705", "CHEBI:12502", "CHEBI:58928", "CHEBI:7274"]},
         "CHEBI:48309": {"x": 958, "y": 677, "level": 1, "name": "N-formyl-L-glutamic acid", "alt": ["CHEBI:7278", "CHEBI:21711"]}
     },
-    "centroid": {"x": 100, "y": -50}
+    "centroid": {"x": 0, "y": 0}
 }

@@ -52,5 +52,5 @@
         "CHEBI:1162": {"x": 969, "y": 825, "level": 1, "name": "2-hydroxyhepta-2,4-dienedioic acid", "alt": []},
         "CHEBI:15924": {"x": 1134, "y": 825, "level": 1, "name": "5-oxopent-3-ene-1,2,5-tricarboxylic acid", "alt": ["CHEBI:20622", "CHEBI:12112", "CHEBI:12155", "CHEBI:2039"]}
     },
-    "centroid": {"x": 100, "y": -50}
+    "centroid": {"x": 0, "y": 0}
 }

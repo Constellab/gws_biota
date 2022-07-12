@@ -20,5 +20,5 @@
         "CHEBI:12532": {"x": 1002, "y": 798, "level": 1, "name": "N,N-dihydroxy-L-tyrosine", "alt": []},
         "CHEBI:28089": {"x": 1039, "y": 798, "level": 1, "name": "N-hydroxytyrosine", "alt": ["CHEBI:7297", "CHEBI:90351", "CHEBI:12512", "CHEBI:12602", "CHEBI:21737"]}
     },
-    "centroid": {"x": 100, "y": -50}
+    "centroid": {"x": 0, "y": 0}
 }

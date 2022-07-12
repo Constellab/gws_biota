@@ -45,7 +45,6 @@
         "CHEBI:1989": {"x": 684, "y": 650, "level": 1, "name": "(6R)-5,10-methylenetetrahydrofolic acid", "alt": ["CHEBI:10925", "CHEBI:15636", "CHEBI:18602"]},
         "CHEBI:17245": {"x": null, "y": null, "level": 2, "name": "carbon monoxide", "alt": ["CHEBI:41526", "CHEBI:3282", "CHEBI:13281", "CHEBI:23013", "CHEBI:58072"]},
         "CHEBI:15350": {"x": 728, "y": 535, "level": 1, "name": "acetyl dihydrogen phosphate", "alt": ["CHEBI:46262", "CHEBI:2407", "CHEBI:13711", "CHEBI:22191"]}
-
     },
-    "centroid": {"x": 50, "y": 100}
+    "centroid": {"x": 0, "y": 0}
 }

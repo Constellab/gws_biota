@@ -15,5 +15,5 @@
         "CHEBI:15710": {"x": 1034, "y": 469, "level": 1, "name": "Betaine aldehyde", "alt": ["CHEBI:3074", "CHEBI:41256", "CHEBI:22859", "CHEBI:13896"]},
         "CHEBI:15354": {"x": 1064, "y": 468, "level": 1, "name": "choline", "alt": ["CHEBI:41524", "CHEBI:3665", "CHEBI:13985", "CHEBI:23212", "CHEBI:72322"]}
     },
-    "centroid": {"x": 100, "y": -50}
+    "centroid": {"x": 0, "y": 0}
 }

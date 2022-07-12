@@ -7,7 +7,7 @@ class Cofactor:
     """ List of cofactors """
     COFACTORS = {
         # hydron, H+
-        "CHEBI:15378": {"alt": ["CHEBI:5584", "CHEBI:10744", "CHEBI:13357"]},
+        "CHEBI:15378": {"alt": ["CHEBI:5584", "CHEBI:10744", "CHEBI:13357", "CHEBI:24636"]},
         # water, H2O
         "CHEBI:15377": {"alt": ["CHEBI:5585", "CHEBI:42857", "CHEBI:42043", "CHEBI:44292", "CHEBI:44819", "CHEBI:43228", "CHEBI:44701", "CHEBI:10743", "CHEBI:13352", "CHEBI:27313"]},
         # hydrogen_peroxide, H2O2
@@ -130,6 +130,8 @@ class Cofactor:
         "CHEBI:18420": {"alt": ["CHEBI:49736", "CHEBI:6635", "CHEBI:13379", "CHEBI:25112"]},
         # Zinc 2+
         "CHEBI:29105": {"alt": ["CHEBI:49972", "CHEBI:49982", "CHEBI:10113", "CHEBI:27368"]},
+        # Sodium
+        "CHEBI:29101": {"alt": ["CHEBI:9175", "CHEBI:49766", "CHEBI:26717", "CHEBI:26714"]}
     }
 
     COFACTOR_NAME_PATTERNS = ["residue"]

@@ -55,5 +55,5 @@
         "CHEBI:181949": {"x": null, "y": null, "level": 2, "name": "APMF-Glu", "alt": [""]},
         "CHEBI:15760": {"x": 954, "y": 316, "level": 1, "name": "tyramine", "alt": ["CHEBI:9799", "CHEBI:15276", "CHEBI:27174", "CHEBI:327995"]}
     },
-    "centroid": {"x": 50, "y": 100}
+    "centroid": {"x": 0, "y": 0}
 }

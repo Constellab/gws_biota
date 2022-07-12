@@ -7,7 +7,6 @@
         "CHEBI:18376": {"x": 888, "y": 40, "level": 1, "name": "dermatan sulfate", "alt": ["CHEBI:4440", "CHEBI:14127", "CHEBI:23644", "CHEBI:58465"]},
         "CHEBI:28815": {"x": 909, "y": 79, "level": 1, "name": "heparan sulfate", "alt": ["CHEBI:24502", "CHEBI:24507", "CHEBI:5661"]},
         "CHEBI:4139": {"x": 623, "y": 269, "level": 1, "name": "D-galactopyranose", "alt": ["CHEBI:12936", "CHEBI:10231", "CHEBI:28061", "CHEBI:22373", "CHEBI:42741"]}
-
     },
-    "centroid": {"x": -1000, "y": 0}
+    "centroid": {"x": 0, "y": 0}
 }

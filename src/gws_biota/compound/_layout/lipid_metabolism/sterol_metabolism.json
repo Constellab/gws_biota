@@ -29,5 +29,5 @@
         "CHEBI:16608": {"x": 430, "y": 631, "level": 1, "name": "5alpha-Cholest-8-en-3beta-ol", "alt": ["CHEBI:12170", "CHEBI:20645", "CHEBI:2139", "CHEBI:175094"]},
         "CHEBI:28940": {"x": 371, "y": 647, "level": 1, "name": "Vitamin D3", "alt": ["CHEBI:46283", "CHEBI:10008", "CHEBI:23170"]}
     },
-    "centroid": {"x": -200, "y": -50}
+    "centroid": {"x": 0, "y": 0}
 }

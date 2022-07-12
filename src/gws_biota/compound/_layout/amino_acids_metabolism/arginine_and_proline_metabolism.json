@@ -31,5 +31,5 @@
         "CHEBI:27657": {"x": 1154, "y": 750, "level": 1, "name": "N-succinyl-L-glutamic 5-semialdehyde", "alt": ["CHEBI:7374", "CHEBI:21820", "CHEBI:58520"]},
         "CHEBI:27574": {"x": 1233, "y": 728, "level": 1, "name": "N2-succinyl-L-ornithine", "alt": ["CHEBI:45896", "CHEBI:7375", "CHEBI:21822", "CHEBI:58514"]}
     },
-    "centroid": {"x": 100, "y": -50}
+    "centroid": {"x": 0, "y": 0}
 }

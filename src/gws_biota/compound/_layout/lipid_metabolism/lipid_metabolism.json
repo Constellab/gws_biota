@@ -61,5 +61,5 @@
         "CHEBI:184960": {"x": null, "y": null, "level": 2, "name": "(9Z)-N-[(2S,3R,4E)-1-{[(2R,5S,6R)-3,5-dihydroxy-6-(hydroxymethyl)-4-(sulfooxy)oxan-2-yl]oxy}-3-hydroxyoctadec-4-en-2-yl]octadec-9-enimidic acid", "alt": [""]},
         "CHEBI:17115": {"x": 889, "y": 513, "level": 1, "name": "L-serine", "alt": ["CHEBI:45440", "CHEBI:45451", "CHEBI:45677", "CHEBI:45590", "CHEBI:45597", "CHEBI:13167", "CHEBI:21387", "CHEBI:6301"]}
     },
-    "centroid": {"x": -200, "y": 50}
+    "centroid": {"x": 0, "y": 0}
 }

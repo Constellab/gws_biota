@@ -29,5 +29,5 @@
         "CHEBI:18153": {"x": 1028, "y": 783, "level": 1, "name": "ethene", "alt": ["CHEBI:4899", "CHEBI:14230", "CHEBI:24000"]},
         "CHEBI:16610": {"x": 1161, "y": 734, "level": 1, "name": "spermidine", "alt": ["CHEBI:26733", "CHEBI:45647", "CHEBI:15095", "CHEBI:9218", "CHEBI:15097", "CHEBI:26732", "CHEBI:57834"]}
     },
-    "centroid": {"x": 100, "y": -50}
+    "centroid": {"x": 0, "y": 0}
 }
