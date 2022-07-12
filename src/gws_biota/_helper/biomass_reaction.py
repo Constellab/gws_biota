@@ -1,12 +1,12 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
 import re
 import json
 
-from gws_core import BadRequestException, Utils
+from gws_core import BadRequestException, StringHelper
 
 class BiomassReaction():
 
@@ -37,7 +37,7 @@ class BiomassReaction():
     def extract_biomass_reactions(cls, data: dict) -> list:
         from ..compound.compound import Compound
 
-        ckey = "compounds" if "compounds" in data else "metabolites"        
+        ckey = "compounds" if "compounds" in data else "metabolites"
         compounds = data[ckey]
         reactions = data["reactions"]
         comp_dict = {comp["id"]:comp for comp in compounds}
@@ -48,7 +48,7 @@ class BiomassReaction():
             name=rxn["name"]
             if not id.startswith("BIOMASS_"):
                 continue
-            
+
             current_biomass_rxn = {
                 "id": id,
                 "name": name
@@ -58,11 +58,11 @@ class BiomassReaction():
             eqn_def_subs = []
             prods = {}
             subs = {}
-            
+
 
             for comp_id in rxn[ckey]:
                 comp = comp_dict[comp_id]
-                comp_name = Utils.slugify(comp["name"], to_lower=False, snakefy=True)
+                comp_name = StringHelper.slugify(comp["name"], to_lower=False, snakefy=True)
                 comp_annotation = comp["annotation"]
                 if isinstance(comp_annotation, list):
                     comp_annotation = cls._convert_annotation_list_to_dict(comp_annotation)
@@ -93,12 +93,12 @@ class BiomassReaction():
                     #current_biomass_rxn.add_product(comp, stoich)
                     prods[chebi_id] = str(stoich)
                     eqn_def_prod.append( str(stoich)+" "+str(comp_name) )
-            
+
             current_biomass_rxn["definition"] = " + ".join(eqn_def_subs) + " = " + " + ".join(eqn_def_prod)
             current_biomass_rxn["equation"] = { "substrates": subs, "products": prods }
 
             eqn_src_subs = " + ".join([ v+" "+k for k,v in subs.items() ])
-            eqn_src_prods = " + ".join([ v+" "+k for k,v in prods.items() ])    
+            eqn_src_prods = " + ".join([ v+" "+k for k,v in prods.items() ])
             current_biomass_rxn["source_equation"] = eqn_src_subs + " = " +  eqn_src_prods
             current_biomass_rxn["substrates"] = list(subs.keys())
             current_biomass_rxn["products"] = list(prods.keys())
@@ -106,4 +106,3 @@ class BiomassReaction():
             biomass_rxns.append(current_biomass_rxn)
 
         return biomass_rxns
-        

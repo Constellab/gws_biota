@@ -5,7 +5,7 @@
         "CHEBI:16933": {"x": 515, "y": 617, "level": 1, "name": "Ergosterol", "alt": ["CHEBI:42264", "CHEBI:4825", "CHEBI:14214", "CHEBI:23942"]},
         "CHEBI:18249": {"x": 498, "y": 617, "level": 1, "name": "Ergosta-5,7,22,24(28)-tetraen-3beta-ol", "alt": ["CHEBI:4824", "CHEBI:14213"]},
         "CHEBI:80095": {"x": 482, "y": 617, "level": 1, "name": "5,7,24(28)-Ergostatrienol", "alt": [""]},
-        "CHEBI:50586": {"x": 462, "y": 617, "level": 1, "name": "Episterol", "alt": [""]},
+        "CHEBI:50586": {"x": 462, "y": 617, "level": 1, "name": "Episterol", "alt": ["CHEBI:23929"]},
         "CHEBI:17038": {"x": 446, "y": 617, "level": 1, "name": "Fecosterol", "alt": ["CHEBI:11663", "CHEBI:1306", "CHEBI:52361", "CHEBI:19811"]},
         "CHEBI:18252": {"x": 430, "y": 617, "level": 1, "name": "Zymosterol", "alt": ["CHEBI:10131", "CHEBI:12172", "CHEBI:27370", "CHEBI:20646"]},
         "CHEBI:16290": {"x": 401, "y": 617, "level": 1, "name": "5alpha-Cholesta-7,24-dien-3beta-ol", "alt": ["CHEBI:2140", "CHEBI:12171", "CHEBI:23183"]},
