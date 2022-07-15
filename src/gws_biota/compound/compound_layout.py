@@ -214,39 +214,33 @@ class CompoundLayout:
             "clusters": clusters,
         }
 
-        # if compartment and compartment == "e":
-        #     position["cluster"] = {
-        #         "name": "extracellular exchanges",
-        #         "x": None,
-        #         "y": None,
-        #         "level": 2
-        #     }
-        #     position["x"] = None
-        #     position["y"] = None
-        # el
+        # if compartment and compartment != "c":
+        #     # add offset for compartment
+        #     if position["x"] is not None:
+        #         position["x"]  = None
+
+        #     if position["y"] is not None:
+        #         position["y"]  = None
+
+        # if position["x"] is not None:
+        #     if position["x"] > cls.X_LIMIT or position["x"] < -cls.X_LIMIT:
+        #         position["x"] = None
+        #         position["y"] = None
+
+        # if position["y"] is not None:
+        #     if position["y"] > cls.Y_LIMIT or position["y"] < -cls.Y_LIMIT:
+        #         position["x"] = None
+        #         position["y"] = None
+
         if compartment and compartment != "c":
-            # add offset for compartment
-            if position["x"] is not None:
-                position["x"] += rnd_offset() * GRID_SCALE
-
-            if position["y"] is not None:
-                position["y"] += rnd_offset() * GRID_SCALE
-
-        if position["x"] is not None:
-            if position["x"] > cls.X_LIMIT or position["x"] < -cls.X_LIMIT:
-                position["x"] = None
-                position["y"] = None
-
-        if position["y"] is not None:
-            if position["y"] > cls.Y_LIMIT or position["y"] < -cls.Y_LIMIT:
-                position["x"] = None
-                position["y"] = None
+            position["x"] = None
+            position["y"] = None
 
         return position
 
     @classmethod
     def get_biomass_position(cls):
-        """ Format and returns biomass position """
+        """ Formats and returns biomass position """
         return {
             "x": cls.BIOMASS_CLUSTER_CENTER["x"] * cls.GRID_SCALE,
             "y": cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE

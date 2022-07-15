@@ -2,6 +2,12 @@
     "name": "sterol metabolism",
     "data": {
         "CHEBI:28934": {"x": 531, "y": 617, "level": 1, "name": "Vitamin D2, Ergocalciferol", "alt": ["CHEBI:23937", "CHEBI:10007"]},
+        "CHEBI:16521": {"x": 305, "y": 603, "level": 1, "name": "Lanosterol", "alt": ["CHEBI:6374", "CHEBI:25011", "CHEBI:14500", "CHEBI:43584"]},
+        "CHEBI:17813": {"x": 322, "y": 603, "level": 1, "name": "4,4-Dimethyl-5alpha-cholesta-8,14,24-trien-3beta-ol", "alt": ["CHEBI:11920", "CHEBI:1743"]},
+        "CHEBI:17791": {"x": 252, "y": 665, "level": 1, "name": "Obtusifoliol", "alt": ["CHEBI:7717", "CHEBI:14678", "CHEBI:25624"]},
+        "CHEBI:30109": {"x": 252, "y": 677, "level": 1, "name": "4alpha-Methyl-5alpha-ergosta-8,14,24(28)-trien-3beta-ol", "alt": ["CHEBI:1946", "CHEBI:12051"]},
+        "CHEBI:16469": {"x": 445, "y": 672, "level": 1, "name": "17β-estradiol", "alt": ["CHEBI:23963", "CHEBI:42475", "CHEBI:4864", "CHEBI:14219"]},
+        "CHEBI:17263": {"x": 445, "y": 699, "level": 1, "name": "Estrone", "alt": ["CHEBI:14220", "CHEBI:23971", "CHEBI:4870"]},
         "CHEBI:16933": {"x": 515, "y": 617, "level": 1, "name": "Ergosterol", "alt": ["CHEBI:42264", "CHEBI:4825", "CHEBI:14214", "CHEBI:23942"]},
         "CHEBI:18249": {"x": 498, "y": 617, "level": 1, "name": "Ergosta-5,7,22,24(28)-tetraen-3beta-ol", "alt": ["CHEBI:4824", "CHEBI:14213"]},
         "CHEBI:80095": {"x": 482, "y": 617, "level": 1, "name": "5,7,24(28)-Ergostatrienol", "alt": [""]},
