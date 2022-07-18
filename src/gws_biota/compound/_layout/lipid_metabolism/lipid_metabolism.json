@@ -2,6 +2,7 @@
     "name": "lipid metabolism",
     "data": {
         "CHEBI:15345": {"x": 501, "y": 457, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173", "CHEBI:57286"]},
+        "CHEBI:17197": {"x": 523, "y": 301, "level": 1, "name": "1-alkylglycerone 3-phosphate", "alt": ["CHEBI:73385", "CHEBI:7675", "CHEBI:12688", "CHEBI:13813", "CHEBI:21941", "CHEBI:73315", "CHEBI:58049"]},
         "CHEBI:17815": {"x": 476, "y": 328, "level": 1, "name": "1,2-diacyl-sn-glycerol", "alt": ["CHEBI:495", "CHEBI:11150", "CHEBI:13582"]},
         "CHEBI:15351": {"x": 719, "y": 550, "level": 1, "name": "acetyl-CoA", "alt": ["CHEBI:40470", "CHEBI:2408", "CHEBI:13712", "CHEBI:22192", "CHEBI:57288"]},
         "CHEBI:10983": {"x": 820, "y": 561, "level": 1, "name": "(R)-3-hydroxybutyrate", "alt": ["CHEBI:17066", "CHEBI:322", "CHEBI:18666"]},
