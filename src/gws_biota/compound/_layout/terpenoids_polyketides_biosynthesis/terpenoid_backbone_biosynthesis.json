@@ -1,5 +1,5 @@
 {  
-    "parent": "Metabolism of terpenoids and polyketides",
+    "parent": "metabolism of terpenoids and polyketides",
     "name": "terpenoid backbone biosynthesis",
     "data": {
         "CHEBI:15361": {"x": 99, "y": -59, "level": 1, "name":"pyruvate", "alt": ["CHEBI:26462", "CHEBI:26466", "CHEBI:8685", "CHEBI:32816", "CHEBI:45253", "CHEBI:14987"]},

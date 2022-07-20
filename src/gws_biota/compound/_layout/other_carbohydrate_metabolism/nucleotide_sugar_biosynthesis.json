@@ -1,0 +1,15 @@
+{  
+    "parent": "other carbohydrate metabolism",
+    "name": "nucleotide sugar biosynthesis",
+    "data": {
+        "CHEBI:28061": {"x": 623, "y": 222, "level": 1, "name": "alpha-D-galactose", "alt": ["CHEBI:4139", "CHEBI:42741", "CHEBI:10231", "CHEBI:22373", "CHEBI:12936"]},
+        "CHEBI:17973": {"x": 638, "y": 222, "level": 1, "name": "alpha-D-galactose 1-phosphate", "alt": ["CHEBI:12306", "CHEBI:22374", "CHEBI:42878", "CHEBI:10232", "CHEBI:12305", "CHEBI:37480", "CHEBI:4140", "CHEBI:58336", "CHEBI:59011", "CHEBI:20957"]},
+        "CHEBI:167608": {"x": 729, "y": 222, "level": 1, "name": "UDP-D-glucose", "alt": ["CHEBI:18066", "CHEBI:28532", "CHEBI:27234", "CHEBI:13498", "CHEBI:13505", "CHEBI:9845", "CHEBI:9895", "CHEBI:22103", "CHEBI:46229", "CHEBI:42885", "CHEBI:46228", "CHEBI:52249", "CHEBI:58885"]},
+        "CHEBI:29042": {"x": 638, "y": 222, "level": 1, "name": "alpha-D-glucose 1-phosphate", "alt": ["CHEBI:12320", "CHEBI:42623", "CHEBI:10246", "CHEBI:12970", "CHEBI:21004", "CHEBI:12967", "CHEBI:4169", "CHEBI:58601", "CHEBI:57629", "CHEBI:16077", "CHEBI:21001"]},
+        "CHEBI:18307": {"x": 653, "y": 247, "level": 1, "name": "UDP-D-galactose", "alt": ["CHEBI:13487", "CHEBI:42751", "CHEBI:13495", "CHEBI:9811", "CHEBI:22100", "CHEBI:67119", "CHEBI:66914", "CHEBI:58439"]},
+        "CHEBI:17925": {"x": 679, "y": 282, "level": 1, "name": "alpha-D-glucose", "alt": ["CHEBI:40557", "CHEBI:42802", "CHEBI:10242", "CHEBI:12318", "CHEBI:22386"]},
+        "CHEBI:58225": {"x": 706, "y": 282, "level": 1, "name": "alpha-D-glucose 6-phosphate(2-), alpha-D-glucose 6-phosphate", "alt": ["CHEBI:17665", "CHEBI:10245", "CHEBI:42748", "CHEBI:12321", "CHEBI:22389"]}
+
+    },
+    "centroid": {"x": 0, "y": 0}
+}

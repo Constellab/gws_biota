@@ -1,0 +1,14 @@
+{  
+    "parent": "other carbohydrate metabolism",
+    "name": "glycogen degradation",
+    "data": {
+        "CHEBI:167608": {"x": 729, "y": 222, "level": 1, "name": "Uridine 5'-diphosphoglucose", "alt": ["CHEBI:18066", "CHEBI:28532", "CHEBI:27234", "CHEBI:13498", "CHEBI:13505", "CHEBI:9845", "CHEBI:9895", "CHEBI:22103", "CHEBI:46229", "CHEBI:42885", "CHEBI:46228", "CHEBI:52249", "CHEBI:58367", "CHEBI:58885"]},
+        "CHEBI:29042": {"x": 638, "y": 222, "level": 1, "name": "alpha-D-glucose 1-phosphate", "alt": ["CHEBI:12320", "CHEBI:42623", "CHEBI:10246", "CHEBI:12970", "CHEBI:21004", "CHEBI:12967", "CHEBI:4169", "CHEBI:58601", "CHEBI:57629", "CHEBI:16077", "CHEBI:21001"]},
+        "CHEBI:28017": {"x": 666, "y": 230, "level": 1, "name": "glycogen", "alt": ["CHEBI:26751", "CHEBI:9251", "CHEBI:26750", "CHEBI:14687", "CHEBI:17462", "CHEBI:7748"]},
+        "CHEBI:28102": {"x": 666, "y": 257, "level": 1, "name": "Amylose", "alt": ["CHEBI:2694", "CHEBI:22539", "CHEBI:15444"]},
+        "CHEBI:15751": {"x": 666, "y": 273, "level": 1, "name": "ADP-glucose", "alt": ["CHEBI:40615", "CHEBI:2349", "CHEBI:13230", "CHEBI:20846", "CHEBI:57498"]},
+        "CHEBI:4170": {"x": 593, "y": 396, "level": 1, "name": "D-Glucose 6-phosphate", "alt": ["CHEBI:61548", "CHEBI:14314"]}
+
+    },
+    "centroid": {"x": 0, "y": 0}
+}

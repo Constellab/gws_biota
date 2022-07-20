@@ -4,24 +4,25 @@
     "data": {
         "CHEBI:17754": {"x": 562, "y": 309, "level": 1, "name": "glycerol", "alt": ["CHEBI:42998", "CHEBI:131422", "CHEBI:5448", "CHEBI:14334", "CHEBI:24351"]},
         "CHEBI:27975": {"x": 562, "y": 138, "level": 1, "name": "L-glyceraldehyde", "alt": ["CHEBI:6233", "CHEBI:21316"]},
-        "CHEBI:37425": {"x": 771, "y": 138, "level": 1, "name": "L-Galactonate", "alt": [""]},
-        "CHEBI:17886": {"x": 796, "y": 183, "level": 1, "name": "D-tagaturonate", "alt": ["CHEBI:4252", "CHEBI:13026", "CHEBI:21098", "CHEBI:58493", "CHEBI:59451"]},
-        "CHEBI:4126": {"x": 796, "y": 209, "level": 1, "name": "D-fructofuranuronic acid", "alt": [""]},
+        "CHEBI:37425": {"x": 771, "y": 138, "level": 1, "name": "L-Galactonate", "alt": ["CHEBI:53071"]},
+        "CHEBI:17886": {"x": 796, "y": 183, "level": 1, "name": "D-tagaturonate", "alt": ["CHEBI:4252", "CHEBI:13026", "CHEBI:21098", "CHEBI:58493", "CHEBI:59451", "CHEBI:21099"]},
+        "CHEBI:4126": {"x": 796, "y": 209, "level": 1, "name": "D-fructofuranuronic acid", "alt": ["CHEBI:47950", "CHEBI:59881", "CHEBI:24113", "CHEBI:16849", "CHEBI:12927", "CHEBI:20936", "CHEBI:59863", "CHEBI:20937", "CHEBI:24112"]},
         "CHEBI:17767": {"x": 814, "y": 209, "level": 1, "name": "D-mannonate", "alt": ["CHEBI:12998", "CHEBI:58654", "CHEBI:21052", "CHEBI:33076", "CHEBI:49545", "CHEBI:21053", "CHEBI:4206"]},
-        "CHEBI:17032": {"x": 840, "y": 209, "level": 1, "name": "2-dehydro-3-deoxy-D-gluconic acid", "alt": ["CHEBI:11550", "CHEBI:19530", "CHEBI:1059"]},
+        "CHEBI:17032": {"x": 840, "y": 209, "level": 1, "name": "2-dehydro-3-deoxy-D-gluconic acid", "alt": ["CHEBI:11550", "CHEBI:19530", "CHEBI:1059", "CHEBI:57990"]},
         "CHEBI:17360": {"x": 859, "y": 209, "level": 1, "name": "D-Altronate", "alt": ["CHEBI:4095", "CHEBI:12908", "CHEBI:20904", "CHEBI:58707", "CHEBI:46644"]},
-        "CHEBI:167608": {"x": 729, "y": 222, "level": 1, "name": "Uridine 5'-diphosphoglucose", "alt": ["CHEBI:18066", "CHEBI:28532", "CHEBI:27234", "CHEBI:13498", "CHEBI:13505", "CHEBI:9845", "CHEBI:9895", "CHEBI:22103", "CHEBI:46229", "CHEBI:42885", "CHEBI:46228", "CHEBI:52249"]},
-        "CHEBI:17200": {"x": 729, "y": 222, "level": 1, "name": "UDP-α-D-glucuronic acid", "alt": ["CHEBI:46309", "CHEBI:13506", "CHEBI:13489", "CHEBI:9846", "CHEBI:22104"]},
-        "CHEBI:15341": {"x": 777, "y": 222, "level": 1, "name": "β-D-glucosiduronic acid", "alt": ["CHEBI:13701", "CHEBI:10404", "CHEBI:22803", "CHEBI:166759", "CHEBI:167579", "CHEBI:168472", "CHEBI:169226", "CHEBI:174831", "CHEBI:176746"]},
-        "CHEBI:15748": {"x": 796, "y": 222, "level": 1, "name": "D-glucuronate", "alt": ["CHEBI:12975", "CHEBI:21013", "CHEBI:4178", "CHEBI:47952"]},
-        "CHEBI:13115": {"x": 831, "y": 222, "level": 1, "name": "L-gulonate", "alt": ["CHEBI:16154", "CHEBI:6235", "CHEBI:21319", "CHEBI:21318"]},
-        "CHEBI:16142": {"x": 831, "y": 238, "level": 1, "name": "3-dehydro-L-gulonic acid", "alt": ["CHEBI:11777", "CHEBI:19992", "CHEBI:1482"]},
+        "CHEBI:167608": {"x": 729, "y": 222, "level": 1, "name": "Uridine 5'-diphosphoglucose", "alt": ["CHEBI:18066", "CHEBI:28532", "CHEBI:27234", "CHEBI:13498", "CHEBI:13505", "CHEBI:9845", "CHEBI:9895", "CHEBI:22103", "CHEBI:46229", "CHEBI:42885", "CHEBI:46228", "CHEBI:52249", "CHEBI:58367", "CHEBI:58885"]},
+        "CHEBI:17200": {"x": 729, "y": 222, "level": 1, "name": "UDP-alpha-D-glucuronic acid", "alt": ["CHEBI:46309", "CHEBI:13506", "CHEBI:13489", "CHEBI:9846", "CHEBI:22104", "CHEBI:58052"]},
+        "CHEBI:15341": {"x": 777, "y": 222, "level": 1, "name": "beta-D-glucosiduronic acid", "alt": ["CHEBI:13701", "CHEBI:10404", "CHEBI:22803", "CHEBI:166759", "CHEBI:167579", "CHEBI:168472", "CHEBI:169226", "CHEBI:174831", "CHEBI:176746"]},
+        "CHEBI:15748": {"x": 796, "y": 222, "level": 1, "name": "D-glucuronate", "alt": ["CHEBI:12975", "CHEBI:21013", "CHEBI:4178", "CHEBI:47952", "CHEBI:24297", "CHEBI:24298", "CHEBI:58720"]},
+        "CHEBI:13115": {"x": 831, "y": 222, "level": 1, "name": "L-gulonate", "alt": ["CHEBI:16154", "CHEBI:6235", "CHEBI:21319", "CHEBI:21318", "CHEBI:24462", "CHEBI:24461"]},
+        "CHEBI:16142": {"x": 831, "y": 238, "level": 1, "name": "3-dehydro-L-gulonic acid", "alt": ["CHEBI:11777", "CHEBI:19992", "CHEBI:1482", "CHEBI:57655"]},
         "CHEBI:165240": {"x": 831, "y": 272, "level": 1, "name": "Lyxulose", "alt": ["CHEBI:17399", "CHEBI:6326", "CHEBI:13190", "CHEBI:21425"]},
         "CHEBI:17151": {"x": 803, "y": 272, "level": 1, "name": "xylitol", "alt": ["CHEBI:60939", "CHEBI:46522", "CHEBI:15328", "CHEBI:253147", "CHEBI:27339", "CHEBI:10078"]},
-        "CHEBI:15925": {"x": 829, "y": 282, "level": 1, "name": "2-dehydro-3-deoxy-6-phospho-D-gluconic acid", "alt": ["CHEBI:11543", "CHEBI:11551", "CHEBI:12227", "CHEBI:1051", "CHEBI:19522"]},
+        "CHEBI:15925": {"x": 829, "y": 282, "level": 1, "name": "2-dehydro-3-deoxy-6-phospho-D-gluconic acid", "alt": ["CHEBI:11543", "CHEBI:11551", "CHEBI:12227", "CHEBI:1051", "CHEBI:19522", "CHEBI:57569"]},
         "CHEBI:17140": {"x": 779, "y": 291, "level": 1, "name": "D-xylulose", "alt": ["CHEBI:46514", "CHEBI:4268", "CHEBI:13035", "CHEBI:21120"]},
-        "CHEBI:16332": {"x": 779, "y": 309, "level": 1, "name": "D-xylulose 5-phosphate", "alt": ["CHEBI:13036", "CHEBI:21121", "CHEBI:4269"]},
-        "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-glyceraldehyde 3-phosphate", "alt": ["CHEBI:181", "CHEBI:12983", "CHEBI:12984", "CHEBI:21026", "CHEBI:18324"]}
+        "CHEBI:16332": {"x": 779, "y": 309, "level": 1, "name": "D-xylulose 5-phosphate", "alt": ["CHEBI:13036", "CHEBI:21121", "CHEBI:4269", "CHEBI:27354", "CHEBI:57737"]},
+        "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-glyceraldehyde 3-phosphate", "alt": ["CHEBI:181", "CHEBI:12983", "CHEBI:12984", "CHEBI:21026", "CHEBI:18324", "CHEBI:5446", "CHEBI:14333", "CHEBI:17138", "CHEBI:58027", "CHEBI:59776"]}
+
     },
     "centroid": {"x": 0, "y": 0}
 }
