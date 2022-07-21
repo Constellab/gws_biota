@@ -1,5 +1,5 @@
 {  
-    "parent": "carbohydrate metabolism",
+    "parent": "central carbohydrate metabolism",
     "name": "fructose metabolism",
     "data": {
         "CHEBI:37721": {"x": 588, "y": 297, "level": 1, "name": "fructofuranose, D-Fructose", "alt": ["CHEBI:47424", "CHEBI:4119", "CHEBI:47424", "CHEBI:28757", "CHEBI:24110", "CHEBI:20929", "CHEBI:4119", "CHEBI:15824", "CHEBI:5172", "CHEBI:24104", "CHEBI:12923", "CHEBI:4118", "CHEBI:37714", "CHEBI:37721", "CHEBI:48095"]},

@@ -1,5 +1,5 @@
 {  
-    "parent": "carbohydrate metabolism",
+    "parent": "central carbohydrate metabolism",
     "name": "ethanol metabolism",
     "data": {
         "CHEBI:15343": {"x": 763, "y": 497, "level": 1, "name": "acetaldehyde", "alt": ["CHEBI:40533", "CHEBI:13703", "CHEBI:2383", "CHEBI:22158"]},

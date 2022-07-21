@@ -1,5 +1,5 @@
 {  
-    "parent": "carbohydrate metabolism",
+    "parent": "central carbohydrate metabolism",
     "name": "pentose phosphate metabolism",
     "data": {
         "CHEBI:12233": {"x": 762, "y": 282, "level": 1, "name": "6-O-phosphono-D-glucono-1,5-lactone", "alt": ["CHEBI:12233", "CHEBI:4160", "CHEBI:57955", "CHEBI:16938", "CHEBI:20989", "CHEBI:12958"]},

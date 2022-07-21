@@ -8,7 +8,6 @@
         "CHEBI:28102": {"x": 666, "y": 257, "level": 1, "name": "Amylose", "alt": ["CHEBI:2694", "CHEBI:22539", "CHEBI:15444"]},
         "CHEBI:15751": {"x": 666, "y": 273, "level": 1, "name": "ADP-glucose", "alt": ["CHEBI:40615", "CHEBI:2349", "CHEBI:13230", "CHEBI:20846", "CHEBI:57498"]},
         "CHEBI:4170": {"x": 593, "y": 396, "level": 1, "name": "D-Glucose 6-phosphate", "alt": ["CHEBI:61548", "CHEBI:14314"]}
-
     },
     "centroid": {"x": 0, "y": 0}
 }

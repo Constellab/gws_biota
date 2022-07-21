@@ -1,5 +1,5 @@
 {  
-    "parent": "carbohydrate metabolism",
+    "parent": "central carbohydrate metabolism",
     "name": "pyruvate metabolism",
     "data": {
         "CHEBI:15361": {"x": 719, "y": 513, "level": 1, "name":"pyruvate", "alt": ["CHEBI:26462", "CHEBI:26466", "CHEBI:8685", "CHEBI:32816", "CHEBI:45253", "CHEBI:14987"]},
