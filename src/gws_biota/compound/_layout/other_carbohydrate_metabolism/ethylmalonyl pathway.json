@@ -2,6 +2,20 @@
     "parent": "other carbohydrate metabolism",
     "name": "ethylmalonyl pathway",
     "data": {
+        "CHEBI:15345": {"x": 501, "y": 457, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173", "CHEBI:57286"]},
+        "CHEBI:15452": {"x": 490, "y": 485, "level": 1, "name": "(R)-3-hydroxybutanoyl-CoA", "alt": ["CHEBI:10879", "CHEBI:18667", "CHEBI:10984", "CHEBI:323"]},
+        "CHEBI:15473": {"x": 501, "y": 513, "level": 1, "name": "crotonoyl-CoA", "alt": ["CHEBI:41612", "CHEBI:14031", "CHEBI:14032", "CHEBI:23408", "CHEBI:3928", "CHEBI:11531", "CHEBI:36926", "CHEBI:57332", "CHEBI:13921", "CHEBI:58669"]},
+        "CHEBI:57288": {"x": 719, "y": 550, "level": 1, "name": "acetyl_CoA(4-)", "alt": ["CHEBI:22192", "CHEBI:15351", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
+        "CHEBI:15539": {"x": 826, "y": 578, "level": 1, "name": "propionyl-CoA", "alt": ["CHEBI:8479", "CHEBI:14904", "CHEBI:14907", "CHEBI:26295", "CHEBI:57392"]},
+        "CHEBI:15589": {"x": 664, "y": 622, "level": 1, "name": "malate, (S)-malate(2-)", "alt": ["CHEBI:30797", "CHEBI:423", "CHEBI:18784", "CHEBI:18785", "CHEBI:13140", "CHEBI:11066"]},
+        "CHEBI:15454": {"x": 692, "y": 645, "level": 1, "name": "L-Malyl-CoA", "alt": ["CHEBI:18565", "CHEBI:10886", "CHEBI:207", "CHEBI:14572"]},
+        "CHEBI:16891": {"x": 722, "y": 635, "level": 1, "name": "Glyoxylate", "alt": ["CHEBI:42767", "CHEBI:5509", "CHEBI:24421", "CHEBI:24420", "CHEBI:36655", "CHEBI:14368", "CHEBI:35977"]},
+        "CHEBI:15466": {"x": 826, "y": 644, "level": 1, "name": "(S)-Methylmalonyl-CoA", "alt": ["CHEBI:11038", "CHEBI:43874", "CHEBI:384", "CHEBI:11068", "CHEBI:18742", "CHEBI:57327"]}, 
+        "CHEBI:81456": {"x": 490, "y": 690, "level": 1, "name": "Ethylmalonyl-CoA", "alt": ["CHEBI:85316", "CHEBI:60909", "CHEBI:60907", "CHEBI:85803"]}, 
+        "CHEBI:81672": {"x": 662, "y": 690, "level": 1, "name": "(2S)-methylsuccinyl-CoA", "alt": ["CHEBI:84866"]}, 
+        "CHEBI:57292": {"x": 714, "y": 709, "level": 1, "name": "succinyl-CoA(5-)", "alt": ["CHEBI:57292", "CHEBI:10746", "CHEBI:15127", "CHEBI:15380", "CHEBI:9310", "CHEBI:45541", "CHEBI:26811"]},
+        "CHEBI:15465": {"x": 826, "y": 719, "level": 1, "name": "(R)-methylmalonyl-CoA", "alt": ["CHEBI:10976", "CHEBI:313", "CHEBI:18654", "CHEBI:57326"]},
+        "CHEBI:27969": {"x": 662, "y": 730, "level": 1, "name": "mesaconyl-CoA", "alt": ["CHEBI:6774", "CHEBI:25201", "CHEBI:75635"]}
 
     },
     "centroid": {"x": 0, "y": 0}

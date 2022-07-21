@@ -242,8 +242,8 @@ class CompoundLayout:
     def get_biomass_position(cls):
         """ Formats and returns biomass position """
         return {
-            "x": cls.BIOMASS_CLUSTER_CENTER["x"] * cls.GRID_SCALE,
-            "y": cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE
+            "x": None,  # cls.BIOMASS_CLUSTER_CENTER["x"] * cls.GRID_SCALE,
+            "y": None,  # cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE
         }
 
     @classmethod
