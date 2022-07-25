@@ -3,6 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+import copy
 import json
 import os
 import random
@@ -55,6 +56,18 @@ class CompoundCluster:
                 self._centroid["y"] = self._centroid["y"] - GOLBAL_CENTER["y"]
             else:
                 self._centroid["y"] = 0
+
+        # for k in data:
+        #     if data[k]["x"] is not None:
+        #         data[k]["x"] += self._centroid["x"]
+        #         data[k]["y"] += self._centroid["y"]
+
+        # with open("/lab/user/bricks/gws_biota/file.json", "a", encoding="utf-8") as fp:
+        #     str_ = json.dumps(data)
+        #     fp.write("-------------------------------\n")
+        #     fp.write(parent + "\n")
+        #     fp.write(name + "\n")
+        #     fp.write(str_ + "\n")
 
     @property
     def name(self):
@@ -145,7 +158,7 @@ class CompoundLayout:
                         cluster = CompoundCluster.from_file(os.path.join(root, file))
                         cls._clusters.append(cluster)
         except Exception as err:
-            Logger.warning(f"An error occur when parsing layout files. Message {err}")
+            raise BadRequestException(f"An error occur when parsing layout files. Message {err}") from err
 
         for cluster in cls._clusters:
             cluster_data = cluster.generate()
@@ -206,35 +219,25 @@ class CompoundLayout:
         if not clusters:
             return position
 
-        default_position: CompoundLayoutDict = list(clusters.values())[0]
+        clusters_ = copy.deepcopy(clusters)
+        default_position: CompoundLayoutDict = list(clusters_.values())[0]
+
         position: CompoundLayoutDict = {
-            "x": default_position["x"],
-            "y": default_position["y"],
+            "x": None,
+            "y": None,
             "level": default_position.get("level", 2),
-            "clusters": clusters,
+            "clusters": clusters_,
         }
 
-        # if compartment and compartment != "c":
-        #     # add offset for compartment
-        #     if position["x"] is not None:
-        #         position["x"]  = None
+        # for c_name in position["clusters"]:
+        #     position["clusters"][c_name]["alt"] = None
 
-        #     if position["y"] is not None:
-        #         position["y"]  = None
-
-        # if position["x"] is not None:
-        #     if position["x"] > cls.X_LIMIT or position["x"] < -cls.X_LIMIT:
-        #         position["x"] = None
-        #         position["y"] = None
-
-        # if position["y"] is not None:
-        #     if position["y"] > cls.Y_LIMIT or position["y"] < -cls.Y_LIMIT:
-        #         position["x"] = None
-        #         position["y"] = None
-
-        if compartment and compartment != "c":
-            position["x"] = None
-            position["y"] = None
+        # if compartment is not None and compartment != "c":
+        #     position["x"] = None
+        #     position["y"] = None
+        #     for c_name in position["clusters"]:
+        #         position["clusters"][c_name]["x"] = None
+        #         position["clusters"][c_name]["y"] = None
 
         return position
 

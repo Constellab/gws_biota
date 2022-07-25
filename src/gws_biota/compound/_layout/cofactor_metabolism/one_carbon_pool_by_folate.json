@@ -2,15 +2,15 @@
     "parent": "vitamins and cofactors metabolism",
     "name": "one carbon pool by folate",
     "data": {
-        "CHEBI:15635": {"x": -25, "y": 0, "level": 1, "name": "Tetrahydrofolate", "alt": ["CHEBI:18606", "CHEBI:12075", "CHEBI:10931", "CHEBI:15220", "CHEBI:9482", "CHEBI:46069", "CHEBI:57453", "CHEBI:20506", "CHEBI:68437"]},
-        "CHEBI:1989": {"x": 46, "y": 0, "level": 1, "name": "5,10-Methylenetetrahydrofolate", "alt": ["CHEBI:10925", "CHEBI:15636", "CHEBI:18602"]},
-        "CHEBI:15637": {"x": 0, "y": 0, "level": 1, "name": "10-Formyltetrahydrofolate", "alt": ["CHEBI:698", "CHEBI:19109", "CHEBI:19108", "CHEBI:11304", "CHEBI:57454"]},      
-        "CHEBI:15633": {"x": -51, "y": 0, "level": 1, "name": "Dihydrofolate", "alt": ["CHEBI:42000", "CHEBI:20768", "CHEBI:12245", "CHEBI:4564", "CHEBI:14150", "CHEBI:57451"]},
-        "CHEBI:15641": {"x": 46, "y": 24, "level": 1, "name": "5-Methyltetrahydrofolate", "alt": ["CHEBI:2097", "CHEBI:12146", "CHEBI:18608", "CHEBI:136009", "CHEBI:20612"]},
-        "CHEBI:15638": {"x": 23, "y": 0, "level": 1, "name": "5,10-Methenyltetrahydrofolate", "alt": ["CHEBI:1987", "CHEBI:12069", "CHEBI:12068", "CHEBI:57455"]},
-        "CHEBI:27470": {"x": -51, "y": 15, "level": 1, "name": "Folate", "alt": ["CHEBI:42610", "CHEBI:569217", "CHEBI:5140", "CHEBI:24075", "CHEBI:62501"]},
-        "CHEBI:15639": {"x": 23, "y": 17, "level": 1, "name": "5-Formiminotetrahydrofolate", "alt": ["CHEBI:12126", "CHEBI:2056", "CHEBI:18603", "CHEBI:57456"]},
-        "CHEBI:15640": {"x": 0, "y": 10, "level": 1, "name": "Folinic acid", "alt": ["CHEBI:2057", "CHEBI:18607", "CHEBI:12127", "CHEBI:63606", "CHEBI:65340", "CHEBI:57457"]}
+        "CHEBI:15635": {"x": 1365, "y": 237, "level": 1, "name": "Tetrahydrofolate", "alt": ["CHEBI:18606", "CHEBI:12075", "CHEBI:10931", "CHEBI:15220", "CHEBI:9482", "CHEBI:46069", "CHEBI:57453", "CHEBI:20506", "CHEBI:68437"]},
+        "CHEBI:1989": {"x": 1436, "y": 237, "level": 1, "name": "5,10-Methylenetetrahydrofolate", "alt": ["CHEBI:10925", "CHEBI:15636", "CHEBI:18602"]},
+        "CHEBI:15637": {"x": 1390, "y": 237, "level": 1, "name": "10-Formyltetrahydrofolate", "alt": ["CHEBI:698", "CHEBI:19109", "CHEBI:19108", "CHEBI:11304", "CHEBI:57454"]},
+        "CHEBI:15633": {"x": 1339, "y": 237, "level": 1, "name": "Dihydrofolate", "alt": ["CHEBI:42000", "CHEBI:20768", "CHEBI:12245", "CHEBI:4564", "CHEBI:14150", "CHEBI:57451"]},
+        "CHEBI:15641": {"x": 1436, "y": 261, "level": 1, "name": "5-Methyltetrahydrofolate", "alt": ["CHEBI:2097", "CHEBI:12146", "CHEBI:18608", "CHEBI:136009", "CHEBI:20612"]},
+        "CHEBI:15638": {"x": 1413, "y": 237, "level": 1, "name": "5,10-Methenyltetrahydrofolate", "alt": ["CHEBI:1987", "CHEBI:12069", "CHEBI:12068", "CHEBI:57455"]},
+        "CHEBI:27470": {"x": 1339, "y": 252, "level": 1, "name": "Folate", "alt": ["CHEBI:42610", "CHEBI:569217", "CHEBI:5140", "CHEBI:24075", "CHEBI:62501"]},
+        "CHEBI:15639": {"x": 1413, "y": 254, "level": 1, "name": "5-Formiminotetrahydrofolate", "alt": ["CHEBI:12126", "CHEBI:2056", "CHEBI:18603", "CHEBI:57456"]},
+        "CHEBI:15640": {"x": 1390, "y": 247, "level": 1, "name": "Folinic acid", "alt": ["CHEBI:2057", "CHEBI:18607", "CHEBI:12127", "CHEBI:63606", "CHEBI:65340", "CHEBI:57457"]}
     },
-    "centroid": {"x": 1390, "y": 237}
+    "centroid": {"x": 0, "y": 0}
 }

@@ -11,7 +11,6 @@
         "CHEBI:61521": {"x": 1173, "y": 702, "level": 1, "name": "gamma-glutamyl-gamma-aminobutyraldehyde", "alt": ["CHEBI:61508"]},
         "CHEBI:178402": {"x": null, "y": null, "level": 2, "name": "L-N-(3-Carboxypropyl)glutamine", "alt": []},
         "CHEBI:49260": {"x": 1173, "y": 729, "level": 1, "name": "4-(L-gamma-glutamylamino)butanoic acid", "alt": ["CHEBI:58800"]},
-        "CHEBI:16865": {"x": 145, "y": 110, "level": 1, "name": "gamma-aminobutyric acid", "alt": ["CHEBI:40483", "CHEBI:1786", "CHEBI:20318", "CHEBI:193777", "CHEBI:20317", "CHEBI:30566", "CHEBI:11961", "CHEBI:59888"]},
         "CHEBI:30566": {"x": 981, "y": 761, "level": 1, "name": "gamma-aminobutyrate", "alt": ["CHEBI:20317", "CHEBI:11961", "CHEBI:40483", "CHEBI:1786", "CHEBI:16865", "CHEBI:193777", "CHEBI:59888", "CHEBI:20318"]},
         "CHEBI:11951": {"x": 1212, "y": 760, "level": 1, "name": "4-acetamidobutanoate", "alt": ["CHEBI:17645", "CHEBI:20303", "CHEBI:1777"]}
     },

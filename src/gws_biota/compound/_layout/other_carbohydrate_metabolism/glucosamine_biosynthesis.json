@@ -9,7 +9,6 @@
         "CHEBI:27625": {"x": 663, "y": 377, "level": 1, "name": "D-Glucosamine 1-phosphate", "alt": ["CHEBI:42868", "CHEBI:12316", "CHEBI:4163", "CHEBI:20994", "CHEBI:58516"]},
         "CHEBI:15784": {"x": 650, "y": 390, "level": 1, "name": "N-acetyl-D-glucosamine 6-phosphate", "alt": ["CHEBI:7127", "CHEBI:12456", "CHEBI:12564", "CHEBI:21521", "CHEBI:49353", "CHEBI:57513", "CHEBI:49359", "CHEBI:39577"]},
         "CHEBI:16446": {"x": 663, "y": 390, "level": 1, "name": "N-Acetyl-alpha-D-glucosamine 1-phosphate", "alt": ["CHEBI:12443", "CHEBI:28742", "CHEBI:42925", "CHEBI:12542", "CHEBI:21573", "CHEBI:7163", "CHEBI:57776"]}        
-
     },
     "centroid": {"x": 0, "y": 0}
 }

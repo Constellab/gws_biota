@@ -22,7 +22,6 @@
         "CHEBI:17666": {"x": 874, "y": 317, "level": 1, "name": "L-ribulose 5-phosphate", "alt": ["CHEBI:6296", "CHEBI:13164", "CHEBI:21383", "CHEBI:58226"]},
         "CHEBI:16593": {"x": 874, "y": 317, "level": 1, "name": "L-xylulose 5-phosphate", "alt": ["CHEBI:6328", "CHEBI:13191", "CHEBI:21427", "CHEBI:57829"]},
         "CHEBI:18205": {"x": 874, "y": 317, "level": 1, "name": "alpha-D-mannose 1-phosphate", "alt": ["CHEBI:43854", "CHEBI:12327", "CHEBI:22404", "CHEBI:10261", "CHEBI:35374", "CHEBI:21058", "CHEBI:4210", "CHEBI:58409"]}
-
     },
     "centroid": {"x": 0, "y": 0}
 }

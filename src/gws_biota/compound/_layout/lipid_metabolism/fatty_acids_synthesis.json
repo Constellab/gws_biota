@@ -50,7 +50,6 @@
         "CHEBI:16018": {"x": 329, "y": 537, "level": 1, "name": "acyl-[acyl-carrier protein]", "alt": ["CHEBI:2457, CHEBI:13728"]},
         "CHEBI:17093": {"x": 348, "y": 435, "level": 1, "name": "acetyl-[acyl-carrier protein]", "alt": ["CHEBI:2409, CHEBI:13713"]},
         "CHEBI:17330": {"x": 377, "y": 453, "level": 1, "name": "carboxyacetyl-[acyl-carrier protein]", "alt": ["CHEBI:6662", "CHEBI:14566"]}
-
     },
     "centroid": {"x": 0, "y": 0}
 }

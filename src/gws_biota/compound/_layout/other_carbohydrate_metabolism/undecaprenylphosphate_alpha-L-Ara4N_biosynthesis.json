@@ -8,7 +8,6 @@
         "CHEBI:47025": {"x": 750, "y": 128, "level": 1, "name": "UDP-L-Ara4N", "alt": ["CHEBI:58708"]},
         "CHEBI:47028": {"x": 750, "y": 150, "level": 1, "name": "UDP-L-Ara4O", "alt": ["CHEBI:58710"]},
         "CHEBI:17200": {"x": 729, "y": 222, "level": 1, "name": "UDP-alpha-D-glucuronic acid", "alt": ["CHEBI:46309", "CHEBI:13506", "CHEBI:13489", "CHEBI:9846", "CHEBI:22104", "CHEBI:58052"]}
-
     },
     "centroid": {"x": 0, "y": 0}
 }
