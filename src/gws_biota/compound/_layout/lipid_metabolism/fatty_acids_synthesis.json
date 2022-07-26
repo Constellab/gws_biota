@@ -1,4 +1,5 @@
 {  
+    "parent": "lipid metabolism",
     "name": "fatty acids synthesis",
     "data": {
         "CHEBI:57384": {"x": null, "y": null, "level": 2, "name": "malonyl-CoA(5-)", "alt": ["CHEBI:25135", "CHEBI:43979", "CHEBI:14565", "CHEBI:15531", "CHEBI:6661"]},

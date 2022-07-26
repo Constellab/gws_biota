@@ -1,11 +1,11 @@
 {  
-    "parent": "nucleotides metabolism",
+    "parent": "nucleotide metabolism",
     "name": "pyrimidine metabolism",
     "data": {
         "CHEBI:17659": {"x": 986, "y": 168, "level": 1, "name": "UDP", "alt": ["CHEBI:46402", "CHEBI:9802", "CHEBI:13445", "CHEBI:27230", "CHEBI:58223"]},
         "CHEBI:17361": {"x": 1012, "y": 194, "level": 1, "name": "CMP", "alt": ["CHEBI:48799", "CHEBI:3275", "CHEBI:41666", "CHEBI:23520", "CHEBI:41691", "CHEBI:41312", "CHEBI:41319", "CHEBI:47362", "CHEBI:13274", "CHEBI:60377", "CHEBI:58120"]},
         "CHEBI:17677": {"x": 960, "y": 194, "level": 1, "name": "CTP", "alt": ["CHEBI:23522", "CHEBI:3285", "CHEBI:41675", "CHEBI:13286", "CHEBI:58231", "CHEBI:37563"]},
-        "CHEBI:18050": {"x": 1006, "y": 300, "level": 1, "name": "L-Glutamine", "alt": ["CHEBI:21308", "CHEBI:42899", "CHEBI:42812", "CHEBI:42814", "CHEBI:42943", "CHEBI:6227", "CHEBI:13110", "CHEBI:32679", "CHEBI:32678", "CHEBI:58359", "CHEBI:28300", "CHEBI:32666", "CHEBI:32665", "CHEBI:5432", "CHEBI:24316"]},
+        "CHEBI:18050": {"x": 1020, "y": 120, "level": 1, "name": "L-Glutamine", "alt": ["CHEBI:21308", "CHEBI:42899", "CHEBI:42812", "CHEBI:42814", "CHEBI:42943", "CHEBI:6227", "CHEBI:13110", "CHEBI:32679", "CHEBI:32678", "CHEBI:58359", "CHEBI:28300", "CHEBI:32666", "CHEBI:32665", "CHEBI:5432", "CHEBI:24316"]},
         "CHEBI:15713": {"x": 960, "y": 168, "level": 1, "name": "UTP", "alt": ["CHEBI:13510", "CHEBI:9850", "CHEBI:27233", "CHEBI:46398", "CHEBI:57481", "CHEBI:37567", "CHEBI:46397"]},
         "CHEBI:16199": {"x": 1202, "y": 596, "level": 1, "name": "Urea", "alt": ["CHEBI:46379", "CHEBI:15292", "CHEBI:27218", "CHEBI:9888", "CHEBI:134711", "CHEBI:32285", "CHEBI:48376"]},
         "CHEBI:16958": {"x": 1097, "y": 278, "level": 1, "name": "beta-Alanine", "alt": ["CHEBI:22821", "CHEBI:41050", "CHEBI:10343", "CHEBI:12389", "CHEBI:63070", "CHEBI:57966"]},
@@ -33,7 +33,7 @@
         "CHEBI:17625": {"x": 960, "y": 244, "level": 1, "name": "dUTP", "alt": ["CHEBI:10533", "CHEBI:14095", "CHEBI:19264", "CHEBI:61555", "CHEBI:58212"]},
         "CHEBI:17562": {"x": 1038, "y": 194, "level": 1, "name": "Cytidine", "alt": ["CHEBI:41686", "CHEBI:14063", "CHEBI:41649", "CHEBI:23515", "CHEBI:41704", "CHEBI:4053", "CHEBI:41709"]},
         "CHEBI:16450": {"x": 1038, "y": 244, "level": 1, "name": "Deoxyuridine", "alt": ["CHEBI:11398", "CHEBI:11572", "CHEBI:23640", "CHEBI:46289", "CHEBI:42178", "CHEBI:14123", "CHEBI:4434", "CHEBI:46165", "CHEBI:19261", "CHEBI:46293", "CHEBI:29113"]},
-        "CHEBI:11563": {"x": 777, "y": 372, "level": 1, "name": "2-Deoxy-D-ribose 1-phosphate", "alt": ["CHEBI:28542", "CHEBI:1081", "CHEBI:19558", "CHEBI:58576", "CHEBI:57259"]},
+        "CHEBI:11563": {"x": 1192, "y": 180, "level": 1, "name": "2-Deoxy-D-ribose 1-phosphate", "alt": ["CHEBI:28542", "CHEBI:1081", "CHEBI:19558", "CHEBI:58576", "CHEBI:57259"]},
         "CHEBI:28846": {"x": 986, "y": 221, "level": 1, "name": "dCDP", "alt": ["CHEBI:19241", "CHEBI:49966", "CHEBI:10492", "CHEBI:58593"]},
         "CHEBI:29745": {"x": 1130, "y": 158, "level": 1, "name": "Barbiturate", "alt": ["CHEBI:22690", "CHEBI:13872", "CHEBI:77938"]},
         "CHEBI:15698": {"x": 1038, "y": 221, "level": 1, "name": "Deoxycytidine", "alt": ["CHEBI:4407", "CHEBI:41430", "CHEBI:41417", "CHEBI:19240", "CHEBI:41806", "CHEBI:41434"]},

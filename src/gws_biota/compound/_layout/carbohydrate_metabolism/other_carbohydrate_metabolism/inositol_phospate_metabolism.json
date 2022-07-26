@@ -1,0 +1,21 @@
+{  
+    "parent": "carbohydrate metabolism",
+    "subparent": "other carbohydrate metabolism",
+    "name": "inositol phosphate metabolism",
+    "data": {
+        "CHEBI:16749": {"x": 544, "y": 349, "level": 1, "name": "1-Phosphatidyl-D-myo-inositol", "alt": ["CHEBI:11283", "CHEBI:11291", "CHEBI:19086", "CHEBI:11292", "CHEBI:677", "CHEBI:679", "CHEBI:11280", "CHEBI:19088", "CHEBI:28601", "CHEBI:57880"]},
+        "CHEBI:17526": {"x": 544, "y": 366, "level": 1, "name": "1-Phosphatidyl-1D-myo-inositol 4-phosphate", "alt": ["CHEBI:675", "CHEBI:11289", "CHEBI:19085", "CHEBI:61083", "CHEBI:58178"]},
+        "CHEBI:18348": {"x": 544, "y": 384, "level": 1, "name": "1-Phosphatidyl-D-myo-inositol 4,5-bisphosphate", "alt": ["CHEBI:8127", "CHEBI:678", "CHEBI:11282", "CHEBI:11288", "CHEBI:14796", "CHEBI:19087", "CHEBI:26028", "CHEBI:28910", "CHEBI:58597", "CHEBI:58456"]},
+        "CHEBI:16595": {"x": 563, "y": 384, "level": 1, "name": "D-myo-Inositol 1,4,5-trisphosphate", "alt": ["CHEBI:4276", "CHEBI:11363", "CHEBI:43249", "CHEBI:12894", "CHEBI:19192", "CHEBI:12892", "CHEBI:203600"]},
+        "CHEBI:166489": {"x": 563, "y": 403, "level": 1, "name": "Inositol 1,3,4,5-tetraphosphate", "alt": ["CHEBI:16783", "CHEBI:11350", "CHEBI:11360", "CHEBI:808", "CHEBI:19188", "CHEBI:57895"]},
+        "CHEBI:17401": {"x": 506, "y": 428, "level": 1, "name": "Phytic acid", "alt": ["CHEBI:12829", "CHEBI:11366", "CHEBI:10603", "CHEBI:12832", "CHEBI:19200", "CHEBI:187038", "CHEBI:58130"]},
+        "CHEBI:16322": {"x": 523, "y": 428, "level": 1, "name": "Inositol 1,3,4,5,6-pentakisphosphate", "alt": ["CHEBI:11359", "CHEBI:11367", "CHEBI:807", "CHEBI:19187", "CHEBI:57733"]},
+        "CHEBI:16155": {"x": 543, "y": 428, "level": 1, "name": "Inositol 1,3,4,6-tetrakisphosphate", "alt": ["CHEBI:809", "CHEBI:19189", "CHEBI:11351", "CHEBI:11361", "CHEBI:57660"]},
+        "CHEBI:18228": {"x": 563, "y": 428, "level": 1, "name": "Inositol 1,3,4-trisphosphate", "alt": ["CHEBI:43378", "CHEBI:11352", "CHEBI:810", "CHEBI:19190", "CHEBI:58414"]},
+        "CHEBI:28858": {"x": 579, "y": 428, "level": 1, "name": "Inositol 3,4-bisphosphate", "alt": ["CHEBI:4277", "CHEBI:19195", "CHEBI:83241"]},
+        "CHEBI:18169": {"x": 593, "y": 428, "level": 1, "name": "Inositol 3-monophosphate", "alt": ["CHEBI:814", "CHEBI:11365", "CHEBI:19196", "CHEBI:58401"]},
+        "CHEBI:17268": {"x": 612, "y": 428, "level": 1, "name": "Inositol", "alt": ["CHEBI:43559", "CHEBI:10601", "CHEBI:12826", "CHEBI:12831", "CHEBI:25451", "CHEBI:4200", "CHEBI:27372", "CHEBI:19183", "CHEBI:24848", "CHEBI:52772"]}
+
+    },
+    "centroid": {"x": 0, "y": 0}
+}

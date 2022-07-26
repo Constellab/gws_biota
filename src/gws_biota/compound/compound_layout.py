@@ -9,7 +9,7 @@ import os
 import random
 from typing import Dict, List, TypedDict, Union
 
-from gws_core import BadRequestException, Logger
+from gws_core import BadRequestException, Logger, StringHelper
 
 GRID_SCALE = 3
 GRID_INTERVAL = 100
@@ -28,6 +28,20 @@ CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
     "y": str,
     "clusters": List[dict],
 })
+
+SHIFTS = {
+    "xenobiotics_biodegradation": {"x": -300, "y": 0},
+    "energy_metabolism": {"x": -200, "y": 0},
+    "lipid_metabolism": {"x": -200, "y": 0},
+    "carbohydrate_metabolism": {"x": 0, "y": 0},
+    "glycan_metabolism": {"x": 20, "y": 0},
+    "amino_acid_metabolism": {"x": 100, "y": 0},
+    "nucleotide_metabolism": {"x": 100, "y": 0},
+    "vitamin_and_cofactor_metabolism": {"x": 300, "y": 0},
+    "other_secondary_metabolite_metabolism": {"x": 400, "y": 0},
+    "terpenoid_and_polyketide_metabolism": {"x": 400, "y": 0},
+    "urea_cycle": {"x": 200, "y": 0}
+}
 
 
 class CompoundCluster:
@@ -49,25 +63,13 @@ class CompoundCluster:
         if centroid:
             self._centroid = centroid
             if isinstance(self._centroid["x"], (float, int)):
-                self._centroid["x"] = self._centroid["x"] - GOLBAL_CENTER["x"]
+                self._centroid["x"] -= GOLBAL_CENTER["x"] - SHIFTS[parent]["x"]
             else:
                 self._centroid["x"] = 0
             if isinstance(self._centroid["y"], (float, int)):
-                self._centroid["y"] = self._centroid["y"] - GOLBAL_CENTER["y"]
+                self._centroid["y"] -= GOLBAL_CENTER["y"] - SHIFTS[parent]["y"]
             else:
                 self._centroid["y"] = 0
-
-        # for k in data:
-        #     if data[k]["x"] is not None:
-        #         data[k]["x"] += self._centroid["x"]
-        #         data[k]["y"] += self._centroid["y"]
-
-        # with open("/lab/user/bricks/gws_biota/file.json", "a", encoding="utf-8") as fp:
-        #     str_ = json.dumps(data)
-        #     fp.write("-------------------------------\n")
-        #     fp.write(parent + "\n")
-        #     fp.write(name + "\n")
-        #     fp.write(str_ + "\n")
 
     @property
     def name(self):
@@ -109,7 +111,7 @@ class CompoundCluster:
 
             folder = (file_path.split("/"))[-2]
             return CompoundCluster(
-                parent=folder,  # cdata.get("parent", folder),
+                parent=StringHelper.slugify(cdata.get("parent", folder), snakefy=True),
                 name=cdata["name"],
                 data=cdata["data"],
                 centroid=cdata.get("centroid"))
@@ -202,6 +204,7 @@ class CompoundLayout:
             return position
 
         def rnd_offset():
+            """ Random offset """
             rnd_num = random.uniform(0, 1)
             return GRID_SCALE * (GRID_INTERVAL if rnd_num >= 0.5 else -GRID_INTERVAL)
 
@@ -219,20 +222,19 @@ class CompoundLayout:
         if not clusters:
             return position
 
-        clusters_ = copy.deepcopy(clusters)
-        default_position: CompoundLayoutDict = list(clusters_.values())[0]
-
+        default_position: CompoundLayoutDict = list(clusters.values())[0]
         position: CompoundLayoutDict = {
             "x": None,
             "y": None,
             "level": default_position.get("level", 2),
-            "clusters": clusters_,
+            "clusters": clusters,
         }
 
-        # for c_name in position["clusters"]:
-        #     position["clusters"][c_name]["alt"] = None
+        for c_name in position["clusters"]:
+            position["clusters"][c_name]["alt"] = None
 
         # if compartment is not None and compartment != "c":
+        #     # clusters = copy.deepcopy(clusters)
         #     position["x"] = None
         #     position["y"] = None
         #     for c_name in position["clusters"]:

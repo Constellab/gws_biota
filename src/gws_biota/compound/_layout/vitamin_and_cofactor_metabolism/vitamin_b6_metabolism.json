@@ -1,0 +1,25 @@
+{  
+    "parent": "vitamin and cofactor metabolism",
+    "name": "vitamin B6 metabolism",
+    "data": {
+        "CHEBI:18405": {"x": 1250, "y": 311, "level": 1, "name": "Pyridoxal phosphate", "alt": ["CHEBI:8668", "CHEBI:45145", "CHEBI:26424", "CHEBI:358848", "CHEBI:234571", "CHEBI:14977", "CHEBI:597326"]},
+        "CHEBI:18050": {"x": 1350, "y": 311, "level": 1, "name": "L-Glutamine", "alt": ["CHEBI:42943", "CHEBI:42899", "CHEBI:32679", "CHEBI:32678", "CHEBI:58359", "CHEBI:28300", "CHEBI:42812", "CHEBI:13110", "CHEBI:32666", "CHEBI:6227", "CHEBI:32665", "CHEBI:21308", "CHEBI:42814", "CHEBI:5432", "CHEBI:24316"]},
+        "CHEBI:17797": {"x": 809, "y": 336, "level": 1, "name": "D-Ribose 5-phosphate", "alt": ["CHEBI:15048", "CHEBI:21083", "CHEBI:13013", "CHEBI:4238"]},
+        "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-Glyceraldehyde 3-phosphate", "alt": ["CHEBI:21026", "CHEBI:181", "CHEBI:12984", "CHEBI:12983", "CHEBI:18324", "CHEBI:5446", "CHEBI:14333", "CHEBI:17138", "CHEBI:58027", "CHEBI:59776"]},
+        "CHEBI:16265": {"x": 675, "y": 761, "level": 1, "name": "succinic semialdehyde", "alt": ["CHEBI:15126", "CHEBI:9305", "CHEBI:26804", "CHEBI:26805", "CHEBI:57706"]},
+        "CHEBI:17310": {"x": 1283, "y": 311, "level": 1, "name": "Pyridoxal", "alt": ["CHEBI:8667", "CHEBI:26423", "CHEBI:45112", "CHEBI:14976", "CHEBI:131530"]},
+        "CHEBI:17071": {"x": 1283, "y": 385, "level": 1, "name": "Glycolaldehyde", "alt": ["CHEBI:24386", "CHEBI:14347", "CHEBI:5474", "CHEBI:131198"]},
+        "CHEBI:48153": {"x": 748, "y": 321, "level": 1, "name": "D-Erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921", "CHEBI:20927", "CHEBI:16897"]},
+        "CHEBI:16709": {"x": 1283, "y": 349, "level": 1, "name": "Pyridoxine", "alt": ["CHEBI:14981", "CHEBI:26429", "CHEBI:8671"]},
+        "CHEBI:16410": {"x": 1283, "y": 281, "level": 1, "name": "Pyridoxamine", "alt": ["CHEBI:14978", "CHEBI:45228", "CHEBI:26426", "CHEBI:8669", "CHEBI:57761", "CHEBI:131533"]},
+        "CHEBI:28803": {"x": 1250, "y": 349, "level": 1, "name": "Pyridoxine phosphate", "alt": ["CHEBI:26430", "CHEBI:45202", "CHEBI:8672", "CHEBI:58589"]},
+        "CHEBI:18335": {"x": 1250, "y": 281, "level": 1, "name": "Pyridoxamine phosphate", "alt": ["CHEBI:45037", "CHEBI:26427", "CHEBI:14980", "CHEBI:8670", "CHEBI:14979", "CHEBI:58451"]},
+        "CHEBI:17405": {"x": 1298, "y": 311, "level": 1, "name": "4-Pyridoxate", "alt": ["CHEBI:20474", "CHEBI:1928"]},
+        "CHEBI:49003": {"x": 1119, "y": 321, "level": 1, "name": "4-Phospho-D-erythronate", "alt": ["CHEBI:1924", "CHEBI:41926", "CHEBI:49055", "CHEBI:58766"]},
+        "CHEBI:27951": {"x": 1119, "y": 349, "level": 1, "name": "2-Oxo-3-hydroxy-4-phosphobutanoate", "alt": ["CHEBI:1240", "CHEBI:19731", "CHEBI:58538"]},
+        "CHEBI:18336": {"x": 1165, "y": 349, "level": 1, "name": "O-Phospho-4-hydroxy-L-threonine", "alt": ["CHEBI:21963", "CHEBI:11945", "CHEBI:7690", "CHEBI:58452", "CHEBI:59459"]},
+        "CHEBI:64186": {"x": 1205, "y": 349, "level": 1, "name": "2-Amino-3-oxo-4-phosphonooxybutyrate", "alt": []},
+        "CHEBI:1449": {"x": 1228, "y": 349, "level": 1, "name": "3-Amino-2-oxopropyl phosphate", "alt": []}
+    },
+    "centroid": {"x": 0, "y": 0}
+}

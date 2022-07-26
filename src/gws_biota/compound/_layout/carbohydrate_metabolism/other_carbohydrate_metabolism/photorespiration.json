@@ -1,0 +1,21 @@
+{  
+    "parent": "carbohydrate metabolism",
+    "subparent": "other carbohydrate metabolism",
+    "name": "photorespiration",
+    "data": {
+        "CHEBI:17115": {"x": 889, "y": 513, "level": 1, "name": "L-serine", "alt": ["CHEBI:45440", "CHEBI:45451", "CHEBI:45677", "CHEBI:45590", "CHEBI:45597", "CHEBI:13167", "CHEBI:21387", "CHEBI:6301", "CHEBI:32845", "CHEBI:17822", "CHEBI:26648", "CHEBI:32837", "CHEBI:32836", "CHEBI:15081", "CHEBI:35243", "CHEBI:32846", "CHEBI:33384", "CHEBI:9116"]},
+        "CHEBI:15428": {"x": 948, "y": 513, "level": 1, "name": "glycine", "alt": ["CHEBI:14344", "CHEBI:42964", "CHEBI:5460", "CHEBI:10792", "CHEBI:24368", "CHEBI:32508", "CHEBI:32507", "CHEBI:57305"]},
+        "CHEBI:16134": {"x": 1079, "y": 609, "level": 1, "name": "ammonia", "alt": ["CHEBI:44284", "CHEBI:44269", "CHEBI:44404", "CHEBI:13405", "CHEBI:13406", "CHEBI:13407", "CHEBI:13771", "CHEBI:7434", "CHEBI:22533", "CHEBI:135980", "CHEBI:29337", "CHEBI:29340", "CHEBI:28938", "CHEBI:22534", "CHEBI:49783","CHEBI:7435"]},
+        "CHEBI:36655": {"x": 722, "y": 635, "level": 1, "name": "glyoxylate", "alt": ["CHEBI:24420", "CHEBI:14368", "CHEBI:24421", "CHEBI:42767", "CHEBI:16891", "CHEBI:35977", "CHEBI:5509"]},
+        "CHEBI:16710": {"x": 666, "y": 657, "level": 1, "name": "D-ribulose 1,5-bisphosphate", "alt": ["CHEBI:45480", "CHEBI:13017", "CHEBI:21087", "CHEBI:4242", "CHEBI:57870"]},
+        "CHEBI:17150": {"x": 666, "y": 657, "level": 1, "name": "2-Phosphoglycolate", "alt": ["CHEBI:44849", "CHEBI:11652", "CHEBI:1268", "CHEBI:19764", "CHEBI:19763", "CHEBI:58033"]},
+        "CHEBI:17497": {"x": 722, "y": 657, "level": 1, "name": "Glycolate", "alt": ["CHEBI:42865", "CHEBI:5475", "CHEBI:24390", "CHEBI:29805", "CHEBI:24388", "CHEBI:14348"]},
+        "CHEBI:16810": {"x": 750, "y": 699, "level": 1, "name": "2-oxoglutarate(2-)", "alt": ["CHEBI:11638", "CHEBI:19748", "CHEBI:40661", "CHEBI:19749", "CHEBI:1253", "CHEBI:30915", "CHEBI:30916"]},
+        "CHEBI:16015": {"x": 981, "y": 699, "level": 1, "name": "L-glutamate", "alt": ["CHEBI:42825", "CHEBI:6224", "CHEBI:21304", "CHEBI:76051", "CHEBI:21301", "CHEBI:29985", "CHEBI:29987", "CHEBI:18237", "CHEBI:24314", "CHEBI:13107", "CHEBI:5431", "CHEBI:14321", "CHEBI:29988"]},
+        "CHEBI:32398": {"x": 668, "y": 755, "level": 1, "name": "D-glyceric acid", "alt": ["CHEBI:21030", "CHEBI:41990", "CHEBI:4187", "CHEBI:24348", "CHEBI:33846", "CHEBI:33508", "CHEBI:24349", "CHEBI:33871", "CHEBI:10999", "CHEBI:12985", "CHEBI:21027", "CHEBI:16659"]},
+        "CHEBI:17180": {"x": 735, "y": 755, "level": 1, "name": "3-hydroxypyruvate", "alt": ["CHEBI:11837", "CHEBI:14425", "CHEBI:20082", "CHEBI:30841", "CHEBI:39999", "CHEBI:5813", "CHEBI:20083"]},
+        "CHEBI:58272": {"x": 719, "y": 424, "level": 1, "name": "3-phosphonato-D-glycerate(3-), 3-Phospho-D-glycerate", "alt": ["CHEBI:11879", "CHEBI:11880", "CHEBI:17794", "CHEBI:21029", "CHEBI:1657", "CHEBI:58272", "CHEBI:12987"]}
+
+    },
+    "centroid": {"x": 0, "y": 0}
+}
