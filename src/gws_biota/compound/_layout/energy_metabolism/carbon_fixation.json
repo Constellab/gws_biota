@@ -4,7 +4,7 @@
     "data": {
         "CHEBI:17969": {"x": 722, "y": 807, "level": 1, "name": "sedoheptulose 1,7-bisphosphate", "alt": ["CHEBI:26620", "CHEBI:9081", "CHEBI:15072", "CHEBI:58335"]},
         "CHEBI:48153": {"x": 742, "y": 807, "level": 1, "name": "D-erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921", "CHEBI:20927", "CHEBI:16897"]},
-        "CHEBI:15721": {"x": 711, "y": 821, "level": 1, "name": "sedoheptulose 7-phosphate", "alt": ["CHEBI:15074, CHEBI:9083, CHEBI:15073, CHEBI:4244, CHEBI:26621", "CHEBI:57483"]},
+        "CHEBI:15721": {"x": 711, "y": 821, "level": 1, "name": "sedoheptulose 7-phosphate", "alt": ["CHEBI:15074", "CHEBI:9083", "CHEBI:15073", "CHEBI:4244", "CHEBI:26621", "CHEBI:57483"]},
         "CHEBI:15946": {"x": 753, "y": 820, "level": 1, "name": "keto-D-fructose 6-phosphate", "alt": ["CHEBI:20935", "CHEBI:42406", "CHEBI:4124", "CHEBI:12926"]},
         "CHEBI:61553": {"x": null, "y": null, "level": 2, "name": "D-fructofuranose 6-phosphate", "alt": [""]},
         "CHEBI:17797": {"x": 711, "y": 844, "level": 1, "name": "aldehydo-D-ribose 5-phosphate", "alt": ["CHEBI:4238", "CHEBI:15048", "CHEBI:13013", "CHEBI:21083"]},

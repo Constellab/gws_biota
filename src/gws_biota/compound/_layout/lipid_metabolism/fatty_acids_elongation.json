@@ -28,7 +28,7 @@
         "CHEBI:15532": {"x": 592, "y": 541, "level": 1, "name": "myristoyl-CoA", "alt": ["CHEBI:52969", "CHEBI:15218", "CHEBI:14637", "CHEBI:26898", "CHEBI:9475", "CHEBI:57385"]},
         "CHEBI:15491": {"x": 610, "y": 457, "level": 1, "name": "3-Oxopalmitoyl-CoA", "alt": ["CHEBI:1647", "CHEBI:11875", "CHEBI:20176", "CHEBI:57349"]},
         "CHEBI:27402": {"x": 610, "y": 485, "level": 1, "name": "(S)-3-hydroxypalmitoyl-CoA", "alt": ["CHEBI:397", "CHEBI:18752", "CHEBI:62613"]},
-        "CHEBI:28935": {"x": 610, "y": 513, "level": 1, "name": "trans-Hexadec-2-enoyl-CoA", "alt": ["CHEBI:27047, CHEBI:10728", "CHEBI:61526", "CHEBI:52381"]},
+        "CHEBI:28935": {"x": 610, "y": 513, "level": 1, "name": "trans-Hexadec-2-enoyl-CoA", "alt": ["CHEBI:27047", "CHEBI:10728", "CHEBI:61526", "CHEBI:52381"]},
         "CHEBI:15525": {"x": 610, "y": 541, "level": 1, "name": "palmitoyl-CoA", "alt": ["CHEBI:14732", "CHEBI:7898", "CHEBI:14397", "CHEBI:24543", "CHEBI:57379"]},
         "CHEBI:15756": {"x": 559, "y": 563, "level": 1, "name": "hexadecanoic acid, palmitate", "alt": ["CHEBI:24542", "CHEBI:35978", "CHEBI:24540", "CHEBI:24550", "CHEBI:44952", "CHEBI:233028", "CHEBI:14730", "CHEBI:24541", "CHEBI:29889", "CHEBI:7896", "CHEBI:231736"]},
         "CHEBI:55329": {"x": null, "y": null, "level": 2, "name": "16-hydroxyhexadecanoate"},

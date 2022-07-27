@@ -32,7 +32,7 @@
         "CHEBI:(3R)-3-Hydroxyoctanoyl-[acyl-carrier protein]": {"x": 385, "y": 500, "name":"(3R)-3-Hydroxyoctanoyl-[acyl-carrier protein]"},
         "CHEBI:trans-Oct-2-enoyl-[acp]": {"x": 385, "y": 528, "name":"trans-Oct-2-enoyl-[acp]"},
         "CHEBI:7725":  {"x": 385, "y": 555, "level": 1, "name": "Octanoyl-[acp]", "alt": [""]},
-        "CHEBI:28837": {"x": 385, "y": 581, "level": 1, "alt": ["CHEBI:44501", "CHEBI:3373", "CHEBI:25648", "CHEBI:25646"]},
+        "CHEBI:28837": {"x": 385, "y": 581, "level": 1, "name": "octanoic acid", "alt": ["CHEBI:44501", "CHEBI:3373", "CHEBI:25648", "CHEBI:25646"]},
         "CHEBI:1642":  {"x": 366, "y": 471, "level": 1, "name": "3-Oxohexanoyl-[acp]", "alt": [""]},
         "CHEBI:326":   {"x": 366, "y": 500, "level": 1, "name": "(R)-3-Hydroxyhexanoyl-[acp]", "alt": [""]},
         "CHEBI:10727": {"x": 366, "y": 528, "level": 1, "name": "trans-Hex-2-enoyl-[acp]", "alt": [""]},
@@ -48,8 +48,8 @@
         "CHEBI:(10Z,13Z,16Z,19Z,22Z)-Octacosapentaenoyl-CoA": {"x": 313, "y": 549, "name": "(10Z,13Z,16Z,19Z,22Z)-Octacosapentaenoyl-CoA", "alt": [""]},
         "CHEBI:65132": {"x": 321, "y": 477, "level": 1, "name": "(4Z,7Z,10Z,13Z,16Z,19Z)-docosahexaenoyl-CoA", "alt": [""]},
         "CHEBI:63540": {"x": 321, "y": 505, "level": 1, "name": "(6Z,9Z,12Z,15Z,18Z,21Z)-tetracosahexaenoyl-CoA", "alt": [""]},
-        "CHEBI:16018": {"x": 329, "y": 537, "level": 1, "name": "acyl-[acyl-carrier protein]", "alt": ["CHEBI:2457, CHEBI:13728"]},
-        "CHEBI:17093": {"x": 348, "y": 435, "level": 1, "name": "acetyl-[acyl-carrier protein]", "alt": ["CHEBI:2409, CHEBI:13713"]},
+        "CHEBI:16018": {"x": 329, "y": 537, "level": 1, "name": "acyl-[acyl-carrier protein]", "alt": ["CHEBI:2457", "CHEBI:13728"]},
+        "CHEBI:17093": {"x": 348, "y": 435, "level": 1, "name": "acetyl-[acyl-carrier protein]", "alt": ["CHEBI:2409", "CHEBI:13713"]},
         "CHEBI:17330": {"x": 377, "y": 453, "level": 1, "name": "carboxyacetyl-[acyl-carrier protein]", "alt": ["CHEBI:6662", "CHEBI:14566"]}
     },
     "centroid": {"x": 0, "y": 0}

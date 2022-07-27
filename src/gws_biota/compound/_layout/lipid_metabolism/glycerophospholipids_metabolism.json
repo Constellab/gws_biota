@@ -39,7 +39,7 @@
         "CHEBI:27555": {"x": 210, "y": 328, "level": 1, "name": "Prostaglandin C2", "alt": ["CHEBI:8508", "CHEBI:26319", "CHEBI:133392"]},
         "CHEBI:28099": {"x": 191, "y": 328, "level": 1, "name": "Prostaglandin B2", "alt": ["CHEBI:26317", "CHEBI:42246", "CHEBI:8507", "CHEBI:133391"]},
         "CHEBI:15554": {"x": 270, "y": 328, "level": 1, "name": "Prostaglandin H2", "alt": ["CHEBI:14909", "CHEBI:10914", "CHEBI:8520", "CHEBI:26330", "CHEBI:57405"]},
-        "CHEBI:15552": {"x": 270, "y": 339, "level": 1, "name": "Prostaglandin I2", "alt": ["CHEBI:245, CHEBI:26331, CHEBI:10912", "CHEBI:57403"]},
+        "CHEBI:15552": {"x": 270, "y": 339, "level": 1, "name": "Prostaglandin I2", "alt": ["CHEBI:245", "CHEBI:26331", "CHEBI:10912", "CHEBI:57403"]},
         "CHEBI:28158": {"x": 270, "y": 350, "level": 1, "name": "6-Keto-prostaglandin F1alpha", "alt": ["CHEBI:2205", "CHEBI:20736", "CHEBI:133451"]},
         "CHEBI:28269": {"x": 270, "y": 360, "level": 1, "name": "6-Keto-prostaglandin E1", "alt": ["CHEBI:2204", "CHEBI:20735"]},
         "CHEBI:15555": {"x": 250, "y": 339, "level": 1, "name": "Prostaglandin D2", "alt": ["CHEBI:45044", "CHEBI:10916", "CHEBI:246", "CHEBI:26321", "CHEBI:57406"]},
