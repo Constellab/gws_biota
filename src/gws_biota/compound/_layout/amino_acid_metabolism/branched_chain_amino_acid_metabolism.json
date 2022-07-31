@@ -2,22 +2,20 @@
     "parent": "amino acid metabolism",
     "name": "branched-chain amino acid metabolism",
     "data": {
-        "CHEBI:15586": {"x": null,    "y": null, "level": 2, "name": "D-citramalic acid", "alt": ["CHEBI:315", "CHEBI:18563"]},
-
-        "CHEBI:30934": {"x": 906,    "y": 475, "level": 1, "name": "D-citramalate(2-)", "alt": ["CHEBI:10977", "CHEBI:18562"]},
-        "CHEBI:17626": {"x": 987,    "y": 475, "level": 1, "name": "citraconic acid", "alt": ["CHEBI:1207", "CHEBI:19703", "CHEBI:19704", "CHEBI:11623"]},
+        "CHEBI:30934": {"x": 906,    "y": 475, "level": 1, "name": "D-citramalate(2-)", "alt": ["CHEBI:10977", "CHEBI:18562", "CHEBI:15586", "CHEBI:315", "CHEBI:18563"]},
+        "CHEBI:17626": {"x": 987,    "y": 475, "level": 1, "name": "citraconic acid", "alt": ["CHEBI:1207", "CHEBI:19703", "CHEBI:19704", "CHEBI:11623", "CHEBI:30719"]},
         "CHEBI:18409": {"x": 1029,    "y": 485, "level": 1, "name": "(2S)-2-hydroxy-2-methyl-3-oxobutanoic acid", "alt": ["CHEBI:11033", "CHEBI:374", "CHEBI:18731", "CHEBI:58476"]},
         "CHEBI:15684": {"x": 1055,    "y": 485, "level": 1, "name": "(R)-2,3-dihydroxy-3-methylbutanoic acid", "alt": ["CHEBI:10966", "CHEBI:305", "CHEBI:18645", "CHEBI:49072"]},
-        "CHEBI:27394": {"x": 987,    "y": 513, "level": 1, "name": "D-erythro-3-methylmalic acid", "alt": ["CHEBI:4271", "CHEBI:20924"]},
+        "CHEBI:27394": {"x": 987,    "y": 513, "level": 1, "name": "D-erythro-3-methylmalic acid", "alt": ["CHEBI:4271", "CHEBI:20924", "CHEBI:58511"]},
         "CHEBI:16857": {"x": 948,    "y": 539, "level": 1, "name": "L-threonine", "alt": ["CHEBI:45843", "CHEBI:42083", "CHEBI:45983", "CHEBI:13175", "CHEBI:6308", "CHEBI:21403", "CHEBI:32822", "CHEBI:57926", "CHEBI:32833", "CHEBI:32820", "CHEBI:32832", "CHEBI:26986"]},
-        "CHEBI:1178": {"x": null,    "y": null, "level": 2, "name": "(2S)-2-isopropylmalate(2-)", "alt": ["CHEBI:35128"]},
+        "CHEBI:1178": {"x": 1032,    "y": 529, "level": 1, "name": "(2S)-2-isopropylmalate(2-)", "alt": ["CHEBI:35128"]},
         "CHEBI:11851": {"x": 1055,    "y": 529, "level": 1, "name": "3-methyl-2-oxobutanoate", "alt": ["CHEBI:16530", "CHEBI:43714", "CHEBI:132177", "CHEBI:20115", "CHEBI:1584"]},
-        "CHEBI:27681": {"x": null,    "y": null, "level": 2, "name": "(S)-2-acetyl-2-hydroxybutanoic acid", "alt": ["CHEBI:373", "CHEBI:18730", "CHEBI:49256"]},
+        "CHEBI:27681": {"x": 1019,    "y": 547, "level": 1, "name": "(S)-2-acetyl-2-hydroxybutanoic acid", "alt": ["CHEBI:373", "CHEBI:18730", "CHEBI:49256"]},
         "CHEBI:35121": {"x": 1032,    "y": 544, "level": 1, "name": "(2R,3S)-3-isopropylmalate(2−)", "alt": ["CHEBI:35120", "CHEBI:1565", "CHEBI:43468", "CHEBI:35122", "CHEBI:43465", "CHEBI:20094", "CHEBI:15592", "CHEBI:35114", "CHEBI:11843", "CHEBI:11760"]},
         "CHEBI:1467": {"x": 1032,    "y": 557, "level": 1, "name": "(2S)-2-isopropyl-3-oxosuccinic acid", "alt": ["CHEBI:17214", "CHEBI:19975", "CHEBI:11765"]},
         "CHEBI:13705": {"x": 852,    "y": 561, "level": 1, "name": "acetoacetate", "alt": ["CHEBI:40507", "CHEBI:131367", "CHEBI:15344", "CHEBI:2391", "CHEBI:22172"]},
-        "CHEBI:15467": {"x": 878,    "y": 561, "level": 1, "name": "(3S)-3-hydroxy-3-methylglutaryl-CoA", "alt": ["CHEBI:61659", "CHEBI:392", "CHEBI:11045", "CHEBI:18747"]},
-        "CHEBI:15488": {"x": 907,    "y": 561, "level": 1, "name": "trans-3-methylglutaconyl-CoA", "alt": ["CHEBI:11860", "CHEBI:1603", "CHEBI:12863", "CHEBI:20132"]},
+        "CHEBI:15467": {"x": 878,    "y": 561, "level": 1, "name": "(3S)-3-hydroxy-3-methylglutaryl-CoA", "alt": ["CHEBI:61659", "CHEBI:392", "CHEBI:11045", "CHEBI:18747", "CHEBI:43074"]},
+        "CHEBI:15488": {"x": 907,    "y": 561, "level": 1, "name": "trans-3-methylglutaconyl-CoA", "alt": ["CHEBI:11860", "CHEBI:1603", "CHEBI:12863", "CHEBI:20132", "CHEBI:57346"]},
         "CHEBI:15486": {"x": 933,    "y": 561, "level": 1, "name": "3-methylbut-2-enoyl-CoA", "alt": ["CHEBI:27728", "CHEBI:1599", "CHEBI:11853", "CHEBI:11858", "CHEBI:23802", "CHEBI:20128", "CHEBI:4615", "CHEBI:57344"]},
         "CHEBI:15487": {"x": 964,    "y": 561, "level": 1, "name": "isovaleryl-CoA", "alt": ["CHEBI:11856", "CHEBI:1598", "CHEBI:14481", "CHEBI:20126", "CHEBI:57345"]},
         "CHEBI:27512": {"x": 1019,    "y": 566, "level": 1, "name": "(2R,3R)-2,3-dihydroxy-3-methylpentanoic acid", "alt": ["CHEBI:306", "CHEBI:18646", "CHEBI:49258"]},
@@ -28,6 +26,7 @@
         "CHEBI:17191": {"x": 1019,    "y": 614, "level": 1, "name": "L-isoleucine", "alt": ["CHEBI:43290", "CHEBI:43342", "CHEBI:43366", "CHEBI:6255", "CHEBI:13127", "CHEBI:21344", "CHEBI:32604", "CHEBI:32605", "CHEBI:32613", "CHEBI:32612", "CHEBI:24898", "CHEBI:58045"]},
         "CHEBI:80218": {"x": 435,    "y": 596, "level": 1, "name": "Enzyme N6-(lipoyl)lysine", "alt": []},
         "CHEBI:80219": {"x": 952,    "y": 611, "level": 1, "name": "Enzyme N6-(dihydrolipoyl)lysine", "alt": []},
+
         "CHEBI:16414": {"x": 1055,    "y": 635, "level": 1, "name": "L-valine", "alt": ["CHEBI:46376", "CHEBI:46282", "CHEBI:46484", "CHEBI:46418", "CHEBI:13186", "CHEBI:21417", "CHEBI:6321", "CHEBI:32859", "CHEBI:57762", "CHEBI:32852", "CHEBI:32851", "CHEBI:87977", "CHEBI:32860", "CHEBI:27266"]}
     },
     "centroid": {"x": 0, "y": 0}

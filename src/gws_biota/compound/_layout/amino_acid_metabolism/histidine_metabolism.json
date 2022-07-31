@@ -11,12 +11,12 @@
         "CHEBI:16426": {"x": 981, "y": 353, "level": 1, "name": "3-(imidazol-4-yl)-2-oxopropyl dihydrogen phosphate", "alt": ["CHEBI:1437", "CHEBI:11736", "CHEBI:19941", "CHEBI:57766"]},
         "CHEBI:16996": {"x": 981, "y": 372, "level": 1, "name": "L-histidinol phosphate", "alt": ["CHEBI:6242", "CHEBI:21327", "CHEBI:43319", "CHEBI:13119", "CHEBI:57980"]},
         "CHEBI:16255": {"x": 981, "y": 389, "level": 1, "name": "L-histidinol", "alt": ["CHEBI:6241", "CHEBI:13118", "CHEBI:21326", "CHEBI:57699"]},
-        "CHEBI:27676": {"x": 981, "y": 408, "level": 1, "name": "L-histidinal", "alt": ["CHEBI:64805", "CHEBI:6239", "CHEBI:21323"]},
+        "CHEBI:27676": {"x": 981, "y": 408, "level": 1, "name": "L-histidinal", "alt": ["CHEBI:64805", "CHEBI:6239", "CHEBI:21323", "CHEBI:64802"]},
         "CHEBI:15971": {"x": 981, "y": 424, "level": 1, "name": "L-histidine", "alt": ["CHEBI:43239", "CHEBI:43114", "CHEBI:43190", "CHEBI:43048", "CHEBI:6240", "CHEBI:13117", "CHEBI:21324", "CHEBI:32529", "CHEBI:5733", "CHEBI:32530", "CHEBI:27570", "CHEBI:32531", "CHEBI:43118", "CHEBI:32513", "CHEBI:32512", "CHEBI:32511", "CHEBI:32510", "CHEBI:32532", "CHEBI:57595", "CHEBI:24598"]},
         "CHEBI:30817": {"x": 981, "y": 458, "level": 1, "name": "trans-urocanic acid", "alt": ["CHEBI:46392", "CHEBI:9899", "CHEBI:27247", "CHEBI:17771", "CHEBI:27247", "CHEBI:15298"]},
         "CHEBI:27384": {"x": 981, "y": 497, "level": 1, "name": "3-(4-oxo-4,5-dihydro-1H-imidazol-5-yl)propanoic acid", "alt": ["CHEBI:11730", "CHEBI:20431", "CHEBI:1886", "CHEBI:20430", "CHEBI:58508", "CHEBI:57255", "CHEBI:77893", "CHEBI:11041"]},        
         "CHEBI:18327": {"x": 981, "y": 531, "level": 1, "name": "N-formimidoyl-L-glutamate(2-)", "alt": ["CHEBI:21705", "CHEBI:12502", "CHEBI:58928", "CHEBI:7274"]},
-        "CHEBI:48309": {"x": 958, "y": 677, "level": 1, "name": "N-formyl-L-glutamic acid", "alt": ["CHEBI:7278", "CHEBI:21711"]}
+        "CHEBI:48309": {"x": 958, "y": 677, "level": 1, "name": "N-formyl-L-glutamic acid", "alt": ["CHEBI:7278", "CHEBI:21711", "CHEBI:17684", "CHEBI:12504", "CHEBI:21710"]}
     },
     "centroid": {"x": 0, "y": 0}
 }

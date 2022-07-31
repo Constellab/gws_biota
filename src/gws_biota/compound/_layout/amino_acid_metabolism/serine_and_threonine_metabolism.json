@@ -3,6 +3,7 @@
     "name": "serine and threonine metabolism",
     "data": {
         "CHEBI:17053": {"x": 812, "y": 603, "level": 1, "name": "L-aspartic acid", "alt": ["CHEBI:40900", "CHEBI:40913", "CHEBI:40942", "CHEBI:40853", "CHEBI:6193", "CHEBI:21247", "CHEBI:29991", "CHEBI:13085", "CHEBI:21244", "CHEBI:22659", "CHEBI:29993", "CHEBI:29995", "CHEBI:22660", "CHEBI:132943", "CHEBI:35391", "CHEBI:29992"]},
+
         "CHEBI:30933": {"x": 818, "y": 424, "level": 1, "name": "3-phosphonooxypyruvic acid", "alt": ["CHEBI:1661", "CHEBI:20192", "CHEBI:18110", "CHEBI:11883", "CHEBI:11884", "CHEBI:20191"]},
         "CHEBI:17115": {"x": 889, "y": 513, "level": 1, "name": "L-serine", "alt": ["CHEBI:45440", "CHEBI:45451", "CHEBI:45677", "CHEBI:45590", "CHEBI:45597", "CHEBI:13167", "CHEBI:21387", "CHEBI:6301", "CHEBI:32845", "CHEBI:17822", "CHEBI:26648", "CHEBI:32837", "CHEBI:32836", "CHEBI:15081", "CHEBI:35243", "CHEBI:32846", "CHEBI:33384", "CHEBI:9116"]},
         "CHEBI:15961": {"x": 948, "y": 557, "level": 1, "name": "O-phospho-L-homoserine", "alt": ["CHEBI:12717", "CHEBI:7691", "CHEBI:12693", "CHEBI:21965", "CHEBI:57590"]},
