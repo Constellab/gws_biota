@@ -2,7 +2,7 @@
     "parent": "lipid metabolism",
     "name": "fatty acids synthesis",
     "data": {
-        "CHEBI:57384": {"x": null, "y": null, "level": 2, "name": "malonyl-CoA(5-)", "alt": ["CHEBI:25135", "CHEBI:43979", "CHEBI:14565", "CHEBI:15531", "CHEBI:6661"]},
+        "CHEBI:57384": {"x": 377, "y": 441, "level": 1, "name": "malonyl-CoA(5-)", "alt": ["CHEBI:25135", "CHEBI:43979", "CHEBI:14565", "CHEBI:15531", "CHEBI:6661"]},
         "CHEBI:80386": {"x": 476, "y": 471, "level": 1, "name": "3-Oxostearoyl-[acp]"},
         "CHEBI:80387": {"x": 476, "y": 500, "level": 1, "name": "3-Hydroxyoctadecanoyl-[acp]"},
         "CHEBI:80388": {"x": 476, "y": 528, "level": 1, "name": "(2E)-Octadecenoyl-[acp]"},

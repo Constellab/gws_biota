@@ -5,7 +5,7 @@
         "CHEBI:59082": {"x": 502, "y": 163, "level": 1, "name": "N-{alpha-Glc-(1->3)-alpha-Glc-(1->3)-alpha-Man-(1->2)-alpha-Man-(1->2)-alpha-Man-(1->3)-[alpha-Man-(1->2)-alpha-Man-(1->3)-[alpha-Man-(1->2)-alpha-Man-(1->6)]-alpha-Man-(1->6)]-beta-Man-(1->4)-beta-GlcNAc-(1->4)-beta-GlcNAc}-L-Asn residue", "alt": [""]},
         "CHEBI:16214": {"x": 457, "y": 207, "level": 1, "name": "dolichyl phosphate", "alt": ["CHEBI:14200", "CHEBI:23874", "CHEBI:4693", "CHEBI:57683"]},
         "CHEBI:17950": {"x": 318, "y": 54, "level": 1, "name": "β-D-galactosyl-(1→4)-β-D-glucosyl-(1↔1)-N-acylsphingosine", "alt": ["CHEBI:29088", "CHEBI:14498", "CHEBI:10392", "CHEBI:12363", "CHEBI:12941", "CHEBI:12358", "CHEBI:25006", "CHEBI:20965", "CHEBI:22791"]},
-        "CHEBI:15809": {"x": null, "y": null, "level": 2, "name": "dolichyl D-mannosyl phosphate", "alt": ["CHEBI:23885", "CHEBI:14201", "CHEBI:4694", "CHEBI:14194", "CHEBI:57523", "CHEBI:58211"]},
+        "CHEBI:15809": {"x": 465, "y": 195, "level": 1, "name": "dolichyl D-mannosyl phosphate", "alt": ["CHEBI:23885", "CHEBI:14201", "CHEBI:4694", "CHEBI:14194", "CHEBI:57523", "CHEBI:58211"]},
         "CHEBI:15812": {"x": 378, "y": 207, "level": 1, "name": "dolichyl β-D-glucosyl phosphate", "alt": ["CHEBI:23880", "CHEBI:4689", "CHEBI:14191", "CHEBI:57525"]},
         "CHEBI:172697": {"x": null, "y": null, "level": 2, "name": "Dolichyl b-D-glucosyl phosphate", "alt": []},
         "CHEBI:15750": {"x": 457, "y": 172, "level": 1, "name": "dolichyl diphosphate", "alt": ["CHEBI:4691", "CHEBI:14197", "CHEBI:23876", "CHEBI:57497"]},

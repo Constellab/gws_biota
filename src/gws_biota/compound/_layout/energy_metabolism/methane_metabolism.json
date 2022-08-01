@@ -14,7 +14,7 @@
         "CHEBI:28890": {"x": 592, "y": 861, "level": 1, "name": "coenzyme B", "alt": ["CHEBI:12534", "CHEBI:12434", "CHEBI:29046", "CHEBI:46031", "CHEBI:7093", "CHEBI:14009", "CHEBI:23350", "CHEBI:21474", "CHEBI:58596"]},
         "CHEBI:18209": {"x": 592, "y": 878, "level": 1, "name": "CoM-S-S-CoB", "alt": ["CHEBI:3809", "CHEBI:23353", "CHEBI:45485", "CHEBI:12619", "CHEBI:14012", "CHEBI:13299", "CHEBI:58411"]},
         "CHEBI:16183": {"x": 582, "y": 887, "level": 1, "name": "methane", "alt": ["CHEBI:6811", "CHEBI:14585", "CHEBI:25220"]},
-        "CHEBI:17245": {"x": null, "y": null, "level": 2, "name": "carbon monoxide", "alt": ["CHEBI:41526", "CHEBI:3282", "CHEBI:13281", "CHEBI:23013", "CHEBI:58072"]},
+        "CHEBI:17245": {"x": 690, "y": 809, "level": 1, "name": "carbon monoxide", "alt": ["CHEBI:41526", "CHEBI:3282", "CHEBI:13281", "CHEBI:23013", "CHEBI:58072"]},
         "CHEBI:17790": {"x": 602, "y": 887, "level": 1, "name": "methanol", "alt": ["CHEBI:44553", "CHEBI:44080", "CHEBI:6816", "CHEBI:14588", "CHEBI:25227", "CHEBI:52090"]},
         "CHEBI:17170": {"x": 545, "y": 838, "level": 1, "name": "dimethylamine", "alt": ["CHEBI:42136", "CHEBI:4618", "CHEBI:14170", "CHEBI:23805", "CHEBI:58040"]},
         "CHEBI:16830": {"x": 564, "y": 838, "level": 1, "name": "methylamine", "alt": ["CHEBI:44374", "CHEBI:6864", "CHEBI:14595", "CHEBI:25402", "CHEBI:57913", "CHEBI:59338"]},
