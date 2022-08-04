@@ -16,7 +16,10 @@
         "CHEBI:30817": {"x": 981, "y": 458, "level": 1, "name": "trans-urocanic acid", "alt": ["CHEBI:46392", "CHEBI:9899", "CHEBI:27247", "CHEBI:17771", "CHEBI:27247", "CHEBI:15298"]},
         "CHEBI:27384": {"x": 981, "y": 497, "level": 1, "name": "3-(4-oxo-4,5-dihydro-1H-imidazol-5-yl)propanoic acid", "alt": ["CHEBI:11730", "CHEBI:20431", "CHEBI:1886", "CHEBI:20430", "CHEBI:58508", "CHEBI:57255", "CHEBI:77893", "CHEBI:11041"]},        
         "CHEBI:18327": {"x": 981, "y": 531, "level": 1, "name": "N-formimidoyl-L-glutamate(2-)", "alt": ["CHEBI:21705", "CHEBI:12502", "CHEBI:58928", "CHEBI:7274"]},
-        "CHEBI:48309": {"x": 958, "y": 677, "level": 1, "name": "N-formyl-L-glutamic acid", "alt": ["CHEBI:7278", "CHEBI:21711", "CHEBI:17684", "CHEBI:12504", "CHEBI:21710"]}
+        "CHEBI:48309": {"x": 958, "y": 677, "level": 1, "name": "N-formyl-L-glutamic acid", "alt": ["CHEBI:7278", "CHEBI:21711", "CHEBI:17684", "CHEBI:12504", "CHEBI:21710"]},
+        "CHEBI:16974": {"x": 1087, "y": 440, "level": 1, "name": "Imidazole-4-acetate", "alt": ["CHEBI:12017", "CHEBI:5875", "CHEBI:14435", "CHEBI:24776", "CHEBI:24777", "CHEBI:43615", "CHEBI:57969", "CHEBI:70804"]},
+        "CHEBI:15727": {"x": 1125, "y": 278, "level": 1, "name": "carnosine", "alt": ["CHEBI:3428", "CHEBI:13948", "CHEBI:23040", "CHEBI:57485"]}
+
     },
     "centroid": {"x": 0, "y": 0}
 }

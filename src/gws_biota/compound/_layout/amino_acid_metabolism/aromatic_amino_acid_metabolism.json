@@ -49,7 +49,9 @@
         "CHEBI:1254": {"x": 816, "y": 825, "level": 1, "name": "cis-2-oxohept-3-enedioic acid", "alt": []},
         "CHEBI:17205": {"x": null, "y": null, "level": 2, "name": "2-oxohept-3-enedioate", "alt": ["CHEBI:11639", "CHEBI:19750", "CHEBI:48061"]},
         "CHEBI:1162": {"x": 969, "y": 825, "level": 1, "name": "2-hydroxyhepta-2,4-dienedioic acid", "alt": ["CHEBI:78626"]},
-        "CHEBI:15924": {"x": 1134, "y": 825, "level": 1, "name": "5-oxopent-3-ene-1,2,5-tricarboxylic acid", "alt": ["CHEBI:20622", "CHEBI:12112", "CHEBI:12155", "CHEBI:2039", "CHEBI:47963"]}
+        "CHEBI:15924": {"x": 1134, "y": 825, "level": 1, "name": "5-oxopent-3-ene-1,2,5-tricarboxylic acid", "alt": ["CHEBI:20622", "CHEBI:12112", "CHEBI:12155", "CHEBI:2039", "CHEBI:47963"]},
+        "CHEBI:1506": {"x": 1047, "y": 391, "level": 1, "name": "3-Fumarylpyruvate", "alt": ["CHEBI:16854", "CHEBI:11796", "CHEBI:20024", "CHEBI:47940", "CHEBI:47941"]},
+        "CHEBI:16727": {"x": 1026, "y": 391, "level": 1, "name": "maleylpyruvate", "alt": ["CHEBI:11845", "CHEBI:14562", "CHEBI:25126", "CHEBI:30859", "CHEBI:25127", "CHEBI:6655"]}
 
     },
     "centroid": {"x": 0, "y": 0}

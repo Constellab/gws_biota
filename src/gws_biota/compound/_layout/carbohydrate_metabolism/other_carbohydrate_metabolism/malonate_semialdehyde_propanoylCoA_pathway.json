@@ -11,7 +11,8 @@
         "CHEBI:15539": {"x": 826, "y": 578, "level": 1, "name": "propionyl-CoA", "alt": ["CHEBI:8479", "CHEBI:14904", "CHEBI:14907", "CHEBI:26295", "CHEBI:57392"]},
         "CHEBI:15466": {"x": 826, "y": 644, "level": 1, "name": "(S)-Methylmalonyl-CoA", "alt": ["CHEBI:11038", "CHEBI:43874", "CHEBI:384", "CHEBI:11068", "CHEBI:18742", "CHEBI:57327"]},
         "CHEBI:15465": {"x": 826, "y": 719, "level": 1, "name": "(R)-methylmalonyl-CoA", "alt": ["CHEBI:10976", "CHEBI:313", "CHEBI:18654", "CHEBI:57326"]},
-        "CHEBI:57292": {"x": 714, "y": 709, "level": 1, "name": "succinyl-CoA(5-)", "alt": ["CHEBI:57292", "CHEBI:10746", "CHEBI:15127", "CHEBI:15380", "CHEBI:9310", "CHEBI:45541", "CHEBI:26811"]}
+        "CHEBI:57292": {"x": 714, "y": 709, "level": 1, "name": "succinyl-CoA(5-)", "alt": ["CHEBI:57292", "CHEBI:10746", "CHEBI:15127", "CHEBI:15380", "CHEBI:9310", "CHEBI:45541", "CHEBI:26811"]},
+        "CHEBI:17153": {"x": 722, "y": 918, "level": 1, "name": "propanal", "alt": ["CHEBI:45052", "CHEBI:41359", "CHEBI:8468", "CHEBI:14898", "CHEBI:26281"]}
 
     },
     "centroid": {"x": 0, "y": 0}

@@ -22,7 +22,9 @@
         "CHEBI:15925": {"x": 829, "y": 282, "level": 1, "name": "2-dehydro-3-deoxy-6-phospho-D-gluconic acid", "alt": ["CHEBI:11543", "CHEBI:11551", "CHEBI:12227", "CHEBI:1051", "CHEBI:19522", "CHEBI:57569"]},
         "CHEBI:17140": {"x": 779, "y": 291, "level": 1, "name": "D-xylulose", "alt": ["CHEBI:46514", "CHEBI:4268", "CHEBI:13035", "CHEBI:21120"]},
         "CHEBI:16332": {"x": 779, "y": 309, "level": 1, "name": "D-xylulose 5-phosphate", "alt": ["CHEBI:13036", "CHEBI:21121", "CHEBI:4269", "CHEBI:27354", "CHEBI:57737"]},
-        "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-glyceraldehyde 3-phosphate", "alt": ["CHEBI:181", "CHEBI:12983", "CHEBI:12984", "CHEBI:21026", "CHEBI:18324", "CHEBI:5446", "CHEBI:14333", "CHEBI:17138", "CHEBI:58027", "CHEBI:59776"]}
+        "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-glyceraldehyde 3-phosphate", "alt": ["CHEBI:181", "CHEBI:12983", "CHEBI:12984", "CHEBI:21026", "CHEBI:18324", "CHEBI:5446", "CHEBI:14333", "CHEBI:17138", "CHEBI:58027", "CHEBI:59776"]},
+        "CHEBI:16880": {"x": 874, "y": 297, "level": 1, "name": "L-Ribulose", "alt": ["CHEBI:13163", "CHEBI:6295", "CHEBI:21382", "CHEBI:182416"]},
+        "CHEBI:17535": {"x": 874, "y": 272, "level": 1, "name": "L-arabinopyranose", "alt": ["CHEBI:6181", "CHEBI:21232"]}
 
     },
     "centroid": {"x": 0, "y": 0}

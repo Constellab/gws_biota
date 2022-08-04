@@ -18,7 +18,11 @@
         "CHEBI:16660": {"x": 913, "y": 798, "level": 1, "name": "(S)-4-hydroxymandelonitrile", "alt": ["CHEBI:41985", "CHEBI:406", "CHEBI:11053", "CHEBI:18759"]},
         "CHEBI:15666": {"x": 966, "y": 798, "level": 1, "name": "(E)-(4-hydroxyphenyl)acetaldehyde oxime", "alt": ["CHEBI:18628", "CHEBI:278", "CHEBI:10953"]},
         "CHEBI:12532": {"x": 1002, "y": 798, "level": 1, "name": "N,N-dihydroxy-L-tyrosine", "alt": ["CHEBI:57270"]},
-        "CHEBI:28089": {"x": 1039, "y": 798, "level": 1, "name": "N-hydroxytyrosine", "alt": ["CHEBI:7297", "CHEBI:90351", "CHEBI:12512", "CHEBI:12602", "CHEBI:21737", "CHEBI:58547"]}
+        "CHEBI:28089": {"x": 1039, "y": 798, "level": 1, "name": "N-hydroxytyrosine", "alt": ["CHEBI:7297", "CHEBI:90351", "CHEBI:12512", "CHEBI:12602", "CHEBI:21737", "CHEBI:58547"]},
+        "CHEBI:18407": {"x": 886, "y": 774, "level": 1, "name": "Hydrogen cyanide", "alt": ["CHEBI:5786", "CHEBI:13362"]},
+        "CHEBI:17084": {"x": 607, "y": 699, "level": 1, "name": "2-Hydroxyglutarate", "alt": ["CHEBI:1160", "CHEBI:11596", "CHEBI:132941", "CHEBI:36149"]},
+        "CHEBI:17196": {"x": 849, "y": 616, "level": 1, "name": "L-Asparagine", "alt": ["CHEBI:40902", "CHEBI:6191", "CHEBI:13083", "CHEBI:21242", "CHEBI:22653", "CHEBI:32651", "CHEBI:58048", "CHEBI:32661", "CHEBI:32660", "CHEBI:32650"]}
+
     },
     "centroid": {"x": 0, "y": 0}
 }

@@ -27,7 +27,11 @@
         "CHEBI:78440": {"x": 1139, "y": 684, "level": 1, "name": "S-methyl-5-thio-D-ribofuranose", "alt":["CHEBI:16895", "CHEBI:2101", "CHEBI:22007", "CHEBI:57941", "CHEBI:12148"]},
         "CHEBI:30526": {"x": 1028, "y": 724, "level": 1, "name": "1-aminocyclopropanecarboxylate", "alt": ["CHEBI:11251", "CHEBI:19026", "CHEBI:18053", "CHEBI:39590", "CHEBI:19027", "CHEBI:19028", "CHEBI:609", "CHEBI:58360"]},
         "CHEBI:18153": {"x": 1028, "y": 783, "level": 1, "name": "ethene", "alt": ["CHEBI:4899", "CHEBI:14230", "CHEBI:24000"]},
-        "CHEBI:16610": {"x": 1161, "y": 734, "level": 1, "name": "spermidine", "alt": ["CHEBI:26733", "CHEBI:45647", "CHEBI:15095", "CHEBI:9218", "CHEBI:15097", "CHEBI:26732", "CHEBI:57834"]}
+        "CHEBI:16610": {"x": 1161, "y": 734, "level": 1, "name": "spermidine", "alt": ["CHEBI:26733", "CHEBI:45647", "CHEBI:15095", "CHEBI:9218", "CHEBI:15097", "CHEBI:26732", "CHEBI:57834"]},
+        "CHEBI:15891": {"x": 1034, "y": 396, "level": 1, "name": "taurine", "alt": ["CHEBI:45877", "CHEBI:9406", "CHEBI:15195", "CHEBI:26852", "CHEBI:32970", "CHEBI:507393"]},
+        "CHEBI:16007": {"x": 926, "y": 479, "level": 1, "name": "methanethiol", "alt": ["CHEBI:6814", "CHEBI:14586", "CHEBI:25225"]},
+        "CHEBI:27891": {"x": 889, "y": 352, "level": 1, "name": "S-Sulfo-L-cysteine", "alt": ["CHEBI:22075", "CHEBI:8974", "CHEBI:62225"]}
+
     },
     "centroid": {"x": 0, "y": 0}
 }

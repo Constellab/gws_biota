@@ -35,7 +35,11 @@
         "CHEBI:17759": {"x": 371, "y": 631, "level": 1, "name": "7-Dehydrocholesterol", "alt": ["CHEBI:3658", "CHEBI:13981", "CHEBI:23181"]},
         "CHEBI:17168": {"x": 401, "y": 631, "level": 1, "name": "Lathosterol", "alt": ["CHEBI:12169", "CHEBI:2138", "CHEBI:20643"]},
         "CHEBI:16608": {"x": 430, "y": 631, "level": 1, "name": "5alpha-Cholest-8-en-3beta-ol", "alt": ["CHEBI:12170", "CHEBI:20645", "CHEBI:2139", "CHEBI:175094"]},
-        "CHEBI:28940": {"x": 371, "y": 647, "level": 1, "name": "Vitamin D3", "alt": ["CHEBI:46283", "CHEBI:10008", "CHEBI:23170"]}
+        "CHEBI:28940": {"x": 371, "y": 647, "level": 1, "name": "Vitamin D3", "alt": ["CHEBI:46283", "CHEBI:10008", "CHEBI:23170"]},
+        "CHEBI:28623": {"x": 216, "y": 761, "level": 1, "name": "campesterol", "alt": ["CHEBI:3342", "CHEBI:22994"]},
+        "CHEBI:27693": {"x": 247, "y": 775, "level": 1, "name": "Sitosterol", "alt": ["CHEBI:26692", "CHEBI:9170"]},
+        "CHEBI:16032": {"x": 399, "y": 663, "level": 1, "name": "androsterone", "alt": ["CHEBI:2714", "CHEBI:13832", "CHEBI:20235"]}
+
     },
     "centroid": {"x": 0, "y": 0}
 }
