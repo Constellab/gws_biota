@@ -3,6 +3,7 @@
 from .base.test_case import BaseTestCaseUsingFullBiotaDB
 from .biomass_reaction.biomass_reaction import BiomassReaction
 from .bto.bto import BTO
+from .compartment.compartment import Compartment, CompartmentNotFoundException
 from .compound.cofactor import Cofactor
 from .compound.compound import Compound
 from .compound.compound_layout import (CompoundClusterDict, CompoundLayout,

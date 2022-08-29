@@ -30,7 +30,7 @@ CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
 })
 
 SHIFTS = {
-    "xenobiotics_biodegradation": {"x": -300, "y": 0},
+    "xenobiotic_biodegradation": {"x": -300, "y": 0},
     "energy_metabolism": {"x": -200, "y": 0},
     "lipid_metabolism": {"x": -200, "y": 0},
     "carbohydrate_metabolism": {"x": 0, "y": 0},
@@ -196,7 +196,7 @@ class CompoundLayout:
         return cls._flat_data
 
     @classmethod
-    def get_layout_by_chebi_id(cls, synonym_chebi_ids: Union[str, List[str]], compartment=None) -> CompoundLayoutDict:
+    def get_layout_by_chebi_id(cls, synonym_chebi_ids: Union[str, List[str]]) -> CompoundLayoutDict:
         """ Get layout position matching with the CheBI id """
 
         position = {"x": None, "y": None, "clusters": {}}
@@ -232,14 +232,6 @@ class CompoundLayout:
 
         for c_name in position["clusters"]:
             position["clusters"][c_name]["alt"] = None
-
-        # if compartment is not None and compartment != "c":
-        #     # clusters = copy.deepcopy(clusters)
-        #     position["x"] = None
-        #     position["y"] = None
-        #     for c_name in position["clusters"]:
-        #         position["clusters"][c_name]["x"] = None
-        #         position["clusters"][c_name]["y"] = None
 
         return position
 

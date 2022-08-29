@@ -3,10 +3,11 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import re
 import json
+import re
 
 from gws_core import BadRequestException, StringHelper
+
 
 class BiomassReaction():
 
@@ -40,12 +41,12 @@ class BiomassReaction():
         ckey = "compounds" if "compounds" in data else "metabolites"
         compounds = data[ckey]
         reactions = data["reactions"]
-        comp_dict = {comp["id"]:comp for comp in compounds}
+        comp_dict = {comp["id"]: comp for comp in compounds}
 
         biomass_rxns = []
         for rxn in reactions:
-            id=rxn["id"]
-            name=rxn["name"]
+            id = rxn["id"]
+            name = rxn["name"]
             if not id.startswith("BIOMASS_"):
                 continue
 
@@ -58,7 +59,6 @@ class BiomassReaction():
             eqn_def_subs = []
             prods = {}
             subs = {}
-
 
             for comp_id in rxn[ckey]:
                 comp = comp_dict[comp_id]
@@ -75,31 +75,20 @@ class BiomassReaction():
                 else:
                     chebi_id = comp_id
 
-                # if chebi_ids:
-                #     Q = Compound.search_by_chebi_ids(chebi_ids)
-                #     if len(Q):
-                #         chebi_id = Q[0].chebi_id
-                #     else:
-                #         raise BadRequestException(f"No componds found for chebi ids {chebi_ids}")
-                # else:
-                #     comp = Compound(comp_id=comp_id, name=comp_name)
-
                 stoich = float(rxn[ckey][comp_id])
                 if stoich < 0:
-                    #current_biomass_rxn.add_substrate(comp, stoich)
                     subs[chebi_id] = str(abs(stoich))
-                    eqn_def_subs.append( str(abs(stoich))+" "+str(comp_name) )
+                    eqn_def_subs.append(str(abs(stoich))+" "+str(comp_name))
                 elif stoich > 0:
-                    #current_biomass_rxn.add_product(comp, stoich)
                     prods[chebi_id] = str(stoich)
-                    eqn_def_prod.append( str(stoich)+" "+str(comp_name) )
+                    eqn_def_prod.append(str(stoich)+" "+str(comp_name))
 
             current_biomass_rxn["definition"] = " + ".join(eqn_def_subs) + " = " + " + ".join(eqn_def_prod)
-            current_biomass_rxn["equation"] = { "substrates": subs, "products": prods }
+            current_biomass_rxn["equation"] = {"substrates": subs, "products": prods}
 
-            eqn_src_subs = " + ".join([ v+" "+k for k,v in subs.items() ])
-            eqn_src_prods = " + ".join([ v+" "+k for k,v in prods.items() ])
-            current_biomass_rxn["source_equation"] = eqn_src_subs + " = " +  eqn_src_prods
+            eqn_src_subs = " + ".join([v+" "+k for k, v in subs.items()])
+            eqn_src_prods = " + ".join([v+" "+k for k, v in prods.items()])
+            current_biomass_rxn["source_equation"] = eqn_src_subs + " = " + eqn_src_prods
             current_biomass_rxn["substrates"] = list(subs.keys())
             current_biomass_rxn["products"] = list(prods.keys())
 
