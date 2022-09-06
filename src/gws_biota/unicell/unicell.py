@@ -141,3 +141,37 @@ class Unicell(BaseFT):
         """ Get the shortest path between components """
         graph = self.get_graph()
         return nx.shortest_path(graph, chebi_id1, chebi_id2)
+
+    def find_neigbors(self, nodes: list, radius: int = 1, exclude_nodes: list = None):
+        """ Finds the neighbors of a list of nodes """
+
+        graph = self.get_graph()
+
+        if not isinstance(nodes, list):
+            raise BadRequestException("The nodes must be a list")
+        neigbors = []
+        for node in nodes:
+            subgraph = nx.ego_graph(graph, node, radius=radius)
+            neigbors.extend(list(subgraph.nodes()))
+
+        neigbors = list(set(neigbors))
+        if exclude_nodes is not None:
+            neigbors = [n for n in neigbors if n not in exclude_nodes]
+
+        return neigbors
+
+    def neigbors_subgraph(self, nodes: list, radius: int = 1):
+        subgraph = nx.Graph()
+        unicell_graph = self.get_graph()
+
+        for node in nodes:
+            egograph = nx.ego_graph(unicell_graph, node, radius=radius)
+            for edge in egograph.edges:
+                if node in edge:
+                    subgraph.add_edges_from([edge])
+
+        for edge in subgraph.edges:
+            data = unicell_graph.get_edge_data(*edge)
+            for k, v in data.items():
+                subgraph[edge[0]][edge[1]][k] = v
+        return subgraph

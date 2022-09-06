@@ -97,6 +97,7 @@ class CompoundCluster:
                 comp_data["y"] = GRID_SCALE * (comp_data["y"] + self._centroid["y"])
             comp_data["parent"] = self._parent
             comp_data["name"] = self._name
+            # comp_data["master_id"] = comp_id
             data[comp_id] = comp_data
         return data
 
@@ -132,6 +133,7 @@ class CompoundLayout:
     _flat_data: dict = {}
     _is_flattened = False
     _is_generated = False
+    _master_ids_map = {}
 
     @ classmethod
     def add_cluster(cls, cluster):
@@ -167,6 +169,7 @@ class CompoundLayout:
             for comp_id in cluster_data:
                 if comp_id not in data:
                     data[comp_id] = {}
+
                 cluster_name = cluster_data[comp_id]["name"]
                 data[comp_id][cluster_name] = cluster_data[comp_id]
 
@@ -185,11 +188,14 @@ class CompoundLayout:
         data = CompoundLayout.generate()
         for comp_id, cluster_data in data.items():
             cls._flat_data[comp_id] = cluster_data
+            cls._master_ids_map[comp_id] = comp_id
+
             # parse current cluster and gather all comp data
             for current_cluster_data in cluster_data.values():
-                #current_cluster_data = cluster_name[cluster_name]
+                # current_cluster_data = cluster_name[cluster_name]
                 for alt_comp_id in current_cluster_data.get("alt", []):
                     cls._flat_data[alt_comp_id] = cluster_data
+                    cls._master_ids_map[alt_comp_id] = comp_id
 
             # cluster_data
         cls._is_flattened = True
@@ -247,3 +253,12 @@ class CompoundLayout:
     def get_empty_layout(cls) -> CompoundLayoutDict:
         """ Get empty layout  """
         return {"x": None, "y": None, "clusters": {}}
+
+    @classmethod
+    def retreive_master_chebi_id(cls, chebi_id) -> dict:
+        """ Get layout position matching with the CheBI id """
+        cls.get_flat_data()
+        if chebi_id in cls._master_ids_map:
+            return cls._master_ids_map[chebi_id]
+        else:
+            return None

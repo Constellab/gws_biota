@@ -44,11 +44,11 @@ class UnicellService:
         if tax is None:
             query = Reaction.select().where(Reaction.direction == "UN")
         else:
-            query = Reaction.select() \
-                .join(ReactionEnzyme, on=(ReactionEnzyme.reaction == Reaction.id)) \
-                .join(Enzyme, on=(ReactionEnzyme.enzyme == Enzyme.id)) \
-                .where(Reaction.direction == "UN") \
-                .where(getattr(Enzyme, "tax_"+tax.rank) == tax.tax_id)
+            query = Reaction.select().where(Reaction.direction == "UN")
+            # query = Reaction.select() \
+            #     .join(ReactionEnzyme, on=(ReactionEnzyme.reaction == Reaction.id)) \
+            #     .join(Enzyme, on=((ReactionEnzyme.enzyme == Enzyme.id) & getattr(Enzyme, "tax_"+tax.rank) == tax.tax_id)) \
+            #     .where(Reaction.direction == "UN")
 
         nb_rxn = query.count()
         Logger.info(f"Creating unicell with {nb_rxn} reactions ...")
@@ -78,8 +78,11 @@ class UnicellService:
                         else:
                             rhea_edge_map[rxn.rhea_id] = [(chebi_id_1, chebi_id_2)]
 
+                        compound_id_list.extend([chebi_id_1, chebi_id_2])
+
             page += 1
 
+        compound_id_list = list(set(compound_id_list))
         uni_cell = Unicell(
             compound_id_list=pickle.dumps(compound_id_list),
             reaction_id_list=pickle.dumps(reaction_id_list),
@@ -87,6 +90,6 @@ class UnicellService:
             graph=pickle.dumps(graph),
         )
 
-        Logger.info(f"Done!")
+        Logger.info("Done!")
 
         return uni_cell
