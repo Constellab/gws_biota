@@ -233,7 +233,7 @@ class CompoundLayout:
             "x": None,
             "y": None,
             "level": default_position.get("level", 2),
-            "clusters": clusters,
+            "clusters": clusters # copy.deepcopy(clusters),
         }
 
         for c_name in position["clusters"]:
@@ -241,18 +241,29 @@ class CompoundLayout:
 
         return position
 
-    @classmethod
-    def get_biomass_position(cls):
-        """ Formats and returns biomass position """
-        return {
-            "x": None,  # cls.BIOMASS_CLUSTER_CENTER["x"] * cls.GRID_SCALE,
-            "y": None,  # cls.BIOMASS_CLUSTER_CENTER["y"] * cls.GRID_SCALE
-        }
 
     @classmethod
     def get_empty_layout(cls) -> CompoundLayoutDict:
         """ Get empty layout  """
         return {"x": None, "y": None, "clusters": {}}
+
+    def get_biomass_layout() -> CompoundLayoutDict:
+        """ Create biomass layout """
+
+        return {
+            "x": None,
+            "y": None,
+            "level": 1,
+            "clusters": {
+                "biomass": {
+                    "x": None,
+                    "y": None,
+                    "level": 1,
+                    "name": "biomass",
+                    "parent": "biomass"
+                }
+            }
+        }
 
     @classmethod
     def retreive_master_chebi_id(cls, chebi_id) -> dict:

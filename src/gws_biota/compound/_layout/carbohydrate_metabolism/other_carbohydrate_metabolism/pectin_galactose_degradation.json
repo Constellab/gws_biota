@@ -13,7 +13,7 @@
         "CHEBI:29042": {"x": 638, "y": 222, "level": 1, "name": "alpha-D-glucose 1-phosphate", "alt": ["CHEBI:12320", "CHEBI:42623", "CHEBI:10246", "CHEBI:12970", "CHEBI:21004", "CHEBI:12967", "CHEBI:4169", "CHEBI:58601", "CHEBI:57629", "CHEBI:16077", "CHEBI:21001"]},
         "CHEBI:12931": {"x": 659, "y": 288, "level": 1, "name": "D-galactonate", "alt": ["CHEBI:16534", "CHEBI:4132", "CHEBI:24149", "CHEBI:24148"]},
         "CHEBI:16001": {"x": 753, "y": 873, "level": 1, "name": "3-phospho-D-glyceroyl dihydrogen phosphate", "alt": ["CHEBI:1658", "CHEBI:11881", "CHEBI:20189", "CHEBI:57604"]},
-        "CHEBI:17794": {"x": 735, "y": 887, "level": 1, "name": "3-phospho-D-glyceric acid", "alt": ["CHEBI:12987", "CHEBI:11879", "CHEBI:1657", "CHEBI:11880", "CHEBI:21029", "CHEBI:58272"]}
+        "CHEBI:17794": {"x": 719, "y": 424, "level": 1, "name": "3-phospho-D-glyceric acid", "alt": ["CHEBI:12987", "CHEBI:11879", "CHEBI:1657", "CHEBI:11880", "CHEBI:21029", "CHEBI:58272"]}
 
     },
     "centroid": {"x": 0, "y": 0}

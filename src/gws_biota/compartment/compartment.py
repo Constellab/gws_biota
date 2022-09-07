@@ -28,14 +28,16 @@ class Compartment:
     go_id = None
     bigg_id = None
     name = None
+    color = None
     data = None
 
     _db_data: dict = None
 
-    def __init__(self, *, go_id="", bigg_id="", name="", data=None):
+    def __init__(self, *, go_id="", bigg_id="", name="", color="", data=None):
         self.go_id = go_id
         self.bigg_id = bigg_id
         self.name = name
+        self.color = color
         self.data = data or {}
 
     @classmethod
