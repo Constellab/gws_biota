@@ -44,7 +44,7 @@ class TaxonomyService(BaseService):
                 tax.rank = tax.data['rank']
                 tax.division = tax.data['division']
                 tax.ancestor_tax_id = tax.data['ancestor']
-                tax.ft_names = cls.format_ft_names([tax.tax_id, tax.name])
+                tax.ft_names = cls.format_ft_names(["TAX"+tax.tax_id, tax.name])
                 del tax.data['ancestor']
             Taxonomy.create_all(taxa)
         taxa = []

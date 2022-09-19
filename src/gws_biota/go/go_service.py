@@ -41,7 +41,7 @@ class GOService(BaseService):
             go.set_name(go.data["name"])
             go.set_namespace(go.data["namespace"])
 
-            ft_names = [go.data["name"], go.data["id"]]
+            ft_names = [go.data["name"], go.data["id"].replace(":", "")]
             go.ft_names = cls.format_ft_names(ft_names)
 
             del go.data["id"]
@@ -70,4 +70,4 @@ class GOService(BaseService):
             if ancestor != go.go_id:
                 val = {'go': go.id, 'ancestor': GO.get(GO.go_id == ancestor).id}
                 vals.append(val)
-        return(vals)
+        return (vals)

@@ -110,9 +110,9 @@ class Compound(BaseFT):
     def search_by_chebi_ids(cls, chebi_ids: Union[list, str]):
         """ Search compounds using CheBI IDs """
         if isinstance(chebi_ids, str):
-            chebi_ids = [chebi_ids]
+            chebi_ids = [chebi_ids.replace("CHEBI:", "")]
         if isinstance(chebi_ids, list):
-            chebi_ids = [_id.replace("CHEBI:", "") for _id in chebi_ids]
+            chebi_ids = [cid.replace("CHEBI:", "") for cid in chebi_ids]
             chebi_ids = " ".join(chebi_ids)
         return cls.search(chebi_ids)
 

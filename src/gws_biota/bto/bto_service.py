@@ -4,15 +4,17 @@
 # About us: https://gencovery.com
 
 from gws_core import transaction
+
 from .._helper.ontology import Onto as OntoHelper
-from .bto import BTO, BTOAncestor
 from ..base.base_service import BaseService
+from .bto import BTO, BTOAncestor
+
 
 class BTOService(BaseService):
 
     @classmethod
     @transaction()
-    def create_bto_db(cls, biodata_dir = None, **kwargs):
+    def create_bto_db(cls, biodata_dir=None, **kwargs):
         """
         Creates and fills the `bto` database
 
@@ -23,12 +25,12 @@ class BTOService(BaseService):
         """
 
         list_bto = OntoHelper.parse_bto_from_json(biodata_dir, kwargs['bto_file'])
-        btos = [BTO(data = dict_) for dict_ in list_bto]
+        btos = [BTO(data=dict_) for dict_ in list_bto]
         for bto in btos:
-            bto.set_bto_id( bto.data["id"] )
-            bto.set_name( bto.data["name"] )
-            ft_names = [ bto.data["name"], bto.bto_id.replace("BTO_", "")]
-            bto.ft_names=cls.format_ft_names(ft_names)
+            bto.set_bto_id(bto.data["id"])
+            bto.set_name(bto.data["name"])
+            ft_names = [bto.data["name"], "BTO" + bto.bto_id.replace("BTO_", "")]
+            bto.ft_names = cls.format_ft_names(ft_names)
             del bto.data["id"]
         BTO.create_all(btos)
 
@@ -38,7 +40,6 @@ class BTOService(BaseService):
             for v in val:
                 vals.append(v)
         BTOAncestor.insert_all(vals)
-
 
     @classmethod
     def __build_insert_query_vals_of_ancestors(self, bto):
@@ -55,6 +56,6 @@ class BTOService(BaseService):
             if ancestor != bto.bto_id:
                 ancestors = BTO.select(BTO.id).where(BTO.bto_id == ancestor)
                 if len(ancestors) > 0:
-                    val = {'bto': bto.id, 'ancestor': ancestors[0].id }
+                    val = {'bto': bto.id, 'ancestor': ancestors[0].id}
                     vals.append(val)
         return vals

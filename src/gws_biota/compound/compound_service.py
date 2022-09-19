@@ -74,7 +74,7 @@ class CompoundService(BaseService):
                 all_ids = [comp.chebi_id, *comp.alt_chebi_ids]
                 if comp.kegg_id is not None:
                     all_ids.append(comp.kegg_id)
-                all_ids_trimed = [elt.replace("CHEBI:", "") for elt in all_ids]
+                all_ids_trimed = [elt.replace(":", "") for elt in all_ids]
                 ft_names = [comp.data["name"], *all_ids_trimed]
                 comp.ft_names = cls.format_ft_names(ft_names)
 

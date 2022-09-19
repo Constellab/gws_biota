@@ -33,7 +33,7 @@ class SBOService(BaseService):
         for sbo in sbos:
             sbo.set_sbo_id(sbo.data["id"])
             sbo.set_name(sbo.data["name"])
-            ft_names = [sbo.data["name"], sbo.data["id"]]
+            ft_names = [sbo.data["name"], sbo.data["id"].replace(":", "")]
             sbo.ft_names = cls.format_ft_names(ft_names)
             del sbo.data["id"]
         SBO.create_all(sbos)
@@ -57,7 +57,7 @@ class SBOService(BaseService):
         if 'ancestors' not in sbo.data:
             return vals
         for ancestor in sbo.data['ancestors']:
-            if(ancestor != sbo.sbo_id):
+            if (ancestor != sbo.sbo_id):
                 val = {'sbo': sbo.id, 'ancestor': SBO.get(SBO.sbo_id == ancestor).id}
                 vals.append(val)
-        return(vals)
+        return (vals)

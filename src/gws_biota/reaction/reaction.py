@@ -2,6 +2,7 @@
 # This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
+from typing import Union
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
@@ -65,6 +66,9 @@ class Reaction(BaseFT):
     products = ManyToManyField(Compound, through_model=ReactionProductDeferred)
     enzymes = ManyToManyField(Enzyme, through_model=ReactionEnzymeDeferred)
 
+    ft_tax_ids = TextField(null=True)  # fulltext indexation of (tax_ids) for fast search of reactions
+    ft_ec_numbers = TextField(null=True)  # fulltext indexation of (ec_numbers) for fast search of reactions
+
     _table_name = 'biota_reaction'
 
     # -- A --
@@ -100,6 +104,12 @@ class Reaction(BaseFT):
         ReactionProduct.create_table()
         ReactionEnzyme.create_table()
 
+    @classmethod
+    def after_table_creation(cls) -> None:
+        super().after_table_creation()
+        cls.create_full_text_index(['ft_tax_ids'], 'ft_tax_ids')
+        cls.create_full_text_index(['ft_ec_numbers'], 'ft_ec_numbers')
+
     # -- D --
 
     @property
@@ -120,7 +130,7 @@ class Reaction(BaseFT):
 
     # -- G --
 
-    def get_title(self, default=None):
+    def get_title(self):
         return self.definition
 
     def has_enzymes(self):
@@ -192,6 +202,26 @@ class Reaction(BaseFT):
         :type master_id: str
         """
         self.master_id = master_id
+
+    @classmethod
+    def search_by_tax_ids(cls, tax_ids: Union[list, str]) -> ModelSelect:
+        if isinstance(tax_ids, str):
+            tax_ids = ["TAX" + tax_ids]
+        if isinstance(tax_ids, list):
+            tax_ids = ["TAX" + tax for tax in tax_ids]
+            tax_ids = " ".join(tax_ids)
+
+        return cls.select().where(Match((cls.ft_tax_ids), tax_ids))
+
+    @classmethod
+    def search_by_ec_numbers(cls, ec_numbers: Union[list, str]) -> ModelSelect:
+        if isinstance(ec_numbers, str):
+            ec_numbers = ["EC" + ec_numbers.replace(".", "")]
+        if isinstance(ec_numbers, list):
+            ec_numbers = ["EC" + ec.replace(".", "") for ec in ec_numbers]
+            ec_numbers = " ".join(ec_numbers)
+
+        return cls.select().where(Match((cls.ft_ec_numbers), ec_numbers))
 
 
 class ReactionSubstrate(ProtectedBaseModel):

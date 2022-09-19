@@ -33,7 +33,7 @@ class ECOService(BaseService):
         for eco in ecos:
             eco.set_eco_id(eco.data["id"])
             eco.set_name(eco.data["name"])
-            ft_names = [eco.data["name"], eco.eco_id.replace("ECO:", "")]
+            ft_names = [eco.data["name"], "ECO" + eco.eco_id.replace("ECO:", "")]
             eco.ft_names = cls.format_ft_names(ft_names)
             del eco.data["id"]
         ECO.create_all(ecos)
@@ -62,4 +62,4 @@ class ECOService(BaseService):
             if ancestor != eco.eco_id:
                 val = {'eco': eco.id, 'ancestor': ECO.get(ECO.eco_id == ancestor).id}
                 vals.append(val)
-        return(vals)
+        return (vals)

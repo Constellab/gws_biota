@@ -59,7 +59,7 @@ class EnzymeService(BaseService):
                 rn = d["RN"]
                 sn = d.get("SN", [])
                 sy = [k.get("data", "") for k in d.get("SY", [])]
-                ft_names = [ec.replace(".", ""), *rn, *sn, *sy]
+                ft_names = ["EC"+ec.replace(".", ""), *rn, *sn, *sy]
                 enzos[ec] = EnzymeOrtholog(
                     ec_number=ec,
                     data={"RN": rn, "SN": sn, "SY": sy},
@@ -88,7 +88,10 @@ class EnzymeService(BaseService):
                     ec_number=ec,
                     uniprot_id=d["uniprot"],
                     data=d,
-                    ft_names=";".join([ec.replace(".", ""), *rn, *sn, *sy, organism]),
+                    ft_names=";".join([
+                        "EC"+ec.replace(".", ""),
+                        *rn, *sn, *sy, organism
+                    ]),
                 )
                 enz.set_name(d["RN"][0])
                 enzyme_chunk.append(enz)
