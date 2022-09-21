@@ -17,6 +17,8 @@ from scipy import sparse
 from scipy.sparse import linalg
 
 from ..base.base_ft import BaseFT
+from ..compound.compound import Compound
+from ..reaction.reaction import Reaction
 
 
 @typing_registrator(unique_name="Unicell", object_type="MODEL", hide=True)
@@ -54,6 +56,17 @@ class Unicell(BaseFT):
         """ DEACTIVATE HASH """
         hash_obj = hashlib.blake2b()
         return hash_obj
+
+    @classmethod
+    def create_table(cls, *args, **kwargs):
+        """
+        Creates `reaction` table and related tables.
+
+        Extra parameters are passed to :meth:`peewee.Model.create_table`
+        """
+        super().create_table(*args, **kwargs)
+        Reaction.create_table()
+        Compound.create_table()
 
     @property
     def nb_compounds(self):

@@ -21,6 +21,7 @@
 # The licensor cannot revoke these freedoms as long as you follow the license terms.
 # https://creativecommons.org/licenses/by/4.0/.
 
+import re
 from typing import Union
 
 from gws_core import BadRequestException
@@ -110,9 +111,9 @@ class Compound(BaseFT):
     def search_by_chebi_ids(cls, chebi_ids: Union[list, str]):
         """ Search compounds using CheBI IDs """
         if isinstance(chebi_ids, str):
-            chebi_ids = [chebi_ids.replace("CHEBI:", "")]
+            chebi_ids = ["CHEBI" + chebi_ids.replace("CHEBI:", "")]
         if isinstance(chebi_ids, list):
-            chebi_ids = [cid.replace("CHEBI:", "") for cid in chebi_ids]
+            chebi_ids = ["CHEBI" + re.sub(r"CHEBI:?", "", cid) for cid in chebi_ids]
             chebi_ids = " ".join(chebi_ids)
         return cls.search(chebi_ids)
 

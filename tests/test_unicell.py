@@ -17,6 +17,7 @@ class TestUnicell(BaseTestCaseUsingFullBiotaDB):
     def test_unicell(self):
         uc = UnicellService.create_unicell()
         tf = uc.are_connected("CHEBI:57604", "CHEBI:58272")  # -> true
+        tf = uc.are_connected("CHEBI:57604", "CHEBI:58248")  # -> true
         self.assertTrue(tf)
         tf = uc.are_connected("CHEBI:57604", "CHEBI:58289", )  # -> true
         self.assertTrue(tf)
@@ -24,7 +25,12 @@ class TestUnicell(BaseTestCaseUsingFullBiotaDB):
         self.assertTrue(tf)
 
         path = uc.shortest_path("CHEBI:57604", "CHEBI:58289")
-        self.assertEqual(path, ['CHEBI:57604', 'CHEBI:58272', 'CHEBI:58289'])
+        #self.assertEqual( path, ['CHEBI:57604', 'CHEBI:58272', 'CHEBI:58289'])
+        self.assertEqual(
+            path == ['CHEBI:57604', 'CHEBI:58248', 'CHEBI:58289'] or \
+            path == ['CHEBI:57604', 'CHEBI:58272', 'CHEBI:58289']
+        )
+
         print(path)
 
         e = uc.get_edge(path[0], path[1])

@@ -38,20 +38,20 @@ class TestCompound(BaseTestCase):
         self.assertEqual(comp.alt_chebi_ids, ['CHEBI:14271', 'CHEBI:49593', 'CHEBI:5113'])
         print(comp.alt_chebi_ids)
 
-        Q = Compound.search('17051')
+        Q = Compound.search('CHEBI17051')
         self.assertEqual(len(Q), 1)
         self.assertEqual(Q[0].name, "fluoride")
 
-        Q = Compound.search('17051 14271')
+        Q = Compound.search('CHEBI17051 CHEBI14271')
         self.assertEqual(len(Q), 1)
         self.assertEqual(Q[0].name, "fluoride")
 
-        Q = Compound.search('CHEBI:49593')
+        Q = Compound.search('CHEBI49593')
         self.assertEqual(len(Q), 1)
         self.assertEqual(Q[0].name, "fluoride")
 
         Q = Compound.search('CHEBI:')
         self.assertEqual(len(Q), 0)
 
-        Q = Compound.search_by_chebi_ids('49593 24431')
+        Q = Compound.search_by_chebi_ids(['49593', 'CHEBI24431'])
         self.assertEqual(len(Q), 2)
