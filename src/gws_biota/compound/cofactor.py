@@ -120,9 +120,9 @@ class Cofactor:
         "CHEBI:13193": {"alt": []},
 
         # L-cysteine residue
-        "CHEBI:29950": {"alt": []},
+        # "CHEBI:29950": {"alt": []},
         # L-lysinium residue
-        "CHEBI:29969": {"alt": []},
+        # "CHEBI:29969": {"alt": []},
 
         # Coblat 2-
         "CHEBI:48828": {"alt": ["CHEBI:48827", "CHEBI:23337"]},
@@ -134,7 +134,7 @@ class Cofactor:
         "CHEBI:29101": {"alt": ["CHEBI:9175", "CHEBI:49766", "CHEBI:26717", "CHEBI:26714"]}
     }
 
-    COFACTOR_NAME_PATTERNS = ["residue"]
+    COFACTOR_NAME_PATTERNS = []
     _unfolded_cofactor_list = None
 
     @classmethod
@@ -149,7 +149,7 @@ class Cofactor:
     @classmethod
     def is_cofactor(cls, chebi_id: str, name: str = None, use_name_pattern=False):
         """
-        Returns True if the compound is a cofactor, Fals otherwise
+        Returns True if the compound is a cofactor, False otherwise
         """
 
         if name and use_name_pattern:

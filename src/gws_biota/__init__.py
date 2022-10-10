@@ -9,6 +9,7 @@ from .compound.compound import Compound
 from .compound.compound_layout import (CompoundClusterDict, CompoundLayout,
                                        CompoundLayoutDict)
 from .compound.compound_position import CompoundPosition
+from .compound.residue import Residue
 from .eco.eco import ECO
 from .enzyme.deprecated_enzyme import DeprecatedEnzyme
 from .enzyme.enzyme import Enzyme
