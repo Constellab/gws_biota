@@ -4,7 +4,7 @@
     "data": {
         "CHEBI:16015": {"x": 1262, "y": 615, "level": 1, "name": "L-Glutamate", "alt": ["CHEBI:76051", "CHEBI:21301", "CHEBI:29985", "CHEBI:42825", "CHEBI:29987", "CHEBI:18237", "CHEBI:24314", "CHEBI:13107", "CHEBI:5431", "CHEBI:21304", "CHEBI:6224", "CHEBI:14321", "CHEBI:29988"]},
         "CHEBI:17627": {"x": 1341, "y": 403, "level": 1, "name": "Heme", "alt": ["CHEBI:14957", "CHEBI:5651", "CHEBI:60344", "CHEBI:26355"]},
-        "CHEBI:15428": {"x": 948, "y": 513, "level": 1, "name": "Glycine", "alt": ["CHEBI:32508", "CHEBI:32507", "CHEBI:42964", "CHEBI:14344", "CHEBI:24368", "CHEBI:10792", "CHEBI:5460", "CHEBI:57305"]},
+        "CHEBI:15428": {"x": null, "y": null, "level": 1, "name": "Glycine", "alt": ["CHEBI:32508", "CHEBI:32507", "CHEBI:42964", "CHEBI:14344", "CHEBI:24368", "CHEBI:10792", "CHEBI:5460", "CHEBI:57305"]},
         "CHEBI:16857": {"x": 948, "y": 539, "level": 1, "name": "L-Threonine", "alt": ["CHEBI:42083", "CHEBI:32822", "CHEBI:45843", "CHEBI:57926", "CHEBI:21403", "CHEBI:32833", "CHEBI:32820", "CHEBI:13175", "CHEBI:6308", "CHEBI:45983", "CHEBI:32832", "CHEBI:26986"]},
         "CHEBI:18408": {"x": 1373, "y": 543, "level": 1, "name": "Cobamide coenzyme", "alt": ["CHEBI:13739", "CHEBI:3797", "CHEBI:23340"]},
         "CHEBI:17549": {"x": 1186, "y": 472, "level": 1, "name": "5-Aminolevulinate", "alt": ["CHEBI:2034", "CHEBI:20547", "CHEBI:356416", "CHEBI:132970", "CHEBI:12109"]},
@@ -25,7 +25,7 @@
         "CHEBI:50602": {"x": 1236, "y": 418, "level": 1, "name": "Precorrin 2", "alt": ["CHEBI:14870", "CHEBI:8370", "CHEBI:58827"]},
         "CHEBI:17439": {"x": 1373, "y": 512, "level": 1, "name": "Cyanocobalamin", "alt": []},
         "CHEBI:16673": {"x": 1315, "y": 474, "level": 1, "name": "Protochlorophyllide", "alt": ["CHEBI:26353", "CHEBI:8587", "CHEBI:14956"]},
-        "CHEBI:29157": {"x": 1102, "y": 570, "level": 1, "name": "L-Glutamyl-tRNA(Glu)", "alt": ["CHEBI:13114", "CHEBI:6232"]},
+        "CHEBI:29157": {"x": null, "y": null, "level": 1, "name": "L-Glutamyl-tRNA(Glu)", "alt": ["CHEBI:13114", "CHEBI:6232"]},
         "CHEBI:15890": {"x": 1421, "y": 482, "level": 1, "name": "Dimethylbenzimidazole", "alt": ["CHEBI:42126", "CHEBI:4620", "CHEBI:14172", "CHEBI:20516"]},
         "CHEBI:15675": {"x": 819, "y": 431, "level": 1, "name": "(R)-1-Aminopropan-2-ol", "alt": ["CHEBI:18642", "CHEBI:10963", "CHEBI:303", "CHEBI:610", "CHEBI:42677", "CHEBI:19030"]},
         "CHEBI:15439": {"x": 1271, "y": 403, "level": 1, "name": "Coproporphyrinogen III", "alt": ["CHEBI:41560", "CHEBI:23386", "CHEBI:3880", "CHEBI:14020", "CHEBI:57309"]},

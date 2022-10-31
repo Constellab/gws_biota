@@ -16,7 +16,7 @@
         "CHEBI:16600": {"x": 719, "y": 550, "level": 1, "name": "mesaconic acid", "alt": ["CHEBI:43999", "CHEBI:6772", "CHEBI:19701", "CHEBI:36986", "CHEBI:19700", "CHEBI:14584", "CHEBI:11622"]},
         "CHEBI:47980": {"x": 837, "y": 654, "level": 1, "name": "L-threo-3-Methylaspartate", "alt": ["CHEBI:39908", "CHEBI:6334", "CHEBI:58724", "CHEBI:16378", "CHEBI:13066", "CHEBI:21399"]},
         "CHEBI:7815": {"x": 782, "y": 679, "level": 1, "name": "oxalosuccinic acid", "alt": ["CHEBI:39908", "CHEBI:6334", "CHEBI:58724", "CHEBI:16378", "CHEBI:13066", "CHEBI:21399", "CHEBI:153066", "CHEBI:58931", "CHEBI:44712"]},
-        "CHEBI:16015": {"x": 981, "y": 699, "level": 1, "name": "L-glutamate", "alt": ["CHEBI:42825", "CHEBI:6224", "CHEBI:21304", "CHEBI:76051", "CHEBI:21301", "CHEBI:29985", "CHEBI:29987", "CHEBI:18237", "CHEBI:24314", "CHEBI:13107", "CHEBI:5431", "CHEBI:14321", "CHEBI:29988"]},
+        "CHEBI:16015": {"x": null, "y": null, "level": 2, "name": "L-glutamate", "alt": ["CHEBI:42825", "CHEBI:6224", "CHEBI:21304", "CHEBI:76051", "CHEBI:21301", "CHEBI:29985", "CHEBI:29987", "CHEBI:18237", "CHEBI:24314", "CHEBI:13107", "CHEBI:5431", "CHEBI:14321", "CHEBI:29988"]},
         "CHEBI:27969": {"x": 662, "y": 730, "level": 1, "name": "mesaconyl-CoA", "alt": ["CHEBI:6774", "CHEBI:25201", "CHEBI:75635"]}
 
     },

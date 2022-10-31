@@ -3,10 +3,10 @@
     "name": "nicotinate and nicotinamide metabolism",
     "data": {
         "CHEBI:17053": {"x": 1262, "y": 575, "level": 1, "name": "L-Aspartate", "alt": ["CHEBI:21247", "CHEBI:40900", "CHEBI:40942", "CHEBI:6193", "CHEBI:40913", "CHEBI:40853", "CHEBI:22659", "CHEBI:29993", "CHEBI:29995", "CHEBI:22660", "CHEBI:29991", "CHEBI:132943", "CHEBI:35391", "CHEBI:13085", "CHEBI:21244", "CHEBI:29992"]},
-        "CHEBI:29806": {"x": 659, "y": 662, "level": 1, "name": "Fumarate", "alt": ["CHEBI:42511", "CHEBI:24122", "CHEBI:14284", "CHEBI:36180", "CHEBI:37155", "CHEBI:5190", "CHEBI:18012", "CHEBI:42743", "CHEBI:22956", "CHEBI:22957", "CHEBI:24124", "CHEBI:37154", "CHEBI:22958"]},
+        "CHEBI:29806": {"x": null, "y": null, "level": 1, "name": "Fumarate", "alt": ["CHEBI:42511", "CHEBI:24122", "CHEBI:14284", "CHEBI:36180", "CHEBI:37155", "CHEBI:5190", "CHEBI:18012", "CHEBI:42743", "CHEBI:22956", "CHEBI:22957", "CHEBI:24124", "CHEBI:37154", "CHEBI:22958"]},
         "CHEBI:17154": {"x": 1203, "y": 709, "level": 1, "name": "Nicotinamide", "alt": ["CHEBI:14645", "CHEBI:7556", "CHEBI:25521", "CHEBI:44258"]},
         "CHEBI:17272": {"x": 873, "y": 578, "level": 1, "name": "Propanoate", "alt": ["CHEBI:14903", "CHEBI:26290"]},
-        "CHEBI:16265": {"x": 675, "y": 761, "level": 1, "name": "Succinate semialdehyde", "alt": ["CHEBI:26804", "CHEBI:15126", "CHEBI:9305", "CHEBI:26805", "CHEBI:57706"]},
+        "CHEBI:16265": {"x": null, "y": null, "level": 1, "name": "Succinate semialdehyde", "alt": ["CHEBI:26804", "CHEBI:15126", "CHEBI:9305", "CHEBI:26805", "CHEBI:57706"]},
         "CHEBI:15940": {"x": 1203, "y": 690, "level": 1, "name": "Nicotinate", "alt": ["CHEBI:7559", "CHEBI:14650", "CHEBI:32544", "CHEBI:25538", "CHEBI:25530", "CHEBI:22851", "CHEBI:44319"]},
         "CHEBI:30566": {"x": 981, "y": 761, "level": 1, "name": "4-Aminobutanoate", "alt": ["CHEBI:20317", "CHEBI:11961", "CHEBI:40483", "CHEBI:1786", "CHEBI:16865", "CHEBI:193777", "CHEBI:59888", "CHEBI:20318"]},
         "CHEBI:16171": {"x": 1260, "y": 709, "level": 1, "name": "Nicotinamide D-ribonucleotide", "alt": ["CHEBI:13409", "CHEBI:7557", "CHEBI:14647", "CHEBI:22850", "CHEBI:12397", "CHEBI:25522", "CHEBI:14646", "CHEBI:10433", "CHEBI:14648", "CHEBI:14649", "CHEBI:18201"]},

@@ -3,7 +3,7 @@
     "subparent": "other carbohydrate metabolism",
     "name": "malonate semialdehyde metabolism and propanoyl-CoA pathway",
     "data": {
-        "CHEBI:57288": {"x": 719, "y": 550, "level": 1, "name": "acetyl_CoA(4-)", "alt": ["CHEBI:22192", "CHEBI:15351", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
+        "CHEBI:57288": {"x": 719, "y": 550, "level": 1, "name": "acetyl-CoA(4-)", "alt": ["CHEBI:22192", "CHEBI:15351", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
         "CHEBI:17960": {"x": 735, "y": 578, "level": 1, "name": "3-Oxopropanoate", "alt": ["CHEBI:1651", "CHEBI:33190", "CHEBI:11877", "CHEBI:14564", "CHEBI:20180"]},
         "CHEBI:16510": {"x": 756, "y": 578, "level": 1, "name": "3-Hydroxypropanoate", "alt": ["CHEBI:20079", "CHEBI:11836", "CHEBI:1553", "CHEBI:40000", "CHEBI:20071", "CHEBI:33404"]},
         "CHEBI:27762": {"x": 773, "y": 578, "level": 1, "name": "3-Hydroxypropionyl-CoA", "alt": ["CHEBI:20080", "CHEBI:1554", "CHEBI:58528"]},

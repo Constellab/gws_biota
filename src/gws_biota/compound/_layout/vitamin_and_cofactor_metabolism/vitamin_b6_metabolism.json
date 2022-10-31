@@ -6,7 +6,7 @@
         "CHEBI:18050": {"x": 1350, "y": 311, "level": 1, "name": "L-Glutamine", "alt": ["CHEBI:42943", "CHEBI:42899", "CHEBI:32679", "CHEBI:32678", "CHEBI:58359", "CHEBI:28300", "CHEBI:42812", "CHEBI:13110", "CHEBI:32666", "CHEBI:6227", "CHEBI:32665", "CHEBI:21308", "CHEBI:42814", "CHEBI:5432", "CHEBI:24316"]},
         "CHEBI:17797": {"x": 809, "y": 336, "level": 1, "name": "D-Ribose 5-phosphate", "alt": ["CHEBI:15048", "CHEBI:21083", "CHEBI:13013", "CHEBI:4238"]},
         "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-Glyceraldehyde 3-phosphate", "alt": ["CHEBI:21026", "CHEBI:181", "CHEBI:12984", "CHEBI:12983", "CHEBI:18324", "CHEBI:5446", "CHEBI:14333", "CHEBI:17138", "CHEBI:58027", "CHEBI:59776"]},
-        "CHEBI:16265": {"x": 675, "y": 761, "level": 1, "name": "succinic semialdehyde", "alt": ["CHEBI:15126", "CHEBI:9305", "CHEBI:26804", "CHEBI:26805", "CHEBI:57706"]},
+        "CHEBI:16265": {"x": null, "y": null, "level": 1, "name": "succinic semialdehyde", "alt": ["CHEBI:15126", "CHEBI:9305", "CHEBI:26804", "CHEBI:26805", "CHEBI:57706"]},
         "CHEBI:17310": {"x": 1283, "y": 311, "level": 1, "name": "Pyridoxal", "alt": ["CHEBI:8667", "CHEBI:26423", "CHEBI:45112", "CHEBI:14976", "CHEBI:131530"]},
         "CHEBI:17071": {"x": 1283, "y": 385, "level": 1, "name": "Glycolaldehyde", "alt": ["CHEBI:24386", "CHEBI:14347", "CHEBI:5474", "CHEBI:131198"]},
         "CHEBI:48153": {"x": 748, "y": 321, "level": 1, "name": "D-Erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921", "CHEBI:20927", "CHEBI:16897"]},

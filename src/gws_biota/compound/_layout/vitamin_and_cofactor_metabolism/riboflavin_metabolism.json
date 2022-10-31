@@ -6,7 +6,7 @@
         "CHEBI:15996": {"x": 1277, "y": 93, "level": 1, "name": "GTP", "alt": ["CHEBI:24451", "CHEBI:42934", "CHEBI:13342", "CHEBI:5234", "CHEBI:37565", "CHEBI:57600"]},
         "CHEBI:17621": {"x": 1310, "y": 277, "level": 1, "name": "FMN", "alt": ["CHEBI:42587", "CHEBI:21127", "CHEBI:13317", "CHEBI:4960", "CHEBI:58210"]},
         "CHEBI:17363": {"x": 809, "y": 309, "level": 1, "name": "D-Ribulose 5-phosphate", "alt": ["CHEBI:13018", "CHEBI:40192", "CHEBI:4243", "CHEBI:21088", "CHEBI:26572", "CHEBI:13040", "CHEBI:37455", "CHEBI:58121"]},
-        "CHEBI:16057": {"x": 308, "y": 578, "level": 1, "name": "Dimethylallyl diphosphate", "alt": ["CHEBI:8394", "CHEBI:23803", "CHEBI:14169", "CHEBI:26245", "CHEBI:14883", "CHEBI:42074", "CHEBI:341937", "CHEBI:12280", "CHEBI:4616", "CHEBI:57623", "CHEBI:18108"]},
+        "CHEBI:16057": {"x": null, "y": null, "level": 1, "name": "Dimethylallyl diphosphate", "alt": ["CHEBI:8394", "CHEBI:23803", "CHEBI:14169", "CHEBI:26245", "CHEBI:14883", "CHEBI:42074", "CHEBI:341937", "CHEBI:12280", "CHEBI:4616", "CHEBI:57623", "CHEBI:18108"]},
         "CHEBI:17015": {"x": 1310, "y": 251, "level": 1, "name": "Riboflavin", "alt": ["CHEBI:8843", "CHEBI:45214", "CHEBI:529204", "CHEBI:27299", "CHEBI:15044", "CHEBI:57986"]},
         "CHEBI:15963": {"x": 859, "y": 309, "level": 1, "name": "Ribitol", "alt": ["CHEBI:8841", "CHEBI:48505", "CHEBI:21074", "CHEBI:26552", "CHEBI:15043", "CHEBI:57591", "CHEBI:27854", "CHEBI:4230"]},
         "CHEBI:17607": {"x": 1291, "y": 251, "level": 1, "name": "Reduced riboflavin", "alt": ["CHEBI:26527", "CHEBI:8798"]},

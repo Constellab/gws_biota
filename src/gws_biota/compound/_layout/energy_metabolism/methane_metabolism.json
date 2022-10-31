@@ -36,7 +36,7 @@
         "CHEBI:80595": {"x": 610, "y": 750, "level": 1, "name": "1-Hydroxyhexane-1,2,6-tricarboxylate", "alt": [""]},
         "CHEBI:80587": {"x": 610, "y": 780, "level": 1, "name": "2-oxosuberic acid", "alt": ["CHEBI:177882"]},
         "CHEBI:16842": {"x": 622, "y": 887, "level": 1, "name": "formaldehyde", "alt": ["CHEBI:5142", "CHEBI:14274", "CHEBI:24077", "CHEBI:337763"]},
-        "CHEBI:17115": {"x": 889, "y": 513, "level": 1, "name": "L-serine", "alt": ["CHEBI:45440", "CHEBI:45451", "CHEBI:45677", "CHEBI:45590", "CHEBI:45597", "CHEBI:13167", "CHEBI:21387", "CHEBI:6301", "CHEBI:32845", "CHEBI:17822", "CHEBI:26648", "CHEBI:32837", "CHEBI:32836", "CHEBI:15081", "CHEBI:35243", "CHEBI:32846", "CHEBI:33384", "CHEBI:9116"]},
+        "CHEBI:17115": {"x": null, "y": null, "level": 1, "name": "L-serine", "alt": ["CHEBI:45440", "CHEBI:45451", "CHEBI:45677", "CHEBI:45590", "CHEBI:45597", "CHEBI:13167", "CHEBI:21387", "CHEBI:6301", "CHEBI:32845", "CHEBI:17822", "CHEBI:26648", "CHEBI:32837", "CHEBI:32836", "CHEBI:15081", "CHEBI:35243", "CHEBI:32846", "CHEBI:33384", "CHEBI:9116"]},
         "CHEBI:16891": {"x": 722, "y": 635, "level": 1, "name": "glyoxylic acid", "alt": ["CHEBI:42767", "CHEBI:5509", "CHEBI:24421", "CHEBI:24420", "CHEBI:36655", "CHEBI:14368", "CHEBI:35977"]},
         "CHEBI:15454": {"x": 692, "y": 645, "level": 1, "name": "(3S)-3-carboxy-3-hydroxypropanoyl-CoA", "alt": ["CHEBI:18565", "CHEBI:10886", "CHEBI:207", "CHEBI:14572"]},
         "CHEBI:32398": {"x": 668, "y": 755, "level": 1, "name": "D-glyceric acid", "alt": ["CHEBI:21030", "CHEBI:41990", "CHEBI:4187", "CHEBI:24348", "CHEBI:33846", "CHEBI:33508", "CHEBI:24349", "CHEBI:33871", "CHEBI:10999", "CHEBI:12985", "CHEBI:21027", "CHEBI:16659"]},

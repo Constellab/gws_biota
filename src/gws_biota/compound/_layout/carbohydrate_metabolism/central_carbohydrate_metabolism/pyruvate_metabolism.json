@@ -4,7 +4,7 @@
     "name": "pyruvate metabolism",
     "data": {
         "CHEBI:15361": {"x": 719, "y": 513, "level": 1, "name":"pyruvate", "alt": ["CHEBI:26462", "CHEBI:26466", "CHEBI:8685", "CHEBI:32816", "CHEBI:45253", "CHEBI:14987"]},
-        "CHEBI:57288": {"x": 719, "y": 550, "level": 1, "name": "acetyl_CoA(4-)", "alt": ["CHEBI:22192", "CHEBI:15351", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
+        "CHEBI:57288": {"x": 719, "y": 550, "level": 1, "name": "acetyl-CoA(4-)", "alt": ["CHEBI:22192", "CHEBI:15351", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
         "CHEBI:24996": {"x": null, "y": null, "level": 2, "name": "lactate", "alt": []},
         "CHEBI:16651": {"x": 796, "y": 513, "level": 2, "name": "(S)-lactate", "alt": ["CHEBI:11065", "CHEBI:12411", "CHEBI:18783", "CHEBI:422"]},
         "CHEBI:16004": {"x": 685, "y": 478, "level": 1, "name": "(R)-lactate", "alt": ["CHEBI:24996", "CHEBI:16651", "CHEBI:11065", "CHEBI:12411", "CHEBI:18783", "CHEBI:341", "CHEBI:18684", "CHEBI:43701", "CHEBI:11001", "CHEBI:42111", "CHEBI:42105"]},

@@ -14,8 +14,10 @@ class Cofactor:
         "CHEBI:16240": {"alt": ["CHEBI:44812", "CHEBI:5586", "CHEBI:13354", "CHEBI:13355", "CHEBI:24637"]},
         # hydrogenphosphate
         "CHEBI:43474": {"alt": ["CHEBI:43470", "CHEBI:29139"]},
-        # diphosphate
+        # diphosphate(3−)
         "CHEBI:33019": {"alt": ["CHEBI:45212", "CHEBI:45208", "CHEBI:33018", "CHEBI:33017", "CHEBI:35782"]},
+        # diphosphoric acid
+        "CHEBI:29888": {"alt": ["CHEBI:45067", "CHEBI:8683"]},
         # phosphate
         "CHEBI:26078": {"alt": ["CHEBI:26078", "CHEBI:18367", "CHEBI:29139", "CHEBI:39739", "CHEBI:43470", "CHEBI:35780", "CHEBI:43474", "CHEBI:26020", "CHEBI:45024", "CHEBI:39745", "CHEBI:29137", "CHEBI:14791", "CHEBI:7793"]},
         # NAD
@@ -34,10 +36,19 @@ class Cofactor:
         "CHEBI:30879": {"alt": ["CHEBI:22288", "CHEBI:2553", "CHEBI:13804"]},
         # ADP
         "CHEBI:16761": {"alt": ["CHEBI:40553", "CHEBI:13222", "CHEBI:2342", "CHEBI:22244", "CHEBI:456216"]},
-        # ATP
-        "CHEBI:15422": {"alt": ["CHEBI:40938", "CHEBI:10841", "CHEBI:10789", "CHEBI:2359", "CHEBI:13236", "CHEBI:22249", "CHEBI:30616"]},
         # dADP
         "CHEBI:16174": {"alt": ["CHEBI:19238", "CHEBI:42290", "CHEBI:10491", "CHEBI:14069", "CHEBI:57667", "CHEBI:61404"]},
+
+        # ATP
+        "CHEBI:15422": {"alt": ["CHEBI:40938", "CHEBI:10841", "CHEBI:10789", "CHEBI:2359", "CHEBI:13236", "CHEBI:22249", "CHEBI:30616"]},
+        # dATP
+        "CHEBI:16284": {"alt": ["CHEBI:19238", "CHEBI:42290", "CHEBI:10491", "CHEBI:14069"]},
+
+        # TTP
+        "CHEBI:63550": {"alt": ["CHEBI:63527"]},
+        # dTTP
+        "CHEBI:18077": {"alt": ["CHEBI:46175", "CHEBI:14093", "CHEBI:10530", "CHEBI:27000", "CHEBI:37568"]},
+
         # AMP
         "CHEBI:16027": {"alt": ["CHEBI:13740", "CHEBI:40510", "CHEBI:22242", "CHEBI:40726", "CHEBI:40786", "CHEBI:40826", "CHEBI:47222", "CHEBI:12056", "CHEBI:2356", "CHEBI:13736", "CHEBI:13234", "CHEBI:13235", "CHEBI:22245", "CHEBI:456215"]},
         # CMP, cytidine 5'-monophosphate(2-)
@@ -119,11 +130,6 @@ class Cofactor:
         # hydrogen acceptor
         "CHEBI:13193": {"alt": []},
 
-        # L-cysteine residue
-        # "CHEBI:29950": {"alt": []},
-        # L-lysinium residue
-        # "CHEBI:29969": {"alt": []},
-
         # Coblat 2-
         "CHEBI:48828": {"alt": ["CHEBI:48827", "CHEBI:23337"]},
         # Magnesium
@@ -131,7 +137,10 @@ class Cofactor:
         # Zinc 2+
         "CHEBI:29105": {"alt": ["CHEBI:49972", "CHEBI:49982", "CHEBI:10113", "CHEBI:27368"]},
         # Sodium
-        "CHEBI:29101": {"alt": ["CHEBI:9175", "CHEBI:49766", "CHEBI:26717", "CHEBI:26714"]}
+        "CHEBI:29101": {"alt": ["CHEBI:9175", "CHEBI:49766", "CHEBI:26717", "CHEBI:26714"]},
+
+        # Nitric acid
+        "CHEBI:48107": {"alt": ["CHEBI:7580", "CHEBI:25545"]}
     }
 
     COFACTOR_NAME_PATTERNS = []

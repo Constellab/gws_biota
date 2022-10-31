@@ -37,7 +37,7 @@
         "CHEBI:28846": {"x": 986, "y": 221, "level": 1, "name": "dCDP", "alt": ["CHEBI:19241", "CHEBI:49966", "CHEBI:10492", "CHEBI:58593"]},
         "CHEBI:29745": {"x": 1130, "y": 158, "level": 1, "name": "Barbiturate", "alt": ["CHEBI:22690", "CHEBI:13872", "CHEBI:77938"]},
         "CHEBI:15698": {"x": 1038, "y": 221, "level": 1, "name": "Deoxycytidine", "alt": ["CHEBI:4407", "CHEBI:41430", "CHEBI:41417", "CHEBI:19240", "CHEBI:41806", "CHEBI:41434"]},
-        "CHEBI:16510": {"x": 756, "y": 578, "level": 1, "name": "3-Hydroxypropanoate", "alt": ["CHEBI:20079", "CHEBI:11836", "CHEBI:1553", "CHEBI:40000", "CHEBI:20071", "CHEBI:33404"]},
+        "CHEBI:16510": {"x": null, "y": null, "level": 1, "name": "3-Hydroxypropanoate", "alt": ["CHEBI:20079", "CHEBI:11836", "CHEBI:1553", "CHEBI:40000", "CHEBI:20071", "CHEBI:33404"]},
         "CHEBI:15842": {"x": 948, "y": 159, "level": 1, "name": "Orotidine 5'-phosphate", "alt": ["CHEBI:14699", "CHEBI:25723", "CHEBI:7788", "CHEBI:57538"]},
         "CHEBI:18116": {"x": 1062, "y": 144, "level": 1, "name": "Pseudouridine 5'-phosphate", "alt": ["CHEBI:8611", "CHEBI:26365", "CHEBI:14965"]},
         "CHEBI:16320": {"x": 941, "y": 308, "level": 1, "name": "(R)-3-Amino-2-methylpropanoate", "alt": ["CHEBI:10981", "CHEBI:18661", "CHEBI:320", "CHEBI:49097", "CHEBI:57731"]},

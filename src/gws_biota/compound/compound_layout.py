@@ -31,13 +31,13 @@ CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
 
 SHIFTS = {
     "xenobiotic_biodegradation": {"x": -300, "y": 0},
-    "energy_metabolism": {"x": -200, "y": 0},
-    "lipid_metabolism": {"x": -200, "y": 0},
+    "energy_metabolism": {"x": -300, "y": 0},
+    "lipid_metabolism": {"x": -400, "y": 0},
     "carbohydrate_metabolism": {"x": 0, "y": 0},
     "glycan_metabolism": {"x": 20, "y": 0},
-    "amino_acid_metabolism": {"x": 100, "y": 0},
-    "nucleotide_metabolism": {"x": 100, "y": 0},
-    "vitamin_and_cofactor_metabolism": {"x": 300, "y": 0},
+    "amino_acid_metabolism": {"x": 200, "y": 150},
+    "nucleotide_metabolism": {"x": 200, "y": 0},
+    "vitamin_and_cofactor_metabolism": {"x": 500, "y": 0},
     "other_secondary_metabolite_metabolism": {"x": 400, "y": 0},
     "terpenoid_and_polyketide_metabolism": {"x": 400, "y": 0},
     "urea_cycle": {"x": 200, "y": 0}
@@ -233,7 +233,7 @@ class CompoundLayout:
             "x": None,
             "y": None,
             "level": default_position.get("level", 2),
-            "clusters": clusters # copy.deepcopy(clusters),
+            "clusters": clusters  # copy.deepcopy(clusters),
         }
 
         for c_name in position["clusters"]:
@@ -241,23 +241,29 @@ class CompoundLayout:
 
         return position
 
-
     @classmethod
     def get_empty_layout(cls) -> CompoundLayoutDict:
         """ Get empty layout  """
         return {"x": None, "y": None, "clusters": {}}
 
-    def get_biomass_layout() -> CompoundLayoutDict:
+    def get_biomass_layout(is_biomass=False) -> CompoundLayoutDict:
         """ Create biomass layout """
 
+        if is_biomass:
+            x = None
+            y = None
+        else:
+            x = None
+            y = None
+
         return {
-            "x": None,
-            "y": None,
+            "x": x,
+            "y": y,
             "level": 1,
             "clusters": {
                 "biomass": {
-                    "x": None,
-                    "y": None,
+                    "x": x,
+                    "y": y,
                     "level": 1,
                     "name": "biomass",
                     "parent": "biomass"

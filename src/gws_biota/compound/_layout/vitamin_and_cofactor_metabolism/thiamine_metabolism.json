@@ -3,7 +3,7 @@
     "name": "thiamine metabolism",
     "data": {
         "CHEBI:18405": {"x": 1250, "y": 311, "level": 1, "name": "Pyridoxal phosphate", "alt": ["CHEBI:8668", "CHEBI:45145", "CHEBI:26424", "CHEBI:358848", "CHEBI:234571", "CHEBI:14977", "CHEBI:597326"]},
-        "CHEBI:15428": {"x": 948, "y": 513, "level": 1, "name": "Glycine", "alt": ["CHEBI:32508", "CHEBI:32507", "CHEBI:42964", "CHEBI:14344", "CHEBI:24368", "CHEBI:10792", "CHEBI:5460", "CHEBI:57305"]},
+        "CHEBI:15428": {"x": null, "y": null, "level": 1, "name": "Glycine", "alt": ["CHEBI:32508", "CHEBI:32507", "CHEBI:42964", "CHEBI:14344", "CHEBI:24368", "CHEBI:10792", "CHEBI:5460", "CHEBI:57305"]},
         "CHEBI:9532": {"x": 1224, "y": 212, "level": 1, "name": "Thiamin diphosphate", "alt": ["CHEBI:15229", "CHEBI:58937", "CHEBI:45931", "CHEBI:45930", "CHEBI:49939"]},
         "CHEBI:17895": {"x": 992, "y": 324, "level": 1, "name": "L-Tyrosine", "alt": ["CHEBI:6313", "CHEBI:21411", "CHEBI:46070", "CHEBI:9800", "CHEBI:32786", "CHEBI:15277", "CHEBI:32761", "CHEBI:32784", "CHEBI:46161", "CHEBI:13181", "CHEBI:32760", "CHEBI:58315", "CHEBI:32762", "CHEBI:27176", "CHEBI:18186", "CHEBI:32785"]},
         "CHEBI:18385": {"x": 1206, "y": 182, "level": 1, "name": "Thiamine", "alt": ["CHEBI:46393", "CHEBI:26941", "CHEBI:15227", "CHEBI:9530"]},
