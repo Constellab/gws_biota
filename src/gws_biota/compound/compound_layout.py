@@ -211,6 +211,6 @@ class CompoundLayout:
             content["data"][chebi_id]["y"] = y
             content["data"][chebi_id]["level"] = level
             p = Path(file_path)
-            updated_file_path = os.path.join(p.parent, p.stem + ".release.json")
+            updated_file_path = os.path.join(p.parent, p.stem + ".json")
             with open(updated_file_path, 'w', encoding="utf-8") as fp:
                 json.dump(content, fp, indent=4)
