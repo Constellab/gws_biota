@@ -2,7 +2,7 @@
     "name"          : "gws_biota",
     "author"        : "Gencovery",
     "author_email"  : "admin@gencovery.com",
-    "version"       : "0.4.4",
+    "version"       : "0.4.5",
     "description"   : "The Biological and Omics Database for Gencovery Web Services",
     "variables":{
         "gws_biota:biodata_dir"     : "/data/${CURRENT_BRICK}/biodata/",
@@ -33,7 +33,7 @@
             {
                 "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/core",
                 "packages":[
-                    {"name": "gws_core", "version":"0.3.16", "is_brick": true}
+                    {"name": "gws_core", "version":"0.4.1", "is_brick": true}
                 ]
             },
             {
