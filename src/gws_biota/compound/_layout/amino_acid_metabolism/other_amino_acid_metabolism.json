@@ -1,5 +1,6 @@
 {  
-    "cluster": "amino acid metabolism",
+    "id": "amino_acid_metabolism",
+    "name": "amino acid metabolism",
     "pathway": "other amino acid metabolism",
     "data": {
         "CHEBI:17415": {"x": 844, "y": 194, "level": 1, "name": "2,5-dioxopentanoic acid", "alt": ["CHEBI:11454", "CHEBI:938", "CHEBI:19385", "CHEBI:58136"]},

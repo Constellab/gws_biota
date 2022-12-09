@@ -1,5 +1,6 @@
 {  
-    "cluster": "energy metabolism",
+    "id": "energy_metabolism",
+    "name": "energy metabolism",
     "pathway": "nitrogen metabolism",
     "data": {
         "CHEBI:48107": {"x": 1040, "y": 655, "level": 1, "name": "nitric acid", "alt": ["CHEBI:7580", "CHEBI:25545", "CHEBI:44487", "CHEBI:14654", "CHEBI:71263", "CHEBI:17632"]},

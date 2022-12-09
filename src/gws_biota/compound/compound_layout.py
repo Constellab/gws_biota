@@ -48,8 +48,8 @@ class CompoundLayout:
         return os.path.join(os.path.dirname(os.path.abspath(__file__)), "./_layout/")
 
     @classmethod
-    def get_cluster_path(cls, cluster_name):
-        return os.path.join(cls.get_db_path(), cluster_name)
+    def get_cluster_path(cls, cluster_id):
+        return os.path.join(cls.get_db_path(), cluster_id)
 
     @ classmethod
     def generate(cls, db_path: str = None, force: bool = False):
@@ -79,8 +79,8 @@ class CompoundLayout:
                 if comp_id not in data:
                     data[comp_id] = {}
 
-                cluster_name = cluster_data[comp_id]["name"]
-                data[comp_id][cluster_name] = cluster_data[comp_id]
+                cluster_id = cluster_data[comp_id]["id"]
+                data[comp_id][cluster_id] = cluster_data[comp_id]
 
         cls._is_generated = True
         cls._data = data
@@ -169,8 +169,9 @@ class CompoundLayout:
                     "x": x,
                     "y": y,
                     "level": 1,
+                    "id": "biomass",
                     "name": "biomass",
-                    "parent": "biomass"
+                    "pathway": "biomass"
                 }
             }
         }
@@ -185,9 +186,9 @@ class CompoundLayout:
             return None
 
     @classmethod
-    def update_compound_layout(cls, chebi_id, cluster_name, level, x, y):
+    def update_compound_layout(cls, chebi_id, cluster_id, level, x, y):
         db_path = cls.get_db_path()
-        cluster_path = os.path.join(db_path, cluster_name)
+        cluster_path = os.path.join(db_path, cluster_id)
         try:
             # update all .json files in the cluster
             for dirpath, _, filenames in os.walk(cluster_path):
@@ -195,17 +196,17 @@ class CompoundLayout:
                     if file.endswith(".json") and file != "__centroid__.json":
                         cls._update_compound_layout_in_file(
                             os.path.join(dirpath, file),
-                            chebi_id, cluster_name, level, x, y)
+                            chebi_id, cluster_id, level, x, y)
         except Exception as err:
             raise BadRequestException(f"An error occur when parsing layout files. Message {err}") from err
 
     @classmethod
-    def _update_compound_layout_in_file(cls, file_path, chebi_id, cluster_name, level, x, y):
+    def _update_compound_layout_in_file(cls, file_path, chebi_id, cluster_id, level, x, y):
         with open(file_path, 'r', encoding="utf-8") as fp:
             content = json.load(fp)
 
         if chebi_id in content["data"]:
-            x, y = CompoundCluster.convert_position_from_view_to_db(cluster_name, x, y)
+            x, y = CompoundCluster.convert_position_from_view_to_db(cluster_id, x, y)
             content["data"][chebi_id]["x"] = x
             content["data"][chebi_id]["y"] = y
             content["data"][chebi_id]["level"] = level

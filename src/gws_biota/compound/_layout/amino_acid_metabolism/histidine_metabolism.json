@@ -1,5 +1,6 @@
 {  
-    "cluster": "amino acid metabolism",
+    "id": "amino_acid_metabolism",
+    "name": "amino acid metabolism",
     "pathway": "histidine metabolism",
     "data": {
         "CHEBI:17111": {"x": 849, "y": 336, "level": 1, "name": "5-O-phosphono-alpha-D-ribofuranosyl diphosphate", "alt": ["CHEBI:12160", "CHEBI:12159", "CHEBI:2121", "CHEBI:45139", "CHEBI:20625",  "CHEBI:58017"]},

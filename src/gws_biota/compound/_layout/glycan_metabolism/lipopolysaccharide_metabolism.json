@@ -1,5 +1,6 @@
 {  
-    "cluster": "glycan metabolism",
+    "id": "glycan_metabolism",
+    "name": "glycan metabolism",
     "pathway": "lipopolysaccharide metabolism",
     "data": {
         "CHEBI:61537": {"x": 686, "y": 112, "level": 1, "name": "UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-α-glucosamine", "alt": ["CHEBI:61494"]},

@@ -1,5 +1,6 @@
 {
-    "cluster": "xenobiotic biodegradation",
+    "id": "xenobiotic_biodegradation",
+    "name": "xenobiotic biodegradation",
     "pathway": "aromatics degradation",
     "data": {
         "CHEBI:17597": {"x": 445, "y": 829, "level": 1, "name": "4-Hydroxybenzaldehyde", "alt": ["CHEBI:43009", "CHEBI:1857", "CHEBI:12002", "CHEBI:20396"]},

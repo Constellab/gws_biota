@@ -1,5 +1,6 @@
 {  
-    "cluster": "amino acid metabolism",
+    "id": "amino_acid_metabolism",
+    "name": "amino acid metabolism",
     "pathway": "polyamine biosynthesis",
     "data": {
         "CHEBI:17431": {"x": 1187, "y": 603, "level": 1, "name": "agmatine", "alt": ["CHEBI:40556", "CHEBI:2514", "CHEBI:13747", "CHEBI:18576", "CHEBI:58145"]},

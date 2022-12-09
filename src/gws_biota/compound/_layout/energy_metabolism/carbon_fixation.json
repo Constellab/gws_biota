@@ -1,5 +1,6 @@
 {  
-    "cluster": "energy metabolism",
+    "id": "energy_metabolism",
+    "name": "energy metabolism",
     "pathway": "carbon fixation",
     "data": {
         "CHEBI:17969": {"x": 722, "y": 807, "level": 1, "name": "sedoheptulose 1,7-bisphosphate", "alt": ["CHEBI:26620", "CHEBI:9081", "CHEBI:15072", "CHEBI:58335"]},

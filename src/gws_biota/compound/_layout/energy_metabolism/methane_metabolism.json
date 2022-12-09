@@ -1,5 +1,6 @@
 {  
-    "cluster": "energy metabolism",
+    "id": "energy_metabolism",
+    "name": "energy metabolism",
     "pathway": "methane metabolism",
     "data": {
         "CHEBI:16848": {"x": 589, "y": 796, "level": 1, "name": "coenzyme gamma-F420-2", "alt": ["CHEBI:14010", "CHEBI:3807", "CHEBI:14008", "CHEBI:23351", "CHEBI:57922"]},

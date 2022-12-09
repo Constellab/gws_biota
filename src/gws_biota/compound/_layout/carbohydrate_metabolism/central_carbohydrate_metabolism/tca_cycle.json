@@ -1,5 +1,6 @@
 {  
-    "cluster": "carbohydrate metabolism",
+    "id": "carbohydrate_metabolism",
+    "name": "carbohydrate metabolism",
     "sub_cluster": "central carbohydrate metabolism",
     "pathway": "glyoxylate cycle",
     "data": {

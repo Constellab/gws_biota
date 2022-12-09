@@ -43,15 +43,17 @@ CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
 class CompoundCluster:
     """ CompoundCluster """
 
+    _id: str = None
     _name: str = None
     _pathway: str = None
     _data: Dict[str, Dict] = None
     _centroid: dict = None
     _level: int = 2
 
-    def __init__(self, name, pathway, data: Dict, centroid: Dict = None):
+    def __init__(self, id, name, pathway, data: Dict, centroid: Dict = None):
         if not isinstance(data, dict):
             raise BadRequestException("The data must be a dict")
+        self._id = id
         self._name = name
         self._pathway = pathway
         self._data = data
@@ -119,9 +121,9 @@ class CompoundCluster:
             parent_folder = p.parent  # (file_path.split("/"))[-2]
             centroid_data = cls.load_centroid_data_from_folder(str(parent_folder))
 
-            folder_name = str(parent_folder.name)
             return CompoundCluster(
-                name=StringHelper.slugify(cdata.get("name", folder_name), snakefy=True),
+                id=cdata["id"],
+                name=cdata["name"],
                 pathway=cdata["pathway"],
                 data=cdata["data"],
                 centroid=centroid_data)
@@ -156,6 +158,7 @@ class CompoundCluster:
         """ Generate positions """
         data = {}
         for comp_id, comp_data in self._data.items():
+            comp_data["id"] = self._id
             comp_data["name"] = self._name
             comp_data["pathway"] = self._pathway
             data[comp_id] = comp_data

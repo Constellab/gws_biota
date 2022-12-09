@@ -1,5 +1,6 @@
 {  
-    "cluster": "amino acid metabolism",
+    "id": "amino_acid_metabolism",
+    "name": "amino acid metabolism",
     "pathway": "aromatic amino acid metabolism",
     "data": {
         "CHEBI:48153": {"x": 748, "y": 321, "level": 1, "name": "D-erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921", "CHEBI:20927", "CHEBI:16897"]},

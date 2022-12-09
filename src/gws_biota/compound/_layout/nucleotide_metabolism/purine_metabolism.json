@@ -1,5 +1,6 @@
 {  
-    "cluster": "nucleotide metabolism",
+    "id": "nucleotide_metabolism",
+    "name": "nucleotide metabolism",
     "pathway": "purine metabolism",
     "data": {
         "CHEBI:16134": {"x": 1079, "y": 609, "level": 1, "name": "ammonia", "alt": ["CHEBI:44284", "CHEBI:44269", "CHEBI:44404", "CHEBI:13405", "CHEBI:13406", "CHEBI:13407", "CHEBI:13771", "CHEBI:7434", "CHEBI:22533", "CHEBI:135980", "CHEBI:29337", "CHEBI:29340", "CHEBI:28938", "CHEBI:22534", "CHEBI:49783", "CHEBI:7435"]},

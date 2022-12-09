@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "one carbon pool by folate",
     "data": {
         "CHEBI:15635": {"x": 1365, "y": 237, "level": 1, "name": "Tetrahydrofolate", "alt": ["CHEBI:18606", "CHEBI:12075", "CHEBI:10931", "CHEBI:15220", "CHEBI:9482", "CHEBI:46069", "CHEBI:57453", "CHEBI:20506", "CHEBI:68437"]},

@@ -1,5 +1,6 @@
 {  
-    "cluster": "lipid metabolism",
+    "id": "lipid_metabolism",
+    "name": "lipid metabolism",
     "pathway": "sterol metabolism",
     "data": {
         "CHEBI:28934": {"x": 531, "y": 617, "level": 1, "name": "Vitamin D2, Ergocalciferol", "alt": ["CHEBI:23937", "CHEBI:10007"]},

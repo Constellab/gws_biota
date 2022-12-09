@@ -1,5 +1,6 @@
 {  
-    "cluster": "lipid metabolism",
+    "id": "lipid_metabolism",
+    "name": "lipid metabolism",
     "pathway": "fatty acids elongation",
     "data": {
         "CHEBI:15345": {"x": 501, "y": 457, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173", "CHEBI:57286"]},        

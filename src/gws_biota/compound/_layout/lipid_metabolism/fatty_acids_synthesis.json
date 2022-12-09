@@ -1,5 +1,6 @@
 {  
-    "cluster": "lipid metabolism",
+    "id": "lipid_metabolism",
+    "name": "lipid metabolism",
     "pathway": "fatty acids synthesis",
     "data": {
         "CHEBI:57384": {"x": 377, "y": 441, "level": 1, "name": "malonyl-CoA(5-)", "alt": ["CHEBI:25135", "CHEBI:43979", "CHEBI:14565", "CHEBI:15531", "CHEBI:6661"]},

@@ -1,5 +1,6 @@
 {  
-    "cluster": "amino acid metabolism",
+    "id": "amino_acid_metabolism",
+    "name": "amino acid metabolism",
     "pathway": "branched-chain amino acid metabolism",
     "data": {
         "CHEBI:30934": {"x": 906,    "y": 475, "level": 1, "name": "D-citramalate(2-)", "alt": ["CHEBI:10977", "CHEBI:18562", "CHEBI:15586", "CHEBI:315", "CHEBI:18563"]},

@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "thiamine metabolism",
     "data": {
         "CHEBI:18405": {"x": 1250, "y": 311, "level": 1, "name": "Pyridoxal phosphate", "alt": ["CHEBI:8668", "CHEBI:45145", "CHEBI:26424", "CHEBI:358848", "CHEBI:234571", "CHEBI:14977", "CHEBI:597326"]},

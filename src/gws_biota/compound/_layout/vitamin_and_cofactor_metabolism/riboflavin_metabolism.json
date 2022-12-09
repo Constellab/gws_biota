@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "riboflavin metabolism",
     "data": {
         "CHEBI:16238": {"x": 1289, "y": 277, "level": 1, "name": "FAD", "alt": ["CHEBI:21125", "CHEBI:42388", "CHEBI:4956", "CHEBI:13315", "CHEBI:57692"]},

@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "pantothenate and CoA biosynthesis",
     "data": {
         "CHEBI:15346": {"x": 1243, "y": 529, "level": 1, "name": "CoA", "alt": ["CHEBI:23355", "CHEBI:741566", "CHEBI:41631", "CHEBI:13294", "CHEBI:13298", "CHEBI:13295", "CHEBI:3771", "CHEBI:41597", "CHEBI:57287"]},

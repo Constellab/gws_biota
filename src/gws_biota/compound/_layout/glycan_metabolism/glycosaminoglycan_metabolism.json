@@ -1,5 +1,6 @@
 {  
-    "cluster": "glycan metabolism",
+    "id": "glycan_metabolism",
+    "name": "glycan metabolism",
     "pathway": "glycosaminoglycan metabolism",
     "data": {
         "CHEBI:8572": {"x": 666, "y": 79, "level": 1, "name": "Protein serine", "alt": []},

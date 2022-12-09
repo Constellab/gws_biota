@@ -1,5 +1,6 @@
 {  
-    "cluster": "glycan metabolism",
+    "id": "glycan_metabolism",
+    "name": "glycan metabolism",
     "pathway": "glycan biosynthesis",
     "data": {
         "CHEBI:59082": {"x": 502, "y": 163, "level": 1, "name": "N-{alpha-Glc-(1->3)-alpha-Glc-(1->3)-alpha-Man-(1->2)-alpha-Man-(1->2)-alpha-Man-(1->3)-[alpha-Man-(1->2)-alpha-Man-(1->3)-[alpha-Man-(1->2)-alpha-Man-(1->6)]-alpha-Man-(1->6)]-beta-Man-(1->4)-beta-GlcNAc-(1->4)-beta-GlcNAc}-L-Asn residue", "alt": [""]},

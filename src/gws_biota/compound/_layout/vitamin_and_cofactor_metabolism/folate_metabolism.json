@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "folate metabolism",
     "data": {
         "CHEBI:15996": {"x": 1277, "y": 93, "level": 2, "name": "GTP", "alt": ["CHEBI:24451", "CHEBI:42934", "CHEBI:13342", "CHEBI:5234", "CHEBI:37565", "CHEBI:57600"]},

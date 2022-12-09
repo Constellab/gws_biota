@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "porphyrin metabolism",
     "data": {
         "CHEBI:16015": {"x": 1262, "y": 615, "level": 1, "name": "L-Glutamate", "alt": ["CHEBI:76051", "CHEBI:21301", "CHEBI:29985", "CHEBI:42825", "CHEBI:29987", "CHEBI:18237", "CHEBI:24314", "CHEBI:13107", "CHEBI:5431", "CHEBI:21304", "CHEBI:6224", "CHEBI:14321", "CHEBI:29988"]},

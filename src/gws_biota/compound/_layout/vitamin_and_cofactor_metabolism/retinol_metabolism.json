@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "retinol metabolism",
     "data": {
         "CHEBI:17898": {"x": 142, "y": 396, "level": 1, "name": "Retinal", "alt": ["CHEBI:12776", "CHEBI:22348", "CHEBI:8814", "CHEBI:15035"]},

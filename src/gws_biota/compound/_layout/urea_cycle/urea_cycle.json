@@ -1,5 +1,6 @@
 {  
-    "cluster": "urea cycle",
+    "id": "urea_cycle",
+    "name": "urea cycle",
     "pathway": "urea cycle",
     "data": {
         "CHEBI:15682": {"x": 1152, "y": 534, "level": 1, "name": "(N-omega-L-arginino)succinic acid", "alt": ["CHEBI:7098", "CHEBI:10960", "CHEBI:21475", "CHEBI:57472"]},

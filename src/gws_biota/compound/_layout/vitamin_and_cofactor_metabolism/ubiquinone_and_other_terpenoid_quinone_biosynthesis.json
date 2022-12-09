@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "ubiquinone and other terpenoid-quinone biosynthesis",
     "data": {
         "CHEBI:17895": {"x": 992, "y": 324, "level": 1, "name": "L-Tyrosine", "alt": ["CHEBI:6313", "CHEBI:21411", "CHEBI:46070", "CHEBI:9800", "CHEBI:32786", "CHEBI:15277", "CHEBI:32761", "CHEBI:32784", "CHEBI:46161", "CHEBI:13181", "CHEBI:32760", "CHEBI:58315", "CHEBI:32762", "CHEBI:27176", "CHEBI:18186", "CHEBI:32785"]},

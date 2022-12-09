@@ -1,5 +1,6 @@
 {  
-    "cluster": "lipid metabolism",
+    "id": "lipid_metabolism",
+    "name": "lipid metabolism",
     "pathway": "glycerophospholipids metabolism",
     "data": {
         "CHEBI:17378": {"x": 840, "y": 330, "level": 1, "name":"D-glyceraldehyde", "alt": ["CHEBI:12982", "CHEBI:39973", "CHEBI:21025", "CHEBI:4186"]},

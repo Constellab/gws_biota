@@ -1,5 +1,6 @@
 {  
-    "cluster": "amino acid metabolism",
+    "id": "amino_acid_metabolism",
+    "name": "amino acid metabolism",
     "pathway": "cysteine and methione metabolism",
     "data": {
         "CHEBI:16136": {"x": 926, "y": 437, "level": 1, "name": "hydrogen sulfide", "alt": ["CHEBI:14414", "CHEBI:45489", "CHEBI:43058", "CHEBI:5787", "CHEBI:13356", "CHEBI:24639", "CHEBI:30488", "CHEBI:29919", "CHEBI:15138"]},

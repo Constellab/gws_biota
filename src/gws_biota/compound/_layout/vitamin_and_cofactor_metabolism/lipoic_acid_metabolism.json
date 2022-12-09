@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "lipoic acid metabolism",
     "data": {
         "CHEBI:15533": {"x": 1430, "y": 541, "level": 1, "name": "Octanoyl-CoA", "alt": ["CHEBI:41542", "CHEBI:25651", "CHEBI:7724", "CHEBI:14681", "CHEBI:57386"]},

@@ -1,5 +1,6 @@
 {  
-    "cluster": "energy metabolism",
+    "id": "energy_metabolism",
+    "name": "energy metabolism",
     "pathway": "sulfur metabolism",
     "data": {
         "CHEBI:33541": {"x": 895, "y": 373, "level": 1, "name": "thiosulfate(1−)", "alt": ["CHEBI:33540", "CHEBI:9569", "CHEBI:26977", "CHEBI:15242", "CHEBI:16094", "CHEBI:29279", "CHEBI:45922", "CHEBI:5587", "CHEBI:33542", "CHEBI:33539"]},

@@ -1,5 +1,6 @@
 {  
-    "cluster": "nucleotide metabolism",
+    "id": "nucleotide_metabolism",
+    "name": "nucleotide metabolism",
     "pathway": "pyrimidine metabolism",
     "data": {
         "CHEBI:17659": {"x": 986, "y": 168, "level": 1, "name": "UDP", "alt": ["CHEBI:46402", "CHEBI:9802", "CHEBI:13445", "CHEBI:27230", "CHEBI:58223"]},

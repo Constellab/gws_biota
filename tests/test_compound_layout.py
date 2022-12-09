@@ -11,7 +11,7 @@ class TestCompoundLayout(BaseTestCase):
 
         CompoundLayout.update_compound_layout(
             chebi_id="CHEBI:16349",
-            cluster_name="amino_acid_metabolism",
+            cluster_id="amino_acid_metabolism",
             level="2",
             x="1",
             y="1"
@@ -19,7 +19,7 @@ class TestCompoundLayout(BaseTestCase):
 
         CompoundLayout.update_compound_layout(
             chebi_id="CHEBI:15361",
-            cluster_name="carbohydrate_metabolism",
+            cluster_id="carbohydrate_metabolism",
             level="2",
             x="0",
             y="0"

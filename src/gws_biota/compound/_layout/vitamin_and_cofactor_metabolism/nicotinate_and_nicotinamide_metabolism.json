@@ -1,5 +1,6 @@
 {  
-    "cluster": "vitamin and cofactor metabolism",
+    "id": "vitamin_and_cofactor_metabolism",
+    "name": "vitamin and cofactor metabolism",
     "pathway": "nicotinate and nicotinamide metabolism",
     "data": {
         "CHEBI:17053": {"x": 1262, "y": 575, "level": 1, "name": "L-Aspartate", "alt": ["CHEBI:21247", "CHEBI:40900", "CHEBI:40942", "CHEBI:6193", "CHEBI:40913", "CHEBI:40853", "CHEBI:22659", "CHEBI:29993", "CHEBI:29995", "CHEBI:22660", "CHEBI:29991", "CHEBI:132943", "CHEBI:35391", "CHEBI:13085", "CHEBI:21244", "CHEBI:29992"]},
