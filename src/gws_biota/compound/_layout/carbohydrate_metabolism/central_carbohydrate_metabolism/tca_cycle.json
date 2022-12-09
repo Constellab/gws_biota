@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "central carbohydrate metabolism",
-    "name": "glyoxylate cycle",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "central carbohydrate metabolism",
+    "pathway": "glyoxylate cycle",
     "data": {
         "CHEBI:16452": {"x": 696, "y": 593, "level": 1, "name":"oxaloacetate(2-)", "alt": ["CHEBI:25731", "CHEBI:24959", "CHEBI:12820", "CHEBI:30744", "CHEBI:14703", "CHEBI:24958", "CHEBI:7812", "CHEBI:25734", "CHEBI:29049"]},
         "CHEBI:16947": {"x": 739, "y": 593, "level": 1, "name": "citrate(3-), citrate", "alt": ["CHEBI:42563", "CHEBI:13999", "CHEBI:23321", "CHEBI:35808", "CHEBI:41523", "CHEBI:3727", "CHEBI:23322", "CHEBI:30769", "CHEBI:35802", "CHEBI:35804", "CHEBI:133748", "CHEBI:35809", "CHEBI:76049", "CHEBI:35810", "CHEBI:132362", "CHEBI:35806"]},
@@ -13,6 +13,5 @@
         "CHEBI:29806": {"x": 659, "y": 662, "level": 1, "name": "fumarate(2-)", "alt": ["CHEBI:24122", "CHEBI:42511", "CHEBI:14284", "CHEBI:36180", "CHEBI:37155", "CHEBI:5190", "CHEBI:18012", "CHEBI:42743", "CHEBI:22956", "CHEBI:22957", "CHEBI:24124", "CHEBI:37154", "CHEBI:22958"]},
         "CHEBI:15589": {"x": 664, "y": 622, "level": 1, "name": "malate, (S)-malate(2-)", "alt": ["CHEBI:30797", "CHEBI:423", "CHEBI:18784", "CHEBI:18785", "CHEBI:13140", "CHEBI:11066"]},
         "CHEBI:36655": {"x": 722, "y": 635, "level": 1, "name": "glyoxylate", "alt": ["CHEBI:24420", "CHEBI:14368", "CHEBI:24421", "CHEBI:42767", "CHEBI:16891", "CHEBI:35977", "CHEBI:5509"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

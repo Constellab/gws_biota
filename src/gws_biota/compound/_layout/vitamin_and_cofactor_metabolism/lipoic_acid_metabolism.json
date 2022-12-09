@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "lipoic acid metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "lipoic acid metabolism",
     "data": {
         "CHEBI:15533": {"x": 1430, "y": 541, "level": 1, "name": "Octanoyl-CoA", "alt": ["CHEBI:41542", "CHEBI:25651", "CHEBI:7724", "CHEBI:14681", "CHEBI:57386"]},
         "CHEBI:15804": {"x": 446, "y": 603, "level": 1, "name": "Lipoylprotein", "alt": ["CHEBI:14523", "CHEBI:6500"]},
@@ -12,6 +12,5 @@
         "CHEBI:80219": {"x": 377, "y": 594, "level": 1, "name": "Enzyme N6-(dihydrolipoyl)lysine", "alt": []},
         "CHEBI:55451": {"x": 454, "y": 596, "level": 1, "name": "Lipoyl-AMP", "alt": ["CHEBI:83864", "CHEBI:58923", "CHEBI:83091"]},
         "CHEBI:30314": {"x": 472, "y": 596, "level": 1, "name": "(R)-Lipoate", "alt": ["CHEBI:43796", "CHEBI:30313", "CHEBI:25058", "CHEBI:6492", "CHEBI:83088", "CHEBI:16494", "CHEBI:14519", "CHEBI:30315", "CHEBI:43790", "CHEBI:146958", "CHEBI:25056"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

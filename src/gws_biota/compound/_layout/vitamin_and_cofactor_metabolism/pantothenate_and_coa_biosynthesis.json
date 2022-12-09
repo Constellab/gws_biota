@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "pantothenate and CoA biosynthesis",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "pantothenate and CoA biosynthesis",
     "data": {
         "CHEBI:15346": {"x": 1243, "y": 529, "level": 1, "name": "CoA", "alt": ["CHEBI:23355", "CHEBI:741566", "CHEBI:41631", "CHEBI:13294", "CHEBI:13298", "CHEBI:13295", "CHEBI:3771", "CHEBI:41597", "CHEBI:57287"]},
         "CHEBI:17053": {"x": 1262, "y": 575, "level": 1, "name": "L-Aspartate", "alt": ["CHEBI:21247", "CHEBI:40900", "CHEBI:40942", "CHEBI:6193", "CHEBI:40913", "CHEBI:40853", "CHEBI:22659", "CHEBI:29993", "CHEBI:29995", "CHEBI:22660", "CHEBI:29991", "CHEBI:132943", "CHEBI:35391", "CHEBI:13085", "CHEBI:21244", "CHEBI:29992"]},
@@ -25,6 +25,5 @@
         "CHEBI:18090": {"x": 1012, "y": 570, "level": 1, "name": "3-Aminopropanal", "alt": ["CHEBI:19966", "CHEBI:11758", "CHEBI:1455", "CHEBI:58374"]},
         "CHEBI:18409": {"x": 1029, "y": 485, "level": 1, "name": "(S)-2-Acetolactate", "alt": ["CHEBI:11033", "CHEBI:18731", "CHEBI:374", "CHEBI:58476"]},
         "CHEBI:61291": {"x": 1121, "y": 519, "level": 1, "name": "(R)-4-Phosphopantoate", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

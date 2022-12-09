@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "other carbohydrate metabolism",
-    "name": "glucuronate galacturonate metabolism",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "other carbohydrate metabolism",
+    "pathway": "glucuronate galacturonate metabolism",
     "data": {
         "CHEBI:17754": {"x": 562, "y": 309, "level": 1, "name": "glycerol", "alt": ["CHEBI:42998", "CHEBI:131422", "CHEBI:5448", "CHEBI:14334", "CHEBI:24351"]},
         "CHEBI:27975": {"x": 562, "y": 138, "level": 1, "name": "L-glyceraldehyde", "alt": ["CHEBI:6233", "CHEBI:21316"]},
@@ -25,7 +25,5 @@
         "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-glyceraldehyde 3-phosphate", "alt": ["CHEBI:181", "CHEBI:12983", "CHEBI:12984", "CHEBI:21026", "CHEBI:18324", "CHEBI:5446", "CHEBI:14333", "CHEBI:17138", "CHEBI:58027", "CHEBI:59776"]},
         "CHEBI:16880": {"x": 874, "y": 297, "level": 1, "name": "L-Ribulose", "alt": ["CHEBI:13163", "CHEBI:6295", "CHEBI:21382", "CHEBI:182416"]},
         "CHEBI:17535": {"x": 874, "y": 272, "level": 1, "name": "L-arabinopyranose", "alt": ["CHEBI:6181", "CHEBI:21232"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

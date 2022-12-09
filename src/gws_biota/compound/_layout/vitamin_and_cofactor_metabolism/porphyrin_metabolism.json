@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "porphyrin metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "porphyrin metabolism",
     "data": {
         "CHEBI:16015": {"x": 1262, "y": 615, "level": 1, "name": "L-Glutamate", "alt": ["CHEBI:76051", "CHEBI:21301", "CHEBI:29985", "CHEBI:42825", "CHEBI:29987", "CHEBI:18237", "CHEBI:24314", "CHEBI:13107", "CHEBI:5431", "CHEBI:21304", "CHEBI:6224", "CHEBI:14321", "CHEBI:29988"]},
         "CHEBI:17627": {"x": 1341, "y": 403, "level": 1, "name": "Heme", "alt": ["CHEBI:14957", "CHEBI:5651", "CHEBI:60344", "CHEBI:26355"]},
@@ -84,6 +84,5 @@
         "CHEBI:137678": {"x": 1225, "y": 443, "level": 1, "name": "Nickel-sirohydrochlorin", "alt": []},
         "CHEBI:137696": {"x": 1225, "y": 460, "level": 1, "name": "Nickel-sirohydrochlorin a,c-diamide", "alt": []},
         "CHEBI:137404": {"x": 1330, "y": 482, "level": 1, "name": "5-Hydroxybenzimidazole", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

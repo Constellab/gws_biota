@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "other carbohydrate metabolism",
-    "name": "UDP-N-acetyl-D-glucosamine biosynthesis",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "other carbohydrate metabolism",
+    "pathway": "UDP-N-acetyl-D-glucosamine biosynthesis",
     "data": {
         "CHEBI:16084": {"x": 706, "y": 309, "level": 1, "name": "beta-D-fructofuranose 6-phosphate", "alt": ["CHEBI:42378", "CHEBI:10375", "CHEBI:12352", "CHEBI:22768", "CHEBI:57634"]},
         "CHEBI:17925": {"x": 679, "y": 282, "level": 1, "name": "alpha-D-glucose", "alt": ["CHEBI:40557", "CHEBI:42802", "CHEBI:10242", "CHEBI:12318", "CHEBI:22386"]},
@@ -10,6 +10,5 @@
         "CHEBI:27625": {"x": 663, "y": 377, "level": 1, "name": "D-Glucosamine 1-phosphate", "alt": ["CHEBI:42868", "CHEBI:12316", "CHEBI:4163", "CHEBI:20994", "CHEBI:58516"]},
         "CHEBI:15784": {"x": 650, "y": 390, "level": 1, "name": "N-acetyl-D-glucosamine 6-phosphate", "alt": ["CHEBI:7127", "CHEBI:12456", "CHEBI:12564", "CHEBI:21521", "CHEBI:49353", "CHEBI:57513", "CHEBI:49359", "CHEBI:39577"]},
         "CHEBI:16446": {"x": 663, "y": 390, "level": 1, "name": "N-Acetyl-alpha-D-glucosamine 1-phosphate", "alt": ["CHEBI:12443", "CHEBI:28742", "CHEBI:42925", "CHEBI:12542", "CHEBI:21573", "CHEBI:7163", "CHEBI:57776"]}        
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

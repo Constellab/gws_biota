@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "vitamin B6 metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "vitamin B6 metabolism",
     "data": {
         "CHEBI:18405": {"x": 1250, "y": 311, "level": 1, "name": "Pyridoxal phosphate", "alt": ["CHEBI:8668", "CHEBI:45145", "CHEBI:26424", "CHEBI:358848", "CHEBI:234571", "CHEBI:14977", "CHEBI:597326"]},
         "CHEBI:18050": {"x": 1350, "y": 311, "level": 1, "name": "L-Glutamine", "alt": ["CHEBI:42943", "CHEBI:42899", "CHEBI:32679", "CHEBI:32678", "CHEBI:58359", "CHEBI:28300", "CHEBI:42812", "CHEBI:13110", "CHEBI:32666", "CHEBI:6227", "CHEBI:32665", "CHEBI:21308", "CHEBI:42814", "CHEBI:5432", "CHEBI:24316"]},
@@ -20,6 +20,5 @@
         "CHEBI:18336": {"x": 1165, "y": 349, "level": 1, "name": "O-Phospho-4-hydroxy-L-threonine", "alt": ["CHEBI:21963", "CHEBI:11945", "CHEBI:7690", "CHEBI:58452", "CHEBI:59459"]},
         "CHEBI:64186": {"x": 1205, "y": 349, "level": 1, "name": "2-Amino-3-oxo-4-phosphonooxybutyrate", "alt": []},
         "CHEBI:1449": {"x": 1228, "y": 349, "level": 1, "name": "3-Amino-2-oxopropyl phosphate", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

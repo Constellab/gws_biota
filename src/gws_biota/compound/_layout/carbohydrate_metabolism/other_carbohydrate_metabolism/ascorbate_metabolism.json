@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "other carbohydrate metabolism",
-    "name": "ascorbate degradation",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "other carbohydrate metabolism",
+    "pathway": "ascorbate degradation",
     "data": {
         "CHEBI:53072": {"x": 567, "y": 156, "level": 1, "name": "beta-L-galactose 1-phosphate", "alt": ["CHEBI:75522"]},
         "CHEBI:42905": {"x": 651, "y": 156, "level": 1, "name": "alpha-L-galactose", "alt": ["CHEBI:42904", "CHEBI:6222"]},
@@ -24,7 +24,5 @@
         "CHEBI:16593": {"x": 874, "y": 317, "level": 1, "name": "L-xylulose 5-phosphate", "alt": ["CHEBI:6328", "CHEBI:13191", "CHEBI:21427", "CHEBI:57829"]},
         "CHEBI:18205": {"x": 874, "y": 317, "level": 1, "name": "alpha-D-mannose 1-phosphate", "alt": ["CHEBI:43854", "CHEBI:12327", "CHEBI:22404", "CHEBI:10261", "CHEBI:35374", "CHEBI:21058", "CHEBI:4210", "CHEBI:58409"]},
         "CHEBI:18041": {"x": 654, "y": 458, "level": 1, "name": "L-Lactaldehyde", "alt": ["CHEBI:421", "CHEBI:11064", "CHEBI:13130", "CHEBI:18782", "CHEBI:18419", "CHEBI:11015", "CHEBI:24994", "CHEBI:6349"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

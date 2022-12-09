@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "central carbohydrate metabolism",
-    "name": "pentose phosphate metabolism",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "central carbohydrate metabolism",
+    "pathway": "pentose phosphate metabolism",
     "data": {
         "CHEBI:12233": {"x": 762, "y": 282, "level": 1, "name": "6-O-phosphono-D-glucono-1,5-lactone", "alt": ["CHEBI:12233", "CHEBI:4160", "CHEBI:57955", "CHEBI:16938", "CHEBI:20989", "CHEBI:12958"]},
         "CHEBI:33851": {"x": 809, "y": 282, "level": 1, "name": "6-phospho-D-gluconic acid, 6-Phospho-D-gluconate", "alt": ["CHEBI:2231", "CHEBI:16863", "CHEBI:40282", "CHEBI:12232", "CHEBI:48928", "CHEBI:58759"]},
@@ -12,6 +12,5 @@
         "CHEBI:4244": {"x": 748,  "y": 355, "level": 1, "name": "sedoheptulose 7-phosphate", "alt": ["CHEBI:15073", "CHEBI:15721", "CHEBI:26621", "CHEBI:9083", "CHEBI:15074", "CHEBI:57483"]},
         "CHEBI:16897": {"x": 748,  "y": 321, "level": 1, "name": "D-erythrose 4-phosphate(2-)", "alt": ["CHEBI:4114", "CHEBI:20927", "CHEBI:12921", "CHEBI:48153", "CHEBI:16897", "CHEBI:42349"]},
         "CHEBI:58273": {"x": null,  "y": null, "level": 2, "name": "aldehydo-D-ribose 5-phosphate(2-)", "alt": ["CHEBI:17797"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

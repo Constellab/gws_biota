@@ -1,6 +1,6 @@
 {  
-    "parent": "glycan metabolism",
-    "name": "glycan biosynthesis",
+    "cluster": "glycan metabolism",
+    "pathway": "glycan biosynthesis",
     "data": {
         "CHEBI:59082": {"x": 502, "y": 163, "level": 1, "name": "N-{alpha-Glc-(1->3)-alpha-Glc-(1->3)-alpha-Man-(1->2)-alpha-Man-(1->2)-alpha-Man-(1->3)-[alpha-Man-(1->2)-alpha-Man-(1->3)-[alpha-Man-(1->2)-alpha-Man-(1->6)]-alpha-Man-(1->6)]-beta-Man-(1->4)-beta-GlcNAc-(1->4)-beta-GlcNAc}-L-Asn residue", "alt": [""]},
         "CHEBI:16214": {"x": 457, "y": 207, "level": 1, "name": "dolichyl phosphate", "alt": ["CHEBI:14200", "CHEBI:23874", "CHEBI:4693", "CHEBI:57683"]},
@@ -14,6 +14,5 @@
         "CHEBI:16246": {"x": 884, "y": 326, "level": 1, "name": "D-ribitol 5-phosphate", "alt": ["CHEBI:44693", "CHEBI:45310", "CHEBI:45311", "CHEBI:4231", "CHEBI:13009", "CHEBI:21075", "CHEBI:57695"]},
         "CHEBI:17677": {"x": 960, "y": 194, "level": 1, "name": "CTP", "alt": ["CHEBI:41675", "CHEBI:3285", "CHEBI:13286", "CHEBI:23522", "CHEBI:58231", "CHEBI:37563"]},
         "CHEBI:16749": {"x": 544, "y": 349, "level": 1, "name": "1-phosphatidyl-1D-myo-inositol", "alt": ["CHEBI:11283", "CHEBI:11291", "CHEBI:19086", "CHEBI:11292", "CHEBI:677", "CHEBI:679", "CHEBI:11280", "CHEBI:19088", "CHEBI:28601", "CHEBI:57880"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

@@ -1,6 +1,6 @@
 {  
-    "parent": "energy metabolism",
-    "name": "carbon fixation",
+    "cluster": "energy metabolism",
+    "pathway": "carbon fixation",
     "data": {
         "CHEBI:17969": {"x": 722, "y": 807, "level": 1, "name": "sedoheptulose 1,7-bisphosphate", "alt": ["CHEBI:26620", "CHEBI:9081", "CHEBI:15072", "CHEBI:58335"]},
         "CHEBI:48153": {"x": 742, "y": 807, "level": 1, "name": "D-erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921", "CHEBI:20927", "CHEBI:16897"]},
@@ -45,6 +45,5 @@
         "CHEBI:1989": {"x": 684, "y": 650, "level": 1, "name": "(6R)-5,10-methylenetetrahydrofolic acid", "alt": ["CHEBI:10925", "CHEBI:15636", "CHEBI:18602"]},
         "CHEBI:17245": {"x": 690, "y": 809, "level": 1, "name": "carbon monoxide", "alt": ["CHEBI:41526", "CHEBI:3282", "CHEBI:13281", "CHEBI:23013", "CHEBI:58072"]},
         "CHEBI:15350": {"x": 728, "y": 535, "level": 1, "name": "acetyl dihydrogen phosphate", "alt": ["CHEBI:46262", "CHEBI:2407", "CHEBI:13711", "CHEBI:22191"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

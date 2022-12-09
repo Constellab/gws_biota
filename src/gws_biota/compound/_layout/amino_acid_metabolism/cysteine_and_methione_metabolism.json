@@ -1,6 +1,6 @@
 {  
-    "parent": "amino acid metabolism",
-    "name": "cysteine and methione metabolism",
+    "cluster": "amino acid metabolism",
+    "pathway": "cysteine and methione metabolism",
     "data": {
         "CHEBI:16136": {"x": 926, "y": 437, "level": 1, "name": "hydrogen sulfide", "alt": ["CHEBI:14414", "CHEBI:45489", "CHEBI:43058", "CHEBI:5787", "CHEBI:13356", "CHEBI:24639", "CHEBI:30488", "CHEBI:29919", "CHEBI:15138"]},
         "CHEBI:17561": {"x": 972, "y": 428, "level": 1, "name": "L-cysteine", "alt": ["CHEBI:13095", "CHEBI:41700", "CHEBI:41811", "CHEBI:41768", "CHEBI:41781", "CHEBI:41227", "CHEBI:6207", "CHEBI:21261", "CHEBI:32456", "CHEBI:14061", "CHEBI:32443", "CHEBI:32458", "CHEBI:32442", "CHEBI:23508", "CHEBI:32445", "CHEBI:35235", "CHEBI:35237"]},
@@ -31,7 +31,5 @@
         "CHEBI:15891": {"x": 1034, "y": 396, "level": 1, "name": "taurine", "alt": ["CHEBI:45877", "CHEBI:9406", "CHEBI:15195", "CHEBI:26852", "CHEBI:32970", "CHEBI:507393"]},
         "CHEBI:16007": {"x": 926, "y": 479, "level": 1, "name": "methanethiol", "alt": ["CHEBI:6814", "CHEBI:14586", "CHEBI:25225"]},
         "CHEBI:27891": {"x": 889, "y": 352, "level": 1, "name": "S-Sulfo-L-cysteine", "alt": ["CHEBI:22075", "CHEBI:8974", "CHEBI:62225"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

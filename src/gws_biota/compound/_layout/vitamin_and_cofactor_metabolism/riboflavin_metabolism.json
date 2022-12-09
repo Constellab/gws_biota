@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "riboflavin metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "riboflavin metabolism",
     "data": {
         "CHEBI:16238": {"x": 1289, "y": 277, "level": 1, "name": "FAD", "alt": ["CHEBI:21125", "CHEBI:42388", "CHEBI:4956", "CHEBI:13315", "CHEBI:57692"]},
         "CHEBI:15996": {"x": 1277, "y": 93, "level": 1, "name": "GTP", "alt": ["CHEBI:24451", "CHEBI:42934", "CHEBI:13342", "CHEBI:5234", "CHEBI:37565", "CHEBI:57600"]},
@@ -21,6 +21,5 @@
         "CHEBI:50606": {"x": 1114, "y": 198, "level": 1, "name": "L-3,4-Dihydroxybutan-2-one 4-phosphate", "alt": []},
         "CHEBI:11515": {"x": 1310, "y": 81, "level": 1, "name": "2-Amino-5-formylamino-6-(5-phospho-D-ribosylamino)pyrimidin-4(3H)-one", "alt": ["CHEBI:59547"]},
         "CHEBI:52402": {"x": 1300, "y": 123, "level": 1, "name": "2,5-Diamino-6-(5-phospho-D-ribitylamino)pyrimidin-4(3H)-one", "alt": ["CHEBI:52957"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

@@ -1,6 +1,6 @@
 {  
-    "parent": "lipid metabolism",
-    "name": "glycerophospholipids metabolism",
+    "cluster": "lipid metabolism",
+    "pathway": "glycerophospholipids metabolism",
     "data": {
         "CHEBI:17378": {"x": 840, "y": 330, "level": 1, "name":"D-glyceraldehyde", "alt": ["CHEBI:12982", "CHEBI:39973", "CHEBI:21025", "CHEBI:4186"]},
         "CHEBI:58248": {"x": 711, "y": 413, "level": 1, "name": "2,3-bisphosphonato-D-glycerate(5-)", "alt": ["CHEBI:41885", "CHEBI:11417", "CHEBI:19307", "CHEBI:19306", "CHEBI:872", "CHEBI:19324", "CHEBI:17720", "CHEBI:873", "CHEBI:19325", "CHEBI:28907"]},
@@ -56,7 +56,5 @@
         "CHEBI:18132": {"x": 445, "y": 318, "level": 1, "name": "Phosphocholine", "alt": ["CHEBI:3667", "CHEBI:44707", "CHEBI:12720", "CHEBI:23214", "CHEBI:13986", "CHEBI:295975"]},
         "CHEBI:15354": {"x": 430, "y": 318, "level": 1, "name": "Choline", "alt": ["CHEBI:41524", "CHEBI:3665", "CHEBI:13985", "CHEBI:23212", "CHEBI:72322"]},
         "CHEBI:64674": {"x": 476, "y": 349, "level": 1, "name": "1,2-diacyl-sn-glycero-3-phosphoethanolamine, phosphatidyl-ethanolamine", "alt": ["CHEBI:16038", "CHEBI:8129", "CHEBI:14803", "CHEBI:12701", "CHEBI:7661", "CHEBI:26030", "CHEBI:26031"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

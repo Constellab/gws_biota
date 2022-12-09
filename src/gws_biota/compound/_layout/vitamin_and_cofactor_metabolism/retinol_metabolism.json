@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "retinol metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "retinol metabolism",
     "data": {
         "CHEBI:17898": {"x": 142, "y": 396, "level": 1, "name": "Retinal", "alt": ["CHEBI:12776", "CHEBI:22348", "CHEBI:8814", "CHEBI:15035"]},
         "CHEBI:17336": {"x": 121, "y": 396, "level": 1, "name": "Retinol", "alt": ["CHEBI:12783", "CHEBI:22349", "CHEBI:50211", "CHEBI:15037", "CHEBI:26538", "CHEBI:8816"]},
@@ -15,6 +15,5 @@
         "CHEBI:80656": {"x": 209, "y": 396, "level": 1, "name": "all-trans-4-Oxoretinoic acid", "alt": []},
         "CHEBI:78273": {"x": 142, "y": 372, "level": 1, "name": "9-cis-Retinal", "alt": []},
         "CHEBI:78272": {"x": 121, "y": 372, "level": 1, "name": "9-cis-Retinol", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

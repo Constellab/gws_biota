@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "folate metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "folate metabolism",
     "data": {
         "CHEBI:15996": {"x": 1277, "y": 93, "level": 2, "name": "GTP", "alt": ["CHEBI:24451", "CHEBI:42934", "CHEBI:13342", "CHEBI:5234", "CHEBI:37565", "CHEBI:57600"]},
         "CHEBI:15635": {"x": 1365, "y": 237, "level": 1, "name": "Tetrahydrofolate", "alt": ["CHEBI:18606", "CHEBI:12075", "CHEBI:10931", "CHEBI:15220", "CHEBI:9482", "CHEBI:46069", "CHEBI:57453", "CHEBI:20506", "CHEBI:68437"]},
@@ -42,6 +42,5 @@
         "CHEBI:132069": {"x": 1277, "y": 51, "level": 1, "name": "(8S)-3',8-Cyclo-7,8-dihydroguanosine 5'-triphosphate", "alt": []},
         "CHEBI:71353": {"x": 1345, "y": 69, "level": 1, "name": "Cytidylyl molybdenum cofactor", "alt": []},
         "CHEBI:83233": {"x": 1345, "y": 37, "level": 1, "name": "Thio-molybdenum cofactor", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

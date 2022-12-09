@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "nicotinate and nicotinamide metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "nicotinate and nicotinamide metabolism",
     "data": {
         "CHEBI:17053": {"x": 1262, "y": 575, "level": 1, "name": "L-Aspartate", "alt": ["CHEBI:21247", "CHEBI:40900", "CHEBI:40942", "CHEBI:6193", "CHEBI:40913", "CHEBI:40853", "CHEBI:22659", "CHEBI:29993", "CHEBI:29995", "CHEBI:22660", "CHEBI:29991", "CHEBI:132943", "CHEBI:35391", "CHEBI:13085", "CHEBI:21244", "CHEBI:29992"]},
         "CHEBI:29806": {"x": null, "y": null, "level": 1, "name": "Fumarate", "alt": ["CHEBI:42511", "CHEBI:24122", "CHEBI:14284", "CHEBI:36180", "CHEBI:37155", "CHEBI:5190", "CHEBI:18012", "CHEBI:42743", "CHEBI:22956", "CHEBI:22957", "CHEBI:24124", "CHEBI:37154", "CHEBI:22958"]},
@@ -38,6 +38,5 @@
         "CHEBI:37753": {"x": 1240, "y": 804, "level": 1, "name": "Pseudooxynicotine", "alt": []},
         "CHEBI:87460": {"x": 1255, "y": 664, "level": 1, "name": "5-(N-Methyl-4,5-dihydro-1H-pyrrol-2-yl)pyridin-2-ol", "alt": []},
         "CHEBI:190393": {"x": 1240, "y": 670, "level": 1, "name": "N-Methylmyosmine", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "central carbohydrate metabolism",
-    "name": "pyruvate metabolism",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "central carbohydrate metabolism",
+    "pathway": "pyruvate metabolism",
     "data": {
         "CHEBI:15361": {"x": 719, "y": 513, "level": 1, "name":"pyruvate", "alt": ["CHEBI:26462", "CHEBI:26466", "CHEBI:8685", "CHEBI:32816", "CHEBI:45253", "CHEBI:14987"]},
         "CHEBI:57288": {"x": 719, "y": 550, "level": 1, "name": "acetyl-CoA(4-)", "alt": ["CHEBI:22192", "CHEBI:15351", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
@@ -12,6 +12,5 @@
         "CHEBI:30089": {"x": 749, "y": 535, "level": 1, "name": "acetate", "alt": ["CHEBI:13704", "CHEBI:22165", "CHEBI:22169", "CHEBI:40480", "CHEBI:15366", "CHEBI:2387", "CHEBI:40486"]},
         "CHEBI:13711": {"x": 728, "y": 535, "level": 1, "name": "acetyl phosphate", "alt": ["CHEBI:46262", "CHEBI:15350", "CHEBI:22191", "CHEBI:2407"]},
         "CHEBI:15344": {"x": 852, "y": 561, "level": 1, "name": "acetoacetic acid", "alt": ["CHEBI:13705", "CHEBI:40507", "CHEBI:2391", "CHEBI:22172", "CHEBI:131367"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

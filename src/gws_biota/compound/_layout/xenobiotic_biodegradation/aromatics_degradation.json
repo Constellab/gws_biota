@@ -1,9 +1,8 @@
 {
-    "parent": "xenobiotic biodegradation",
-    "name": "aromatics degradation",
+    "cluster": "xenobiotic biodegradation",
+    "pathway": "aromatics degradation",
     "data": {
         "CHEBI:17597": {"x": 445, "y": 829, "level": 1, "name": "4-Hydroxybenzaldehyde", "alt": ["CHEBI:43009", "CHEBI:1857", "CHEBI:12002", "CHEBI:20396"]},
         "CHEBI:30762": {"x": 351, "y": 801, "level": 1, "name": "salicylate", "alt": ["CHEBI:15061", "CHEBI:26595", "CHEBI:16914", "CHEBI:45521", "CHEBI:9006", "CHEBI:26597"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

@@ -1,6 +1,6 @@
 {  
-    "parent": "lipid metabolism",
-    "name": "fatty acids elongation",
+    "cluster": "lipid metabolism",
+    "pathway": "fatty acids elongation",
     "data": {
         "CHEBI:15345": {"x": 501, "y": 457, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173", "CHEBI:57286"]},        
         "CHEBI:15453": {"x": 501, "y": 485, "level": 1, "name": "(S)-3-Hydroxybutanoyl-CoA", "alt": ["CHEBI:39978", "CHEBI:394", "CHEBI:18749", "CHEBI:11048", "CHEBI:57316"]},
@@ -36,7 +36,5 @@
         "CHEBI:76276": {"x": 620, "y": 580, "level": 2, "name": "Hexadecanedioate", "alt": ["CHEBI:73722"]},
         "CHEBI:15531": {"x": 685, "y": 568, "level": 1, "name": "malonyl-CoA", "alt": ["CHEBI:43979", "CHEBI:6661", "CHEBI:14565", "CHEBI:25135", "CHEBI:57384"]},
         "CHEBI:15843": {"x": 360, "y": 328, "level": 1, "name": "Arachidonate", "alt": ["CHEBI:40501", "CHEBI:22608", "CHEBI:2799", "CHEBI:32395", "CHEBI:13852", "CHEBI:22607"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

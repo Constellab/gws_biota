@@ -7,21 +7,12 @@ import copy
 import json
 import os
 import random
+from pathlib import Path
 from typing import Dict, List, TypedDict, Union
 
-from gws_core import BadRequestException, Logger, StringHelper
+from gws_core import BadRequestException, StringHelper
 
-GRID_SCALE = 3
-GRID_INTERVAL = 100
-
-GOLBAL_CENTER = {"x": 719, "y": 513}  # center on pyruvate
-
-CompoundClusterDict = TypedDict("CompoundClusterDict", {
-    "name": List[dict],
-    "x": str,
-    "y": str,
-    "level": int
-})
+from .compound_cluster import CompoundCluster, CompoundClusterDict
 
 CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
     "x": str,
@@ -29,102 +20,12 @@ CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
     "clusters": List[dict],
 })
 
-SHIFTS = {
-    "xenobiotic_biodegradation": {"x": -300, "y": 0},
-    "energy_metabolism": {"x": -300, "y": 0},
-    "lipid_metabolism": {"x": -400, "y": 0},
-    "carbohydrate_metabolism": {"x": 0, "y": 0},
-    "glycan_metabolism": {"x": 20, "y": 0},
-    "amino_acid_metabolism": {"x": 200, "y": 150},
-    "nucleotide_metabolism": {"x": 200, "y": 0},
-    "vitamin_and_cofactor_metabolism": {"x": 500, "y": 0},
-    "other_secondary_metabolite_metabolism": {"x": 400, "y": 0},
-    "terpenoid_and_polyketide_metabolism": {"x": 400, "y": 0},
-    "urea_cycle": {"x": 200, "y": 0}
-}
-
-
-class CompoundCluster:
-    """ CompoundCluster """
-
-    _name: str = None
-    _parent: str = None
-    _data: Dict[str, Dict] = None
-    _centroid: dict = None
-    _level: int = 2
-
-    def __init__(self, parent, name, data: Dict, centroid: Dict = None):
-        if not isinstance(data, dict):
-            raise BadRequestException("The data must be a dict")
-        self._name = name
-        self._parent = parent
-        self._data = data
-        self._centroid = {"x": 0, "y": 0}
-        if centroid:
-            self._centroid = centroid
-            if isinstance(self._centroid["x"], (float, int)):
-                self._centroid["x"] -= GOLBAL_CENTER["x"] - SHIFTS[parent]["x"]
-            else:
-                self._centroid["x"] = 0
-            if isinstance(self._centroid["y"], (float, int)):
-                self._centroid["y"] -= GOLBAL_CENTER["y"] - SHIFTS[parent]["y"]
-            else:
-                self._centroid["y"] = 0
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def data(self):
-        return self._data
-
-    @property
-    def centroid(self):
-        return self._centroid
-
-    def set_position(self, centroid):
-        """ Set centroid """
-        self._centroid = centroid
-
-    def generate(self):
-        """ Generate positions """
-        data = {}
-        for comp_id, comp_data in self._data.items():
-            if comp_data["x"] is not None:
-                comp_data["x"] = GRID_SCALE * (comp_data["x"] + self._centroid["x"])
-            if comp_data["y"] is not None:
-                comp_data["y"] = GRID_SCALE * (comp_data["y"] + self._centroid["y"])
-            comp_data["parent"] = self._parent
-            comp_data["name"] = self._name
-            # comp_data["master_id"] = comp_id
-            data[comp_id] = comp_data
-        return data
-
-    @ staticmethod
-    def from_file(file_path) -> 'CompoundCluster':
-        """ Create a CompoundCluster using a JSON data file """
-        with open(file_path, "r", encoding="utf-8") as fp:
-            try:
-                cdata = json.load(fp)
-            except Exception as err:
-                raise BadRequestException(f'Cannot load JSON file "{file_path}"') from err
-
-            folder = (file_path.split("/"))[-2]
-            return CompoundCluster(
-                parent=StringHelper.slugify(cdata.get("parent", folder), snakefy=True),
-                name=cdata["name"],
-                data=cdata["data"],
-                centroid=cdata.get("centroid"))
-
 
 class CompoundLayout:
     """ CompoundLayout """
 
     X_LIMIT = 4000
     Y_LIMIT = 4000
-    GRID_SCALE = GRID_SCALE
-    GRID_INTERVAL = GRID_INTERVAL
     BIOMASS_CLUSTER_CENTER = {"x": 1000, "y": 200}
 
     _clusters: List[CompoundCluster] = []
@@ -142,23 +43,31 @@ class CompoundLayout:
             raise BadRequestException("The cluster must be CompoundCluster")
         cls._clusters.append(cluster)
 
+    @classmethod
+    def get_db_path(cls):
+        return os.path.join(os.path.dirname(os.path.abspath(__file__)), "./_layout/")
+
+    @classmethod
+    def get_cluster_path(cls, cluster_name):
+        return os.path.join(cls.get_db_path(), cluster_name)
+
     @ classmethod
     def generate(cls, db_path: str = None, force: bool = False):
         """ Generate positions """
-
         if cls._is_generated:
             if not force:
                 return cls._data
 
         if not db_path:
-            db_path = os.path.join("./_layout/", os.path.dirname(os.path.abspath(__file__)))
+            db_path = cls.get_db_path()
 
         data = {}
+
         try:
             # loads for all .json files
             for root, _, files in os.walk(db_path):
                 for file in files:
-                    if file.endswith(".json"):
+                    if file.endswith(".json") and file != "__centroid__.json":
                         cluster = CompoundCluster.from_file(os.path.join(root, file))
                         cls._clusters.append(cluster)
         except Exception as err:
@@ -192,7 +101,6 @@ class CompoundLayout:
 
             # parse current cluster and gather all comp data
             for current_cluster_data in cluster_data.values():
-                # current_cluster_data = cluster_name[cluster_name]
                 for alt_comp_id in current_cluster_data.get("alt", []):
                     cls._flat_data[alt_comp_id] = cluster_data
                     cls._master_ids_map[alt_comp_id] = comp_id
@@ -208,11 +116,6 @@ class CompoundLayout:
         position = {"x": None, "y": None, "clusters": {}}
         if not synonym_chebi_ids:
             return position
-
-        def rnd_offset():
-            """ Random offset """
-            rnd_num = random.uniform(0, 1)
-            return GRID_SCALE * (GRID_INTERVAL if rnd_num >= 0.5 else -GRID_INTERVAL)
 
         clusters: List[CompoundClusterDict] = {}
 
@@ -246,7 +149,8 @@ class CompoundLayout:
         """ Get empty layout  """
         return {"x": None, "y": None, "clusters": {}}
 
-    def get_biomass_layout(is_biomass=False) -> CompoundLayoutDict:
+    @classmethod
+    def get_biomass_layout(cls, is_biomass=False) -> CompoundLayoutDict:
         """ Create biomass layout """
 
         if is_biomass:
@@ -279,3 +183,33 @@ class CompoundLayout:
             return cls._master_ids_map[chebi_id]
         else:
             return None
+
+    @classmethod
+    def update_compound_layout(cls, chebi_id, cluster_name, level, x, y):
+        db_path = cls.get_db_path()
+        cluster_path = os.path.join(db_path, cluster_name)
+        try:
+            # update all .json files in the cluster
+            for dirpath, _, filenames in os.walk(cluster_path):
+                for file in filenames:
+                    if file.endswith(".json") and file != "__centroid__.json":
+                        cls._update_compound_layout_in_file(
+                            os.path.join(dirpath, file),
+                            chebi_id, cluster_name, level, x, y)
+        except Exception as err:
+            raise BadRequestException(f"An error occur when parsing layout files. Message {err}") from err
+
+    @classmethod
+    def _update_compound_layout_in_file(cls, file_path, chebi_id, cluster_name, level, x, y):
+        with open(file_path, 'r', encoding="utf-8") as fp:
+            content = json.load(fp)
+
+        if chebi_id in content["data"]:
+            x, y = CompoundCluster.convert_position_from_view_to_db(cluster_name, x, y)
+            content["data"][chebi_id]["x"] = x
+            content["data"][chebi_id]["y"] = y
+            content["data"][chebi_id]["level"] = level
+            p = Path(file_path)
+            updated_file_path = os.path.join(p.parent, p.stem + ".release.json")
+            with open(updated_file_path, 'w', encoding="utf-8") as fp:
+                json.dump(content, fp, indent=4)

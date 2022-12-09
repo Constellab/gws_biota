@@ -1,6 +1,6 @@
 {  
-    "parent": "amino acid metabolism",
-    "name": "lysine metabolism",
+    "cluster": "amino acid metabolism",
+    "pathway": "lysine metabolism",
     "data": {
         "CHEBI:15345": {"x": 501, "y": 457, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173", "CHEBI:57286"]},
         "CHEBI:15453": {"x": 501, "y": 485, "level": 1, "name": "(S)-3-hydroxybutanoyl-CoA", "alt": ["CHEBI:39978", "CHEBI:394", "CHEBI:18749", "CHEBI:11048", "CHEBI:57316"]},
@@ -24,6 +24,5 @@
         "CHEBI:30308": {"x": 897, "y": 675, "level": 1, "name": "meso-2,6-diaminopimelate(2-)", "alt": ["CHEBI:12822", "CHEBI:12823", "CHEBI:12825", "CHEBI:25203", "CHEBI:16488", "CHEBI:40838", "CHEBI:10598", "CHEBI:25204", "CHEBI:57791"]},
         "CHEBI:16026": {"x": 929, "y": 675, "level": 1, "name": "LL-2,6-diaminopimelic acid", "alt": ["CHEBI:6341", "CHEBI:21429", "CHEBI:47031", "CHEBI:13192", "CHEBI:21428", "CHEBI:57609"]},
         "CHEBI:17279": {"x": 948, "y": 675, "level": 1, "name": "N-succinyl-LL-2,6-diaminopimelic acid", "alt": ["CHEBI:7342", "CHEBI:12617", "CHEBI:21791", "CHEBI:12618", "CHEBI:21792", "CHEBI:58087", "CHEBI:165894"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

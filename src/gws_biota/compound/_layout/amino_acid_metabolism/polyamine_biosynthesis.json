@@ -1,6 +1,6 @@
 {  
-    "parent": "amino acid metabolism",
-    "name": "polyamine biosynthesis",
+    "cluster": "amino acid metabolism",
+    "pathway": "polyamine biosynthesis",
     "data": {
         "CHEBI:17431": {"x": 1187, "y": 603, "level": 1, "name": "agmatine", "alt": ["CHEBI:40556", "CHEBI:2514", "CHEBI:13747", "CHEBI:18576", "CHEBI:58145"]},
         "CHEBI:17768": {"x": 1212, "y": 624, "level": 1, "name": "N-acetylputrescine", "alt": ["CHEBI:7222", "CHEBI:21629", "CHEBI:12473", "CHEBI:58263"]},
@@ -13,6 +13,5 @@
         "CHEBI:49260": {"x": 1173, "y": 729, "level": 1, "name": "4-(L-gamma-glutamylamino)butanoic acid", "alt": ["CHEBI:58800"]},
         "CHEBI:30566": {"x": 981, "y": 761, "level": 1, "name": "gamma-aminobutyrate", "alt": ["CHEBI:20317", "CHEBI:11961", "CHEBI:40483", "CHEBI:1786", "CHEBI:16865", "CHEBI:193777", "CHEBI:59888", "CHEBI:20318"]},
         "CHEBI:11951": {"x": 1212, "y": 760, "level": 1, "name": "4-acetamidobutanoate", "alt": ["CHEBI:17645", "CHEBI:20303", "CHEBI:1777"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

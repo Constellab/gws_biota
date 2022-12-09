@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "other carbohydrate metabolism",
-    "name": "inositol phosphate metabolism",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "other carbohydrate metabolism",
+    "pathway": "inositol phosphate metabolism",
     "data": {
         "CHEBI:16749": {"x": 544, "y": 349, "level": 1, "name": "1-Phosphatidyl-D-myo-inositol", "alt": ["CHEBI:11283", "CHEBI:11291", "CHEBI:19086", "CHEBI:11292", "CHEBI:677", "CHEBI:679", "CHEBI:11280", "CHEBI:19088", "CHEBI:28601", "CHEBI:57880"]},
         "CHEBI:17526": {"x": 544, "y": 366, "level": 1, "name": "1-Phosphatidyl-1D-myo-inositol 4-phosphate", "alt": ["CHEBI:675", "CHEBI:11289", "CHEBI:19085", "CHEBI:61083", "CHEBI:58178"]},
@@ -15,7 +15,5 @@
         "CHEBI:28858": {"x": 579, "y": 428, "level": 1, "name": "Inositol 3,4-bisphosphate", "alt": ["CHEBI:4277", "CHEBI:19195", "CHEBI:83241"]},
         "CHEBI:18169": {"x": 593, "y": 428, "level": 1, "name": "Inositol 3-monophosphate", "alt": ["CHEBI:814", "CHEBI:11365", "CHEBI:19196", "CHEBI:58401"]},
         "CHEBI:17268": {"x": 612, "y": 428, "level": 1, "name": "Inositol", "alt": ["CHEBI:43559", "CHEBI:10601", "CHEBI:12826", "CHEBI:12831", "CHEBI:25451", "CHEBI:4200", "CHEBI:27372", "CHEBI:19183", "CHEBI:24848", "CHEBI:52772"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

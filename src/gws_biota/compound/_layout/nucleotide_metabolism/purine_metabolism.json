@@ -1,6 +1,6 @@
 {  
-    "parent": "nucleotide metabolism",
-    "name": "purine metabolism",
+    "cluster": "nucleotide metabolism",
+    "pathway": "purine metabolism",
     "data": {
         "CHEBI:16134": {"x": 1079, "y": 609, "level": 1, "name": "ammonia", "alt": ["CHEBI:44284", "CHEBI:44269", "CHEBI:44404", "CHEBI:13405", "CHEBI:13406", "CHEBI:13407", "CHEBI:13771", "CHEBI:7434", "CHEBI:22533", "CHEBI:135980", "CHEBI:29337", "CHEBI:29340", "CHEBI:28938", "CHEBI:22534", "CHEBI:49783", "CHEBI:7435"]},
         "CHEBI:16027": {"x": 1127, "y": 93, "level": 1, "name": "AMP", "alt": ["CHEBI:40826", "CHEBI:47222", "CHEBI:40510", "CHEBI:13234", "CHEBI:13740", "CHEBI:40726", "CHEBI:2356", "CHEBI:13235", "CHEBI:40786", "CHEBI:22242", "CHEBI:22245", "CHEBI:12056", "CHEBI:13736", "CHEBI:40721", "CHEBI:456215"]},
@@ -89,6 +89,5 @@
         "CHEBI:48000": {"x": 1022, "y": 111, "level": 1, "name": "5-Carboxyamino-1-(5-phospho-D-ribosyl)imidazole", "alt": ["CHEBI:58730"]},
         "CHEBI:16991": {"x": 1062, "y": 113, "level": 1, "name": "DNA", "alt": ["CHEBI:33698", "CHEBI:4291", "CHEBI:13302", "CHEBI:21123"]},
         "CHEBI:33697": {"x": 1284, "y": 66, "level": 1, "name": "RNA", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

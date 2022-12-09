@@ -1,6 +1,6 @@
 {  
-    "parent": "glycan metabolism",
-    "name": "lipopolysaccharide metabolism",
+    "cluster": "glycan metabolism",
+    "pathway": "lipopolysaccharide metabolism",
     "data": {
         "CHEBI:61537": {"x": 686, "y": 112, "level": 1, "name": "UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-α-glucosamine", "alt": ["CHEBI:61494"]},
         "CHEBI:71619": {"x": 706, "y": 112, "level": 1, "name": "UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-α-D-glucosamine", "alt": ["CHEBI:27392", "CHEBI:58510", "CHEBI:71573", "CHEBI:9807", "CHEBI:22095"]},
@@ -24,6 +24,5 @@
         "CHEBI:17363": {"x": 711, "y": 858, "level": 1, "name": "D-ribulose 5-phosphate", "alt": ["CHEBI:40192", "CHEBI:4243", "CHEBI:21088", "CHEBI:13018", "CHEBI:26572", "CHEBI:13040", "CHEBI:37455", "CHEBI:58121"]},
         "CHEBI:15721": {"x": 748, "y": 355, "level": 1, "name": "sedoheptulose 7-phosphate", "alt": ["CHEBI:15074", "CHEBI:9083", "CHEBI:15073", "CHEBI:4244", "CHEBI:26621", "CHEBI:57483"]},  
         "CHEBI:16556": {"x": 702, "y": 493, "level": 1, "name": "CMP-N-acetyl-β-neuraminic acid", "alt": ["CHEBI:44441", "CHEBI:3278", "CHEBI:13279", "CHEBI:13276", "CHEBI:20875", "CHEBI:59434", "CHEBI:57812"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

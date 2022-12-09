@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "other carbohydrate metabolism",
-    "name": "photorespiration",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "other carbohydrate metabolism",
+    "pathway": "photorespiration",
     "data": {
         "CHEBI:17115": {"x": 889, "y": 513, "level": 2, "name": "L-serine", "alt": ["CHEBI:45440", "CHEBI:45451", "CHEBI:45677", "CHEBI:45590", "CHEBI:45597", "CHEBI:13167", "CHEBI:21387", "CHEBI:6301", "CHEBI:32845", "CHEBI:17822", "CHEBI:26648", "CHEBI:32837", "CHEBI:32836", "CHEBI:15081", "CHEBI:35243", "CHEBI:32846", "CHEBI:33384", "CHEBI:9116"]},
         "CHEBI:15428": {"x": null, "y": null, "level": 2, "name": "glycine", "alt": ["CHEBI:14344", "CHEBI:42964", "CHEBI:5460", "CHEBI:10792", "CHEBI:24368", "CHEBI:32508", "CHEBI:32507", "CHEBI:57305"]},
@@ -15,7 +15,5 @@
         "CHEBI:32398": {"x": 668, "y": 755, "level": 1, "name": "D-glyceric acid", "alt": ["CHEBI:21030", "CHEBI:41990", "CHEBI:4187", "CHEBI:24348", "CHEBI:33846", "CHEBI:33508", "CHEBI:24349", "CHEBI:33871", "CHEBI:10999", "CHEBI:12985", "CHEBI:21027", "CHEBI:16659"]},
         "CHEBI:17180": {"x": 735, "y": 755, "level": 1, "name": "3-hydroxypyruvate", "alt": ["CHEBI:11837", "CHEBI:14425", "CHEBI:20082", "CHEBI:30841", "CHEBI:39999", "CHEBI:5813", "CHEBI:20083"]},
         "CHEBI:58272": {"x": 719, "y": 424, "level": 1, "name": "3-phosphonato-D-glycerate(3-), 3-Phospho-D-glycerate", "alt": ["CHEBI:11879", "CHEBI:11880", "CHEBI:17794", "CHEBI:21029", "CHEBI:1657", "CHEBI:58272", "CHEBI:12987"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

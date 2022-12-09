@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "ubiquinone and other terpenoid-quinone biosynthesis",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "ubiquinone and other terpenoid-quinone biosynthesis",
     "data": {
         "CHEBI:17895": {"x": 992, "y": 324, "level": 1, "name": "L-Tyrosine", "alt": ["CHEBI:6313", "CHEBI:21411", "CHEBI:46070", "CHEBI:9800", "CHEBI:32786", "CHEBI:15277", "CHEBI:32761", "CHEBI:32784", "CHEBI:46161", "CHEBI:13181", "CHEBI:32760", "CHEBI:58315", "CHEBI:32762", "CHEBI:27176", "CHEBI:18186", "CHEBI:32785"]},
         "CHEBI:30763": {"x": 1165, "y": 403, "level": 1, "name": "4-Hydroxybenzoate", "alt": ["CHEBI:20398", "CHEBI:44949", "CHEBI:1858", "CHEBI:20397", "CHEBI:17879", "CHEBI:12003"]},
@@ -62,6 +62,5 @@
         "CHEBI:77107": {"x": 1282, "y": 491, "level": 1, "name": "3-[(1-Carboxyvinyl)oxy]benzoate", "alt": []},
         "CHEBI:64260": {"x": 1301, "y": 491, "level": 1, "name": "6-Amino-6-deoxyfutalosine", "alt": []},
         "CHEBI:88158": {"x": 1252, "y": 371, "level": 1, "name": "2-Carboxy-1,4-naphthoquinone", "alt": []}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

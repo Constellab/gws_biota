@@ -1,6 +1,6 @@
 {  
-    "parent": "energy metabolism",
-    "name": "methane metabolism",
+    "cluster": "energy metabolism",
+    "pathway": "methane metabolism",
     "data": {
         "CHEBI:16848": {"x": 589, "y": 796, "level": 1, "name": "coenzyme gamma-F420-2", "alt": ["CHEBI:14010", "CHEBI:3807", "CHEBI:14008", "CHEBI:23351", "CHEBI:57922"]},
         "CHEBI:15823": {"x": 606, "y": 796, "level": 1, "name": "1,5-dihydrocoenzyme F420", "alt": ["CHEBI:8788", "CHEBI:15020", "CHEBI:15021", "CHEBI:26524"]},
@@ -54,6 +54,5 @@
         "CHEBI:59536": {"x": 589, "y": 759, "level": 1, "name": "coenzyme F420-1", "alt": ["CHEBI:59920"]},
         "CHEBI:181949": {"x": null, "y": null, "level": 2, "name": "APMF-Glu", "alt": [""]},
         "CHEBI:15760": {"x": 954, "y": 316, "level": 1, "name": "tyramine", "alt": ["CHEBI:9799", "CHEBI:15276", "CHEBI:27174", "CHEBI:327995"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

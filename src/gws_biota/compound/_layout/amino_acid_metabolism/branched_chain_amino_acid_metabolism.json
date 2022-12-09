@@ -1,6 +1,6 @@
 {  
-    "parent": "amino acid metabolism",
-    "name": "branched-chain amino acid metabolism",
+    "cluster": "amino acid metabolism",
+    "pathway": "branched-chain amino acid metabolism",
     "data": {
         "CHEBI:30934": {"x": 906,    "y": 475, "level": 1, "name": "D-citramalate(2-)", "alt": ["CHEBI:10977", "CHEBI:18562", "CHEBI:15586", "CHEBI:315", "CHEBI:18563"]},
         "CHEBI:17626": {"x": 987,    "y": 475, "level": 1, "name": "citraconic acid", "alt": ["CHEBI:1207", "CHEBI:19703", "CHEBI:19704", "CHEBI:11623", "CHEBI:30719"]},
@@ -26,8 +26,6 @@
         "CHEBI:17191": {"x": 1019,    "y": 614, "level": 1, "name": "L-isoleucine", "alt": ["CHEBI:43290", "CHEBI:43342", "CHEBI:43366", "CHEBI:6255", "CHEBI:13127", "CHEBI:21344", "CHEBI:32604", "CHEBI:32605", "CHEBI:32613", "CHEBI:32612", "CHEBI:24898", "CHEBI:58045"]},
         "CHEBI:80218": {"x": 435,    "y": 596, "level": 1, "name": "Enzyme N6-(lipoyl)lysine", "alt": []},
         "CHEBI:80219": {"x": 952,    "y": 611, "level": 1, "name": "Enzyme N6-(dihydrolipoyl)lysine", "alt": []},
-
         "CHEBI:16414": {"x": 1055,    "y": 635, "level": 1, "name": "L-valine", "alt": ["CHEBI:46376", "CHEBI:46282", "CHEBI:46484", "CHEBI:46418", "CHEBI:13186", "CHEBI:21417", "CHEBI:6321", "CHEBI:32859", "CHEBI:57762", "CHEBI:32852", "CHEBI:32851", "CHEBI:87977", "CHEBI:32860", "CHEBI:27266"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

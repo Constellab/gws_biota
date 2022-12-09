@@ -1,7 +1,7 @@
 {  
-    "parent": "carbohydrate metabolism",
-    "subparent": "other carbohydrate metabolism",
-    "name": "ethylmalonyl pathway",
+    "cluster": "carbohydrate metabolism",
+    "sub_cluster": "other carbohydrate metabolism",
+    "pathway": "ethylmalonyl pathway",
     "data": {
         "CHEBI:15345": {"x": 912, "y": 802, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173", "CHEBI:57286"]},
         "CHEBI:15452": {"x": 950, "y": 802, "level": 1, "name": "(R)-3-hydroxybutanoyl-CoA", "alt": ["CHEBI:10879", "CHEBI:18667", "CHEBI:10984", "CHEBI:323"]},
@@ -17,7 +17,5 @@
         "CHEBI:57292": {"x": 714, "y": 709, "level": 1, "name": "succinyl-CoA(5-)", "alt": ["CHEBI:57292", "CHEBI:10746", "CHEBI:15127", "CHEBI:15380", "CHEBI:9310", "CHEBI:45541", "CHEBI:26811"]},
         "CHEBI:15465": {"x": 826, "y": 719, "level": 1, "name": "(R)-methylmalonyl-CoA", "alt": ["CHEBI:10976", "CHEBI:313", "CHEBI:18654", "CHEBI:57326"]},
         "CHEBI:27969": {"x": 662, "y": 730, "level": 1, "name": "mesaconyl-CoA", "alt": ["CHEBI:6774", "CHEBI:25201", "CHEBI:75635"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

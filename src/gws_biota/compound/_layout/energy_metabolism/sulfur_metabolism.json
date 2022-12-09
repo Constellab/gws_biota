@@ -1,11 +1,10 @@
 {  
-    "parent": "energy metabolism",
-    "name": "sulfur metabolism",
+    "cluster": "energy metabolism",
+    "pathway": "sulfur metabolism",
     "data": {
         "CHEBI:33541": {"x": 895, "y": 373, "level": 1, "name": "thiosulfate(1−)", "alt": ["CHEBI:33540", "CHEBI:9569", "CHEBI:26977", "CHEBI:15242", "CHEBI:16094", "CHEBI:29279", "CHEBI:45922", "CHEBI:5587", "CHEBI:33542", "CHEBI:33539"]},
         "CHEBI:17709": {"x": 926, "y": 390, "level": 1, "name": "5'-adenylyl sulfate", "alt": ["CHEBI:40562", "CHEBI:12059", "CHEBI:2486", "CHEBI:13741", "CHEBI:13743", "CHEBI:22247", "CHEBI:58243"]},
         "CHEBI:48854": {"x": 926, "y": 410, "level": 1, "name": "sulfurous acid", "alt": ["CHEBI:9344", "CHEBI:26837", "CHEBI:15139", "CHEBI:17137", "CHEBI:45548", "CHEBI:5598", "CHEBI:29214", "CHEBI:13367", "CHEBI:17359", "CHEBI:33543"]},
         "CHEBI:16136": {"x": 926, "y": 437, "level": 1, "name": "hydrogen sulfide", "alt": ["CHEBI:14414", "CHEBI:45489", "CHEBI:43058", "CHEBI:5787", "CHEBI:13356", "CHEBI:24639", "CHEBI:30488", "CHEBI:29919", "CHEBI:15138"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

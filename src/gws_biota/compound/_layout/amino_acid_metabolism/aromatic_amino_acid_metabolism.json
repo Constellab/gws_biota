@@ -1,6 +1,6 @@
 {  
-    "parent": "amino acid metabolism",
-    "name": "aromatic amino acid metabolism",
+    "cluster": "amino acid metabolism",
+    "pathway": "aromatic amino acid metabolism",
     "data": {
         "CHEBI:48153": {"x": 748, "y": 321, "level": 1, "name": "D-erythrose 4-phosphate", "alt": ["CHEBI:42349", "CHEBI:4114", "CHEBI:12921", "CHEBI:20927", "CHEBI:16897"]},
         "CHEBI:15765": {"x": null, "y": null, "level": 2, "name": "L-dopa", "alt": ["CHEBI:75987", "CHEBI:41871", "CHEBI:49933", "CHEBI:1377", "CHEBI:11693", "CHEBI:13098", "CHEBI:19825", "CHEBI:57504"]},
@@ -53,6 +53,5 @@
         "CHEBI:1506": {"x": 1047, "y": 391, "level": 1, "name": "3-Fumarylpyruvate", "alt": ["CHEBI:16854", "CHEBI:11796", "CHEBI:20024", "CHEBI:47940", "CHEBI:47941"]},
         "CHEBI:16727": {"x": 1026, "y": 391, "level": 1, "name": "maleylpyruvate", "alt": ["CHEBI:11845", "CHEBI:14562", "CHEBI:25126", "CHEBI:30859", "CHEBI:25127", "CHEBI:6655"]}
 
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

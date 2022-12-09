@@ -1,6 +1,6 @@
 {  
-    "parent": "amino acid metabolism",
-    "name": "histidine metabolism",
+    "cluster": "amino acid metabolism",
+    "pathway": "histidine metabolism",
     "data": {
         "CHEBI:17111": {"x": 849, "y": 336, "level": 1, "name": "5-O-phosphono-alpha-D-ribofuranosyl diphosphate", "alt": ["CHEBI:12160", "CHEBI:12159", "CHEBI:2121", "CHEBI:45139", "CHEBI:20625",  "CHEBI:58017"]},
         "CHEBI:73200": {"x": 870, "y": 336, "level": 1, "name": "1-(5-phospho-berta-D-ribosyl)-ATP", "alt": ["CHEBI:58424", "CHEBI:11196", "CHEBI:18263", "CHEBI:73183", "CHEBI:8167", "CHEBI:18970", "CHEBI:59460", "CHEBI:11192"]},
@@ -19,7 +19,5 @@
         "CHEBI:48309": {"x": 958, "y": 677, "level": 1, "name": "N-formyl-L-glutamic acid", "alt": ["CHEBI:7278", "CHEBI:21711", "CHEBI:17684", "CHEBI:12504", "CHEBI:21710"]},
         "CHEBI:16974": {"x": 1087, "y": 440, "level": 1, "name": "Imidazole-4-acetate", "alt": ["CHEBI:12017", "CHEBI:5875", "CHEBI:14435", "CHEBI:24776", "CHEBI:24777", "CHEBI:43615", "CHEBI:57969", "CHEBI:70804"]},
         "CHEBI:15727": {"x": 1125, "y": 278, "level": 1, "name": "carnosine", "alt": ["CHEBI:3428", "CHEBI:13948", "CHEBI:23040", "CHEBI:57485"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

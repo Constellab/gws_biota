@@ -1,6 +1,6 @@
 {  
-    "parent": "vitamin and cofactor metabolism",
-    "name": "thiamine metabolism",
+    "cluster": "vitamin and cofactor metabolism",
+    "pathway": "thiamine metabolism",
     "data": {
         "CHEBI:18405": {"x": 1250, "y": 311, "level": 1, "name": "Pyridoxal phosphate", "alt": ["CHEBI:8668", "CHEBI:45145", "CHEBI:26424", "CHEBI:358848", "CHEBI:234571", "CHEBI:14977", "CHEBI:597326"]},
         "CHEBI:15428": {"x": null, "y": null, "level": 1, "name": "Glycine", "alt": ["CHEBI:32508", "CHEBI:32507", "CHEBI:42964", "CHEBI:14344", "CHEBI:24368", "CHEBI:10792", "CHEBI:5460", "CHEBI:57305"]},
@@ -28,6 +28,5 @@
         "CHEBI:44549": {"x": 1170, "y": 173, "level": 1, "name": "4-Amino-5-aminomethyl-2-methylpyrimidine", "alt": []},
         "CHEBI:134399": {"x": 1258, "y": 223, "level": 1, "name": "ADP-5-ethyl-4-methylthiazole-2-carboxylate", "alt": ["CHEBI:40688"]},
         "CHEBI:29052": {"x": 719, "y": 366, "level": 1, "name": "D-Glyceraldehyde 3-phosphate", "alt": ["CHEBI:21026", "CHEBI:181", "CHEBI:12984", "CHEBI:12983", "CHEBI:18324", "CHEBI:5446", "CHEBI:14333", "CHEBI:17138", "CHEBI:58027", "CHEBI:59776"]}
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }

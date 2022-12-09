@@ -1,6 +1,6 @@
 {  
-    "parent": "amino acid metabolism",
-    "name": "other amino acid metabolism",
+    "cluster": "amino acid metabolism",
+    "pathway": "other amino acid metabolism",
     "data": {
         "CHEBI:17415": {"x": 844, "y": 194, "level": 1, "name": "2,5-dioxopentanoic acid", "alt": ["CHEBI:11454", "CHEBI:938", "CHEBI:19385", "CHEBI:58136"]},
         "CHEBI:16352": {"x": 913, "y": 282, "level": 1, "name": "4-hydroxy-1-pyrroline-2-carboxylic acid", "alt": ["CHEBI:684", "CHEBI:11296", "CHEBI:19094", "CHEBI:57745"]},
@@ -22,7 +22,5 @@
         "CHEBI:18407": {"x": 886, "y": 774, "level": 1, "name": "Hydrogen cyanide", "alt": ["CHEBI:5786", "CHEBI:13362"]},
         "CHEBI:17084": {"x": 607, "y": 699, "level": 1, "name": "2-Hydroxyglutarate", "alt": ["CHEBI:1160", "CHEBI:11596", "CHEBI:132941", "CHEBI:36149"]},
         "CHEBI:17196": {"x": 849, "y": 616, "level": 1, "name": "L-Asparagine", "alt": ["CHEBI:40902", "CHEBI:6191", "CHEBI:13083", "CHEBI:21242", "CHEBI:22653", "CHEBI:32651", "CHEBI:58048", "CHEBI:32661", "CHEBI:32660", "CHEBI:32650"]}
-
-    },
-    "centroid": {"x": 0, "y": 0}
+    }
 }
