@@ -14,7 +14,7 @@ from .compound_layout import CompoundLayout
 # Info provided by the user
 class UpdateCompoundLayout(BaseModel):
     chebi_id: str
-    cluster_name: str
+    cluster_id: str
     level: int
     x: float
     y: float
@@ -30,7 +30,7 @@ def update_compound_layout(
 
     CompoundLayout.update_compound_layout(
         chebi_id=compound_layout.chebi_id,
-        cluster_name=compound_layout.cluster_name,
+        cluster_id=compound_layout.cluster_id,
         level=compound_layout.level,
         x=compound_layout.x,
         y=compound_layout.y
