@@ -20,7 +20,7 @@ class UpdateCompoundLayout(BaseModel):
     y: float
 
 
-@core_app.put("/biota/compound-layout")
+@core_app.put("/biota/compound/layout")
 def update_compound_layout(
         compound_layout: UpdateCompoundLayout,
         _=Depends(AuthService.check_user_access_token)):
