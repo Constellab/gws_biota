@@ -28,10 +28,12 @@ class DbManager(AbstractDbManager):
 
         if mode == 'test':
             return settings.get_gws_core_test_db_config()
-        elif mode == 'prod':
-            return cls.get_prod_db_config()
         else:
-            return cls.get_local_db_config()
+            return cls.get_prod_db_config()
+        # elif mode == 'prod':
+        #     return cls.get_prod_db_config()
+        # else:
+        #     return cls.get_local_db_config()
 
     @classmethod
     def get_prod_db_config(cls) -> DbConfig:
@@ -44,16 +46,16 @@ class DbManager(AbstractDbManager):
             "engine": "mariadb"
         }
 
-    @classmethod
-    def get_local_db_config(cls) -> DbConfig:
-        return {
-            "host":  "gws_biota_dev_db",
-            "user": "gws_biota",
-            "password": "gencovery",
-            "port": 3306,
-            "db_name": "gws_biota",
-            "engine": "mariadb"
-        }
+    # @classmethod
+    # def get_local_db_config(cls) -> DbConfig:
+    #     return {
+    #         "host":  "gws_biota_dev_db",
+    #         "user": "gws_biota",
+    #         "password": "gencovery",
+    #         "port": 3306,
+    #         "db_name": "gws_biota",
+    #         "engine": "mariadb"
+    #     }
 
     @classmethod
     def get_unique_name(cls) -> str:

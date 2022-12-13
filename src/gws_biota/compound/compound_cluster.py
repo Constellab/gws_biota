@@ -59,6 +59,11 @@ class CompoundCluster:
         self._data = data
         self._centroid = centroid
 
+        for c in self._data.values():
+            x, y = self.convert_position_from_db_to_view(self._name, c["x"], c["y"])
+            c["x"] = x
+            c["y"] = y
+
     @property
     def pathway(self):
         return self._pathway
@@ -83,11 +88,11 @@ class CompoundCluster:
             y = float(y)
             x_shift = (GOLBAL_CENTER["x"] - centroid["x"])
             y_shift = (GOLBAL_CENTER["y"] - centroid["y"])
-            x = (x/GRID_SCALE + x_shift) if isinstance(x, (float, int)) else 0
-            y = (y/GRID_SCALE + y_shift) if isinstance(y, (float, int)) else 0
+            x = (x/GRID_SCALE + x_shift) if isinstance(x, (float, int)) else None
+            y = (y/GRID_SCALE + y_shift) if isinstance(y, (float, int)) else None
             return x, y
         except:
-            return 0, 0
+            return None, None
 
     @classmethod
     def convert_position_from_db_to_view(cls, cluster_name, x, y):
@@ -99,11 +104,11 @@ class CompoundCluster:
             y = float(y)
             x_shift = (GOLBAL_CENTER["x"] - centroid["x"])
             y_shift = (GOLBAL_CENTER["y"] - centroid["y"])
-            x = GRID_SCALE*(x - x_shift) if isinstance(x, (float, int)) else 0
-            y = GRID_SCALE*(y - y_shift) if isinstance(y, (float, int)) else 0
+            x = GRID_SCALE*(x - x_shift) if isinstance(x, (float, int)) else None
+            y = GRID_SCALE*(y - y_shift) if isinstance(y, (float, int)) else None
             return x, y
         except:
-            return 0, 0
+            return None, None
 
     # -- F --
 
@@ -134,7 +139,7 @@ class CompoundCluster:
     def load_centroid_data_from_cluster_name(cls, cluster_name):
         from .compound_layout import CompoundLayout
         cluster_path = CompoundLayout.get_cluster_path(cluster_name)
-        return cls.load_centroid_data_from_folder(cluster_path)
+        return cls.load_centroid_data_from_folder(cluster_path.replace(" ", "_"))
 
     @classmethod
     def load_centroid_data_from_folder(cls, folder):

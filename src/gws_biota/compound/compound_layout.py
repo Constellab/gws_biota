@@ -6,11 +6,10 @@
 import copy
 import json
 import os
-import random
 from pathlib import Path
 from typing import Dict, List, TypedDict, Union
 
-from gws_core import BadRequestException, StringHelper
+from gws_core import BadRequestException
 
 from .compound_cluster import CompoundCluster, CompoundClusterDict
 
