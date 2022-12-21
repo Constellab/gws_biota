@@ -204,7 +204,17 @@ class CompoundLayout:
         with open(file_path, 'r', encoding="utf-8") as fp:
             content = json.load(fp)
 
-        if chebi_id in content["data"]:
+        found = False
+        if chebi_id not in content["data"]:
+            for current_chebi_id, data in content["data"].items():
+                if chebi_id in data.get("alt", []):
+                    chebi_id = current_chebi_id
+                    found = True
+                    break
+        else:
+            found = True
+
+        if found:
             x, y = CompoundCluster.convert_position_from_view_to_db(cluster_id, x, y)
             content["data"][chebi_id]["x"] = x
             content["data"][chebi_id]["y"] = y

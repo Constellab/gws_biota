@@ -1,94 +1,1195 @@
-{  
+{
     "id": "nucleotide_metabolism",
     "name": "nucleotide metabolism",
     "pathway": "purine metabolism",
     "data": {
-        "CHEBI:16134": {"x": 1079, "y": 609, "level": 1, "name": "ammonia", "alt": ["CHEBI:44284", "CHEBI:44269", "CHEBI:44404", "CHEBI:13405", "CHEBI:13406", "CHEBI:13407", "CHEBI:13771", "CHEBI:7434", "CHEBI:22533", "CHEBI:135980", "CHEBI:29337", "CHEBI:29340", "CHEBI:28938", "CHEBI:22534", "CHEBI:49783", "CHEBI:7435"]},
-        "CHEBI:16027": {"x": 1127, "y": 93, "level": 1, "name": "AMP", "alt": ["CHEBI:40826", "CHEBI:47222", "CHEBI:40510", "CHEBI:13234", "CHEBI:13740", "CHEBI:40726", "CHEBI:2356", "CHEBI:13235", "CHEBI:40786", "CHEBI:22242", "CHEBI:22245", "CHEBI:12056", "CHEBI:13736", "CHEBI:40721", "CHEBI:456215"]},
-        "CHEBI:17552": {"x": 1248, "y": 93, "level": 1, "name": "GDP", "alt": ["CHEBI:13327", "CHEBI:14379", "CHEBI:24448", "CHEBI:42738", "CHEBI:5212", "CHEBI:58189", "CHEBI:65180"]},
-        "CHEBI:15428": {"x": null, "y": null, "level": 1, "name": "Glycine", "alt": ["CHEBI:14344", "CHEBI:42964", "CHEBI:5460", "CHEBI:10792", "CHEBI:24368", "CHEBI:32508", "CHEBI:32507", "CHEBI:57305"]},
-        "CHEBI:15996": {"x": 1277, "y": 93, "level": 1, "name": "GTP", "alt": ["CHEBI:24451", "CHEBI:42934", "CHEBI:13342", "CHEBI:5234", "CHEBI:37565", "CHEBI:57600"]},
-        "CHEBI:16891": {"x": 722, "y": 635, "level": 1, "name": "Glyoxylate", "alt": ["CHEBI:24421", "CHEBI:5509", "CHEBI:42767", "CHEBI:24420", "CHEBI:36655", "CHEBI:14368", "CHEBI:35977"]},
-        "CHEBI:17980": {"x": 950, "y": 390, "level": 1, "name": "3'-Phosphoadenylyl sulfate", "alt": ["CHEBI:1353", "CHEBI:11680", "CHEBI:19857", "CHEBI:11679", "CHEBI:58339"]},
-        "CHEBI:17985": {"x": 964, "y": 390, "level": 1, "name": "Adenosine 3',5'-bisphosphate", "alt": ["CHEBI:2475", "CHEBI:22240", "CHEBI:13735", "CHEBI:58343"]},
-        "CHEBI:16189": {"x": 926, "y": 373, "level": 1, "name": "Sulfate", "alt": ["CHEBI:9335", "CHEBI:45687", "CHEBI:15135", "CHEBI:45693", "CHEBI:29199", "CHEBI:26836", "CHEBI:45696"]},
-        "CHEBI:18050": {"x": 1020, "y": 120, "level": 1, "name": "L-Glutamine", "alt": ["CHEBI:21308", "CHEBI:42899", "CHEBI:42812", "CHEBI:42814", "CHEBI:42943", "CHEBI:6227", "CHEBI:13110", "CHEBI:32679", "CHEBI:32678", "CHEBI:58359", "CHEBI:28300", "CHEBI:32666", "CHEBI:32665", "CHEBI:5432", "CHEBI:24316"]},
-        "CHEBI:16039": {"x": 1204, "y": 67, "level": 1, "name": "ITP", "alt": ["CHEBI:13374", "CHEBI:19272", "CHEBI:5851", "CHEBI:43508", "CHEBI:61402", "CHEBI:57614"]},
-        "CHEBI:16199": {"x": 1202, "y": 596, "level": 1, "name": "Urea", "alt": ["CHEBI:46379", "CHEBI:15292", "CHEBI:27218", "CHEBI:9888", "CHEBI:134711", "CHEBI:32285", "CHEBI:48376"]},
-        "CHEBI:17808": {"x": 1181, "y": 67, "level": 1, "name": "IDP", "alt": ["CHEBI:13371", "CHEBI:5848", "CHEBI:43252", "CHEBI:19270", "CHEBI:58280"]},
-        "CHEBI:17797": {"x": 809, "y": 336, "level": 1, "name": "D-Ribose 5-phosphate", "alt": ["CHEBI:15048", "CHEBI:21083", "CHEBI:13013", "CHEBI:4238"]},
-        "CHEBI:17111": {"x": 1167, "y": 180, "level": 1, "name": "5-Phospho-alpha-D-ribose 1-diphosphate", "alt": ["CHEBI:2121", "CHEBI:45139", "CHEBI:12160", "CHEBI:20625", "CHEBI:12159", "CHEBI:58017"]},
-        "CHEBI:17202": {"x": 1171, "y": 93, "level": 1, "name": "IMP", "alt": ["CHEBI:5849", "CHEBI:12057", "CHEBI:43524", "CHEBI:43418", "CHEBI:13372", "CHEBI:19271", "CHEBI:43475", "CHEBI:12063", "CHEBI:47501", "CHEBI:43611", "CHEBI:43563", "CHEBI:14457", "CHEBI:13373", "CHEBI:43528", "CHEBI:58053"]},
-        "CHEBI:16284": {"x": 1079, "y": 113, "level": 1, "name": "dATP", "alt": ["CHEBI:14069", "CHEBI:19238", "CHEBI:10491", "CHEBI:42290", "CHEBI:495505", "CHEBI:61404"]},
-        "CHEBI:17345": {"x": 1224, "y": 93, "level": 1, "name": "GMP", "alt": ["CHEBI:42979", "CHEBI:24449", "CHEBI:42647", "CHEBI:42831", "CHEBI:47450", "CHEBI:40119", "CHEBI:5228", "CHEBI:13341", "CHEBI:14381", "CHEBI:24450", "CHEBI:42887", "CHEBI:58115", "CHEBI:29058", "CHEBI:42615", "CHEBI:42892"]},
-        "CHEBI:16708": {"x": 1127, "y": 140, "level": 1, "name": "Adenine", "alt": ["CHEBI:40579", "CHEBI:2470", "CHEBI:13733", "CHEBI:22236"]},
-        "CHEBI:17672": {"x": 1097, "y": 609, "level": 1, "name": "Carbamoyl phosphate", "alt": ["CHEBI:23005", "CHEBI:13942", "CHEBI:3389", "CHEBI:41567", "CHEBI:58228"]},
-        "CHEBI:16174": {"x": 1105, "y": 113, "level": 1, "name": "dADP", "alt": ["CHEBI:19235", "CHEBI:41890", "CHEBI:14067", "CHEBI:10489", "CHEBI:57667"]},
-        "CHEBI:16995": {"x": 722, "y": 624, "level": 1, "name": "Oxalate", "alt": ["CHEBI:44583", "CHEBI:7811", "CHEBI:25730", "CHEBI:46904", "CHEBI:14702", "CHEBI:132952", "CHEBI:30623", "CHEBI:44820", "CHEBI:25729"]},
-        "CHEBI:16335": {"x": 1127, "y": 116, "level": 1, "name": "Adenosine", "alt": ["CHEBI:2472", "CHEBI:40558", "CHEBI:40825", "CHEBI:40906", "CHEBI:40911", "CHEBI:13734", "CHEBI:22237"]},
-        "CHEBI:17709": {"x": 926, "y": 390, "level": 1, "name": "Adenylyl sulfate", "alt": ["CHEBI:12059", "CHEBI:13743", "CHEBI:22247", "CHEBI:13741", "CHEBI:40562", "CHEBI:2486", "CHEBI:58243"]},
-        "CHEBI:16235": {"x": 1224, "y": 140, "level": 1, "name": "Guanine", "alt": ["CHEBI:14372", "CHEBI:14371", "CHEBI:24443", "CHEBI:5563", "CHEBI:42948"]},
-        "CHEBI:17368": {"x": 1171, "y": 140, "level": 1, "name": "Hypoxanthine", "alt": ["CHEBI:24762", "CHEBI:5841", "CHEBI:43237", "CHEBI:14431"]},
-        "CHEBI:16497": {"x": 1277, "y": 113, "level": 1, "name": "dGTP", "alt": ["CHEBI:19247", "CHEBI:14076", "CHEBI:10497", "CHEBI:57794", "CHEBI:61429"]},
-        "CHEBI:17544": {"x": null, "y": null, "level": 1, "name": "HCO3-", "alt": ["CHEBI:22863", "CHEBI:40961", "CHEBI:13363", "CHEBI:5589", "CHEBI:41605", "CHEBI:13351", "CHEBI:29201", "CHEBI:3401", "CHEBI:23017", "CHEBI:23744", "CHEBI:41609", "CHEBI:28976"]},
-        "CHEBI:17596": {"x": 1171, "y": 116, "level": 1, "name": "Inosine", "alt": ["CHEBI:14456", "CHEBI:24841", "CHEBI:44407", "CHEBI:5927"]},
-        "CHEBI:16960": {"x": 809, "y": 372, "level": 1, "name": "ADP-ribose", "alt": ["CHEBI:13231", "CHEBI:40752", "CHEBI:20850", "CHEBI:2351", "CHEBI:32889", "CHEBI:57967"]},
-        "CHEBI:17172": {"x": 1277, "y": 129, "level": 1, "name": "Deoxyguanosine", "alt": ["CHEBI:14116", "CHEBI:42987", "CHEBI:4412", "CHEBI:42667", "CHEBI:19244", "CHEBI:23624", "CHEBI:42867", "CHEBI:42874"]},
-        "CHEBI:17713": {"x": 1105, "y": 127, "level": 1, "name": "dAMP", "alt": ["CHEBI:40607", "CHEBI:41864", "CHEBI:41815", "CHEBI:40499", "CHEBI:10490", "CHEBI:19236", "CHEBI:40544", "CHEBI:14068", "CHEBI:40505", "CHEBI:40419", "CHEBI:40614", "CHEBI:41870", "CHEBI:58245"]},
-        "CHEBI:28862": {"x": 1248, "y": 113, "level": 1, "name": "dGDP", "alt": ["CHEBI:10495", "CHEBI:41949", "CHEBI:19245", "CHEBI:58595"]},
-        "CHEBI:16192": {"x": 1248, "y": 129, "level": 1, "name": "dGMP", "alt": ["CHEBI:42676", "CHEBI:41902", "CHEBI:14074", "CHEBI:19246", "CHEBI:10496", "CHEBI:42726", "CHEBI:42733", "CHEBI:47449", "CHEBI:41939", "CHEBI:57673", "CHEBI:41944", "CHEBI:45049"]},
-        "CHEBI:17775": {"x": 1081, "y": 216, "level": 1, "name": "Urate", "alt": ["CHEBI:9885", "CHEBI:46455", "CHEBI:27216", "CHEBI:46817", "CHEBI:46814", "CHEBI:46826", "CHEBI:49051", "CHEBI:46818", "CHEBI:15290", "CHEBI:46821", "CHEBI:46824", "CHEBI:46825", "CHEBI:27226", "CHEBI:46820", "CHEBI:46823", "CHEBI:46822", "CHEBI:30848", "CHEBI:46811"]},
-        "CHEBI:48517": {"x": 1194, "y": 140, "level": 1, "name": "Xanthine", "alt": ["CHEBI:15318", "CHEBI:10059", "CHEBI:46377", "CHEBI:17712", "CHEBI:27317"]},
-        "CHEBI:16750": {"x": 1224, "y": 116, "level": 1, "name": "Guanosine", "alt": ["CHEBI:14375", "CHEBI:471737", "CHEBI:24444", "CHEBI:5564", "CHEBI:42840", "CHEBI:42847", "CHEBI:42853"]},
-        "CHEBI:30837": {"x": 1081, "y": 473, "level": 1, "name": "Allantoate", "alt": ["CHEBI:22353", "CHEBI:2593", "CHEBI:22352", "CHEBI:13760", "CHEBI:17536"]},
-        "CHEBI:17256": {"x": 1079, "y": 127, "level": 1, "name": "Deoxyadenosine", "alt": ["CHEBI:19234", "CHEBI:40560", "CHEBI:4405", "CHEBI:14112", "CHEBI:40535", "CHEBI:39863", "CHEBI:40565"]},
-        "CHEBI:17489": {"x": 1127, "y": 69, "level": 1, "name": "3',5'-Cyclic AMP", "alt": ["CHEBI:19827", "CHEBI:1325", "CHEBI:41588", "CHEBI:11673", "CHEBI:58165"]},
-        "CHEBI:15412": {"x": null, "y": null, "level": 1, "name": "(S)-Ureidoglycolate", "alt": ["CHEBI:10783", "CHEBI:18499", "CHEBI:121", "CHEBI:18804", "CHEBI:11076", "CHEBI:49050", "CHEBI:57296", "CHEBI:27224", "CHEBI:9891"]},
-        "CHEBI:16300": {"x": 1223, "y": 180, "level": 1, "name": "alpha-D-Ribose 1-phosphate", "alt": ["CHEBI:12330", "CHEBI:45482", "CHEBI:12329", "CHEBI:45429", "CHEBI:22412", "CHEBI:10269", "CHEBI:57720"]},
-        "CHEBI:15652": {"x": 1194, "y": 93, "level": 1, "name": "Xanthosine 5'-phosphate", "alt": ["CHEBI:15324", "CHEBI:10938", "CHEBI:10067", "CHEBI:27328", "CHEBI:57464"]},
-        "CHEBI:10049": {"x": 1194, "y": 72, "level": 1, "name": "XTP", "alt": ["CHEBI:61314", "CHEBI:59885"]},
-        "CHEBI:16582": {"x": 1087, "y": 565, "level": 1, "name": "Oxalureate", "alt": ["CHEBI:7816", "CHEBI:25737", "CHEBI:14706", "CHEBI:57824", "CHEBI:25736"]},
-        "CHEBI:16356": {"x": 1224, "y": 63, "level": 1, "name": "3',5'-Cyclic GMP", "alt": ["CHEBI:14377", "CHEBI:44955", "CHEBI:19829", "CHEBI:1327", "CHEBI:44957", "CHEBI:39915", "CHEBI:11675", "CHEBI:57746"]},
-        "CHEBI:17633": {"x": 1248, "y": 75, "level": 1, "name": "Guanosine 3',5'-bis(diphosphate)", "alt": ["CHEBI:24445", "CHEBI:5565", "CHEBI:42747", "CHEBI:14380", "CHEBI:14376", "CHEBI:58215", "CHEBI:77828"]},
-        "CHEBI:17422": {"x": 1069, "y": 201, "level": 1, "name": "P1,P4-Bis(5'-adenosyl)tetraphosphate", "alt": ["CHEBI:21998", "CHEBI:12726", "CHEBI:7875", "CHEBI:12729", "CHEBI:58141"]},
-        "CHEBI:15883": {"x": 1295, "y": 75, "level": 1, "name": "P1,P4-Bis(5'-guanosyl) tetraphosphate", "alt": ["CHEBI:12730", "CHEBI:21999", "CHEBI:7876", "CHEBI:12727", "CHEBI:57553"]},
-        "CHEBI:28931": {"x": 1140, "y": 127, "level": 1, "name": "3'-AMP", "alt": ["CHEBI:22241", "CHEBI:40872", "CHEBI:1333", "CHEBI:60880"]},
-        "CHEBI:18058": {"x": 1023, "y": 596, "level": 1, "name": "Oxamate", "alt": ["CHEBI:14708", "CHEBI:7818", "CHEBI:44589", "CHEBI:25740", "CHEBI:58363"]},
-        "CHEBI:18107": {"x": 1194, "y": 116, "level": 1, "name": "Xanthosine", "alt": ["CHEBI:15323", "CHEBI:10066", "CHEBI:27327"]},
-        "CHEBI:59945": {"x": 1047, "y": 473, "level": 1, "name": "(S)-Ureidoglycine", "alt": ["CHEBI:59945"]},
-        "CHEBI:15677": {"x": 1103, "y": 339, "level": 1, "name": "(R)(-)-Allantoin", "alt": ["CHEBI:298", "CHEBI:18640", "CHEBI:10962"]},
-        "CHEBI:15678": {"x": 1081, "y": 363, "level": 1, "name": "(S)-Allantoin", "alt": ["CHEBI:18724", "CHEBI:11024", "CHEBI:366"]},
-        "CHEBI:27844": {"x": 1140, "y": 145, "level": 1, "name": "2',3'-Cyclic AMP", "alt": ["CHEBI:40469", "CHEBI:823", "CHEBI:19212", "CHEBI:60879"]},
-        "CHEBI:18415": {"x": 1194, "y": 480, "level": 1, "name": "N-Formiminoglycine", "alt": ["CHEBI:7275", "CHEBI:12596", "CHEBI:21707", "CHEBI:58479"]},
-        "CHEBI:37737": {"x": 849, "y": 187, "level": 1, "name": "5-Phosphoribosylamine", "alt": ["CHEBI:20626", "CHEBI:2123", "CHEBI:42834", "CHEBI:133922", "CHEBI:12161", "CHEBI:58681"]},
-        "CHEBI:138560": {"x": 992, "y": 123, "level": 1, "name": "Aminoimidazole ribotide", "alt": []},
-        "CHEBI:18334": {"x": 1079, "y": 63, "level": 1, "name": "Adenosine tetraphosphate", "alt": ["CHEBI:13738", "CHEBI:22248", "CHEBI:2478", "CHEBI:58450"]},
-        "CHEBI:28505": {"x": 1204, "y": 50, "level": 1, "name": "Inosine 5'-tetraphosphate", "alt": ["CHEBI:5928", "CHEBI:24842"]},
-        "CHEBI:15919": {"x": 1149, "y": 93, "level": 1, "name": "N6-(1,2-Dicarboxyethyl)-AMP", "alt": ["CHEBI:21857", "CHEBI:12656", "CHEBI:12657", "CHEBI:7405", "CHEBI:39869", "CHEBI:57567", "CHEBI:22262"]},
-        "CHEBI:18349": {"x": 849, "y": 123, "level": 1, "name": "5'-Phosphoribosylglycinamide", "alt": ["CHEBI:20499", "CHEBI:1983", "CHEBI:12623", "CHEBI:58457"]},
-        "CHEBI:2030": {"x": 1109, "y": 41, "level": 1, "name": "5-Amino-4-imidazolecarboxyamide", "alt": ["CHEBI:20544"]},
-        "CHEBI:18272": {"x": 898, "y": 123, "level": 1, "name": "5'-Phosphoribosyl-N-formylglycinamide", "alt": ["CHEBI:1982", "CHEBI:12635", "CHEBI:20498", "CHEBI:42411", "CHEBI:58426"]},
-        "CHEBI:28400": {"x": 1194, "y": 50, "level": 1, "name": "P1,P4-Bis(5'-xanthosyl) tetraphosphate", "alt": ["CHEBI:22001", "CHEBI:7878"]},
-        "CHEBI:16690": {"x": 1266, "y": 75, "level": 1, "name": "Guanosine 3'-diphosphate 5'-triphosphate", "alt": ["CHEBI:14378", "CHEBI:5566", "CHEBI:14382", "CHEBI:24446", "CHEBI:71477", "CHEBI:60028"]},
-        "CHEBI:18413": {"x": 945, "y": 123, "level": 1, "name": "2-(Formamido)-N1-(5'-phosphoribosyl)acetamidine", "alt": ["CHEBI:11474", "CHEBI:971", "CHEBI:58478"]},
-        "CHEBI:18406": {"x": 1109, "y": 56, "level": 1, "name": "1-(5'-Phosphoribosyl)-5-amino-4-imidazolecarboxamide", "alt": ["CHEBI:573", "CHEBI:40739", "CHEBI:12102", "CHEBI:18966", "CHEBI:58475"]},
-        "CHEBI:18381": {"x": 1171, "y": 56, "level": 1, "name": "1-(5'-Phosphoribosyl)-5-formamido-4-imidazolecarboxamide", "alt": ["CHEBI:18967", "CHEBI:12125", "CHEBI:574", "CHEBI:58467"]},
-        "CHEBI:28413": {"x": 1050, "y": 123, "level": 1, "name": "1-(5-Phospho-D-ribosyl)-5-amino-4-imidazolecarboxylate", "alt": ["CHEBI:12103", "CHEBI:575", "CHEBI:18968", "CHEBI:77657", "CHEBI:58564", "CHEBI:41336"]},
-        "CHEBI:18319": {"x": 1050, "y": 56, "level": 1, "name": "1-(5'-Phosphoribosyl)-5-amino-4-(N-succinocarboxamide)-imidazole", "alt": ["CHEBI:18965", "CHEBI:572", "CHEBI:78110", "CHEBI:11028", "CHEBI:58443"]},
-        "CHEBI:16607": {"x": 1194, "y": 354, "level": 1, "name": "5-Aminoimidazole", "alt": ["CHEBI:11963", "CHEBI:28840", "CHEBI:20543", "CHEBI:2033", "CHEBI:1788"]},
-        "CHEBI:28997": {"x": 1079, "y": 151, "level": 1, "name": "Deoxyinosine", "alt": ["CHEBI:4413", "CHEBI:43293", "CHEBI:19248", "CHEBI:39841", "CHEBI:43436", "CHEBI:23629", "CHEBI:43437"]},
-        "CHEBI:50547": {"x": 1060, "y": 216, "level": 1, "name": "Urate-3-ribonucleoside", "alt": ["CHEBI:50546", "CHEBI:9887"]},
-        "CHEBI:27580": {"x": 1194, "y": 243, "level": 1, "name": "5-Ureido-4-imidazole carboxylate", "alt": ["CHEBI:20631", "CHEBI:2126"]},
-        "CHEBI:28280": {"x": 1194, "y": 297, "level": 1, "name": "5-Amino-4-imidazole carboxylate", "alt": ["CHEBI:2029", "CHEBI:20545"]},
-        "CHEBI:37666": {"x": 701, "y": 523, "level": 1, "name": "Acetyl adenylate", "alt": ["CHEBI:1951", "CHEBI:2405"]},
-        "CHEBI:28072": {"x": 1240, "y": 116, "level": 1, "name": "Guanosine 3'-phosphate", "alt": ["CHEBI:5567", "CHEBI:24447", "CHEBI:42888", "CHEBI:39948", "CHEBI:60732"]},
-        "CHEBI:28181": {"x": 1240, "y": 100, "level": 1, "name": "2',3'-Cyclic GMP", "alt": ["CHEBI:825", "CHEBI:19214", "CHEBI:60837"]},
-        "CHEBI:51023": {"x": 1194, "y": 410, "level": 1, "name": "Imidazolone", "alt": ["CHEBI:28470"]},
-        "CHEBI:27775": {"x": 1105, "y": 78, "level": 1, "name": "P1,P3-Bis(5'-adenosyl) triphosphate", "alt": ["CHEBI:21997", "CHEBI:12728", "CHEBI:7874", "CHEBI:58529"]},
-        "CHEBI:18072": {"x": 1081, "y": 272, "level": 1, "name": "5-Hydroxyisourate", "alt": ["CHEBI:12137", "CHEBI:2074", "CHEBI:20588", "CHEBI:59562"]},
-        "CHEBI:31132": {"x": 1081, "y": 314, "level": 1, "name": "5-Hydroxy-2-oxo-4-ureido-2,5-dihydro-1H-imidazole-5-carboxylate", "alt": ["CHEBI:58639"]},
-        "CHEBI:48000": {"x": 1022, "y": 111, "level": 1, "name": "5-Carboxyamino-1-(5-phospho-D-ribosyl)imidazole", "alt": ["CHEBI:58730"]},
-        "CHEBI:16991": {"x": 1062, "y": 113, "level": 1, "name": "DNA", "alt": ["CHEBI:33698", "CHEBI:4291", "CHEBI:13302", "CHEBI:21123"]},
-        "CHEBI:33697": {"x": 1284, "y": 66, "level": 1, "name": "RNA", "alt": []}
+        "CHEBI:16134": {
+            "x": 1079,
+            "y": 609,
+            "level": 1,
+            "name": "ammonia",
+            "alt": [
+                "CHEBI:44284",
+                "CHEBI:44269",
+                "CHEBI:44404",
+                "CHEBI:13405",
+                "CHEBI:13406",
+                "CHEBI:13407",
+                "CHEBI:13771",
+                "CHEBI:7434",
+                "CHEBI:22533",
+                "CHEBI:135980",
+                "CHEBI:29337",
+                "CHEBI:29340",
+                "CHEBI:28938",
+                "CHEBI:22534",
+                "CHEBI:49783",
+                "CHEBI:7435"
+            ]
+        },
+        "CHEBI:16027": {
+            "x": 1127,
+            "y": 93,
+            "level": 1,
+            "name": "AMP",
+            "alt": [
+                "CHEBI:40826",
+                "CHEBI:47222",
+                "CHEBI:40510",
+                "CHEBI:13234",
+                "CHEBI:13740",
+                "CHEBI:40726",
+                "CHEBI:2356",
+                "CHEBI:13235",
+                "CHEBI:40786",
+                "CHEBI:22242",
+                "CHEBI:22245",
+                "CHEBI:12056",
+                "CHEBI:13736",
+                "CHEBI:40721",
+                "CHEBI:456215"
+            ]
+        },
+        "CHEBI:17552": {
+            "x": 1248,
+            "y": 93,
+            "level": 1,
+            "name": "GDP",
+            "alt": [
+                "CHEBI:13327",
+                "CHEBI:14379",
+                "CHEBI:24448",
+                "CHEBI:42738",
+                "CHEBI:5212",
+                "CHEBI:58189",
+                "CHEBI:65180"
+            ]
+        },
+        "CHEBI:15428": {
+            "x": 1160.5979344175798,
+            "y": 227.93706750450673,
+            "level": 1,
+            "name": "Glycine",
+            "alt": [
+                "CHEBI:14344",
+                "CHEBI:42964",
+                "CHEBI:5460",
+                "CHEBI:10792",
+                "CHEBI:24368",
+                "CHEBI:32508",
+                "CHEBI:32507",
+                "CHEBI:57305"
+            ]
+        },
+        "CHEBI:15996": {
+            "x": 1277,
+            "y": 93,
+            "level": 1,
+            "name": "GTP",
+            "alt": [
+                "CHEBI:24451",
+                "CHEBI:42934",
+                "CHEBI:13342",
+                "CHEBI:5234",
+                "CHEBI:37565",
+                "CHEBI:57600"
+            ]
+        },
+        "CHEBI:16891": {
+            "x": 722,
+            "y": 635,
+            "level": 1,
+            "name": "Glyoxylate",
+            "alt": [
+                "CHEBI:24421",
+                "CHEBI:5509",
+                "CHEBI:42767",
+                "CHEBI:24420",
+                "CHEBI:36655",
+                "CHEBI:14368",
+                "CHEBI:35977"
+            ]
+        },
+        "CHEBI:17980": {
+            "x": 950,
+            "y": 390,
+            "level": 1,
+            "name": "3'-Phosphoadenylyl sulfate",
+            "alt": [
+                "CHEBI:1353",
+                "CHEBI:11680",
+                "CHEBI:19857",
+                "CHEBI:11679",
+                "CHEBI:58339"
+            ]
+        },
+        "CHEBI:17985": {
+            "x": 964,
+            "y": 390,
+            "level": 1,
+            "name": "Adenosine 3',5'-bisphosphate",
+            "alt": [
+                "CHEBI:2475",
+                "CHEBI:22240",
+                "CHEBI:13735",
+                "CHEBI:58343"
+            ]
+        },
+        "CHEBI:16189": {
+            "x": 926,
+            "y": 373,
+            "level": 1,
+            "name": "Sulfate",
+            "alt": [
+                "CHEBI:9335",
+                "CHEBI:45687",
+                "CHEBI:15135",
+                "CHEBI:45693",
+                "CHEBI:29199",
+                "CHEBI:26836",
+                "CHEBI:45696"
+            ]
+        },
+        "CHEBI:18050": {
+            "x": 1209.3333333333335,
+            "y": 285.33333333333337,
+            "level": 1,
+            "name": "L-Glutamine",
+            "alt": [
+                "CHEBI:21308",
+                "CHEBI:42899",
+                "CHEBI:42812",
+                "CHEBI:42814",
+                "CHEBI:42943",
+                "CHEBI:6227",
+                "CHEBI:13110",
+                "CHEBI:32679",
+                "CHEBI:32678",
+                "CHEBI:58359",
+                "CHEBI:28300",
+                "CHEBI:32666",
+                "CHEBI:32665",
+                "CHEBI:5432",
+                "CHEBI:24316"
+            ]
+        },
+        "CHEBI:16039": {
+            "x": 1204,
+            "y": 67,
+            "level": 1,
+            "name": "ITP",
+            "alt": [
+                "CHEBI:13374",
+                "CHEBI:19272",
+                "CHEBI:5851",
+                "CHEBI:43508",
+                "CHEBI:61402",
+                "CHEBI:57614"
+            ]
+        },
+        "CHEBI:16199": {
+            "x": 1202,
+            "y": 596,
+            "level": 1,
+            "name": "Urea",
+            "alt": [
+                "CHEBI:46379",
+                "CHEBI:15292",
+                "CHEBI:27218",
+                "CHEBI:9888",
+                "CHEBI:134711",
+                "CHEBI:32285",
+                "CHEBI:48376"
+            ]
+        },
+        "CHEBI:17808": {
+            "x": 1181,
+            "y": 67,
+            "level": 1,
+            "name": "IDP",
+            "alt": [
+                "CHEBI:13371",
+                "CHEBI:5848",
+                "CHEBI:43252",
+                "CHEBI:19270",
+                "CHEBI:58280"
+            ]
+        },
+        "CHEBI:17797": {
+            "x": 809,
+            "y": 336,
+            "level": 1,
+            "name": "D-Ribose 5-phosphate",
+            "alt": [
+                "CHEBI:15048",
+                "CHEBI:21083",
+                "CHEBI:13013",
+                "CHEBI:4238"
+            ]
+        },
+        "CHEBI:17111": {
+            "x": 985.0,
+            "y": 256.00000000000006,
+            "level": 1,
+            "name": "5-Phospho-alpha-D-ribose 1-diphosphate",
+            "alt": [
+                "CHEBI:2121",
+                "CHEBI:45139",
+                "CHEBI:12160",
+                "CHEBI:20625",
+                "CHEBI:12159",
+                "CHEBI:58017"
+            ]
+        },
+        "CHEBI:17202": {
+            "x": 1171,
+            "y": 93,
+            "level": 1,
+            "name": "IMP",
+            "alt": [
+                "CHEBI:5849",
+                "CHEBI:12057",
+                "CHEBI:43524",
+                "CHEBI:43418",
+                "CHEBI:13372",
+                "CHEBI:19271",
+                "CHEBI:43475",
+                "CHEBI:12063",
+                "CHEBI:47501",
+                "CHEBI:43611",
+                "CHEBI:43563",
+                "CHEBI:14457",
+                "CHEBI:13373",
+                "CHEBI:43528",
+                "CHEBI:58053"
+            ]
+        },
+        "CHEBI:16284": {
+            "x": 1079,
+            "y": 113,
+            "level": 1,
+            "name": "dATP",
+            "alt": [
+                "CHEBI:14069",
+                "CHEBI:19238",
+                "CHEBI:10491",
+                "CHEBI:42290",
+                "CHEBI:495505",
+                "CHEBI:61404"
+            ]
+        },
+        "CHEBI:17345": {
+            "x": 1178.6666666666665,
+            "y": 175.66666666666669,
+            "level": 1,
+            "name": "GMP",
+            "alt": [
+                "CHEBI:42979",
+                "CHEBI:24449",
+                "CHEBI:42647",
+                "CHEBI:42831",
+                "CHEBI:47450",
+                "CHEBI:40119",
+                "CHEBI:5228",
+                "CHEBI:13341",
+                "CHEBI:14381",
+                "CHEBI:24450",
+                "CHEBI:42887",
+                "CHEBI:58115",
+                "CHEBI:29058",
+                "CHEBI:42615",
+                "CHEBI:42892"
+            ]
+        },
+        "CHEBI:16708": {
+            "x": 1127,
+            "y": 140,
+            "level": 1,
+            "name": "Adenine",
+            "alt": [
+                "CHEBI:40579",
+                "CHEBI:2470",
+                "CHEBI:13733",
+                "CHEBI:22236"
+            ]
+        },
+        "CHEBI:17672": {
+            "x": 990.3333333333333,
+            "y": 303.66666666666663,
+            "level": 1,
+            "name": "Carbamoyl phosphate",
+            "alt": [
+                "CHEBI:23005",
+                "CHEBI:13942",
+                "CHEBI:3389",
+                "CHEBI:41567",
+                "CHEBI:58228"
+            ]
+        },
+        "CHEBI:16174": {
+            "x": 1105,
+            "y": 113,
+            "level": 1,
+            "name": "dADP",
+            "alt": [
+                "CHEBI:19235",
+                "CHEBI:41890",
+                "CHEBI:14067",
+                "CHEBI:10489",
+                "CHEBI:57667"
+            ]
+        },
+        "CHEBI:16995": {
+            "x": 722,
+            "y": 624,
+            "level": 1,
+            "name": "Oxalate",
+            "alt": [
+                "CHEBI:44583",
+                "CHEBI:7811",
+                "CHEBI:25730",
+                "CHEBI:46904",
+                "CHEBI:14702",
+                "CHEBI:132952",
+                "CHEBI:30623",
+                "CHEBI:44820",
+                "CHEBI:25729"
+            ]
+        },
+        "CHEBI:16335": {
+            "x": 1127,
+            "y": 116,
+            "level": 1,
+            "name": "Adenosine",
+            "alt": [
+                "CHEBI:2472",
+                "CHEBI:40558",
+                "CHEBI:40825",
+                "CHEBI:40906",
+                "CHEBI:40911",
+                "CHEBI:13734",
+                "CHEBI:22237"
+            ]
+        },
+        "CHEBI:17709": {
+            "x": 926,
+            "y": 390,
+            "level": 1,
+            "name": "Adenylyl sulfate",
+            "alt": [
+                "CHEBI:12059",
+                "CHEBI:13743",
+                "CHEBI:22247",
+                "CHEBI:13741",
+                "CHEBI:40562",
+                "CHEBI:2486",
+                "CHEBI:58243"
+            ]
+        },
+        "CHEBI:16235": {
+            "x": 1224,
+            "y": 140,
+            "level": 1,
+            "name": "Guanine",
+            "alt": [
+                "CHEBI:14372",
+                "CHEBI:14371",
+                "CHEBI:24443",
+                "CHEBI:5563",
+                "CHEBI:42948"
+            ]
+        },
+        "CHEBI:17368": {
+            "x": 1171,
+            "y": 140,
+            "level": 1,
+            "name": "Hypoxanthine",
+            "alt": [
+                "CHEBI:24762",
+                "CHEBI:5841",
+                "CHEBI:43237",
+                "CHEBI:14431"
+            ]
+        },
+        "CHEBI:16497": {
+            "x": 1277,
+            "y": 113,
+            "level": 1,
+            "name": "dGTP",
+            "alt": [
+                "CHEBI:19247",
+                "CHEBI:14076",
+                "CHEBI:10497",
+                "CHEBI:57794",
+                "CHEBI:61429"
+            ]
+        },
+        "CHEBI:17544": {
+            "x": 1044.333333333333,
+            "y": 307.66666666666663,
+            "level": 1,
+            "name": "HCO3-",
+            "alt": [
+                "CHEBI:22863",
+                "CHEBI:40961",
+                "CHEBI:13363",
+                "CHEBI:5589",
+                "CHEBI:41605",
+                "CHEBI:13351",
+                "CHEBI:29201",
+                "CHEBI:3401",
+                "CHEBI:23017",
+                "CHEBI:23744",
+                "CHEBI:41609",
+                "CHEBI:28976"
+            ]
+        },
+        "CHEBI:17596": {
+            "x": 1171,
+            "y": 116,
+            "level": 1,
+            "name": "Inosine",
+            "alt": [
+                "CHEBI:14456",
+                "CHEBI:24841",
+                "CHEBI:44407",
+                "CHEBI:5927"
+            ]
+        },
+        "CHEBI:16960": {
+            "x": 809,
+            "y": 372,
+            "level": 1,
+            "name": "ADP-ribose",
+            "alt": [
+                "CHEBI:13231",
+                "CHEBI:40752",
+                "CHEBI:20850",
+                "CHEBI:2351",
+                "CHEBI:32889",
+                "CHEBI:57967"
+            ]
+        },
+        "CHEBI:17172": {
+            "x": 1277,
+            "y": 129,
+            "level": 1,
+            "name": "Deoxyguanosine",
+            "alt": [
+                "CHEBI:14116",
+                "CHEBI:42987",
+                "CHEBI:4412",
+                "CHEBI:42667",
+                "CHEBI:19244",
+                "CHEBI:23624",
+                "CHEBI:42867",
+                "CHEBI:42874"
+            ]
+        },
+        "CHEBI:17713": {
+            "x": 1105,
+            "y": 127,
+            "level": 1,
+            "name": "dAMP",
+            "alt": [
+                "CHEBI:40607",
+                "CHEBI:41864",
+                "CHEBI:41815",
+                "CHEBI:40499",
+                "CHEBI:10490",
+                "CHEBI:19236",
+                "CHEBI:40544",
+                "CHEBI:14068",
+                "CHEBI:40505",
+                "CHEBI:40419",
+                "CHEBI:40614",
+                "CHEBI:41870",
+                "CHEBI:58245"
+            ]
+        },
+        "CHEBI:28862": {
+            "x": 1248,
+            "y": 113,
+            "level": 1,
+            "name": "dGDP",
+            "alt": [
+                "CHEBI:10495",
+                "CHEBI:41949",
+                "CHEBI:19245",
+                "CHEBI:58595"
+            ]
+        },
+        "CHEBI:16192": {
+            "x": 1248,
+            "y": 129,
+            "level": 1,
+            "name": "dGMP",
+            "alt": [
+                "CHEBI:42676",
+                "CHEBI:41902",
+                "CHEBI:14074",
+                "CHEBI:19246",
+                "CHEBI:10496",
+                "CHEBI:42726",
+                "CHEBI:42733",
+                "CHEBI:47449",
+                "CHEBI:41939",
+                "CHEBI:57673",
+                "CHEBI:41944",
+                "CHEBI:45049"
+            ]
+        },
+        "CHEBI:17775": {
+            "x": 1081,
+            "y": 216,
+            "level": 1,
+            "name": "Urate",
+            "alt": [
+                "CHEBI:9885",
+                "CHEBI:46455",
+                "CHEBI:27216",
+                "CHEBI:46817",
+                "CHEBI:46814",
+                "CHEBI:46826",
+                "CHEBI:49051",
+                "CHEBI:46818",
+                "CHEBI:15290",
+                "CHEBI:46821",
+                "CHEBI:46824",
+                "CHEBI:46825",
+                "CHEBI:27226",
+                "CHEBI:46820",
+                "CHEBI:46823",
+                "CHEBI:46822",
+                "CHEBI:30848",
+                "CHEBI:46811"
+            ]
+        },
+        "CHEBI:48517": {
+            "x": 1194,
+            "y": 140,
+            "level": 1,
+            "name": "Xanthine",
+            "alt": [
+                "CHEBI:15318",
+                "CHEBI:10059",
+                "CHEBI:46377",
+                "CHEBI:17712",
+                "CHEBI:27317"
+            ]
+        },
+        "CHEBI:16750": {
+            "x": 1224,
+            "y": 116,
+            "level": 1,
+            "name": "Guanosine",
+            "alt": [
+                "CHEBI:14375",
+                "CHEBI:471737",
+                "CHEBI:24444",
+                "CHEBI:5564",
+                "CHEBI:42840",
+                "CHEBI:42847",
+                "CHEBI:42853"
+            ]
+        },
+        "CHEBI:30837": {
+            "x": 1081,
+            "y": 473,
+            "level": 1,
+            "name": "Allantoate",
+            "alt": [
+                "CHEBI:22353",
+                "CHEBI:2593",
+                "CHEBI:22352",
+                "CHEBI:13760",
+                "CHEBI:17536"
+            ]
+        },
+        "CHEBI:17256": {
+            "x": 1079,
+            "y": 127,
+            "level": 1,
+            "name": "Deoxyadenosine",
+            "alt": [
+                "CHEBI:19234",
+                "CHEBI:40560",
+                "CHEBI:4405",
+                "CHEBI:14112",
+                "CHEBI:40535",
+                "CHEBI:39863",
+                "CHEBI:40565"
+            ]
+        },
+        "CHEBI:17489": {
+            "x": 1127,
+            "y": 69,
+            "level": 1,
+            "name": "3',5'-Cyclic AMP",
+            "alt": [
+                "CHEBI:19827",
+                "CHEBI:1325",
+                "CHEBI:41588",
+                "CHEBI:11673",
+                "CHEBI:58165"
+            ]
+        },
+        "CHEBI:15412": {
+            "x": null,
+            "y": null,
+            "level": 1,
+            "name": "(S)-Ureidoglycolate",
+            "alt": [
+                "CHEBI:10783",
+                "CHEBI:18499",
+                "CHEBI:121",
+                "CHEBI:18804",
+                "CHEBI:11076",
+                "CHEBI:49050",
+                "CHEBI:57296",
+                "CHEBI:27224",
+                "CHEBI:9891"
+            ]
+        },
+        "CHEBI:16300": {
+            "x": 1223,
+            "y": 180,
+            "level": 1,
+            "name": "alpha-D-Ribose 1-phosphate",
+            "alt": [
+                "CHEBI:12330",
+                "CHEBI:45482",
+                "CHEBI:12329",
+                "CHEBI:45429",
+                "CHEBI:22412",
+                "CHEBI:10269",
+                "CHEBI:57720"
+            ]
+        },
+        "CHEBI:15652": {
+            "x": 1194,
+            "y": 93,
+            "level": 1,
+            "name": "Xanthosine 5'-phosphate",
+            "alt": [
+                "CHEBI:15324",
+                "CHEBI:10938",
+                "CHEBI:10067",
+                "CHEBI:27328",
+                "CHEBI:57464"
+            ]
+        },
+        "CHEBI:10049": {
+            "x": 1194,
+            "y": 72,
+            "level": 1,
+            "name": "XTP",
+            "alt": [
+                "CHEBI:61314",
+                "CHEBI:59885"
+            ]
+        },
+        "CHEBI:16582": {
+            "x": 1087,
+            "y": 565,
+            "level": 1,
+            "name": "Oxalureate",
+            "alt": [
+                "CHEBI:7816",
+                "CHEBI:25737",
+                "CHEBI:14706",
+                "CHEBI:57824",
+                "CHEBI:25736"
+            ]
+        },
+        "CHEBI:16356": {
+            "x": 1224,
+            "y": 63,
+            "level": 1,
+            "name": "3',5'-Cyclic GMP",
+            "alt": [
+                "CHEBI:14377",
+                "CHEBI:44955",
+                "CHEBI:19829",
+                "CHEBI:1327",
+                "CHEBI:44957",
+                "CHEBI:39915",
+                "CHEBI:11675",
+                "CHEBI:57746"
+            ]
+        },
+        "CHEBI:17633": {
+            "x": 1248,
+            "y": 75,
+            "level": 1,
+            "name": "Guanosine 3',5'-bis(diphosphate)",
+            "alt": [
+                "CHEBI:24445",
+                "CHEBI:5565",
+                "CHEBI:42747",
+                "CHEBI:14380",
+                "CHEBI:14376",
+                "CHEBI:58215",
+                "CHEBI:77828"
+            ]
+        },
+        "CHEBI:17422": {
+            "x": 1069,
+            "y": 201,
+            "level": 1,
+            "name": "P1,P4-Bis(5'-adenosyl)tetraphosphate",
+            "alt": [
+                "CHEBI:21998",
+                "CHEBI:12726",
+                "CHEBI:7875",
+                "CHEBI:12729",
+                "CHEBI:58141"
+            ]
+        },
+        "CHEBI:15883": {
+            "x": 1295,
+            "y": 75,
+            "level": 1,
+            "name": "P1,P4-Bis(5'-guanosyl) tetraphosphate",
+            "alt": [
+                "CHEBI:12730",
+                "CHEBI:21999",
+                "CHEBI:7876",
+                "CHEBI:12727",
+                "CHEBI:57553"
+            ]
+        },
+        "CHEBI:28931": {
+            "x": 1140,
+            "y": 127,
+            "level": 1,
+            "name": "3'-AMP",
+            "alt": [
+                "CHEBI:22241",
+                "CHEBI:40872",
+                "CHEBI:1333",
+                "CHEBI:60880"
+            ]
+        },
+        "CHEBI:18058": {
+            "x": 1023,
+            "y": 596,
+            "level": 1,
+            "name": "Oxamate",
+            "alt": [
+                "CHEBI:14708",
+                "CHEBI:7818",
+                "CHEBI:44589",
+                "CHEBI:25740",
+                "CHEBI:58363"
+            ]
+        },
+        "CHEBI:18107": {
+            "x": 1194,
+            "y": 116,
+            "level": 1,
+            "name": "Xanthosine",
+            "alt": [
+                "CHEBI:15323",
+                "CHEBI:10066",
+                "CHEBI:27327"
+            ]
+        },
+        "CHEBI:59945": {
+            "x": 1047,
+            "y": 473,
+            "level": 1,
+            "name": "(S)-Ureidoglycine",
+            "alt": [
+                "CHEBI:59945"
+            ]
+        },
+        "CHEBI:15677": {
+            "x": 1103,
+            "y": 339,
+            "level": 1,
+            "name": "(R)(-)-Allantoin",
+            "alt": [
+                "CHEBI:298",
+                "CHEBI:18640",
+                "CHEBI:10962"
+            ]
+        },
+        "CHEBI:15678": {
+            "x": 1081,
+            "y": 363,
+            "level": 1,
+            "name": "(S)-Allantoin",
+            "alt": [
+                "CHEBI:18724",
+                "CHEBI:11024",
+                "CHEBI:366"
+            ]
+        },
+        "CHEBI:27844": {
+            "x": 1140,
+            "y": 145,
+            "level": 1,
+            "name": "2',3'-Cyclic AMP",
+            "alt": [
+                "CHEBI:40469",
+                "CHEBI:823",
+                "CHEBI:19212",
+                "CHEBI:60879"
+            ]
+        },
+        "CHEBI:18415": {
+            "x": 1194,
+            "y": 480,
+            "level": 1,
+            "name": "N-Formiminoglycine",
+            "alt": [
+                "CHEBI:7275",
+                "CHEBI:12596",
+                "CHEBI:21707",
+                "CHEBI:58479"
+            ]
+        },
+        "CHEBI:37737": {
+            "x": 849,
+            "y": 187,
+            "level": 1,
+            "name": "5-Phosphoribosylamine",
+            "alt": [
+                "CHEBI:20626",
+                "CHEBI:2123",
+                "CHEBI:42834",
+                "CHEBI:133922",
+                "CHEBI:12161",
+                "CHEBI:58681"
+            ]
+        },
+        "CHEBI:138560": {
+            "x": 992,
+            "y": 123,
+            "level": 1,
+            "name": "Aminoimidazole ribotide",
+            "alt": []
+        },
+        "CHEBI:18334": {
+            "x": 1079,
+            "y": 63,
+            "level": 1,
+            "name": "Adenosine tetraphosphate",
+            "alt": [
+                "CHEBI:13738",
+                "CHEBI:22248",
+                "CHEBI:2478",
+                "CHEBI:58450"
+            ]
+        },
+        "CHEBI:28505": {
+            "x": 1204,
+            "y": 50,
+            "level": 1,
+            "name": "Inosine 5'-tetraphosphate",
+            "alt": [
+                "CHEBI:5928",
+                "CHEBI:24842"
+            ]
+        },
+        "CHEBI:15919": {
+            "x": 1149,
+            "y": 93,
+            "level": 1,
+            "name": "N6-(1,2-Dicarboxyethyl)-AMP",
+            "alt": [
+                "CHEBI:21857",
+                "CHEBI:12656",
+                "CHEBI:12657",
+                "CHEBI:7405",
+                "CHEBI:39869",
+                "CHEBI:57567",
+                "CHEBI:22262"
+            ]
+        },
+        "CHEBI:18349": {
+            "x": 849,
+            "y": 123,
+            "level": 1,
+            "name": "5'-Phosphoribosylglycinamide",
+            "alt": [
+                "CHEBI:20499",
+                "CHEBI:1983",
+                "CHEBI:12623",
+                "CHEBI:58457"
+            ]
+        },
+        "CHEBI:2030": {
+            "x": 1109,
+            "y": 41,
+            "level": 1,
+            "name": "5-Amino-4-imidazolecarboxyamide",
+            "alt": [
+                "CHEBI:20544"
+            ]
+        },
+        "CHEBI:18272": {
+            "x": 898,
+            "y": 123,
+            "level": 1,
+            "name": "5'-Phosphoribosyl-N-formylglycinamide",
+            "alt": [
+                "CHEBI:1982",
+                "CHEBI:12635",
+                "CHEBI:20498",
+                "CHEBI:42411",
+                "CHEBI:58426"
+            ]
+        },
+        "CHEBI:28400": {
+            "x": 1194,
+            "y": 50,
+            "level": 1,
+            "name": "P1,P4-Bis(5'-xanthosyl) tetraphosphate",
+            "alt": [
+                "CHEBI:22001",
+                "CHEBI:7878"
+            ]
+        },
+        "CHEBI:16690": {
+            "x": 1266,
+            "y": 75,
+            "level": 1,
+            "name": "Guanosine 3'-diphosphate 5'-triphosphate",
+            "alt": [
+                "CHEBI:14378",
+                "CHEBI:5566",
+                "CHEBI:14382",
+                "CHEBI:24446",
+                "CHEBI:71477",
+                "CHEBI:60028"
+            ]
+        },
+        "CHEBI:18413": {
+            "x": 945,
+            "y": 123,
+            "level": 1,
+            "name": "2-(Formamido)-N1-(5'-phosphoribosyl)acetamidine",
+            "alt": [
+                "CHEBI:11474",
+                "CHEBI:971",
+                "CHEBI:58478"
+            ]
+        },
+        "CHEBI:18406": {
+            "x": 1109,
+            "y": 56,
+            "level": 1,
+            "name": "1-(5'-Phosphoribosyl)-5-amino-4-imidazolecarboxamide",
+            "alt": [
+                "CHEBI:573",
+                "CHEBI:40739",
+                "CHEBI:12102",
+                "CHEBI:18966",
+                "CHEBI:58475"
+            ]
+        },
+        "CHEBI:18381": {
+            "x": 1171,
+            "y": 56,
+            "level": 1,
+            "name": "1-(5'-Phosphoribosyl)-5-formamido-4-imidazolecarboxamide",
+            "alt": [
+                "CHEBI:18967",
+                "CHEBI:12125",
+                "CHEBI:574",
+                "CHEBI:58467"
+            ]
+        },
+        "CHEBI:28413": {
+            "x": 1050,
+            "y": 123,
+            "level": 1,
+            "name": "1-(5-Phospho-D-ribosyl)-5-amino-4-imidazolecarboxylate",
+            "alt": [
+                "CHEBI:12103",
+                "CHEBI:575",
+                "CHEBI:18968",
+                "CHEBI:77657",
+                "CHEBI:58564",
+                "CHEBI:41336"
+            ]
+        },
+        "CHEBI:18319": {
+            "x": 1050,
+            "y": 56,
+            "level": 1,
+            "name": "1-(5'-Phosphoribosyl)-5-amino-4-(N-succinocarboxamide)-imidazole",
+            "alt": [
+                "CHEBI:18965",
+                "CHEBI:572",
+                "CHEBI:78110",
+                "CHEBI:11028",
+                "CHEBI:58443"
+            ]
+        },
+        "CHEBI:16607": {
+            "x": 1194,
+            "y": 354,
+            "level": 1,
+            "name": "5-Aminoimidazole",
+            "alt": [
+                "CHEBI:11963",
+                "CHEBI:28840",
+                "CHEBI:20543",
+                "CHEBI:2033",
+                "CHEBI:1788"
+            ]
+        },
+        "CHEBI:28997": {
+            "x": 1079,
+            "y": 151,
+            "level": 1,
+            "name": "Deoxyinosine",
+            "alt": [
+                "CHEBI:4413",
+                "CHEBI:43293",
+                "CHEBI:19248",
+                "CHEBI:39841",
+                "CHEBI:43436",
+                "CHEBI:23629",
+                "CHEBI:43437"
+            ]
+        },
+        "CHEBI:50547": {
+            "x": 1060,
+            "y": 216,
+            "level": 1,
+            "name": "Urate-3-ribonucleoside",
+            "alt": [
+                "CHEBI:50546",
+                "CHEBI:9887"
+            ]
+        },
+        "CHEBI:27580": {
+            "x": 1194,
+            "y": 243,
+            "level": 1,
+            "name": "5-Ureido-4-imidazole carboxylate",
+            "alt": [
+                "CHEBI:20631",
+                "CHEBI:2126"
+            ]
+        },
+        "CHEBI:28280": {
+            "x": 1194,
+            "y": 297,
+            "level": 1,
+            "name": "5-Amino-4-imidazole carboxylate",
+            "alt": [
+                "CHEBI:2029",
+                "CHEBI:20545"
+            ]
+        },
+        "CHEBI:37666": {
+            "x": 701,
+            "y": 523,
+            "level": 1,
+            "name": "Acetyl adenylate",
+            "alt": [
+                "CHEBI:1951",
+                "CHEBI:2405"
+            ]
+        },
+        "CHEBI:28072": {
+            "x": 1240,
+            "y": 116,
+            "level": 1,
+            "name": "Guanosine 3'-phosphate",
+            "alt": [
+                "CHEBI:5567",
+                "CHEBI:24447",
+                "CHEBI:42888",
+                "CHEBI:39948",
+                "CHEBI:60732"
+            ]
+        },
+        "CHEBI:28181": {
+            "x": 1240,
+            "y": 100,
+            "level": 1,
+            "name": "2',3'-Cyclic GMP",
+            "alt": [
+                "CHEBI:825",
+                "CHEBI:19214",
+                "CHEBI:60837"
+            ]
+        },
+        "CHEBI:51023": {
+            "x": 1194,
+            "y": 410,
+            "level": 1,
+            "name": "Imidazolone",
+            "alt": [
+                "CHEBI:28470"
+            ]
+        },
+        "CHEBI:27775": {
+            "x": 1105,
+            "y": 78,
+            "level": 1,
+            "name": "P1,P3-Bis(5'-adenosyl) triphosphate",
+            "alt": [
+                "CHEBI:21997",
+                "CHEBI:12728",
+                "CHEBI:7874",
+                "CHEBI:58529"
+            ]
+        },
+        "CHEBI:18072": {
+            "x": 1081,
+            "y": 272,
+            "level": 1,
+            "name": "5-Hydroxyisourate",
+            "alt": [
+                "CHEBI:12137",
+                "CHEBI:2074",
+                "CHEBI:20588",
+                "CHEBI:59562"
+            ]
+        },
+        "CHEBI:31132": {
+            "x": 1081,
+            "y": 314,
+            "level": 1,
+            "name": "5-Hydroxy-2-oxo-4-ureido-2,5-dihydro-1H-imidazole-5-carboxylate",
+            "alt": [
+                "CHEBI:58639"
+            ]
+        },
+        "CHEBI:48000": {
+            "x": 1022,
+            "y": 111,
+            "level": 1,
+            "name": "5-Carboxyamino-1-(5-phospho-D-ribosyl)imidazole",
+            "alt": [
+                "CHEBI:58730"
+            ]
+        },
+        "CHEBI:16991": {
+            "x": 1062,
+            "y": 113,
+            "level": 1,
+            "name": "DNA",
+            "alt": [
+                "CHEBI:33698",
+                "CHEBI:4291",
+                "CHEBI:13302",
+                "CHEBI:21123"
+            ]
+        },
+        "CHEBI:33697": {
+            "x": 1284,
+            "y": 66,
+            "level": 1,
+            "name": "RNA",
+            "alt": []
+        }
     }
 }
