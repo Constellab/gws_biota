@@ -1,16 +1,17 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
 import requests
 from gws.settings import Settings
 
+
 class QuickGOAnnotation():
     """
-    
+
     This module allows to get results of a quickgo annotation research from an uniprot identifiers.
-    Results are return in a python readable and exploitable format 
+    Results are return in a python readable and exploitable format
 
     """
     @classmethod
@@ -29,10 +30,10 @@ class QuickGOAnnotation():
         :param uniprot_id: Uniprot id of a protein
         :returns: list of dictionnaries where each rows correspond to a results given by the request
         :rtype: list
-        
+
         """
 
-        settings = Settings.retrieve()
+        settings = Settings.get_instance()
         URL = settings.get_variable("biota:quickgo_api_url")
         try:
             requestURL = URL + str(uniprot_id)
@@ -66,7 +67,7 @@ class QuickGOAnnotation():
         a raw of the response text
         :returns: list of dictionnaries where each rows correspond to a results given by the request
         :rtype: list
-        
+
         """
         list_annotations = []
         line_count = 0
@@ -85,6 +86,5 @@ class QuickGOAnnotation():
                     dict_annotation[infos_table[j]] = list_info[j]
                 list_annotations.append(dict_annotation)
         return(list_annotations)
-                        
-            
-                
+
+

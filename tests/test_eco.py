@@ -1,8 +1,8 @@
-from gws_core import Settings, BaseTestCase
 from gws_biota import ECO
 from gws_biota.eco.eco_service import ECOService
+from gws_core import BaseTestCase, Settings
 
-settings = Settings.retrieve()
+settings = Settings.get_instance()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
 

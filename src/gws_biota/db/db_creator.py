@@ -1,31 +1,32 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
 import os
 import time
-from gws_core import (Task, Settings, BadRequestException, 
-                        ModelService, Resource, resource_decorator, 
-                        task_decorator, ConfigParams, TaskInputs, TaskOutputs, StrParam, Logger)
 
-from gws_biota import (GO, SBO, BTO, ECO, Taxonomy, Compound, Enzyme, Reaction, Protein, Pathway)
-
-from gws_biota.go.go_service import GOService
-from gws_biota.sbo.sbo_service import SBOService
+from gws_biota import (BTO, ECO, GO, SBO, Compound, Enzyme, Pathway, Protein,
+                       Reaction, Taxonomy)
 from gws_biota.bto.bto_service import BTOService
-from gws_biota.eco.eco_service import ECOService
-from gws_biota.taxonomy.taxonomy_service import TaxonomyService
 from gws_biota.compound.compound_service import CompoundService
+from gws_biota.eco.eco_service import ECOService
 from gws_biota.enzyme.enzyme_service import EnzymeService
-from gws_biota.reaction.reaction_service import ReactionService
-from gws_biota.protein.protein_service import ProteinService
+from gws_biota.go.go_service import GOService
 from gws_biota.pathway.pathway_service import PathwayService
+from gws_biota.protein.protein_service import ProteinService
+from gws_biota.reaction.reaction_service import ReactionService
+from gws_biota.sbo.sbo_service import SBOService
+from gws_biota.taxonomy.taxonomy_service import TaxonomyService
+from gws_core import (BadRequestException, ConfigParams, Logger, ModelService,
+                      Resource, Settings, StrParam, Task, TaskInputs,
+                      TaskOutputs, resource_decorator, task_decorator)
 
 from ..base.base import Base
 
+
 class DbCreatorHelper:
-    params =  { 
+    params =  {
         "go_file"                   : "./go/go.obo",
         "sbo_file"                  : "./sbo/sbo.obo",
         "eco_file"                  : "./eco/eco.obo",
@@ -50,14 +51,14 @@ class DbCreatorHelper:
         "rhea2reactome_file"        : "./rhea/tsv/rhea2reactome.tsv",
         "reactome_pathways_file"          : "./reactome/ReactomePathways.txt",
         "reactome_pathway_relations_file" : "./reactome/ReactomePathwaysRelation.txt",
-        "reactome_chebi_pathways_file"    : "./reactome/ChEBI2Reactome.txt",        
+        "reactome_chebi_pathways_file"    : "./reactome/ChEBI2Reactome.txt",
     }
 
     #only allow admin user to run this process
     @classmethod
     def run(cls):
         Logger.info("Start creating biota_db...")
-        settings = Settings.retrieve()
+        settings = Settings.get_instance()
         biodata_dir = settings.get_variable("gws_biota:biodata_dir")
 
         # check that all paths exists
@@ -83,7 +84,7 @@ class DbCreatorHelper:
         i = i+1
         Logger.info(f"Step {i} | Saving go and go_ancestors...")
         start_time = time.time()
-        
+
         GOService.create_go_db(biodata_dir, **cls.params)
         len_go = GO.select().count()
         elapsed_time = time.time() - start_time
@@ -165,7 +166,7 @@ class DbCreatorHelper:
 class DbCreator(Task):
     input_specs = {}
     output_specs = {}
-    config_specs =  { 
+    config_specs =  {
         "go_file"                   : StrParam(default_value="./go/go.obo"),
         "sbo_file"                  : StrParam(default_value="./sbo/sbo.obo"),
         "eco_file"                  : StrParam(default_value="./eco/eco.obo"),
@@ -190,7 +191,7 @@ class DbCreator(Task):
         "rhea2reactome_file"        : StrParam(default_value="./rhea/tsv/rhea2reactome.tsv"),
         "reactome_pathways_file"          : StrParam(default_value="./reactome/ReactomePathways.txt"),
         "reactome_pathway_relations_file" : StrParam(default_value="./reactome/ReactomePathwaysRelation.txt"),
-        "reactome_chebi_pathways_file"    : StrParam(default_value="./reactome/ChEBI2Reactome.txt"),        
+        "reactome_chebi_pathways_file"    : StrParam(default_value="./reactome/ChEBI2Reactome.txt"),
     }
 
     #only allow admin user to run this process

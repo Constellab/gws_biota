@@ -9,7 +9,7 @@ from gws_core import BaseTestCase, Settings
 #                                        TestChebiOntology
 #
 ############################################################################################
-settings = Settings.retrieve()
+settings = Settings.get_instance()
 testdata_path = os.path.join(
     settings.get_variable("gws_biota:testdata_dir"),
     '../_helper/data/'

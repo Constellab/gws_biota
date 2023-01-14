@@ -1,62 +1,664 @@
-{  
+{
     "id": "lipid_metabolism",
     "name": "lipid metabolism",
     "pathway": "other lipid metabolism",
     "data": {
-        "CHEBI:15345": {"x": 501, "y": 457, "level": 1, "name": "acetoacetyl-CoA", "alt": ["CHEBI:41333", "CHEBI:2392", "CHEBI:11756", "CHEBI:13706", "CHEBI:22173", "CHEBI:57286"]},
-        "CHEBI:17197": {"x": 523, "y": 301, "level": 1, "name": "1-alkylglycerone 3-phosphate", "alt": ["CHEBI:73385", "CHEBI:7675", "CHEBI:12688", "CHEBI:13813", "CHEBI:21941", "CHEBI:73315", "CHEBI:58049"]},
-        "CHEBI:17815": {"x": 476, "y": 328, "level": 1, "name": "1,2-diacyl-sn-glycerol", "alt": ["CHEBI:495", "CHEBI:11150", "CHEBI:13582"]},
-        "CHEBI:15351": {"x": 719, "y": 550, "level": 1, "name": "acetyl-CoA", "alt": ["CHEBI:40470", "CHEBI:2408", "CHEBI:13712", "CHEBI:22192", "CHEBI:57288"]},
-        "CHEBI:10983": {"x": 820, "y": 561, "level": 1, "name": "(R)-3-hydroxybutyrate", "alt": ["CHEBI:17066", "CHEBI:322", "CHEBI:18666"]},
-        "CHEBI:13705": {"x": 852, "y": 561, "level": 1, "name": "acetoacetate", "alt": ["CHEBI:40507", "CHEBI:131367", "CHEBI:15344", "CHEBI:2391", "CHEBI:22172"]},
-        "CHEBI:15467": {"x": 878, "y": 561, "level": 1, "name": "(3S)-3-hydroxy-3-methylglutaryl-CoA", "alt": ["CHEBI:61659", "CHEBI:392", "CHEBI:11045", "CHEBI:18747"]},
-        "CHEBI:17855": {"x": 494, "y": 291, "level": 1, "name": "triglyceride", "alt": ["CHEBI:9664", "CHEBI:15255", "CHEBI:27085", "CHEBI:64615"]},
-        "CHEBI:16975": {"x": 540, "y": 319, "level": 1, "name": "1-acyl-sn-glycerol 3-phosphate", "alt": ["CHEBI:590", "CHEBI:11227", "CHEBI:18993", "CHEBI:57970"]},
-        "CHEBI:15978": {"x": 562, "y": 319, "level": 1, "name": "sn-glycerol 3-phosphate", "alt": ["CHEBI:12848", "CHEBI:42793", "CHEBI:10648", "CHEBI:12843", "CHEBI:26705", "CHEBI:57597"]},
-        "CHEBI:17754": {"x": 562, "y": 309, "level": 1, "name": "glycerol", "alt": ["CHEBI:42998", "CHEBI:131422", "CHEBI:5448", "CHEBI:14334", "CHEBI:24351"]},
-        "CHEBI:15354": {"x": 430, "y": 318, "level": 1, "name": "choline", "alt": ["CHEBI:41524", "CHEBI:3665", "CHEBI:13985", "CHEBI:23212", "CHEBI:72322"]},
-        "CHEBI:18132": {"x": 445, "y": 318, "level": 1, "name": "phosphocholine", "alt": ["CHEBI:3667", "CHEBI:44707", "CHEBI:12720", "CHEBI:23214", "CHEBI:13986", "CHEBI:295975"]},
-        "CHEBI:16436": {"x": 463, "y": 318, "level": 1, "name": "CDP-choline", "alt": ["CHEBI:41440", "CHEBI:13268", "CHEBI:3268", "CHEBI:20867", "CHEBI:49086", "CHEBI:58779"]},
-        "CHEBI:16110": {"x": null, "y": null, "level": 2, "name": "1,2-diacyl-sn-glycero-3-phosphocholine(1+)", "alt": ["CHEBI:44694", "CHEBI:1681", "CHEBI:11148", "CHEBI:11753", "CHEBI:17046", "CHEBI:26029", "CHEBI:23660", "CHEBI:20200", "CHEBI:18878", "CHEBI:8128", "CHEBI:57643"]},
-        "CHEBI:49183": {"x": 476, "y": 309, "level": 1, "name": "phosphatidylcholine(1+)", "alt": ["CHEBI:36705", "CHEBI:14802"]},
-        "CHEBI:16000": {"x": 414, "y": 339, "level": 1, "name": "ethanolamine", "alt": ["CHEBI:42323", "CHEBI:272066", "CHEBI:14223", "CHEBI:23979", "CHEBI:4880", "CHEBI:57603"]},
-        "CHEBI:17553": {"x": 445, "y": 339, "level": 1, "name": "O-phosphoethanolamine", "alt": ["CHEBI:14224", "CHEBI:44681", "CHEBI:4881", "CHEBI:14814", "CHEBI:23980", "CHEBI:12694", "CHEBI:36711", "CHEBI:58190"]},
-        "CHEBI:16732": {"x": 463, "y": 339, "level": 1, "name": "CDP-ethanolamine", "alt": ["CHEBI:3270", "CHEBI:13270", "CHEBI:13257", "CHEBI:20869", "CHEBI:57876"]},
-        "CHEBI:16038": {"x": 476, "y": 349, "level": 1, "name": "phosphatidylethanolamine", "alt": ["CHEBI:8129", "CHEBI:14803", "CHEBI:12701", "CHEBI:7661", "CHEBI:26030", "CHEBI:26031", "CHEBI:45210", "CHEBI:57613"]},
-        "CHEBI:18303": {"x": 505, "y": 349, "level": 1, "name": "phosphatidyl-L-serine", "alt": ["CHEBI:14801", "CHEBI:26041", "CHEBI:8137", "CHEBI:11750", "CHEBI:64388", "CHEBI:57262", "CHEBI:64764", "CHEBI:64380", "CHEBI:58436"]},
-        "CHEBI:17962": {"x": 527, "y": 349, "level": 1, "name": "CDP-diacylglycerol", "alt": ["CHEBI:20868", "CHEBI:13256", "CHEBI:13269", "CHEBI:3269", "CHEBI:58332"]},
-        "CHEBI:16337": {"x": 527, "y": 328, "level": 1, "name": "phosphatidic acid", "alt": ["CHEBI:14795", "CHEBI:26023", "CHEBI:8122"]},
-        "CHEBI:18368": {"x": 436, "y": 138, "level": 1, "name": "D-glucosyl-N-acylsphingosine", "alt": ["CHEBI:5422", "CHEBI:12971", "CHEBI:24260", "CHEBI:36500"]},
-        "CHEBI:79332": {"x": 441, "y": 265, "level": 1, "name": "1-alkyl-2-acyl-3-(3-O-sulfo-β-D-galactosyl)-sn-glycerol", "alt": [""]},
-        "CHEBI:52595": {"x": 486, "y": 265, "level": 1, "name": "1-alkyl-2-acyl-sn-glycerol", "alt": ["CHEBI:19009", "CHEBI:598"]},
-        "CHEBI:181431": {"x": null, "y": null, "level": 2, "name": "3-Oxo-2(R)-(2Z)2-penten-1(R)-yl-cyclopentaneacetic acid", "alt": [""]},
-        "CHEBI:18292": {"x": 228, "y": 291, "level": 1, "name": "(-)-Jasmonic acid", "alt": ["CHEBI:181431", "CHEBI:95", "CHEBI:14486", "CHEBI:18487", 	"CHEBI:58431"]},
-        "CHEBI:18435": {"x": 245, "y": 291, "level": 1, "name": "(+)-7-Isojasmonic acid", "alt": ["CHEBI:136179"]},
-        "CHEBI:80460": {"x": 261, "y": 291, "level": 1, "name": "(+)-7-Isojasmonic acid CoA", "alt": [""]},
-        "CHEBI:80459": {"x": 277, "y": 291, "level": 1, "name": "3-Oxo-OPC4-CoA", "alt": [""]},
-        "CHEBI:80457": {"x": 293, "y": 291, "level": 1, "name": "trans-2-Enoyl-OPC4-CoA", "alt": [""]},
-        "CHEBI:80456": {"x": 309, "y": 291, "level": 1, "name": "OPC4-CoA", "alt": [""]},
-        "CHEBI:80455": {"x": 325, "y": 291, "level": 1, "name": "3-Oxo-OPC6-CoA", "alt": [""]},
-        "CHEBI:80453": {"x": 341, "y": 291, "level": 1, "name": "trans-2-Enoyl-OPC6-CoA", "alt": [""]},
-        "CHEBI:139105": {"x": 357, "y": 291, "level": 1, "name": "OPC6-CoA", "alt": ["CHEBI:138431", "CHEBI:80452"]},
-        "CHEBI:80451": {"x": 374, "y": 291, "level": 1, "name": "3-Oxo-OPC8-CoA", "alt": [""]},
-        "CHEBI:80449": {"x": 388, "y": 291, "level": 1, "name": "trans-2-Enoyl-OPC8-CoA", "alt": [""]},
-        "CHEBI:80448": {"x": 403, "y": 291, "level": 1, "name": "OPC8-CoA", "alt": ["CHEBI:138396"]},
-        "CHEBI:15720": {"x": 417, "y": 291, "level": 1, "name": "8-[(1R,2R)-3-Oxo-2-{(Z)-pent-2-enyl}cyclopentyl]octanoate", "alt": ["CHEBI:2326", "CHEBI:20807", "CHEBI:12265", "CHEBI:165637"]},
-        "CHEBI:15560": {"x": 432, "y": 291, "level": 1, "name": "12-OPDA", "alt": ["CHEBI:148", "CHEBI:10825", "CHEBI:19141", "CHEBI:19142"]},
-        "CHEBI:15653": {"x": 447, "y": 291, "level": 2, "name": "12,13(S)-EOT", "alt": ["CHEBI:262", "CHEBI:18616", "CHEBI:36438", "CHEBI:18615", "CHEBI:10939"]},
-        "CHEBI:48905": {"x": 462, "y": 291, "level": 1, "name": "(9Z,11E,13S,15Z)-13-hydroperoxyoctadeca-9,11,15-trienoic acid", "alt": [""]},
-        "CHEBI:37550": {"x": 445, "y": 362, "level": 1, "name": "sphingosine 1-phosphate", "alt": ["CHEBI:26742", "CHEBI:9225","CHEBI:60119"]},
-        "CHEBI:16393": {"x": 445, "y": 387, "level": 1, "name": "sphingosine", "alt": ["CHEBI:9224", "CHEBI:15102", "CHEBI:26741", "CHEBI:207585", "CHEBI:57756"]},
-        "CHEBI:17761": {"x": 445, "y": 411, "level": 1, "name": "ceramide, N-acylsphingosine bases", "alt": ["CHEBI:12487", "CHEBI:13954", "CHEBI:7242", "CHEBI:23074", "CHEBI:52639", "CHEBI:52573", "CHEBI:12586"]},
-        "CHEBI:176270": {"x": null, "y": null, "level": 2, "name": "Galactosylceramide (d18:1/12:0)", "alt": [""]},
-        "CHEBI:18390": {"x": null, "y": null, "level": 2, "name": "N-acyl-β-D-galactosylsphingosine", "alt": ["CHEBI:20947", "CHEBI:5258", "CHEBI:12947", "CHEBI:12949", "CHEBI:24141"]},
-        "CHEBI:36498": {"x": 469, "y": 411, "level": 1, "name": "galactosylceramide", "alt": ["CHEBI:13641"]},
-        "CHEBI:176327": {"x": null, "y": null, "level": 2, "name": "3-O-Sulfogalactosylceramide (d18:1/22:0)", "alt": [""]},
-        "CHEBI:18318": {"x": 485, "y": 411, "level": 1, "name": "galactosylceramide sulfate", "alt": ["CHEBI:14289", "CHEBI:36499", "CHEBI:24142", "CHEBI:9338", "CHEBI:26827", "CHEBI:24143", "CHEBI:75956"]},      
-        "CHEBI:184397": {"x": null, "y": null, "level": 2, "name": "(3'-SulfO)galbeta-cer(D18:1/20:0)", "alt": [""]},
-        "CHEBI:184402": {"x": null, "y": null, "level": 2, "name": "(17Z)-N-[(2S,3R,4E)-1-{[(2R,5S,6R)-3,5-dihydroxy-6-(hydroxymethyl)-4-(sulfooxy)oxan-2-yl]oxy}-3-hydroxyoctadec-4-en-2-yl]hexacos-17-enimidic acid", "alt": [""]},
-        "CHEBI:184960": {"x": null, "y": null, "level": 2, "name": "(9Z)-N-[(2S,3R,4E)-1-{[(2R,5S,6R)-3,5-dihydroxy-6-(hydroxymethyl)-4-(sulfooxy)oxan-2-yl]oxy}-3-hydroxyoctadec-4-en-2-yl]octadec-9-enimidic acid", "alt": [""]},
-        "CHEBI:17115": {"x": null, "y": null, "level": 1, "name": "L-serine", "alt": ["CHEBI:45440", "CHEBI:45451", "CHEBI:45677", "CHEBI:45590", "CHEBI:45597", "CHEBI:13167", "CHEBI:21387", "CHEBI:6301", "CHEBI:32845", "CHEBI:17822", "CHEBI:26648", "CHEBI:32837", "CHEBI:32836", "CHEBI:15081", "CHEBI:35243", "CHEBI:32846", "CHEBI:33384", "CHEBI:9116"]}
+        "CHEBI:15345": {
+            "x": 501,
+            "y": 457,
+            "level": 1,
+            "name": "acetoacetyl-CoA",
+            "alt": [
+                "CHEBI:41333",
+                "CHEBI:2392",
+                "CHEBI:11756",
+                "CHEBI:13706",
+                "CHEBI:22173",
+                "CHEBI:57286"
+            ]
+        },
+        "CHEBI:17197": {
+            "x": 523,
+            "y": 301,
+            "level": 1,
+            "name": "1-alkylglycerone 3-phosphate",
+            "alt": [
+                "CHEBI:73385",
+                "CHEBI:7675",
+                "CHEBI:12688",
+                "CHEBI:13813",
+                "CHEBI:21941",
+                "CHEBI:73315",
+                "CHEBI:58049"
+            ]
+        },
+        "CHEBI:17815": {
+            "x": 476,
+            "y": 328,
+            "level": 1,
+            "name": "1,2-diacyl-sn-glycerol",
+            "alt": [
+                "CHEBI:495",
+                "CHEBI:11150",
+                "CHEBI:13582"
+            ]
+        },
+        "CHEBI:15351": {
+            "x": 719,
+            "y": 550,
+            "level": 1,
+            "name": "acetyl-CoA",
+            "alt": [
+                "CHEBI:40470",
+                "CHEBI:2408",
+                "CHEBI:13712",
+                "CHEBI:22192",
+                "CHEBI:57288"
+            ]
+        },
+        "CHEBI:10983": {
+            "x": 820,
+            "y": 561,
+            "level": 1,
+            "name": "(R)-3-hydroxybutyrate",
+            "alt": [
+                "CHEBI:17066",
+                "CHEBI:322",
+                "CHEBI:18666"
+            ]
+        },
+        "CHEBI:13705": {
+            "x": 852,
+            "y": 561,
+            "level": 1,
+            "name": "acetoacetate",
+            "alt": [
+                "CHEBI:40507",
+                "CHEBI:131367",
+                "CHEBI:15344",
+                "CHEBI:2391",
+                "CHEBI:22172"
+            ]
+        },
+        "CHEBI:15467": {
+            "x": 534.9418282299313,
+            "y": 125.1774391750368,
+            "level": 1,
+            "name": "(3S)-3-hydroxy-3-methylglutaryl-CoA",
+            "alt": [
+                "CHEBI:61659",
+                "CHEBI:392",
+                "CHEBI:11045",
+                "CHEBI:18747",
+                "CHEBI:43074"
+            ]
+        },
+        "CHEBI:17855": {
+            "x": 494,
+            "y": 291,
+            "level": 1,
+            "name": "triglyceride",
+            "alt": [
+                "CHEBI:9664",
+                "CHEBI:15255",
+                "CHEBI:27085",
+                "CHEBI:64615"
+            ]
+        },
+        "CHEBI:16975": {
+            "x": 540,
+            "y": 319,
+            "level": 1,
+            "name": "1-acyl-sn-glycerol 3-phosphate",
+            "alt": [
+                "CHEBI:590",
+                "CHEBI:11227",
+                "CHEBI:18993",
+                "CHEBI:57970"
+            ]
+        },
+        "CHEBI:15978": {
+            "x": 562,
+            "y": 319,
+            "level": 1,
+            "name": "sn-glycerol 3-phosphate",
+            "alt": [
+                "CHEBI:12848",
+                "CHEBI:42793",
+                "CHEBI:10648",
+                "CHEBI:12843",
+                "CHEBI:26705",
+                "CHEBI:57597"
+            ]
+        },
+        "CHEBI:17754": {
+            "x": 562,
+            "y": 309,
+            "level": 1,
+            "name": "glycerol",
+            "alt": [
+                "CHEBI:42998",
+                "CHEBI:131422",
+                "CHEBI:5448",
+                "CHEBI:14334",
+                "CHEBI:24351"
+            ]
+        },
+        "CHEBI:15354": {
+            "x": 430,
+            "y": 318,
+            "level": 1,
+            "name": "choline",
+            "alt": [
+                "CHEBI:41524",
+                "CHEBI:3665",
+                "CHEBI:13985",
+                "CHEBI:23212",
+                "CHEBI:72322"
+            ]
+        },
+        "CHEBI:18132": {
+            "x": 445,
+            "y": 318,
+            "level": 1,
+            "name": "phosphocholine",
+            "alt": [
+                "CHEBI:3667",
+                "CHEBI:44707",
+                "CHEBI:12720",
+                "CHEBI:23214",
+                "CHEBI:13986",
+                "CHEBI:295975"
+            ]
+        },
+        "CHEBI:16436": {
+            "x": 463,
+            "y": 318,
+            "level": 1,
+            "name": "CDP-choline",
+            "alt": [
+                "CHEBI:41440",
+                "CHEBI:13268",
+                "CHEBI:3268",
+                "CHEBI:20867",
+                "CHEBI:49086",
+                "CHEBI:58779"
+            ]
+        },
+        "CHEBI:16110": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "1,2-diacyl-sn-glycero-3-phosphocholine(1+)",
+            "alt": [
+                "CHEBI:44694",
+                "CHEBI:1681",
+                "CHEBI:11148",
+                "CHEBI:11753",
+                "CHEBI:17046",
+                "CHEBI:26029",
+                "CHEBI:23660",
+                "CHEBI:20200",
+                "CHEBI:18878",
+                "CHEBI:8128",
+                "CHEBI:57643"
+            ]
+        },
+        "CHEBI:49183": {
+            "x": 476,
+            "y": 309,
+            "level": 1,
+            "name": "phosphatidylcholine(1+)",
+            "alt": [
+                "CHEBI:36705",
+                "CHEBI:14802"
+            ]
+        },
+        "CHEBI:16000": {
+            "x": 414,
+            "y": 339,
+            "level": 1,
+            "name": "ethanolamine",
+            "alt": [
+                "CHEBI:42323",
+                "CHEBI:272066",
+                "CHEBI:14223",
+                "CHEBI:23979",
+                "CHEBI:4880",
+                "CHEBI:57603"
+            ]
+        },
+        "CHEBI:17553": {
+            "x": 445,
+            "y": 339,
+            "level": 1,
+            "name": "O-phosphoethanolamine",
+            "alt": [
+                "CHEBI:14224",
+                "CHEBI:44681",
+                "CHEBI:4881",
+                "CHEBI:14814",
+                "CHEBI:23980",
+                "CHEBI:12694",
+                "CHEBI:36711",
+                "CHEBI:58190"
+            ]
+        },
+        "CHEBI:16732": {
+            "x": 463,
+            "y": 339,
+            "level": 1,
+            "name": "CDP-ethanolamine",
+            "alt": [
+                "CHEBI:3270",
+                "CHEBI:13270",
+                "CHEBI:13257",
+                "CHEBI:20869",
+                "CHEBI:57876"
+            ]
+        },
+        "CHEBI:16038": {
+            "x": 476,
+            "y": 349,
+            "level": 1,
+            "name": "phosphatidylethanolamine",
+            "alt": [
+                "CHEBI:8129",
+                "CHEBI:14803",
+                "CHEBI:12701",
+                "CHEBI:7661",
+                "CHEBI:26030",
+                "CHEBI:26031",
+                "CHEBI:45210",
+                "CHEBI:57613"
+            ]
+        },
+        "CHEBI:18303": {
+            "x": 505,
+            "y": 349,
+            "level": 1,
+            "name": "phosphatidyl-L-serine",
+            "alt": [
+                "CHEBI:14801",
+                "CHEBI:26041",
+                "CHEBI:8137",
+                "CHEBI:11750",
+                "CHEBI:64388",
+                "CHEBI:57262",
+                "CHEBI:64764",
+                "CHEBI:64380",
+                "CHEBI:58436"
+            ]
+        },
+        "CHEBI:17962": {
+            "x": 527,
+            "y": 349,
+            "level": 1,
+            "name": "CDP-diacylglycerol",
+            "alt": [
+                "CHEBI:20868",
+                "CHEBI:13256",
+                "CHEBI:13269",
+                "CHEBI:3269",
+                "CHEBI:58332"
+            ]
+        },
+        "CHEBI:16337": {
+            "x": 527,
+            "y": 328,
+            "level": 1,
+            "name": "phosphatidic acid",
+            "alt": [
+                "CHEBI:14795",
+                "CHEBI:26023",
+                "CHEBI:8122"
+            ]
+        },
+        "CHEBI:18368": {
+            "x": 436,
+            "y": 138,
+            "level": 1,
+            "name": "D-glucosyl-N-acylsphingosine",
+            "alt": [
+                "CHEBI:5422",
+                "CHEBI:12971",
+                "CHEBI:24260",
+                "CHEBI:36500"
+            ]
+        },
+        "CHEBI:79332": {
+            "x": 441,
+            "y": 265,
+            "level": 1,
+            "name": "1-alkyl-2-acyl-3-(3-O-sulfo-\u03b2-D-galactosyl)-sn-glycerol",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:52595": {
+            "x": 486,
+            "y": 265,
+            "level": 1,
+            "name": "1-alkyl-2-acyl-sn-glycerol",
+            "alt": [
+                "CHEBI:19009",
+                "CHEBI:598"
+            ]
+        },
+        "CHEBI:181431": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "3-Oxo-2(R)-(2Z)2-penten-1(R)-yl-cyclopentaneacetic acid",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:18292": {
+            "x": 228,
+            "y": 291,
+            "level": 1,
+            "name": "(-)-Jasmonic acid",
+            "alt": [
+                "CHEBI:181431",
+                "CHEBI:95",
+                "CHEBI:14486",
+                "CHEBI:18487",
+                "CHEBI:58431"
+            ]
+        },
+        "CHEBI:18435": {
+            "x": 245,
+            "y": 291,
+            "level": 1,
+            "name": "(+)-7-Isojasmonic acid",
+            "alt": [
+                "CHEBI:136179"
+            ]
+        },
+        "CHEBI:80460": {
+            "x": 261,
+            "y": 291,
+            "level": 1,
+            "name": "(+)-7-Isojasmonic acid CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:80459": {
+            "x": 277,
+            "y": 291,
+            "level": 1,
+            "name": "3-Oxo-OPC4-CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:80457": {
+            "x": 293,
+            "y": 291,
+            "level": 1,
+            "name": "trans-2-Enoyl-OPC4-CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:80456": {
+            "x": 309,
+            "y": 291,
+            "level": 1,
+            "name": "OPC4-CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:80455": {
+            "x": 325,
+            "y": 291,
+            "level": 1,
+            "name": "3-Oxo-OPC6-CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:80453": {
+            "x": 341,
+            "y": 291,
+            "level": 1,
+            "name": "trans-2-Enoyl-OPC6-CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:139105": {
+            "x": 357,
+            "y": 291,
+            "level": 1,
+            "name": "OPC6-CoA",
+            "alt": [
+                "CHEBI:138431",
+                "CHEBI:80452"
+            ]
+        },
+        "CHEBI:80451": {
+            "x": 374,
+            "y": 291,
+            "level": 1,
+            "name": "3-Oxo-OPC8-CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:80449": {
+            "x": 388,
+            "y": 291,
+            "level": 1,
+            "name": "trans-2-Enoyl-OPC8-CoA",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:80448": {
+            "x": 403,
+            "y": 291,
+            "level": 1,
+            "name": "OPC8-CoA",
+            "alt": [
+                "CHEBI:138396"
+            ]
+        },
+        "CHEBI:15720": {
+            "x": 417,
+            "y": 291,
+            "level": 1,
+            "name": "8-[(1R,2R)-3-Oxo-2-{(Z)-pent-2-enyl}cyclopentyl]octanoate",
+            "alt": [
+                "CHEBI:2326",
+                "CHEBI:20807",
+                "CHEBI:12265",
+                "CHEBI:165637"
+            ]
+        },
+        "CHEBI:15560": {
+            "x": 432,
+            "y": 291,
+            "level": 1,
+            "name": "12-OPDA",
+            "alt": [
+                "CHEBI:148",
+                "CHEBI:10825",
+                "CHEBI:19141",
+                "CHEBI:19142"
+            ]
+        },
+        "CHEBI:15653": {
+            "x": 447,
+            "y": 291,
+            "level": 2,
+            "name": "12,13(S)-EOT",
+            "alt": [
+                "CHEBI:262",
+                "CHEBI:18616",
+                "CHEBI:36438",
+                "CHEBI:18615",
+                "CHEBI:10939"
+            ]
+        },
+        "CHEBI:48905": {
+            "x": 462,
+            "y": 291,
+            "level": 1,
+            "name": "(9Z,11E,13S,15Z)-13-hydroperoxyoctadeca-9,11,15-trienoic acid",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:37550": {
+            "x": 445,
+            "y": 362,
+            "level": 1,
+            "name": "sphingosine 1-phosphate",
+            "alt": [
+                "CHEBI:26742",
+                "CHEBI:9225",
+                "CHEBI:60119"
+            ]
+        },
+        "CHEBI:16393": {
+            "x": 445,
+            "y": 387,
+            "level": 1,
+            "name": "sphingosine",
+            "alt": [
+                "CHEBI:9224",
+                "CHEBI:15102",
+                "CHEBI:26741",
+                "CHEBI:207585",
+                "CHEBI:57756"
+            ]
+        },
+        "CHEBI:17761": {
+            "x": 445,
+            "y": 411,
+            "level": 1,
+            "name": "ceramide, N-acylsphingosine bases",
+            "alt": [
+                "CHEBI:12487",
+                "CHEBI:13954",
+                "CHEBI:7242",
+                "CHEBI:23074",
+                "CHEBI:52639",
+                "CHEBI:52573",
+                "CHEBI:12586"
+            ]
+        },
+        "CHEBI:176270": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "Galactosylceramide (d18:1/12:0)",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:18390": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "N-acyl-\u03b2-D-galactosylsphingosine",
+            "alt": [
+                "CHEBI:20947",
+                "CHEBI:5258",
+                "CHEBI:12947",
+                "CHEBI:12949",
+                "CHEBI:24141"
+            ]
+        },
+        "CHEBI:36498": {
+            "x": 469,
+            "y": 411,
+            "level": 1,
+            "name": "galactosylceramide",
+            "alt": [
+                "CHEBI:13641"
+            ]
+        },
+        "CHEBI:176327": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "3-O-Sulfogalactosylceramide (d18:1/22:0)",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:18318": {
+            "x": 485,
+            "y": 411,
+            "level": 1,
+            "name": "galactosylceramide sulfate",
+            "alt": [
+                "CHEBI:14289",
+                "CHEBI:36499",
+                "CHEBI:24142",
+                "CHEBI:9338",
+                "CHEBI:26827",
+                "CHEBI:24143",
+                "CHEBI:75956"
+            ]
+        },
+        "CHEBI:184397": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "(3'-SulfO)galbeta-cer(D18:1/20:0)",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:184402": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "(17Z)-N-[(2S,3R,4E)-1-{[(2R,5S,6R)-3,5-dihydroxy-6-(hydroxymethyl)-4-(sulfooxy)oxan-2-yl]oxy}-3-hydroxyoctadec-4-en-2-yl]hexacos-17-enimidic acid",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:184960": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "(9Z)-N-[(2S,3R,4E)-1-{[(2R,5S,6R)-3,5-dihydroxy-6-(hydroxymethyl)-4-(sulfooxy)oxan-2-yl]oxy}-3-hydroxyoctadec-4-en-2-yl]octadec-9-enimidic acid",
+            "alt": [
+                ""
+            ]
+        },
+        "CHEBI:17115": {
+            "x": null,
+            "y": null,
+            "level": 1,
+            "name": "L-serine",
+            "alt": [
+                "CHEBI:45440",
+                "CHEBI:45451",
+                "CHEBI:45677",
+                "CHEBI:45590",
+                "CHEBI:45597",
+                "CHEBI:13167",
+                "CHEBI:21387",
+                "CHEBI:6301",
+                "CHEBI:32845",
+                "CHEBI:17822",
+                "CHEBI:26648",
+                "CHEBI:32837",
+                "CHEBI:32836",
+                "CHEBI:15081",
+                "CHEBI:35243",
+                "CHEBI:32846",
+                "CHEBI:33384",
+                "CHEBI:9116"
+            ]
+        }
     }
 }

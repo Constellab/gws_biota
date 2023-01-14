@@ -8,7 +8,7 @@ from gws_biota.unicell.unicell_service import UnicellService
 from gws_core import BaseTestCase, Settings
 from scipy import sparse
 
-settings = Settings.retrieve()
+settings = Settings.get_instance()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
 
@@ -26,7 +26,7 @@ class TestUnicell(BaseTestCaseUsingFullBiotaDB):
 
         path = uc.shortest_path("CHEBI:57604", "CHEBI:58289")
         #self.assertEqual( path, ['CHEBI:57604', 'CHEBI:58272', 'CHEBI:58289'])
-        self.assertEqual(
+        self.assertTrue(
             path == ['CHEBI:57604', 'CHEBI:58248', 'CHEBI:58289'] or \
             path == ['CHEBI:57604', 'CHEBI:58272', 'CHEBI:58289']
         )

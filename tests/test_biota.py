@@ -1,10 +1,12 @@
-import os
 import json
-from gws_core import Settings, BaseTestCase
-from gws_biota import BiomassReaction, Compound
-from gws_biota.biomass_reaction.biomass_reaction_service import BiomassReactionService
+import os
 
-settings = Settings.retrieve()
+from gws_biota import BiomassReaction, Compound
+from gws_biota.biomass_reaction.biomass_reaction_service import \
+    BiomassReactionService
+from gws_core import BaseTestCase, Settings
+
+settings = Settings.get_instance()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
 class TestBiotaReaction(BaseTestCase):
@@ -20,19 +22,19 @@ class TestBiotaReaction(BaseTestCase):
         file = os.path.join(testdata_path, 'ecoli_core.json')
         with open(file, 'r', encoding="utf-8") as fp:
             data = json.load(fp)
-            ckey = "compounds" if "compounds" in data else "metabolites"        
+            ckey = "compounds" if "compounds" in data else "metabolites"
             compounds = data[ckey]
             reactions = data["reactions"]
             for comp_data in data[ckey]:
                 chebi_ids = comp_data["annotation"].get("chebi")
                 if chebi_ids:
                     comp = Compound(
-                        chebi_id = chebi_ids[0], 
+                        chebi_id = chebi_ids[0],
                     )
                 comp.set_name(comp_data["name"])
                 comp.ft_names = ",".join([ comp_data["name"], *[_id.replace("CHEBI:","") for _id in chebi_ids] ])
                 comp.save()
-        
+
         Q = Compound.select()
         print(f"{len(Q)} compounds created")
         self.assertEquals(len(Q), 72)

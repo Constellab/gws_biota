@@ -4,7 +4,7 @@ from gws_biota.db.db_service import DbCreator, DbService, QueueService
 from gws_core import (BaseTestCase, Experiment, ExperimentRunService, GTest,
                       Settings)
 
-settings = Settings.retrieve()
+settings = Settings.get_instance()
 testdata_path = settings.get_variable("gws_biota:testdata_dir")
 
 

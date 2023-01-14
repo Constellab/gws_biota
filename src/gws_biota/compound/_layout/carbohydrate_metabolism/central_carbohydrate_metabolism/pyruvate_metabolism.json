@@ -1,17 +1,127 @@
-{  
+{
     "id": "carbohydrate_metabolism",
     "name": "carbohydrate metabolism",
     "sub_cluster": "central carbohydrate metabolism",
     "pathway": "pyruvate metabolism",
     "data": {
-        "CHEBI:15361": {"x": 719, "y": 513, "level": 1, "name":"pyruvate", "alt": ["CHEBI:26462", "CHEBI:26466", "CHEBI:8685", "CHEBI:32816", "CHEBI:45253", "CHEBI:14987"]},
-        "CHEBI:57288": {"x": 719, "y": 550, "level": 1, "name": "acetyl-CoA(4-)", "alt": ["CHEBI:22192", "CHEBI:15351", "CHEBI:13712", "CHEBI:2408", "CHEBI:40470"]},
-        "CHEBI:24996": {"x": null, "y": null, "level": 2, "name": "lactate", "alt": []},
-        "CHEBI:16651": {"x": 796, "y": 513, "level": 2, "name": "(S)-lactate", "alt": ["CHEBI:11065", "CHEBI:12411", "CHEBI:18783", "CHEBI:422"]},
-        "CHEBI:16004": {"x": 685, "y": 478, "level": 1, "name": "(R)-lactate", "alt": ["CHEBI:24996", "CHEBI:16651", "CHEBI:11065", "CHEBI:12411", "CHEBI:18783", "CHEBI:341", "CHEBI:18684", "CHEBI:43701", "CHEBI:11001", "CHEBI:42111", "CHEBI:42105"]},
-        "CHEBI:30751": {"x": 728, "y": 614, "level": 1, "name": "formic acid", "alt": ["CHEBI:15740", "CHEBI:14276", "CHEBI:24081", "CHEBI:42460", "CHEBI:5145", "CHEBI:24082"]},
-        "CHEBI:30089": {"x": 749, "y": 535, "level": 1, "name": "acetate", "alt": ["CHEBI:13704", "CHEBI:22165", "CHEBI:22169", "CHEBI:40480", "CHEBI:15366", "CHEBI:2387", "CHEBI:40486"]},
-        "CHEBI:13711": {"x": 728, "y": 535, "level": 1, "name": "acetyl phosphate", "alt": ["CHEBI:46262", "CHEBI:15350", "CHEBI:22191", "CHEBI:2407"]},
-        "CHEBI:15344": {"x": 852, "y": 561, "level": 1, "name": "acetoacetic acid", "alt": ["CHEBI:13705", "CHEBI:40507", "CHEBI:2391", "CHEBI:22172", "CHEBI:131367"]}
+        "CHEBI:15361": {
+            "x": 719.0,
+            "y": 513.0,
+            "level": "2",
+            "name": "pyruvate",
+            "alt": [
+                "CHEBI:26462",
+                "CHEBI:26466",
+                "CHEBI:8685",
+                "CHEBI:32816",
+                "CHEBI:45253",
+                "CHEBI:14987"
+            ]
+        },
+        "CHEBI:57288": {
+            "x": 719,
+            "y": 550,
+            "level": 1,
+            "name": "acetyl-CoA(4-)",
+            "alt": [
+                "CHEBI:22192",
+                "CHEBI:15351",
+                "CHEBI:13712",
+                "CHEBI:2408",
+                "CHEBI:40470"
+            ]
+        },
+        "CHEBI:24996": {
+            "x": null,
+            "y": null,
+            "level": 2,
+            "name": "lactate",
+            "alt": []
+        },
+        "CHEBI:16651": {
+            "x": 796,
+            "y": 513,
+            "level": 2,
+            "name": "(S)-lactate",
+            "alt": [
+                "CHEBI:11065",
+                "CHEBI:12411",
+                "CHEBI:18783",
+                "CHEBI:422"
+            ]
+        },
+        "CHEBI:16004": {
+            "x": 685,
+            "y": 478,
+            "level": 1,
+            "name": "(R)-lactate",
+            "alt": [
+                "CHEBI:24996",
+                "CHEBI:16651",
+                "CHEBI:11065",
+                "CHEBI:12411",
+                "CHEBI:18783",
+                "CHEBI:341",
+                "CHEBI:18684",
+                "CHEBI:43701",
+                "CHEBI:11001",
+                "CHEBI:42111",
+                "CHEBI:42105"
+            ]
+        },
+        "CHEBI:30751": {
+            "x": 728,
+            "y": 614,
+            "level": 1,
+            "name": "formic acid",
+            "alt": [
+                "CHEBI:15740",
+                "CHEBI:14276",
+                "CHEBI:24081",
+                "CHEBI:42460",
+                "CHEBI:5145",
+                "CHEBI:24082"
+            ]
+        },
+        "CHEBI:30089": {
+            "x": 749,
+            "y": 535,
+            "level": 1,
+            "name": "acetate",
+            "alt": [
+                "CHEBI:13704",
+                "CHEBI:22165",
+                "CHEBI:22169",
+                "CHEBI:40480",
+                "CHEBI:15366",
+                "CHEBI:2387",
+                "CHEBI:40486"
+            ]
+        },
+        "CHEBI:13711": {
+            "x": 728,
+            "y": 535,
+            "level": 1,
+            "name": "acetyl phosphate",
+            "alt": [
+                "CHEBI:46262",
+                "CHEBI:15350",
+                "CHEBI:22191",
+                "CHEBI:2407"
+            ]
+        },
+        "CHEBI:15344": {
+            "x": 852,
+            "y": 561,
+            "level": 1,
+            "name": "acetoacetic acid",
+            "alt": [
+                "CHEBI:13705",
+                "CHEBI:40507",
+                "CHEBI:2391",
+                "CHEBI:22172",
+                "CHEBI:131367"
+            ]
+        }
     }
 }

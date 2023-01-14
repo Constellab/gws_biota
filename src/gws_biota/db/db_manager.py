@@ -24,7 +24,7 @@ class DbManager(AbstractDbManager):
 
     @classmethod
     def get_config(cls, mode: DbMode) -> DbConfig:
-        settings = Settings.retrieve()
+        settings = Settings.get_instance()
 
         if mode == 'test':
             return settings.get_gws_core_test_db_config()

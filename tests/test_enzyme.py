@@ -7,7 +7,7 @@ class TestEnzyme(BaseTestCase):
 
     def test_enzyme(self):
         self.print("Enzyme")
-        settings = Settings.retrieve()
+        settings = Settings.get_instance()
         testdata_path = settings.get_variable("gws_biota:testdata_dir")
         params = dict(
             biodata_dir=testdata_path,
