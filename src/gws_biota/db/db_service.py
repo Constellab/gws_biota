@@ -3,10 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (BadRequestException, BaseService, CurrentUserService,
-                      Experiment, ExperimentService, Job, Logger, ModelService,
-                      MySQLBase, MySQLService, Protocol, Queue, QueueService,
-                      Requests, Settings, TaskModel, TaskService, UserService)
+from gws_core import (BadRequestException, BaseService, Experiment, Logger,
+                      ModelService)
 from gws_core.extra import BaseModelService
 
 from ..biomass_reaction.biomass_reaction import BiomassReaction
