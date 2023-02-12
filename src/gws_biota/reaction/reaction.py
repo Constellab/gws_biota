@@ -58,7 +58,7 @@ class Reaction(BaseFT):
     master_id = CharField(null=True, index=True)
     direction = CharField(null=True, index=True)
     biocyc_ids = CharField(null=True, index=True)
-    #brenda_id = CharField(null=True, index=True)
+    # brenda_id = CharField(null=True, index=True)
     metacyc_id = CharField(null=True, index=True)
     kegg_id = CharField(null=True, index=True)
     sabio_rk_id = CharField(null=True, index=True)

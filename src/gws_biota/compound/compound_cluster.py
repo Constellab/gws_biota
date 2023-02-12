@@ -28,15 +28,17 @@ GOLBAL_CENTER = {"x": 719, "y": 513}  # Pyruvate is the center of the world!
 # }
 
 CompoundClusterDict = TypedDict("CompoundClusterDict", {
+    "id": str,
+    "name": str,
     "pathway": List[dict],
+    "level": int,
     "x": str,
-    "y": str,
-    "level": int
+    "y": str
 })
 CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
-    "x": str,
-    "y": str,
     "clusters": List[dict],
+    "x": str,
+    "y": str
 })
 
 

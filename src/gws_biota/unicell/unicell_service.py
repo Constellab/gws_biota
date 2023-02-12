@@ -21,7 +21,7 @@ class UnicellService:
 
     @classmethod
     @transaction()
-    def create_unicell(cls, tax_id=None):
+    def create_unicell_skeleton(cls, tax_id=None):
         """ Create a universal cell """
         from ..reaction.reaction import Reaction
 
