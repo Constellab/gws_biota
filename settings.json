@@ -21,7 +21,8 @@
                     {"name":"pronto", "version":"2.1.0"},
                     {"name":"ujson", "version":"5.1.0"},
                     {"name":"pyparsing", "version":"3.0.6"},
-                    {"name":"owlready2", "version":"0.36"}
+                    {"name":"owlready2", "version":"0.36"},
+                    {"name": "biopython", "version": "1.79"}
                 ]
             },
             {
@@ -33,7 +34,7 @@
             {
                 "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/core",
                 "packages":[
-                    {"name": "gws_core", "version":"0.4.4", "is_brick": true}
+                    {"name": "gws_core", "version":"0.5.0-beta.1", "is_brick": true}
                 ]
             },
             {
