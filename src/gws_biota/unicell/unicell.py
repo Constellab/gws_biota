@@ -8,13 +8,10 @@ import pickle
 from typing import Dict, List
 
 import networkx as nx
-import numpy
 from gws_biota import Compound
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import BigBitField, BlobField, CharField
-from scipy import sparse
-from scipy.sparse import linalg
+from peewee import BlobField
 
 from ..base.base_ft import BaseFT
 from ..compound.compound import Compound

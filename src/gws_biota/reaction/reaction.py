@@ -205,12 +205,13 @@ class Reaction(BaseFT):
 
     @classmethod
     def search_by_tax_ids(cls, tax_ids: Union[list, str]) -> ModelSelect:
+        tax_ids = [tax.replace("TAX", "") for tax in tax_ids]  # clean taxa
         if isinstance(tax_ids, str):
             tax_ids = ["TAX" + tax_ids]
         if isinstance(tax_ids, list):
             tax_ids = ["TAX" + tax for tax in tax_ids]
-            tax_ids = " ".join(tax_ids)
 
+        tax_ids = " ".join(tax_ids)
         return cls.select().where(Match((cls.ft_tax_ids), tax_ids))
 
     @classmethod

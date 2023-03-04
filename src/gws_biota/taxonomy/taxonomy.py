@@ -4,8 +4,7 @@
 # About us: https://gencovery.com
 
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import CharField, ModelSelect, TextField
-from playhouse.mysql_ext import Match
+from peewee import CharField
 
 from ..ontology.ontology import Ontology
 
