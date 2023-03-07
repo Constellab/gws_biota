@@ -3,6 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+import os
+
 from gws_core import AbstractDbManager, DbConfig, DbMode, Settings
 from peewee import DatabaseProxy
 
@@ -24,41 +26,29 @@ class DbManager(AbstractDbManager):
 
     @classmethod
     def get_config(cls, mode: DbMode) -> DbConfig:
-        settings = Settings.get_instance()
 
         if mode == 'test':
-            return settings.get_gws_core_test_db_config()
+            return Settings.get_test_db_config()
         else:
             return cls.get_prod_db_config()
-        # elif mode == 'prod':
-        #     return cls.get_prod_db_config()
-        # else:
-        #     return cls.get_local_db_config()
 
     @classmethod
     def get_prod_db_config(cls) -> DbConfig:
         return {
-            "host":  "gws_biota_db",
-            "user": "gws_biota",
-            "password": "gencovery",
-            "port": 3306,
-            "db_name": "gws_biota",
+            "host":  os.environ.get("GWS_BIOTA_DB_HOST"),
+            "user": os.environ.get("GWS_BIOTA_DB_USER"),
+            "password": os.environ.get("GWS_BIOTA_DB_PASSWORD"),
+            "port": int(os.environ.get("GWS_BIOTA_DB_PORT")),
+            "db_name": os.environ.get("GWS_BIOTA_DB_NAME"),
             "engine": "mariadb"
         }
 
-    # @classmethod
-    # def get_local_db_config(cls) -> DbConfig:
-    #     return {
-    #         "host":  "gws_biota_dev_db",
-    #         "user": "gws_biota",
-    #         "password": "gencovery",
-    #         "port": 3306,
-    #         "db_name": "gws_biota",
-    #         "engine": "mariadb"
-    #     }
-
     @classmethod
     def get_unique_name(cls) -> str:
+        return 'gws_biota'
+
+    @classmethod
+    def get_brick_name(cls) -> str:
         return 'gws_biota'
 
 
