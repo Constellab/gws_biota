@@ -1,6 +1,9 @@
 import time
 
+<<<<<<< HEAD
 from gws_biota.db.db_service import DbCreator, DbService
+=======
+>>>>>>> 0.5.X
 from gws_core import (BaseTestCase, Experiment, ExperimentRunService, GTest,
                       Settings)
 
@@ -16,7 +19,7 @@ class TestDbService(BaseTestCase):
         # self.assertTrue(DbService.is_ready())
         # self.assertTrue(not DbService.is_busy())
 
-    async def test_build_biota(self):
+    def test_build_biota(self):
         return
         # self.print("Build biota")
 
