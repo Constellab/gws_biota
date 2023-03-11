@@ -22,7 +22,7 @@
                     {"name":"pronto", "version":"2.1.0"},
                     {"name":"ujson", "version":"5.1.0"},
                     {"name":"pyparsing", "version":"3.0.6"},
-                    {"name":"owlready2", "version":"0.36"},
+                    {"name":"owlready2", "version":"0.36"}
                 ]
             },
             {
