@@ -160,15 +160,11 @@ class ReactionService(BaseService):
                     if tax_id:
                         ft_tax_ids.append("TAX" + tax_id)
 
-            # set ft_names
+            # set fulltext index data
             ft_names = [react.rhea_id.replace(":", ""), *ft_names]
-            react.ft_names = ";".join(ft_names)
-
-            # set ft_tax_ids
-            react.ft_tax_ids = ";".join(ft_tax_ids)
-
-            # set ft_ec_numbers
-            react.ft_ec_numbers = ";".join(ft_ec_numbers)
+            react.ft_names = ";".join(list(set(ft_names)))
+            react.ft_tax_ids = ";".join(list(set(ft_tax_ids)))
+            react.ft_ec_numbers = ";".join(list(set(ft_ec_numbers)))
 
         return vals
     # -- U --

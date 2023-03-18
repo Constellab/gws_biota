@@ -11,6 +11,7 @@
         {"go_id": "GO:0005739", "bigg_id": "m",  "name": "mitochondria", "color": "#8c0da4", "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0005759", "bigg_id": "i",  "name": "mitochondrial matrix", "color": "#e493f3", "data": {"alt_go_ids":[], "synonymes": ["inner mitochondria"], "is_steady": true}},
         {"go_id": "GO:0005758", "bigg_id": "im", "name": "mitochondrial intermembrane space", "color": "#d5a6bd", "data": {"alt_go_ids": ["GO:0031971"], "synonymes": [], "is_steady": true}},
+        {"go_id": "GO:0005758mm", "bigg_id": "mm", "name": "mitochondrial intermembrane", "color": "#d5a6bd", "data": {"alt_go_ids": ["GO:0031971"], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0005764", "bigg_id": "l",  "name": "lysosome", "color": "#8ce3e6", "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0005634", "bigg_id": "n",  "name": "nucleus", "color": "#23980d", "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0005575", "bigg_id": "",   "name": "cellular component", "color": "#bcbcbc", "data": {"alt_go_ids": ["GO:0008372"], "synonymes": ["other"], "is_steady": true}},
@@ -21,6 +22,8 @@
         {"go_id": "GO:0009579", "bigg_id": "u",  "name": "thylakoid", "color": null, "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0042651", "bigg_id": "um", "name": "thylakoid membrane", "color": null, "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0005773", "bigg_id": "v",  "name": "vacuole", "color": "#b2b2f9", "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
-        {"go_id": "GO:0005777", "bigg_id": "x",  "name": "peroxisome", "color": "#fe8f06", "data": {"alt_go_ids":["GO:0019818"], "synonymes": ["peroxisome/glyoxysome"], "is_steady": true}}
+        {"go_id": "GO:0005777", "bigg_id": "x",  "name": "peroxisome", "color": "#fe8f06", "data": {"alt_go_ids":["GO:0019818"], "synonymes": ["peroxisome/glyoxysome"], "is_steady": true}},
+        {"go_id": "GO:0070069", "bigg_id": "y",  "name": "cytochrome complex", "color": "#007006", "data": {"alt_go_ids":["GO:0070069"], "synonymes": ["cytochrome complex"], "is_steady": true}},
+        {"go_id": "GO:0000000w", "bigg_id": "w",  "name": "wildtype staph aureus", "color": "#000000", "data": {"alt_go_ids":["GO:0000000w"], "synonymes": ["wildtype staph aureus"], "is_steady": true}}
     ]
 }

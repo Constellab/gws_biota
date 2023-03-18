@@ -45,10 +45,7 @@ class UnicellService:
             query = Reaction.select().where(Reaction.direction == "UN")
         else:
             query = Reaction.search_by_tax_ids(tax.tax_id).where(Reaction.direction == "UN")
-            # query = Reaction.select() \
-            #     .join(ReactionEnzyme, on=(ReactionEnzyme.reaction == Reaction.id)) \
-            #     .join(Enzyme, on=((ReactionEnzyme.enzyme == Enzyme.id) & getattr(Enzyme, "tax_"+tax.rank) == tax.tax_id)) \
-            #     .where(Reaction.direction == "UN")
+            # query = Reaction.select().where(Reaction.direction == "UN")
 
         nb_rxn = query.count()
         Logger.info(f"Creating unicell with {nb_rxn} reactions ...")
