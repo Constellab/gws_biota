@@ -9,6 +9,7 @@ from playhouse.mysql_ext import Match
 
 from ..base.base_ft import BaseFT
 from .enzyme_pathway import EnzymePathway
+from .deprecated_enzyme import DeprecatedEnzyme
 
 
 @typing_registrator(unique_name="EnzymeOrtholog", object_type="MODEL", hide=True)
@@ -47,3 +48,8 @@ class EnzymeOrtholog(BaseFT):
         """
 
         return ",".join([sn.capitalize() for sn in self.data.get("SN", [""])])
+
+    @property
+    def related_deprecated_enzyme(self):
+        """ Returns depreacated enzymes related to this enzyme """
+        return DeprecatedEnzyme.get_or_none(DeprecatedEnzyme.new_ec_number == self.ec_number)
