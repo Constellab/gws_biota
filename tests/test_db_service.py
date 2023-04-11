@@ -1,9 +1,6 @@
 import time
 
-<<<<<<< HEAD
-from gws_biota.db.db_service import DbCreator, DbService
-=======
->>>>>>> 0.5.X
+
 from gws_core import (BaseTestCase, Experiment, ExperimentRunService, GTest,
                       Settings)
 

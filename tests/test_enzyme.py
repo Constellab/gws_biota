@@ -15,7 +15,7 @@ class TestEnzyme(BaseTestCase):
             bkms_file="bkms_test.csv",
             expasy_enzclass_file="enzclass_test.txt"
         )
-        bto = BTO(bto_id='BTO_0000214')
+        bto = BTO(bto_id='BTO:0000214')
         bto.save()
 
         EnzymeService.create_enzyme_db(**params)
@@ -31,7 +31,7 @@ class TestEnzyme(BaseTestCase):
 
         print(bto_ids)
 
-        self.assertEqual(enzyme.bto[0].bto_id, 'BTO_0000214')
+        self.assertEqual(enzyme.bto[0].bto_id, 'BTO:0000214')
 
         self.assertEqual(enzyme.organism, 'Candida boidinii')
         self.assertEqual(enzyme.name, 'D-glutamate oxidase')
@@ -76,7 +76,7 @@ class TestEnzyme(BaseTestCase):
         self.assertEqual(enzyme.params('RT')[1000].value, None)
 
         self.assertEqual(enzyme.params('ST')[0].value, "cell culture")
-        self.assertEqual(enzyme.params('ST')[0].get("bto"), "BTO_0000214")
+        self.assertEqual(enzyme.params('ST')[0].get("bto"), "BTO:0000214")
 
         self.assertEqual(enzyme.params('UknownParam')[0].value, None)
         self.assertEqual(enzyme.params('UknownParam')[1000].value, None)
@@ -126,7 +126,7 @@ class TestEnzyme(BaseTestCase):
         for e in Q:
             print(e.ec_number)
             self.assertTrue(e.ec_number in ['1.1.1.119', '1.3.1.28'])
-            #self.assertEqual(e.related_deprecated_enzyme.ec_number, '1.1.1.109')
+            # self.assertEqual(e.related_deprecated_enzyme.ec_number, '1.1.1.109')
 
         # Multiple deprecated
         print("\nFollow multiple deprecated enzymes")
@@ -141,7 +141,7 @@ class TestEnzyme(BaseTestCase):
         Q = Enzyme.select().where(Enzyme.ec_number.in_(['1.1.0.10', '1.3.1.45', '1.3.1.18']))
         self.assertEqual(len(Q), 0)
         Q = Enzyme.select_and_follow_if_deprecated(ec_number='1.1.0.10')
-        #self.assertEqual(len(Q), 15)
+        # self.assertEqual(len(Q), 15)
         for e in Q:
             print(e.ec_number)
             self.assertTrue(e.ec_number in ['1.1.1.119', '1.3.1.28'])

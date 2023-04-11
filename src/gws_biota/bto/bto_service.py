@@ -24,12 +24,14 @@ class BTOService(BaseService):
         :type kwargs: dict
         """
 
-        list_bto = OntoHelper.parse_bto_from_json(biodata_dir, kwargs['bto_file'])
+        # convert to obo if required
+        ontology = OntoHelper.create_ontology_from_file(biodata_dir, kwargs['bto_file'])
+        list_bto = OntoHelper.parse_bto_from_ontology(ontology)
         btos = [BTO(data=dict_) for dict_ in list_bto]
         for bto in btos:
             bto.set_bto_id(bto.data["id"])
             bto.set_name(bto.data["name"])
-            ft_names = [bto.data["name"], "BTO" + bto.bto_id.replace("BTO_", "")]
+            ft_names = [bto.data["name"], "BTO" + bto.bto_id.replace("BTO:", "")]
             bto.ft_names = cls.format_ft_names(ft_names)
             del bto.data["id"]
         BTO.create_all(btos)

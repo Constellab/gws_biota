@@ -1,28 +1,29 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
 import sys
 import os
-import pronto 
+import pronto
 from pronto import Ontology
 import json
 import re
 
+
 class Onto():
     """
-    
+
     This module allows to get all ontologie that will be used by the Gencovery web application.
-    
+
     This include GO, SBO, BTO and ECO ontologies
 
     """
-    
+
     @staticmethod
     def correction_of_eco_file(path, file):
         in_file = os.path.join(path, file)
-        
+
         tab = in_file.split("/")
         n = len(tab)
         path = ("/").join(tab[0:n-1])
@@ -31,25 +32,25 @@ class Onto():
         out_filename = 'corrected_'+in_filename
         out_file = os.path.join(path, out_filename)
 
-        with open(in_file,'rt') as file: 
-            with open(out_file,'wt') as outfile:
+        with open(in_file, 'rt') as file:
+            with open(out_file, 'wt') as outfile:
                 for line in file.readlines():
                     if line.startswith('def: '):
                         tokens = line.split("def: ")
                         if ': ' in tokens[1]:
                             tokens[1] = tokens[1].replace(': ', ':')
                             line = "def: " + tokens[1]
-                        
+
                         outfile.write(line)
                     else:
                         outfile.write(line)
 
         return path, out_filename
-    
+
     @staticmethod
     def correction_of_sbo_file(path, file):
         """
-        Correct the initial sbo.obo file which contained syntax errors which prevented to use 
+        Correct the initial sbo.obo file which contained syntax errors which prevented to use
         the pronto package to parse the obo file
 
         This method read the initial obo file and create a corrected copy whose the name is given
@@ -63,7 +64,7 @@ class Onto():
         """
 
         in_file = os.path.join(path, file)
-        
+
         tab = in_file.split("/")
         n = len(tab)
         path = ("/").join(tab[0:n-1])
@@ -72,8 +73,8 @@ class Onto():
         out_filename = 'corrected_'+in_filename
         out_file = os.path.join(path, out_filename)
 
-        with open(in_file,'rt') as file: 
-            with open(out_file,'wt') as outfile:
+        with open(in_file, 'rt') as file:
+            with open(out_file, 'wt') as outfile:
                 for line in file.readlines():
                     if line.startswith('synonym'):
                         if ' []' in line:
@@ -86,7 +87,7 @@ class Onto():
     @staticmethod
     def correction_of_pwo_file(path, file):
         """
-        Correct the initial pwo obo file which contained syntax errors which prevented to use 
+        Correct the initial pwo obo file which contained syntax errors which prevented to use
         the pronto package to parse the obo file
 
         This method read the initial obo file and create a corrected copy whose the name is given
@@ -100,7 +101,7 @@ class Onto():
         """
 
         in_file = os.path.join(path, file)
-        
+
         tab = in_file.split("/")
         n = len(tab)
         path = ("/").join(tab[0:n-1])
@@ -109,17 +110,17 @@ class Onto():
         out_filename = 'corrected_'+in_filename
         out_file = os.path.join(path, out_filename)
 
-        with open(in_file,'rt') as file: 
-            with open(out_file,'wt') as outfile:
+        with open(in_file, 'rt') as file:
+            with open(out_file, 'wt') as outfile:
                 for line in file.readlines():
                     m = re.search('\[(.+)\]', line)
                     if m:
                         text = m.group(1)
-                        entries = text.replace("\,","##").split(",")
+                        entries = text.replace("\,", "##").split(",")
                         for i in range(0, len(entries)):
-                            entries[i] = entries[i].strip().replace(" ", "-")     
-                        
-                        corrected_text = ", ".join(entries)  
+                            entries[i] = entries[i].strip().replace(" ", "-")
+
+                        corrected_text = ", ".join(entries)
                         outfile.write(line.replace(text, corrected_text).replace("##", "\,"))
                     else:
                         outfile.write(line)
@@ -138,12 +139,63 @@ class Onto():
         :returns: Ontology object from the package pronto
         :rtype: Ontology
         """
+        return Onto.create_ontology_from_file(path, file)
+
+    @staticmethod
+    def create_ontology_from_owl(path, file):
+        """
+        This method allows the create an ontalogy from an .owl file.
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the obo file
+        :returns: Ontology object from the package pronto
+        :rtype: Ontology
+        """
+        return Onto.create_ontology_from_file(path, file)
+
+    @staticmethod
+    def create_ontology_from_file(path, file):
+        """
+        This method allows the create an ontalogy from an .owl file.
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the obo file
+        :returns: Ontology object from the package pronto
+        :rtype: Ontology
+        """
         file_path = os.path.join(path, file)
         onto = Ontology(file_path)
         return onto
 
     @staticmethod
-    def parse_bto_from_json(path,file):
+    def parse_bto_from_ontology(ontology):
+        list_bto = []
+        for term in ontology.terms():
+            dict_ = {}
+            if not term.name:
+                continue
+            # print(term.id)
+            dict_['id'] = term.id
+            dict_['name'] = term.name
+            dict_['definition'] = str(term.definition)
+            dict_['synonyms'] = []
+            for syn in term.synonyms:
+                dict_['synonyms'].append(str(syn.description))
+            dict_['ancestors'] = [term.id]
+            ancestors = term.superclasses(distance=1000, with_self=False)
+            for sup in ancestors:
+                dict_['ancestors'].append(sup.id)
+
+            list_bto.append(dict_)
+
+        return list_bto
+
+    @staticmethod
+    def parse_bto_from_json(path, file):
         """
         Create the bto ontology from a json file
 
@@ -164,14 +216,14 @@ class Onto():
                 else:
                     dict_bto['id'] = data[key]['key']
                     dict_bto['name'] = data[key]['label']
-                    if('ancestors' in data[key].keys()):
+                    if ('ancestors' in data[key].keys()):
                         dict_bto['ancestors'] = data[key]['ancestors']
-                    if ('synonyms' in data[key].keys() ):
+                    if ('synonyms' in data[key].keys()):
                         dict_bto['synonyms'] = data[key]['synonyms']
                 list_bto.append(dict_bto)
 
-        return(list_bto)
-    
+        return (list_bto)
+
     @staticmethod
     def parse_eco_terms_from_ontoloy(ontology):
         """
@@ -187,10 +239,10 @@ class Onto():
             dict_eco = {}
             dict_eco['id'] = term.id
             dict_eco['name'] = term.name.replace('\r', '')
-            dict_eco['definition'] = str(term.definition) #str 
+            dict_eco['definition'] = str(term.definition)  # str
 
             try:
-                sup = term.superclasses(distance = 1, with_self = False)
+                sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
                     dict_eco['ancestors'] = []
@@ -200,7 +252,7 @@ class Onto():
                 pass
 
             list_eco.append(dict_eco)
-        return(list_eco)
+        return (list_eco)
 
     @staticmethod
     def parse_obo_from_ontology(ontology):
@@ -218,12 +270,12 @@ class Onto():
             dict_go['id'] = term.id
             dict_go['name'] = term.name.replace('\r', '')
             dict_go['namespace'] = term.namespace.replace('\r', '')
-            dict_go['definition'] = str(term.definition) #str
+            dict_go['definition'] = str(term.definition)  # str
 
             # ------ get xrefs ------#
             try:
                 xrefs_fro = term.xrefs
-                if len(xrefs_fro) > 0 :
+                if len(xrefs_fro) > 0:
                     dict_go['xrefs'] = []
                     for data in xrefs_fro:
                         dict_go['xrefs'].append(data.id)
@@ -232,7 +284,7 @@ class Onto():
 
             # ------ get ancestors ------ #
             try:
-                sup = term.superclasses(distance = 1, with_self = False)
+                sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
                     dict_go['ancestors'] = []
@@ -249,7 +301,7 @@ class Onto():
                     if len(list_rhea_id) > 0:
                         dict_go['rhea_id'] = []
                         dict_go['rhea_id'] = list_rhea_id
-            #dict_go['synonyms'] = list(term.synonyms)
+            # dict_go['synonyms'] = list(term.synonyms)
 
             list_alt_ids = list(term.alternate_ids)
             if len(list_alt_ids) > 0:
@@ -257,7 +309,7 @@ class Onto():
 
             list_go.append(dict_go)
 
-        return(list_go)
+        return (list_go)
 
     @staticmethod
     def parse_sbo_terms_from_ontology(ontology):
@@ -283,7 +335,7 @@ class Onto():
                 dict_sbo['definition'] = term.definition.capitalize()
 
             try:
-                sup = term.superclasses(distance = 1, with_self = False)
+                sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
                     dict_sbo['ancestors'] = []
@@ -294,8 +346,8 @@ class Onto():
 
             list_sbo.append(dict_sbo)
 
-        return(list_sbo)
-    
+        return (list_sbo)
+
     @staticmethod
     def from_owl_to_obo(path, file, filename_):
         """
@@ -311,12 +363,12 @@ class Onto():
         :rtype: None
         """
         file_path = os.path.join(path, file)
-        save_path = os.path.realpath('./databases_input')
-        complete_name = os.path.join(save_path, filename_+".obo")
+        complete_name = os.path.join(path, filename_+".obo")
         edam = Ontology(file_path)
         with open(complete_name, "wb") as f:
             edam.dump(f, format='obo')
 
+        return complete_name
 
     @staticmethod
     def parse_pwo_terms_from_ontology(ontology):
@@ -333,10 +385,10 @@ class Onto():
             dict_pwo = {}
             dict_pwo['id'] = term.id
             dict_pwo['name'] = term.name.replace('\r', '')
-            dict_pwo['definition'] = str(term.definition) #str 
+            dict_pwo['definition'] = str(term.definition)  # str
 
             try:
-                sup = term.superclasses(distance = 1, with_self = False)
+                sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
                     dict_pwo['ancestors'] = []
@@ -346,4 +398,4 @@ class Onto():
                 pass
 
             list_pwo.append(dict_pwo)
-        return(list_pwo)
+        return (list_pwo)

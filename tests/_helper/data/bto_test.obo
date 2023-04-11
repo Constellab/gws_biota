@@ -1,0 +1,124 @@
+format-version: 1.2
+data-version: releases/2021-04-27
+date: 21:03:2021 18:30
+saved-by: Marion
+auto-generated-by: OBO-Edit 2.3.1
+synonym_typedef: FR "LANGUAGE FRENCH"
+synonym_typedef: GE "LANGUAGE GERMAN"
+synonym_typedef: MS "MISSPELLING"
+synonym_typedef: SCI "SCIENTIFIC NAME"
+default-namespace: BrendaTissueOBO
+property_value: http://purl.org/dc/elements/1.1/description "A structured controlled vocabulary for the source of an enzyme comprising tissues, cell lines, cell types and cell cultures." xsd:string
+property_value: http://purl.org/dc/elements/1.1/title "The BRENDA Tissue Ontology (BTO)" xsd:string
+property_value: http://purl.org/dc/terms/license "https://creativecommons.org/licenses/by/4.0/" xsd:string
+ontology: bto
+
+[Term]
+id: BTO:0000000
+name: tissues, cell types and enzyme sources
+def: "A structured controlled vocabulary for the source of an enzyme. It comprises terms of tissues, cell lines, cell types and cell cultures from uni- and multicellular organisms." []
+
+[Term]
+id: BTO:0000001
+name: culture condition:-induced cell
+is_a: BTO:0000216
+
+[Term]
+id: BTO:0000002
+name: culture condition:1,4-dichlorobenzene-grown cell
+is_a: BTO:0001479
+
+[Term]
+id: BTO:0000003
+name: intestinal cell line
+
+[Term]
+id: BTO:0000004
+name: culture condition:2,5-dihydroxybenzoate-grown cell
+is_a: BTO:0001479
+
+[Term]
+id: BTO:0000005
+name: culture condition:2-aminobenzenesulfonate-grown cell
+is_a: BTO:0001479
+
+[Term]
+id: BTO:0000006
+name: osteoblastoma cell
+def: "A benign tumor cell of bone." []
+is_a: BTO:0000372
+
+[Term]
+id: BTO:0000007
+name: HEK-293 cell
+def: "Established from a human primary embryonal kidney transformed by adenovirus type 5." []
+synonym: "HEK293 cell" RELATED []
+synonym: "293 cell" RELATED []
+synonym: "human embryonal kidney cell" RELATED []
+synonym: "A293 cell" RELATED []
+synonym: "human embryonic kidney cell" RELATED []
+synonym: "HEK cell" RELATED []
+synonym: "A-293 cell" RELATED []
+is_a: BTO:0000067
+is_a: BTO:0002733
+
+[Term]
+id: BTO:0000008
+name: culture condition:3-chlorobenzoate-grown cell
+is_a: BTO:0001479
+
+[Term]
+id: BTO:0000009
+name: culture condition:3-hydroxybenzoate-grown cell
+is_a: BTO:0001479
+
+[Term]
+id: BTO:0000010
+name: culture condition:3-methylcrotonoyl-CoA-grown cell
+is_a: BTO:0001479
+
+[Term]
+id: BTO:0000216
+name: culture condition
+
+[Term]
+id: BTO:0001479
+name: culture condition:-grown cell
+is_a: BTO:0000216
+
+[Term]
+id: BTO:0000648
+name: intestine
+def: "The tubular part of the alimentary canal that extends from the stomach to the anus." []
+synonym: "bowel" RELATED []
+
+[Term]
+id: BTO:0000372
+name: bone cancer cell
+def: "Cancer cell of the skeleton. Cancers that begin in bone are rare but it is not unusual for cancers to spread (metastasize) to bone from other parts of the body. This is not called bone cancer, but is named for the organ or tissue in which the cancer begins." []
+synonym: "bone tumor cell" RELATED []
+
+[Term]
+id: BTO:0001593
+name: osteoblast
+def: "A cell from which bone develops; a bone-forming cell." []
+is_a: BTO:0002050
+
+[Term]
+id: BTO:0000067
+name: kidney cell line
+synonym: "renal cell line" RELATED []
+
+[Term]
+id: BTO:0002733
+name: embryonic kidney cell line
+is_a: BTO:0000669
+
+[Term]
+id: BTO:0002050
+name: osteogenic cell
+def: "One of the cell's in the inner layer of the periosteum that forms osseous tissue." []
+
+[Term]
+id: BTO:0000669
+name: embryonic cell line
