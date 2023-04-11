@@ -30,13 +30,13 @@
         ],
         "git":[
             {
-                "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/core",
+                "source": "",
                 "packages":[
-                    {"name": "gws_core", "version":"0.5.0-beta.1", "is_brick": true}
+                    {"name": "gws_core", "version":"0.5.0-beta.5", "is_brick": true}
                 ]
             },
             {
-                "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/lib",
+                "source": "https://brendapy-reader:glpat-nuPdMdsKUd2zU6C1RPR6@gitlab.com/constellab/public/lib",
                 "packages":[
                     {"name": "brendapy"}
                 ]
