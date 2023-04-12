@@ -32,7 +32,7 @@ class DbCreatorHelper:
         "eco_file": "./eco/eco.obo",
         "chebi_file": "./chebi/chebi.obo",
         "bto_file": "./bto/bto.owl",
-        "pwo_file": "./pwo/pwo.obo",
+        "pwo_file": "./pwo/pathway.obo",
         "brenda_file": "./brenda/brenda_download.txt",
         "bkms_file": "./bkms/Reactions_BKMS.csv",
         "protein_file": "./uniprot/uniprot_sprot.fasta",
@@ -63,9 +63,9 @@ class DbCreatorHelper:
 
         # check that all paths exists
         Logger.info("Check that all biodata files exist...")
-        for k in cls.params:
+        for k, val in cls.params.items():
             if k.endswith("_file"):
-                file_path = os.path.join(biodata_dir, cls.params[k])
+                file_path = os.path.join(biodata_dir, val)
                 if not os.path.exists(file_path):
                     raise BadRequestException(f"Biodata file '{file_path}'' does not exist")
         i = 0
