@@ -5,7 +5,7 @@
 
 import os
 
-from gws_core import Logger, transaction
+from gws_core import Logger, transaction, Settings
 from peewee import chunked
 
 from .._helper.bkms import BKMS
@@ -35,10 +35,19 @@ class EnzymeService(BaseService):
         :rtype: None
         """
 
+        base_biodata_dir = Settings.get_instance().get_variable("gws_biota:biodata_dir")
+        if biodata_dir is None:
+            biodata_dir = base_biodata_dir
+
         # add enzyme classes
         Logger.info("Loading BRENDA file ...")
         EnzymeClass.create_enzyme_class_db(biodata_dir, **kwargs)
-        brenda = Brenda(os.path.join(biodata_dir, kwargs["brenda_file"]))
+        brenda = Brenda(
+            brenda_file=os.path.join(biodata_dir, kwargs["brenda_file"]),
+            taxonomy_dir=os.path.join(base_biodata_dir, "ncbi", "taxdump"),
+            bto_file=os.path.join(base_biodata_dir, "bto", "bto.owl"),
+            chebi_file=os.path.join(base_biodata_dir, "chebi", "chebi.obo"),
+        )
         list_of_enzymes, list_deprecated_ec = brenda.parse_all_enzyme_to_dict()
 
         # save EnzymePathway
@@ -100,7 +109,7 @@ class EnzymeService(BaseService):
 
         # flatten the list_deprecated_ec
         all_old_ecs = [elt["old_ec"] for elt in list_deprecated_ec]
-        #list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec if len(elt["new_ec"]) > 0}
+        # list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec if len(elt["new_ec"]) > 0}
         list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec}
         is_nested = True
         while is_nested:
@@ -131,7 +140,7 @@ class EnzymeService(BaseService):
                         new_list = list(set(new_list))
                 dep_ec["new_ec"] = new_list
 
-        #list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec.values() if len(elt["new_ec"]) > 0}
+        # list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec.values() if len(elt["new_ec"]) > 0}
 
         # saved all deprecated enzymes
         Logger.info("Saving deprecated enzymes ...")
@@ -208,10 +217,10 @@ class EnzymeService(BaseService):
         in the enzyme_btos table
         """
 
-        n = len(enzyme.params("ST"))
+        n = len(enzyme.get_params("ST"))
         bto_ids = []
         for i in range(0, n):
-            bto_ids.append(enzyme.params("ST")[i].get("bto"))
+            bto_ids.append(enzyme.get_params("ST")[i].get("bto"))
         Q = BTO.select().where(BTO.bto_id << bto_ids)
 
         vals = []

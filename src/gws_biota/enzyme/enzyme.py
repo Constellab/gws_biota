@@ -4,6 +4,7 @@
 # About us: https://gencovery.com
 
 from collections import OrderedDict
+from typing import List
 
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
@@ -163,7 +164,32 @@ class Enzyme(BaseFT):
         """ Get pathways """
         return EnzymePathway.get_or_none(EnzymePathway.ec_number == self.ec_number)
 
-    def params(self, name) -> Params:
+    def get_params(self, name) -> Params:
+        """
+        Returns the list of parameters associated with `name`
+
+        :param name: Name of the parameter
+        :type name: str
+        :returns: Parameters
+        :rtype: ParamList
+        """
+
+        return Params(name, self.data)
+
+    def get_params_as_json(self, name) -> Params:
+        """
+        Returns the list of parameters associated with `name`
+
+        :param name: Name of the parameter
+        :type name: str
+        :returns: Parameters
+        :rtype: ParamList
+        """
+
+        params = self.get_params(name)
+        return params.to_json()
+
+    def get_params_by_tax(self, name, tax_id) -> List[Params]:
         """
         Returns the list of parameters associated with `name`
 
