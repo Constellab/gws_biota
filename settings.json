@@ -47,7 +47,7 @@
     ],
     "git": [
       {
-        "source": "https://brendapy-reader:glpat-nuPdMdsKUd2zU6C1RPR6@gitlab.com/constellab/public/lib",
+        "source": "https://public-lib-reader:glpat-dzcjGnwmXX-_TWqRVEdG@gitlab.com/constellab/public/lib",
         "packages": [
           {
             "name": "brendapy"
