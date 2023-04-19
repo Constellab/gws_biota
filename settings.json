@@ -47,7 +47,7 @@
     ],
     "git": [
       {
-        "source": "https://$GWS_GIT_LOGIN:$GWS_GIT_PWD@gitlab.com/gencovery/lib",
+        "source": "https://brendapy-reader:glpat-nuPdMdsKUd2zU6C1RPR6@gitlab.com/constellab/public/lib",
         "packages": [
           {
             "name": "brendapy"
