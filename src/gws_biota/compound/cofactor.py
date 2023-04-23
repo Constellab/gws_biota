@@ -75,9 +75,9 @@ class Cofactor:
         "CHEBI:15346": {"alt": ["CHEBI:741566", "CHEBI:41631", "CHEBI:41597", "CHEBI:3771", "CHEBI:13294", "CHEBI:13295", "CHEBI:13298", "CHEBI:23355", "CHEBI:57287"]},
 
         # S_adenosyl_L_methionine
-        "CHEBI:59789": {"alt": []},
+        # "CHEBI:59789": {"alt": []},
         # S_adenosyl_L_homocysteine
-        "CHEBI:57856": {"alt": []},
+        # "CHEBI:57856": {"alt": []},
 
         # iron_2
         "CHEBI:29033": {"alt": ["CHEBI:34754", "CHEBI:49599", "CHEBI:13321", "CHEBI:13319", "CHEBI:21129", "CHEBI:24876"]},
