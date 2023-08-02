@@ -20,7 +20,7 @@ from gws_biota.sbo.sbo_service import SBOService
 from gws_biota.taxonomy.taxonomy_service import TaxonomyService
 from gws_core import (BadRequestException, ConfigParams, Logger, ModelService,
                       Resource, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, resource_decorator, task_decorator)
+                      TaskOutputs, resource_decorator, task_decorator, InputSpecs, OutputSpecs)
 
 from ..base.base import Base
 
@@ -165,8 +165,8 @@ class DbCreatorHelper:
 
 @task_decorator("DbCreator")
 class DbCreator(Task):
-    input_specs = {}
-    output_specs = {}
+    input_specs = InputSpecs({})
+    output_specs = OutputSpecs({})
     config_specs = {
         "go_file": StrParam(default_value="./go/go.obo"),
         "sbo_file": StrParam(default_value="./sbo/sbo.obo"),
