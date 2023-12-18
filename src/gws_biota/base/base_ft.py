@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from peewee import CharField, ModelSelect, TextField
+from peewee import ModelSelect, TextField
 from playhouse.mysql_ext import Match
 
 from .base import Base

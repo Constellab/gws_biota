@@ -4,18 +4,11 @@
 # About us: https://gencovery.com
 
 from typing import List
-from gws_core import BadRequestException, Logger, Settings
-from gws_core.extra import SystemService
+
+from gws_core import Logger
 from peewee import Model, chunked
 
 from ..db.db_manager import DbManager
-
-IS_IPYTHON_ACTIVE = False
-try:
-    get_ipython
-    IS_IPYTHON_ACTIVE = True
-except:
-    pass
 
 
 class ProtectedBaseModel(Model):
@@ -41,13 +34,13 @@ class ProtectedBaseModel(Model):
 
         db = cls._db_manager.db
         with db.atomic():
-            cls.bulk_create(model_list,batch_size=batch_size)
+            cls.bulk_create(model_list, batch_size=batch_size)
 
         return model_list
 
-    
     @classmethod
-    def update_all(cls, model_list: List['ProtectedBaseModel'], fields: list, batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
+    def update_all(cls, model_list: List['ProtectedBaseModel'],
+                   fields: list, batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
         """
         Automically and safely save a list of models in the database. If an error occurs
         during the operation, the whole transactions is rolled back.
@@ -60,7 +53,7 @@ class ProtectedBaseModel(Model):
 
         db = cls._db_manager.db
         with db.atomic():
-            cls.bulk_update(model_list,fields,batch_size=batch_size)
+            cls.bulk_update(model_list, fields, batch_size=batch_size)
 
         return model_list
 

@@ -3,9 +3,10 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from typing import List
 
-from gws_core import BadRequestException, Logger, Model, Settings
+from typing import Any, Dict
+
+from gws_core import BadRequestException, JSONField, Model
 from peewee import CharField, DoesNotExist, ModelSelect
 from playhouse.mysql_ext import Match
 
@@ -18,17 +19,11 @@ from .protected_base_model import ProtectedBaseModel
 #
 # ####################################################################
 
-IS_IPYTHON_ACTIVE = False
-try:
-    get_ipython
-    IS_IPYTHON_ACTIVE = True
-except:
-    pass
-
 
 class Base(Model, ProtectedBaseModel):
 
     name = CharField(null=True, index=True)
+    data: Dict[str, Any] = JSONField(null=True)
     _db_manager = DbManager
 
     @classmethod
