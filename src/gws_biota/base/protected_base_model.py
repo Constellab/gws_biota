@@ -10,6 +10,12 @@ from peewee import Model, chunked
 
 from ..db.db_manager import DbManager
 
+IS_IPYTHON_ACTIVE = False
+try:
+    get_ipython
+    IS_IPYTHON_ACTIVE = True
+except:
+    pass
 
 class ProtectedBaseModel(Model):
 
