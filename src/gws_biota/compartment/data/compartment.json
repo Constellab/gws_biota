@@ -18,7 +18,7 @@
         {"go_id": "GO:0042597", "bigg_id": "p",  "name": "periplasmic space", "color": "#7b9b47", "data": {"alt_go_ids": ["GO:0005620"], "synonymes": ["periplasm"], "is_steady": true}},
         {"go_id": "GO:0005783", "bigg_id": "r",  "name": "endoplasmic reticulum", "color": "#7b9b47", "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:1990413", "bigg_id": "s",  "name": "eyespot apparatus", "color": null, "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
-        {"go_id": "GO:0005576", "bigg_id": "",   "name": "extracellular region (environment)", "color": "#5a5052", "data": {"alt_go_ids": [], "synonymes": ["sink"], "is_steady": false}},
+        {"go_id": "GO:0005576", "bigg_id": "env",   "name": "extracellular region (environment)", "color": "#5a5052", "data": {"alt_go_ids": [], "synonymes": ["sink"], "is_steady": false}},
         {"go_id": "GO:0009579", "bigg_id": "u",  "name": "thylakoid", "color": null, "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0042651", "bigg_id": "um", "name": "thylakoid membrane", "color": null, "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
         {"go_id": "GO:0005773", "bigg_id": "v",  "name": "vacuole", "color": "#b2b2f9", "data": {"alt_go_ids":[], "synonymes": [], "is_steady": true}},
