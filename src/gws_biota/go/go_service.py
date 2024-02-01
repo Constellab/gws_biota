@@ -18,20 +18,20 @@ class GOService(BaseService):
 
     @classmethod
     @transaction()
-    def create_go_db(cls, biodata_dir=None, **kwargs):
+    def create_go_db(cls, path, go_file):
         """
         Creates and fills the `go` database
 
-        :param biodata_dir: path of the :file:`go.obo`
-        :type biodata_dir: str
-        :param files: dictionnary that contains all data files names
-        :type files: dict
+        :param path: path of the :file:`go.obo`
+        :type path: str
+        :param go_file: file that contains data file name
+        :type go_file: file
         :returns: None
         :rtype: None
         """
 
         Logger.info("Loading GO file ...")
-        onto_go = OntoHelper.create_ontology_from_obo(biodata_dir, kwargs['go_file'])
+        onto_go = OntoHelper.create_ontology_from_file(path, go_file)
         list_go = OntoHelper.parse_obo_from_ontology(onto_go)
         gos = [GO(data=dict_) for dict_ in list_go]
 

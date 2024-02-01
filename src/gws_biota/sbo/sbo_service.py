@@ -14,20 +14,20 @@ class SBOService(BaseService):
 
     @classmethod
     @transaction()
-    def create_sbo_db(cls, biodata_dir=None, **kwargs):
+    def create_sbo_db(cls, path, sbo_file):
         """
         Creates and fills the `sbo` database
 
         :param biodata_dir: path to the folder that contain the :file:`sbo.obo` file
         :type biodata_dir: str
-        :param files_test: dictionnary that contains all data files names
-        :type files_test: dict
+        :param sbo_file: file that contains data file name
+        :type sbo_file: file
         :returns: None
         :rtype: None
         """
 
-        data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(biodata_dir, kwargs['sbo_file'])
-        ontology = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
+        data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(path, sbo_file)
+        ontology = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
         list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
         sbos = [SBO(data=dict_) for dict_ in list_sbo]
         for sbo in sbos:
@@ -43,6 +43,7 @@ class SBOService(BaseService):
             val = cls.__build_insert_query_vals_of_ancestors(sbo)
             for v in val:
                 vals.append(v)
+
         SBOAncestor.insert_all(vals)
 
     @classmethod

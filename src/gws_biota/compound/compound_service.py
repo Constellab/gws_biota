@@ -9,6 +9,7 @@ from gws_core import Logger, transaction
 from peewee import chunked
 
 from .._helper.chebi import Chebi as ChebiHelper
+from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
 from ..compound.compound import Compound, CompoundAncestor
 
@@ -27,21 +28,21 @@ class CompoundService(BaseService):
 
     @classmethod
     @transaction()
-    def create_compound_db(cls, biodata_dir=None, **kwargs):
+    def create_compound_db(cls, path, chebi_file):
         """
         Creates and fills the `chebi_ontology` database
 
-        :type biodata_dir: str
-        :param biodata_dir: path of the :file:`chebi.obo`
-        :type kwargs: dict
-        :param kwargs: dictionnary that contains all data files names
+        :type path: str
+        :param path: path of the :file:`chebi.obo`
+        :type chebi_file: file
+        :param chebi_file: file that contains data file name
         :returns: None
         :rtype: None
         """
 
-        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(biodata_dir, kwargs['chebi_file'])
-        onto = ChebiHelper.create_ontology_from_file(data_dir, corrected_file_name)
-        list_chebi = ChebiHelper.parse_onto_from_ontology(onto)
+        data_dir, corrected_file_name = OntoHelper.correction_of_chebi_file(path, chebi_file)
+        onto_chebi = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
+        list_chebi = ChebiHelper.parse_chebi_from_ontology(onto_chebi)
 
         comp_count = len(list_chebi)
         Logger.info(f"Saving {comp_count} compounds ...")

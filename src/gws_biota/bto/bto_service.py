@@ -14,7 +14,7 @@ class BTOService(BaseService):
 
     @classmethod
     @transaction()
-    def create_bto_db(cls, biodata_dir=None, **kwargs):
+    def create_bto_db(cls, path, bto_file):
         """
         Creates and fills the `bto` database
 
@@ -25,7 +25,7 @@ class BTOService(BaseService):
         """
 
         # convert to obo if required
-        ontology = OntoHelper.create_ontology_from_file(biodata_dir, kwargs['bto_file'])
+        ontology = OntoHelper.create_ontology_from_file(path, bto_file)
         list_bto = OntoHelper.parse_bto_from_ontology(ontology)
         btos = [BTO(data=dict_) for dict_ in list_bto]
         for bto in btos:

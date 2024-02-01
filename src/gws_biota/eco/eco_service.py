@@ -14,20 +14,20 @@ class ECOService(BaseService):
 
     @classmethod
     @transaction()
-    def create_eco_db(cls, biodata_dir=None, **kwargs):
+    def create_eco_db(cls, path, eco_file):
         """
         Creates and fills the `eco` database
 
-        :param biodata_dir: path of the :file:`eco.obo`
-        :type biodata_dir: str
-        :param kwargs: dictionnary that contains all data files names
-        :type kwargs: dict
+        :param path: path of the :file:`eco.obo`
+        :type path: str
+        :param eco_file: file that contains data file name
+        :type eco_file: file
         :returns: None
         :rtype: None
         """
 
-        data_dir, corrected_file_name = OntoHelper.correction_of_eco_file(biodata_dir, kwargs['eco_file'])
-        onto_eco = OntoHelper.create_ontology_from_obo(data_dir, corrected_file_name)
+        data_dir, corrected_file_name = OntoHelper.correction_of_eco_file(path, eco_file)
+        onto_eco = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
         list_eco = OntoHelper.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [ECO(data=dict_) for dict_ in list_eco]
         for eco in ecos:

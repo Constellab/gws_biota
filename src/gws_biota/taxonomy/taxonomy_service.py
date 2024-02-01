@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Logger, transaction
+from gws_core import Logger, transaction, FileDownloader, Settings
 from peewee import chunked
 
 from .._helper.ncbi import Taxonomy as NCBITaxonomyHelper
@@ -15,7 +15,7 @@ class TaxonomyService(BaseService):
 
     @classmethod
     @transaction()
-    def create_taxonomy_db(cls, biodata_dir=None, **kwargs):
+    def create_taxonomy_db(cls, biodata_dir: str, taxonomy_tar_url: str):
         """
         Creates and fills the `taxonomy` database
 
@@ -26,9 +26,17 @@ class TaxonomyService(BaseService):
         :returns: None
         :rtype: None
         """
+        temp_dir = Settings.get_instance().make_temp_dir()
+        file_downloader = FileDownloader(temp_dir)
+        taxonomy_dir = file_downloader.download_file_if_missing(
+            taxonomy_tar_url, 'taxonomy.tar.gz', decompress_file=True)
+
+        ncbi_nodes = f"{taxonomy}/nodes.dmp"
+        ncbi_names = f"{taxonomy}/names.dmp"
+        ncbi_division = f"{taxonomy}/division.dmp"
 
         Logger.info("Loading ncbi taxonomy file ...")
-        dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, **kwargs)
+        dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, ncbi_names)
         dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
 
         taxa_count = len(dict_taxons)

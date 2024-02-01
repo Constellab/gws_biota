@@ -13,13 +13,15 @@ import re
 
 class Onto():
     """
-
     This module allows to get all ontologie that will be used by the Gencovery web application.
-
-    This include GO, SBO, BTO and ECO ontologies
-
+    This include GO, SBO, BTO, CHEBI and ECO ontologies
     """
 
+    ##################################################################
+    ###################### FILE CORRECTION PART ######################
+    ##################################################################
+
+    # ECO (Evidence and Conclusion Ontology)
     @staticmethod
     def correction_of_eco_file(path, file):
         in_file = os.path.join(path, file)
@@ -36,17 +38,15 @@ class Onto():
             with open(out_file, 'wt') as outfile:
                 for line in file.readlines():
                     if line.startswith('def: '):
-                        tokens = line.split("def: ")
-                        if ': ' in tokens[1]:
-                            tokens[1] = tokens[1].replace(': ', ':')
-                            line = "def: " + tokens[1]
-
-                        outfile.write(line)
+                        label, definition = line.split("def: ", 1)
+                        definition = re.sub(r'\[UniProt:[^\]]*\]', lambda x: x.group().replace(" ", "_"), definition)
+                        outfile.write(f"{label}def: {definition}")
                     else:
                         outfile.write(line)
 
         return path, out_filename
 
+    # SBO (Systems Biology Ontology)
     @staticmethod
     def correction_of_sbo_file(path, file):
         """
@@ -76,14 +76,14 @@ class Onto():
         with open(in_file, 'rt') as file:
             with open(out_file, 'wt') as outfile:
                 for line in file.readlines():
-                    if line.startswith('synonym'):
-                        if ' []' in line:
-                            outfile.write(line.replace(' []', ' EXACT []'))
-                    else:
+                    if not line.startswith('property_value'):
+                        if line.startswith('synonym') and ' []' in line:
+                            line = line.replace(' []', ' EXACT []')
                         outfile.write(line)
 
         return path, out_filename
 
+    # PWO
     @staticmethod
     def correction_of_pwo_file(path, file):
         """
@@ -127,38 +127,37 @@ class Onto():
 
         return path, out_filename
 
+    # File conversion
     @staticmethod
-    def create_ontology_from_obo(path, file):
+    def from_owl_to_obo(path, file, filename_):
         """
-        This method allows the create an ontalogy from an .owl file.
+        Use the pronto package to convert a .owl to a .obo file
 
         :type path: str
         :param path: Location of the file
         :type file: str
-        :param file: Name of the obo file
-        :returns: Ontology object from the package pronto
-        :rtype: Ontology
-        """
-        return Onto.create_ontology_from_file(path, file)
+        :param file: Name of the original owl file
+        :type filename_: str
+        :param filename_: Name of the converted obo file
 
-    @staticmethod
-    def create_ontology_from_owl(path, file):
+        :rtype: None
         """
-        This method allows the create an ontalogy from an .owl file.
+        file_path = os.path.join(path, file)
+        complete_name = os.path.join(path, filename_+".obo")
+        edam = Ontology(file_path)
+        with open(complete_name, "wb") as f:
+            edam.dump(f, format='obo')
 
-        :type path: str
-        :param path: Location of the file
-        :type file: str
-        :param file: Name of the obo file
-        :returns: Ontology object from the package pronto
-        :rtype: Ontology
-        """
-        return Onto.create_ontology_from_file(path, file)
+        return complete_name
+
+    ##################################################################
+    ##################### ONTHOLOGY CREATION PART ####################
+    ##################################################################
 
     @staticmethod
     def create_ontology_from_file(path, file):
         """
-        This method allows the create an ontalogy from an .owl file.
+        This method allows the create an ontalogy from an obo file.
 
         :type path: str
         :param path: Location of the file
@@ -167,6 +166,7 @@ class Onto():
         :returns: Ontology object from the package pronto
         :rtype: Ontology
         """
+
         file_path = os.path.join(path, file)
         onto = Ontology(file_path)
         return onto
@@ -194,66 +194,11 @@ class Onto():
 
         return list_bto
 
-    @staticmethod
-    def parse_bto_from_json(path, file):
-        """
-        Create the bto ontology from a json file
+    ##################################################################
+    ###################### FILE ANALYSIS PART ######################
+    ##################################################################
 
-        :type path: str
-        :param path: Location of the file
-        :type file: str
-        :param file: Name of the json file
-        :returns: Ontology object from the package pronto
-        :rtype: Ontology
-        """
-        list_bto = []
-        with open(os.path.join(path, file)) as json_bto_data:
-            data = json.load(json_bto_data)
-            for key in data.keys():
-                dict_bto = {}
-                if data[key] == {}:
-                    pass
-                else:
-                    dict_bto['id'] = data[key]['key']
-                    dict_bto['name'] = data[key]['label']
-                    if ('ancestors' in data[key].keys()):
-                        dict_bto['ancestors'] = data[key]['ancestors']
-                    if ('synonyms' in data[key].keys()):
-                        dict_bto['synonyms'] = data[key]['synonyms']
-                list_bto.append(dict_bto)
-
-        return (list_bto)
-
-    @staticmethod
-    def parse_eco_terms_from_ontoloy(ontology):
-        """
-        Create eco ontology terms from a Ontology object
-
-        :type ontology: Ontology
-        :param ontology: ECO ontology created by the create_ontology_from_obo method
-        :returns: list on dictionnaries where each terms represents an eco ontology term
-        :rtype: list
-        """
-        list_eco = []
-        for term in ontology.terms():
-            dict_eco = {}
-            dict_eco['id'] = term.id
-            dict_eco['name'] = term.name.replace('\r', '')
-            dict_eco['definition'] = str(term.definition)  # str
-
-            try:
-                sup = term.superclasses(distance=1, with_self=False)
-                fro = sup.to_set().ids
-                if len(fro) > 0:
-                    dict_eco['ancestors'] = []
-                    for data in fro:
-                        dict_eco['ancestors'].append(data)
-            except:
-                pass
-
-            list_eco.append(dict_eco)
-        return (list_eco)
-
+    # OBO
     @staticmethod
     def parse_obo_from_ontology(ontology):
         """
@@ -311,6 +256,69 @@ class Onto():
 
         return (list_go)
 
+    # BTO
+    @staticmethod
+    def parse_bto_from_json(path, file):
+        """
+        Create the bto ontology from a json file
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param file: Name of the json file
+        :returns: Ontology object from the package pronto
+        :rtype: Ontology
+        """
+        list_bto = []
+        with open(os.path.join(path, file)) as json_bto_data:
+            data = json.load(json_bto_data)
+            for key in data.keys():
+                dict_bto = {}
+                if data[key] == {}:
+                    pass
+                else:
+                    dict_bto['id'] = data[key]['key']
+                    dict_bto['name'] = data[key]['label']
+                    if ('ancestors' in data[key].keys()):
+                        dict_bto['ancestors'] = data[key]['ancestors']
+                    if ('synonyms' in data[key].keys()):
+                        dict_bto['synonyms'] = data[key]['synonyms']
+                list_bto.append(dict_bto)
+
+        return (list_bto)
+
+    # ECO
+    @staticmethod
+    def parse_eco_terms_from_ontoloy(ontology):
+        """
+        Create eco ontology terms from a Ontology object
+
+        :type ontology: Ontology
+        :param ontology: ECO ontology created by the create_ontology_from_obo method
+        :returns: list on dictionnaries where each terms represents an eco ontology term
+        :rtype: list
+        """
+        list_eco = []
+        for term in ontology.terms():
+            dict_eco = {}
+            dict_eco['id'] = term.id
+            dict_eco['name'] = term.name.replace('\r', '')
+            dict_eco['definition'] = str(term.definition)  # str
+
+            try:
+                sup = term.superclasses(distance=1, with_self=False)
+                fro = sup.to_set().ids
+                if len(fro) > 0:
+                    dict_eco['ancestors'] = []
+                    for data in fro:
+                        dict_eco['ancestors'].append(data)
+            except:
+                pass
+
+            list_eco.append(dict_eco)
+        return (list_eco)
+
+    # SBO
     @staticmethod
     def parse_sbo_terms_from_ontology(ontology):
         """
@@ -327,13 +335,6 @@ class Onto():
             dict_sbo['id'] = term.id
             dict_sbo['name'] = term.name.replace('\r', '')
 
-            if '</math>' in term.definition:
-                list_def = term.definition.split("<math xmlns")
-                def_ = list_def[0]
-                dict_sbo['definition'] = def_.capitalize()
-            else:
-                dict_sbo['definition'] = term.definition.capitalize()
-
             try:
                 sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
@@ -348,28 +349,7 @@ class Onto():
 
         return (list_sbo)
 
-    @staticmethod
-    def from_owl_to_obo(path, file, filename_):
-        """
-        Use the pronto package to convert a .owl to a .obo file
-
-        :type path: str
-        :param path: Location of the file
-        :type file: str
-        :param file: Name of the original owl file
-        :type filename_: str
-        :param filename_: Name of the converted obo file
-
-        :rtype: None
-        """
-        file_path = os.path.join(path, file)
-        complete_name = os.path.join(path, filename_+".obo")
-        edam = Ontology(file_path)
-        with open(complete_name, "wb") as f:
-            edam.dump(f, format='obo')
-
-        return complete_name
-
+    # PWO
     @staticmethod
     def parse_pwo_terms_from_ontology(ontology):
         """
@@ -399,3 +379,82 @@ class Onto():
 
             list_pwo.append(dict_pwo)
         return (list_pwo)
+
+    # CHEBI
+    @staticmethod
+    def parse_chebi_from_ontology(ontology):
+        """
+        Parses a chebi ontology and returns a list of dictionnaries where each elements represent an ontology terms
+
+        This method allows the user to format all the chebi ontology in readable and usable terms.
+
+        This tool accepts only Ontology object created from the package pronto
+
+        :type ontology: Ontology
+        :param path: chebi ontology
+        :returns: list of dictionnaries reapresenting all terms of the ontology
+        :rtype: list
+        """
+
+        list_chebi_term = []
+        for term in ontology.terms():
+            subsets = ''
+            if len(term.subsets):
+                subsets = list(term.subsets)[0]
+
+            dict_term = {}
+            dict_term['id'] = term.id
+            dict_term['name'] = term.name.replace('\r', '')
+            dict_term['alt_id'] = list(term.alternate_ids)
+            dict_term['subsets'] = subsets
+            dict_term['ancestors'] = []
+            dict_term['inchikey'] = None
+            dict_term['inchi'] = None
+            dict_term['smiles'] = None
+            dict_term['formula'] = None
+            dict_term['charge'] = None
+            dict_term['mass'] = None
+            dict_term['monoisotopic_mass'] = None
+
+            for pv in term.annotations:
+                if '/inchikey' in pv.property:
+                    dict_term['inchikey'] = pv.literal
+                elif '/inchi' in pv.property:
+                    dict_term['inchi'] = pv.literal
+                elif '/smiles' in pv.property:
+                    dict_term['smiles'] = pv.literal
+                elif '/formula' in pv.property:
+                    dict_term['formula'] = pv.literal
+                elif '/monoisotopicmass' in pv.property:
+                    dict_term['monoisotopic_mass'] = pv.literal
+                elif '/mass' in pv.property:
+                    dict_term['mass'] = pv.literal
+                elif '/charge' in pv.property:
+                    dict_term['charge'] = pv.literal
+
+            # ancestors
+            for c in term.superclasses():
+                if c.id != term.id:
+                    dict_term['ancestors'].append(c.id)
+
+            # synonyms
+            dict_term['synonyms'] = []
+            for syn in term.synonyms:
+                if syn.scope == "EXACT":
+                    if syn.description != dict_term['name']:
+                        dict_term['synonyms'].append(syn.description)
+
+            # definition
+            if term.definition is None:
+                dict_term['definition'] = ""
+            else:
+                dict_term['definition'] = term.definition
+
+            dict_term['xref'] = {}
+            for xref in term.xrefs:
+                xref_id = xref.id.split(":")[0].lower()
+                dict_term['xref'][xref_id] = xref.id.split(":")[1]
+
+            list_chebi_term.append(dict_term)
+
+        return (list_chebi_term)
