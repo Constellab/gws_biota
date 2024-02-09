@@ -23,7 +23,7 @@ from .protected_base_model import ProtectedBaseModel
 class Base(Model, ProtectedBaseModel):
 
     name = CharField(null=True, index=True)
-    data: Dict[str, Any] = JSONField(null=True)
+    data: Dict[str, Any] = JSONField(default=dict)
     _db_manager = DbManager
 
     @classmethod

@@ -19,39 +19,44 @@ class ReactionService(BaseService):
 
     @classmethod
     @transaction()
-    def create_reaction_db(cls, biodata_dir=None, **kwargs):
+    def create_reaction_db(cls, path, rhea_reaction_text_file, rhea_direction_file, rhea2ecocyc_file,
+                           rhea2metacyc_file, rhea2macie_file, rhea2kegg_reaction_file, rhea2ec_file, rhea2reactome_file):
         """
         Creates and fills the `reaction` database
 
-        :param biodata_dir: path to the folder that contain the go.obo file
-        :type biodata_dir: str
+        :param path: path to the folder that contain the go.obo file
+        :type path: str
         :param kwargs: dictionnary that contains all data files names
         :type kwargs: dict
         :returns: None
         :rtype: None
         """
 
-        list_of_reactions = Rhea.parse_reaction_from_file(biodata_dir, kwargs['rhea_reaction_file'])
+        list_of_reactions = Rhea.parse_reaction_from_file(path, rhea_reaction_text_file)
         cls._create_reactions(list_of_reactions)
 
-        list_of_directions = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea_direction_file'])
+        list_of_directions = Rhea.parse_csv_from_file(rhea_direction_file)
         cols = Rhea.get_columns_from_lines(list_of_directions)
 
         for k in ['UN', 'LR', 'RL', 'BI']:
             cls._update_direction_from_list(cols[k], k)
 
-        biocyc_dbs = ['ecocyc', 'metacyc', 'macie']
-        for k in biocyc_dbs:
-            xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2'+k+'_file'])
-            cls._update_master_and_biocyc_ids_from_rhea2biocyc(xref_ids)
+        xref_ids = Rhea.parse_csv_from_file(rhea2ecocyc_file)
+        cls._update_master_and_biocyc_ids_from_rhea2biocyc(xref_ids)
 
-        xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2kegg_reaction_file'])
+        xref_ids = Rhea.parse_csv_from_file(rhea2metacyc_file)
+        cls._update_master_and_biocyc_ids_from_rhea2biocyc(xref_ids)
+
+        xref_ids = Rhea.parse_csv_from_file(rhea2macie_file)
+        cls._update_master_and_biocyc_ids_from_rhea2biocyc(xref_ids)
+
+        xref_ids = Rhea.parse_csv_from_file(rhea2kegg_reaction_file)
         cls._update_master_and_id_from_rhea2kegg(xref_ids)
 
-        xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2ec_file'])
+        xref_ids = Rhea.parse_csv_from_file(rhea2ec_file)
         cls._update_master_and_biocyc_ids_from_rhea2ec(xref_ids)
 
-        xref_ids = Rhea.parse_csv_from_file(biodata_dir, kwargs['rhea2reactome_file'])
+        xref_ids = Rhea.parse_csv_from_file(rhea2reactome_file)
         cls._update_master_and_biocyc_ids_from_rhea2ec(xref_ids)
 
     @classmethod
@@ -77,8 +82,13 @@ class ReactionService(BaseService):
             i += 1
             Logger.info(f"... saving reaction chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
             for react in reaction_chunk:
+                ######################################
+                # Revoir à partir d'ici              #
+                ######################################
+                Logger.info(f"react: {react.data.keys()}")
                 if 'entry' in react.data.keys():
                     react.rhea_id = react.data['entry']
+                    Logger.info(f"react.rhea_id : {react.rhea_id}")
                     del react.data['entry']
             Reaction.create_all(reaction_chunk)
 
@@ -178,6 +188,8 @@ class ReactionService(BaseService):
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
+
+        Logger.info(f"list_reaction_infos: {list_reaction_infos}")
         rhea_ids = []
         master_ids = {}
         biocyc_ids = {}
@@ -206,6 +218,7 @@ class ReactionService(BaseService):
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
+
         rhea_ids = []
         master_ids = {}
         biocyc_ids = {}
@@ -229,6 +242,7 @@ class ReactionService(BaseService):
                     has_changed = True
                 if has_changed:
                     reaction_list.append(reaction)
+
         Reaction.update_all(reaction_list, fields=['master_id', 'biocyc_ids'])
 
     @classmethod
@@ -288,4 +302,5 @@ class ReactionService(BaseService):
             for reaction in query:
                 reaction.set_direction(direction)
                 reaction_list.append(reaction)
+
         Reaction.update_all(reaction_list, fields=['direction'])

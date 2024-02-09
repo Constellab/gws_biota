@@ -127,29 +127,6 @@ class Onto():
 
         return path, out_filename
 
-    # File conversion
-    @staticmethod
-    def from_owl_to_obo(path, file, filename_):
-        """
-        Use the pronto package to convert a .owl to a .obo file
-
-        :type path: str
-        :param path: Location of the file
-        :type file: str
-        :param file: Name of the original owl file
-        :type filename_: str
-        :param filename_: Name of the converted obo file
-
-        :rtype: None
-        """
-        file_path = os.path.join(path, file)
-        complete_name = os.path.join(path, filename_+".obo")
-        edam = Ontology(file_path)
-        with open(complete_name, "wb") as f:
-            edam.dump(f, format='obo')
-
-        return complete_name
-
     ##################################################################
     ##################### ONTHOLOGY CREATION PART ####################
     ##################################################################
@@ -171,6 +148,11 @@ class Onto():
         onto = Ontology(file_path)
         return onto
 
+    ##################################################################
+    ###################### FILE ANALYSIS PART ######################
+    ##################################################################
+
+    # BTO
     @staticmethod
     def parse_bto_from_ontology(ontology):
         list_bto = []
@@ -193,10 +175,6 @@ class Onto():
             list_bto.append(dict_)
 
         return list_bto
-
-    ##################################################################
-    ###################### FILE ANALYSIS PART ######################
-    ##################################################################
 
     # OBO
     @staticmethod

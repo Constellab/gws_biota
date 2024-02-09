@@ -7,23 +7,8 @@ from gws_core import (BadRequestException, BaseService, Experiment, Logger,
                       ModelService)
 from gws_core.extra import BaseModelService
 
-from ..biomass_reaction.biomass_reaction import BiomassReaction
-from ..bto.bto import BTO
-from ..compound.compound import Compound
 from ..eco.eco import ECO, ECOAncestor
-from ..enzyme.deprecated_enzyme import DeprecatedEnzyme
-from ..enzyme.enzyme import Enzyme, EnzymeOrtholog
-from ..enzyme.enzyme_class import EnzymeClass
-from ..enzyme.enzyme_pathway import EnzymePathway
-from ..go.go import GO
-from ..ontology.ontology import Ontology
-from ..organism.organism import Organism
-from ..pathway.pathway import Pathway
-from ..protein.protein import Protein
-from ..reaction.reaction import Reaction
-from ..sbo.sbo import SBO
-from ..taxonomy.taxonomy import Taxonomy
-from .db_creator import DbCreator, DbCreatorHelper
+from .db_creator import DbCreator
 from .db_manager import DbManager
 
 
@@ -36,7 +21,7 @@ class DbService(BaseService):
         """
 
         cls.create_tables()
-        DbCreatorHelper.run()
+        DbCreator.run()
         Logger.info("Done")
 
     @classmethod

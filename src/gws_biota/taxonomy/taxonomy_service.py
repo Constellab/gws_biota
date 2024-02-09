@@ -15,29 +15,24 @@ class TaxonomyService(BaseService):
 
     @classmethod
     @transaction()
-    def create_taxonomy_db(cls, biodata_dir: str, taxonomy_tar_url: str):
+    def create_taxonomy_db(cls, path, taxdump_files):
         """
         Creates and fills the `taxonomy` database
 
-        :param biodata_dir: path to the folder that contain ncbi taxonomy dump files
-        :type biodata_dir: str
-        :param kwargs: dictionnary that contains all data files names
-        :type kwargs: dict
+        :param path: path to the folder that contain ncbi taxonomy dump files
+        :type path: str
+        :param taxdump_files: url that contains all data files names
+        :type taxdump_files: tar.gz url
         :returns: None
         :rtype: None
         """
-        temp_dir = Settings.get_instance().make_temp_dir()
-        file_downloader = FileDownloader(temp_dir)
-        taxonomy_dir = file_downloader.download_file_if_missing(
-            taxonomy_tar_url, 'taxonomy.tar.gz', decompress_file=True)
-
-        ncbi_nodes = f"{taxonomy}/nodes.dmp"
-        ncbi_names = f"{taxonomy}/names.dmp"
-        ncbi_division = f"{taxonomy}/division.dmp"
+        ncbi_nodes = f"{taxdump_files}/nodes.dmp"
+        ncbi_names = f"{taxdump_files}/names.dmp"
+        ncbi_division = f"{taxdump_files}/division.dmp"
 
         Logger.info("Loading ncbi taxonomy file ...")
-        dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(biodata_dir, ncbi_names)
-        dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(biodata_dir, dict_ncbi_names, **kwargs)
+        dict_ncbi_names = NCBITaxonomyHelper.get_ncbi_names(ncbi_names)
+        dict_taxons = NCBITaxonomyHelper.get_all_taxonomy(dict_ncbi_names, ncbi_nodes, ncbi_division)
 
         taxa_count = len(dict_taxons)
         Logger.info(f"Saving {taxa_count} taxa ...")

@@ -6,7 +6,6 @@
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
-from .._helper.ontology import Onto as OntoHelper
 from ..base.protected_base_model import ProtectedBaseModel
 from ..db.db_manager import DbManager
 from ..ontology.ontology import Ontology
@@ -36,7 +35,7 @@ class ECO(Ontology):
 
     # -- A --
 
-    @property
+    @ property
     def ancestors(self):
         if self._ancestors is not None:
             return self._ancestors
@@ -48,7 +47,7 @@ class ECO(Ontology):
 
     # -- C --
 
-    @classmethod
+    @ classmethod
     def create_table(cls, *args, **kwargs):
         """
         Creates `eco` table and related tables.
@@ -60,7 +59,7 @@ class ECO(Ontology):
 
     # -- D --
 
-    @property
+    @ property
     def definition(self):
         """
         return self.definition
@@ -68,7 +67,7 @@ class ECO(Ontology):
         definition = self.data["definition"]
         return ". ".join(i.capitalize() for i in definition.split(". "))
 
-    @classmethod
+    @ classmethod
     def drop_table(cls, *arg, **kwargs):
         """
         Drops `eco` table and related tables.

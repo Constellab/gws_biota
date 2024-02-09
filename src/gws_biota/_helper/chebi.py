@@ -45,8 +45,6 @@ class Chebi():
 
         return list__
 
-
-
     @staticmethod
     def correction_of_chebi_file(path, file):
         """

@@ -17,6 +17,7 @@ try:
 except:
     pass
 
+
 class ProtectedBaseModel(Model):
 
     _is_table_warning_printed = False
@@ -25,6 +26,12 @@ class ProtectedBaseModel(Model):
     BATCH_SIZE = 10000
 
     # -- C --
+
+    @classmethod
+    def inheritors(cls):
+        """ Get all the classes that inherit this class """
+        return set(cls.__subclasses__()).union(
+            [s for c in cls.__subclasses__() for s in c.inheritors()])
 
     @classmethod
     def create_all(cls, model_list: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:

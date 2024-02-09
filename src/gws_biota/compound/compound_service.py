@@ -40,9 +40,9 @@ class CompoundService(BaseService):
         :rtype: None
         """
 
-        data_dir, corrected_file_name = OntoHelper.correction_of_chebi_file(path, chebi_file)
+        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(path, chebi_file)
         onto_chebi = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
-        list_chebi = ChebiHelper.parse_chebi_from_ontology(onto_chebi)
+        list_chebi = OntoHelper.parse_chebi_from_ontology(onto_chebi)
 
         comp_count = len(list_chebi)
         Logger.info(f"Saving {comp_count} compounds ...")

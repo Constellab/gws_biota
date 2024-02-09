@@ -10,6 +10,9 @@ import pronto
 from pronto import Ontology
 import csv
 
+from gws_core import Logger
+
+
 class Rhea():
     """
 
@@ -19,7 +22,7 @@ class Rhea():
     """
 
     @staticmethod
-    def parse_csv_from_file(path, file) -> list:
+    def parse_csv_from_file(file_path) -> list:
         """
         Parses a .tsv file and returns a list of dictionaries
 
@@ -37,12 +40,11 @@ class Rhea():
         :rtype: list
         """
 
-        file_path = os.path.join(path, file)
         list__ = []
         with open(file_path, newline='') as csvfile:
             reader = csv.DictReader(csvfile, delimiter='\t', quoting=csv.QUOTE_NONE)
             for row in reader:
-                list__.append( {key.lower() if type(key) == str else key: value for key, value in row.items()} )
+                list__.append({key.lower() if type(key) == str else key: value for key, value in row.items()})
 
         return list__
 
@@ -72,6 +74,7 @@ class Rhea():
         with open(file_path) as fh:
             contents = fh.read()
             list_content = contents.split('///')
+
             list_reaction = []
             for cont in list_content:
                 m1 = re.search("ENTRY\s+(.*)", cont)
@@ -94,17 +97,17 @@ class Rhea():
                 if 'equation' in dict__.keys():
                     dict__['source_equation'] = dict__['equation']
                     if len(re.findall(' =>', dict__['equation'])) > 0:
-                        list_compound  = dict__['equation'].split(" => ")
+                        list_compound = dict__['equation'].split(" => ")
 
                     elif len(re.findall('<=>', dict__['equation'])) > 0:
-                        list_compound  = dict__['equation'].split(" <=> ")
+                        list_compound = dict__['equation'].split(" <=> ")
 
                     elif len(re.findall(' = ', dict__['equation'])) > 0:
-                        list_compound  = dict__['equation'].split(" = ")
+                        list_compound = dict__['equation'].split(" = ")
 
                 reagents = list_compound[0]
                 products = list_compound[1]
-                delimiters = ","," + "
+                delimiters = ",", " + "
                 regexPattern = '|'.join(map(re.escape, delimiters))
                 list_substrates = re.split(regexPattern, reagents)
                 list_products = re.split(regexPattern, products)
@@ -140,7 +143,7 @@ class Rhea():
                         coeff_compound = re.split(' ', list_products[i])
                         compound = coeff_compound[1]
                         coeff = coeff_compound[0]
-                        dict_products[compound] = int(coeff)
+                        dict_products[compound] = coeff
                         list_dict_p.append(compound)
                     else:
                         dict_products[list_products[i]] = 1
@@ -153,7 +156,6 @@ class Rhea():
                     list_reaction.append(dict__)
 
         return list_reaction
-
 
     @staticmethod
     def get_columns_from_lines(list_lines):
