@@ -24,6 +24,8 @@ class DbManager(AbstractDbManager):
 
     db = DatabaseProxy()
 
+    _DEACTIVATE_PROTECTION_ = False
+
     @classmethod
     def get_config(cls, mode: DbMode) -> DbConfig:
 
