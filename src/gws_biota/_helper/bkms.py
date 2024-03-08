@@ -1,13 +1,14 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
 import sys
 import os
-import pronto 
+import pronto
 from pronto import Ontology
 import csv
+
 
 class BKMS():
     """
@@ -27,12 +28,12 @@ class BKMS():
         :returns: list of dictionnaries reapresenting rows of the spreadsheet
         :rtype: list
         """
-        
-        file_path = os.path.join(path, file)
+        bkms_file = f"{file}/Reactions_BKMS.csv"
+        file_path = os.path.join(path, bkms_file)
         list__ = []
         with open(file_path, newline='') as csvfile:
             reader = csv.DictReader(csvfile, delimiter='\t', quoting=csv.QUOTE_NONE)
             for row in reader:
-                list__.append( {key.lower() if type(key) == str else key: value for key, value in row.items()} )
-        
+                list__.append({key.lower() if type(key) == str else key: value for key, value in row.items()})
+
         return list__

@@ -3,8 +3,6 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import os
-
 from gws_core import Logger, transaction, Settings
 from peewee import chunked
 
@@ -23,12 +21,9 @@ from .enzyme_pathway import EnzymePathway
 class EnzymeService(BaseService):
     @classmethod
     @transaction()
-    def create_enzyme_db(cls, biodata_dir=None, **kwargs):
+    def create_enzyme_db(cls, brenda_file, bkms_file, expasy_file, taxonomy_file, bto_file, compound_file):
         """
         Creates and fills the `enzyme` database
-
-        :param biodata_dir: path of the :file:`go.obo`
-        :type biodata_dir: str
         :param files: dictionnary that contains all data files names
         :type files: dict
         :returns: None
@@ -36,18 +31,17 @@ class EnzymeService(BaseService):
         """
 
         base_biodata_dir = Settings.get_instance().get_variable("gws_biota:biodata_dir")
-        if biodata_dir is None:
-            biodata_dir = base_biodata_dir
 
         # add enzyme classes
         Logger.info("Loading BRENDA file ...")
-        EnzymeClass.create_enzyme_class_db(biodata_dir, **kwargs)
+        EnzymeClass.create_enzyme_class_db(base_biodata_dir, expasy_file)
         brenda = Brenda(
-            brenda_file=os.path.join(biodata_dir, kwargs["brenda_file"]),
-            taxonomy_dir=os.path.join(base_biodata_dir, "ncbi", "taxdump"),
-            bto_file=os.path.join(base_biodata_dir, "bto", "bto.owl"),
-            chebi_file=os.path.join(base_biodata_dir, "chebi", "chebi.obo"),
+            brenda_file=brenda_file,
+            taxonomy_dir=taxonomy_file,
+            bto_file=bto_file,
+            chebi_file=compound_file,
         )
+
         list_of_enzymes, list_deprecated_ec = brenda.parse_all_enzyme_to_dict()
 
         # save EnzymePathway
@@ -169,9 +163,8 @@ class EnzymeService(BaseService):
 
         # save bkms data
         Logger.info("Updating enzyme BKMS data ...")
-        if "bkms_file" in kwargs:
-            list_of_bkms = BKMS.parse_csv_from_file(biodata_dir, kwargs["bkms_file"])
-            cls.__update_pathway_from_bkms(list_of_bkms)
+        list_of_bkms = BKMS.parse_csv_from_file(base_biodata_dir, bkms_file)
+        cls.__update_pathway_from_bkms(list_of_bkms)
 
     # -- U --
 
@@ -190,7 +183,7 @@ class EnzymeService(BaseService):
         EnzymeBTO.insert_all(vals)
 
     @classmethod
-    def __set_taxonomy_data(self, enzyme):
+    def __set_taxonomy_data(cls, enzyme):
         """
         See if there is any information about the enzyme taxonomy and if so, connects
         the enzyme and its taxonomy by adding the related tax_id from the taxonomy
@@ -210,7 +203,7 @@ class EnzymeService(BaseService):
                 pass
 
     @classmethod
-    def __create_bto_values(self, enzyme):
+    def __create_bto_values(cls, enzyme):
         """
         See if there is any information about the enzyme tissue locations and if so,
         connects the enzyme and tissues by adding an enzyme-tissues relation

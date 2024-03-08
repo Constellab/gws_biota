@@ -19,7 +19,7 @@ class EnzymeClass(Base):
     # -- C --
 
     @classmethod
-    def create_enzyme_class_db(cls, biodata_dir=None, **kwargs):
+    def create_enzyme_class_db(cls, biodata_dir, expasy_file):
         """
         Creates and fills the `enzyme_class` database
 
@@ -31,7 +31,7 @@ class EnzymeClass(Base):
         :rtype: None
         """
 
-        list_of_enzclasses = Expasy.parse_all_enzclasses_to_dict(biodata_dir, kwargs['expasy_enzclass_file'])
+        list_of_enzclasses = Expasy.parse_all_enzclasses_to_dict(biodata_dir, expasy_file)
         enz_classes = []
         for enzc in list_of_enzclasses:
             ec = EnzymeClass(

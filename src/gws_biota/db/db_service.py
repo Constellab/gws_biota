@@ -9,8 +9,8 @@ from gws_core import (BadRequestException, BaseService, Experiment, Logger,
                       MessageDispatcher, ModelService)
 from gws_core.extra import BaseModelService
 
-from bricks.other.gws_biota.src.gws_biota.base.base import Base
-from bricks.other.gws_biota.src.gws_biota.base.protected_base_model import \
+from gws_biota.base.base import Base
+from gws_biota.base.protected_base_model import \
     ProtectedBaseModel
 
 from ..eco.eco import ECO, ECOAncestor
@@ -58,7 +58,7 @@ class DbService(BaseService):
     @classmethod
     def reset_tables(cls, biota_models: List[Type[Base]], message_dispatcher: MessageDispatcher = None) -> None:
         """
-        Create tables
+        Reset tables
         """
         if message_dispatcher is None:
             message_dispatcher = MessageDispatcher()
@@ -99,6 +99,8 @@ class DbService(BaseService):
         :param instance: If provided, only the tables of the models that are instances of `model_type` will be droped
         :type model_type: `type`
         """
+        DbManager._DEACTIVATE_PROTECTION_ = True
+
         if message_dispatcher is None:
             message_dispatcher = MessageDispatcher()
 
@@ -114,11 +116,18 @@ class DbService(BaseService):
             biota_model.drop_table()
 
         DbManager.db.execute_sql("SET FOREIGN_KEY_CHECKS=1")
+        DbManager._DEACTIVATE_PROTECTION_ = False
 
     @classmethod
-    def create_biota_tables(cls, biota_models: List[Type[Base]]):
+    def create_biota_tables(cls, biota_models: List[Type[Base]], message_dispatcher: MessageDispatcher = None):
+        DbManager._DEACTIVATE_PROTECTION_ = True
+
+        if message_dispatcher is None:
+            message_dispatcher = MessageDispatcher()
+
         DbManager.db.execute_sql("SET FOREIGN_KEY_CHECKS=0")
         for biota_model in biota_models:
+            message_dispatcher.notify_info_message(f"Creating table {biota_model.__name__}")
             biota_model.create_table()
 
         for biota_model in biota_models:
@@ -126,3 +135,4 @@ class DbService(BaseService):
                 biota_model.after_all_tables_init()
 
         DbManager.db.execute_sql("SET FOREIGN_KEY_CHECKS=1")
+        DbManager._DEACTIVATE_PROTECTION_ = False

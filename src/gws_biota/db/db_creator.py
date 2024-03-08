@@ -57,8 +57,8 @@ class DbCreator(Task):
         "rhea2ec_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv"),
         "rhea2reactome_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2reactome.tsv"),
         # "brenda_file": StrParam(default_value="/"),
-        # "bkms_file": StrParam(default_value="/"),
-        # "expasy_enzclass_file": StrParam(default_value="./expasy/enzclass.txt"),
+        # "bkms_file": StrParam(default_value="https://bkms.brenda-enzymes.org/download/Reactions_BKMS.tar.gz"),
+        # "expasy_enzclass_file": StrParam(default_value="https://raw.githubusercontent.com/google-research/proteinfer/540773f988005cc5ed834210d1477e4db1f141e6/testdata/enzclass.txt"),
     }
 
     # only allow admin user to run this process
@@ -80,7 +80,7 @@ class DbCreator(Task):
         destination_dir = Settings.make_temp_dir()
         file_downloader = FileDownloader(destination_dir)
 
-        # # ------------------- Create ECO ----------------- #
+        # ------------------- Create ECO ----------------- #
         # i = i+1
         # self.log_info_message(f"Step {i} | Saving eco and eco_ancestors...")
         # start_time = time.time()
@@ -108,7 +108,7 @@ class DbCreator(Task):
         # elapsed_time = time.time() - start_time
         # self.log_info_message("... done in {:10.2f} min for #go = {}".format(elapsed_time/60, len_go))
 
-        # # ------------- Create SBO ------------- #
+        # ------------- Create SBO ------------- #
         # i = i+1
         # self.log_info_message(f"Step {i} | Saving sbo and sbo_ancestors...")
         # start_time = time.time()
@@ -122,7 +122,7 @@ class DbCreator(Task):
         # elapsed_time = time.time() - start_time
         # self.log_info_message("... done in {:10.2f} sec for #sbo= {}".format(elapsed_time, len_sbo))
 
-        # # ------------------- Create BTO ----------------- #
+        # ------------------- Create BTO ----------------- #
         # i = i+1
         # self.log_info_message(f"Step {i} | Saving bto and bto_ancestors...")
         # start_time = time.time()
@@ -136,7 +136,7 @@ class DbCreator(Task):
         # elapsed_time = time.time() - start_time
         # self.log_info_message("... done in {:10.2f} sec for #bto = {}".format(elapsed_time, len_bto))
 
-        # # ---------------- Create Compound --------------- #
+        # ---------------- Create Compound --------------- #
         # i = i+1
         # self.log_info_message(f"Step {i} | Saving chebi compounds...")
         # start_time = time.time()
@@ -150,69 +150,69 @@ class DbCreator(Task):
         # elapsed_time = time.time() - start_time
         # self.log_info_message("... done in {:10.2f} min for #compounds = {} ".format(elapsed_time/60, len_compound))
 
-        # # ---------------- Create Pathway --------------- #
-        # i = i+1
-        # self.log_info_message(f"Step {i} | Saving pathways...")
-        # start_time = time.time()
+        # ---------------- Create Pathway --------------- #
+        i = i+1
+        self.log_info_message(f"Step {i} | Saving pathways...")
+        start_time = time.time()
 
-        # # download pathway file
-        # pwo_file = file_downloader.download_file_if_missing(
-        #     params["pwo_file"], filename="pathway.obo")
+        # download pathway file
+        pwo_file = file_downloader.download_file_if_missing(
+            params["pwo_file"], filename="pathway.obo")
 
-        # # download reactome pathway file
-        # reactome_pathways_file = file_downloader.download_file_if_missing(
-        #     params["reactome_pathways_file"], filename="ReactomePathways.txt")
+        # download reactome pathway file
+        reactome_pathways_file = file_downloader.download_file_if_missing(
+            params["reactome_pathways_file"], filename="ReactomePathways.txt")
 
-        # # download reactome pathway relation pathway file
-        # reactome_pathway_relations_file = file_downloader.download_file_if_missing(
-        #     params["reactome_pathway_relations_file"], filename="ReactomePathwaysRelation.txt")
+        # download reactome pathway relation pathway file
+        reactome_pathway_relations_file = file_downloader.download_file_if_missing(
+            params["reactome_pathway_relations_file"], filename="ReactomePathwaysRelation.txt")
 
-        # # download reactome pathway relation pathway file
-        # reactome_chebi_pathways_file = file_downloader.download_file_if_missing(
-        #     params["reactome_chebi_pathways_file"], filename="ChEBI2Reactome.txt")
+        # download reactome pathway relation pathway file
+        reactome_chebi_pathways_file = file_downloader.download_file_if_missing(
+            params["reactome_chebi_pathways_file"], filename="ChEBI2Reactome.txt")
 
-        # PathwayService.create_pathway_db(destination_dir, pwo_file, reactome_pathways_file,
-        #                                  reactome_pathway_relations_file, reactome_chebi_pathways_file)
-        # len_pathways = Pathway.select().count()
-        # elapsed_time = time.time() - start_time
-        # self.log_info_message("... done in {:10.2f} min for #pathway = {} ".format(elapsed_time/60, len_pathways))
+        PathwayService.create_pathway_db(destination_dir, pwo_file, reactome_pathways_file,
+                                         reactome_pathway_relations_file, reactome_chebi_pathways_file)
+        len_pathways = Pathway.select().count()
+        elapsed_time = time.time() - start_time
+        self.log_info_message("... done in {:10.2f} min for #pathway = {} ".format(elapsed_time/60, len_pathways))
 
         # ---------------- Create Taxonomy --------------- #
-        # i = i+1
-        # self.log_info_message(f"Step {i} | Saving ncbi taxonomy...")
-        # start_time = time.time()
+        i = i+1
+        self.log_info_message(f"Step {i} | Saving ncbi taxonomy...")
+        start_time = time.time()
 
-        # # download taxonomy files
-        # taxdump_files = file_downloader.download_file_if_missing(
-        #     params["taxdump_files"], filename="taxdump.tar.gz", decompress_file=True)
+        # download taxonomy files
+        taxdump_files = file_downloader.download_file_if_missing(
+            params["taxdump_files"], filename="taxdump.tar.gz", decompress_file=True)
 
-        # TaxonomyService.create_taxonomy_db(destination_dir, taxdump_files)
-        # len_taxonomy = Taxonomy.select().count()
-        # elapsed_time = time.time() - start_time
-        # self.log_info_message("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
+        TaxonomyService.create_taxonomy_db(destination_dir, taxdump_files)
+        len_taxonomy = Taxonomy.select().count()
+        elapsed_time = time.time() - start_time
+        self.log_info_message("... done in {:10.2f} min for #taxa = {}".format(elapsed_time/60, len_taxonomy))
 
-        # # ---------------- Create Protein --------------- #
-        # i = i+1
-        # self.log_info_message(f"Step {i} | Saving proteins...")
-        # start_time = time.time()
+        # ---------------- Create Protein --------------- #
+        i = i+1
+        self.log_info_message(f"Step {i} | Saving proteins...")
+        start_time = time.time()
 
-        # # download file
-        # protein_file = file_downloader.download_file_if_missing(
-        #     params["protein_file"], filename="uniprot_sprot")
+        # download file
+        protein_file = file_downloader.download_file_if_missing(
+            params["protein_file"], filename="uniprot_sprot")
 
-        # ProteinService.create_protein_db(destination_dir, protein_file)
-        # len_protein = Protein.select().count()
-        # elapsed_time = time.time() - start_time
-        # self.log_info_message("... done in {:10.2f} min for #protein = {} ".format(elapsed_time/60, len_protein))
+        ProteinService.create_protein_db(destination_dir, protein_file)
+        len_protein = Protein.select().count()
+        elapsed_time = time.time() - start_time
+        self.log_info_message("... done in {:10.2f} min for #protein = {} ".format(elapsed_time/60, len_protein))
 
-        # # ------------------ Create Enzyme --------------- #
-        # i = i+1
-        # self.log_info_message(f"Step {i} | Saving brenda enzymes and enzyme_btos...")
-        # start_time = time.time()
-        # EnzymeService.create_enzyme_db(biodata_dir, **cls.params)
-        # len_enzyme = Enzyme.select().count()
-        # elapsed_time = time.time() - start_time
-        # self.log_info_message("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
+        # ------------------ Create Enzyme --------------- #
+        i = i+1
+        self.log_info_message(f"Step {i} | Saving brenda enzymes and enzyme_btos...")
+        start_time = time.time()
+        EnzymeService.create_enzyme_db(biodata_dir, **cls.params)
+        len_enzyme = Enzyme.select().count()
+        elapsed_time = time.time() - start_time
+        self.log_info_message("... done in {:10.2f} min for #enzymes = {} ".format(elapsed_time/60, len_enzyme))
 
         # ---------------- Create Reactions -------------- #
         i = i+1
@@ -263,7 +263,7 @@ class DbCreator(Task):
                         file.write(f"{enzyme}       ")
                     file.write("\n")
                 file.write("///\n")
-                
+
         # download direction file
         rhea_direction_file = file_downloader.download_file_if_missing(
             params["rhea_direction_file"], filename="rhea-directions.tsv")

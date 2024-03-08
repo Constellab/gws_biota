@@ -82,13 +82,8 @@ class ReactionService(BaseService):
             i += 1
             Logger.info(f"... saving reaction chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
             for react in reaction_chunk:
-                ######################################
-                # Revoir à partir d'ici              #
-                ######################################
-                Logger.info(f"react: {react.data.keys()}")
                 if 'entry' in react.data.keys():
                     react.rhea_id = react.data['entry']
-                    Logger.info(f"react.rhea_id : {react.rhea_id}")
                     del react.data['entry']
             Reaction.create_all(reaction_chunk)
 
@@ -188,8 +183,6 @@ class ReactionService(BaseService):
         :type list_reaction_infos: list
         :param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
-
-        Logger.info(f"list_reaction_infos: {list_reaction_infos}")
         rhea_ids = []
         master_ids = {}
         biocyc_ids = {}

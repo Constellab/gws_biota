@@ -8,14 +8,13 @@ import re
 import os
 from brendapy import BrendaParser, BrendaSettings
 
-
 class Brenda():
     """
     This module allows to get list of dictionnaries where terms represents brenda proteins/enzymes
     """
     parser = None  # reuse parser
 
-    def __init__(self, brenda_file=None, taxonomy_dir=None, bto_file=None, chebi_file=None):
+    def __init__(self, brenda_file, taxonomy_dir=None, bto_file=None, chebi_file=None):
         BrendaSettings.initialize_data_dir(
             brenda_file=brenda_file, taxonomy_dir=taxonomy_dir, bto_file=bto_file, chebi_file=chebi_file)
         self.parser = BrendaParser(brenda_file=brenda_file)
