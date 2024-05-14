@@ -8,8 +8,8 @@ import requests
 from gws_biota import Compound
 from gws_biota.compound.compound_service import CompoundService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, OutputSpecs,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
 from .db_service import DbService
@@ -17,8 +17,9 @@ from .db_service import DbService
 
 @task_decorator("CompoundDBCreator")
 class CompoundDBCreator(Task):
-    input_specs = InputSpecs({})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
+
     config_specs = {"compound_file": StrParam(
         default_value="https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo")}
 
@@ -48,7 +49,7 @@ class CompoundDBCreator(Task):
 
         # ------------- Create COMPOUND ------------- #
         # download file
-        compound_file = file_downloader.download_file_if_missing(
+        compound_file_path = file_downloader.download_file_if_missing(
             params["compound_file"], filename="chebi.obo")
 
-        CompoundService.create_compound_db(destination_dir, compound_file)
+        CompoundService.create_compound_db(destination_dir, compound_file_path)

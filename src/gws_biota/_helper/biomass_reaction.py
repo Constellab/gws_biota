@@ -4,9 +4,8 @@
 # About us: https://gencovery.com
 
 import json
-import re
-
-from gws_core import BadRequestException, StringHelper
+from typing import List
+from gws_core import StringHelper
 
 
 class BiomassReaction():
@@ -15,8 +14,8 @@ class BiomassReaction():
     SKIP_BIGG_EXCHANGE_REACTIONS = True
 
     @staticmethod
-    def _convert_annotation_list_to_dict(annotation):
-        annotation_dict = {}
+    def _convert_annotation_list_to_dict(annotation: List) -> dict:
+        annotation_dict: dict = {}
         if isinstance(annotation, list):
             for annotation_val in annotation:
                 k = annotation_val[0]
@@ -36,7 +35,6 @@ class BiomassReaction():
 
     @ classmethod
     def extract_biomass_reactions(cls, data: dict) -> list:
-        from ..compound.compound import Compound
 
         ckey = "compounds" if "compounds" in data else "metabolites"
         compounds = data[ckey]

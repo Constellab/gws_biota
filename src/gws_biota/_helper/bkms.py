@@ -3,11 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import sys
-import os
-import pronto
-from pronto import Ontology
 import csv
+import os
 
 
 class BKMS():
@@ -22,9 +19,9 @@ class BKMS():
         Parses a .csv file
 
         :type path: str
-        :param path: Location of the spreadsheet
+        :param path: Location of the bkms file
         :type file: str
-        :param file: Name of the spreadsheet
+        :param file: Name of the bkms file
         :returns: list of dictionnaries reapresenting rows of the spreadsheet
         :rtype: list
         """

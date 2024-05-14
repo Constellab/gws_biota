@@ -8,8 +8,8 @@ import requests
 from gws_biota import Pathway
 from gws_biota.pathway.pathway_service import PathwayService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, OutputSpecs,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
 from .db_service import DbService
@@ -17,8 +17,8 @@ from .db_service import DbService
 
 @task_decorator("PathwayDBCreator")
 class PathwayDBCreator(Task):
-    input_specs = InputSpecs({})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"pwo_file": StrParam(
         default_value="https://download.rgd.mcw.edu/ontology/pathway/pathway.obo"),
         "reactome_pathways_file": StrParam(default_value="https://reactome.org/download/current/ReactomePathways.txt"),

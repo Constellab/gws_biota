@@ -3,12 +3,10 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import sys
-import os
-import pronto
-from pronto import Ontology
 import json
+import os
 import re
+from pronto import Ontology
 
 
 class Onto():
@@ -24,6 +22,20 @@ class Onto():
     # ECO (Evidence and Conclusion Ontology)
     @staticmethod
     def correction_of_eco_file(path, file):
+        """
+        Correct the initial eco.obo file which contained syntax errors which prevented to use
+        the pronto package to parse the obo file
+
+        This method read the initial obo file and create a corrected copy whose the name is given
+        by the out_file parameter which is located in the same folder as the original file
+
+        :type path: str
+        :param path: Location of the file
+        :type file: str
+        :param out_file: Name of the corrected obo file
+        :rtype: None
+        """
+
         in_file = os.path.join(path, file)
 
         tab = in_file.split("/")
@@ -132,20 +144,18 @@ class Onto():
     ##################################################################
 
     @staticmethod
-    def create_ontology_from_file(path, file):
+    def create_ontology_from_file(path, file) -> Ontology:
         """
         This method allows the create an ontalogy from an obo file.
 
-        :type path: str
-        :param path: Location of the file
         :type file: str
-        :param file: Name of the obo file
+        :param file: path of obo file
         :returns: Ontology object from the package pronto
         :rtype: Ontology
         """
+        in_file = os.path.join(path, file)
 
-        file_path = os.path.join(path, file)
-        onto = Ontology(file_path)
+        onto = Ontology(in_file)
         return onto
 
     ##################################################################
@@ -154,7 +164,7 @@ class Onto():
 
     # BTO
     @staticmethod
-    def parse_bto_from_ontology(ontology):
+    def parse_bto_from_ontology(ontology: Ontology):
         list_bto = []
         for term in ontology.terms():
             dict_ = {}

@@ -24,10 +24,8 @@
 import re
 from typing import Union
 
-from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import (CharField, DoubleField, FloatField, ForeignKeyField,
-                    IntegerField)
+from peewee import (CharField, DoubleField, FloatField, ForeignKeyField)
 
 from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel

@@ -8,8 +8,8 @@ import requests
 from gws_biota import ECO
 from gws_biota.eco.eco_service import ECOService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, OutputSpecs,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
 from .db_service import DbService
@@ -17,8 +17,8 @@ from .db_service import DbService
 
 @task_decorator("EcoDBCreator")
 class EcoDBCreator(Task):
-    input_specs = InputSpecs({})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"eco_file": StrParam(
         default_value="https://raw.githubusercontent.com/evidenceontology/evidenceontology/master/eco.obo")}
 

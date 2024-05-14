@@ -71,7 +71,7 @@ class ProtectedBaseModel(Model):
         return model_list
 
     @classmethod
-    def insert_all(cls, data: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
+    def insert_all(cls, data: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> None:
         db = cls._db_manager.db
         with db.atomic():
             for batch in chunked(data, batch_size):

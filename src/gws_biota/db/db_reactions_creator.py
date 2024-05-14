@@ -6,8 +6,8 @@
 import re
 import requests
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, OutputSpecs,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
 from gws_biota import Reaction
@@ -21,8 +21,11 @@ from .db_service import DbService
 
 @task_decorator("ReactionDBCreator")
 class ReactionDBCreator(Task):
-    input_specs = InputSpecs({})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({"input_bto": InputSpec(Text, human_name="link to bto", is_optional=True),
+                              "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),
+                              "input_pathway": InputSpec(Text, human_name="link to pathway", is_optional=True)})
+
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"rhea_direction_file": StrParam(
         default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea-directions.tsv"),
         "rhea2ecocyc_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2ecocyc.tsv"),
@@ -142,4 +145,3 @@ class ReactionDBCreator(Task):
         ReactionService.create_reaction_db(
             destination_dir, f"{destination_dir}/rhea_reactions.txt", rhea_direction_file, rhea2ecocyc_file,
             rhea2metacyc_file, rhea2macie_file, rhea2kegg_reaction_file, rhea2ec_file, rhea2reactome_file)
-

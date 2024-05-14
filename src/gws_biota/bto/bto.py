@@ -33,7 +33,6 @@ class BTO(Ontology):
     _table_name = 'biota_bto'
 
     # -- A --
-
     @property
     def ancestors(self):
         if not self._ancestors is None:
@@ -45,7 +44,6 @@ class BTO(Ontology):
         return self._ancestors
 
     # -- C --
-
     @classmethod
     def create_table(cls, *args, **kwargs):
         """
@@ -57,7 +55,6 @@ class BTO(Ontology):
         BTOAncestor.create_table()
 
     # -- D --
-
     @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
@@ -68,10 +65,7 @@ class BTO(Ontology):
         BTOAncestor.drop_table()
         super().drop_table(*arg, **kwargs)
 
-    # -- G --
-
     # -- S --
-
     def set_bto_id(self, bto_id):
         """
         Set the bto_id accessor

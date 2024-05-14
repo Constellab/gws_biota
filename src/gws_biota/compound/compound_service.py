@@ -5,6 +5,7 @@
 
 import math
 
+from typing import List
 from gws_core import Logger, transaction
 from peewee import chunked
 
@@ -28,20 +29,19 @@ class CompoundService(BaseService):
 
     @classmethod
     @transaction()
-    def create_compound_db(cls, path, chebi_file):
+    def create_compound_db(cls, path, compound_file) -> None:
         """
         Creates and fills the `chebi_ontology` database
 
-        :type path: str
-        :param path: path of the :file:`chebi.obo`
-        :type chebi_file: file
-        :param chebi_file: file that contains data file name
+        :type compound_file_path: file
+        :param compound_file_path: path of chebi data
         :returns: None
         :rtype: None
         """
 
-        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(path, chebi_file)
+        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(path, compound_file)
         onto_chebi = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
+
         list_chebi = OntoHelper.parse_chebi_from_ontology(onto_chebi)
 
         comp_count = len(list_chebi)
@@ -99,7 +99,7 @@ class CompoundService(BaseService):
         CompoundAncestor.insert_all(vals)
 
     @classmethod
-    def _get_ancestors_query(cls, compound):
+    def _get_ancestors_query(cls, compound) -> List[dict]:
         """
         Look for the compound term ancestors and returns all ancetors relations in a list
 

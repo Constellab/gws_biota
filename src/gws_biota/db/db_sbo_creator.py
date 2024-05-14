@@ -8,8 +8,8 @@ import requests
 from gws_biota import SBO
 from gws_biota.sbo.sbo_service import SBOService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, OutputSpecs,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
 from .db_service import DbService
@@ -17,8 +17,8 @@ from .db_service import DbService
 
 @task_decorator("SboDBCreator")
 class SboDBCreator(Task):
-    input_specs = InputSpecs({})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"sbo_file": StrParam(
         default_value="https://raw.githubusercontent.com/EBI-BioModels/SBO/2143b2973f8912db9d4324a4fe543aabcd8f8ba7/SBO_OBO.obo")}
 

@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import transaction
+from gws_core import transaction, Logger
 
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
@@ -27,7 +27,10 @@ class ECOService(BaseService):
         """
 
         data_dir, corrected_file_name = OntoHelper.correction_of_eco_file(path, eco_file)
+        Logger.info(f"tuple : {data_dir}, {corrected_file_name}")
+
         onto_eco = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
+
         list_eco = OntoHelper.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [ECO(data=dict_) for dict_ in list_eco]
         for eco in ecos:

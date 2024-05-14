@@ -9,21 +9,21 @@ from gws_biota import BTO
 from gws_biota.bto.bto_service import BTOService
 
 from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, OutputSpecs,
-                      FileDownloader)
+                      task_decorator, InputSpecs, InputSpec, OutputSpecs, OutputSpec,
+                      FileDownloader, Text)
 
 from .db_service import DbService
 
 
 @task_decorator("BtoDBCreator")
 class BtoDBCreator(Task):
-    input_specs = InputSpecs({})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"bto_file": StrParam(
         default_value="https://raw.githubusercontent.com/BRENDA-Enzymes/BTO/master/bto.owl")}
 
     # only allow admin user to run this process
-    def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+    def run(self, params: ConfigParams, inputs: TaskInputs):
         # Deleting the database...
         self.log_info_message("Deleting the BTO database...")
         DbService.drop_biota_tables([BTO])
@@ -48,7 +48,7 @@ class BtoDBCreator(Task):
 
         # ------------- Create BTO ------------- #
         # download file
-        bto_file = file_downloader.download_file_if_missing(
+        bto_file_path = file_downloader.download_file_if_missing(
             params["bto_file"], filename="bto.owl")
 
-        BTOService.create_bto_db(destination_dir, bto_file)
+        BTOService.create_bto_db(destination_dir, bto_file_path)

@@ -3,12 +3,10 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import copy
+from typing import List, TypedDict, Union
 import json
 import os
 from pathlib import Path
-from typing import Dict, List, TypedDict, Union
-
 from gws_core import BadRequestException
 
 from .compound_cluster import CompoundCluster, CompoundClusterDict

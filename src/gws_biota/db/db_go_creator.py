@@ -8,8 +8,8 @@ import requests
 from gws_biota import GO
 from gws_biota.go.go_service import GOService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, OutputSpecs,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
 from .db_service import DbService
@@ -17,8 +17,8 @@ from .db_service import DbService
 
 @task_decorator("GoDBCreator")
 class GoDBCreator(Task):
-    input_specs = InputSpecs({})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {
         "go_file": StrParam(default_value="https://current.geneontology.org/ontology/go.obo")
     }

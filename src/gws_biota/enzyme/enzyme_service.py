@@ -24,7 +24,7 @@ class EnzymeService(BaseService):
     def create_enzyme_db(cls, brenda_file, bkms_file, expasy_file, taxonomy_file, bto_file, compound_file):
         """
         Creates and fills the `enzyme` database
-        :param files: dictionnary that contains all data files names
+        :param: enzymes files
         :type files: dict
         :returns: None
         :rtype: None
@@ -224,9 +224,9 @@ class EnzymeService(BaseService):
     @classmethod
     def __update_pathway_from_bkms(cls, list_of_bkms):
         """
-        See if there is any information about the enzyme tissue locations and if so,
-        connects the enzyme and tissues by adding an enzyme-tissues relation
-        in the enzyme_btostable
+        See if there is any information about the biochemical reaction and if so,
+        connects the enzyme and biochemical reaction by adding an enzyme-bkms relation
+        in the biota_enzyme_pathway
         """
 
         pathways = {}

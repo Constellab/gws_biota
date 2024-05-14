@@ -2,8 +2,8 @@
 # This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
-
-from gws_core import transaction
+from typing import List
+from gws_core import transaction, Logger
 
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
@@ -14,20 +14,18 @@ class BTOService(BaseService):
 
     @classmethod
     @transaction()
-    def create_bto_db(cls, path, bto_file):
+    def create_bto_db(cls, destination_dir, bto_file_path: str) -> None:
         """
         Creates and fills the `bto` database
 
-        :param biodata_dir: path of the :file:`bto.json`
-        :type biodata_dir: str
-        :param kwargs: dictionnary that contains all data file names
-        :type kwargs: dict
+        :param bto_file: path of bto.owl file
+        :type bto_file: file
         """
 
         # convert to obo if required
-        ontology = OntoHelper.create_ontology_from_file(path, bto_file)
+        ontology = OntoHelper.create_ontology_from_file(destination_dir, bto_file_path)
         list_bto = OntoHelper.parse_bto_from_ontology(ontology)
-        btos = [BTO(data=dict_) for dict_ in list_bto]
+        btos: List[BTO] = [BTO(data=dict_) for dict_ in list_bto]
         for bto in btos:
             bto.set_bto_id(bto.data["id"])
             bto.set_name(bto.data["name"])
@@ -44,20 +42,22 @@ class BTOService(BaseService):
         BTOAncestor.insert_all(vals)
 
     @classmethod
-    def __build_insert_query_vals_of_ancestors(self, bto):
+    def __build_insert_query_vals_of_ancestors(cls, bto: BTO) -> List[dict]:
         """
         Look for the bto term ancestors and returns all bto-bto_ancetors relations in a list.
 
         :returns: a list of dictionnaries inf the following format: {'bto': self.id, 'ancestor': ancestor.id}
         :rtype: list
         """
-        vals = []
+        vals: List[dict] = []
         if 'ancestors' not in bto.data:
             return vals
         for ancestor in bto.data['ancestors']:
             if ancestor != bto.bto_id:
-                ancestors = BTO.select(BTO.id).where(BTO.bto_id == ancestor)
+                ancestors: List[BTO] = list(BTO.select(BTO.id).where(BTO.bto_id == ancestor))
                 if len(ancestors) > 0:
                     val = {'bto': bto.id, 'ancestor': ancestors[0].id}
+                    Logger.info(f"ancestor : {ancestor}")
+
                     vals.append(val)
         return vals

@@ -3,11 +3,11 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-import requests
 import os
+import requests
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
-                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpecs,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader, File)
 
 from gws_biota import Enzyme
@@ -20,9 +20,13 @@ from .db_service import DbService
 
 @task_decorator("EnzymeDBCreator")
 class EnzymeDBCreator(Task):
-    input_specs = InputSpecs({'input': InputSpec(File, human_name="Enzyme file",
-                             short_description="Enzyme file from BRENDA database")})
-    output_specs = OutputSpecs({})
+    input_specs = InputSpecs({'input_brenda': InputSpec(File, human_name="Enzyme file",
+                             short_description="Enzyme file from BRENDA database"),
+                             "input_bto": InputSpec(Text, human_name="link to bto", is_optional=True),
+                              "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),
+                              "input_pathway": InputSpec(Text, human_name="link to pathway", is_optional=True)})
+
+    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"bkms_file": StrParam(default_value="https://bkms.brenda-enzymes.org/download/Reactions_BKMS.tar.gz"), "expasy_file": StrParam(
         default_value="https://raw.githubusercontent.com/google-research/proteinfer/540773f988005cc5ed834210d1477e4db1f141e6/testdata/enzclass.txt"),
         "compound_file": StrParam(default_value="https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"),
@@ -31,7 +35,7 @@ class EnzymeDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
-        input_file: File = inputs["input"]
+        input_file: File = inputs["input_brenda"]
 
         len_bto = BTO.select().count()
         len_taxonomy = Taxonomy.select().count()
