@@ -15,6 +15,16 @@ class ProteinService(BaseService):
     @classmethod
     @transaction()
     def create_protein_db(cls, path, protein_file):
+        """
+        Creates and fills the `protein` database
+
+        :param path: path of the file
+        :type path: str
+        :param protein_file: file that contains data file name
+        :type protein_file: file
+        :returns: None
+        :rtype: None
+        """
 
         Logger.info(f"Loading and saving uniprot data ...")
         with gzip.open(protein_file, "rt") as handle:

@@ -1,3 +1,8 @@
+# LICENSE
+# This software is the exclusive property of Gencovery SAS.
+# The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
+# About us: https://gencovery.com
+
 from gws_core.model.typing_style import TypingStyle
 
 from gws_core import Protocol, protocol_decorator, ProcessSpec
@@ -16,6 +21,7 @@ from .db_taxonomy_creator import TaxonomyDBCreator
 @protocol_decorator("UpdateBiotaDB",
                     style=TypingStyle.community_icon("database", background_color="#2b6d57"))
 class UpdateBiotaDB(Protocol):
+    # Create instances of various database creators and assign them to variables
     def configure_protocol(self) -> None:
         bto: ProcessSpec = self.add_process(BtoDBCreator, "bto")
         compound: ProcessSpec = self.add_process(CompoundDBCreator, "compound")
@@ -28,22 +34,20 @@ class UpdateBiotaDB(Protocol):
         sbo: ProcessSpec = self.add_process(SboDBCreator, "sbo")
         taxonomy: ProcessSpec = self.add_process(TaxonomyDBCreator, "taxonomy")
 
+        # Define the data flow connections between the processes
+        # The eco Task is placed before the go Task. So we place in output eco and input go
         self.add_connectors([
             (eco >> "output_text", go << "input_text"),
             (go >> "output_text", sbo << "input_text"),
             (sbo >> "output_text", bto << "input_text"),
             (bto >> "output_text", compound << "input_text"),
             (bto >> "output_text", enzyme << "input_bto"),
-            (bto >> "output_text", reaction << "input_bto"),
             (compound >> "output_text", pathway << "input_text"),
+            (compound >> "output_text", reaction << "input_compound"),
             (pathway >> "output_text", taxonomy << "input_text"),
-            (pathway >> "output_text", enzyme << "input_pathway"),
-            (pathway >> "output_text", reaction << "input_pathway"),
             (taxonomy >> "output_text", protein << "input_text"),
             (taxonomy >> "output_text", enzyme << "input_taxonomy"),
-            (taxonomy >> "output_text", reaction << "input_taxonomy")
+            (taxonomy >> "output_text", reaction << "input_taxonomy"),
+            (protein >> "output_text", enzyme << "input_protein"),
+            (enzyme >> "output_text", reaction << "input_enzyme")
         ])
-
-    # Ressource Text à mettre dans le output, vide ou avec une rapide description de ce qu"il s"est passé pour chaque database
-    # Créer 3 inputs pour Rhea par exemple et les nommer pour que ce soit plus clair
-    # input is_optional dans les inputspecs des différents scripts db

@@ -18,9 +18,9 @@ from .db_service import DbService
 
 @task_decorator("ReactionDBCreator")
 class ReactionDBCreator(Task):
-    input_specs = InputSpecs({"input_bto": InputSpec(Text, human_name="link to bto", is_optional=True),
+    input_specs = InputSpecs({"input_compound": InputSpec(Text, human_name="link to compound", is_optional=True),
                               "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),
-                              "input_pathway": InputSpec(Text, human_name="link to pathway", is_optional=True)})
+                              "input_enzyme": InputSpec(Text, human_name="link to enzyme", is_optional=True)})
 
     output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"rhea_direction_file": StrParam(

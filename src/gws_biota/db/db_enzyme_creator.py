@@ -21,7 +21,7 @@ class EnzymeDBCreator(Task):
                              short_description="Enzyme file from BRENDA database"),
                              "input_bto": InputSpec(Text, human_name="link to bto", is_optional=True),
                               "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),
-                              "input_pathway": InputSpec(Text, human_name="link to pathway", is_optional=True)})
+                              "input_protein": InputSpec(Text, human_name="link to protein", is_optional=True)})
 
     output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
     config_specs = {"bkms_file": StrParam(default_value="https://bkms.brenda-enzymes.org/download/Reactions_BKMS.tar.gz"), "expasy_file": StrParam(
@@ -63,7 +63,7 @@ class EnzymeDBCreator(Task):
         self.log_info_message("all files were found.")
 
         destination_dir = Settings.make_temp_dir()
-        file_downloader = FileDownloader(destination_dir)
+        file_downloader = FileDownloader(destination_dir, message_dispatcher=self.message_dispatcher)
 
         # ------------- Create ENZYME ------------- #
         # download BKMS file
@@ -88,4 +88,4 @@ class EnzymeDBCreator(Task):
 
         EnzymeService.create_enzyme_db(
             brenda_file=input_file.path, bkms_file=bkms_file, expasy_file=expasy_file, taxonomy_file=taxdump_files,
-            bto_file=bto_file, compound_file=compound_file)
+            bto_file=bto_file, compound_file='/lab/user/chebi.obo')

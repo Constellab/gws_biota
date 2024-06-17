@@ -22,7 +22,7 @@ class EnzymeService(BaseService):
         """
         Creates and fills the `enzyme` database
         :param: enzymes files
-        :type files: dict
+        :type files: file
         :returns: None
         :rtype: None
         """

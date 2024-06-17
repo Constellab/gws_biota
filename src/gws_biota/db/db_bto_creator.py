@@ -41,7 +41,7 @@ class BtoDBCreator(Task):
         self.log_info_message("bto.owl file found.")
 
         destination_dir = Settings.make_temp_dir()
-        file_downloader = FileDownloader(destination_dir)
+        file_downloader = FileDownloader(destination_dir, message_dispatcher=self.message_dispatcher)
 
         # ------------- Create BTO ------------- #
         # download file
