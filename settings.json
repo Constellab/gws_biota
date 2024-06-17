@@ -2,7 +2,7 @@
   "name": "gws_biota",
   "author": "Gencovery",
   "author_email": "admin@gencovery.com",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "The Biological and Omics Database for Gencovery Web Services",
   "variables": {
     "gws_biota:biodata_dir": "/data/${CURRENT_BRICK}/biodata/",
@@ -15,7 +15,7 @@
     "bricks": [
       {
         "name": "gws_core",
-        "version": "0.7.1"
+        "version": "0.8.0"
       }
     ],
     "pip": [
@@ -28,19 +28,15 @@
           },
           {
             "name": "pronto",
-            "version": "2.1.0"
+            "version": "2.5.7"
           },
           {
             "name": "ujson",
-            "version": "5.1.0"
+            "version": "5.10.0"
           },
           {
             "name": "pyparsing",
             "version": "3.0.6"
-          },
-          {
-            "name": "owlready2",
-            "version": "0.36"
           }
         ]
       }
@@ -54,11 +50,6 @@
           }
         ]
       }
-    ],
-    "variables": {
-      "GWS_GIT_LOGIN": "",
-      "GWS_GIT_PWD": "",
-      "GWS_PIP_PACKAGE_TOKEN": ""
-    }
+    ]
   }
 }

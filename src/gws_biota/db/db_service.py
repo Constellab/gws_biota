@@ -1,15 +1,14 @@
-# LICENSE
-# This software is the exclusive property of Gencovery SAS.
-# The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
-# About us: https://gencovery.com
+
 
 from typing import List, Type
-from gws_core import (BaseService, MessageDispatcher)
+
 from gws_biota.base.base import Base
+from gws_core import MessageDispatcher
+
 from .db_manager import DbManager
 
 
-class DbService(BaseService):
+class DbService:
     @classmethod
     def drop_biota_tables(cls, biota_models: List[Type[Base]], message_dispatcher: MessageDispatcher = None) -> None:
         """
