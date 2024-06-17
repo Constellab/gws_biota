@@ -1,5 +1,5 @@
 # LICENSE
-# This software is the exclusive property of Gencovery SAS. 
+# This software is the exclusive property of Gencovery SAS.
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
@@ -10,19 +10,19 @@ from ..db.db_manager import DbManager
 from ..base.base import Base
 from ..base.protected_base_model import ProtectedBaseModel
 from ..ontology.ontology import Ontology
-from ..taxonomy.taxonomy import Taxonomy
 from ..compound.compound import Compound
 from .pathway_compound import PathwayCompound
+
 
 @typing_registrator(unique_name="Pathway", object_type="MODEL", hide=True)
 class Pathway(Ontology):
     """
-    This class represents reactome Pathways 
+    This class represents reactome Pathways
     """
-    
+
     reactome_pathway_id = CharField(null=True, index=True)
     _ancestors = None
-    
+
     _table_name = 'biota_pathways'
 
     # -- A --
@@ -36,7 +36,7 @@ class Pathway(Ontology):
         for q in Q:
             self._ancestors.append(q.ancestor)
         return self._ancestors
-    
+
     # -- C --
 
     @classmethod
@@ -46,7 +46,7 @@ class Pathway(Ontology):
 
         Extra parameters are passed to :meth:`peewee.Model.create_table`
         """
-        
+
         if not Compound.table_exists():
             Compound.create_table()
         super().create_table(*args, **kwargs)
@@ -66,19 +66,20 @@ class Pathway(Ontology):
         PathwayCompound.drop_table()
         super().drop_table(*arg, **kwargs)
 
+
 class PathwayAncestor(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between the pathway and theirs ancestors
 
-    :type pathway: CharField 
+    :type pathway: CharField
     :property pathway: id of the concerned pathway
-    :type ancestor: CharField 
+    :type ancestor: CharField
     :property ancestor: ancestor of the concerned pathway term
     """
 
     pathway = ForeignKeyField(Pathway)
     ancestor = ForeignKeyField(Pathway)
-    
+
     class Meta:
         table_name = 'biota_pathway_ancestors'
         database = DbManager.db

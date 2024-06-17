@@ -20,10 +20,8 @@ class PathwayService(BaseService):
         """
         Creates and fills the `pwo` database
 
-        :param biodata_dir: path of the :file:`pwo.obo`
-        :type biodata_dir: str
-        :param files: dictionnary that contains all data files names
-        :type files: dict
+        :params: path of the files
+        :type: str
         :returns: None
         :rtype: None
         """

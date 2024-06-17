@@ -57,7 +57,5 @@ class BTOService(BaseService):
                 ancestors: List[BTO] = list(BTO.select(BTO.id).where(BTO.bto_id == ancestor))
                 if len(ancestors) > 0:
                     val = {'bto': bto.id, 'ancestor': ancestors[0].id}
-                    Logger.info(f"ancestor : {ancestor}")
-
                     vals.append(val)
         return vals

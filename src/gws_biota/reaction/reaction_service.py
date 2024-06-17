@@ -24,10 +24,8 @@ class ReactionService(BaseService):
         """
         Creates and fills the `reaction` database
 
-        :param path: path to the folder that contain the go.obo file
+        :param: path of each files
         :type path: str
-        :param kwargs: dictionnary that contains all data files names
-        :type kwargs: dict
         :returns: None
         :rtype: None
         """
@@ -67,11 +65,11 @@ class ReactionService(BaseService):
         reaction_subtrates and reations_products by calling
         _create_substrate_vals_from_data(), _create_product_vals_from_data()
 
-        :type list_reaction: list
-        :param list_reaction: list of dictionnaries where each element refers
+        : type list_reaction: list
+        : param list_reaction: list of dictionnaries where each element refers
         to a rhea reaction
-        :returns: list of reactions entities
-        :rtype: list
+        : returns: list of reactions entities
+        : rtype: list
         """
 
         rxn_count = len(list_reaction)
@@ -177,11 +175,11 @@ class ReactionService(BaseService):
     @classmethod
     def _update_master_and_biocyc_ids_from_rhea2ec(cls, list_reaction_infos):
         """
-        Get informations about master id and biocyc id of from a :file:`rhea2ec.tsv` file
+        Get informations about master id and biocyc id of from a: file: `rhea2ec.tsv` file
         update those index if the concerned reaction is in the table
 
-        :type list_reaction_infos: list
-        :param list_reaction_infos: list of dictionnaries that contains informations about reactions
+        : type list_reaction_infos: list
+        : param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
         rhea_ids = []
         master_ids = {}
@@ -205,11 +203,11 @@ class ReactionService(BaseService):
     @classmethod
     def _update_master_and_biocyc_ids_from_rhea2biocyc(cls, list_reaction_infos):
         """
-        Get informations about master id and biocyc id of from a :file:`rhea2biocyc.tsv` file
+        Get informations about master id and biocyc id of from a: file: `rhea2biocyc.tsv` file
         update those index if the concerned reaction is in the table
 
-        :type list_reaction_infos: list
-        :param list_reaction_infos: list of dictionnaries that contains informations about reactions
+        : type list_reaction_infos: list
+        : param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
 
         rhea_ids = []
@@ -241,11 +239,11 @@ class ReactionService(BaseService):
     @classmethod
     def _update_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
         """
-        Get informations about master id and biocyc id of from a :file:`rhea2kegg.tsv` file
+        Get informations about master id and biocyc id of from a: file: `rhea2kegg.tsv` file
         update those index if the concerned reaction is in the table
 
-        :type list_reaction_infos: list
-        :param list_reaction_infos: list of dictionnaries that contains informations about reactions
+        : type list_reaction_infos: list
+        : param list_reaction_infos: list of dictionnaries that contains informations about reactions
         """
         rhea_ids = []
         master_ids = {}
@@ -275,14 +273,14 @@ class ReactionService(BaseService):
     @classmethod
     def _update_direction_from_list(cls, list_direction, direction):
         """
-        Get informations about direction of from :file:`rhea.tsv` files and
+        Get informations about direction of from: file: `rhea.tsv` files and
         update the direction property if the concerned reaction is in the table
 
-        :type list_direction: list
-        :param list_direction: list of dictionnaries that contains informations about
+        : type list_direction: list
+        : param list_direction: list of dictionnaries that contains informations about
         directions of reactions
-        :type direction : str
-        :param direction : direction of reactions in the file
+        : type direction: str
+        : param direction: direction of reactions in the file
         """
         rhea_ids = []
         for s in list_direction:
