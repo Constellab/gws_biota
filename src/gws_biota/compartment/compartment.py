@@ -1,73 +1,105 @@
-
-
-# from ..base.base_ft import BaseFT
-
-# @typing_registrator(unique_name="Compartment", object_type="MODEL", hide=True)
-# class Compartment(BaseFT):
-#     go_id = CharField(null=True, index=True)
-#     bigg_id = CharField(null=True, index=True)
-
 import json
 import os
+from typing import List, Optional
 
-from gws_core import BadRequestException
+from gws_core import BadRequestException, BaseModelDTO
 
 __cdir__ = os.path.dirname(os.path.abspath(__file__))
+
+
+class Compartments():
+    all_compartments: List['Compartment'] = None
 
 
 class CompartmentNotFoundException(BadRequestException):
     """ CompartmentNotFoundException """
 
 
-class Compartment:
-    """ Comaprtment """
+class Compartment(BaseModelDTO):
+    """ Compartment """
 
-    go_id = None
-    bigg_id = None
-    name = None
-    color = None
-    data = None
+    go_id: str = None
+    bigg_id: str = None
+    name: str = None
+    color: Optional[str] = None
+    alt_go_ids: List[str] = []
+    synonymes: List[str] = []
+    is_steady: bool = False
 
-    _db_data: dict = None
-
-    def __init__(self, *, go_id="", bigg_id="", name="", color="", data=None):
-        self.go_id = go_id
-        self.bigg_id = bigg_id
-        self.name = name
-        self.color = color
-        self.data = data or {}
+    def has_name_or_synonym(self, name: str) -> bool:
+        """ Check if has name or synonym """
+        return name == self.name or (name in self.synonymes)
 
     @classmethod
-    def search_by_name(cls, name: str):
+    def get_steady_compartments(cls) -> List['Compartment']:
+        """ Get steady compartments """
+        return [compartment for compartment in cls.get_all_compartments() if compartment.is_steady]
+
+    @classmethod
+    def search_by_name(cls, name: str) -> List['Compartment']:
         """ Search by name """
-        comparts = []
-        db_data = cls._get_db_data()
-        for val in db_data:
-            if (name in val["name"]) or (name in val["data"]["synonymes"].join(",")):
-                comparts.append(Compartment(**val))
+        comparts: List[Compartment] = []
+        for compartment in cls.get_all_compartments():
+            if compartment.has_name_or_synonym(name):
+                comparts.append(compartment)
         return comparts
 
     @classmethod
-    def get_by_go_id(cls, go_id: str):
+    def get_by_go_id_or_none(cls, go_id: str) -> Optional['Compartment']:
         """ Get by GO id """
-        db_data = cls._get_db_data()
-        for val in db_data:
-            if val["go_id"] == go_id:
-                return Compartment(**val)
-        raise CompartmentNotFoundException("Compartment not found")
+        for compartment in cls.get_all_compartments():
+            if compartment.go_id == go_id:
+                return compartment
+        return None
 
     @classmethod
-    def get_by_bigg_id(cls, bigg_id: str):
-        """ Get by GO id """
-        db_data = cls._get_db_data()
-        for val in db_data:
-            if val["bigg_id"] == bigg_id:
-                return Compartment(**val)
-        raise CompartmentNotFoundException("Compartment not found")
+    def get_by_go_id(cls, go_id: str) -> Optional['Compartment']:
+        """ Get by GO id and raise exception if not found"""
+        compartment = cls.get_by_go_id_or_none(go_id)
+        if compartment:
+            return compartment
+        raise CompartmentNotFoundException(f"Compartment with go_id '{go_id}' not found")
 
     @classmethod
-    def _get_db_data(cls):
-        if cls._db_data is None:
+    def get_by_bigg_id_or_none(cls, bigg_id: str) -> Optional['Compartment']:
+        """ Get by BiGG id """
+        for compartment in cls.get_all_compartments():
+            if compartment.bigg_id == bigg_id:
+                return compartment
+        return None
+
+    @classmethod
+    def get_by_bigg_id(cls, bigg_id: str) -> 'Compartment':
+        """ Get by BiGG id and raise exception if not found"""
+        compartment = cls.get_by_bigg_id_or_none(bigg_id)
+        if compartment:
+            return compartment
+        raise CompartmentNotFoundException(f"Compartment with bigg_id '{bigg_id}' not found")
+
+    @classmethod
+    def get_by_big_id_or_go_id_or_none(cls, id_: str) -> Optional['Compartment']:
+        """ Get by BiGG id or GO id """
+        compartment = cls.get_by_bigg_id_or_none(id_)
+        if compartment:
+            return compartment
+        compartment = cls.get_by_go_id_or_none(id_)
+        if compartment:
+            return compartment
+        return None
+
+    @classmethod
+    def get_by_big_id_or_go_id(cls, id_: str) -> 'Compartment':
+        """ Get by BiGG id or GO id and raise exception if not found"""
+        compartment = cls.get_by_big_id_or_go_id_or_none(id_)
+        if compartment:
+            return compartment
+        raise CompartmentNotFoundException(f"Compartment with id '{id_}' not found")
+
+    @classmethod
+    def get_all_compartments(cls) -> List['Compartment']:
+        if Compartments.all_compartments is None:
             with open(os.path.join(__cdir__, "./data/compartment.json"), 'r', encoding="utf-8") as fp:
-                cls._db_data = json.load(fp)
-        return cls._db_data["data"]
+                compartments = json.load(fp)
+                Compartments.all_compartments = Compartment.from_json_list(compartments.get("data"))
+
+        return Compartments.all_compartments
