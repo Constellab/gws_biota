@@ -4,13 +4,10 @@
 # About us: https://gencovery.com
 
 from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs,
-                      task_decorator, File, InputSpec, InputSpecs, StrParam, Table, Logger)
+                      task_decorator, File, InputSpec, InputSpecs, StrParam, Table)
 
-from brendapyrser import BRENDA
-import requests
-import re
+
 import pandas as pd
-import numpy as np
 
 
 @task_decorator("CreateContextFile", human_name="Create file with reactions and kcat",
