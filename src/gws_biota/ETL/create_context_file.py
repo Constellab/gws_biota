@@ -31,6 +31,7 @@ class CreateContextFile(Task):
         organism_name: str = params["organism_name"]
 
         with open(f"reaction_kcat_{organism_name}.txt", "w") as context:
+            # example of line => NTD8,1.100,0.100,2.100,1
             context.write("reaction_id,target,lower_bound,upper_bound,confidence_score\n")
             for ec, bigg, kcat in zip(
                     reaction_table["Ec number"],

@@ -30,6 +30,7 @@ class RetrieveKcatFromBiota(Task):
                 n = len(enzyme.get_params('TN'))  # TN = turn over = kcat
 
                 for i in range(0, n):
+                    # Retrieve only value and substrate name of TN and not all data about it
                     tn_param = enzyme.get_params('TN')[i].value
                     if "{more}" in tn_param or len(tn_param) == 0:  # not a value
                         continue
@@ -37,7 +38,7 @@ class RetrieveKcatFromBiota(Task):
                     if ec_number not in enzymes_dict:
                         enzymes_dict[ec_number] = []
 
-                    tn_param_values = tn_param.split(" ")
+                    tn_param_values = tn_param.split(" ")  # split value and substrate name
                     tn_value = tn_param_values[0]
                     # does not take into account values with a dash, so cannot be used to make a median => e.g. on brenda: for saccharomyces cerevisiae EC 4.1.1.23, TN 14-20 for substrate orotidine 5'-phosphate
                     if "-" in tn_value:
@@ -46,7 +47,6 @@ class RetrieveKcatFromBiota(Task):
                     tn_substrat = tn_param_values[1]
                     enzymes_dict[ec_number].append((float(tn_value), tn_substrat))
 
-        # self.log_info_message(f"enzymes_dict : {enzymes_dict}")
         enzymes_dict_normalize = {}
         for ec, tn_values in enzymes_dict.items():
             list_tn = []
@@ -54,11 +54,10 @@ class RetrieveKcatFromBiota(Task):
             for tn in tn_values:
                 list_tn.append(tn[0])  # take tn_value and not tn_substrat
 
-            tn_median = np.nanmedian(list_tn)
+            tn_median = np.nanmedian(list_tn)  # Make the median of TN and ignore NaN
 
             enzymes_dict_normalize[ec] = tn_median
 
-        self.log_info_message(f"list : {list(enzymes_dict_normalize.items())}")
         df = pd.DataFrame(list(enzymes_dict_normalize.items()), columns=['Ec number', 'median Kcat'])
 
         return {"results": Table(df)}
