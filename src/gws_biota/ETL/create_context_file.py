@@ -4,14 +4,15 @@
 # About us: https://gencovery.com
 
 from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs,
-                      task_decorator, File, InputSpec, InputSpecs, StrParam, Table)
+                      task_decorator, File, InputSpec, InputSpecs, StrParam, Table, TypingStyle)
 
 
 import pandas as pd
 
 
-@task_decorator("CreateContextFile", human_name="Create file with reactions and kcat",
-                short_description="Creation of the enzymatic context file used to reconstruct a metabolic network")
+@task_decorator("CreateContextFile", style=TypingStyle.material_icon(
+    material_icon_name="text_snippet", background_color="#2b6d57"), human_name="Create a contextualization file (kcat)",
+    short_description="Creation of the enzymatic context file used to reconstruct a metabolic network")
 class CreateContextFile(Task):
     input_specs = InputSpecs({'reaction_table': InputSpec(
         Table, human_name="Table containing ec number, bigg id and kcat")})

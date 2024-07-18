@@ -19,7 +19,7 @@ from .db_taxonomy_creator import TaxonomyDBCreator
 
 
 @protocol_decorator("UpdateBiotaDB",
-                    style=TypingStyle.community_icon("database", background_color="#2b6d57"))
+                    style=TypingStyle.material_icon(material_icon_name="database", background_color="#2b6d57"))
 class UpdateBiotaDB(Protocol):
     # Create instances of various database creators and assign them to variables
     def configure_protocol(self) -> None:

@@ -4,17 +4,20 @@
 # About us: https://gencovery.com
 
 from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs,
-                      task_decorator, Table, InputSpec, InputSpecs, StrParam, Table, Logger)
+                      task_decorator, Table, InputSpec, InputSpecs, StrParam, Table,
+                      TypingStyle)
 
 from gws_biota import Enzyme
 import numpy as np
 import pandas as pd
 
 
-@task_decorator("RetrieveKcatFromBiota", human_name="Correspondance between kcat and ec number ",
-                short_description="Add kcat to ec number using BIOTA")
+@task_decorator("RetrieveKcatFromBiota", style=TypingStyle.material_icon(
+    material_icon_name="database", background_color="#2b6d57"),
+    human_name="Retrieve Kcat from BIOTA",
+    short_description="Add kcat to ec number using BIOTA for a selected species")
 class RetrieveKcatFromBiota(Task):
-    output_specs = OutputSpecs({'results': OutputSpec(Table, human_name="ec number to kcat",
+    output_specs = OutputSpecs({'results': OutputSpec(Table, human_name="Ec number to kcat",
                                                       short_description="Correspondence table between kcat and ec number")})
 
     config_specs = {"organism_name": StrParam(default_value="Saccharomyces cerevisiae")}

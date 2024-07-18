@@ -4,17 +4,19 @@
 # About us: https://gencovery.com
 
 from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs,
-                      task_decorator, InputSpec, InputSpecs, Table, StrParam, File)
+                      task_decorator, InputSpec, InputSpecs, Table, StrParam, File, TypingStyle)
 
 import json
 import pandas as pd
 
 
-@task_decorator("EcNumberTransformBiGG", human_name="Translate EC number to Bigg ID",
-                short_description="Transform table corresponding to EC Number to BiGG id")
-class EcNumberTransformBiGG(Task):
-    input_specs = InputSpecs({'ec_number_table': InputSpec(Table, human_name="Table containing ec number"),
-                              "BiGG_models": InputSpec(File, human_name="BiGG Models file about organism of internet")})
+@task_decorator("BiGGIdentifiersToEcNumber", style=TypingStyle.material_icon(
+    material_icon_name="join_inner", background_color="#2b6d57"), human_name="EC number to Bigg ID",
+    short_description="Adds BiGG identifiers for each set (Ec number / kcat)")
+class BiGGIdentifiersToEcNumber(Task):
+    input_specs = InputSpecs(
+        {'ec_number_table': InputSpec(Table, human_name="Table containing ec number"),
+         "BiGG_models": InputSpec(File, human_name="BiGG Models json file about organism of internet")})
     output_specs = OutputSpecs({'table_results': OutputSpec(Table, human_name="Results",
                                short_description="Table containing the correspondance between bigg id, ec_number and kcat")})
 
