@@ -7,13 +7,13 @@ from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, S
                       TaskOutputs, task_decorator, Folder, StrParam)
 
 from Bio import Entrez
-from ..extract_data.pubmed import Pubmed
-from ..extract_data.geoprofiles import GeoProfiles
-from ..extract_data.gene import Gene
-from ..extract_data.clinvar import ClinVar
-from ..extract_data.protein import Protein
-from ..extract_data.gds import GDS
-from ..extract_data.popset import PopSet
+from ..extract_data_ncbi.pubmed import Pubmed
+from ..extract_data_ncbi.geoprofiles import GeoProfiles
+from ..extract_data_ncbi.gene import Gene
+from ..extract_data_ncbi.clinvar import ClinVar
+from ..extract_data_ncbi.protein import Protein
+from ..extract_data_ncbi.gds import GDS
+from ..extract_data_ncbi.popset import PopSet
 
 
 @task_decorator("RequestNCBI", human_name="Request NCBI",
