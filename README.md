@@ -55,21 +55,21 @@ pip install biopython==1.79 pronto==2.5.7 ujson==5.10.0 pyparsing==3.0.6
 ▶️ To start the server :
 
 ```bash
-python3 manage.py --runserver
+gws server run
 ```
 
 🕵️ To run a given unit test
 
 ```bash
-python3 manage.py --test [TEST_FILE_NAME]
+gws server test [TEST_FILE_NAME]
 ```
 
-Replace `[TEST_FILE_NAME]` with the name of the test file (without `.py`) in the tests folder.
+Replace `[TEST_FILE_NAME]` with the name of the test file (without `.py`) in the tests folder. Execute this command in the folder of the brick.
 
 🕵️ To run the whole test suite, use the following command:
 
 ```bash
-python3 manage.py --test all
+gws server test all
 ```
 
 📌 VSCode users can use the predefined run configuration in `.vscode/launch.json`.
