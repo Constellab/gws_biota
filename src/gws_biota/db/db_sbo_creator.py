@@ -12,7 +12,7 @@ from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
 from .db_service import DbService
 
 
-@task_decorator("SboDBCreator")
+@task_decorator("SboDBCreator", short_description="Download the online file SBO_OBO.obo (Systems Biology Ontology) and use it to load the “biota_sbo” table from the BIOTA database.")
 class SboDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
     output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})

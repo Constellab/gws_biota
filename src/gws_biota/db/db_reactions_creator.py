@@ -16,7 +16,7 @@ from ..enzyme.enzyme_service import Enzyme
 from .db_service import DbService
 
 
-@task_decorator("ReactionDBCreator")
+@task_decorator("ReactionDBCreator", short_description="Download the online files from expasy and rhea databases, and use them to load the “biota_reaction” table from the BIOTA database.")
 class ReactionDBCreator(Task):
     input_specs = InputSpecs({"input_compound": InputSpec(Text, human_name="link to compound", is_optional=True),
                               "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),

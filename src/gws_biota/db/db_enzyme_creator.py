@@ -15,7 +15,7 @@ from ..pathway.pathway import Pathway
 from .db_service import DbService
 
 
-@task_decorator("EnzymeDBCreator")
+@task_decorator("EnzymeDBCreator", short_description="Download the online folders/files from BRENDA, ebi.ac.uk and ncbi databases and use them to load the “biota_enzyme” table from the BIOTA database.")
 class EnzymeDBCreator(Task):
     input_specs = InputSpecs({'input_brenda': InputSpec(File, human_name="Enzyme file",
                              short_description="Enzyme file from BRENDA database"),

@@ -12,7 +12,7 @@ from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
 from .db_service import DbService
 
 
-@task_decorator("EcoDBCreator")
+@task_decorator("EcoDBCreator", short_description="Download the online file eco.obo (The Evidence & Conclusion Ontology) and use it to load the “biota_eco” table from the BIOTA database.")
 class EcoDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
     output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})

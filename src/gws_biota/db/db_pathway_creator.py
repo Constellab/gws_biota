@@ -12,7 +12,7 @@ from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
 from .db_service import DbService
 
 
-@task_decorator("PathwayDBCreator")
+@task_decorator("PathwayDBCreator", short_description="Download the online files from rgd.mcw.edu and reactome databases and use them to load the “biota_pathway” table from the BIOTA database.")
 class PathwayDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
     output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})

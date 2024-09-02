@@ -12,7 +12,7 @@ from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
 from .db_service import DbService
 
 
-@task_decorator("GoDBCreator")
+@task_decorator("GoDBCreator", short_description="Download the online file GO (Gene Ontology) and use it to load the “biota_go” table from the BIOTA database.")
 class GoDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
     output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})

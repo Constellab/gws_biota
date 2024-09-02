@@ -12,7 +12,7 @@ from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs,
 from .db_service import DbService
 
 
-@task_decorator("BtoDBCreator")
+@task_decorator("BtoDBCreator", short_description="Download the online file bto.owl (The BRENDA Tissue Ontology) and use it to load the “biota_bto” table from the BIOTA database.")
 class BtoDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
     output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
