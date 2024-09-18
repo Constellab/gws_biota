@@ -2,7 +2,8 @@ import json
 import os
 from typing import List, Optional
 
-from gws_core import BadRequestException, BaseModelDTO
+from gws_core import BadRequestException
+from gws_core.core.model.model_dto import BaseModelDTO
 
 __cdir__ = os.path.dirname(os.path.abspath(__file__))
 
@@ -58,7 +59,8 @@ class Compartment(BaseModelDTO):
         compartment = cls.get_by_go_id_or_none(go_id)
         if compartment:
             return compartment
-        raise CompartmentNotFoundException(f"Compartment with go_id '{go_id}' not found")
+        raise CompartmentNotFoundException(
+            f"Compartment with go_id '{go_id}' not found")
 
     @classmethod
     def get_by_bigg_id_or_none(cls, bigg_id: str) -> Optional['Compartment']:
@@ -74,10 +76,11 @@ class Compartment(BaseModelDTO):
         compartment = cls.get_by_bigg_id_or_none(bigg_id)
         if compartment:
             return compartment
-        raise CompartmentNotFoundException(f"Compartment with bigg_id '{bigg_id}' not found")
+        raise CompartmentNotFoundException(
+            f"Compartment with bigg_id '{bigg_id}' not found")
 
     @classmethod
-    def get_by_big_id_or_go_id_or_none(cls, id_: str) -> Optional['Compartment']:
+    def get_by_bigg_id_or_go_id_or_none(cls, id_: str) -> Optional['Compartment']:
         """ Get by BiGG id or GO id """
         compartment = cls.get_by_bigg_id_or_none(id_)
         if compartment:
@@ -90,16 +93,18 @@ class Compartment(BaseModelDTO):
     @classmethod
     def get_by_big_id_or_go_id(cls, id_: str) -> 'Compartment':
         """ Get by BiGG id or GO id and raise exception if not found"""
-        compartment = cls.get_by_big_id_or_go_id_or_none(id_)
+        compartment = cls.get_by_bigg_id_or_go_id_or_none(id_)
         if compartment:
             return compartment
-        raise CompartmentNotFoundException(f"Compartment with id '{id_}' not found")
+        raise CompartmentNotFoundException(
+            f"Compartment with id '{id_}' not found")
 
     @classmethod
     def get_all_compartments(cls) -> List['Compartment']:
         if Compartments.all_compartments is None:
             with open(os.path.join(__cdir__, "./data/compartment.json"), 'r', encoding="utf-8") as fp:
                 compartments = json.load(fp)
-                Compartments.all_compartments = Compartment.from_json_list(compartments.get("data"))
+                Compartments.all_compartments = Compartment.from_json_list(
+                    compartments.get("data"))
 
         return Compartments.all_compartments
