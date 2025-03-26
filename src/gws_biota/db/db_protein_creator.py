@@ -5,7 +5,7 @@ import requests
 from gws_biota import Protein
 from gws_biota.protein.protein_service import ProteinService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
                       TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
@@ -16,9 +16,10 @@ from .db_service import DbService
                 short_description="Download the online file uniprot_sprot.fasta.gz from uniprot database and use it to load the “biota_protein” table from the BIOTA database.")
 class ProteinDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
-    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
-    config_specs = {"protein_file": StrParam(
-        default_value="https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz")}
+    output_specs = OutputSpecs(
+        {"output_text": OutputSpec(Text, is_optional=True)})
+    config_specs = ConfigSpecs({"protein_file": StrParam(
+        default_value="https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz")})
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:

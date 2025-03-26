@@ -5,7 +5,7 @@ import requests
 from gws_biota import Pathway
 from gws_biota.pathway.pathway_service import PathwayService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
                       TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
@@ -15,12 +15,13 @@ from .db_service import DbService
 @task_decorator("PathwayDBCreator", short_description="Download the online files from rgd.mcw.edu and reactome databases and use them to load the “biota_pathway” table from the BIOTA database.")
 class PathwayDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
-    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
-    config_specs = {"pwo_file": StrParam(
+    output_specs = OutputSpecs(
+        {"output_text": OutputSpec(Text, is_optional=True)})
+    config_specs = ConfigSpecs({"pwo_file": StrParam(
         default_value="https://download.rgd.mcw.edu/ontology/pathway/pathway.obo"),
         "reactome_pathways_file": StrParam(default_value="https://reactome.org/download/current/ReactomePathways.txt"),
         "reactome_pathway_relations_file": StrParam(default_value="https://reactome.org/download/current/ReactomePathwaysRelation.txt"),
-        "reactome_chebi_pathways_file": StrParam(default_value="https://reactome.org/download/current/ChEBI2Reactome.txt")}
+        "reactome_chebi_pathways_file": StrParam(default_value="https://reactome.org/download/current/ChEBI2Reactome.txt")})
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:

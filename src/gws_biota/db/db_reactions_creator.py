@@ -3,7 +3,7 @@
 import re
 import requests
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
                       TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
@@ -22,8 +22,9 @@ class ReactionDBCreator(Task):
                               "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),
                               "input_enzyme": InputSpec(Text, human_name="link to enzyme", is_optional=True)})
 
-    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
-    config_specs = {"rhea_direction_file": StrParam(
+    output_specs = OutputSpecs(
+        {"output_text": OutputSpec(Text, is_optional=True)})
+    config_specs = ConfigSpecs({"rhea_direction_file": StrParam(
         default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea-directions.tsv"),
         "rhea2ecocyc_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2ecocyc.tsv"),
         "rhea2metacyc_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2metacyc.tsv"),
@@ -31,7 +32,7 @@ class ReactionDBCreator(Task):
         "rhea2kegg_reaction_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2kegg%5Freaction.tsv"),
         "rhea2ec_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv"),
         "rhea2reactome_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2reactome.tsv"),
-        "rhea_reactions_file": StrParam(default_value="https://www.rhea-db.org/rhea/?query=uniprot:*&columns=rhea-id,equation,chebi-id,ec&format=tsv")}
+        "rhea_reactions_file": StrParam(default_value="https://www.rhea-db.org/rhea/?query=uniprot:*&columns=rhea-id,equation,chebi-id,ec&format=tsv")})
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
@@ -114,7 +115,8 @@ class ReactionDBCreator(Task):
 
                     # Checking the presence of the "equation" column
                     if len(colonnes) > 1 and colonnes[1]:
-                        new_reactions_file.write(f"DEFINITION  {colonnes[1]}\n")
+                        new_reactions_file.write(
+                            f"DEFINITION  {colonnes[1]}\n")
 
                     # Checking the presence of the “chebi-id” column
                     if len(colonnes) > 2 and colonnes[2]:
@@ -122,7 +124,8 @@ class ReactionDBCreator(Task):
                         # Rewriting the equation : CHEBI:58758;CHEBI:16842;CHEBI:57925 -> CHEBI:58758 = CHEBI:16842 + CHEBI:57925
                         for index, value in enumerate(chebi_ids):
                             if index < len(operators_in_def):
-                                new_reactions_file.write(f"{value} {operators_in_def[index]} ")
+                                new_reactions_file.write(
+                                    f"{value} {operators_in_def[index]} ")
                             else:
                                 new_reactions_file.write(f"{value} ")
                         new_reactions_file.write("\n")

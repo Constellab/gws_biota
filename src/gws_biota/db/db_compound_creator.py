@@ -5,7 +5,7 @@ import requests
 from gws_biota import Compound
 from gws_biota.compound.compound_service import CompoundService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
                       TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
@@ -15,10 +15,11 @@ from .db_service import DbService
 @task_decorator("CompoundDBCreator", short_description="Download the online file ChEBI.obo (Chemical Entities of Biological Interest) and use it to load the “biota_compound” table from the BIOTA database.")
 class CompoundDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
-    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
+    output_specs = OutputSpecs(
+        {"output_text": OutputSpec(Text, is_optional=True)})
 
-    config_specs = {"compound_file": StrParam(
-        default_value="https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo")}
+    config_specs = ConfigSpecs({"compound_file": StrParam(
+        default_value="https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo")})
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:

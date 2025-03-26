@@ -3,8 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, Settings,
-                      task_decorator, File, StrParam, FileDownloader, Logger, FileDownloader)
+from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, Settings, ConfigSpecs,
+                      task_decorator, File, StrParam)
 
 import os
 import requests
@@ -19,9 +19,9 @@ class ExtractProteomeNCBI(Task):
     output_specs = OutputSpecs({'results': OutputSpec(File, human_name="Results",
                                short_description="Folders containing the proteome downloaded")})
 
-    config_specs = {
+    config_specs = ConfigSpecs({
         "accessionNumber": StrParam(
-            human_name="Accession number", short_description="NCBI RefSeq/GenBank assembly (GCF/GCA)")}
+            human_name="Accession number", short_description="NCBI RefSeq/GenBank assembly (GCF/GCA)")})
 
     # --------------------- RUN ---------------------
     def run(self, params: ConfigParams, inputs: TaskInputs) -> File:
@@ -32,7 +32,8 @@ class ExtractProteomeNCBI(Task):
         destination_dir = Settings.make_temp_dir()
 
         # Divide the chain into parts of length 3
-        parts = [accession_number[i:i+3] for i in range(0, len(accession_number), 3)]
+        parts = [accession_number[i:i+3]
+                 for i in range(0, len(accession_number), 3)]
 
         ftp_path = "/".join(parts)
 
@@ -53,7 +54,8 @@ class ExtractProteomeNCBI(Task):
             # Extract HTML content from response
             html_content = response.text
         else:
-            self.log_error_message("The request failed. Check the URL or availability of the page.")
+            self.log_error_message(
+                "The request failed. Check the URL or availability of the page.")
 
         # List all files in the url folder
         ftp.cwd(f"/genomes/all/{ftp_path}/{folder_name[0]}")

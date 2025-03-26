@@ -5,7 +5,7 @@ import requests
 from gws_biota import GO
 from gws_biota.go.go_service import GOService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
                       TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
@@ -15,10 +15,11 @@ from .db_service import DbService
 @task_decorator("GoDBCreator", short_description="Download the online file GO (Gene Ontology) and use it to load the “biota_go” table from the BIOTA database.")
 class GoDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
-    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
-    config_specs = {
+    output_specs = OutputSpecs(
+        {"output_text": OutputSpec(Text, is_optional=True)})
+    config_specs = ConfigSpecs({
         "go_file": StrParam(default_value="https://current.geneontology.org/ontology/go.obo")
-    }
+    })
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:

@@ -3,7 +3,7 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, Settings,
+from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, Settings, ConfigSpecs,
                       TaskOutputs, task_decorator, Folder, StrParam)
 
 from Bio import Entrez
@@ -22,13 +22,13 @@ class RequestNCBI(Task):
     output_specs = OutputSpecs({'results': OutputSpec(Folder, human_name="Results",
                                short_description="Folders containing the results")})
 
-    config_specs = {
+    config_specs = ConfigSpecs({
         "query": StrParam(
             human_name="Query", short_description="The user query"),
         "choice_DB": StrParam(
             default_value="PubMed", human_name="Database",
             short_description="Select the database of interest",
-            allowed_values=["PubMed", "Gene", "GDS", "Popset", "GeoProfiles", "Protein", "ClinVar"])}
+            allowed_values=["PubMed", "Gene", "GDS", "Popset", "GeoProfiles", "Protein", "ClinVar"])})
 
 # --------------------- RUN ---------------------
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
@@ -37,7 +37,8 @@ class RequestNCBI(Task):
 
         database: str = params["choice_DB"]
 
-        uids = Entrez.read(Entrez.esearch(db=database, term=query, retmax=10000))
+        uids = Entrez.read(Entrez.esearch(
+            db=database, term=query, retmax=10000))
 
         # Destination directory where files will be downloaded
         destination_dir: str = Settings.make_temp_dir()

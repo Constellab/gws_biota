@@ -1,13 +1,11 @@
 
 
 import requests
-
 from gws_biota import Taxonomy
 from gws_biota.taxonomy.taxonomy_service import TaxonomyService
-
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
-                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
-                      FileDownloader)
+from gws_core import (ConfigParams, ConfigSpecs, FileDownloader, InputSpec,
+                      InputSpecs, OutputSpec, OutputSpecs, Settings, StrParam,
+                      Task, TaskInputs, TaskOutputs, Text, task_decorator)
 
 from .db_service import DbService
 
@@ -16,9 +14,10 @@ from .db_service import DbService
                 short_description="Download the online file taxdump.tar.gz from ncbi and use it to load the “biota_taxonomy” table from the BIOTA database.")
 class TaxonomyDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
-    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
-    config_specs = {"taxdump_files": StrParam(
-        default_value="https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz")}
+    output_specs = OutputSpecs(
+        {"output_text": OutputSpec(Text, is_optional=True)})
+    config_specs = ConfigSpecs({"taxdump_files": StrParam(
+        default_value="https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz")})
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:

@@ -3,8 +3,8 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs,
-                      task_decorator, Table, InputSpec, InputSpecs, StrParam, Table,
+from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, ConfigSpecs,
+                      task_decorator, Table, StrParam, Table,
                       TypingStyle)
 
 from gws_biota import Enzyme
@@ -20,7 +20,8 @@ class RetrieveKcatFromBiota(Task):
     output_specs = OutputSpecs({'results': OutputSpec(Table, human_name="Ec number to kcat",
                                                       short_description="Correspondence table between kcat and ec number")})
 
-    config_specs = {"organism_name": StrParam(default_value="Saccharomyces cerevisiae")}
+    config_specs = ConfigSpecs(
+        {"organism_name": StrParam(default_value="Saccharomyces cerevisiae")})
 
     # --------------------- RUN ---------------------
     def run(self, params: ConfigParams, inputs: TaskInputs) -> Table:
@@ -41,14 +42,16 @@ class RetrieveKcatFromBiota(Task):
                     if ec_number not in enzymes_dict:
                         enzymes_dict[ec_number] = []
 
-                    tn_param_values = tn_param.split(" ")  # split value and substrate name
+                    # split value and substrate name
+                    tn_param_values = tn_param.split(" ")
                     tn_value = tn_param_values[0]
                     # does not take into account values with a dash, so cannot be used to make a median => e.g. on brenda: for saccharomyces cerevisiae EC 4.1.1.23, TN 14-20 for substrate orotidine 5'-phosphate
                     if "-" in tn_value:
                         continue
 
                     tn_substrat = tn_param_values[1]
-                    enzymes_dict[ec_number].append((float(tn_value), tn_substrat))
+                    enzymes_dict[ec_number].append(
+                        (float(tn_value), tn_substrat))
 
         enzymes_dict_normalize = {}
         for ec, tn_values in enzymes_dict.items():
@@ -57,10 +60,12 @@ class RetrieveKcatFromBiota(Task):
             for tn in tn_values:
                 list_tn.append(tn[0])  # take tn_value and not tn_substrat
 
-            tn_median = np.nanmedian(list_tn)  # Make the median of TN and ignore NaN
+            # Make the median of TN and ignore NaN
+            tn_median = np.nanmedian(list_tn)
 
             enzymes_dict_normalize[ec] = tn_median
 
-        df = pd.DataFrame(list(enzymes_dict_normalize.items()), columns=['Ec number', 'median Kcat'])
+        df = pd.DataFrame(list(enzymes_dict_normalize.items()),
+                          columns=['Ec number', 'median Kcat'])
 
         return {"results": Table(df)}

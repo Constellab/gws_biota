@@ -5,7 +5,7 @@ import requests
 from gws_biota import ECO
 from gws_biota.eco.eco_service import ECOService
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text,
+from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
                       TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
                       FileDownloader)
 
@@ -15,9 +15,10 @@ from .db_service import DbService
 @task_decorator("EcoDBCreator", short_description="Download the online file eco.obo (The Evidence & Conclusion Ontology) and use it to load the “biota_eco” table from the BIOTA database.")
 class EcoDBCreator(Task):
     input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
-    output_specs = OutputSpecs({"output_text": OutputSpec(Text, is_optional=True)})
-    config_specs = {"eco_file": StrParam(
-        default_value="https://raw.githubusercontent.com/evidenceontology/evidenceontology/master/eco.obo")}
+    output_specs = OutputSpecs(
+        {"output_text": OutputSpec(Text, is_optional=True)})
+    config_specs = ConfigSpecs({"eco_file": StrParam(
+        default_value="https://raw.githubusercontent.com/evidenceontology/evidenceontology/master/eco.obo")})
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
