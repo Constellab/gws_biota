@@ -1,7 +1,7 @@
 
 
 from fastapi import Depends
-from gws_core import AuthService
+from gws_core import AuthorizationService
 from gws_core.app import core_app
 from pydantic import BaseModel
 
@@ -20,7 +20,7 @@ class UpdateCompoundLayout(BaseModel):
 @core_app.put("/biota/compound/layout")
 def update_compound_layout(
         compound_layout: UpdateCompoundLayout,
-        _=Depends(AuthService.check_user_access_token)):
+        _=Depends(AuthorizationService.check_user_access_token)):
     """
     Update compound information like position and level directly in json files.
     """
