@@ -5,12 +5,6 @@ import os
 from gws_core import AbstractDbManager, DbConfig, DbMode, Settings
 from peewee import DatabaseProxy
 
-# ####################################################################
-#
-# DbManager class
-#
-# ####################################################################
-
 
 class DbManager(AbstractDbManager):
     """
@@ -44,8 +38,8 @@ class DbManager(AbstractDbManager):
         }
 
     @classmethod
-    def get_unique_name(cls) -> str:
-        return 'gws_biota'
+    def get_name(cls) -> str:
+        return 'db'
 
     @classmethod
     def get_brick_name(cls) -> str:
