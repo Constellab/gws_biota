@@ -19,12 +19,12 @@ from .db_service import DbService
 class EnzymeDBCreator(Task):
     input_specs = InputSpecs({'input_brenda': InputSpec(File, human_name="Enzyme file",
                              short_description="Enzyme file from BRENDA database"),
-                             "input_bto": InputSpec(Text, human_name="link to bto", is_optional=True),
-                              "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),
-                              "input_protein": InputSpec(Text, human_name="link to protein", is_optional=True)})
+                             "input_bto": InputSpec(Text, human_name="link to bto", optional=True),
+                              "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", optional=True),
+                              "input_protein": InputSpec(Text, human_name="link to protein", optional=True)})
 
     output_specs = OutputSpecs(
-        {"output_text": OutputSpec(Text, is_optional=True)})
+        {"output_text": OutputSpec(Text, optional=True)})
     config_specs = ConfigSpecs({"bkms_file": StrParam(default_value="https://bkms.brenda-enzymes.org/download/Reactions_BKMS.tar.gz"), "expasy_file": StrParam(
         default_value="https://raw.githubusercontent.com/google-research/proteinfer/540773f988005cc5ed834210d1477e4db1f141e6/testdata/enzclass.txt"),
         "compound_file": StrParam(default_value="https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"),

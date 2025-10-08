@@ -14,9 +14,9 @@ from .db_service import DbService
 
 @task_decorator("EcoDBCreator", short_description="Download the online file eco.obo (The Evidence & Conclusion Ontology) and use it to load the “biota_eco” table from the BIOTA database.")
 class EcoDBCreator(Task):
-    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, optional=True)})
     output_specs = OutputSpecs(
-        {"output_text": OutputSpec(Text, is_optional=True)})
+        {"output_text": OutputSpec(Text, optional=True)})
     config_specs = ConfigSpecs({"eco_file": StrParam(
         default_value="https://raw.githubusercontent.com/evidenceontology/evidenceontology/master/eco.obo")})
 

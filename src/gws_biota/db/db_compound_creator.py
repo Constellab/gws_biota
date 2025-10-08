@@ -14,9 +14,9 @@ from .db_service import DbService
 
 @task_decorator("CompoundDBCreator", short_description="Download the online file ChEBI.obo (Chemical Entities of Biological Interest) and use it to load the “biota_compound” table from the BIOTA database.")
 class CompoundDBCreator(Task):
-    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, optional=True)})
     output_specs = OutputSpecs(
-        {"output_text": OutputSpec(Text, is_optional=True)})
+        {"output_text": OutputSpec(Text, optional=True)})
 
     config_specs = ConfigSpecs({"compound_file": StrParam(
         default_value="https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo")})

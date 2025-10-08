@@ -14,9 +14,9 @@ from .db_service import DbService
 
 @task_decorator("SboDBCreator", short_description="Download the online file SBO_OBO.obo (Systems Biology Ontology) and use it to load the “biota_sbo” table from the BIOTA database.")
 class SboDBCreator(Task):
-    input_specs = InputSpecs({"input_text": InputSpec(Text, is_optional=True)})
+    input_specs = InputSpecs({"input_text": InputSpec(Text, optional=True)})
     output_specs = OutputSpecs(
-        {"output_text": OutputSpec(Text, is_optional=True)})
+        {"output_text": OutputSpec(Text, optional=True)})
     config_specs = ConfigSpecs({"sbo_file": StrParam(
         default_value="https://raw.githubusercontent.com/EBI-BioModels/SBO/2143b2973f8912db9d4324a4fe543aabcd8f8ba7/SBO_OBO.obo")})
 

@@ -18,12 +18,12 @@ from .db_service import DbService
 
 @task_decorator("ReactionDBCreator", short_description="Download the online files from expasy and rhea databases, and use them to load the “biota_reaction” table from the BIOTA database.")
 class ReactionDBCreator(Task):
-    input_specs = InputSpecs({"input_compound": InputSpec(Text, human_name="link to compound", is_optional=True),
-                              "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", is_optional=True),
-                              "input_enzyme": InputSpec(Text, human_name="link to enzyme", is_optional=True)})
+    input_specs = InputSpecs({"input_compound": InputSpec(Text, human_name="link to compound", optional=True),
+                              "input_taxonomy": InputSpec(Text, human_name="link to taxonomy", optional=True),
+                              "input_enzyme": InputSpec(Text, human_name="link to enzyme", optional=True)})
 
     output_specs = OutputSpecs(
-        {"output_text": OutputSpec(Text, is_optional=True)})
+        {"output_text": OutputSpec(Text, optional=True)})
     config_specs = ConfigSpecs({"rhea_direction_file": StrParam(
         default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea-directions.tsv"),
         "rhea2ecocyc_file": StrParam(default_value="https://ftp.expasy.org/databases/rhea/tsv/rhea2ecocyc.tsv"),
