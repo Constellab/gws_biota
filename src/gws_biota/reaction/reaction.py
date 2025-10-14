@@ -9,7 +9,7 @@ from playhouse.mysql_ext import Match
 from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
 from ..compound.compound import Compound
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 from ..enzyme.enzyme import Enzyme
 from .reaction_layout import ReactionLayout, ReactionLayoutDict
 
@@ -65,8 +65,6 @@ class Reaction(BaseFT):
 
     ft_tax_ids = TextField(null=True)  # fulltext indexation of (tax_ids) for fast search of reactions
     ft_ec_numbers = TextField(null=True)  # fulltext indexation of (ec_numbers) for fast search of reactions
-
-    _table_name = 'biota_reaction'
 
     # -- A --
 
@@ -221,6 +219,10 @@ class Reaction(BaseFT):
 
         return cls.select().where(Match((cls.ft_ec_numbers), ec_numbers))
 
+    class Meta:
+        table_name = 'biota_reaction'
+        is_table = True
+
 
 class ReactionSubstrate(ProtectedBaseModel):
     """
@@ -236,7 +238,7 @@ class ReactionSubstrate(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_reaction_substrates'
-        database = DbManager.db
+        is_table = True
 
 
 class ReactionProduct(ProtectedBaseModel):
@@ -253,7 +255,7 @@ class ReactionProduct(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_reaction_products'
-        database = DbManager.db
+        is_table = True
 
 
 class ReactionEnzyme(ProtectedBaseModel):
@@ -271,7 +273,7 @@ class ReactionEnzyme(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_reaction_enzymes'
-        database = DbManager.db
+        is_table = True
 
 
 ReactionSubstrateDeferred.set_model(ReactionSubstrate)

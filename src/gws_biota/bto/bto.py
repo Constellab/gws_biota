@@ -4,7 +4,7 @@ from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
 from ..base.protected_base_model import ProtectedBaseModel
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 from ..ontology.ontology import Ontology
 
 
@@ -72,6 +72,9 @@ class BTO(Ontology):
         """
         self.bto_id = bto_id
 
+    class Meta:
+        table_name = 'biota_bto'
+        is_table = True
 
 class BTOAncestor(ProtectedBaseModel):
     """
@@ -87,7 +90,7 @@ class BTOAncestor(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_bto_ancestors'
-        database = DbManager.db
+        is_table = True
         indexes = (
             (('bto', 'ancestor'), True),
         )

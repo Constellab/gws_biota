@@ -1,12 +1,13 @@
 
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
-from gws_core.model.typing_register_decorator import typing_registrator
-from ..db.db_manager import DbManager
 from ..base.base import Base
 from ..base.protected_base_model import ProtectedBaseModel
+from ..db.biota_db_manager import BiotaDbManager
 from ..ontology.ontology import Ontology
+
 
 @typing_registrator(unique_name="SBO", object_type="MODEL", hide=True)
 class SBO(Ontology):
@@ -26,7 +27,6 @@ class SBO(Ontology):
     """
 
     sbo_id = CharField(null=True, index=True)
-    _table_name = 'biota_sbo'
     _ancestors = None
 
     # -- A --
@@ -90,6 +90,10 @@ class SBO(Ontology):
         """
         self.sbo_id = sbo_id
 
+    class Meta:
+        table_name = 'biota_sbo'
+        is_table = True
+
 class SBOAncestor(ProtectedBaseModel):
     """
     This class defines the many-to-many relationship between the sbo terms and theirs ancestors
@@ -104,7 +108,7 @@ class SBOAncestor(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_sbo_ancestors'
-        database = DbManager.db
+        is_table = True
         indexes = (
             (('sbo', 'ancestor'), True),
         )

@@ -2,10 +2,10 @@
 
 from typing import List
 
-from gws_core import Logger
-from peewee import Model, chunked
+from gws_core import BaseModel, Logger
+from peewee import chunked
 
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 
 IS_IPYTHON_ACTIVE = False
 try:
@@ -15,10 +15,9 @@ except:
     pass
 
 
-class ProtectedBaseModel(Model):
+class ProtectedBaseModel(BaseModel):
 
     _is_table_warning_printed = False
-    _db_manager = DbManager
 
     BATCH_SIZE = 10000
 
@@ -42,7 +41,7 @@ class ProtectedBaseModel(Model):
         :rtype: bool
         """
 
-        db = cls._db_manager.db
+        db = cls.get_db()
         with db.atomic():
             cls.bulk_create(model_list, batch_size=batch_size)
 
@@ -61,7 +60,7 @@ class ProtectedBaseModel(Model):
         :rtype: bool
         """
 
-        db = cls._db_manager.db
+        db = cls.get_db()
         with db.atomic():
             cls.bulk_update(model_list, fields, batch_size=batch_size)
 
@@ -69,7 +68,7 @@ class ProtectedBaseModel(Model):
 
     @classmethod
     def insert_all(cls, data: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> None:
-        db = cls._db_manager.db
+        db = cls.get_db()
         with db.atomic():
             for batch in chunked(data, batch_size):
                 cls.insert_many(batch).execute()
@@ -81,14 +80,15 @@ class ProtectedBaseModel(Model):
             cls._print_warning("The BIOTA db is protected in notebooks")
             return True
 
+        db_manager: BiotaDbManager = cls.get_db_manager()
         # always protect in prod mode
-        if cls._db_manager.mode == "prod":
+        if db_manager.mode == "prod":
             cls._print_warning("The prod BIOTA db is protected and cannot be altered")
             return True
 
         # check protection in dev mode
-        if cls._db_manager.mode == "dev":
-            if hasattr(cls._db_manager, "_DEACTIVATE_PROTECTION_") and cls._db_manager._DEACTIVATE_PROTECTION_:
+        if db_manager.mode == "dev":
+            if hasattr(db_manager, "_DEACTIVATE_PROTECTION_") and db_manager._DEACTIVATE_PROTECTION_:
                 cls._print_warning("The BIOTA protection is DEACTIVATED")
                 return False
             else:
@@ -131,5 +131,6 @@ class ProtectedBaseModel(Model):
         return super().save(*args, **kwargs)
 
     class Meta:
-        table_name = 'biota_protected_model'
-        database = DbManager.db
+        db_manager = BiotaDbManager
+        is_table = False
+        database = BiotaDbManager.db

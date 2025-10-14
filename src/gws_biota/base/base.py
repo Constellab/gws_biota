@@ -7,21 +7,14 @@ from gws_core import BadRequestException, JSONField, Model
 from peewee import CharField, DoesNotExist, ModelSelect
 from playhouse.mysql_ext import Match
 
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 from .protected_base_model import ProtectedBaseModel
-
-# ####################################################################
-#
-# Base class
-#
-# ####################################################################
 
 
 class Base(Model, ProtectedBaseModel):
 
     name = CharField(null=True, index=True)
     data: Dict[str, Any] = JSONField(default=dict)
-    _db_manager = DbManager
 
     @classmethod
     def after_table_creation(cls) -> None:
@@ -70,4 +63,6 @@ class Base(Model, ProtectedBaseModel):
         return Q
 
     class Meta:
-        database = DbManager.db
+        db_manager = BiotaDbManager
+        is_table = False
+        database = BiotaDbManager.db

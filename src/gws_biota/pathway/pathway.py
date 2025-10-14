@@ -1,12 +1,12 @@
 
+from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
-from gws_core.model.typing_register_decorator import typing_registrator
-from ..db.db_manager import DbManager
 from ..base.base import Base
 from ..base.protected_base_model import ProtectedBaseModel
-from ..ontology.ontology import Ontology
 from ..compound.compound import Compound
+from ..db.biota_db_manager import BiotaDbManager
+from ..ontology.ontology import Ontology
 from .pathway_compound import PathwayCompound
 
 
@@ -18,8 +18,6 @@ class Pathway(Ontology):
 
     reactome_pathway_id = CharField(null=True, index=True)
     _ancestors = None
-
-    _table_name = 'biota_pathways'
 
     # -- A --
 
@@ -62,6 +60,10 @@ class Pathway(Ontology):
         PathwayCompound.drop_table()
         super().drop_table(*arg, **kwargs)
 
+    class Meta:
+        table_name = 'biota_pathway'
+        is_table = True
+
 
 class PathwayAncestor(ProtectedBaseModel):
     """
@@ -78,7 +80,7 @@ class PathwayAncestor(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_pathway_ancestors'
-        database = DbManager.db
+        is_table = True
         indexes = (
             (('pathway', 'ancestor'), True),
         )

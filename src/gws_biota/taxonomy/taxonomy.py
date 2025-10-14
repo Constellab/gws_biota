@@ -32,7 +32,6 @@ class Taxonomy(Ontology):
     ancestor_tax_id = CharField(null=True, index=True)
     _tax_tree = ['superkingdom', 'clade', 'kingdom', 'subkingdom', 'class',
                  'phylum', 'subphylum', 'order', 'genus', 'family', 'species']
-    _table_name = 'biota_taxonomy'
     _children = None
     _siblings = None
     _ancestor = None
@@ -106,3 +105,7 @@ class Taxonomy(Ontology):
         :type rank: str
         """
         self.rank = rank
+
+    class Meta:
+        table_name = 'biota_taxonomy'
+        is_table = True

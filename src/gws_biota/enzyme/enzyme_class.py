@@ -11,7 +11,6 @@ from ..base.base import Base
 class EnzymeClass(Base):
 
     ec_number = CharField(null=True, index=True, unique=True)
-    _table_name = 'biota_enzyme_class'
 
     # -- C --
 
@@ -38,3 +37,7 @@ class EnzymeClass(Base):
             ec.set_name(enzc["data"]["name"])
             enz_classes.append(ec)
         EnzymeClass.create_all(enz_classes)
+
+    class Meta:
+        table_name = 'biota_enzyme_class'
+        is_table = True

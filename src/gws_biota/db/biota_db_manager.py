@@ -6,7 +6,7 @@ from gws_core import AbstractDbManager, DbConfig, DbMode, Settings
 from peewee import DatabaseProxy
 
 
-class DbManager(AbstractDbManager):
+class BiotaDbManager(AbstractDbManager):
     """
     DbManager class.
 
@@ -49,6 +49,6 @@ class DbManager(AbstractDbManager):
 # Activate the biota db if we are in a notebook
 try:
     get_ipython
-    DbManager.init(mode='dev')
+    BiotaDbManager.init(mode='dev')
 except:
     pass

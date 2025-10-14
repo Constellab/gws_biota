@@ -4,7 +4,7 @@ from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
 from ..base.protected_base_model import ProtectedBaseModel
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 from ..ontology.ontology import Ontology
 
 
@@ -28,7 +28,6 @@ class ECO(Ontology):
     eco_id = CharField(null=True, index=True)
 
     _ancestors = None
-    _table_name = 'biota_eco'
 
     # -- A --
 
@@ -98,7 +97,7 @@ class ECOAncestor(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_eco_ancestors'
-        database = DbManager.db
+        is_table = True
         indexes = (
             (('eco', 'ancestor'), True),
         )

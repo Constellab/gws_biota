@@ -6,7 +6,7 @@ from peewee import CharField, ForeignKeyField
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base import Base
 from ..base.base_service import BaseService
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 from ..ontology.ontology import Ontology
 from .go import GO, GOAncestor
 

@@ -11,7 +11,7 @@ from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
 from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
 from ..bto.bto import BTO
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 from ..protein.protein import Protein
 from ..taxonomy.taxonomy import Taxonomy
 from .deprecated_enzyme import DeprecatedEnzyme
@@ -73,7 +73,6 @@ class Enzyme(BaseFT):
     tax_id = CharField(null=True, index=True)
     bto = ManyToManyField(BTO, through_model=EnzymeBTODeffered)
 
-    _table_name = 'biota_enzymes'
 
     # -- A --
 
@@ -269,6 +268,10 @@ class Enzyme(BaseFT):
 
     # -- U --
 
+    class Meta:
+        table_name = 'biota_enzymes'
+        is_table = True
+
 
 class EnzymeBTO(ProtectedBaseModel):
     """
@@ -286,7 +289,7 @@ class EnzymeBTO(ProtectedBaseModel):
 
     class Meta:
         table_name = 'biota_enzyme_btos'
-        database = DbManager.db
+        is_table = True
 
 
 # Resolve dependencies.

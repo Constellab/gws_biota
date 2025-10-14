@@ -1,8 +1,8 @@
 
 
-from peewee import CharField, TextField, IntegerField
-
 from gws_core.model.typing_register_decorator import typing_registrator
+from peewee import CharField, IntegerField, TextField
+
 from ..base.base import Base
 from ..taxonomy.taxonomy import Taxonomy
 
@@ -19,7 +19,6 @@ class Protein(Base):
     evidence_score = IntegerField(null=True, index=True)  # 1, 2, 3, 4, 5
     tax_id = CharField(null=True, index=True)
 
-    _table_name = 'biota_protein'
     _evidence_score_description = {
         0: "No evidence score",
         1: "Experimental evidence at protein level",
@@ -60,3 +59,7 @@ class Protein(Base):
             return Taxonomy.get(Taxonomy.tax_id == self.tax_id)
         except:
             return None
+
+    class Meta:
+        table_name = 'biota_protein'
+        is_table = True

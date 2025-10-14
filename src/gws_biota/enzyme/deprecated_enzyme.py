@@ -21,7 +21,6 @@ class DeprecatedEnzyme(Base):
 
     ec_number = CharField(null=True, index=True)
     new_ec_number = CharField(null=True, index=True)
-    _table_name = 'biota_deprecated_enzymes'
 
     @property
     def reason(self):
@@ -35,3 +34,7 @@ class DeprecatedEnzyme(Base):
             if select_only_one:
                 query = query.limit(1)
         return query
+
+    class Meta:
+        table_name = 'biota_deprecated_enzymes'
+        is_table = True

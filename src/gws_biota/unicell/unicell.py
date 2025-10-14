@@ -35,8 +35,6 @@ class Unicell(BaseFT):
     _rhea_edge_map: Dict[str, List[str]] = None
     _graph = None
 
-    _table_name = 'biota_unicell'
-
     @classmethod
     def retrieve(cls):
         """ Retrieve the unicell """
@@ -182,3 +180,7 @@ class Unicell(BaseFT):
             for k, v in data.items():
                 subgraph[edge[0]][edge[1]][k] = v
         return subgraph
+
+    class Meta:
+        table_name = 'biota_unicell'
+        is_table = True

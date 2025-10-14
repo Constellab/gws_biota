@@ -22,11 +22,11 @@ import re
 from typing import Union
 
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import (CharField, DoubleField, FloatField, ForeignKeyField)
+from peewee import CharField, DoubleField, FloatField, ForeignKeyField
 
 from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
-from ..db.db_manager import DbManager
+from ..db.biota_db_manager import BiotaDbManager
 from .compound_layout import CompoundLayout, CompoundLayoutDict
 
 
@@ -58,7 +58,6 @@ class Compound(BaseFT):
     chebi_star = CharField(null=True, index=True)
 
     _ancestors = None
-    _table_name = "biota_compound"
 
     # -- A --
 
@@ -166,5 +165,5 @@ class CompoundAncestor(ProtectedBaseModel):
 
     class Meta:
         table_name = "biota_compound_ancestors"
-        database = DbManager.db
+        is_table = True
         indexes = ((("compound", "ancestor"), True),)

@@ -1,7 +1,9 @@
 
 
 from gws_core import BaseTestCase
-from ..db.db_manager import DbManager as BiotaDbManager
+
+from ..db.biota_db_manager import BiotaDbManager as BiotaDbManager
+
 
 class BaseTestCaseUsingFullBiotaDB(BaseTestCase):
 

@@ -21,4 +21,7 @@ class BiomassReaction(BaseFT):
     """
 
     biomass_rxn_id = CharField(null=True, index=True)
-    _table_name = 'biota_biomass_reaction'
+
+    class Meta:
+        table_name = 'biota_biomass_reaction'
+        is_table = True

@@ -5,8 +5,8 @@ from peewee import CharField, ForeignKeyField, ModelSelect, TextField
 from playhouse.mysql_ext import Match
 
 from ..base.base_ft import BaseFT
-from .enzyme_pathway import EnzymePathway
 from .deprecated_enzyme import DeprecatedEnzyme
+from .enzyme_pathway import EnzymePathway
 
 
 @typing_registrator(unique_name="EnzymeOrtholog", object_type="MODEL", hide=True)
@@ -17,8 +17,6 @@ class EnzymeOrtholog(BaseFT):
 
     ec_number = CharField(null=True, index=True, unique=True)
     pathway = ForeignKeyField(EnzymePathway, backref="enzos", null=True)
-
-    _table_name = "biota_enzo"
 
   # -- E --
 
@@ -50,3 +48,7 @@ class EnzymeOrtholog(BaseFT):
     def related_deprecated_enzyme(self):
         """ Returns depreacated enzymes related to this enzyme """
         return DeprecatedEnzyme.get_or_none(DeprecatedEnzyme.new_ec_number == self.ec_number)
+
+    class Meta:
+        table_name = 'biota_enzyme_ortholog'
+        is_table = True
