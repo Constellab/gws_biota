@@ -1,6 +1,7 @@
 
 
-from gws_core import Logger, transaction, Settings
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger, Settings
 from peewee import chunked
 
 from .._helper.bkms import BKMS
@@ -17,7 +18,7 @@ from .enzyme_pathway import EnzymePathway
 
 class EnzymeService(BaseService):
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_enzyme_db(cls, brenda_file, bkms_file, expasy_file, taxonomy_file, bto_file, compound_file):
         """
         Creates and fills the `enzyme` database

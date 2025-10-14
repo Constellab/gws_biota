@@ -1,20 +1,17 @@
 
 
-from gws_core import Logger, transaction
-from peewee import CharField, ForeignKeyField
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger
 
 from .._helper.ontology import Onto as OntoHelper
-from ..base.base import Base
 from ..base.base_service import BaseService
-from ..db.biota_db_manager import BiotaDbManager
-from ..ontology.ontology import Ontology
 from .go import GO, GOAncestor
 
 
 class GOService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_go_db(cls, path, go_file):
         """
         Creates and fills the `go` database

@@ -1,6 +1,7 @@
 
 
-from gws_core import transaction, Logger
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger
 
 from .._helper.reactome import Reactome as ReactomeHelper
 from ..base.base_service import BaseService
@@ -11,7 +12,7 @@ from .pathway_compound import PathwayCompound
 class PathwayService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_pathway_db(cls, path, pwo_file, reactome_pathways_file, reactome_pathway_relations_file,
                           reactome_chebi_pathways_file):
         """

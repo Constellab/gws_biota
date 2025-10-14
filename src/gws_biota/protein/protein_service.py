@@ -1,19 +1,20 @@
 
 
-import os
-import re
-from Bio import SeqIO
 import gzip
-from gws_core import transaction, Logger
-from ..base.base import Base
-from .protein import Protein
+import re
+
+from Bio import SeqIO
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger
+
 from ..base.base_service import BaseService
+from .protein import Protein
 
 
 class ProteinService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_protein_db(cls, path, protein_file):
         """
         Creates and fills the `protein` database

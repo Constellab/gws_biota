@@ -1,6 +1,7 @@
 
 
-from gws_core import transaction, Logger
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger
 
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
@@ -10,7 +11,7 @@ from ..eco.eco import ECO, ECOAncestor
 class ECOService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_eco_db(cls, path, eco_file):
         """
         Creates and fills the `eco` database

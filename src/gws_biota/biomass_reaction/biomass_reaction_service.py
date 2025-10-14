@@ -2,15 +2,18 @@
 
 
 import os
-from gws_core import transaction
-from .biomass_reaction import BiomassReaction
+
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+
 from .._helper.biomass_reaction import BiomassReaction as BiomassReactionHelper
 from ..base.base_service import BaseService
+from .biomass_reaction import BiomassReaction
+
 
 class BiomassReactionService(BaseService):
-    
+
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_biomass_reaction_db(cls, biodata_dir = None, **kwargs):
         """
         Creates and fills the `network` database

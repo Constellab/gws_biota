@@ -4,12 +4,10 @@ import pickle
 from typing import List
 
 import networkx as nx
-from gws_core import BadRequestException, Logger, transaction
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import BadRequestException, Logger
 
 from ..compound.cofactor import Cofactor
-from ..compound.compound_layout import CompoundLayout
-from ..enzyme.enzyme import Enzyme
-from ..reaction.reaction import Reaction, ReactionEnzyme
 from ..taxonomy.taxonomy import Taxonomy
 from .unicell import Unicell
 
@@ -17,7 +15,7 @@ from .unicell import Unicell
 class UnicellService:
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_unicell_skeleton(cls, tax_id=None):
         """ Create a universal cell """
         from ..reaction.reaction import Reaction

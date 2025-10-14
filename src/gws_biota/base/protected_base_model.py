@@ -131,6 +131,6 @@ class ProtectedBaseModel(BaseModel):
         return super().save(*args, **kwargs)
 
     class Meta:
-        db_manager = BiotaDbManager
+        db_manager = BiotaDbManager.get_instance()
         is_table = False
-        database = BiotaDbManager.db
+        database = db_manager.db

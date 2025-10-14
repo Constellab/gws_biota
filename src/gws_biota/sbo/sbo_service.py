@@ -1,6 +1,7 @@
 
 
-from gws_core import transaction
+
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
@@ -10,7 +11,7 @@ from .sbo import SBO, SBOAncestor
 class SBOService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_sbo_db(cls, path, sbo_file):
         """
         Creates and fills the `sbo` database

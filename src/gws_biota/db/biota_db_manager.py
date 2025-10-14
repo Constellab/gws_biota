@@ -17,17 +17,23 @@ class BiotaDbManager(AbstractDbManager):
 
     _DEACTIVATE_PROTECTION_ = False
 
+    _instance: 'BiotaDbManager' = None
+
     @classmethod
-    def get_config(cls, mode: DbMode) -> DbConfig:
+    def get_instance(cls) -> 'BiotaDbManager':
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+
+    def get_config(self, mode: DbMode) -> DbConfig:
 
         if mode == 'test':
             settings = Settings.get_instance()
             return settings.get_test_db_config()
         else:
-            return cls.get_prod_db_config()
+            return self.get_prod_db_config()
 
-    @classmethod
-    def get_prod_db_config(cls) -> DbConfig:
+    def get_prod_db_config(self) -> DbConfig:
         return {
             "host":  os.environ.get("GWS_BIOTA_DB_HOST"),
             "user": os.environ.get("GWS_BIOTA_DB_USER"),
@@ -37,18 +43,8 @@ class BiotaDbManager(AbstractDbManager):
             "engine": "mariadb"
         }
 
-    @classmethod
-    def get_name(cls) -> str:
+    def get_name(self) -> str:
         return 'db'
 
-    @classmethod
-    def get_brick_name(cls) -> str:
+    def get_brick_name(self) -> str:
         return 'gws_biota'
-
-
-# Activate the biota db if we are in a notebook
-try:
-    get_ipython
-    BiotaDbManager.init(mode='dev')
-except:
-    pass

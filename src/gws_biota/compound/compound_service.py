@@ -1,9 +1,10 @@
 
 
 import math
-
 from typing import List
-from gws_core import Logger, transaction
+
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger
 from peewee import chunked
 
 from .._helper.chebi import Chebi as ChebiHelper
@@ -25,7 +26,7 @@ class CompoundService(BaseService):
         return val
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_compound_db(cls, path, compound_file) -> None:
         """
         Creates and fills the `chebi_ontology` database

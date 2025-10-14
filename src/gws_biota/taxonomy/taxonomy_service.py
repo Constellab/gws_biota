@@ -1,6 +1,7 @@
 
 
-from gws_core import Logger, transaction, FileDownloader, Settings
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger
 from peewee import chunked
 
 from .._helper.ncbi import Taxonomy as NCBITaxonomyHelper
@@ -11,7 +12,7 @@ from .taxonomy import Taxonomy
 class TaxonomyService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_taxonomy_db(cls, path, taxdump_files):
         """
         Creates and fills the `taxonomy` database

@@ -1,6 +1,7 @@
 
 
-from gws_core import Logger, transaction
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_core import Logger
 from peewee import chunked
 
 from .._helper.rhea import Rhea
@@ -15,7 +16,7 @@ from .reaction import (Reaction, ReactionEnzyme, ReactionProduct,
 class ReactionService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_reaction_db(cls, path, rhea_reaction_text_file, rhea_direction_file, rhea2ecocyc_file,
                            rhea2metacyc_file, rhea2macie_file, rhea2kegg_reaction_file, rhea2ec_file, rhea2reactome_file):
         """

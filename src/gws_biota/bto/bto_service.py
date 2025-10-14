@@ -1,6 +1,7 @@
 
 from typing import List
-from gws_core import transaction, Logger
+
+from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
@@ -10,7 +11,7 @@ from .bto import BTO, BTOAncestor
 class BTOService(BaseService):
 
     @classmethod
-    @transaction()
+    @BiotaDbManager.transaction()
     def create_bto_db(cls, destination_dir, bto_file_path: str) -> None:
         """
         Creates and fills the `bto` database
