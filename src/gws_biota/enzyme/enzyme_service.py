@@ -1,6 +1,6 @@
 
 
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger, Settings
 from peewee import chunked
 
@@ -78,7 +78,8 @@ class EnzymeService(BaseService):
         for chunk in chunked(list_of_enzymes, cls.BATCH_SIZE):
             i += 1
             enzyme_chunk = []
-            Logger.info(f"... saving enzyme chunk {i}/{int(enz_count/cls.BATCH_SIZE)+1}")
+            Logger.info(
+                f"... saving enzyme chunk {i}/{int(enz_count/cls.BATCH_SIZE)+1}")
             for d in chunk:
                 ec = d["ec"]
                 rn = d["RN"]
@@ -119,7 +120,8 @@ class EnzymeService(BaseService):
                             # take the nested relation
                             next_dep_ec = list_deprecated_ec[new_ec]
                             # dep_ec["new_ec"] = next_dep_ec["new_ec"]  # follow the next
-                            new_list.extend(next_dep_ec["new_ec"])  # follow the next
+                            # follow the next
+                            new_list.extend(next_dep_ec["new_ec"])
                             new_list = list(set(new_list))
                             for key, val in next_dep_ec["data"].items():
                                 # concatenate the next data with the current one

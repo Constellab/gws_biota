@@ -4,7 +4,7 @@ import gzip
 import re
 
 from Bio import SeqIO
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 
 from ..base.base_service import BaseService

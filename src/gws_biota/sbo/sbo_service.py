@@ -1,7 +1,6 @@
 
 
-
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
@@ -24,8 +23,10 @@ class SBOService(BaseService):
         :rtype: None
         """
 
-        data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(path, sbo_file)
-        ontology = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
+        data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(
+            path, sbo_file)
+        ontology = OntoHelper.create_ontology_from_file(
+            data_dir, corrected_file_name)
         list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
         sbos = [SBO(data=dict_) for dict_ in list_sbo]
         for sbo in sbos:
@@ -57,6 +58,7 @@ class SBOService(BaseService):
             return vals
         for ancestor in sbo.data['ancestors']:
             if (ancestor != sbo.sbo_id):
-                val = {'sbo': sbo.id, 'ancestor': SBO.get(SBO.sbo_id == ancestor).id}
+                val = {'sbo': sbo.id, 'ancestor': SBO.get(
+                    SBO.sbo_id == ancestor).id}
                 vals.append(val)
         return (vals)

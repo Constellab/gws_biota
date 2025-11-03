@@ -1,6 +1,6 @@
 
 
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 
 from .._helper.reactome import Reactome as ReactomeHelper
@@ -25,7 +25,8 @@ class PathwayService(BaseService):
         """
 
         # insert patwhays
-        pathway_dict = ReactomeHelper.parse_pathways_to_dict(path, reactome_pathways_file)
+        pathway_dict = ReactomeHelper.parse_pathways_to_dict(
+            path, reactome_pathways_file)
         pathways = []
         for _pw in pathway_dict:
             pw = Pathway(
@@ -49,7 +50,8 @@ class PathwayService(BaseService):
         PathwayAncestor.insert_all(vals)
 
         # insert chebi pathways
-        chebi_pathways = ReactomeHelper.parse_chebi_pathway_to_dict(path, reactome_chebi_pathways_file)
+        chebi_pathways = ReactomeHelper.parse_chebi_pathway_to_dict(
+            path, reactome_chebi_pathways_file)
         pathways_comps = []
         for cpw in chebi_pathways:
             chebi_id = "CHEBI:"+cpw["chebi_id"]
@@ -66,8 +68,10 @@ class PathwayService(BaseService):
         vals = []
         for _pw in pathway_rels:
             try:
-                pathway_id = Pathway.get(Pathway.reactome_pathway_id == _pw["reactome_pathway_id"]).id
-                ancestor_id = Pathway.get(Pathway.reactome_pathway_id == _pw["ancestor"]).id
+                pathway_id = Pathway.get(
+                    Pathway.reactome_pathway_id == _pw["reactome_pathway_id"]).id
+                ancestor_id = Pathway.get(
+                    Pathway.reactome_pathway_id == _pw["ancestor"]).id
                 val = {'pathway': pathway_id, 'ancestor': ancestor_id}
                 vals.append(val)
             except:

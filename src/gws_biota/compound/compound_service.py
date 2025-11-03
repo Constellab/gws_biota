@@ -3,7 +3,7 @@
 import math
 from typing import List
 
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 from peewee import chunked
 
@@ -37,8 +37,10 @@ class CompoundService(BaseService):
         :rtype: None
         """
 
-        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(path, compound_file)
-        onto_chebi = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
+        data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(
+            path, compound_file)
+        onto_chebi = OntoHelper.create_ontology_from_file(
+            data_dir, corrected_file_name)
 
         list_chebi = OntoHelper.parse_chebi_from_ontology(onto_chebi)
 
@@ -48,7 +50,8 @@ class CompoundService(BaseService):
         compounds = [Compound(data=data) for data in list_chebi]
         for compound_chunk in chunked(compounds, cls.BATCH_SIZE):
             i += 1
-            Logger.info(f"... saving compound chunk {i}/{int(comp_count/cls.BATCH_SIZE)+1}")
+            Logger.info(
+                f"... saving compound chunk {i}/{int(comp_count/cls.BATCH_SIZE)+1}")
             for comp in compound_chunk:
                 comp.set_name(comp.data["name"])
                 comp.chebi_id = comp.data["id"]
@@ -59,7 +62,8 @@ class CompoundService(BaseService):
                 if not comp.data["mass"] is None:
                     comp.mass = cls._to_float(comp.data["mass"])
                 if not comp.data["monoisotopic_mass"] is None:
-                    comp.monoisotopic_mass = cls._to_float(comp.data["monoisotopic_mass"])
+                    comp.monoisotopic_mass = cls._to_float(
+                        comp.data["monoisotopic_mass"])
                 if not comp.data["charge"] is None:
                     comp.charge = cls._to_float(comp.data["charge"])
                 comp.chebi_star = comp.data["subsets"]

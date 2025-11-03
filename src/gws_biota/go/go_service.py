@@ -1,6 +1,6 @@
 
 
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 
 from .._helper.ontology import Onto as OntoHelper
@@ -62,6 +62,7 @@ class GOService(BaseService):
             return vals
         for ancestor in go.data['ancestors']:
             if ancestor != go.go_id:
-                val = {'go': go.id, 'ancestor': GO.get(GO.go_id == ancestor).id}
+                val = {'go': go.id, 'ancestor': GO.get(
+                    GO.go_id == ancestor).id}
                 vals.append(val)
         return (vals)

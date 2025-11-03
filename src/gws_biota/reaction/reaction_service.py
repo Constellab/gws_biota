@@ -1,6 +1,6 @@
 
 
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 from peewee import chunked
 
@@ -28,7 +28,8 @@ class ReactionService(BaseService):
         :rtype: None
         """
 
-        list_of_reactions = Rhea.parse_reaction_from_file(path, rhea_reaction_text_file)
+        list_of_reactions = Rhea.parse_reaction_from_file(
+            path, rhea_reaction_text_file)
         cls._create_reactions(list_of_reactions)
 
         list_of_directions = Rhea.parse_csv_from_file(rhea_direction_file)
@@ -76,7 +77,8 @@ class ReactionService(BaseService):
         i = 0
         for reaction_chunk in chunked(reactions, cls.BATCH_SIZE):
             i += 1
-            Logger.info(f"... saving reaction chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
+            Logger.info(
+                f"... saving reaction chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
             for react in reaction_chunk:
                 if 'entry' in react.data.keys():
                     react.rhea_id = react.data['entry']
@@ -95,11 +97,13 @@ class ReactionService(BaseService):
 
         vals = []
         for react in reactions:
-            vals.extend(cls._create_enzymes_vals_and_set_ft_names_from_data(react))
+            vals.extend(
+                cls._create_enzymes_vals_and_set_ft_names_from_data(react))
         ReactionEnzyme.insert_all(vals)
 
         # update reaction tf_names
-        Reaction.update_all(reactions, fields=['ft_names', 'ft_tax_ids', 'ft_ec_numbers'])
+        Reaction.update_all(reactions, fields=[
+                            'ft_names', 'ft_tax_ids', 'ft_ec_numbers'])
 
         return reactions
 
@@ -110,7 +114,8 @@ class ReactionService(BaseService):
         """
 
         vals = []
-        Q = Compound.select().where(Compound.chebi_id << react.data['substrates'])
+        Q = Compound.select().where(
+            Compound.chebi_id << react.data['substrates'])
         for comp in Q:
             # react.substrates.add(comp)
             vals.append({
@@ -126,7 +131,8 @@ class ReactionService(BaseService):
         """
 
         vals = []
-        Q = Compound.select().where(Compound.chebi_id << react.data['products'])
+        Q = Compound.select().where(
+            Compound.chebi_id << react.data['products'])
         for comp in Q:
             # react.products.add(comp)
             vals.append({
@@ -145,7 +151,8 @@ class ReactionService(BaseService):
         ft_tax_ids = []
         ft_ec_numbers = []
         if 'enzymes' in react.data:
-            Q = Enzyme.select().where(Enzyme.ec_number << react.data['enzymes'])
+            Q = Enzyme.select().where(
+                Enzyme.ec_number << react.data['enzymes'])
             ft_names = []
             for enz in Q:
                 ft_names.append(enz.ft_names)

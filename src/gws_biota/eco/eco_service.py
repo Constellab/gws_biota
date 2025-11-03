@@ -1,6 +1,6 @@
 
 
-from gws_biota.src.gws_biota.db.biota_db_manager import BiotaDbManager
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 
 from .._helper.ontology import Onto as OntoHelper
@@ -24,17 +24,20 @@ class ECOService(BaseService):
         :rtype: None
         """
 
-        data_dir, corrected_file_name = OntoHelper.correction_of_eco_file(path, eco_file)
+        data_dir, corrected_file_name = OntoHelper.correction_of_eco_file(
+            path, eco_file)
         Logger.info(f"tuple : {data_dir}, {corrected_file_name}")
 
-        onto_eco = OntoHelper.create_ontology_from_file(data_dir, corrected_file_name)
+        onto_eco = OntoHelper.create_ontology_from_file(
+            data_dir, corrected_file_name)
 
         list_eco = OntoHelper.parse_eco_terms_from_ontoloy(onto_eco)
         ecos = [ECO(data=dict_) for dict_ in list_eco]
         for eco in ecos:
             eco.set_eco_id(eco.data["id"])
             eco.set_name(eco.data["name"])
-            ft_names = [eco.data["name"], "ECO" + eco.eco_id.replace("ECO:", "")]
+            ft_names = [eco.data["name"], "ECO" +
+                        eco.eco_id.replace("ECO:", "")]
             eco.ft_names = cls.format_ft_names(ft_names)
             del eco.data["id"]
         ECO.create_all(ecos)
@@ -61,6 +64,7 @@ class ECOService(BaseService):
             return vals
         for ancestor in eco.data['ancestors']:
             if ancestor != eco.eco_id:
-                val = {'eco': eco.id, 'ancestor': ECO.get(ECO.eco_id == ancestor).id}
+                val = {'eco': eco.id, 'ancestor': ECO.get(
+                    ECO.eco_id == ancestor).id}
                 vals.append(val)
         return (vals)
