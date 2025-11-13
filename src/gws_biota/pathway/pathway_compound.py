@@ -33,5 +33,5 @@ class PathwayCompound(Base):
             return None
 
     class Meta:
-        table_name = 'biota_pathway_compound'
+        table_name = 'biota_pathway_compounds'
         is_table = True

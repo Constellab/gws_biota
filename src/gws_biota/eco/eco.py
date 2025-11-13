@@ -31,7 +31,7 @@ class ECO(Ontology):
 
     # -- A --
 
-    @ property
+    @property
     def ancestors(self):
         if self._ancestors is not None:
             return self._ancestors
@@ -43,7 +43,7 @@ class ECO(Ontology):
 
     # -- C --
 
-    @ classmethod
+    @classmethod
     def create_table(cls, *args, **kwargs):
         """
         Creates `eco` table and related tables.
@@ -55,7 +55,7 @@ class ECO(Ontology):
 
     # -- D --
 
-    @ property
+    @property
     def definition(self):
         """
         return self.definition
@@ -63,7 +63,7 @@ class ECO(Ontology):
         definition = self.data["definition"]
         return ". ".join(i.capitalize() for i in definition.split(". "))
 
-    @ classmethod
+    @classmethod
     def drop_table(cls, *arg, **kwargs):
         """
         Drops `eco` table and related tables.
@@ -80,6 +80,10 @@ class ECO(Ontology):
         set self.eco_id
         """
         self.eco_id = id
+
+    class Meta:
+        table_name = 'biota_eco'
+        is_table = True
 
 
 class ECOAncestor(ProtectedBaseModel):

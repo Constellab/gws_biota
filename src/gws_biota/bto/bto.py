@@ -27,7 +27,6 @@ class BTO(Ontology):
     bto_id = CharField(null=True, index=True)
 
     _ancestors = None
-    _table_name = 'biota_bto'
 
     # -- A --
     @property

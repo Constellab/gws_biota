@@ -61,7 +61,7 @@ class Pathway(Ontology):
         super().drop_table(*arg, **kwargs)
 
     class Meta:
-        table_name = 'biota_pathway'
+        table_name = 'biota_pathways'
         is_table = True
 
 

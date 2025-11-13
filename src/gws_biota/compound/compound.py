@@ -26,7 +26,6 @@ from peewee import CharField, DoubleField, FloatField, ForeignKeyField
 
 from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
-from ..db.biota_db_manager import BiotaDbManager
 from .compound_layout import CompoundLayout, CompoundLayoutDict
 
 
@@ -148,6 +147,10 @@ class Compound(BaseFT):
         for r in Q:
             rxns.append(r.reaction)
         return rxns
+
+    class Meta:
+        table_name = "biota_compound"
+        is_table = True
 
 
 class CompoundAncestor(ProtectedBaseModel):

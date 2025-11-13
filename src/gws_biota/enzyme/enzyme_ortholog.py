@@ -50,5 +50,5 @@ class EnzymeOrtholog(BaseFT):
         return DeprecatedEnzyme.get_or_none(DeprecatedEnzyme.new_ec_number == self.ec_number)
 
     class Meta:
-        table_name = 'biota_enzyme_ortholog'
+        table_name = 'biota_enzo'
         is_table = True
