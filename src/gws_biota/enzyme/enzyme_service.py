@@ -1,8 +1,7 @@
-
-
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger, Settings
 from peewee import chunked
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.bkms import BKMS
 from .._helper.brenda import Brenda
@@ -19,7 +18,9 @@ from .enzyme_pathway import EnzymePathway
 class EnzymeService(BaseService):
     @classmethod
     @BiotaDbManager.transaction()
-    def create_enzyme_db(cls, brenda_file, bkms_file, expasy_file, taxonomy_file, bto_file, compound_file):
+    def create_enzyme_db(
+        cls, brenda_file, bkms_file, expasy_file, taxonomy_file, bto_file, compound_file
+    ):
         """
         Creates and fills the `enzyme` database
         :param: enzymes files
@@ -28,7 +29,7 @@ class EnzymeService(BaseService):
         :rtype: None
         """
 
-        base_biodata_dir = Settings.get_instance().get_variable("gws_biota:biodata_dir")
+        base_biodata_dir = Settings.get_instance().get_variable("gws_biota", "biodata_dir")
 
         # add enzyme classes
         Logger.info("Loading BRENDA file ...")
@@ -47,7 +48,7 @@ class EnzymeService(BaseService):
         pathways = {}
         for d in list_of_enzymes:
             ec = d["ec"]
-            if not ec in pathways:
+            if ec not in pathways:
                 pathways[ec] = EnzymePathway(ec_number=ec)
         EnzymePathway.create_all(pathways.values())
 
@@ -56,11 +57,11 @@ class EnzymeService(BaseService):
         enzos = {}
         for d in list_of_enzymes:
             ec = d["ec"]
-            if not ec in enzos:
+            if ec not in enzos:
                 rn = d["RN"]
                 sn = d.get("SN", [])
                 sy = [k.get("data", "") for k in d.get("SY", [])]
-                ft_names = ["EC"+ec.replace(".", ""), *rn, *sn, *sy]
+                ft_names = ["EC" + ec.replace(".", ""), *rn, *sn, *sy]
                 enzos[ec] = EnzymeOrtholog(
                     ec_number=ec,
                     data={"RN": rn, "SN": sn, "SY": sy},
@@ -78,8 +79,7 @@ class EnzymeService(BaseService):
         for chunk in chunked(list_of_enzymes, cls.BATCH_SIZE):
             i += 1
             enzyme_chunk = []
-            Logger.info(
-                f"... saving enzyme chunk {i}/{int(enz_count/cls.BATCH_SIZE)+1}")
+            Logger.info(f"... saving enzyme chunk {i}/{int(enz_count / cls.BATCH_SIZE) + 1}")
             for d in chunk:
                 ec = d["ec"]
                 rn = d["RN"]
@@ -90,10 +90,7 @@ class EnzymeService(BaseService):
                     ec_number=ec,
                     uniprot_id=d["uniprot"],
                     data=d,
-                    ft_names=";".join([
-                        "EC"+ec.replace(".", ""),
-                        *rn, *sn, *sy, organism
-                    ]),
+                    ft_names=";".join(["EC" + ec.replace(".", ""), *rn, *sn, *sy, organism]),
                 )
                 enz.set_name(d["RN"][0])
                 enzyme_chunk.append(enz)
@@ -172,7 +169,7 @@ class EnzymeService(BaseService):
     def __update_taxonomy(cls, enzymes):
         for enz in enzymes:
             cls.__set_taxonomy_data(enz)
-        fields = ["tax_"+t for t in Taxonomy.get_tax_tree()]
+        fields = ["tax_" + t for t in Taxonomy.get_tax_tree()]
         Enzyme.update_all(enzymes, fields=["tax_id", *fields])
 
     @classmethod
@@ -218,7 +215,7 @@ class EnzymeService(BaseService):
 
         vals = []
         for bto in Q:
-            vals.append({'bto': bto.id, 'enzyme': enzyme.id})
+            vals.append({"bto": bto.id, "enzyme": enzyme.id})
         return vals
 
     @classmethod
@@ -243,4 +240,4 @@ class EnzymeService(BaseService):
 
                 pathways[pathway.ec_number] = pathway
 
-        EnzymePathway.update_all(pathways.values(), fields=['data'])
+        EnzymePathway.update_all(pathways.values(), fields=["data"])

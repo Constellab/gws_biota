@@ -5,8 +5,9 @@
   "version": "0.10.1",
   "description": "The Biological and Omics Database for Gencovery Web Services",
   "variables": {
-    "gws_biota:biodata_dir": "/data/${CURRENT_BRICK}/biodata/",
-    "gws_biota:testdata_dir": "${CURRENT_DIR}/tests/testdata"
+    "biodata_dir": "/data/${CURRENT_BRICK}/biodata/",
+    "testdata_dir": "${CURRENT_DIR}/tests/testdata",
+    "MARIA_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/db/0.6.0/mariadb.zip"
   },
   "technical_info": {
     "MARIA_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/db/0.6.0/mariadb.zip"

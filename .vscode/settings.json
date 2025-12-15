@@ -8,37 +8,16 @@
   "[python]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
+      "source.fixAll": "explicit"
     },
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "autopep8.path": [
-    "/home/labuser/.local/bin/autopep8"
-  ],
-  "autopep8.args": [
-    "--max-line-length",
-    "120",
-    "--experimental"
-  ],
-  "pylint.path": [
-    "/home/labuser/.local/bin/pylint"
-  ],
-  "pylint.args": [
-    "--rcfile=${workspaceFolder}/.pylintrc"
-  ],
-  "mypy-type-checker.path": [
-    "/home/labuser/.local/bin/mypy"
-  ],
-  "mypy-type-checker.args": [
-    "--config-file=${workspaceFolder}/.mypy.ini"
-  ],
-  "git-graph.maxDepthOfRepoSearch": 2,
-  "python.autoComplete.extraPaths": [
-    "/lab/user/bricks/gws_core/src",
-    "/lab/user/bricks/gws_project/src"
-  ],
-  "python.analysis.extraPaths": [
-    "/lab/user/bricks/gws_core/src",
-    "/lab/user/bricks/gws_project/src"
-  ]
+  "ruff.configurationPreference": "filesystemFirst",
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "python.analysis.indexing": true,
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.importFormat": "absolute",
 }
