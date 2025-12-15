@@ -1,4 +1,3 @@
-import os
 from typing import Union
 
 from gws_core import AbstractDbManager, DbConfig, DbMode, Settings
@@ -16,6 +15,12 @@ class BiotaDbManager(AbstractDbManager):
 
     _DEACTIVATE_PROTECTION_ = False
 
+    HOST = "gws_biota-db-prod-db"
+    PORT = 3306
+    USER = "gws_biota"
+    PASSWORD = "gencovery"
+    DB_NAME = "gws_biota"
+
     _instance: Union["BiotaDbManager", None] = None
 
     @classmethod
@@ -32,11 +37,11 @@ class BiotaDbManager(AbstractDbManager):
 
     def get_prod_db_config(self) -> DbConfig:
         return DbConfig(
-            host=os.environ.get("GWS_BIOTA_DB_HOST"),
-            user=os.environ.get("GWS_BIOTA_DB_USER"),
-            password=os.environ.get("GWS_BIOTA_DB_PASSWORD"),
-            port=int(os.environ.get("GWS_BIOTA_DB_PORT")),
-            db_name=os.environ.get("GWS_BIOTA_DB_NAME"),
+            host=self.HOST,
+            port=self.PORT,
+            user=self.USER,
+            password=self.PASSWORD,
+            db_name=self.DB_NAME,
             engine="mariadb",
         )
 
@@ -45,3 +50,18 @@ class BiotaDbManager(AbstractDbManager):
 
     def get_brick_name(self) -> str:
         return "gws_biota"
+
+    def is_lazy_init(self) -> bool:
+        """
+        If True, the db will be initialized after the app start, and app won't fail if db is not available
+        If False, the db will be initialized immediately (not recommended), and app fails if db is not available
+        """
+
+        return True
+
+    def auto_init(self) -> bool:
+        """
+        Disable auto_init because this DB need to be started and downloaded manually
+        """
+
+        return False

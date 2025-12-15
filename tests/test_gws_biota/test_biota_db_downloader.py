@@ -1,7 +1,8 @@
+import os
 from unittest import TestCase
 
 from gws_biota.db.biota_db_downloader import BiotaDbDownloader
-from gws_core import TaskRunner
+from gws_core import Settings, TaskRunner
 
 
 # test_biota_db_downloader.py
@@ -19,7 +20,19 @@ class TestBiotaDbDownloader(TestCase):
         )
 
         # Execute the task
-        outputs = runner.run()
+        runner.run()
 
-        # Verify the task completed successfully
-        self.assertIsNotNone(outputs)
+        destination_folder = os.path.join(
+            Settings.get_instance().get_brick_data_dir("gws_biota"),
+            BiotaDbDownloader.BRICK_DATA_FOLDER,
+        )
+
+        # Verify that the database folder was created and it contains a 'mariadb' subfolder
+        mariadb_folder = os.path.join(destination_folder, "mariadb")
+        self.assertTrue(
+            os.path.exists(destination_folder), "Destination folder was not created."
+        )
+        self.assertTrue(
+            os.path.exists(mariadb_folder),
+            "'mariadb' folder was not created inside destination folder.",
+        )

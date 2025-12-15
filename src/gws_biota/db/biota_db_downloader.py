@@ -1,5 +1,7 @@
 import os
 
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import (
     BoolParam,
     ConfigParams,
@@ -15,7 +17,9 @@ from gws_core import (
     TaskInputs,
     TaskOutputs,
     task_decorator,
+    DockerService,
 )
+from gws_core import RegisterSQLDBComposeRequestOptionsDTO
 
 
 @task_decorator(
@@ -61,7 +65,11 @@ class BiotaDbDownloader(Task):
     input_specs = InputSpecs({})
     output_specs = OutputSpecs({})
 
-    DESTINATION_FOLDER = "db"
+    # Sub folder of brick-data where the DB will be stored and the .version file
+    BRICK_DATA_FOLDER = "db"
+    # Sub folder inside the DB folder where the mariadb data is stored once unzipped
+    MARIA_DB_FOLDER = "mariadb"
+
     SETTINGS_VARIABLE = "MARIA_DB_URL"
 
     config_specs = ConfigSpecs(
@@ -83,8 +91,43 @@ class BiotaDbDownloader(Task):
         db_url: str = params.get_value("db_url")
         force_redownload: bool = params.get_value("force_redownload")
 
+        # Initialize file downloader
+        file_downloader = TaskFileDownloader(
+            brick_name=self.get_brick_name(),
+            message_dispatcher=self.message_dispatcher,
+        )
+
+        # Create output folder if it doesn't exist
+        brick_data_folder = os.path.join(
+            file_downloader.destination_folder, self.BRICK_DATA_FOLDER
+        )
+
+        # Clear existing DB if force redownload is requested
+        if force_redownload:
+            self._clear_db(brick_data_folder)
+
+        # Download and install the database if missing
+        self._install_db_if_missing(db_url, file_downloader)
+
+        # Start the Biota DB Docker container
+        self._start_db_container()
+
+        # Check Db Manager connection
+        self.log_info_message("Verifying Biota database connection...")
+        biota_db_manager = BiotaDbManager.get_instance()
+        if not biota_db_manager.check_connection():
+            raise Exception("Failed to connect to the Biota database after download.")
+        self.log_success_message("Successfully connected to the Biota database.")
+
+        return {}
+
+    def _install_db_if_missing(
+        self, db_url: str, file_downloader: TaskFileDownloader
+    ) -> None:
         if not db_url:
-            settings_url = Settings.get_instance().get_variable("gws_biota", self.SETTINGS_VARIABLE)
+            settings_url = Settings.get_instance().get_variable(
+                "gws_biota", self.SETTINGS_VARIABLE
+            )
             if not settings_url:
                 raise Exception(
                     f"Database URL not provided and not found in settings variable '{self.SETTINGS_VARIABLE}'"
@@ -95,58 +138,46 @@ class BiotaDbDownloader(Task):
 
             db_url = settings_url
 
-        # Initialize file downloader
-        file_downloader = TaskFileDownloader(
-            brick_name=self.get_brick_name(),
-            message_dispatcher=self.message_dispatcher,
-        )
-
         # Create output folder if it doesn't exist
-        destination_folder = os.path.join(
-            file_downloader.destination_folder, self.DESTINATION_FOLDER
+        brick_data_folder = os.path.join(
+            file_downloader.destination_folder, self.BRICK_DATA_FOLDER
         )
 
-        mariadb_folder = os.path.join(file_downloader.destination_folder, "mariadb")
-        version_file = os.path.join(file_downloader.destination_folder, ".version")
+        mariadb_folder = os.path.join(brick_data_folder, self.MARIA_DB_FOLDER)
+        version_file = os.path.join(brick_data_folder, ".version")
 
         # Check if re-download is needed
-        if not force_redownload and self._db_exists_with_same_version(
-            mariadb_folder, version_file, db_url
-        ):
+        if self._db_exists_with_same_version(mariadb_folder, version_file, db_url):
             self.log_info_message(
                 f"Biota DB already downloaded with the correct version from {db_url}. Skipping download."
             )
-            return {}
+            return
 
         # Log start of download
         self.log_info_message(f"Starting Biota DB download from {db_url}")
 
-        # Delete old database folder if it exists
-        if FileHelper.exists_on_os(destination_folder):
-            self.log_info_message(f"Deleting existing database folder: {destination_folder}")
-            FileHelper.delete_dir(destination_folder)
-        # if os.path.exists(destination_folder):
-        #     self.log_info_message(
-        #         f"Deleting existing destination folder: {destination_folder}"
-        #     )
-        #     FileHelper.delete_dir(destination_folder)
-
-        # if not FileHelper.exists_on_os(destination_folder):
-
         # Download the ZIP file
         db_folder = file_downloader.download_file_if_missing(
-            url=db_url, filename=self.DESTINATION_FOLDER, decompress_file=True
+            url=db_url, filename=self.BRICK_DATA_FOLDER, decompress_file=True
         )
 
-        # Save version information
-        self._save_version(version_file, db_url)
-        self.log_info_message(f"Saved database version: {db_url}")
+        mariadb_folder = os.path.join(db_folder, self.MARIA_DB_FOLDER)
+
+        # Check if mariadb folder exists after extraction
+        if not FileHelper.exists_on_os(mariadb_folder):
+            raise Exception(
+                f"Downloaded Biota DB does not contain 'mariadb' folder at expected location: {mariadb_folder}"
+            )
 
         self.log_success_message(
             f"Biota DB successfully downloaded and extracted to {mariadb_folder}"
         )
 
-        return {}
+        # Save the version information
+        self._save_version(version_file, db_url)
+        self.log_info_message(f"Saved database version: {db_url}")
+
+        return
 
     def _db_exists_with_same_version(
         self, mariadb_folder: str, version_file: str, current_url: str
@@ -210,3 +241,73 @@ class BiotaDbDownloader(Task):
 
         if result != 0:
             raise Exception(f"Failed to extract ZIP file. Return code: {result}")
+
+    def _start_db_container(self) -> None:
+        """
+        Start the Biota MariaDB Docker container using DockerService.
+        """
+
+        docker_service = DockerService()
+        docker_service.get_or_create_basic_credentials(
+            brick_name=self.get_brick_name(),
+            unique_name=BiotaDbManager.get_instance().get_name(),
+            url=BiotaDbManager.HOST,
+            username=BiotaDbManager.USER,
+            password=BiotaDbManager.PASSWORD,
+        )
+
+        try:
+            docker_service.register_sqldb_compose(
+                brick_name=self.get_brick_name(),
+                unique_name=BiotaDbManager.get_instance().get_name(),
+                database_name=BiotaDbManager.DB_NAME,
+                options=RegisterSQLDBComposeRequestOptionsDTO(
+                    description="Biota MariaDB database container",
+                    auto_start=True,
+                    disable_volume_backup=True,
+                    all_environments_networks=True,
+                    volume_sub_directory=self.MARIA_DB_FOLDER,
+                ),
+            )
+
+            self.log_info_message("Biota DB container started successfully.")
+        except Exception as e:
+            self.log_error_message(f"Failed to start Biota DB container: {e}")
+            return
+
+    def _clear_db(self, destination_folder: str) -> None:
+        """
+        Clear the existing database folder.
+
+        :param destination_folder: Path to the database folder
+        :type destination_folder: str
+        """
+        self.log_info_message("Clearing existing database")
+
+        try:
+            docker_service = DockerService()
+            docker_service.unregister_compose(
+                brick_name=self.get_brick_name(),
+                unique_name=BiotaDbManager.get_instance().get_name(),
+            )
+        except Exception as e:
+            self.log_info_message(
+                f"Failed to unregister Biota DB container before clearing the database: {e}. Continuing with folder deletion."
+            )
+
+        if FileHelper.exists_on_os(destination_folder):
+            self.log_info_message(
+                f"Deleting existing destination folder: {destination_folder}"
+            )
+            shell_proxy = ShellProxy(
+                working_dir="/", message_dispatcher=self.message_dispatcher
+            )
+            result = shell_proxy.run(
+                cmd=["sudo", "rm", "-rf", destination_folder],
+                dispatch_stdout=True,
+                dispatch_stderr=True,
+            )
+            if result != 0:
+                raise Exception(
+                    f"Failed to delete directory {destination_folder}. Return code: {result}"
+                )
