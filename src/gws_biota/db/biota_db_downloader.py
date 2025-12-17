@@ -164,7 +164,7 @@ class BiotaDbDownloader(Task):
             brick_name=brick_name,
             unique_name=unique_name,
             service_name=self.SERVICE_NAME,
-            interval_seconds=10,
+            interval_seconds=30,
             max_attempts=30,
             message_dispatcher=self.message_dispatcher,
         )
