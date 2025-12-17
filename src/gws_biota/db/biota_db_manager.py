@@ -15,12 +15,9 @@ class BiotaDbManager(AbstractDbManager):
 
     _DEACTIVATE_PROTECTION_ = False
 
-    HOST = "gws_biota-db-prod-db"
+    # HOST = "gws_biota-db-prod-db"
+    HOST = "gws_biota-db"
     PORT = 3306
-    USER = "gws_biota"
-    PASSWORD = "gencovery"
-    DB_NAME = "gws_biota"
-
     _instance: Union["BiotaDbManager", None] = None
 
     @classmethod
@@ -36,12 +33,13 @@ class BiotaDbManager(AbstractDbManager):
             return self.get_prod_db_config()
 
     def get_prod_db_config(self) -> DbConfig:
+        settings = Settings.get_instance()
         return DbConfig(
             host=self.HOST,
             port=self.PORT,
-            user=self.USER,
-            password=self.PASSWORD,
-            db_name=self.DB_NAME,
+            user=settings.get_and_check_variable(self.get_brick_name(), "BIOTA_DB_USER"),
+            password=settings.get_and_check_variable(self.get_brick_name(), "BIOTA_DB_PASSWORD"),
+            db_name=settings.get_and_check_variable(self.get_brick_name(), "BIOTA_DB_NAME"),
             engine="mariadb",
         )
 
@@ -59,9 +57,12 @@ class BiotaDbManager(AbstractDbManager):
 
         return True
 
-    def auto_init(self) -> bool:
+    def ignore_error_on_init(self) -> bool:
         """
-        Disable auto_init because this DB need to be started and downloaded manually
+        If True, errors during initialization from DbManagerService will be ignored
+        If False, errors during initialization will raise exceptions
+
+        Useful if the database need to be initialized manually later (eg: downloaded first)
         """
 
-        return False
+        return True

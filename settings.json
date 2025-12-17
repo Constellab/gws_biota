@@ -7,7 +7,11 @@
   "variables": {
     "biodata_dir": "/data/${CURRENT_BRICK}/biodata/",
     "testdata_dir": "${CURRENT_DIR}/tests/testdata",
-    "MARIA_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/db/0.6.0/mariadb.zip"
+    "BIOTA_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/db/0.6.0/mariadb.zip",
+    "BIOTA_TEST_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/test_small_biota.zip",
+    "BIOTA_DB_PASSWORD": "gencovery",
+    "BIOTA_DB_USER": "gws_biota",
+    "BIOTA_DB_NAME": "gws_biota"
   },
   "technical_info": {
     "MARIA_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/db/0.6.0/mariadb.zip"

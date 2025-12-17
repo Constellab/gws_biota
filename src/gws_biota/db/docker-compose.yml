@@ -1,0 +1,14 @@
+services:
+  lab-biota-db:
+    image: constellab/biota-db:1.0.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${BIOTA_DB_PASSWORD}
+      - MYSQL_USER=${BIOTA_DB_USER}
+      - MYSQL_PASSWORD=${BIOTA_DB_PASSWORD}
+      - MYSQL_DATABASE=${BIOTA_DB_NAME}
+      - BIOTA_DB_URL=${BIOTA_DB_URL} 
+    volumes:
+      - ${LAB_VOLUME_HOST_NO_BACKUP}:/var/lib/mysql
+    container_name: gws_biota-db
+    networks:
+      - ${LAB_NETWORK_ALL}

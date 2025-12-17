@@ -1,16 +1,17 @@
-from gws_biota.db.biota_db_downloader import BiotaDbDownloader
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import (
+    AuthenticateUser,
+    BrickService,
+    DbManagerService,
     Event,
     EventListener,
-    event_listener,
-    DbManagerService,
     Logger,
     ScenarioProxy,
-    BrickService,
-    AuthenticateUser,
     Settings,
+    event_listener,
 )
+
+from gws_biota.db.biota_db_downloader import BiotaDbDownloader
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 
 @event_listener
@@ -30,9 +31,7 @@ class GwsCoreDbListener(EventListener):
         """Initialize the database"""
         biota_db_manager = BiotaDbManager.get_instance()
 
-        initialized = DbManagerService.init_db(
-            biota_db_manager, full_init=True, ignore_error=True
-        )
+        initialized = DbManagerService.init_db(biota_db_manager, full_init=True)
 
         if not initialized:
             Logger.info("Biota database not initialized, installing database")
@@ -81,7 +80,5 @@ class GwsCoreDbListener(EventListener):
             )
             return False
 
-        BrickService.log_brick_info(
-            BiotaDbManager, "Biota database installation completed."
-        )
+        BrickService.log_brick_info(BiotaDbManager, "Biota database installation completed.")
         return True
