@@ -98,7 +98,7 @@ class BiotaDbDownloader(Task):
             "db_url": StrParam(
                 human_name="Database URL",
                 short_description="URL to download the Biota database from",
-                optional=False,
+                optional=True,
             ),
         }
     )
