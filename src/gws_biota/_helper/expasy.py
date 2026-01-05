@@ -1,13 +1,11 @@
 
 
-import sys
 import os
 import re
-import csv
 
-reg = re.compile("(\d+\.[\d\-\s]+\.[\d\-\s]+\.[\d\-\s]+)\s+(.+)")
+reg = re.compile(r"(\d+\.[\d\-\s]+\.[\d\-\s]+\.[\d\-\s]+)\s+(.+)")
 
-class Expasy():
+class Expasy:
 
     @staticmethod
     def parse_all_enzclasses_to_dict(path, file) -> list:

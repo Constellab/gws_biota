@@ -3,9 +3,9 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
+from gws_core import ProcessSpec, Protocol, protocol_decorator
 from gws_core.model.typing_style import TypingStyle
 
-from gws_core import Protocol, protocol_decorator, ProcessSpec
 from .db_bto_creator import BtoDBCreator
 from .db_compound_creator import CompoundDBCreator
 from .db_eco_creator import EcoDBCreator

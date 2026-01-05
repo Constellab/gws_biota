@@ -4,7 +4,6 @@ from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
 from ..base.protected_base_model import ProtectedBaseModel
-from ..db.biota_db_manager import BiotaDbManager
 from ..ontology.ontology import Ontology
 
 
@@ -31,7 +30,7 @@ class BTO(Ontology):
     # -- A --
     @property
     def ancestors(self):
-        if not self._ancestors is None:
+        if self._ancestors is not None:
             return self._ancestors
         self._ancestors = []
         query = BTOAncestor.select().where(BTOAncestor.bto == self.id)

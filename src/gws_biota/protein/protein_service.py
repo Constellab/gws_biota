@@ -4,8 +4,9 @@ import gzip
 import re
 
 from Bio import SeqIO
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from ..base.base_service import BaseService
 from .protein import Protein
@@ -27,7 +28,7 @@ class ProteinService(BaseService):
         :rtype: None
         """
 
-        Logger.info(f"Loading and saving uniprot data ...")
+        Logger.info("Loading and saving uniprot data ...")
         with gzip.open(protein_file, "rt") as handle:
             proteins = []
             count = 0

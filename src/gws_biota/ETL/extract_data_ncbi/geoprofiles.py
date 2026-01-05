@@ -3,16 +3,17 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Folder, Compress, Logger
+import os
+import re
+import tarfile
 from ftplib import FTP
+
 import requests
 from bs4 import BeautifulSoup
-import re
-import os
-import tarfile
+from gws_core import Compress, Folder, Logger
 
 
-class GeoProfiles():
+class GeoProfiles:
     @classmethod
     def get_geoprofiles_data(cls, destination_dir, uids) -> Folder:
         # Connection to FTP

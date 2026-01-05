@@ -2,13 +2,13 @@
 
 import hashlib
 import pickle
-from typing import Dict, List
 
 import networkx as nx
-from gws_biota import Compound
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import BlobField
+
+from gws_biota import Compound
 
 from ..base.base_ft import BaseFT
 from ..compound.compound import Compound
@@ -28,11 +28,11 @@ class Unicell(BaseFT):
     rhea_edge_map = BlobField()
     graph = BlobField()
 
-    _compound_x_list: List[float] = None
-    _compound_y_list: List[float] = None
-    _compound_id_list: List[str] = None
-    _reaction_id_list: List[str] = None
-    _rhea_edge_map: Dict[str, List[str]] = None
+    _compound_x_list: list[float] = None
+    _compound_y_list: list[float] = None
+    _compound_id_list: list[str] = None
+    _reaction_id_list: list[str] = None
+    _rhea_edge_map: dict[str, list[str]] = None
     _graph = None
 
     @classmethod
@@ -82,13 +82,13 @@ class Unicell(BaseFT):
             self._reaction_id_list = pickle.loads(self.reaction_id_list)
         return self._reaction_id_list
 
-    def get_rhea_edge_map(self) -> Dict[str, List[str]]:
+    def get_rhea_edge_map(self) -> dict[str, list[str]]:
         """ Get rhea_edge mapping dictionnary """
         if self._rhea_edge_map is None:
             self._rhea_edge_map = pickle.loads(self.rhea_edge_map)
         return self._rhea_edge_map
 
-    def get_subgraph(self, rhea_id_list: List[str]):
+    def get_subgraph(self, rhea_id_list: list[str]):
         " Get subgraph "
         edges = []
         rhea_edge_map = self.get_rhea_edge_map()

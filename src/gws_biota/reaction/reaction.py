@@ -1,15 +1,19 @@
 
-from typing import Union
 
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
-                    ManyToManyField, ModelSelect, TextField)
+from peewee import (
+    CharField,
+    DeferredThroughModel,
+    ForeignKeyField,
+    ManyToManyField,
+    ModelSelect,
+    TextField,
+)
 from playhouse.mysql_ext import Match
 
 from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
 from ..compound.compound import Compound
-from ..db.biota_db_manager import BiotaDbManager
 from ..enzyme.enzyme import Enzyme
 from .reaction_layout import ReactionLayout, ReactionLayoutDict
 
@@ -199,7 +203,7 @@ class Reaction(BaseFT):
         self.master_id = master_id
 
     @classmethod
-    def search_by_tax_ids(cls, tax_ids: Union[list, str]) -> ModelSelect:
+    def search_by_tax_ids(cls, tax_ids: list | str) -> ModelSelect:
         tax_ids = [tax.replace("TAX", "") for tax in tax_ids]  # clean taxa
         if isinstance(tax_ids, str):
             tax_ids = ["TAX" + tax_ids]
@@ -210,7 +214,7 @@ class Reaction(BaseFT):
         return cls.select().where(Match((cls.ft_tax_ids), tax_ids))
 
     @classmethod
-    def search_by_ec_numbers(cls, ec_numbers: Union[list, str]) -> ModelSelect:
+    def search_by_ec_numbers(cls, ec_numbers: list | str) -> ModelSelect:
         if isinstance(ec_numbers, str):
             ec_numbers = ["EC" + ec_numbers.replace(".", "")]
         if isinstance(ec_numbers, list):

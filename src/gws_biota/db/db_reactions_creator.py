@@ -1,18 +1,31 @@
 
 
 import re
-import requests
 
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
-                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
-                      FileDownloader)
+import requests
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    FileDownloader,
+    InputSpec,
+    InputSpecs,
+    OutputSpec,
+    OutputSpecs,
+    Settings,
+    StrParam,
+    Task,
+    TaskInputs,
+    TaskOutputs,
+    Text,
+    task_decorator,
+)
 
 from gws_biota import Reaction
 from gws_biota.reaction.reaction_service import ReactionService
-from ..compound.compound_service import Compound
-from ..taxonomy.taxonomy import Taxonomy
-from ..enzyme.enzyme_service import Enzyme
 
+from ..compound.compound_service import Compound
+from ..enzyme.enzyme_service import Enzyme
+from ..taxonomy.taxonomy import Taxonomy
 from .db_service import DbService
 
 
@@ -100,7 +113,7 @@ class ReactionDBCreator(Task):
         rhea_reactions_file = file_downloader.download_file_if_missing(
             params["rhea_reactions_file"], filename="rhea_reactions.tsv")
 
-        with open(rhea_reactions_file, "r", encoding='utf-8') as reactions_file:
+        with open(rhea_reactions_file, encoding='utf-8') as reactions_file:
             with open(f"{destination_dir}/rhea_reactions.txt", 'w', encoding='utf-8') as new_reactions_file:
                 # Ignore the first line which is the headere
                 lines = reactions_file.readlines()
@@ -134,7 +147,7 @@ class ReactionDBCreator(Task):
                     if len(colonnes) > 3 and colonnes[3]:
                         enzymes = re.split(":|;", colonnes[3])
 
-                        new_reactions_file.write(f"ENZYME      ")
+                        new_reactions_file.write("ENZYME      ")
                         for enzyme in enzymes:
                             if enzyme == "EC":
                                 continue

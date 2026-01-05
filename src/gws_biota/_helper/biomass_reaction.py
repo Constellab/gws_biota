@@ -1,17 +1,17 @@
 
 
 import json
-from typing import List
+
 from gws_core import StringHelper
 
 
-class BiomassReaction():
+class BiomassReaction:
 
     DEFAULT_NAME = "biota"
     SKIP_BIGG_EXCHANGE_REACTIONS = True
 
     @staticmethod
-    def _convert_annotation_list_to_dict(annotation: List) -> dict:
+    def _convert_annotation_list_to_dict(annotation: list) -> dict:
         annotation_dict: dict = {}
         if isinstance(annotation, list):
             for annotation_val in annotation:
@@ -26,7 +26,7 @@ class BiomassReaction():
 
     @ classmethod
     def extract_biomass_reactions_from_file(cls, file: str) -> list:
-        with open(file, 'r', encoding="utf-8") as fp:
+        with open(file, encoding="utf-8") as fp:
             data = json.load(fp)
             return cls.extract_biomass_reactions(data)
 

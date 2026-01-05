@@ -3,11 +3,22 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, ConfigSpecs,
-                      task_decorator, File, InputSpec, InputSpecs, StrParam, Table, TypingStyle)
-
-
 import pandas as pd
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    File,
+    InputSpec,
+    InputSpecs,
+    OutputSpec,
+    OutputSpecs,
+    StrParam,
+    Table,
+    Task,
+    TaskInputs,
+    TypingStyle,
+    task_decorator,
+)
 
 
 @task_decorator("CreateContextFile", style=TypingStyle.material_icon(

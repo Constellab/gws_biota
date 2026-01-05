@@ -4,7 +4,7 @@ import requests
 from gws.settings import Settings
 
 
-class QuickGOAnnotation():
+class QuickGOAnnotation:
     """
 
     This module allows to get results of a quickgo annotation research from an uniprot identifiers.

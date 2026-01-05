@@ -1,18 +1,19 @@
 
 
-from typing import List, TypedDict, Union
 import json
 import os
 from pathlib import Path
+from typing import TypedDict
+
 from gws_core import BadRequestException
 
 from .compound_cluster import CompoundCluster, CompoundClusterDict
 
-CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
-    "x": str,
-    "y": str,
-    "clusters": List[dict],
-})
+
+class CompoundLayoutDict(TypedDict):
+    x: str
+    y: str
+    clusters: list[dict]
 
 
 class CompoundLayout:
@@ -22,7 +23,7 @@ class CompoundLayout:
     Y_LIMIT = 4000
     BIOMASS_CLUSTER_CENTER = {"x": 1000, "y": 200}
 
-    _clusters: List[CompoundCluster] = []
+    _clusters: list[CompoundCluster] = []
 
     _data: dict = {}
     _flat_data: dict = {}
@@ -104,14 +105,14 @@ class CompoundLayout:
         return cls._flat_data
 
     @classmethod
-    def get_layout_by_chebi_id(cls, synonym_chebi_ids: Union[str, List[str]]) -> CompoundLayoutDict:
+    def get_layout_by_chebi_id(cls, synonym_chebi_ids: str | list[str]) -> CompoundLayoutDict:
         """ Get layout position matching with the CheBI id """
 
         position = {"x": None, "y": None, "clusters": {}}
         if not synonym_chebi_ids:
             return position
 
-        clusters: List[CompoundClusterDict] = {}
+        clusters: list[CompoundClusterDict] = {}
 
         if isinstance(synonym_chebi_ids, str):
             clusters = cls.get_flat_data().get(synonym_chebi_ids, {})
@@ -196,7 +197,7 @@ class CompoundLayout:
 
     @classmethod
     def _update_compound_layout_in_file(cls, file_path, chebi_id, cluster_id, level, x, y):
-        with open(file_path, 'r', encoding="utf-8") as fp:
+        with open(file_path, encoding="utf-8") as fp:
             content = json.load(fp)
 
         found = False

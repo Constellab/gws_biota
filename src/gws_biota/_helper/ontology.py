@@ -3,10 +3,11 @@
 import json
 import os
 import re
+
 from pronto import Ontology
 
 
-class Onto():
+class Onto:
     """
     This module allows to get all ontologie that will be used by the Gencovery web application.
     This include GO, SBO, BTO, CHEBI and ECO ontologies
@@ -43,8 +44,8 @@ class Onto():
         out_filename = 'corrected_'+in_filename
         out_file = os.path.join(path, out_filename)
 
-        with open(in_file, 'rt') as file:
-            with open(out_file, 'wt') as outfile:
+        with open(in_file) as file:
+            with open(out_file, "w") as outfile:
                 for line in file.readlines():
                     if line.startswith('def: '):
                         label, definition = line.split("def: ", 1)
@@ -82,13 +83,12 @@ class Onto():
         out_filename = 'corrected_'+in_filename
         out_file = os.path.join(path, out_filename)
 
-        with open(in_file, 'rt') as file:
-            with open(out_file, 'wt') as outfile:
-                for line in file.readlines():
-                    if not line.startswith('property_value'):
-                        if line.startswith('synonym') and ' []' in line:
-                            line = line.replace(' []', ' EXACT []')
-                        outfile.write(line)
+        with open(in_file) as file, open(out_file, "w") as outfile:
+            for line in file.readlines():
+                if not line.startswith('property_value'):
+                    if line.startswith('synonym') and ' []' in line:
+                        line = line.replace(' []', ' EXACT []')
+                    outfile.write(line)
 
         return path, out_filename
 
@@ -119,20 +119,19 @@ class Onto():
         out_filename = 'corrected_'+in_filename
         out_file = os.path.join(path, out_filename)
 
-        with open(in_file, 'rt') as file:
-            with open(out_file, 'wt') as outfile:
-                for line in file.readlines():
-                    m = re.search('\[(.+)\]', line)
-                    if m:
-                        text = m.group(1)
-                        entries = text.replace("\,", "##").split(",")
-                        for i in range(0, len(entries)):
-                            entries[i] = entries[i].strip().replace(" ", "-")
+        with open(in_file) as file, open(out_file, "w") as outfile:
+            for line in file.readlines():
+                m = re.search(r'\[(.+)\]', line)
+                if m:
+                    text = m.group(1)
+                    entries = text.replace(r"\,", "##").split(",")
+                    for i in range(0, len(entries)):
+                        entries[i] = entries[i].strip().replace(" ", "-")
 
-                        corrected_text = ", ".join(entries)
-                        outfile.write(line.replace(text, corrected_text).replace("##", "\,"))
-                    else:
-                        outfile.write(line)
+                    corrected_text = ", ".join(entries)
+                    outfile.write(line.replace(text, corrected_text).replace("##", r"\,"))
+                else:
+                    outfile.write(line)
 
         return path, out_filename
 

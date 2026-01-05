@@ -1,6 +1,5 @@
 
 
-from typing import List
 
 from gws_core import BaseModel, Logger
 from peewee import chunked
@@ -30,7 +29,7 @@ class ProtectedBaseModel(BaseModel):
             [s for c in cls.__subclasses__() for s in c.inheritors()])
 
     @classmethod
-    def create_all(cls, model_list: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
+    def create_all(cls, model_list: list['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> list['ProtectedBaseModel']:
         """
         Automically and safely save a list of models in the database. If an error occurs
         during the operation, the whole transactions is rolled back.
@@ -48,8 +47,8 @@ class ProtectedBaseModel(BaseModel):
         return model_list
 
     @classmethod
-    def update_all(cls, model_list: List['ProtectedBaseModel'],
-                   fields: list, batch_size=BATCH_SIZE) -> List['ProtectedBaseModel']:
+    def update_all(cls, model_list: list['ProtectedBaseModel'],
+                   fields: list, batch_size=BATCH_SIZE) -> list['ProtectedBaseModel']:
         """
         Automically and safely save a list of models in the database. If an error occurs
         during the operation, the whole transactions is rolled back.
@@ -67,7 +66,7 @@ class ProtectedBaseModel(BaseModel):
         return model_list
 
     @classmethod
-    def insert_all(cls, data: List['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> None:
+    def insert_all(cls, data: list['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> None:
         db = cls.get_db()
         with db.atomic():
             for batch in chunked(data, batch_size):

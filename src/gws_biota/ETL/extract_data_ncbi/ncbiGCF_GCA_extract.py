@@ -3,14 +3,23 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, Settings, ConfigSpecs,
-                      task_decorator, File, StrParam)
-
-import os
-import requests
+import gzip
 from ftplib import FTP
 from io import BytesIO
-import gzip
+
+import requests
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    File,
+    OutputSpec,
+    OutputSpecs,
+    Settings,
+    StrParam,
+    Task,
+    TaskInputs,
+    task_decorator,
+)
 
 
 @task_decorator("ExtractProteomeNCBI", human_name="Download NCBI proteome file",

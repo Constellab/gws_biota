@@ -3,12 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Folder, Logger
-from Bio import Entrez
 import os
 
+from Bio import Entrez
+from gws_core import Folder, Logger
 
-class PopSet():
+
+class PopSet:
     @classmethod
     def get_popset_data(cls, destination_dir, uids) -> Folder:
         Logger.info(f"Number of elements : {len(uids['IdList'])}")

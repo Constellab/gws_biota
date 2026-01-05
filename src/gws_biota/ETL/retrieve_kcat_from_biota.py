@@ -3,13 +3,22 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, ConfigSpecs,
-                      task_decorator, Table, StrParam, Table,
-                      TypingStyle)
-
-from gws_biota import Enzyme
 import numpy as np
 import pandas as pd
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    OutputSpec,
+    OutputSpecs,
+    StrParam,
+    Table,
+    Task,
+    TaskInputs,
+    TypingStyle,
+    task_decorator,
+)
+
+from gws_biota import Enzyme
 
 
 @task_decorator("RetrieveKcatFromBiota", style=TypingStyle.material_icon(

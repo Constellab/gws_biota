@@ -13,6 +13,7 @@
     "BIOTA_DB_USER": "gws_biota",
     "BIOTA_DB_NAME": "gws_biota"
   },
+  "technical_info": {},
   "environment": {
     "bricks": [
       {

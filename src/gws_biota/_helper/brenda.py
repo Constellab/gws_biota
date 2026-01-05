@@ -1,11 +1,9 @@
 
 
-import sys
-import re
-import os
 from brendapy import BrendaParser, BrendaSettings
 
-class Brenda():
+
+class Brenda:
     """
     This module allows to get list of dictionnaries where terms represents brenda proteins/enzymes
     """

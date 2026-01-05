@@ -1,16 +1,16 @@
 
 
-from typing import List, Type
+
+from gws_core import MessageDispatcher
 
 from gws_biota.base.base import Base
-from gws_core import MessageDispatcher
 
 from .biota_db_manager import BiotaDbManager
 
 
 class DbService:
     @classmethod
-    def drop_biota_tables(cls, biota_models: List[Type[Base]], message_dispatcher: MessageDispatcher = None) -> None:
+    def drop_biota_tables(cls, biota_models: list[type[Base]], message_dispatcher: MessageDispatcher = None) -> None:
         """
         Drops tables (if they exist)
 
@@ -39,7 +39,7 @@ class DbService:
         BiotaDbManager._DEACTIVATE_PROTECTION_ = False
 
     @classmethod
-    def create_biota_tables(cls, biota_models: List[Type[Base]], message_dispatcher: MessageDispatcher = None) -> None:
+    def create_biota_tables(cls, biota_models: list[type[Base]], message_dispatcher: MessageDispatcher = None) -> None:
         BiotaDbManager._DEACTIVATE_PROTECTION_ = True
 
         if message_dispatcher is None:

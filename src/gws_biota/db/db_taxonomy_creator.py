@@ -1,11 +1,25 @@
 
 
 import requests
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    FileDownloader,
+    InputSpec,
+    InputSpecs,
+    OutputSpec,
+    OutputSpecs,
+    Settings,
+    StrParam,
+    Task,
+    TaskInputs,
+    TaskOutputs,
+    Text,
+    task_decorator,
+)
+
 from gws_biota import Taxonomy
 from gws_biota.taxonomy.taxonomy_service import TaxonomyService
-from gws_core import (ConfigParams, ConfigSpecs, FileDownloader, InputSpec,
-                      InputSpecs, OutputSpec, OutputSpecs, Settings, StrParam,
-                      Task, TaskInputs, TaskOutputs, Text, task_decorator)
 
 from .db_service import DbService
 

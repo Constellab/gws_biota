@@ -3,13 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Folder, Logger
-from Bio import Entrez
-import xml.dom.minidom
 import os
 
+from Bio import Entrez
+from gws_core import Folder, Logger
 
-class Pubmed():
+
+class Pubmed:
     @classmethod
     def get_all_pubmed_articles(cls, destination_dir, uids):
         Logger.info(f"Number of elements : {len(uids['IdList'])}")

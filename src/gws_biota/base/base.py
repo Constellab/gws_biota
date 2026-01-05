@@ -1,7 +1,7 @@
 
 
 
-from typing import Any, Dict
+from typing import Any
 
 from gws_core import BadRequestException, JSONField, Model
 from peewee import CharField, DoesNotExist, ModelSelect
@@ -14,7 +14,7 @@ from .protected_base_model import ProtectedBaseModel
 class Base(Model, ProtectedBaseModel):
 
     name = CharField(null=True, index=True)
-    data: Dict[str, Any] = JSONField(default=dict)
+    data: dict[str, Any] = JSONField(default=dict)
 
     @classmethod
     def after_table_creation(cls) -> None:

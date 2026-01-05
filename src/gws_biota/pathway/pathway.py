@@ -2,10 +2,8 @@
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
-from ..base.base import Base
 from ..base.protected_base_model import ProtectedBaseModel
 from ..compound.compound import Compound
-from ..db.biota_db_manager import BiotaDbManager
 from ..ontology.ontology import Ontology
 from .pathway_compound import PathwayCompound
 
@@ -23,7 +21,7 @@ class Pathway(Ontology):
 
     @property
     def ancestors(self):
-        if not self._ancestors is None:
+        if self._ancestors is not None:
             return self._ancestors
         self._ancestors = []
         Q = PathwayAncestor.select().where(PathwayAncestor.pathway == self.id)

@@ -3,11 +3,24 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, ConfigSpecs,
-                      task_decorator, InputSpec, InputSpecs, Table, StrParam, File, TypingStyle)
-
 import json
+
 import pandas as pd
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    File,
+    InputSpec,
+    InputSpecs,
+    OutputSpec,
+    OutputSpecs,
+    StrParam,
+    Table,
+    Task,
+    TaskInputs,
+    TypingStyle,
+    task_decorator,
+)
 
 
 @task_decorator("BiGGIdentifiersToEcNumber", style=TypingStyle.material_icon(
@@ -31,7 +44,7 @@ class BiGGIdentifiersToEcNumber(Task):
         final_table = {}
         results = []
 
-        with open(BiGG_model.path, "r") as bigg:
+        with open(BiGG_model.path) as bigg:
             data = json.load(bigg)
 
         # Retrieve bigg ID and ec-code from BiGG model file

@@ -1,11 +1,11 @@
 
 
 import math
-from typing import List
 
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 from peewee import chunked
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.chebi import Chebi as ChebiHelper
 from .._helper.ontology import Onto as OntoHelper
@@ -59,12 +59,12 @@ class CompoundService(BaseService):
                 comp.inchi = comp.data["inchi"]
                 comp.inchikey = comp.data["inchikey"]
                 comp.smiles = comp.data["smiles"]
-                if not comp.data["mass"] is None:
+                if comp.data["mass"] is not None:
                     comp.mass = cls._to_float(comp.data["mass"])
-                if not comp.data["monoisotopic_mass"] is None:
+                if comp.data["monoisotopic_mass"] is not None:
                     comp.monoisotopic_mass = cls._to_float(
                         comp.data["monoisotopic_mass"])
-                if not comp.data["charge"] is None:
+                if comp.data["charge"] is not None:
                     comp.charge = cls._to_float(comp.data["charge"])
                 comp.chebi_star = comp.data["subsets"]
                 if "kegg" in comp.data["xref"]:
@@ -101,7 +101,7 @@ class CompoundService(BaseService):
         CompoundAncestor.insert_all(vals)
 
     @classmethod
-    def _get_ancestors_query(cls, compound) -> List[dict]:
+    def _get_ancestors_query(cls, compound) -> list[dict]:
         """
         Look for the compound term ancestors and returns all ancetors relations in a list
 

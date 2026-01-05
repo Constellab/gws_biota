@@ -1,13 +1,25 @@
 
 
 import requests
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    FileDownloader,
+    InputSpec,
+    InputSpecs,
+    OutputSpec,
+    OutputSpecs,
+    Settings,
+    StrParam,
+    Task,
+    TaskInputs,
+    TaskOutputs,
+    Text,
+    task_decorator,
+)
 
 from gws_biota import Compound
 from gws_biota.compound.compound_service import CompoundService
-
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
-                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
-                      FileDownloader)
 
 from .db_service import DbService
 

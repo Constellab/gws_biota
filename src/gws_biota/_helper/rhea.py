@@ -5,7 +5,7 @@ import os
 import re
 
 
-class Rhea():
+class Rhea:
     """
 
     This module allows to get list of biological reactions from rhea files and informations about thoses
@@ -69,10 +69,10 @@ class Rhea():
 
             list_reaction = []
             for cont in list_content:
-                m1 = re.search("ENTRY\s+(.*)", cont)
-                m2 = re.search("DEFINITION\s+(.*)", cont)
-                m3 = re.search("EQUATION\s+(.*)", cont)
-                m4 = re.search("ENZYME\s+(.*)", cont, flags=re.DOTALL)
+                m1 = re.search(r"ENTRY\s+(.*)", cont)
+                m2 = re.search(r"DEFINITION\s+(.*)", cont)
+                m3 = re.search(r"EQUATION\s+(.*)", cont)
+                m4 = re.search(r"ENZYME\s+(.*)", cont, flags=re.DOTALL)
                 dict__ = {}
                 if m1:
                     dict__["entry"] = m1[1]
@@ -86,7 +86,7 @@ class Rhea():
                 if m4:
                     dict__["enzymes"] = m4[1].split()
 
-                if 'equation' in dict__.keys():
+                if 'equation' in dict__:
                     dict__['source_equation'] = dict__['equation']
                     if len(re.findall(' =>', dict__['equation'])) > 0:
                         list_compound = dict__['equation'].split(" => ")

@@ -1,8 +1,7 @@
 
 
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import CharField, ForeignKeyField, ModelSelect, TextField
-from playhouse.mysql_ext import Match
+from peewee import CharField, ForeignKeyField
 
 from ..base.base_ft import BaseFT
 from .deprecated_enzyme import DeprecatedEnzyme
@@ -25,7 +24,7 @@ class EnzymeOrtholog(BaseFT):
         from .enzyme import Enzyme
 
         Q = Enzyme.select().where(Enzyme.ec_number == self.ec_number)
-        if not tax_id is None:
+        if tax_id is not None:
             Q = Q.where(Enzyme.tax_id == tax_id)
         if limit:
             Q = Q.limit(limit)

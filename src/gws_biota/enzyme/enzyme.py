@@ -1,17 +1,14 @@
 
 
 from collections import OrderedDict
-from typing import List
 
 from gws_core import BadRequestException
 from gws_core.model.typing_register_decorator import typing_registrator
-from peewee import (CharField, DeferredThroughModel, ForeignKeyField,
-                    ManyToManyField)
+from peewee import CharField, DeferredThroughModel, ForeignKeyField, ManyToManyField
 
 from ..base.base_ft import BaseFT
 from ..base.protected_base_model import ProtectedBaseModel
 from ..bto.bto import BTO
-from ..db.biota_db_manager import BiotaDbManager
 from ..protein.protein import Protein
 from ..taxonomy.taxonomy import Taxonomy
 from .deprecated_enzyme import DeprecatedEnzyme
@@ -185,7 +182,7 @@ class Enzyme(BaseFT):
         params = self.get_params(name)
         return params.to_json()
 
-    def get_params_by_tax(self, name, tax_id) -> List[Params]:
+    def get_params_by_tax(self, name, tax_id) -> list[Params]:
         """
         Returns the list of parameters associated with `name`
 

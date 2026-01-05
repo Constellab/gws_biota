@@ -3,9 +3,7 @@
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, ForeignKeyField
 
-from ..base.base import Base
 from ..base.protected_base_model import ProtectedBaseModel
-from ..db.biota_db_manager import BiotaDbManager
 from ..ontology.ontology import Ontology
 
 

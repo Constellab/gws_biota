@@ -3,7 +3,7 @@
 from pprint import pformat
 
 
-class Param():
+class Param:
     """
     Adpater class that represents a BRENDA parameter
 
@@ -46,7 +46,7 @@ class Param():
 
         :rtype: bool
         """
-        return not self.value is None
+        return self.value is not None
 
     def get(self, key):
         return self.data.get(key, None)
@@ -59,7 +59,7 @@ class Param():
         }
 
 
-class Params():
+class Params:
     """
     Adpater class that represents a list of BRENDA parameters
     """

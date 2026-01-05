@@ -3,9 +3,9 @@
 import json
 import os
 from pathlib import Path
-from typing import Dict, List, TypedDict
+from typing import TypedDict
 
-from gws_core import BadRequestException, StringHelper
+from gws_core import BadRequestException
 
 GRID_SCALE = 3
 GOLBAL_CENTER = {"x": 719, "y": 513}  # Pyruvate is the center of the world!
@@ -24,19 +24,17 @@ GOLBAL_CENTER = {"x": 719, "y": 513}  # Pyruvate is the center of the world!
 #     "urea_cycle": {"x": 200, "y": 0}
 # }
 
-CompoundClusterDict = TypedDict("CompoundClusterDict", {
-    "id": str,
-    "name": str,
-    "pathway": List[dict],
-    "level": int,
-    "x": str,
-    "y": str
-})
-CompoundLayoutDict = TypedDict("CompoundLayoutDict", {
-    "clusters": List[dict],
-    "x": str,
-    "y": str
-})
+class CompoundClusterDict(TypedDict):
+    id: str
+    name: str
+    pathway: list[dict]
+    level: int
+    x: str
+    y: str
+class CompoundLayoutDict(TypedDict):
+    clusters: list[dict]
+    x: str
+    y: str
 
 
 class CompoundCluster:
@@ -45,11 +43,11 @@ class CompoundCluster:
     _id: str = None
     _name: str = None
     _pathway: str = None
-    _data: Dict[str, Dict] = None
+    _data: dict[str, dict] = None
     _centroid: dict = None
     _level: int = 2
 
-    def __init__(self, id, name, pathway, data: Dict, centroid: Dict = None):
+    def __init__(self, id, name, pathway, data: dict, centroid: dict = None):
         if not isinstance(data, dict):
             raise BadRequestException("The data must be a dict")
         self._id = id
@@ -114,7 +112,7 @@ class CompoundCluster:
     @ classmethod
     def from_file(cls, file_path) -> 'CompoundCluster':
         """ Create a CompoundCluster using a json data file """
-        with open(file_path, "r", encoding="utf-8") as fp:
+        with open(file_path, encoding="utf-8") as fp:
             try:
                 cdata = json.load(fp)
             except Exception as err:
@@ -148,7 +146,7 @@ class CompoundCluster:
         if not os.path.exists(centroid_file):
             raise BadRequestException(f'No centroid file found for folder {folder}')
 
-        with open(centroid_file, "r", encoding="utf-8") as fp:
+        with open(centroid_file, encoding="utf-8") as fp:
             try:
                 cdata = json.load(fp)
             except Exception as err:

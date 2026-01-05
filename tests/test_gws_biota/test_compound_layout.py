@@ -1,6 +1,4 @@
-import os
 
-from gws_biota import Compound
 from gws_biota.compound.compound_layout import CompoundLayout
 from gws_core import BaseTestCase
 

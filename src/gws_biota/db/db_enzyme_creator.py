@@ -1,17 +1,30 @@
 
 
-import os
 import requests
-
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, Text, ConfigSpecs,
-                      TaskOutputs, task_decorator, InputSpecs, InputSpec, OutputSpec, OutputSpecs,
-                      FileDownloader, File)
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    File,
+    FileDownloader,
+    InputSpec,
+    InputSpecs,
+    OutputSpec,
+    OutputSpecs,
+    Settings,
+    StrParam,
+    Task,
+    TaskInputs,
+    TaskOutputs,
+    Text,
+    task_decorator,
+)
 
 from gws_biota import Enzyme
 from gws_biota.enzyme.enzyme_service import EnzymeService
+
 from ..bto.bto import BTO
-from ..taxonomy.taxonomy import Taxonomy
 from ..pathway.pathway import Pathway
+from ..taxonomy.taxonomy import Taxonomy
 from .db_service import DbService
 
 

@@ -68,6 +68,6 @@ class Compartment:
     @classmethod
     def _get_db_data(cls):
         if cls._db_data is None:
-            with open(os.path.join(__cdir__, "./data/compartment.json"), 'r', encoding="utf-8") as fp:
+            with open(os.path.join(__cdir__, "./data/compartment.json"), encoding="utf-8") as fp:
                 cls._db_data = json.load(fp)
         return cls._db_data["data"]

@@ -3,15 +3,15 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Folder, Logger
-from Bio import Entrez
+import ftplib
 import os
 import re
-from ftplib import FTP
-import ftplib
+
+from Bio import Entrez
+from gws_core import Folder, Logger
 
 
-class GDS():
+class GDS:
     @classmethod
     def get_geodataset(cls, destination_dir, uids) -> Folder:
         gds_ids = uids["IdList"]

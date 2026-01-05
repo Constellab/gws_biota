@@ -1,11 +1,11 @@
 
 
 import pickle
-from typing import List
 
 import networkx as nx
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import BadRequestException, Logger
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from ..compound.cofactor import Cofactor
 from ..taxonomy.taxonomy import Taxonomy
@@ -26,7 +26,7 @@ class UnicellService:
 
         page = 1
         nb_items_per_page = 1000
-        cofactor_list: List[str] = list(Cofactor.get_factors_as_list())
+        cofactor_list: list[str] = list(Cofactor.get_factors_as_list())
         graph = nx.Graph()
 
         if tax_id:

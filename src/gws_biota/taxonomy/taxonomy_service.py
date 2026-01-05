@@ -1,8 +1,9 @@
 
 
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 from peewee import chunked
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.ncbi import Taxonomy as NCBITaxonomyHelper
 from ..base.base_service import BaseService

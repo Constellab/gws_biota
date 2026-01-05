@@ -3,12 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Folder, Logger
-from Bio import Entrez
 import os
 
+from Bio import Entrez
+from gws_core import Folder, Logger
 
-class Protein():
+
+class Protein:
     @classmethod
     def get_protein_data(cls, destination_dir, uids) -> Folder:
         uids = uids['IdList']

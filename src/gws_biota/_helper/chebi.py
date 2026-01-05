@@ -6,7 +6,7 @@ import re
 from gws_core import Logger
 
 
-class Chebi():
+class Chebi:
     """
     This module allows to get list of dictionnaries where terms represents chebi chemical compounds and
     to get list of dictionnaries where terms represents chebi ontology terms
@@ -37,8 +37,8 @@ class Chebi():
         out_file = os.path.join(path, out_filename)
         Logger.info(f"out_file : {out_file}")
 
-        with open(in_file, 'rt', encoding='utf-8') as file:
-            with open(out_file, 'wt', encoding='utf-8') as outfile:
+        with open(in_file, encoding='utf-8') as file:
+            with open(out_file, "w", encoding='utf-8') as outfile:
                 for line in file.readlines():
                     m = re.search(r'xref: [a-zA-Z]+:([^\{\}\"]+) .*', line)
                     if m:

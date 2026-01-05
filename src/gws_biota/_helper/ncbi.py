@@ -1,11 +1,8 @@
 
 
-import sys
-import os
-import re
 
 
-class Taxonomy():
+class Taxonomy:
     """
     This module allows to all the ncbi taxonomy terms but also additionnal informations such as:
     parent id of terms, division, citations, etc..

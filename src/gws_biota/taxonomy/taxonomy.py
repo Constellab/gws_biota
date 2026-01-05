@@ -55,11 +55,11 @@ class Taxonomy(Ontology):
 
     @property
     def ancestors(self):
-        if not self._ancestors is None:
+        if self._ancestors is not None:
             return self._ancestors
         tax = self
         self._ancestors = []
-        while not tax.ancestor is None:
+        while tax.ancestor is not None:
             self._ancestors.append(tax.ancestor)
             tax = tax.ancestor
         return self._ancestors
@@ -68,7 +68,7 @@ class Taxonomy(Ontology):
 
     @property
     def children(self):
-        if not self._children is None:
+        if self._children is not None:
             return self._children
         self._children = Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.tax_id)
         return self._children
@@ -83,7 +83,7 @@ class Taxonomy(Ontology):
 
     @property
     def siblings(self):
-        if not self._siblings is None:
+        if self._siblings is not None:
             return self._siblings
         self._siblings = Taxonomy.select().where(Taxonomy.ancestor_tax_id == self.ancestor_tax_id)
         return self._siblings

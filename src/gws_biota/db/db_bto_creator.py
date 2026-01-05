@@ -1,13 +1,24 @@
 
 
 import requests
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    FileDownloader,
+    InputSpec,
+    InputSpecs,
+    OutputSpec,
+    OutputSpecs,
+    Settings,
+    StrParam,
+    Task,
+    TaskInputs,
+    Text,
+    task_decorator,
+)
 
 from gws_biota import BTO
 from gws_biota.bto.bto_service import BTOService
-
-from gws_core import (ConfigParams, Settings, StrParam, Task, TaskInputs, ConfigSpecs,
-                      task_decorator, InputSpecs, InputSpec, OutputSpecs, OutputSpec,
-                      FileDownloader, Text)
 
 from .db_service import DbService
 

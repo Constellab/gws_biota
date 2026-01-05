@@ -3,17 +3,28 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import (ConfigParams, OutputSpec, OutputSpecs, Task, TaskInputs, Settings, ConfigSpecs,
-                      TaskOutputs, task_decorator, Folder, StrParam)
-
 from Bio import Entrez
-from ..extract_data_ncbi.pubmed import Pubmed
-from ..extract_data_ncbi.geoprofiles import GeoProfiles
-from ..extract_data_ncbi.gene import Gene
+from gws_core import (
+    ConfigParams,
+    ConfigSpecs,
+    Folder,
+    OutputSpec,
+    OutputSpecs,
+    Settings,
+    StrParam,
+    Task,
+    TaskInputs,
+    TaskOutputs,
+    task_decorator,
+)
+
 from ..extract_data_ncbi.clinvar import ClinVar
-from ..extract_data_ncbi.protein import Protein
 from ..extract_data_ncbi.gds import GDS
+from ..extract_data_ncbi.gene import Gene
+from ..extract_data_ncbi.geoprofiles import GeoProfiles
 from ..extract_data_ncbi.popset import PopSet
+from ..extract_data_ncbi.protein import Protein
+from ..extract_data_ncbi.pubmed import Pubmed
 
 
 @task_decorator("RequestNCBI", human_name="Request NCBI",

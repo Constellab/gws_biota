@@ -1,7 +1,8 @@
 
 
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService

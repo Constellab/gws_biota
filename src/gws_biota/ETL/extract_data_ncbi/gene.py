@@ -3,13 +3,13 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Folder, Logger
-
-from Bio import Entrez
 import os
 
+from Bio import Entrez
+from gws_core import Folder, Logger
 
-class Gene():
+
+class Gene:
     @classmethod
     def get_gene_data(cls, destination_dir, uids) -> Folder:
         uids = uids['IdList']
@@ -26,7 +26,7 @@ class Gene():
                 try:
                     with open(file_path, "w") as output_file:
                         output_file.write(gene_record)
-                except IOError as e:
+                except OSError as e:
                     Logger.info(f"Failed to write file {file_path}: {e}")
                     Logger.error(f"Failed to write file {file_path}: {e}")
 

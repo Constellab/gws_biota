@@ -1,16 +1,16 @@
 
 
-from gws_biota.db.biota_db_manager import BiotaDbManager
 from gws_core import Logger
 from peewee import chunked
+
+from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.rhea import Rhea
 from ..base.base_service import BaseService
 from ..compound.compound import Compound
 from ..enzyme.enzyme import Enzyme
 from ..taxonomy.taxonomy import Taxonomy
-from .reaction import (Reaction, ReactionEnzyme, ReactionProduct,
-                       ReactionSubstrate)
+from .reaction import Reaction, ReactionEnzyme, ReactionProduct, ReactionSubstrate
 
 
 class ReactionService(BaseService):

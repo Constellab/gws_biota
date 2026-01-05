@@ -4,7 +4,7 @@ import csv
 import os
 
 
-class BKMS():
+class BKMS:
     """
     This module allows to parse and process the BKMS (Brend Kegg MetaCyc  and Sabio-RK) csv file
     obtained from http://bkms-react.tu-bs.de

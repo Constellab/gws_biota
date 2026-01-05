@@ -19,7 +19,6 @@
 # https://creativecommons.org/licenses/by/4.0/.
 
 import re
-from typing import Union
 
 from gws_core.model.typing_register_decorator import typing_registrator
 from peewee import CharField, DoubleField, FloatField, ForeignKeyField
@@ -101,7 +100,7 @@ class Compound(BaseFT):
     # -- G --
 
     @classmethod
-    def search_by_chebi_ids(cls, chebi_ids: Union[list, str]):
+    def search_by_chebi_ids(cls, chebi_ids: list | str):
         """ Search compounds using CheBI IDs """
         if isinstance(chebi_ids, str):
             chebi_ids = ["CHEBI" + chebi_ids.replace("CHEBI:", "")]

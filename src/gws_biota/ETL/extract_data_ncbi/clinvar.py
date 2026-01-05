@@ -3,13 +3,14 @@
 # The use and distribution of this software is prohibited without the prior consent of Gencovery SAS.
 # About us: https://gencovery.com
 
-from gws_core import Folder, Logger
-import requests
-import os
 import json
+import os
+
+import requests
+from gws_core import Folder, Logger
 
 
-class ClinVar():
+class ClinVar:
     @classmethod
     def get_clinvar_data(cls, destination_dir, uids) -> Folder:
         def send_request(url, params):

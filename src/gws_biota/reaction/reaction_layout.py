@@ -1,12 +1,12 @@
 
 
-from typing import List, TypedDict
+from typing import TypedDict
 
-ReactionLayoutDict = TypedDict("ReactionLayoutDict", {
-    "x": str,
-    "y": str,
-    "points": List[dict],
-})
+
+class ReactionLayoutDict(TypedDict):
+    x: str
+    y: str
+    points: list[dict]
 
 
 class ReactionLayout:
@@ -16,5 +16,5 @@ class ReactionLayout:
         return {
             "x": str,
             "y": str,
-            "points": List[dict],
+            "points": list[dict],
         }
