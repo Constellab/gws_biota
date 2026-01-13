@@ -2,7 +2,7 @@
   "name": "gws_biota",
   "author": "Gencovery",
   "author_email": "admin@gencovery.com",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "The Biological and Omics Database for Gencovery Web Services",
   "variables": {
     "biodata_dir": "/data/${CURRENT_BRICK}/biodata/",
@@ -32,10 +32,6 @@
           {
             "name": "pronto",
             "version": "2.5.7"
-          },
-          {
-            "name": "ujson",
-            "version": "5.10.0"
           },
           {
             "name": "pyparsing",
