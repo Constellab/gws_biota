@@ -17,6 +17,39 @@ Categories:
 from typing import Optional, List, Dict, Any, Union
 
 from mcp_biota_simple import _ensure_initialized, _entity_to_dict, _entities_to_list
+from mcp_biota_complex_dto import (
+    TissueInfo, CompoundInfo, ReactionInfo, EnzymeInfo, TaxonomyInfo,
+    EnzymeTissueSources, ReactionSubstratesProducts, ReactionsByCompound,
+    TaxonomyAncestors, PathwayCompoundsResult, EnzymesByTissue, EnzymesForProtein,
+    EnzymeProteinTaxonTable, EnzymeProteinTaxonEntry, EnzymeProteinTaxonTableFilters,
+    MetabolicNetworkForTaxon, MetabolicNetworkStatistics, MetabolicReactionData,
+    EnzymeReactionsCompounds, EnzymeReactionWithCompounds,
+    EnzymeProteinTaxonomy, EnzymeProteinTaxonomyEntry,
+    EnzymeBTOAncestors, TissueWithAncestors, BTOAncestorInfo,
+    EnzymeReactionsByTaxon, EnzymeWithReactions,
+    EnzymeClassHierarchy, EnzymeClassHierarchyEntry,
+    DeprecatedEnzymeToReactions, DeprecatedEnzymeMapping,
+    EnzymeOrthologPathway, EnzymeOrthologEntry, PathwayInfo,
+    EnzymeAllTissuesByTaxon, TissueWithEnzymes,
+    ReactionFullDetail, EnzymeWithTaxonomy,
+    ReactionEnzymesByTaxon, TaxonEnzymeGroup,
+    ReactionSharedCompounds, ReactionsBetweenCompounds, CompoundPair,
+    ReactionTaxonomyDistribution, ReactionCrossReferences,
+    ReactionXRef, CompoundXRef, EnzymeXRef,
+    ReactionMassBalance, ReactionsByEnzymePair,
+    CompoundReactionsEnzymes, ReactionWithEnzymes,
+    CompoundPathwaySpecies, PathwayWithSpecies,
+    CompoundAncestorsTree, CompoundCommonReactions, CompoundInfoPair,
+    CompoundProducingEnzymesByTaxon, EnzymeProducingCompound,
+    CompoundConsumingEnzymesByTaxon, EnzymeConsumingCompound,
+    TaxonomyEnzymesProteinsCount, TaxonomyChildrenEnzymeStats, TaxonomyChildStats,
+    TaxonomyReactionsCompounds, CompoundRole, ReactionWithCompounds,
+    PathwayReactionsEnzymes, ReactionWithEnzymeList,
+    PathwayAncestorCompounds, AncestorPathwayWithCompounds,
+    GOAncestorsTree, GOInfo,
+    OrganismFullProfile, OrganismStatistics, ProteinInfo,
+    CompareTwoTaxaEnzymes, TaxonInfo
+)
 
 
 # ============================================================================
@@ -24,7 +57,7 @@ from mcp_biota_simple import _ensure_initialized, _entity_to_dict, _entities_to_
 # ============================================================================
 
 @_ensure_initialized
-def get_enzyme_tissue_sources(ec_number: str) -> Dict[str, Any]:
+def get_enzyme_tissue_sources(ec_number: str) -> EnzymeTissueSources:
     """
     6. Récupère les tissus (BTO) où l'enzyme est exprimé.
 
@@ -32,7 +65,7 @@ def get_enzyme_tissue_sources(ec_number: str) -> Dict[str, Any]:
         ec_number: Numéro EC de l'enzyme
 
     Returns:
-        Dict avec la liste des tissus/organes
+        EnzymeTissueSources with tissue information
     """
     from gws_biota import Enzyme, BTO
     from gws_biota.enzyme.enzyme import EnzymeBTO
@@ -41,7 +74,7 @@ def get_enzyme_tissue_sources(ec_number: str) -> Dict[str, Any]:
     enzymes = list(Enzyme.select().where(Enzyme.ec_number == ec_number))
 
     if not enzymes:
-        return {"error": f"No enzyme found with EC number {ec_number}"}
+        raise ValueError(f"No enzyme found with EC number {ec_number}")
 
     # Get BTO associations
     tissues = []
@@ -50,22 +83,22 @@ def get_enzyme_tissue_sources(ec_number: str) -> Dict[str, Any]:
         for eb in enzyme_btos:
             bto = eb.bto
             if bto:
-                tissues.append({
-                    "bto_id": bto.bto_id,
-                    "name": bto.name,
-                    "enzyme_uniprot_id": enzyme.uniprot_id
-                })
+                tissues.append(TissueInfo(
+                    bto_id=bto.bto_id,
+                    name=bto.name,
+                    enzyme_uniprot_id=enzyme.uniprot_id
+                ))
 
-    return {
-        "ec_number": ec_number,
-        "enzyme_count": len(enzymes),
-        "tissue_count": len(tissues),
-        "tissues": tissues
-    }
+    return EnzymeTissueSources(
+        ec_number=ec_number,
+        enzyme_count=len(enzymes),
+        tissue_count=len(tissues),
+        tissues=tissues
+    )
 
 
 @_ensure_initialized
-def get_reaction_substrates_products(rhea_id: str) -> Dict[str, Any]:
+def get_reaction_substrates_products(rhea_id: str) -> ReactionSubstratesProducts:
     """
     20. Substrats et produits d'une réaction.
 
@@ -73,7 +106,7 @@ def get_reaction_substrates_products(rhea_id: str) -> Dict[str, Any]:
         rhea_id: Rhea identifier
 
     Returns:
-        Dict avec les substrats et produits détaillés
+        ReactionSubstratesProducts with substrates and products
     """
     from gws_biota import Reaction
 
@@ -84,39 +117,39 @@ def get_reaction_substrates_products(rhea_id: str) -> Dict[str, Any]:
     reaction = Reaction.get_or_none(Reaction.rhea_id == rhea_id)
 
     if not reaction:
-        return {"error": f"No reaction found with Rhea ID {rhea_id}"}
+        raise ValueError(f"No reaction found with Rhea ID {rhea_id}")
 
     substrates = []
     for s in reaction.substrates:
-        substrates.append({
-            "chebi_id": s.chebi_id,
-            "name": s.name,
-            "formula": s.formula,
-            "mass": s.mass
-        })
+        substrates.append(CompoundInfo(
+            chebi_id=s.chebi_id,
+            name=s.name,
+            formula=s.formula,
+            mass=s.mass
+        ))
 
     products = []
     for p in reaction.products:
-        products.append({
-            "chebi_id": p.chebi_id,
-            "name": p.name,
-            "formula": p.formula,
-            "mass": p.mass
-        })
+        products.append(CompoundInfo(
+            chebi_id=p.chebi_id,
+            name=p.name,
+            formula=p.formula,
+            mass=p.mass
+        ))
 
-    return {
-        "rhea_id": rhea_id,
-        "reaction_name": reaction.name,
-        "direction": reaction.direction,
-        "substrate_count": len(substrates),
-        "product_count": len(products),
-        "substrates": substrates,
-        "products": products
-    }
+    return ReactionSubstratesProducts(
+        rhea_id=rhea_id,
+        reaction_name=reaction.name,
+        direction=reaction.direction,
+        substrate_count=len(substrates),
+        product_count=len(products),
+        substrates=substrates,
+        products=products
+    )
 
 
 @_ensure_initialized
-def search_reactions_by_compound(chebi_id: str, role: str = "both") -> Dict[str, Any]:
+def search_reactions_by_compound(chebi_id: str, role: str = "both") -> ReactionsByCompound:
     """
     21. Réactions impliquant un composé.
 
@@ -125,7 +158,7 @@ def search_reactions_by_compound(chebi_id: str, role: str = "both") -> Dict[str,
         role: "substrate", "product", ou "both"
 
     Returns:
-        Dict avec la liste des réactions
+        ReactionsByCompound with reactions involving the compound
     """
     from gws_biota import Reaction, Compound
     from gws_biota.reaction.reaction import ReactionSubstrate, ReactionProduct
@@ -136,7 +169,7 @@ def search_reactions_by_compound(chebi_id: str, role: str = "both") -> Dict[str,
 
     compound = Compound.get_or_none(Compound.chebi_id == chebi_id)
     if not compound:
-        return {"error": f"No compound found with ChEBI ID {chebi_id}"}
+        raise ValueError(f"No compound found with ChEBI ID {chebi_id}")
 
     reactions_as_substrate = []
     reactions_as_product = []
@@ -147,11 +180,11 @@ def search_reactions_by_compound(chebi_id: str, role: str = "both") -> Dict[str,
         )
         for link in substrate_links:
             r = link.reaction
-            reactions_as_substrate.append({
-                "rhea_id": r.rhea_id,
-                "name": r.name,
-                "direction": r.direction
-            })
+            reactions_as_substrate.append(ReactionInfo(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                direction=r.direction
+            ))
 
     if role in ["product", "both"]:
         product_links = ReactionProduct.select().where(
@@ -159,25 +192,25 @@ def search_reactions_by_compound(chebi_id: str, role: str = "both") -> Dict[str,
         )
         for link in product_links:
             r = link.reaction
-            reactions_as_product.append({
-                "rhea_id": r.rhea_id,
-                "name": r.name,
-                "direction": r.direction
-            })
+            reactions_as_product.append(ReactionInfo(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                direction=r.direction
+            ))
 
-    return {
-        "chebi_id": chebi_id,
-        "compound_name": compound.name,
-        "role_filter": role,
-        "as_substrate_count": len(reactions_as_substrate),
-        "as_product_count": len(reactions_as_product),
-        "reactions_as_substrate": reactions_as_substrate,
-        "reactions_as_product": reactions_as_product
-    }
+    return ReactionsByCompound(
+        chebi_id=chebi_id,
+        compound_name=compound.name,
+        role_filter=role,
+        as_substrate_count=len(reactions_as_substrate),
+        as_product_count=len(reactions_as_product),
+        reactions_as_substrate=reactions_as_substrate,
+        reactions_as_product=reactions_as_product
+    )
 
 
 @_ensure_initialized
-def get_taxonomy_ancestors(tax_id: str) -> Dict[str, Any]:
+def get_taxonomy_ancestors(tax_id: str) -> TaxonomyAncestors:
     """
     24. Récupère la lignée taxonomique (ancêtres).
 
@@ -185,14 +218,14 @@ def get_taxonomy_ancestors(tax_id: str) -> Dict[str, Any]:
         tax_id: NCBI Taxonomy ID
 
     Returns:
-        Dict avec la lignée complète
+        TaxonomyAncestors with lineage
     """
     from gws_biota import Taxonomy
 
     taxonomy = Taxonomy.get_or_none(Taxonomy.tax_id == tax_id)
 
     if not taxonomy:
-        return {"error": f"No taxonomy found with ID {tax_id}"}
+        raise ValueError(f"No taxonomy found with ID {tax_id}")
 
     lineage = []
     current = taxonomy
@@ -201,27 +234,27 @@ def get_taxonomy_ancestors(tax_id: str) -> Dict[str, Any]:
     visited = set()
     while current and current.tax_id not in visited:
         visited.add(current.tax_id)
-        lineage.append({
-            "tax_id": current.tax_id,
-            "name": current.name,
-            "rank": current.rank
-        })
+        lineage.append(TaxonomyInfo(
+            tax_id=current.tax_id,
+            name=current.name,
+            rank=current.rank
+        ))
 
         if current.ancestor_tax_id:
             current = Taxonomy.get_or_none(Taxonomy.tax_id == current.ancestor_tax_id)
         else:
             break
 
-    return {
-        "tax_id": tax_id,
-        "name": taxonomy.name,
-        "lineage_length": len(lineage),
-        "lineage": lineage
-    }
+    return TaxonomyAncestors(
+        tax_id=tax_id,
+        name=taxonomy.name,
+        lineage_length=len(lineage),
+        lineage=lineage
+    )
 
 
 @_ensure_initialized
-def get_pathway_compounds(reactome_id: str) -> Dict[str, Any]:
+def get_pathway_compounds(reactome_id: str) -> PathwayCompoundsResult:
     """
     27. Composés impliqués dans un pathway.
 
@@ -229,14 +262,14 @@ def get_pathway_compounds(reactome_id: str) -> Dict[str, Any]:
         reactome_id: Reactome pathway identifier
 
     Returns:
-        Dict avec la liste des composés
+        PathwayCompoundsResult with compound list
     """
     from gws_biota import Pathway, PathwayCompound, Compound
 
     pathway = Pathway.get_or_none(Pathway.reactome_pathway_id == reactome_id)
 
     if not pathway:
-        return {"error": f"No pathway found with Reactome ID {reactome_id}"}
+        raise ValueError(f"No pathway found with Reactome ID {reactome_id}")
 
     # Get pathway compounds
     pathway_compounds = list(PathwayCompound.select().where(
@@ -247,23 +280,22 @@ def get_pathway_compounds(reactome_id: str) -> Dict[str, Any]:
     for pc in pathway_compounds:
         compound = Compound.get_or_none(Compound.chebi_id == pc.chebi_id)
         if compound:
-            compounds.append({
-                "chebi_id": compound.chebi_id,
-                "name": compound.name,
-                "formula": compound.formula,
-                "species": pc.species
-            })
+            compounds.append(CompoundInfo(
+                chebi_id=compound.chebi_id,
+                name=compound.name,
+                formula=compound.formula
+            ))
 
-    return {
-        "reactome_id": reactome_id,
-        "pathway_name": pathway.name,
-        "compound_count": len(compounds),
-        "compounds": compounds
-    }
+    return PathwayCompoundsResult(
+        reactome_id=reactome_id,
+        pathway_name=pathway.name,
+        compound_count=len(compounds),
+        compounds=compounds
+    )
 
 
 @_ensure_initialized
-def get_enzymes_by_tissue(bto_id: str, tax_id: str = None, limit: int = 100) -> Dict[str, Any]:
+def get_enzymes_by_tissue(bto_id: str, tax_id: str = None, limit: int = 100) -> EnzymesByTissue:
     """
     63. Récupère tous les enzymes exprimés dans un tissu donné (reverse lookup).
 
@@ -273,14 +305,14 @@ def get_enzymes_by_tissue(bto_id: str, tax_id: str = None, limit: int = 100) -> 
         limit: Nombre maximum de résultats
 
     Returns:
-        Dict avec les enzymes exprimés dans ce tissu
+        EnzymesByTissue with enzymes expressed in tissue
     """
     from gws_biota import Enzyme, BTO
     from gws_biota.enzyme.enzyme import EnzymeBTO
 
     bto = BTO.get_or_none(BTO.bto_id == bto_id)
     if not bto:
-        return {"error": f"No BTO term found with ID {bto_id}"}
+        raise ValueError(f"No BTO term found with ID {bto_id}")
 
     ebto_links = list(EnzymeBTO.select().where(EnzymeBTO.bto == bto).limit(limit * 2))
 
@@ -299,27 +331,27 @@ def get_enzymes_by_tissue(bto_id: str, tax_id: str = None, limit: int = 100) -> 
             continue
 
         seen.add(key)
-        enzymes_data.append({
-            "ec_number": enzyme.ec_number,
-            "name": enzyme.name,
-            "uniprot_id": enzyme.uniprot_id,
-            "tax_id": enzyme.tax_id
-        })
+        enzymes_data.append(EnzymeInfo(
+            ec_number=enzyme.ec_number,
+            name=enzyme.name,
+            uniprot_id=enzyme.uniprot_id,
+            tax_id=enzyme.tax_id
+        ))
 
         if len(enzymes_data) >= limit:
             break
 
-    return {
-        "bto_id": bto_id,
-        "tissue_name": bto.name,
-        "tax_filter": tax_id,
-        "enzyme_count": len(enzymes_data),
-        "enzymes": enzymes_data
-    }
+    return EnzymesByTissue(
+        bto_id=bto_id,
+        tissue_name=bto.name,
+        tax_filter=tax_id,
+        enzyme_count=len(enzymes_data),
+        enzymes=enzymes_data
+    )
 
 
 @_ensure_initialized
-def get_enzymes_for_protein(uniprot_id: str) -> Dict[str, Any]:
+def get_enzymes_for_protein(uniprot_id: str) -> EnzymesForProtein:
     """
     67. Récupère les enzymes associés à une protéine (reverse lookup Protein → Enzymes).
 
@@ -327,13 +359,13 @@ def get_enzymes_for_protein(uniprot_id: str) -> Dict[str, Any]:
         uniprot_id: UniProt identifier de la protéine
 
     Returns:
-        Dict avec les enzymes partageant cet UniProt ID
+        EnzymesForProtein with enzymes sharing this UniProt ID
     """
     from gws_biota import Enzyme, Protein, Taxonomy
 
     protein = Protein.get_or_none(Protein.uniprot_id == uniprot_id)
     if not protein:
-        return {"error": f"No protein found with UniProt ID {uniprot_id}", "count": 0}
+        raise ValueError(f"No protein found with UniProt ID {uniprot_id}")
 
     # Find enzymes with this uniprot_id
     enzymes = list(Enzyme.select().where(Enzyme.uniprot_id == uniprot_id))
@@ -345,20 +377,20 @@ def get_enzymes_for_protein(uniprot_id: str) -> Dict[str, Any]:
             tax = Taxonomy.get_or_none(Taxonomy.tax_id == e.tax_id)
             tax_name = tax.name if tax else None
 
-        enzymes_data.append({
-            "ec_number": e.ec_number,
-            "name": e.name,
-            "tax_id": e.tax_id,
-            "tax_name": tax_name
-        })
+        enzymes_data.append(EnzymeInfo(
+            ec_number=e.ec_number,
+            name=e.name,
+            uniprot_id=e.uniprot_id,
+            tax_id=e.tax_id
+        ))
 
-    return {
-        "uniprot_id": uniprot_id,
-        "protein_gene": protein.uniprot_gene,
-        "protein_tax_id": protein.tax_id,
-        "enzyme_count": len(enzymes_data),
-        "enzymes": enzymes_data
-    }
+    return EnzymesForProtein(
+        uniprot_id=uniprot_id,
+        protein_gene=protein.uniprot_gene,
+        protein_tax_id=protein.tax_id,
+        enzyme_count=len(enzymes_data),
+        enzymes=enzymes_data
+    )
 
 
 # ============================================================================
@@ -371,7 +403,7 @@ def get_enzyme_protein_taxon_table(
     uniprot_id: str = None,
     ec_number: str = None,
     limit: int = 100
-) -> Dict[str, Any]:
+) -> EnzymeProteinTaxonTable:
     """
     29. Table enzyme ↔ protein ↔ taxon.
 
@@ -382,7 +414,7 @@ def get_enzyme_protein_taxon_table(
         limit: Nombre maximum de résultats
 
     Returns:
-        Dict avec la table de relations
+        EnzymeProteinTaxonTable with relation table
     """
     from gws_biota import Enzyme, Protein, Taxonomy
 
@@ -411,31 +443,31 @@ def get_enzyme_protein_taxon_table(
         if enzyme.tax_id:
             taxonomy = Taxonomy.get_or_none(Taxonomy.tax_id == enzyme.tax_id)
 
-        results.append({
-            "enzyme_ec_number": enzyme.ec_number,
-            "enzyme_name": enzyme.name,
-            "enzyme_uniprot_id": enzyme.uniprot_id,
-            "protein_uniprot_id": protein.uniprot_id if protein else None,
-            "protein_gene": protein.uniprot_gene if protein else None,
-            "protein_evidence_score": protein.evidence_score if protein else None,
-            "taxon_id": enzyme.tax_id,
-            "taxon_name": taxonomy.name if taxonomy else None,
-            "taxon_rank": taxonomy.rank if taxonomy else None
-        })
+        results.append(EnzymeProteinTaxonEntry(
+            enzyme_ec_number=enzyme.ec_number,
+            enzyme_name=enzyme.name,
+            enzyme_uniprot_id=enzyme.uniprot_id,
+            protein_uniprot_id=protein.uniprot_id if protein else None,
+            protein_gene=protein.uniprot_gene if protein else None,
+            protein_evidence_score=protein.evidence_score if protein else None,
+            taxon_id=enzyme.tax_id,
+            taxon_name=taxonomy.name if taxonomy else None,
+            taxon_rank=taxonomy.rank if taxonomy else None
+        ))
 
-    return {
-        "filters": {
-            "tax_id": tax_id,
-            "uniprot_id": uniprot_id,
-            "ec_number": ec_number
-        },
-        "count": len(results),
-        "table": results
-    }
+    return EnzymeProteinTaxonTable(
+        filters=EnzymeProteinTaxonTableFilters(
+            tax_id=tax_id,
+            uniprot_id=uniprot_id,
+            ec_number=ec_number
+        ),
+        count=len(results),
+        table=results
+    )
 
 
 @_ensure_initialized
-def get_metabolic_network_for_taxon(tax_id: str, limit: int = 500) -> Dict[str, Any]:
+def get_metabolic_network_for_taxon(tax_id: str, limit: int = 500) -> MetabolicNetworkForTaxon:
     """
     30. Réseau métabolique complet (enzymes + réactions + composés) pour un taxon.
 
@@ -444,7 +476,7 @@ def get_metabolic_network_for_taxon(tax_id: str, limit: int = 500) -> Dict[str, 
         limit: Nombre maximum de réactions
 
     Returns:
-        Dict avec le réseau métabolique complet
+        MetabolicNetworkForTaxon with complete metabolic network
     """
     from gws_biota import Enzyme, Reaction, Taxonomy
 
@@ -461,58 +493,58 @@ def get_metabolic_network_for_taxon(tax_id: str, limit: int = 500) -> Dict[str, 
 
     for reaction in reactions:
         # Add reaction
-        reaction_data = {
-            "rhea_id": reaction.rhea_id,
-            "name": reaction.name,
-            "direction": reaction.direction,
-            "substrates": [],
-            "products": [],
-            "enzymes": []
-        }
+        reaction_data = MetabolicReactionData(
+            rhea_id=reaction.rhea_id,
+            name=reaction.name,
+            direction=reaction.direction,
+            substrates=[],
+            products=[],
+            enzymes=[]
+        )
 
         # Add substrates
         for s in reaction.substrates:
-            reaction_data["substrates"].append(s.chebi_id)
+            reaction_data.substrates.append(s.chebi_id)
             if s.chebi_id not in compounds_set:
-                compounds_set[s.chebi_id] = {
-                    "chebi_id": s.chebi_id,
-                    "name": s.name,
-                    "formula": s.formula
-                }
+                compounds_set[s.chebi_id] = CompoundInfo(
+                    chebi_id=s.chebi_id,
+                    name=s.name,
+                    formula=s.formula
+                )
 
         # Add products
         for p in reaction.products:
-            reaction_data["products"].append(p.chebi_id)
+            reaction_data.products.append(p.chebi_id)
             if p.chebi_id not in compounds_set:
-                compounds_set[p.chebi_id] = {
-                    "chebi_id": p.chebi_id,
-                    "name": p.name,
-                    "formula": p.formula
-                }
+                compounds_set[p.chebi_id] = CompoundInfo(
+                    chebi_id=p.chebi_id,
+                    name=p.name,
+                    formula=p.formula
+                )
 
         # Add enzymes
         for e in reaction.enzymes:
-            reaction_data["enzymes"].append(e.ec_number)
+            reaction_data.enzymes.append(e.ec_number)
             if e.ec_number not in enzymes_set:
-                enzymes_set[e.ec_number] = {
-                    "ec_number": e.ec_number,
-                    "name": e.name
-                }
+                enzymes_set[e.ec_number] = EnzymeInfo(
+                    ec_number=e.ec_number,
+                    name=e.name
+                )
 
         reaction_list.append(reaction_data)
 
-    return {
-        "tax_id": tax_id,
-        "tax_name": tax_name,
-        "statistics": {
-            "reaction_count": len(reaction_list),
-            "enzyme_count": len(enzymes_set),
-            "compound_count": len(compounds_set)
-        },
-        "enzymes": list(enzymes_set.values()),
-        "compounds": list(compounds_set.values()),
-        "reactions": reaction_list
-    }
+    return MetabolicNetworkForTaxon(
+        tax_id=tax_id,
+        tax_name=tax_name,
+        statistics=MetabolicNetworkStatistics(
+            reaction_count=len(reaction_list),
+            enzyme_count=len(enzymes_set),
+            compound_count=len(compounds_set)
+        ),
+        enzymes=list(enzymes_set.values()),
+        compounds=list(compounds_set.values()),
+        reactions=reaction_list
+    )
 
 
 # ============================================================================
@@ -520,7 +552,7 @@ def get_metabolic_network_for_taxon(tax_id: str, limit: int = 500) -> Dict[str, 
 # ============================================================================
 
 @_ensure_initialized
-def join_enzyme_reactions_compounds(ec_number: str, limit: int = 50) -> Dict[str, Any]:
+def join_enzyme_reactions_compounds(ec_number: str, limit: int = 50) -> EnzymeReactionsCompounds:
     """
     31. Enzyme → Reactions → Substrats/Produits (3 tables).
 
@@ -529,14 +561,14 @@ def join_enzyme_reactions_compounds(ec_number: str, limit: int = 50) -> Dict[str
         limit: Nombre maximum de réactions
 
     Returns:
-        Dict avec les réactions et leurs composés pour cet enzyme
+        EnzymeReactionsCompounds avec les réactions et leurs composés pour cet enzyme
     """
     from gws_biota import Enzyme, Reaction, Compound
     from gws_biota.reaction.reaction import ReactionEnzyme
 
     enzymes = list(Enzyme.select().where(Enzyme.ec_number == ec_number).limit(10))
     if not enzymes:
-        return {"error": f"No enzyme found with EC number {ec_number}"}
+        raise ValueError(f"No enzyme found with EC number {ec_number}")
 
     reactions_data = []
     seen_rhea = set()
@@ -549,29 +581,35 @@ def join_enzyme_reactions_compounds(ec_number: str, limit: int = 50) -> Dict[str
                 continue
             seen_rhea.add(reaction.rhea_id)
 
-            substrates = [{"chebi_id": s.chebi_id, "name": s.name, "formula": s.formula}
-                          for s in reaction.substrates]
-            products = [{"chebi_id": p.chebi_id, "name": p.name, "formula": p.formula}
-                        for p in reaction.products]
+            substrates = [CompoundInfo(
+                chebi_id=s.chebi_id,
+                name=s.name,
+                formula=s.formula
+            ) for s in reaction.substrates]
+            products = [CompoundInfo(
+                chebi_id=p.chebi_id,
+                name=p.name,
+                formula=p.formula
+            ) for p in reaction.products]
 
-            reactions_data.append({
-                "rhea_id": reaction.rhea_id,
-                "reaction_name": reaction.name,
-                "direction": reaction.direction,
-                "substrates": substrates,
-                "products": products
-            })
+            reactions_data.append(EnzymeReactionWithCompounds(
+                rhea_id=reaction.rhea_id,
+                reaction_name=reaction.name,
+                direction=reaction.direction,
+                substrates=substrates,
+                products=products
+            ))
 
-    return {
-        "ec_number": ec_number,
-        "enzyme_count": len(enzymes),
-        "reaction_count": len(reactions_data),
-        "reactions": reactions_data
-    }
+    return EnzymeReactionsCompounds(
+        ec_number=ec_number,
+        enzyme_count=len(enzymes),
+        reaction_count=len(reactions_data),
+        reactions=reactions_data
+    )
 
 
 @_ensure_initialized
-def join_enzyme_protein_taxonomy(ec_number: str, limit: int = 100) -> Dict[str, Any]:
+def join_enzyme_protein_taxonomy(ec_number: str, limit: int = 100) -> EnzymeProteinTaxonomy:
     """
     32. Enzyme → Protein → Taxonomy avec lignée complète (3 tables).
 
@@ -580,13 +618,13 @@ def join_enzyme_protein_taxonomy(ec_number: str, limit: int = 100) -> Dict[str, 
         limit: Nombre maximum de résultats
 
     Returns:
-        Dict avec enzymes, protéines associées et lignée taxonomique
+        EnzymeProteinTaxonomy avec enzymes, protéines associées et lignée taxonomique
     """
     from gws_biota import Enzyme, Protein, Taxonomy
 
     enzymes = list(Enzyme.select().where(Enzyme.ec_number == ec_number).limit(limit))
     if not enzymes:
-        return {"error": f"No enzyme found with EC number {ec_number}"}
+        raise ValueError(f"No enzyme found with EC number {ec_number}")
 
     results = []
     for enzyme in enzymes:
@@ -603,32 +641,36 @@ def join_enzyme_protein_taxonomy(ec_number: str, limit: int = 100) -> Dict[str, 
                 visited = set()
                 while current and current.tax_id not in visited:
                     visited.add(current.tax_id)
-                    lineage.append({"tax_id": current.tax_id, "name": current.name, "rank": current.rank})
+                    lineage.append(TaxonomyInfo(
+                        tax_id=current.tax_id,
+                        name=current.name,
+                        rank=current.rank
+                    ))
                     if current.ancestor_tax_id:
                         current = Taxonomy.get_or_none(Taxonomy.tax_id == current.ancestor_tax_id)
                     else:
                         break
 
-        results.append({
-            "enzyme_ec": enzyme.ec_number,
-            "enzyme_uniprot_id": enzyme.uniprot_id,
-            "enzyme_name": enzyme.name,
-            "protein_gene": protein.uniprot_gene if protein else None,
-            "protein_evidence": protein.evidence_score if protein else None,
-            "taxon_id": enzyme.tax_id,
-            "taxon_name": taxonomy.name if taxonomy else None,
-            "lineage": lineage
-        })
+        results.append(EnzymeProteinTaxonomyEntry(
+            enzyme_ec=enzyme.ec_number,
+            enzyme_uniprot_id=enzyme.uniprot_id,
+            enzyme_name=enzyme.name,
+            protein_gene=protein.uniprot_gene if protein else None,
+            protein_evidence=protein.evidence_score if protein else None,
+            taxon_id=enzyme.tax_id,
+            taxon_name=taxonomy.name if taxonomy else None,
+            lineage=lineage
+        ))
 
-    return {
-        "ec_number": ec_number,
-        "count": len(results),
-        "entries": results
-    }
+    return EnzymeProteinTaxonomy(
+        ec_number=ec_number,
+        count=len(results),
+        entries=results
+    )
 
 
 @_ensure_initialized
-def join_enzyme_bto_ancestors(ec_number: str, limit: int = 50) -> Dict[str, Any]:
+def join_enzyme_bto_ancestors(ec_number: str, limit: int = 50) -> EnzymeBTOAncestors:
     """
     33. Enzyme → BTO tissus → BTO ancêtres (3 tables).
 
@@ -637,7 +679,7 @@ def join_enzyme_bto_ancestors(ec_number: str, limit: int = 50) -> Dict[str, Any]
         limit: Nombre maximum de tissus
 
     Returns:
-        Dict avec tissus et leur hiérarchie ontologique
+        EnzymeBTOAncestors avec tissus et leur hiérarchie ontologique
     """
     from gws_biota import Enzyme, BTO
     from gws_biota.enzyme.enzyme import EnzymeBTO
@@ -645,7 +687,7 @@ def join_enzyme_bto_ancestors(ec_number: str, limit: int = 50) -> Dict[str, Any]
 
     enzymes = list(Enzyme.select().where(Enzyme.ec_number == ec_number).limit(10))
     if not enzymes:
-        return {"error": f"No enzyme found with EC number {ec_number}"}
+        raise ValueError(f"No enzyme found with EC number {ec_number}")
 
     tissues_data = []
     for enzyme in enzymes:
@@ -660,25 +702,28 @@ def join_enzyme_bto_ancestors(ec_number: str, limit: int = 50) -> Dict[str, Any]
             for ba in bto_ancestors:
                 anc = ba.ancestor
                 if anc:
-                    ancestors.append({"bto_id": anc.bto_id, "name": anc.name})
+                    ancestors.append(BTOAncestorInfo(
+                        bto_id=anc.bto_id,
+                        name=anc.name
+                    ))
 
-            tissues_data.append({
-                "bto_id": bto.bto_id,
-                "tissue_name": bto.name,
-                "enzyme_uniprot_id": enzyme.uniprot_id,
-                "ancestor_count": len(ancestors),
-                "ancestors": ancestors
-            })
+            tissues_data.append(TissueWithAncestors(
+                bto_id=bto.bto_id,
+                tissue_name=bto.name,
+                enzyme_uniprot_id=enzyme.uniprot_id,
+                ancestor_count=len(ancestors),
+                ancestors=ancestors
+            ))
 
-    return {
-        "ec_number": ec_number,
-        "tissue_count": len(tissues_data),
-        "tissues": tissues_data
-    }
+    return EnzymeBTOAncestors(
+        ec_number=ec_number,
+        tissue_count=len(tissues_data),
+        tissues=tissues_data
+    )
 
 
 @_ensure_initialized
-def join_enzyme_reactions_by_taxon(tax_id: str, limit: int = 100) -> Dict[str, Any]:
+def join_enzyme_reactions_by_taxon(tax_id: str, limit: int = 100) -> EnzymeReactionsByTaxon:
     """
     34. Taxon → Enzymes → Réactions (3 tables).
 
@@ -687,7 +732,7 @@ def join_enzyme_reactions_by_taxon(tax_id: str, limit: int = 100) -> Dict[str, A
         limit: Nombre maximum d'enzymes
 
     Returns:
-        Dict avec les enzymes du taxon et leurs réactions
+        EnzymeReactionsByTaxon avec les enzymes du taxon et leurs réactions
     """
     from gws_biota import Enzyme, Reaction, Taxonomy
     from gws_biota.reaction.reaction import ReactionEnzyme
@@ -703,32 +748,32 @@ def join_enzyme_reactions_by_taxon(tax_id: str, limit: int = 100) -> Dict[str, A
         reactions = []
         for link in re_links:
             r = link.reaction
-            reactions.append({
-                "rhea_id": r.rhea_id,
-                "name": r.name,
-                "direction": r.direction
-            })
+            reactions.append(ReactionInfo(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                direction=r.direction
+            ))
 
         if reactions:
-            enzyme_reactions.append({
-                "ec_number": enzyme.ec_number,
-                "enzyme_name": enzyme.name,
-                "uniprot_id": enzyme.uniprot_id,
-                "reaction_count": len(reactions),
-                "reactions": reactions
-            })
+            enzyme_reactions.append(EnzymeWithReactions(
+                ec_number=enzyme.ec_number,
+                enzyme_name=enzyme.name,
+                uniprot_id=enzyme.uniprot_id,
+                reaction_count=len(reactions),
+                reactions=reactions
+            ))
 
-    return {
-        "tax_id": tax_id,
-        "tax_name": tax_name,
-        "enzyme_count": len(enzyme_reactions),
-        "total_reactions": sum(e["reaction_count"] for e in enzyme_reactions),
-        "enzymes": enzyme_reactions
-    }
+    return EnzymeReactionsByTaxon(
+        tax_id=tax_id,
+        tax_name=tax_name,
+        enzyme_count=len(enzyme_reactions),
+        total_reactions=sum(e.reaction_count for e in enzyme_reactions),
+        enzymes=enzyme_reactions
+    )
 
 
 @_ensure_initialized
-def join_enzyme_class_hierarchy(ec_prefix: str) -> Dict[str, Any]:
+def join_enzyme_class_hierarchy(ec_prefix: str) -> EnzymeClassHierarchy:
     """
     35. EnzymeClass → Enzymes associés (2 tables).
 
@@ -736,7 +781,7 @@ def join_enzyme_class_hierarchy(ec_prefix: str) -> Dict[str, Any]:
         ec_prefix: Préfixe EC (ex: "1.1" pour toutes les oxydoréductases alcohol)
 
     Returns:
-        Dict avec la hiérarchie des classes et les enzymes
+        EnzymeClassHierarchy avec la hiérarchie des classes et les enzymes
     """
     from gws_biota import Enzyme, EnzymeClass
 
@@ -751,23 +796,28 @@ def join_enzyme_class_hierarchy(ec_prefix: str) -> Dict[str, Any]:
             Enzyme.ec_number.startswith(ec_class.ec_number)
         ).limit(20))
 
-        results.append({
-            "class_ec": ec_class.ec_number,
-            "class_name": ec_class.name,
-            "enzyme_count": len(enzymes),
-            "enzymes": [{"ec_number": e.ec_number, "name": e.name, "uniprot_id": e.uniprot_id}
-                        for e in enzymes[:10]]
-        })
+        enzymes_info = [EnzymeInfo(
+            ec_number=e.ec_number,
+            name=e.name,
+            uniprot_id=e.uniprot_id
+        ) for e in enzymes[:10]]
 
-    return {
-        "ec_prefix": ec_prefix,
-        "class_count": len(results),
-        "classes": results
-    }
+        results.append(EnzymeClassHierarchyEntry(
+            class_ec=ec_class.ec_number,
+            class_name=ec_class.name,
+            enzyme_count=len(enzymes),
+            enzymes=enzymes_info
+        ))
+
+    return EnzymeClassHierarchy(
+        ec_prefix=ec_prefix,
+        class_count=len(results),
+        classes=results
+    )
 
 
 @_ensure_initialized
-def join_enzyme_deprecated_to_reactions(old_ec_number: str) -> Dict[str, Any]:
+def join_enzyme_deprecated_to_reactions(old_ec_number: str) -> DeprecatedEnzymeToReactions:
     """
     36. DeprecatedEnzyme → Nouvel EC → Réactions (3 tables).
 
@@ -775,7 +825,7 @@ def join_enzyme_deprecated_to_reactions(old_ec_number: str) -> Dict[str, Any]:
         old_ec_number: Ancien numéro EC (déprécié)
 
     Returns:
-        Dict avec le mapping ancien→nouveau EC et les réactions du nouveau
+        DeprecatedEnzymeToReactions avec le mapping ancien→nouveau EC et les réactions du nouveau
     """
     from gws_biota import Enzyme, Reaction, DeprecatedEnzyme
     from gws_biota.reaction.reaction import ReactionEnzyme
@@ -785,7 +835,7 @@ def join_enzyme_deprecated_to_reactions(old_ec_number: str) -> Dict[str, Any]:
     ))
 
     if not deprecated:
-        return {"error": f"No deprecated enzyme found with EC {old_ec_number}"}
+        raise ValueError(f"No deprecated enzyme found with EC {old_ec_number}")
 
     results = []
     for dep in deprecated:
@@ -796,29 +846,29 @@ def join_enzyme_deprecated_to_reactions(old_ec_number: str) -> Dict[str, Any]:
             re_links = list(ReactionEnzyme.select().where(ReactionEnzyme.enzyme == enzyme).limit(10))
             for link in re_links:
                 r = link.reaction
-                reactions.append({
-                    "rhea_id": r.rhea_id,
-                    "name": r.name,
-                    "direction": r.direction
-                })
+                reactions.append(ReactionInfo(
+                    rhea_id=r.rhea_id,
+                    name=r.name,
+                    direction=r.direction
+                ))
 
-        results.append({
-            "old_ec": dep.ec_number,
-            "new_ec": dep.new_ec_number,
-            "new_enzyme_count": len(new_enzymes),
-            "reaction_count": len(reactions),
-            "reactions": reactions
-        })
+        results.append(DeprecatedEnzymeMapping(
+            old_ec=dep.ec_number,
+            new_ec=dep.new_ec_number,
+            new_enzyme_count=len(new_enzymes),
+            reaction_count=len(reactions),
+            reactions=reactions
+        ))
 
-    return {
-        "old_ec_number": old_ec_number,
-        "mapping_count": len(results),
-        "mappings": results
-    }
+    return DeprecatedEnzymeToReactions(
+        old_ec_number=old_ec_number,
+        mapping_count=len(results),
+        mappings=results
+    )
 
 
 @_ensure_initialized
-def join_enzyme_ortholog_pathway(ec_number: str) -> Dict[str, Any]:
+def join_enzyme_ortholog_pathway(ec_number: str) -> EnzymeOrthologPathway:
     """
     37. EnzymeOrtholog → EnzymePathway (2 tables).
 
@@ -826,7 +876,7 @@ def join_enzyme_ortholog_pathway(ec_number: str) -> Dict[str, Any]:
         ec_number: Numéro EC
 
     Returns:
-        Dict avec les orthologues et leurs pathways
+        EnzymeOrthologPathway avec les orthologues et leurs pathways
     """
     from gws_biota import EnzymeOrtholog, EnzymePathway
 
@@ -835,30 +885,33 @@ def join_enzyme_ortholog_pathway(ec_number: str) -> Dict[str, Any]:
     ))
 
     if not orthologs:
-        return {"error": f"No ortholog found with EC {ec_number}", "count": 0}
+        raise ValueError(f"No ortholog found with EC {ec_number}")
 
     results = []
     for orth in orthologs:
         pathway_info = None
         if orth.pathway:
             pw = orth.pathway
-            pathway_info = {"ec_number": pw.ec_number, "name": pw.name}
+            pathway_info = PathwayInfo(
+                reactome_id=pw.ec_number,
+                name=pw.name
+            )
 
-        results.append({
-            "ortholog_ec": orth.ec_number,
-            "ortholog_name": orth.name,
-            "pathway": pathway_info
-        })
+        results.append(EnzymeOrthologEntry(
+            ortholog_ec=orth.ec_number,
+            ortholog_name=orth.name,
+            pathway=pathway_info
+        ))
 
-    return {
-        "ec_number": ec_number,
-        "ortholog_count": len(results),
-        "orthologs": results
-    }
+    return EnzymeOrthologPathway(
+        ec_number=ec_number,
+        ortholog_count=len(results),
+        orthologs=results
+    )
 
 
 @_ensure_initialized
-def join_enzyme_all_tissues_by_taxon(tax_id: str, limit: int = 50) -> Dict[str, Any]:
+def join_enzyme_all_tissues_by_taxon(tax_id: str, limit: int = 50) -> EnzymeAllTissuesByTaxon:
     """
     38. Taxon → Enzymes → BTO tissus (3 tables).
 
@@ -867,7 +920,7 @@ def join_enzyme_all_tissues_by_taxon(tax_id: str, limit: int = 50) -> Dict[str, 
         limit: Nombre maximum d'enzymes
 
     Returns:
-        Dict avec tous les tissus exprimant les enzymes du taxon
+        EnzymeAllTissuesByTaxon avec tous les tissus exprimant les enzymes du taxon
     """
     from gws_biota import Enzyme, BTO, Taxonomy
     from gws_biota.enzyme.enzyme import EnzymeBTO
@@ -891,17 +944,22 @@ def join_enzyme_all_tissues_by_taxon(tax_id: str, limit: int = 50) -> Dict[str, 
                     }
                 tissue_map[bto.bto_id]["enzyme_ec_numbers"].append(enzyme.ec_number)
 
-    tissues = list(tissue_map.values())
-    for t in tissues:
-        t["enzyme_count"] = len(t["enzyme_ec_numbers"])
+    tissues = []
+    for t_data in tissue_map.values():
+        tissues.append(TissueWithEnzymes(
+            bto_id=t_data["bto_id"],
+            name=t_data["name"],
+            enzyme_count=len(t_data["enzyme_ec_numbers"]),
+            enzyme_ec_numbers=t_data["enzyme_ec_numbers"]
+        ))
 
-    return {
-        "tax_id": tax_id,
-        "tax_name": tax_name,
-        "enzyme_count": len(enzymes),
-        "unique_tissue_count": len(tissues),
-        "tissues": tissues
-    }
+    return EnzymeAllTissuesByTaxon(
+        tax_id=tax_id,
+        tax_name=tax_name,
+        enzyme_count=len(enzymes),
+        unique_tissue_count=len(tissues),
+        tissues=tissues
+    )
 
 
 # ============================================================================
@@ -909,7 +967,7 @@ def join_enzyme_all_tissues_by_taxon(tax_id: str, limit: int = 50) -> Dict[str, 
 # ============================================================================
 
 @_ensure_initialized
-def join_reaction_full_detail(rhea_id: str) -> Dict[str, Any]:
+def join_reaction_full_detail(rhea_id: str) -> ReactionFullDetail:
     """
     39. Réaction complète: Substrats + Produits + Enzymes + Taxonomie (5 tables).
 
@@ -917,7 +975,7 @@ def join_reaction_full_detail(rhea_id: str) -> Dict[str, Any]:
         rhea_id: Rhea identifier
 
     Returns:
-        Dict avec détails complets de la réaction
+        ReactionFullDetail avec détails complets de la réaction
     """
     from gws_biota import Reaction, Enzyme, Taxonomy
     from gws_biota.reaction.reaction import ReactionEnzyme
@@ -927,12 +985,21 @@ def join_reaction_full_detail(rhea_id: str) -> Dict[str, Any]:
 
     reaction = Reaction.get_or_none(Reaction.rhea_id == rhea_id)
     if not reaction:
-        return {"error": f"No reaction found with Rhea ID {rhea_id}"}
+        raise ValueError(f"No reaction found with Rhea ID {rhea_id}")
 
-    substrates = [{"chebi_id": s.chebi_id, "name": s.name, "formula": s.formula, "mass": s.mass}
-                  for s in reaction.substrates]
-    products = [{"chebi_id": p.chebi_id, "name": p.name, "formula": p.formula, "mass": p.mass}
-                for p in reaction.products]
+    substrates = [CompoundInfo(
+        chebi_id=s.chebi_id,
+        name=s.name,
+        formula=s.formula,
+        mass=s.mass
+    ) for s in reaction.substrates]
+    
+    products = [CompoundInfo(
+        chebi_id=p.chebi_id,
+        name=p.name,
+        formula=p.formula,
+        mass=p.mass
+    ) for p in reaction.products]
 
     enzymes_data = []
     re_links = list(ReactionEnzyme.select().where(ReactionEnzyme.reaction == reaction))
@@ -942,30 +1009,34 @@ def join_reaction_full_detail(rhea_id: str) -> Dict[str, Any]:
         if enzyme.tax_id:
             tax = Taxonomy.get_or_none(Taxonomy.tax_id == enzyme.tax_id)
             if tax:
-                tax_info = {"tax_id": tax.tax_id, "name": tax.name, "rank": tax.rank}
+                tax_info = TaxonomyInfo(
+                    tax_id=tax.tax_id,
+                    name=tax.name,
+                    rank=tax.rank
+                )
 
-        enzymes_data.append({
-            "ec_number": enzyme.ec_number,
-            "name": enzyme.name,
-            "uniprot_id": enzyme.uniprot_id,
-            "taxonomy": tax_info
-        })
+        enzymes_data.append(EnzymeWithTaxonomy(
+            ec_number=enzyme.ec_number,
+            name=enzyme.name,
+            uniprot_id=enzyme.uniprot_id,
+            taxonomy=tax_info
+        ))
 
-    return {
-        "rhea_id": rhea_id,
-        "reaction_name": reaction.name,
-        "direction": reaction.direction,
-        "kegg_id": reaction.kegg_id,
-        "metacyc_id": reaction.metacyc_id,
-        "substrates": substrates,
-        "products": products,
-        "enzyme_count": len(enzymes_data),
-        "enzymes": enzymes_data
-    }
+    return ReactionFullDetail(
+        rhea_id=rhea_id,
+        reaction_name=reaction.name,
+        direction=reaction.direction,
+        kegg_id=reaction.kegg_id,
+        metacyc_id=reaction.metacyc_id,
+        substrates=substrates,
+        products=products,
+        enzyme_count=len(enzymes_data),
+        enzymes=enzymes_data
+    )
 
 
 @_ensure_initialized
-def join_reaction_enzymes_by_taxon(rhea_id: str) -> Dict[str, Any]:
+def join_reaction_enzymes_by_taxon(rhea_id: str) -> ReactionEnzymesByTaxon:
     """
     40. Réaction → Enzymes groupés par taxon (3 tables).
 
@@ -973,7 +1044,7 @@ def join_reaction_enzymes_by_taxon(rhea_id: str) -> Dict[str, Any]:
         rhea_id: Rhea identifier
 
     Returns:
-        Dict avec les enzymes groupés par organisme
+        ReactionEnzymesByTaxon avec les enzymes groupés par organisme
     """
     from gws_biota import Reaction, Enzyme, Taxonomy
     from gws_biota.reaction.reaction import ReactionEnzyme
@@ -983,7 +1054,7 @@ def join_reaction_enzymes_by_taxon(rhea_id: str) -> Dict[str, Any]:
 
     reaction = Reaction.get_or_none(Reaction.rhea_id == rhea_id)
     if not reaction:
-        return {"error": f"No reaction found with Rhea ID {rhea_id}"}
+        raise ValueError(f"No reaction found with Rhea ID {rhea_id}")
 
     taxon_groups = {}
     re_links = list(ReactionEnzyme.select().where(ReactionEnzyme.reaction == reaction))
@@ -999,27 +1070,32 @@ def join_reaction_enzymes_by_taxon(rhea_id: str) -> Dict[str, Any]:
                 "enzymes": []
             }
 
-        taxon_groups[tax_id]["enzymes"].append({
-            "ec_number": enzyme.ec_number,
-            "uniprot_id": enzyme.uniprot_id,
-            "name": enzyme.name
-        })
+        taxon_groups[tax_id]["enzymes"].append(EnzymeInfo(
+            ec_number=enzyme.ec_number,
+            name=enzyme.name,
+            uniprot_id=enzyme.uniprot_id
+        ))
 
-    groups = list(taxon_groups.values())
-    for g in groups:
-        g["enzyme_count"] = len(g["enzymes"])
+    groups = []
+    for g_data in taxon_groups.values():
+        groups.append(TaxonEnzymeGroup(
+            tax_id=g_data["tax_id"],
+            tax_name=g_data["tax_name"],
+            enzyme_count=len(g_data["enzymes"]),
+            enzymes=g_data["enzymes"]
+        ))
 
-    return {
-        "rhea_id": rhea_id,
-        "reaction_name": reaction.name,
-        "taxon_count": len(groups),
-        "total_enzymes": sum(g["enzyme_count"] for g in groups),
-        "taxon_groups": groups
-    }
+    return ReactionEnzymesByTaxon(
+        rhea_id=rhea_id,
+        reaction_name=reaction.name,
+        taxon_count=len(groups),
+        total_enzymes=sum(g.enzyme_count for g in groups),
+        taxon_groups=groups
+    )
 
 
 @_ensure_initialized
-def join_reaction_shared_compounds(rhea_id_1: str, rhea_id_2: str) -> Dict[str, Any]:
+def join_reaction_shared_compounds(rhea_id_1: str, rhea_id_2: str) -> ReactionSharedCompounds:
     """
     41. Composés partagés entre deux réactions (3 tables).
 
@@ -1028,7 +1104,7 @@ def join_reaction_shared_compounds(rhea_id_1: str, rhea_id_2: str) -> Dict[str, 
         rhea_id_2: Deuxième Rhea ID
 
     Returns:
-        Dict avec les composés en commun
+        ReactionSharedCompounds avec les composés en commun
     """
     from gws_biota import Reaction
     from gws_biota.reaction.reaction import ReactionSubstrate, ReactionProduct
@@ -1042,7 +1118,7 @@ def join_reaction_shared_compounds(rhea_id_1: str, rhea_id_2: str) -> Dict[str, 
     r2 = Reaction.get_or_none(Reaction.rhea_id == rhea_id_2)
 
     if not r1 or not r2:
-        return {"error": "One or both reactions not found"}
+        raise ValueError("One or both reactions not found")
 
     def get_compounds(reaction):
         compounds = set()
@@ -1061,20 +1137,24 @@ def join_reaction_shared_compounds(rhea_id_1: str, rhea_id_2: str) -> Dict[str, 
     for chebi_id in shared:
         comp = Compound.get_or_none(Compound.chebi_id == chebi_id)
         if comp:
-            shared_details.append({"chebi_id": chebi_id, "name": comp.name, "formula": comp.formula})
+            shared_details.append(CompoundInfo(
+                chebi_id=chebi_id,
+                name=comp.name,
+                formula=comp.formula
+            ))
 
-    return {
-        "reaction_1": rhea_id_1,
-        "reaction_2": rhea_id_2,
-        "compounds_r1": len(c1),
-        "compounds_r2": len(c2),
-        "shared_count": len(shared),
-        "shared_compounds": shared_details
-    }
+    return ReactionSharedCompounds(
+        reaction_1=rhea_id_1,
+        reaction_2=rhea_id_2,
+        compounds_r1=len(c1),
+        compounds_r2=len(c2),
+        shared_count=len(shared),
+        shared_compounds=shared_details
+    )
 
 
 @_ensure_initialized
-def join_reactions_between_two_compounds(chebi_substrate: str, chebi_product: str) -> Dict[str, Any]:
+def join_reactions_between_two_compounds(chebi_substrate: str, chebi_product: str) -> ReactionsBetweenCompounds:
     """
     42. Réactions convertissant un substrat en produit (3 tables).
 
@@ -1083,7 +1163,7 @@ def join_reactions_between_two_compounds(chebi_substrate: str, chebi_product: st
         chebi_product: ChEBI ID du produit
 
     Returns:
-        Dict avec les réactions reliant les deux composés
+        ReactionsBetweenCompounds avec les réactions reliant les deux composés
     """
     from gws_biota import Reaction, Compound
     from gws_biota.reaction.reaction import ReactionSubstrate, ReactionProduct
@@ -1097,7 +1177,7 @@ def join_reactions_between_two_compounds(chebi_substrate: str, chebi_product: st
     prod_comp = Compound.get_or_none(Compound.chebi_id == chebi_product)
 
     if not sub_comp or not prod_comp:
-        return {"error": "One or both compounds not found"}
+        raise ValueError("One or both compounds not found")
 
     # Get reactions where chebi_substrate is a substrate
     sub_reactions = set()
@@ -1115,23 +1195,29 @@ def join_reactions_between_two_compounds(chebi_substrate: str, chebi_product: st
     for rid in common_ids:
         r = Reaction.get_or_none(Reaction.id == rid)
         if r:
-            reactions.append({
-                "rhea_id": r.rhea_id,
-                "name": r.name,
-                "direction": r.direction,
-                "kegg_id": r.kegg_id
-            })
+            reactions.append(ReactionInfo(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                direction=r.direction,
+                kegg_id=r.kegg_id
+            ))
 
-    return {
-        "substrate": {"chebi_id": chebi_substrate, "name": sub_comp.name},
-        "product": {"chebi_id": chebi_product, "name": prod_comp.name},
-        "reaction_count": len(reactions),
-        "reactions": reactions
-    }
+    return ReactionsBetweenCompounds(
+        substrate=CompoundPair(
+            chebi_id=chebi_substrate,
+            name=sub_comp.name
+        ),
+        product=CompoundPair(
+            chebi_id=chebi_product,
+            name=prod_comp.name
+        ),
+        reaction_count=len(reactions),
+        reactions=reactions
+    )
 
 
 @_ensure_initialized
-def join_reaction_taxonomy_distribution(rhea_id: str) -> Dict[str, Any]:
+def join_reaction_taxonomy_distribution(rhea_id: str) -> ReactionTaxonomyDistribution:
     """
     43. Distribution taxonomique d'une réaction (3 tables).
 
@@ -1139,7 +1225,7 @@ def join_reaction_taxonomy_distribution(rhea_id: str) -> Dict[str, Any]:
         rhea_id: Rhea identifier
 
     Returns:
-        Dict avec la distribution par rang taxonomique
+        ReactionTaxonomyDistribution avec la distribution par rang taxonomique
     """
     from gws_biota import Reaction, Enzyme, Taxonomy
     from gws_biota.reaction.reaction import ReactionEnzyme
@@ -1149,7 +1235,7 @@ def join_reaction_taxonomy_distribution(rhea_id: str) -> Dict[str, Any]:
 
     reaction = Reaction.get_or_none(Reaction.rhea_id == rhea_id)
     if not reaction:
-        return {"error": f"No reaction found with Rhea ID {rhea_id}"}
+        raise ValueError(f"No reaction found with Rhea ID {rhea_id}")
 
     rank_distribution = {}
     species_list = []
@@ -1163,20 +1249,23 @@ def join_reaction_taxonomy_distribution(rhea_id: str) -> Dict[str, Any]:
                 rank = tax.rank or "unknown"
                 rank_distribution[rank] = rank_distribution.get(rank, 0) + 1
                 if rank == "species":
-                    species_list.append({"tax_id": tax.tax_id, "name": tax.name})
+                    species_list.append(TaxonomyInfo(
+                        tax_id=tax.tax_id,
+                        name=tax.name
+                    ))
 
-    return {
-        "rhea_id": rhea_id,
-        "reaction_name": reaction.name,
-        "total_enzymes": len(re_links),
-        "rank_distribution": rank_distribution,
-        "species_count": len(species_list),
-        "species": species_list[:50]
-    }
+    return ReactionTaxonomyDistribution(
+        rhea_id=rhea_id,
+        reaction_name=reaction.name,
+        total_enzymes=len(re_links),
+        rank_distribution=rank_distribution,
+        species_count=len(species_list),
+        species=species_list[:50]
+    )
 
 
 @_ensure_initialized
-def join_reaction_cross_references(rhea_id: str) -> Dict[str, Any]:
+def join_reaction_cross_references(rhea_id: str) -> ReactionCrossReferences:
     """
     44. Références croisées complètes d'une réaction + enzymes + composés (4 tables).
 
@@ -1184,7 +1273,7 @@ def join_reaction_cross_references(rhea_id: str) -> Dict[str, Any]:
         rhea_id: Rhea identifier
 
     Returns:
-        Dict avec toutes les références croisées
+        ReactionCrossReferences avec toutes les références croisées
     """
     from gws_biota import Reaction
     from gws_biota.reaction.reaction import ReactionEnzyme
@@ -1194,47 +1283,54 @@ def join_reaction_cross_references(rhea_id: str) -> Dict[str, Any]:
 
     reaction = Reaction.get_or_none(Reaction.rhea_id == rhea_id)
     if not reaction:
-        return {"error": f"No reaction found with Rhea ID {rhea_id}"}
+        raise ValueError(f"No reaction found with Rhea ID {rhea_id}")
 
     # Cross references
-    xrefs = {
-        "rhea_id": reaction.rhea_id,
-        "master_id": reaction.master_id,
-        "kegg_id": reaction.kegg_id,
-        "metacyc_id": reaction.metacyc_id,
-        "biocyc_ids": reaction.biocyc_ids,
-        "sabio_rk_id": reaction.sabio_rk_id,
-    }
+    xrefs = ReactionXRef(
+        rhea_id=reaction.rhea_id,
+        master_id=reaction.master_id,
+        kegg_id=reaction.kegg_id,
+        metacyc_id=reaction.metacyc_id,
+        biocyc_ids=reaction.biocyc_ids,
+        sabio_rk_id=reaction.sabio_rk_id
+    )
 
     # Compound cross-refs
     compound_xrefs = []
     for s in reaction.substrates:
-        compound_xrefs.append({
-            "chebi_id": s.chebi_id, "kegg_id": s.kegg_id,
-            "inchikey": s.inchikey, "role": "substrate"
-        })
+        compound_xrefs.append(CompoundXRef(
+            chebi_id=s.chebi_id,
+            kegg_id=s.kegg_id,
+            inchikey=s.inchikey,
+            role="substrate"
+        ))
     for p in reaction.products:
-        compound_xrefs.append({
-            "chebi_id": p.chebi_id, "kegg_id": p.kegg_id,
-            "inchikey": p.inchikey, "role": "product"
-        })
+        compound_xrefs.append(CompoundXRef(
+            chebi_id=p.chebi_id,
+            kegg_id=p.kegg_id,
+            inchikey=p.inchikey,
+            role="product"
+        ))
 
     # Enzyme cross-refs
     enzyme_xrefs = []
     re_links = list(ReactionEnzyme.select().where(ReactionEnzyme.reaction == reaction))
     for link in re_links:
         e = link.enzyme
-        enzyme_xrefs.append({"ec_number": e.ec_number, "uniprot_id": e.uniprot_id})
+        enzyme_xrefs.append(EnzymeXRef(
+            ec_number=e.ec_number,
+            uniprot_id=e.uniprot_id
+        ))
 
-    return {
-        "reaction_xrefs": xrefs,
-        "compound_xrefs": compound_xrefs,
-        "enzyme_xrefs": enzyme_xrefs
-    }
+    return ReactionCrossReferences(
+        reaction_xrefs=xrefs,
+        compound_xrefs=compound_xrefs,
+        enzyme_xrefs=enzyme_xrefs
+    )
 
 
 @_ensure_initialized
-def join_reaction_mass_balance(rhea_id: str) -> Dict[str, Any]:
+def join_reaction_mass_balance(rhea_id: str) -> ReactionMassBalance:
     """
     45. Bilan de masse d'une réaction: substrats vs produits (2 tables).
 
@@ -1242,7 +1338,7 @@ def join_reaction_mass_balance(rhea_id: str) -> Dict[str, Any]:
         rhea_id: Rhea identifier
 
     Returns:
-        Dict avec les masses des substrats et produits
+        ReactionMassBalance avec les masses des substrats et produits
     """
     from gws_biota import Reaction
 
@@ -1251,35 +1347,45 @@ def join_reaction_mass_balance(rhea_id: str) -> Dict[str, Any]:
 
     reaction = Reaction.get_or_none(Reaction.rhea_id == rhea_id)
     if not reaction:
-        return {"error": f"No reaction found with Rhea ID {rhea_id}"}
+        raise ValueError(f"No reaction found with Rhea ID {rhea_id}")
 
     substrates = []
     total_sub_mass = 0.0
     for s in reaction.substrates:
         mass = s.mass or 0.0
         total_sub_mass += mass
-        substrates.append({"chebi_id": s.chebi_id, "name": s.name, "formula": s.formula, "mass": mass})
+        substrates.append(CompoundInfo(
+            chebi_id=s.chebi_id,
+            name=s.name,
+            formula=s.formula,
+            mass=mass
+        ))
 
     products = []
     total_prod_mass = 0.0
     for p in reaction.products:
         mass = p.mass or 0.0
         total_prod_mass += mass
-        products.append({"chebi_id": p.chebi_id, "name": p.name, "formula": p.formula, "mass": mass})
+        products.append(CompoundInfo(
+            chebi_id=p.chebi_id,
+            name=p.name,
+            formula=p.formula,
+            mass=mass
+        ))
 
-    return {
-        "rhea_id": rhea_id,
-        "reaction_name": reaction.name,
-        "substrates": substrates,
-        "products": products,
-        "total_substrate_mass": round(total_sub_mass, 4),
-        "total_product_mass": round(total_prod_mass, 4),
-        "mass_difference": round(total_prod_mass - total_sub_mass, 4)
-    }
+    return ReactionMassBalance(
+        rhea_id=rhea_id,
+        reaction_name=reaction.name,
+        substrates=substrates,
+        products=products,
+        total_substrate_mass=round(total_sub_mass, 4),
+        total_product_mass=round(total_prod_mass, 4),
+        mass_difference=round(total_prod_mass - total_sub_mass, 4)
+    )
 
 
 @_ensure_initialized
-def join_reactions_by_enzyme_pair(ec_number_1: str, ec_number_2: str) -> Dict[str, Any]:
+def join_reactions_by_enzyme_pair(ec_number_1: str, ec_number_2: str) -> ReactionsByEnzymePair:
     """
     46. Réactions catalysées par les deux EC (3 tables).
 
@@ -1288,7 +1394,7 @@ def join_reactions_by_enzyme_pair(ec_number_1: str, ec_number_2: str) -> Dict[st
         ec_number_2: Deuxième numéro EC
 
     Returns:
-        Dict avec les réactions partagées
+        ReactionsByEnzymePair avec les réactions partagées
     """
     from gws_biota import Enzyme, Reaction
     from gws_biota.reaction.reaction import ReactionEnzyme
@@ -1297,7 +1403,7 @@ def join_reactions_by_enzyme_pair(ec_number_1: str, ec_number_2: str) -> Dict[st
     enzymes_2 = list(Enzyme.select().where(Enzyme.ec_number == ec_number_2))
 
     if not enzymes_1 or not enzymes_2:
-        return {"error": "One or both EC numbers not found"}
+        raise ValueError("One or both EC numbers not found")
 
     reactions_1 = set()
     for e in enzymes_1:
@@ -1317,16 +1423,20 @@ def join_reactions_by_enzyme_pair(ec_number_1: str, ec_number_2: str) -> Dict[st
     for rid in shared_ids:
         r = Reaction.get_or_none(Reaction.id == rid)
         if r:
-            shared_reactions.append({"rhea_id": r.rhea_id, "name": r.name, "direction": r.direction})
+            shared_reactions.append(ReactionInfo(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                direction=r.direction
+            ))
 
-    return {
-        "ec_number_1": ec_number_1,
-        "ec_number_2": ec_number_2,
-        "reactions_ec1_only": len(only_1),
-        "reactions_ec2_only": len(only_2),
-        "shared_count": len(shared_reactions),
-        "shared_reactions": shared_reactions
-    }
+    return ReactionsByEnzymePair(
+        ec_number_1=ec_number_1,
+        ec_number_2=ec_number_2,
+        reactions_ec1_only=len(only_1),
+        reactions_ec2_only=len(only_2),
+        shared_count=len(shared_reactions),
+        shared_reactions=shared_reactions
+    )
 
 
 # ============================================================================
@@ -1334,7 +1444,7 @@ def join_reactions_by_enzyme_pair(ec_number_1: str, ec_number_2: str) -> Dict[st
 # ============================================================================
 
 @_ensure_initialized
-def join_compound_reactions_enzymes(chebi_id: str) -> Dict[str, Any]:
+def join_compound_reactions_enzymes(chebi_id: str) -> CompoundReactionsEnzymes:
     """
     47. Composé → Réactions (substrat/produit) → Enzymes (4 tables).
 
@@ -1342,7 +1452,7 @@ def join_compound_reactions_enzymes(chebi_id: str) -> Dict[str, Any]:
         chebi_id: ChEBI identifier
 
     Returns:
-        Dict avec les réactions et enzymes associés au composé
+        CompoundReactionsEnzymes avec les réactions et enzymes associés au composé
     """
     from gws_biota import Compound, Reaction
     from gws_biota.reaction.reaction import ReactionSubstrate, ReactionProduct, ReactionEnzyme
@@ -1352,7 +1462,7 @@ def join_compound_reactions_enzymes(chebi_id: str) -> Dict[str, Any]:
 
     compound = Compound.get_or_none(Compound.chebi_id == chebi_id)
     if not compound:
-        return {"error": f"No compound found with ChEBI ID {chebi_id}"}
+        raise ValueError(f"No compound found with ChEBI ID {chebi_id}")
 
     reactions_data = []
     seen_rhea = set()
@@ -1365,11 +1475,17 @@ def join_compound_reactions_enzymes(chebi_id: str) -> Dict[str, Any]:
             enzymes = []
             for re_link in ReactionEnzyme.select().where(ReactionEnzyme.reaction == r):
                 e = re_link.enzyme
-                enzymes.append({"ec_number": e.ec_number, "name": e.name})
-            reactions_data.append({
-                "rhea_id": r.rhea_id, "name": r.name, "role": "substrate",
-                "enzyme_count": len(enzymes), "enzymes": enzymes
-            })
+                enzymes.append(EnzymeInfo(
+                    ec_number=e.ec_number,
+                    name=e.name
+                ))
+            reactions_data.append(ReactionWithEnzymes(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                role="substrate",
+                enzyme_count=len(enzymes),
+                enzymes=enzymes
+            ))
 
     # As product
     for link in ReactionProduct.select().where(ReactionProduct.compound == compound):
@@ -1379,22 +1495,28 @@ def join_compound_reactions_enzymes(chebi_id: str) -> Dict[str, Any]:
             enzymes = []
             for re_link in ReactionEnzyme.select().where(ReactionEnzyme.reaction == r):
                 e = re_link.enzyme
-                enzymes.append({"ec_number": e.ec_number, "name": e.name})
-            reactions_data.append({
-                "rhea_id": r.rhea_id, "name": r.name, "role": "product",
-                "enzyme_count": len(enzymes), "enzymes": enzymes
-            })
+                enzymes.append(EnzymeInfo(
+                    ec_number=e.ec_number,
+                    name=e.name
+                ))
+            reactions_data.append(ReactionWithEnzymes(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                role="product",
+                enzyme_count=len(enzymes),
+                enzymes=enzymes
+            ))
 
-    return {
-        "chebi_id": chebi_id,
-        "compound_name": compound.name,
-        "reaction_count": len(reactions_data),
-        "reactions": reactions_data
-    }
+    return CompoundReactionsEnzymes(
+        chebi_id=chebi_id,
+        compound_name=compound.name,
+        reaction_count=len(reactions_data),
+        reactions=reactions_data
+    )
 
 
 @_ensure_initialized
-def join_compound_pathway_species(chebi_id: str) -> Dict[str, Any]:
+def join_compound_pathway_species(chebi_id: str) -> CompoundPathwaySpecies:
     """
     48. Composé → Pathways → Espèces (3 tables).
 
@@ -1402,7 +1524,7 @@ def join_compound_pathway_species(chebi_id: str) -> Dict[str, Any]:
         chebi_id: ChEBI identifier
 
     Returns:
-        Dict avec les pathways et espèces associés au composé
+        CompoundPathwaySpecies avec les pathways et espèces associés au composé
     """
     from gws_biota import Compound, Pathway, PathwayCompound
 
@@ -1411,7 +1533,7 @@ def join_compound_pathway_species(chebi_id: str) -> Dict[str, Any]:
 
     compound = Compound.get_or_none(Compound.chebi_id == chebi_id)
     if not compound:
-        return {"error": f"No compound found with ChEBI ID {chebi_id}"}
+        raise ValueError(f"No compound found with ChEBI ID {chebi_id}")
 
     pc_links = list(PathwayCompound.select().where(PathwayCompound.chebi_id == chebi_id))
 
@@ -1430,22 +1552,29 @@ def join_compound_pathway_species(chebi_id: str) -> Dict[str, Any]:
         if pc.species and pc.species not in pathway_species[key]["species"]:
             pathway_species[key]["species"].append(pc.species)
 
-    pathways = list(pathway_species.values())
+    pathways = []
+    for p_data in pathway_species.values():
+        pathways.append(PathwayWithSpecies(
+            reactome_id=p_data["reactome_id"],
+            pathway_name=p_data["pathway_name"],
+            species=p_data["species"]
+        ))
+    
     all_species = set()
     for p in pathways:
-        all_species.update(p["species"])
+        all_species.update(p.species)
 
-    return {
-        "chebi_id": chebi_id,
-        "compound_name": compound.name,
-        "pathway_count": len(pathways),
-        "unique_species": sorted(all_species),
-        "pathways": pathways
-    }
+    return CompoundPathwaySpecies(
+        chebi_id=chebi_id,
+        compound_name=compound.name,
+        pathway_count=len(pathways),
+        unique_species=sorted(all_species),
+        pathways=pathways
+    )
 
 
 @_ensure_initialized
-def join_compound_ancestors_tree(chebi_id: str, max_depth: int = 10) -> Dict[str, Any]:
+def join_compound_ancestors_tree(chebi_id: str, max_depth: int = 10) -> CompoundAncestorsTree:
     """
     49. Composé → arbre d'ancêtres ChEBI (2 tables).
 
@@ -1454,7 +1583,7 @@ def join_compound_ancestors_tree(chebi_id: str, max_depth: int = 10) -> Dict[str
         max_depth: Profondeur maximale de l'arbre
 
     Returns:
-        Dict avec l'arbre d'ancêtres du composé
+        CompoundAncestorsTree avec l'arbre d'ancêtres du composé
     """
     from gws_biota import Compound
     from gws_biota.compound.compound import CompoundAncestor
@@ -1464,29 +1593,29 @@ def join_compound_ancestors_tree(chebi_id: str, max_depth: int = 10) -> Dict[str
 
     compound = Compound.get_or_none(Compound.chebi_id == chebi_id)
     if not compound:
-        return {"error": f"No compound found with ChEBI ID {chebi_id}"}
+        raise ValueError(f"No compound found with ChEBI ID {chebi_id}")
 
     ancestors = []
     ca_links = list(CompoundAncestor.select().where(CompoundAncestor.compound == compound).limit(100))
     for link in ca_links:
         anc = link.ancestor
         if anc:
-            ancestors.append({
-                "chebi_id": anc.chebi_id,
-                "name": anc.name,
-                "formula": anc.formula
-            })
+            ancestors.append(CompoundInfo(
+                chebi_id=anc.chebi_id,
+                name=anc.name,
+                formula=anc.formula
+            ))
 
-    return {
-        "chebi_id": chebi_id,
-        "compound_name": compound.name,
-        "ancestor_count": len(ancestors),
-        "ancestors": ancestors
-    }
+    return CompoundAncestorsTree(
+        chebi_id=chebi_id,
+        compound_name=compound.name,
+        ancestor_count=len(ancestors),
+        ancestors=ancestors
+    )
 
 
 @_ensure_initialized
-def join_compound_common_reactions(chebi_id_1: str, chebi_id_2: str) -> Dict[str, Any]:
+def join_compound_common_reactions(chebi_id_1: str, chebi_id_2: str) -> CompoundCommonReactions:
     """
     50. Réactions en commun entre deux composés (3 tables).
 
@@ -1495,7 +1624,7 @@ def join_compound_common_reactions(chebi_id_1: str, chebi_id_2: str) -> Dict[str
         chebi_id_2: Deuxième ChEBI ID
 
     Returns:
-        Dict avec les réactions impliquant les deux composés
+        CompoundCommonReactions avec les réactions impliquant les deux composés
     """
     from gws_biota import Compound, Reaction
     from gws_biota.reaction.reaction import ReactionSubstrate, ReactionProduct
@@ -1509,7 +1638,7 @@ def join_compound_common_reactions(chebi_id_1: str, chebi_id_2: str) -> Dict[str
     c2 = Compound.get_or_none(Compound.chebi_id == chebi_id_2)
 
     if not c1 or not c2:
-        return {"error": "One or both compounds not found"}
+        raise ValueError("One or both compounds not found")
 
     def get_reaction_ids(compound):
         ids = set()
@@ -1527,20 +1656,30 @@ def join_compound_common_reactions(chebi_id_1: str, chebi_id_2: str) -> Dict[str
     for rid in shared:
         r = Reaction.get_or_none(Reaction.id == rid)
         if r:
-            shared_reactions.append({"rhea_id": r.rhea_id, "name": r.name, "direction": r.direction})
+            shared_reactions.append(ReactionInfo(
+                rhea_id=r.rhea_id,
+                name=r.name,
+                direction=r.direction
+            ))
 
-    return {
-        "compound_1": {"chebi_id": chebi_id_1, "name": c1.name},
-        "compound_2": {"chebi_id": chebi_id_2, "name": c2.name},
-        "reactions_c1": len(r1),
-        "reactions_c2": len(r2),
-        "shared_count": len(shared_reactions),
-        "shared_reactions": shared_reactions
-    }
+    return CompoundCommonReactions(
+        compound_1=CompoundInfoPair(
+            chebi_id=chebi_id_1,
+            name=c1.name
+        ),
+        compound_2=CompoundInfoPair(
+            chebi_id=chebi_id_2,
+            name=c2.name
+        ),
+        reactions_c1=len(r1),
+        reactions_c2=len(r2),
+        shared_count=len(shared_reactions),
+        shared_reactions=shared_reactions
+    )
 
 
 @_ensure_initialized
-def join_compound_producing_enzymes_by_taxon(chebi_id: str, tax_id: str = None, limit: int = 50) -> Dict[str, Any]:
+def join_compound_producing_enzymes_by_taxon(chebi_id: str, tax_id: str = None, limit: int = 50) -> CompoundProducingEnzymesByTaxon:
     """
     51. Enzymes produisant un composé, optionnellement filtré par taxon (4 tables).
 
@@ -1550,7 +1689,7 @@ def join_compound_producing_enzymes_by_taxon(chebi_id: str, tax_id: str = None, 
         limit: Nombre maximum de résultats
 
     Returns:
-        Dict avec les enzymes produisant ce composé
+        CompoundProducingEnzymesByTaxon avec les enzymes produisant ce composé
     """
     from gws_biota import Compound, Reaction, Enzyme, Taxonomy
     from gws_biota.reaction.reaction import ReactionProduct, ReactionEnzyme
@@ -1560,7 +1699,7 @@ def join_compound_producing_enzymes_by_taxon(chebi_id: str, tax_id: str = None, 
 
     compound = Compound.get_or_none(Compound.chebi_id == chebi_id)
     if not compound:
-        return {"error": f"No compound found with ChEBI ID {chebi_id}"}
+        raise ValueError(f"No compound found with ChEBI ID {chebi_id}")
 
     # Find reactions that produce this compound
     prod_links = list(ReactionProduct.select().where(ReactionProduct.compound == compound))
@@ -1580,30 +1719,30 @@ def join_compound_producing_enzymes_by_taxon(chebi_id: str, tax_id: str = None, 
                 continue
 
             seen_enzymes.add(key)
-            enzymes_data.append({
-                "ec_number": enzyme.ec_number,
-                "uniprot_id": enzyme.uniprot_id,
-                "name": enzyme.name,
-                "tax_id": enzyme.tax_id,
-                "reaction_rhea_id": reaction.rhea_id
-            })
+            enzymes_data.append(EnzymeProducingCompound(
+                ec_number=enzyme.ec_number,
+                uniprot_id=enzyme.uniprot_id,
+                name=enzyme.name,
+                tax_id=enzyme.tax_id,
+                reaction_rhea_id=reaction.rhea_id
+            ))
 
             if len(enzymes_data) >= limit:
                 break
         if len(enzymes_data) >= limit:
             break
 
-    return {
-        "chebi_id": chebi_id,
-        "compound_name": compound.name,
-        "tax_filter": tax_id,
-        "producing_enzyme_count": len(enzymes_data),
-        "enzymes": enzymes_data
-    }
+    return CompoundProducingEnzymesByTaxon(
+        chebi_id=chebi_id,
+        compound_name=compound.name,
+        tax_filter=tax_id,
+        producing_enzyme_count=len(enzymes_data),
+        enzymes=enzymes_data
+    )
 
 
 @_ensure_initialized
-def join_compound_consuming_enzymes_by_taxon(chebi_id: str, tax_id: str = None, limit: int = 50) -> Dict[str, Any]:
+def join_compound_consuming_enzymes_by_taxon(chebi_id: str, tax_id: str = None, limit: int = 50) -> CompoundConsumingEnzymesByTaxon:
     """
     52. Enzymes consommant un composé, optionnellement filtré par taxon (4 tables).
 
@@ -1613,7 +1752,7 @@ def join_compound_consuming_enzymes_by_taxon(chebi_id: str, tax_id: str = None, 
         limit: Nombre maximum de résultats
 
     Returns:
-        Dict avec les enzymes consommant ce composé
+        CompoundConsumingEnzymesByTaxon avec les enzymes consommant ce composé
     """
     from gws_biota import Compound, Reaction, Enzyme, Taxonomy
     from gws_biota.reaction.reaction import ReactionSubstrate, ReactionEnzyme
@@ -1623,7 +1762,7 @@ def join_compound_consuming_enzymes_by_taxon(chebi_id: str, tax_id: str = None, 
 
     compound = Compound.get_or_none(Compound.chebi_id == chebi_id)
     if not compound:
-        return {"error": f"No compound found with ChEBI ID {chebi_id}"}
+        raise ValueError(f"No compound found with ChEBI ID {chebi_id}")
 
     sub_links = list(ReactionSubstrate.select().where(ReactionSubstrate.compound == compound))
 
@@ -1642,26 +1781,26 @@ def join_compound_consuming_enzymes_by_taxon(chebi_id: str, tax_id: str = None, 
                 continue
 
             seen_enzymes.add(key)
-            enzymes_data.append({
-                "ec_number": enzyme.ec_number,
-                "uniprot_id": enzyme.uniprot_id,
-                "name": enzyme.name,
-                "tax_id": enzyme.tax_id,
-                "reaction_rhea_id": reaction.rhea_id
-            })
+            enzymes_data.append(EnzymeConsumingCompound(
+                ec_number=enzyme.ec_number,
+                uniprot_id=enzyme.uniprot_id,
+                name=enzyme.name,
+                tax_id=enzyme.tax_id,
+                reaction_rhea_id=reaction.rhea_id
+            ))
 
             if len(enzymes_data) >= limit:
                 break
         if len(enzymes_data) >= limit:
             break
 
-    return {
-        "chebi_id": chebi_id,
-        "compound_name": compound.name,
-        "tax_filter": tax_id,
-        "consuming_enzyme_count": len(enzymes_data),
-        "enzymes": enzymes_data
-    }
+    return CompoundConsumingEnzymesByTaxon(
+        chebi_id=chebi_id,
+        compound_name=compound.name,
+        tax_filter=tax_id,
+        consuming_enzyme_count=len(enzymes_data),
+        enzymes=enzymes_data
+    )
 
 
 # ============================================================================
@@ -1669,7 +1808,7 @@ def join_compound_consuming_enzymes_by_taxon(chebi_id: str, tax_id: str = None, 
 # ============================================================================
 
 @_ensure_initialized
-def join_taxonomy_enzymes_proteins_count(tax_id: str) -> Dict[str, Any]:
+def join_taxonomy_enzymes_proteins_count(tax_id: str) -> TaxonomyEnzymesProteinsCount:
     """
     53. Statistiques enzymes + protéines pour un taxon (3 tables).
 
@@ -1677,13 +1816,13 @@ def join_taxonomy_enzymes_proteins_count(tax_id: str) -> Dict[str, Any]:
         tax_id: NCBI Taxonomy ID
 
     Returns:
-        Dict avec les comptages d'enzymes et protéines
+        TaxonomyEnzymesProteinsCount avec les comptages d'enzymes et protéines
     """
     from gws_biota import Enzyme, Protein, Taxonomy
 
     taxonomy = Taxonomy.get_or_none(Taxonomy.tax_id == tax_id)
     if not taxonomy:
-        return {"error": f"No taxonomy found with ID {tax_id}"}
+        raise ValueError(f"No taxonomy found with ID {tax_id}")
 
     enzyme_count = Enzyme.select().where(Enzyme.tax_id == tax_id).count()
     protein_count = Protein.select().where(Protein.tax_id == tax_id).count()
@@ -1692,18 +1831,18 @@ def join_taxonomy_enzymes_proteins_count(tax_id: str) -> Dict[str, Any]:
     enzymes = list(Enzyme.select(Enzyme.ec_number).where(Enzyme.tax_id == tax_id).distinct())
     unique_ec = len(set(e.ec_number for e in enzymes if e.ec_number))
 
-    return {
-        "tax_id": tax_id,
-        "tax_name": taxonomy.name,
-        "tax_rank": taxonomy.rank,
-        "enzyme_count": enzyme_count,
-        "unique_ec_numbers": unique_ec,
-        "protein_count": protein_count
-    }
+    return TaxonomyEnzymesProteinsCount(
+        tax_id=tax_id,
+        tax_name=taxonomy.name,
+        tax_rank=taxonomy.rank,
+        enzyme_count=enzyme_count,
+        unique_ec_numbers=unique_ec,
+        protein_count=protein_count
+    )
 
 
 @_ensure_initialized
-def join_taxonomy_children_enzyme_stats(tax_id: str, limit: int = 50) -> Dict[str, Any]:
+def join_taxonomy_children_enzyme_stats(tax_id: str, limit: int = 50) -> TaxonomyChildrenEnzymeStats:
     """
     54. Enfants taxonomiques et leurs statistiques enzymes (2 tables).
 
@@ -1712,13 +1851,13 @@ def join_taxonomy_children_enzyme_stats(tax_id: str, limit: int = 50) -> Dict[st
         limit: Nombre maximum d'enfants
 
     Returns:
-        Dict avec les enfants et leur nombre d'enzymes
+        TaxonomyChildrenEnzymeStats avec les enfants et leur nombre d'enzymes
     """
     from gws_biota import Enzyme, Taxonomy
 
     parent = Taxonomy.get_or_none(Taxonomy.tax_id == tax_id)
     if not parent:
-        return {"error": f"No taxonomy found with ID {tax_id}"}
+        raise ValueError(f"No taxonomy found with ID {tax_id}")
 
     children = list(Taxonomy.select().where(
         Taxonomy.ancestor_tax_id == tax_id
@@ -1727,26 +1866,26 @@ def join_taxonomy_children_enzyme_stats(tax_id: str, limit: int = 50) -> Dict[st
     children_stats = []
     for child in children:
         enzyme_count = Enzyme.select().where(Enzyme.tax_id == child.tax_id).count()
-        children_stats.append({
-            "tax_id": child.tax_id,
-            "name": child.name,
-            "rank": child.rank,
-            "enzyme_count": enzyme_count
-        })
+        children_stats.append(TaxonomyChildStats(
+            tax_id=child.tax_id,
+            name=child.name,
+            rank=child.rank,
+            enzyme_count=enzyme_count
+        ))
 
-    children_stats.sort(key=lambda x: x["enzyme_count"], reverse=True)
+    children_stats.sort(key=lambda x: x.enzyme_count, reverse=True)
 
-    return {
-        "parent_tax_id": tax_id,
-        "parent_name": parent.name,
-        "children_count": len(children_stats),
-        "total_enzymes_in_children": sum(c["enzyme_count"] for c in children_stats),
-        "children": children_stats
-    }
+    return TaxonomyChildrenEnzymeStats(
+        parent_tax_id=tax_id,
+        parent_name=parent.name,
+        children_count=len(children_stats),
+        total_enzymes_in_children=sum(c.enzyme_count for c in children_stats),
+        children=children_stats
+    )
 
 
 @_ensure_initialized
-def join_taxonomy_reactions_compounds(tax_id: str, limit: int = 100) -> Dict[str, Any]:
+def join_taxonomy_reactions_compounds(tax_id: str, limit: int = 100) -> TaxonomyReactionsCompounds:
     """
     55. Taxon → Réactions → Composés (substrats + produits) (4 tables).
 
@@ -1755,13 +1894,13 @@ def join_taxonomy_reactions_compounds(tax_id: str, limit: int = 100) -> Dict[str
         limit: Nombre maximum de réactions
 
     Returns:
-        Dict avec réactions et composés du taxon
+        TaxonomyReactionsCompounds avec réactions et composés du taxon
     """
     from gws_biota import Reaction, Taxonomy
 
     taxonomy = Taxonomy.get_or_none(Taxonomy.tax_id == tax_id)
     if not taxonomy:
-        return {"error": f"No taxonomy found with ID {tax_id}"}
+        raise ValueError(f"No taxonomy found with ID {tax_id}")
 
     reactions = list(Reaction.search_by_tax_ids(tax_id))[:limit]
 
@@ -1769,40 +1908,63 @@ def join_taxonomy_reactions_compounds(tax_id: str, limit: int = 100) -> Dict[str
     reaction_list = []
 
     for r in reactions:
-        subs = [{"chebi_id": s.chebi_id, "name": s.name} for s in r.substrates]
-        prods = [{"chebi_id": p.chebi_id, "name": p.name} for p in r.products]
+        subs = [CompoundInfo(
+            chebi_id=s.chebi_id,
+            name=s.name
+        ) for s in r.substrates]
+        prods = [CompoundInfo(
+            chebi_id=p.chebi_id,
+            name=p.name
+        ) for p in r.products]
 
         for s in r.substrates:
             if s.chebi_id and s.chebi_id not in compounds_set:
-                compounds_set[s.chebi_id] = {"chebi_id": s.chebi_id, "name": s.name, "as_substrate": True, "as_product": False}
+                compounds_set[s.chebi_id] = {
+                    "chebi_id": s.chebi_id,
+                    "name": s.name,
+                    "as_substrate": True,
+                    "as_product": False
+                }
             elif s.chebi_id:
                 compounds_set[s.chebi_id]["as_substrate"] = True
 
         for p in r.products:
             if p.chebi_id and p.chebi_id not in compounds_set:
-                compounds_set[p.chebi_id] = {"chebi_id": p.chebi_id, "name": p.name, "as_substrate": False, "as_product": True}
+                compounds_set[p.chebi_id] = {
+                    "chebi_id": p.chebi_id,
+                    "name": p.name,
+                    "as_substrate": False,
+                    "as_product": True
+                }
             elif p.chebi_id:
                 compounds_set[p.chebi_id]["as_product"] = True
 
-        reaction_list.append({
-            "rhea_id": r.rhea_id,
-            "name": r.name,
-            "substrates": subs,
-            "products": prods
-        })
+        reaction_list.append(ReactionWithCompounds(
+            rhea_id=r.rhea_id,
+            name=r.name,
+            substrates=subs,
+            products=prods
+        ))
 
-    return {
-        "tax_id": tax_id,
-        "tax_name": taxonomy.name,
-        "reaction_count": len(reaction_list),
-        "unique_compound_count": len(compounds_set),
-        "compounds": list(compounds_set.values()),
-        "reactions": reaction_list
-    }
+    compounds = [CompoundRole(
+        chebi_id=c["chebi_id"],
+        name=c["name"],
+        as_substrate=c["as_substrate"],
+        as_product=c["as_product"]
+    ) for c in compounds_set.values()]
+
+    return TaxonomyReactionsCompounds(
+        tax_id=tax_id,
+        tax_name=taxonomy.name,
+        reaction_count=len(reaction_list),
+        unique_compound_count=len(compounds),
+        compounds=compounds,
+        reactions=reaction_list
+    )
 
 
 @_ensure_initialized
-def join_pathway_reactions_enzymes(reactome_id: str) -> Dict[str, Any]:
+def join_pathway_reactions_enzymes(reactome_id: str) -> PathwayReactionsEnzymes:
     """
     56. Pathway → Composés → Réactions → Enzymes (5 tables).
 
@@ -1810,14 +1972,14 @@ def join_pathway_reactions_enzymes(reactome_id: str) -> Dict[str, Any]:
         reactome_id: Reactome pathway identifier
 
     Returns:
-        Dict avec les réactions et enzymes du pathway
+        PathwayReactionsEnzymes avec les réactions et enzymes du pathway
     """
     from gws_biota import Pathway, PathwayCompound, Compound
     from gws_biota.reaction.reaction import ReactionSubstrate, ReactionProduct, ReactionEnzyme
 
     pathway = Pathway.get_or_none(Pathway.reactome_pathway_id == reactome_id)
     if not pathway:
-        return {"error": f"No pathway found with Reactome ID {reactome_id}"}
+        raise ValueError(f"No pathway found with Reactome ID {reactome_id}")
 
     pc_links = list(PathwayCompound.select().where(
         PathwayCompound.reactome_pathway_id == reactome_id
@@ -1835,34 +1997,50 @@ def join_pathway_reactions_enzymes(reactome_id: str) -> Dict[str, Any]:
         for link in ReactionSubstrate.select().where(ReactionSubstrate.compound == compound):
             r = link.reaction
             if r.rhea_id not in reactions_map:
-                reactions_map[r.rhea_id] = {"rhea_id": r.rhea_id, "name": r.name, "enzymes": []}
+                enzymes = []
                 for re_link in ReactionEnzyme.select().where(ReactionEnzyme.reaction == r):
                     e = re_link.enzyme
-                    reactions_map[r.rhea_id]["enzymes"].append(e.ec_number)
-                    enzymes_map[e.ec_number] = {"ec_number": e.ec_number, "name": e.name}
+                    enzymes.append(e.ec_number)
+                    enzymes_map[e.ec_number] = EnzymeInfo(
+                        ec_number=e.ec_number,
+                        name=e.name
+                    )
+                reactions_map[r.rhea_id] = ReactionWithEnzymeList(
+                    rhea_id=r.rhea_id,
+                    name=r.name,
+                    enzymes=enzymes
+                )
 
         for link in ReactionProduct.select().where(ReactionProduct.compound == compound):
             r = link.reaction
             if r.rhea_id not in reactions_map:
-                reactions_map[r.rhea_id] = {"rhea_id": r.rhea_id, "name": r.name, "enzymes": []}
+                enzymes = []
                 for re_link in ReactionEnzyme.select().where(ReactionEnzyme.reaction == r):
                     e = re_link.enzyme
-                    reactions_map[r.rhea_id]["enzymes"].append(e.ec_number)
-                    enzymes_map[e.ec_number] = {"ec_number": e.ec_number, "name": e.name}
+                    enzymes.append(e.ec_number)
+                    enzymes_map[e.ec_number] = EnzymeInfo(
+                        ec_number=e.ec_number,
+                        name=e.name
+                    )
+                reactions_map[r.rhea_id] = ReactionWithEnzymeList(
+                    rhea_id=r.rhea_id,
+                    name=r.name,
+                    enzymes=enzymes
+                )
 
-    return {
-        "reactome_id": reactome_id,
-        "pathway_name": pathway.name,
-        "compound_count": len(pc_links),
-        "reaction_count": len(reactions_map),
-        "enzyme_count": len(enzymes_map),
-        "reactions": list(reactions_map.values()),
-        "enzymes": list(enzymes_map.values())
-    }
+    return PathwayReactionsEnzymes(
+        reactome_id=reactome_id,
+        pathway_name=pathway.name,
+        compound_count=len(pc_links),
+        reaction_count=len(reactions_map),
+        enzyme_count=len(enzymes_map),
+        reactions=list(reactions_map.values()),
+        enzymes=list(enzymes_map.values())
+    )
 
 
 @_ensure_initialized
-def join_pathway_ancestor_compounds(reactome_id: str) -> Dict[str, Any]:
+def join_pathway_ancestor_compounds(reactome_id: str) -> PathwayAncestorCompounds:
     """
     57. Pathway → ancêtres → composés de chaque ancêtre (3 tables).
 
@@ -1870,14 +2048,14 @@ def join_pathway_ancestor_compounds(reactome_id: str) -> Dict[str, Any]:
         reactome_id: Reactome pathway identifier
 
     Returns:
-        Dict avec la hiérarchie des pathways et leurs composés
+        PathwayAncestorCompounds avec la hiérarchie des pathways et leurs composés
     """
     from gws_biota import Pathway, PathwayCompound, Compound
     from gws_biota.pathway.pathway import PathwayAncestor
 
     pathway = Pathway.get_or_none(Pathway.reactome_pathway_id == reactome_id)
     if not pathway:
-        return {"error": f"No pathway found with Reactome ID {reactome_id}"}
+        raise ValueError(f"No pathway found with Reactome ID {reactome_id}")
 
     # Get ancestors
     pa_links = list(PathwayAncestor.select().where(PathwayAncestor.pathway == pathway).limit(50))
@@ -1896,25 +2074,28 @@ def join_pathway_ancestor_compounds(reactome_id: str) -> Dict[str, Any]:
         for pc in pc_links:
             comp = Compound.get_or_none(Compound.chebi_id == pc.chebi_id)
             if comp:
-                compounds.append({"chebi_id": comp.chebi_id, "name": comp.name})
+                compounds.append(CompoundInfo(
+                    chebi_id=comp.chebi_id,
+                    name=comp.name
+                ))
 
-        ancestors_data.append({
-            "reactome_id": anc.reactome_pathway_id,
-            "name": anc.name,
-            "compound_count": len(compounds),
-            "compounds": compounds
-        })
+        ancestors_data.append(AncestorPathwayWithCompounds(
+            reactome_id=anc.reactome_pathway_id,
+            name=anc.name,
+            compound_count=len(compounds),
+            compounds=compounds
+        ))
 
-    return {
-        "reactome_id": reactome_id,
-        "pathway_name": pathway.name,
-        "ancestor_count": len(ancestors_data),
-        "ancestors": ancestors_data
-    }
+    return PathwayAncestorCompounds(
+        reactome_id=reactome_id,
+        pathway_name=pathway.name,
+        ancestor_count=len(ancestors_data),
+        ancestors=ancestors_data
+    )
 
 
 @_ensure_initialized
-def join_go_ancestors_tree(go_id: str) -> Dict[str, Any]:
+def join_go_ancestors_tree(go_id: str) -> GOAncestorsTree:
     """
     58. GO term → arbre complet des ancêtres (2 tables).
 
@@ -1922,7 +2103,7 @@ def join_go_ancestors_tree(go_id: str) -> Dict[str, Any]:
         go_id: GO identifier (ex: "GO:0008150")
 
     Returns:
-        Dict avec l'arbre des ancêtres GO
+        GOAncestorsTree avec l'arbre des ancêtres GO
     """
     from gws_biota.go.go import GO, GOAncestor
 
@@ -1931,39 +2112,39 @@ def join_go_ancestors_tree(go_id: str) -> Dict[str, Any]:
 
     go_term = GO.get_or_none(GO.go_id == go_id)
     if not go_term:
-        return {"error": f"No GO term found with ID {go_id}"}
+        raise ValueError(f"No GO term found with ID {go_id}")
 
     ancestors = []
     ga_links = list(GOAncestor.select().where(GOAncestor.go == go_term).limit(200))
     for link in ga_links:
         anc = link.ancestor
         if anc:
-            ancestors.append({
-                "go_id": anc.go_id,
-                "name": anc.name,
-                "namespace": anc.namespace
-            })
+            ancestors.append(GOInfo(
+                go_id=anc.go_id,
+                name=anc.name,
+                namespace=anc.namespace
+            ))
 
     # Group by namespace
     by_namespace = {}
     for a in ancestors:
-        ns = a.get("namespace", "unknown")
+        ns = a.namespace or "unknown"
         if ns not in by_namespace:
             by_namespace[ns] = []
         by_namespace[ns].append(a)
 
-    return {
-        "go_id": go_id,
-        "go_name": go_term.name,
-        "namespace": go_term.namespace,
-        "ancestor_count": len(ancestors),
-        "by_namespace": by_namespace,
-        "ancestors": ancestors
-    }
+    return GOAncestorsTree(
+        go_id=go_id,
+        go_name=go_term.name,
+        namespace=go_term.namespace,
+        ancestor_count=len(ancestors),
+        by_namespace=by_namespace,
+        ancestors=ancestors
+    )
 
 
 @_ensure_initialized
-def join_organism_full_profile(tax_id: str, limit: int = 50) -> Dict[str, Any]:
+def join_organism_full_profile(tax_id: str, limit: int = 50) -> OrganismFullProfile:
     """
     59. Profil complet d'un organisme: enzymes + protéines + réactions + composés (5 tables).
 
@@ -1972,58 +2153,73 @@ def join_organism_full_profile(tax_id: str, limit: int = 50) -> Dict[str, Any]:
         limit: Nombre maximum par catégorie
 
     Returns:
-        Dict avec le profil complet de l'organisme
+        OrganismFullProfile avec le profil complet de l'organisme
     """
     from gws_biota import Enzyme, Protein, Reaction, Taxonomy
 
     taxonomy = Taxonomy.get_or_none(Taxonomy.tax_id == tax_id)
     if not taxonomy:
-        return {"error": f"No taxonomy found with ID {tax_id}"}
+        raise ValueError(f"No taxonomy found with ID {tax_id}")
 
     # Enzymes
     enzymes = list(Enzyme.select().where(Enzyme.tax_id == tax_id).limit(limit))
-    enzyme_data = [{"ec_number": e.ec_number, "name": e.name, "uniprot_id": e.uniprot_id}
-                   for e in enzymes]
+    enzyme_data = [EnzymeInfo(
+        ec_number=e.ec_number,
+        name=e.name,
+        uniprot_id=e.uniprot_id
+    ) for e in enzymes]
 
     # Proteins
     proteins = list(Protein.select().where(Protein.tax_id == tax_id).limit(limit))
-    protein_data = [{"uniprot_id": p.uniprot_id, "gene": p.uniprot_gene, "evidence": p.evidence_score}
-                    for p in proteins]
+    protein_data = [ProteinInfo(
+        uniprot_id=p.uniprot_id,
+        gene=p.uniprot_gene,
+        evidence_score=p.evidence_score
+    ) for p in proteins]
 
     # Reactions
     reactions = list(Reaction.search_by_tax_ids(tax_id))[:limit]
-    reaction_data = [{"rhea_id": r.rhea_id, "name": r.name, "direction": r.direction}
-                     for r in reactions]
+    reaction_data = [ReactionInfo(
+        rhea_id=r.rhea_id,
+        name=r.name,
+        direction=r.direction
+    ) for r in reactions]
 
     # Unique compounds from reactions
     compounds_set = {}
     for r in reactions:
         for s in r.substrates:
             if s.chebi_id and s.chebi_id not in compounds_set:
-                compounds_set[s.chebi_id] = {"chebi_id": s.chebi_id, "name": s.name}
+                compounds_set[s.chebi_id] = CompoundInfo(
+                    chebi_id=s.chebi_id,
+                    name=s.name
+                )
         for p in r.products:
             if p.chebi_id and p.chebi_id not in compounds_set:
-                compounds_set[p.chebi_id] = {"chebi_id": p.chebi_id, "name": p.name}
+                compounds_set[p.chebi_id] = CompoundInfo(
+                    chebi_id=p.chebi_id,
+                    name=p.name
+                )
 
-    return {
-        "tax_id": tax_id,
-        "tax_name": taxonomy.name,
-        "tax_rank": taxonomy.rank,
-        "statistics": {
-            "enzyme_count": Enzyme.select().where(Enzyme.tax_id == tax_id).count(),
-            "protein_count": Protein.select().where(Protein.tax_id == tax_id).count(),
-            "reaction_count": len(reaction_data),
-            "compound_count": len(compounds_set)
-        },
-        "enzymes": enzyme_data,
-        "proteins": protein_data,
-        "reactions": reaction_data,
-        "compounds": list(compounds_set.values())
-    }
+    return OrganismFullProfile(
+        tax_id=tax_id,
+        tax_name=taxonomy.name,
+        tax_rank=taxonomy.rank,
+        statistics=OrganismStatistics(
+            enzyme_count=Enzyme.select().where(Enzyme.tax_id == tax_id).count(),
+            protein_count=Protein.select().where(Protein.tax_id == tax_id).count(),
+            reaction_count=len(reaction_data),
+            compound_count=len(compounds_set)
+        ),
+        enzymes=enzyme_data,
+        proteins=protein_data,
+        reactions=reaction_data,
+        compounds=list(compounds_set.values())
+    )
 
 
 @_ensure_initialized
-def join_compare_two_taxa_enzymes(tax_id_1: str, tax_id_2: str) -> Dict[str, Any]:
+def join_compare_two_taxa_enzymes(tax_id_1: str, tax_id_2: str) -> CompareTwoTaxaEnzymes:
     """
     60. Compare les profils enzymatiques de deux taxons (2 tables).
 
@@ -2032,7 +2228,7 @@ def join_compare_two_taxa_enzymes(tax_id_1: str, tax_id_2: str) -> Dict[str, Any
         tax_id_2: Deuxième NCBI Taxonomy ID
 
     Returns:
-        Dict avec les EC partagés et uniques à chaque taxon
+        CompareTwoTaxaEnzymes avec les EC partagés et uniques à chaque taxon
     """
     from gws_biota import Enzyme, Taxonomy
 
@@ -2040,7 +2236,7 @@ def join_compare_two_taxa_enzymes(tax_id_1: str, tax_id_2: str) -> Dict[str, Any
     tax2 = Taxonomy.get_or_none(Taxonomy.tax_id == tax_id_2)
 
     if not tax1 or not tax2:
-        return {"error": "One or both taxa not found"}
+        raise ValueError("One or both taxa not found")
 
     # Get EC numbers for each taxon
     ec_set_1 = set()
@@ -2061,14 +2257,22 @@ def join_compare_two_taxa_enzymes(tax_id_1: str, tax_id_2: str) -> Dict[str, Any
     union = ec_set_1 | ec_set_2
     jaccard = len(shared) / len(union) if union else 0.0
 
-    return {
-        "taxon_1": {"tax_id": tax_id_1, "name": tax1.name, "ec_count": len(ec_set_1)},
-        "taxon_2": {"tax_id": tax_id_2, "name": tax2.name, "ec_count": len(ec_set_2)},
-        "shared_ec_count": len(shared),
-        "only_taxon1_count": len(only_1),
-        "only_taxon2_count": len(only_2),
-        "jaccard_similarity": round(jaccard, 4),
-        "shared_ec_numbers": sorted(shared)[:100],
-        "only_taxon1_ec": sorted(only_1)[:50],
-        "only_taxon2_ec": sorted(only_2)[:50]
-    }
+    return CompareTwoTaxaEnzymes(
+        taxon_1=TaxonInfo(
+            tax_id=tax_id_1,
+            name=tax1.name,
+            ec_count=len(ec_set_1)
+        ),
+        taxon_2=TaxonInfo(
+            tax_id=tax_id_2,
+            name=tax2.name,
+            ec_count=len(ec_set_2)
+        ),
+        shared_ec_count=len(shared),
+        only_taxon1_count=len(only_1),
+        only_taxon2_count=len(only_2),
+        jaccard_similarity=round(jaccard, 4),
+        shared_ec_numbers=sorted(shared)[:100],
+        only_taxon1_ec=sorted(only_1)[:50],
+        only_taxon2_ec=sorted(only_2)[:50]
+    )
