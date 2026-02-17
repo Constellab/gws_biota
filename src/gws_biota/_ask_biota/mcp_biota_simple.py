@@ -19,13 +19,12 @@ Categories:
 from __future__ import annotations
 
 import functools
-from typing import Optional, List, Dict, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from pydantic import BaseModel
 
 if TYPE_CHECKING:
-    from gws_biota import Enzyme, Protein, Compound, Reaction, Taxonomy, Pathway
-    from gws_biota import BTO
+    from gws_biota import BTO, Compound, Enzyme, Pathway, Protein, Reaction, Taxonomy
     from gws_biota.go.go import GO
 
 
@@ -33,8 +32,10 @@ if TYPE_CHECKING:
 # DTOs - Summary types for list results
 # ============================================================================
 
+
 class EnzymeSummary(BaseModel):
     """Summary of an enzyme entry."""
+
     ec_number: Optional[str] = None
     uniprot_id: Optional[str] = None
     name: Optional[str] = None
@@ -44,16 +45,17 @@ class EnzymeSummary(BaseModel):
     @classmethod
     def from_entity(cls, entity) -> EnzymeSummary:
         return cls(
-            ec_number=getattr(entity, 'ec_number', None),
-            uniprot_id=getattr(entity, 'uniprot_id', None),
-            name=getattr(entity, 'name', None),
-            tax_id=getattr(entity, 'tax_id', None),
-            tax_species=getattr(entity, 'tax_species', None),
+            ec_number=getattr(entity, "ec_number", None),
+            uniprot_id=getattr(entity, "uniprot_id", None),
+            name=getattr(entity, "name", None),
+            tax_id=getattr(entity, "tax_id", None),
+            tax_species=getattr(entity, "tax_species", None),
         )
 
 
 class ProteinSummary(BaseModel):
     """Summary of a protein entry."""
+
     uniprot_id: Optional[str] = None
     uniprot_gene: Optional[str] = None
     tax_id: Optional[str] = None
@@ -62,15 +64,16 @@ class ProteinSummary(BaseModel):
     @classmethod
     def from_entity(cls, entity) -> ProteinSummary:
         return cls(
-            uniprot_id=getattr(entity, 'uniprot_id', None),
-            uniprot_gene=getattr(entity, 'uniprot_gene', None),
-            tax_id=getattr(entity, 'tax_id', None),
-            evidence_score=getattr(entity, 'evidence_score', None),
+            uniprot_id=getattr(entity, "uniprot_id", None),
+            uniprot_gene=getattr(entity, "uniprot_gene", None),
+            tax_id=getattr(entity, "tax_id", None),
+            evidence_score=getattr(entity, "evidence_score", None),
         )
 
 
 class CompoundSummary(BaseModel):
     """Summary of a compound entry."""
+
     chebi_id: Optional[str] = None
     kegg_id: Optional[str] = None
     name: Optional[str] = None
@@ -85,21 +88,22 @@ class CompoundSummary(BaseModel):
     @classmethod
     def from_entity(cls, entity) -> CompoundSummary:
         return cls(
-            chebi_id=getattr(entity, 'chebi_id', None),
-            kegg_id=getattr(entity, 'kegg_id', None),
-            name=getattr(entity, 'name', None),
-            formula=getattr(entity, 'formula', None),
-            mass=getattr(entity, 'mass', None),
-            monoisotopic_mass=getattr(entity, 'monoisotopic_mass', None),
-            charge=getattr(entity, 'charge', None),
-            inchi=getattr(entity, 'inchi', None),
-            inchikey=getattr(entity, 'inchikey', None),
-            smiles=getattr(entity, 'smiles', None),
+            chebi_id=getattr(entity, "chebi_id", None),
+            kegg_id=getattr(entity, "kegg_id", None),
+            name=getattr(entity, "name", None),
+            formula=getattr(entity, "formula", None),
+            mass=getattr(entity, "mass", None),
+            monoisotopic_mass=getattr(entity, "monoisotopic_mass", None),
+            charge=getattr(entity, "charge", None),
+            inchi=getattr(entity, "inchi", None),
+            inchikey=getattr(entity, "inchikey", None),
+            smiles=getattr(entity, "smiles", None),
         )
 
 
 class ReactionSummary(BaseModel):
     """Summary of a reaction entry."""
+
     rhea_id: Optional[str] = None
     name: Optional[str] = None
     direction: Optional[str] = None
@@ -108,15 +112,16 @@ class ReactionSummary(BaseModel):
     @classmethod
     def from_entity(cls, entity) -> ReactionSummary:
         return cls(
-            rhea_id=getattr(entity, 'rhea_id', None),
-            name=getattr(entity, 'name', None),
-            direction=getattr(entity, 'direction', None),
-            kegg_id=getattr(entity, 'kegg_id', None),
+            rhea_id=getattr(entity, "rhea_id", None),
+            name=getattr(entity, "name", None),
+            direction=getattr(entity, "direction", None),
+            kegg_id=getattr(entity, "kegg_id", None),
         )
 
 
 class TaxonomySummary(BaseModel):
     """Summary of a taxonomy entry."""
+
     tax_id: Optional[str] = None
     name: Optional[str] = None
     rank: Optional[str] = None
@@ -125,41 +130,44 @@ class TaxonomySummary(BaseModel):
     @classmethod
     def from_entity(cls, entity) -> TaxonomySummary:
         return cls(
-            tax_id=getattr(entity, 'tax_id', None),
-            name=getattr(entity, 'name', None),
-            rank=getattr(entity, 'rank', None),
-            division=getattr(entity, 'division', None),
+            tax_id=getattr(entity, "tax_id", None),
+            name=getattr(entity, "name", None),
+            rank=getattr(entity, "rank", None),
+            division=getattr(entity, "division", None),
         )
 
 
 class PathwaySummary(BaseModel):
     """Summary of a pathway entry."""
+
     reactome_pathway_id: Optional[str] = None
     name: Optional[str] = None
 
     @classmethod
     def from_entity(cls, entity) -> PathwaySummary:
         return cls(
-            reactome_pathway_id=getattr(entity, 'reactome_pathway_id', None),
-            name=getattr(entity, 'name', None),
+            reactome_pathway_id=getattr(entity, "reactome_pathway_id", None),
+            name=getattr(entity, "name", None),
         )
 
 
 class BTOSummary(BaseModel):
     """Summary of a BTO tissue/organ entry."""
+
     bto_id: Optional[str] = None
     name: Optional[str] = None
 
     @classmethod
     def from_entity(cls, entity) -> BTOSummary:
         return cls(
-            bto_id=getattr(entity, 'bto_id', None),
-            name=getattr(entity, 'name', None),
+            bto_id=getattr(entity, "bto_id", None),
+            name=getattr(entity, "name", None),
         )
 
 
 class GOSummary(BaseModel):
     """Summary of a GO term entry."""
+
     go_id: Optional[str] = None
     name: Optional[str] = None
     namespace: Optional[str] = None
@@ -167,9 +175,9 @@ class GOSummary(BaseModel):
     @classmethod
     def from_entity(cls, entity) -> GOSummary:
         return cls(
-            go_id=getattr(entity, 'go_id', None),
-            name=getattr(entity, 'name', None),
-            namespace=getattr(entity, 'namespace', None),
+            go_id=getattr(entity, "go_id", None),
+            name=getattr(entity, "name", None),
+            namespace=getattr(entity, "namespace", None),
         )
 
 
@@ -177,8 +185,10 @@ class GOSummary(BaseModel):
 # DTOs - Result types for list/search functions
 # ============================================================================
 
+
 class EnzymeListResult(BaseModel):
     """Result containing a list of enzymes."""
+
     enzymes: List[EnzymeSummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -186,6 +196,7 @@ class EnzymeListResult(BaseModel):
 
 class ProteinListResult(BaseModel):
     """Result containing a list of proteins."""
+
     proteins: List[ProteinSummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -193,6 +204,7 @@ class ProteinListResult(BaseModel):
 
 class CompoundListResult(BaseModel):
     """Result containing a list of compounds."""
+
     compounds: List[CompoundSummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -200,6 +212,7 @@ class CompoundListResult(BaseModel):
 
 class ReactionListResult(BaseModel):
     """Result containing a list of reactions."""
+
     reactions: List[ReactionSummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -207,6 +220,7 @@ class ReactionListResult(BaseModel):
 
 class TaxonomyListResult(BaseModel):
     """Result containing a list of taxonomy entries."""
+
     taxonomies: List[TaxonomySummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -214,6 +228,7 @@ class TaxonomyListResult(BaseModel):
 
 class PathwayListResult(BaseModel):
     """Result containing a list of pathways."""
+
     pathways: List[PathwaySummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -221,6 +236,7 @@ class PathwayListResult(BaseModel):
 
 class BTOListResult(BaseModel):
     """Result containing a list of BTO entries."""
+
     tissues: List[BTOSummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -228,6 +244,7 @@ class BTOListResult(BaseModel):
 
 class GOListResult(BaseModel):
     """Result containing a list of GO terms."""
+
     go_terms: List[GOSummary] = []
     count: int = 0
     total_count: Optional[int] = None
@@ -235,6 +252,7 @@ class GOListResult(BaseModel):
 
 class ProteinCountResult(BaseModel):
     """Result of protein count by taxon."""
+
     tax_id: str
     tax_name: str
     total_count: int
@@ -243,6 +261,7 @@ class ProteinCountResult(BaseModel):
 
 class DatabaseStatistics(BaseModel):
     """Database statistics overview."""
+
     primary_entities: Dict[str, int]
     classification: Dict[str, int]
     ontologies: Dict[str, int]
@@ -265,24 +284,29 @@ def _init_gws_core():
         return
 
     from gws_core_loader import load_gws_core
+
     load_gws_core()
     from gws_core.manage import AppManager
+
     AppManager.init_gws_env_and_db("/lab/.sys/app/settings.json", log_level="ERROR")
     _initialized = True
 
 
 def _ensure_initialized(func):
     """Decorator to ensure GWS Core is initialized before function execution."""
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         _init_gws_core()
         return func(*args, **kwargs)
+
     return wrapper
 
 
 # ============================================================================
 # HELPER FUNCTIONS (kept for backward compatibility with mcp_biota_complex.py)
 # ============================================================================
+
 
 def _entity_to_dict(entity, fields: List[str] = None) -> Dict[str, Any]:
     """Convert a Peewee entity to a dictionary."""
@@ -294,21 +318,27 @@ def _entity_to_dict(entity, fields: List[str] = None) -> Dict[str, Any]:
         for field in fields:
             value = getattr(entity, field, None)
             # Handle special types
-            if hasattr(value, '__dict__') and not isinstance(value, (str, int, float, bool, list, dict)):
+            if hasattr(value, "__dict__") and not isinstance(
+                value, (str, int, float, bool, list, dict)
+            ):
                 value = str(value)
             result[field] = value
     else:
         # Get all fields from model
         for field_name in entity._meta.fields.keys():
             value = getattr(entity, field_name, None)
-            if hasattr(value, '__dict__') and not isinstance(value, (str, int, float, bool, list, dict)):
+            if hasattr(value, "__dict__") and not isinstance(
+                value, (str, int, float, bool, list, dict)
+            ):
                 value = str(value)
             result[field_name] = value
 
     return result
 
 
-def _entities_to_list(entities, fields: List[str] = None, limit: int = None) -> List[Dict[str, Any]]:
+def _entities_to_list(
+    entities, fields: List[str] = None, limit: int = None
+) -> List[Dict[str, Any]]:
     """Convert multiple Peewee entities to a list of dictionaries."""
     results = []
     for i, entity in enumerate(entities):
@@ -321,6 +351,7 @@ def _entities_to_list(entities, fields: List[str] = None, limit: int = None) -> 
 # ============================================================================
 # ENZYME FUNCTIONS (1-5)
 # ============================================================================
+
 
 @_ensure_initialized
 def get_enzyme_by_ec_number(ec_number: str) -> Optional[Enzyme]:
@@ -339,21 +370,20 @@ def get_enzyme_by_ec_number(ec_number: str) -> Optional[Enzyme]:
 
 
 @_ensure_initialized
-def get_enzymes_by_taxon(tax_id: str, limit: int = 100) -> EnzymeListResult:
+def get_enzymes_by_taxon(tax_id: str) -> EnzymeListResult:
     """
     2. Liste les enzymes d'un taxon donné.
 
     Args:
         tax_id: NCBI Taxonomy ID (ex: "9606" pour Homo sapiens)
-        limit: Nombre maximum de résultats (défaut: 100)
 
     Returns:
         EnzymeListResult avec la liste des enzymes et le compte total
     """
     from gws_biota import Enzyme
 
-    enzymes = list(Enzyme.select().where(Enzyme.tax_id == tax_id).limit(limit))
-    total_count = Enzyme.select().where(Enzyme.tax_id == tax_id).count()
+    enzymes = list(Enzyme.select().where(Enzyme.tax_id == tax_id))
+    total_count = len(enzymes)
 
     return EnzymeListResult(
         enzymes=[EnzymeSummary.from_entity(e) for e in enzymes],
@@ -384,22 +414,19 @@ def get_enzymes_by_uniprot_id(uniprot_id: str) -> EnzymeListResult:
 
 
 @_ensure_initialized
-def search_enzymes_by_name(query: str, limit: int = 50) -> EnzymeListResult:
+def search_enzymes_by_name(query: str) -> EnzymeListResult:
     """
     4. Recherche enzymes par nom (full-text search).
 
     Args:
         query: Terme de recherche
-        limit: Nombre maximum de résultats (défaut: 50)
 
     Returns:
         EnzymeListResult avec la liste des enzymes correspondants
     """
     from gws_biota import Enzyme
 
-    enzymes = list(Enzyme.select().where(
-        Enzyme.name.contains(query)
-    ).limit(limit))
+    enzymes = list(Enzyme.select().where(Enzyme.name.contains(query)))
 
     return EnzymeListResult(
         enzymes=[EnzymeSummary.from_entity(e) for e in enzymes],
@@ -408,14 +435,13 @@ def search_enzymes_by_name(query: str, limit: int = 50) -> EnzymeListResult:
 
 
 @_ensure_initialized
-def get_enzymes_by_taxonomy_rank(rank: str, value: str, limit: int = 100) -> EnzymeListResult:
+def get_enzymes_by_taxonomy_rank(rank: str, value: str) -> EnzymeListResult:
     """
     5. Récupère les enzymes par rang taxonomique.
 
     Args:
         rank: Rang taxonomique ("species", "genus", "family", "order", "class", "phylum", "kingdom")
         value: Valeur du rang (ex: "Homo sapiens", "Saccharomyces")
-        limit: Nombre maximum de résultats
 
     Returns:
         EnzymeListResult avec la liste des enzymes
@@ -440,8 +466,8 @@ def get_enzymes_by_taxonomy_rank(rank: str, value: str, limit: int = 100) -> Enz
         raise ValueError(f"Invalid rank '{rank}'. Valid ranks: {list(rank_mapping.keys())}")
 
     field = rank_mapping[rank.lower()]
-    enzymes = list(Enzyme.select().where(field == value).limit(limit))
-    total_count = Enzyme.select().where(field == value).count()
+    enzymes = list(Enzyme.select().where(field == value))
+    total_count = len(enzymes)
 
     return EnzymeListResult(
         enzymes=[EnzymeSummary.from_entity(e) for e in enzymes],
@@ -453,6 +479,7 @@ def get_enzymes_by_taxonomy_rank(rank: str, value: str, limit: int = 100) -> Enz
 # ============================================================================
 # PROTEIN FUNCTIONS (7-11)
 # ============================================================================
+
 
 @_ensure_initialized
 def get_protein_by_uniprot_id(uniprot_id: str) -> Optional[Protein]:
@@ -471,21 +498,20 @@ def get_protein_by_uniprot_id(uniprot_id: str) -> Optional[Protein]:
 
 
 @_ensure_initialized
-def get_proteins_by_taxon(tax_id: str, limit: int = 100) -> ProteinListResult:
+def get_proteins_by_taxon(tax_id: str) -> ProteinListResult:
     """
     8. Liste les protéines d'un organisme.
 
     Args:
         tax_id: NCBI Taxonomy ID
-        limit: Nombre maximum de résultats
 
     Returns:
         ProteinListResult avec la liste des protéines
     """
     from gws_biota import Protein
 
-    proteins = list(Protein.select().where(Protein.tax_id == tax_id).limit(limit))
-    total_count = Protein.select().where(Protein.tax_id == tax_id).count()
+    proteins = list(Protein.select().where(Protein.tax_id == tax_id))
+    total_count = len(proteins)
 
     return ProteinListResult(
         proteins=[ProteinSummary.from_entity(p) for p in proteins],
@@ -495,22 +521,19 @@ def get_proteins_by_taxon(tax_id: str, limit: int = 100) -> ProteinListResult:
 
 
 @_ensure_initialized
-def get_proteins_by_gene_name(gene_name: str, limit: int = 50) -> ProteinListResult:
+def get_proteins_by_gene_name(gene_name: str) -> ProteinListResult:
     """
     9. Recherche protéines par nom de gène.
 
     Args:
         gene_name: Nom du gène (ou partie)
-        limit: Nombre maximum de résultats
 
     Returns:
         ProteinListResult avec la liste des protéines
     """
     from gws_biota import Protein
 
-    proteins = list(Protein.select().where(
-        Protein.uniprot_gene.contains(gene_name)
-    ).limit(limit))
+    proteins = list(Protein.select().where(Protein.uniprot_gene.contains(gene_name)))
 
     return ProteinListResult(
         proteins=[ProteinSummary.from_entity(p) for p in proteins],
@@ -537,8 +560,8 @@ def get_proteins_by_evidence_score(min_score: int, tax_id: str = None) -> Protei
     if tax_id:
         query = query.where(Protein.tax_id == tax_id)
 
-    proteins = list(query.limit(100))
-    total_count = query.count()
+    proteins = list(query)
+    total_count = len(proteins)
 
     return ProteinListResult(
         proteins=[ProteinSummary.from_entity(p) for p in proteins],
@@ -568,10 +591,11 @@ def count_proteins_by_taxon(tax_id: str) -> ProteinCountResult:
     # Count by evidence score
     evidence_counts = {}
     for score in range(1, 6):
-        count = Protein.select().where(
-            (Protein.tax_id == tax_id) &
-            (Protein.evidence_score == score)
-        ).count()
+        count = (
+            Protein.select()
+            .where((Protein.tax_id == tax_id) & (Protein.evidence_score == score))
+            .count()
+        )
         evidence_counts[f"score_{score}"] = count
 
     return ProteinCountResult(
@@ -585,6 +609,7 @@ def count_proteins_by_taxon(tax_id: str) -> ProteinCountResult:
 # ============================================================================
 # COMPOUND FUNCTIONS (12-16)
 # ============================================================================
+
 
 @_ensure_initialized
 def get_compound_by_chebi_id(chebi_id: str) -> Optional[Compound]:
@@ -623,22 +648,19 @@ def get_compound_by_inchikey(inchikey: str) -> Optional[Compound]:
 
 
 @_ensure_initialized
-def search_compounds_by_name(query: str, limit: int = 50) -> CompoundListResult:
+def search_compounds_by_name(query: str) -> CompoundListResult:
     """
     14. Recherche composés par nom.
 
     Args:
         query: Terme de recherche
-        limit: Nombre maximum de résultats
 
     Returns:
         CompoundListResult avec la liste des composés
     """
     from gws_biota import Compound
 
-    compounds = list(Compound.select().where(
-        Compound.name.contains(query)
-    ).limit(limit))
+    compounds = list(Compound.select().where(Compound.name.contains(query)))
 
     return CompoundListResult(
         compounds=[CompoundSummary.from_entity(c) for c in compounds],
@@ -659,9 +681,7 @@ def get_compounds_by_formula(formula: str) -> CompoundListResult:
     """
     from gws_biota import Compound
 
-    compounds = list(Compound.select().where(
-        Compound.formula == formula
-    ).limit(100))
+    compounds = list(Compound.select().where(Compound.formula == formula))
 
     return CompoundListResult(
         compounds=[CompoundSummary.from_entity(c) for c in compounds],
@@ -670,29 +690,26 @@ def get_compounds_by_formula(formula: str) -> CompoundListResult:
 
 
 @_ensure_initialized
-def get_compounds_by_mass_range(min_mass: float, max_mass: float, limit: int = 100) -> CompoundListResult:
+def get_compounds_by_mass_range(min_mass: float, max_mass: float) -> CompoundListResult:
     """
     16. Composés dans une plage de masse.
 
     Args:
         min_mass: Masse minimale (Da)
         max_mass: Masse maximale (Da)
-        limit: Nombre maximum de résultats
 
     Returns:
         CompoundListResult avec la liste des composés
     """
     from gws_biota import Compound
 
-    compounds = list(Compound.select().where(
-        (Compound.mass >= min_mass) &
-        (Compound.mass <= max_mass)
-    ).order_by(Compound.mass).limit(limit))
+    compounds = list(
+        Compound.select()
+        .where((Compound.mass >= min_mass) & (Compound.mass <= max_mass))
+        .order_by(Compound.mass)
+    )
 
-    total_count = Compound.select().where(
-        (Compound.mass >= min_mass) &
-        (Compound.mass <= max_mass)
-    ).count()
+    total_count = len(compounds)
 
     return CompoundListResult(
         compounds=[CompoundSummary.from_entity(c) for c in compounds],
@@ -704,6 +721,7 @@ def get_compounds_by_mass_range(min_mass: float, max_mass: float, limit: int = 1
 # ============================================================================
 # REACTION FUNCTIONS (17-19)
 # ============================================================================
+
 
 @_ensure_initialized
 def get_reaction_by_rhea_id(rhea_id: str) -> Optional[Reaction]:
@@ -728,20 +746,19 @@ def get_reaction_by_rhea_id(rhea_id: str) -> Optional[Reaction]:
 
 
 @_ensure_initialized
-def get_reactions_by_ec_number(ec_number: str, limit: int = 100) -> ReactionListResult:
+def get_reactions_by_ec_number(ec_number: str) -> ReactionListResult:
     """
     18. Réactions catalysées par un EC.
 
     Args:
         ec_number: Numéro EC de l'enzyme
-        limit: Nombre maximum de résultats
 
     Returns:
         ReactionListResult avec la liste des réactions
     """
     from gws_biota import Reaction
 
-    reactions = list(Reaction.search_by_ec_numbers(ec_number))[:limit]
+    reactions = list(Reaction.search_by_ec_numbers(ec_number))
 
     return ReactionListResult(
         reactions=[ReactionSummary.from_entity(r) for r in reactions],
@@ -750,20 +767,19 @@ def get_reactions_by_ec_number(ec_number: str, limit: int = 100) -> ReactionList
 
 
 @_ensure_initialized
-def get_reactions_by_taxon(tax_id: str, limit: int = 100) -> ReactionListResult:
+def get_reactions_by_taxon(tax_id: str) -> ReactionListResult:
     """
     19. Réactions associées à un taxon.
 
     Args:
         tax_id: NCBI Taxonomy ID
-        limit: Nombre maximum de résultats
 
     Returns:
         ReactionListResult avec la liste des réactions
     """
     from gws_biota import Reaction
 
-    reactions = list(Reaction.search_by_tax_ids(tax_id))[:limit]
+    reactions = list(Reaction.search_by_tax_ids(tax_id))
 
     return ReactionListResult(
         reactions=[ReactionSummary.from_entity(r) for r in reactions],
@@ -774,6 +790,7 @@ def get_reactions_by_taxon(tax_id: str, limit: int = 100) -> ReactionListResult:
 # ============================================================================
 # TAXONOMY FUNCTIONS (22-23, 25)
 # ============================================================================
+
 
 @_ensure_initialized
 def get_taxonomy_by_id(tax_id: str) -> Optional[Taxonomy]:
@@ -792,22 +809,19 @@ def get_taxonomy_by_id(tax_id: str) -> Optional[Taxonomy]:
 
 
 @_ensure_initialized
-def search_taxonomy_by_name(query: str, limit: int = 50) -> TaxonomyListResult:
+def search_taxonomy_by_name(query: str) -> TaxonomyListResult:
     """
     23. Recherche taxons par nom scientifique.
 
     Args:
         query: Terme de recherche
-        limit: Nombre maximum de résultats
 
     Returns:
         TaxonomyListResult avec la liste des taxons
     """
     from gws_biota import Taxonomy
 
-    taxonomies = list(Taxonomy.select().where(
-        Taxonomy.name.contains(query)
-    ).limit(limit))
+    taxonomies = list(Taxonomy.select().where(Taxonomy.name.contains(query)))
 
     return TaxonomyListResult(
         taxonomies=[TaxonomySummary.from_entity(t) for t in taxonomies],
@@ -816,14 +830,13 @@ def search_taxonomy_by_name(query: str, limit: int = 50) -> TaxonomyListResult:
 
 
 @_ensure_initialized
-def get_taxonomy_children(tax_id: str, rank: str = None, limit: int = 100) -> TaxonomyListResult:
+def get_taxonomy_children(tax_id: str, rank: str = None) -> TaxonomyListResult:
     """
     25. Récupère les taxons enfants.
 
     Args:
         tax_id: NCBI Taxonomy ID du parent
         rank: Optionnel - filtrer par rang
-        limit: Nombre maximum de résultats
 
     Returns:
         TaxonomyListResult avec la liste des enfants
@@ -835,8 +848,8 @@ def get_taxonomy_children(tax_id: str, rank: str = None, limit: int = 100) -> Ta
     if rank:
         query = query.where(Taxonomy.rank == rank)
 
-    children = list(query.limit(limit))
-    total_count = query.count()
+    children = list(query)
+    total_count = len(children)
 
     return TaxonomyListResult(
         taxonomies=[TaxonomySummary.from_entity(t) for t in children],
@@ -848,6 +861,7 @@ def get_taxonomy_children(tax_id: str, rank: str = None, limit: int = 100) -> Ta
 # ============================================================================
 # PATHWAY FUNCTIONS (26, 28)
 # ============================================================================
+
 
 @_ensure_initialized
 def get_pathway_by_reactome_id(reactome_id: str) -> Optional[Pathway]:
@@ -866,22 +880,19 @@ def get_pathway_by_reactome_id(reactome_id: str) -> Optional[Pathway]:
 
 
 @_ensure_initialized
-def search_pathways_by_name(query: str, limit: int = 50) -> PathwayListResult:
+def search_pathways_by_name(query: str) -> PathwayListResult:
     """
     28. Recherche pathways par nom.
 
     Args:
         query: Terme de recherche
-        limit: Nombre maximum de résultats
 
     Returns:
         PathwayListResult avec la liste des pathways
     """
     from gws_biota import Pathway
 
-    pathways = list(Pathway.select().where(
-        Pathway.name.contains(query)
-    ).limit(limit))
+    pathways = list(Pathway.select().where(Pathway.name.contains(query)))
 
     return PathwayListResult(
         pathways=[PathwaySummary.from_entity(p) for p in pathways],
@@ -892,6 +903,7 @@ def search_pathways_by_name(query: str, limit: int = 50) -> PathwayListResult:
 # ============================================================================
 # BTO / GO / OTHER SIMPLE LOOKUPS (61-62, 64-66, 68-70)
 # ============================================================================
+
 
 @_ensure_initialized
 def get_bto_by_id(bto_id: str) -> Optional[BTO]:
@@ -910,20 +922,19 @@ def get_bto_by_id(bto_id: str) -> Optional[BTO]:
 
 
 @_ensure_initialized
-def search_bto_by_name(query: str, limit: int = 50) -> BTOListResult:
+def search_bto_by_name(query: str) -> BTOListResult:
     """
     62. Recherche tissus/organes par nom dans BTO.
 
     Args:
         query: Terme de recherche (ex: "liver", "brain", "blood")
-        limit: Nombre maximum de résultats
 
     Returns:
         BTOListResult avec la liste des tissus correspondants
     """
     from gws_biota import BTO
 
-    btos = list(BTO.select().where(BTO.name.contains(query)).limit(limit))
+    btos = list(BTO.select().where(BTO.name.contains(query)))
 
     return BTOListResult(
         tissues=[BTOSummary.from_entity(b) for b in btos],
@@ -951,14 +962,13 @@ def get_go_by_id(go_id: str) -> Optional[GO]:
 
 
 @_ensure_initialized
-def search_go_by_name(query: str, namespace: str = None, limit: int = 50) -> GOListResult:
+def search_go_by_name(query: str, namespace: str = None) -> GOListResult:
     """
     65. Recherche termes GO par nom, optionnellement filtré par namespace.
 
     Args:
         query: Terme de recherche
         namespace: Optionnel - "molecular_function", "biological_process", "cellular_component"
-        limit: Nombre maximum de résultats
 
     Returns:
         GOListResult avec la liste des termes GO
@@ -969,7 +979,7 @@ def search_go_by_name(query: str, namespace: str = None, limit: int = 50) -> GOL
     if namespace:
         q = q.where(GO.namespace == namespace)
 
-    go_terms = list(q.limit(limit))
+    go_terms = list(q)
 
     return GOListResult(
         go_terms=[GOSummary.from_entity(g) for g in go_terms],
@@ -978,13 +988,12 @@ def search_go_by_name(query: str, namespace: str = None, limit: int = 50) -> GOL
 
 
 @_ensure_initialized
-def get_pathways_by_species(species: str, limit: int = 100) -> PathwayListResult:
+def get_pathways_by_species(species: str) -> PathwayListResult:
     """
     66. Récupère les pathways pour une espèce donnée.
 
     Args:
         species: Nom de l'espèce (ex: "Homo sapiens", "Mus musculus")
-        limit: Nombre maximum de résultats
 
     Returns:
         PathwayListResult avec la liste des pathways pour cette espèce
@@ -992,9 +1001,11 @@ def get_pathways_by_species(species: str, limit: int = 100) -> PathwayListResult
     from gws_biota import Pathway, PathwayCompound
 
     # Get unique pathway IDs for this species
-    pc_links = list(PathwayCompound.select(PathwayCompound.reactome_pathway_id).where(
-        PathwayCompound.species == species
-    ).distinct().limit(limit))
+    pc_links = list(
+        PathwayCompound.select(PathwayCompound.reactome_pathway_id)
+        .where(PathwayCompound.species == species)
+        .distinct()
+    )
 
     pathways = []
     seen = set()
@@ -1056,12 +1067,22 @@ def get_database_statistics() -> DatabaseStatistics:
     Returns:
         DatabaseStatistics avec les statistiques globales de la base
     """
-    from gws_biota import Enzyme, Protein, Compound, Reaction, Taxonomy, Pathway, PathwayCompound
-    from gws_biota import EnzymeClass, EnzymeOrtholog, DeprecatedEnzyme
-    from gws_biota import BTO
-    from gws_biota.go.go import GO
+    from gws_biota import (
+        BTO,
+        Compound,
+        DeprecatedEnzyme,
+        Enzyme,
+        EnzymeClass,
+        EnzymeOrtholog,
+        Pathway,
+        PathwayCompound,
+        Protein,
+        Reaction,
+        Taxonomy,
+    )
     from gws_biota.enzyme.enzyme import EnzymeBTO
-    from gws_biota.reaction.reaction import ReactionEnzyme, ReactionSubstrate, ReactionProduct
+    from gws_biota.go.go import GO
+    from gws_biota.reaction.reaction import ReactionEnzyme, ReactionProduct, ReactionSubstrate
 
     primary = {
         "enzymes": Enzyme.select().count(),
