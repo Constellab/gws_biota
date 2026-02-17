@@ -1,4 +1,0 @@
-type,enzyme_ec_number,enzyme_uniprot_id,protein_uniprot_id,protein_gene,taxon_id,taxon_name,taxon_rank
-ENZYME,3.2.1.51,N/A,N/A,N/A,7220,Drosophila erecta,species
-ENZYME,3.1.26.5,N/A,N/A,N/A,7220,Drosophila erecta,species
-PROTEIN,N/A (pas d'enzyme associé),N/A,Q8I1I3,SH3G3_DROER,7220,Drosophila erecta,species
