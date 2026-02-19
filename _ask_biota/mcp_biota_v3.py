@@ -466,19 +466,23 @@ def get_schema():
 
 #         for table, col, col_type, nullable, key, _default in columns_rows:
 #             if table in tables:
-#                 tables[table]["columns"].append({
-#                     "name": col,
-#                     "type": col_type,
-#                     "nullable": nullable == "YES",
-#                     "key": key if key else None,
-#                 })
+#                 tables[table]["columns"].append(
+#                     {
+#                         "name": col,
+#                         "type": col_type,
+#                         "nullable": nullable == "YES",
+#                         "key": key if key else None,
+#                     }
+#                 )
 
 #         for table, col, ref_table, ref_col in fk_rows:
 #             if table in tables:
-#                 tables[table]["foreign_keys"].append({
-#                     "column": col,
-#                     "references": f"{ref_table}.{ref_col}",
-#                 })
+#                 tables[table]["foreign_keys"].append(
+#                     {
+#                         "column": col,
+#                         "references": f"{ref_table}.{ref_col}",
+#                     }
+#                 )
 
 #         return {"database": db_name, "table_count": len(tables), "tables": tables}
 #     except Exception as e:
