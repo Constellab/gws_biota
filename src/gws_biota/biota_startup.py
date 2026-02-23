@@ -48,12 +48,12 @@ class GwsCoreDbListener(EventListener):
     def _install_database(self) -> bool:
         """Install the database"""
 
-        if Settings.is_dev_mode():
-            BrickService.log_brick_critical(
-                BiotaDbManager,
-                "Dev mode detected, skipping Biota database installation. The biota database must be installed in the production environment because it is common for both environments. Please add the 'gws_biota' brick to your datalab.",
-            )
-            return True
+        # if Settings.is_dev_mode():
+        #     BrickService.log_brick_critical(
+        #         BiotaDbManager,
+        #         "Dev mode detected, skipping Biota database installation. The biota database must be installed in the production environment because it is common for both environments. Please add the 'gws_biota' brick to your datalab.",
+        #     )
+        #     return True
 
         with AuthenticateUser.system_user():
             scenario_proxy = ScenarioProxy(title="Biota Database Installation")
