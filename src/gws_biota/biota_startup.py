@@ -1,6 +1,6 @@
 from gws_core import (
     AuthenticateUser,
-    BrickService,
+    BrickLogService,
     DbManagerService,
     Event,
     EventListener,
@@ -40,7 +40,7 @@ class GwsCoreDbListener(EventListener):
                 return
 
         if not biota_db_manager.check_connection():
-            BrickService.log_brick_critical(
+            BrickLogService.log_brick_critical(
                 BiotaDbManager, "Biota database not initialized properly."
             )
             return
@@ -49,7 +49,7 @@ class GwsCoreDbListener(EventListener):
         """Install the database"""
 
         if Settings.is_dev_mode():
-            BrickService.log_brick_critical(
+            BrickLogService.log_brick_critical(
                 BiotaDbManager,
                 "Dev mode detected, skipping Biota database installation. The biota database must be installed in the production environment because it is common for both environments. Please add the 'gws_biota' brick to your datalab.",
             )
@@ -59,13 +59,13 @@ class GwsCoreDbListener(EventListener):
             scenario_proxy = ScenarioProxy(title="Biota Database Installation")
             scenario_proxy.get_protocol().add_process(BiotaDbDownloader)
             try:
-                BrickService.log_brick_info(
+                BrickLogService.log_brick_info(
                     BiotaDbManager,
                     f"Starting Biota database installation in scenario '{scenario_proxy.get_url()}'",
                 )
                 scenario_proxy.run()
             except Exception as e:
-                BrickService.log_brick_critical(
+                BrickLogService.log_brick_critical(
                     BiotaDbManager,
                     f"Error while installing Biota database: {e}. Check scenario '{scenario_proxy.get_url()}' for details.",
                 )
@@ -75,10 +75,10 @@ class GwsCoreDbListener(EventListener):
             biota_db_manager = BiotaDbManager.get_instance()
             DbManagerService.init_db(biota_db_manager, full_init=True)
         except Exception as e:
-            BrickService.log_brick_critical(
+            BrickLogService.log_brick_critical(
                 BiotaDbManager, f"Error while initializing Biota database: {e}"
             )
             return False
 
-        BrickService.log_brick_info(BiotaDbManager, "Biota database installation completed.")
+        BrickLogService.log_brick_info(BiotaDbManager, "Biota database installation completed.")
         return True
