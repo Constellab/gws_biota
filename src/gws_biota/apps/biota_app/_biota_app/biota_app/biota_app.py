@@ -1,0 +1,50 @@
+import reflex as rx
+from gws_reflex_main import ReflexMainState, main_component, register_gws_reflex_app
+
+
+class State(rx.State):
+    value = 0
+
+    @rx.var
+    async def get_resource_name(self) -> str:
+        """Return the name of the resource."""
+
+        # Secure the method to ensure it checks authentication
+        # before accessing resources.
+        main_state = await self.get_state(ReflexMainState)
+        if not await main_state.check_authentication():
+            return "Unauthorized"
+        resources = await main_state.get_resources()
+        return resources[0].name if resources else "No resource"
+
+    @rx.var
+    async def get_param_name(self) -> str | None:
+        """
+        Get a parameter from the app configuration.
+        This route is not secured, so it can be accessed without authentication.
+        """
+        main_state = await self.get_state(ReflexMainState)
+        return await main_state.get_param("param_name", "default_value")
+
+    @rx.event
+    def increment(self):
+        """Increment the value."""
+        self.value += 1
+
+
+app = register_gws_reflex_app()
+
+
+# Declare the page and init the main state
+@rx.page()
+def index():
+    # Render the main container with the app content.
+    # The content will be displayed once the state is initialized.
+    # If the state is not initialized, a loading spinner will be shown.
+    return main_component(
+        rx.heading("Reflex app", font_size="2em"),
+        rx.text("Input resource name: " + State.get_resource_name),
+        rx.text("Param name: " + State.get_param_name),
+        rx.text(f"Value: {State.value}"),
+        rx.button("Click me", on_click=State.increment, style={"margin-top": "20px"}),
+    )
