@@ -18,7 +18,11 @@
     "bricks": [
       {
         "name": "gws_core",
-        "version": "0.20.6"
+        "version": "0.20.0"
+      },
+      {
+        "name": "gws_ai_toolkit",
+        "version": "0.1.14"
       }
     ],
     "pip": [
