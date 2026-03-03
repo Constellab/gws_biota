@@ -18,8 +18,10 @@ from .db_sbo_creator import SboDBCreator
 from .db_taxonomy_creator import TaxonomyDBCreator
 
 
-@protocol_decorator("UpdateBiotaDB",
-                    style=TypingStyle.material_icon(material_icon_name="database", background_color="#2b6d57"))
+@protocol_decorator(
+    "UpdateBiotaDB",
+    style=TypingStyle.material_icon(material_icon_name="database", background_color="#2b6d57"),
+)
 class UpdateBiotaDB(Protocol):
     # Create instances of various database creators and assign them to variables
     def configure_protocol(self) -> None:
@@ -36,18 +38,22 @@ class UpdateBiotaDB(Protocol):
 
         # Define the data flow connections between the processes
         # The eco Task is placed before the go Task. So we place in output eco and input go
-        self.add_connectors([
-            (eco >> "output_text", go << "input_text"),
-            (go >> "output_text", sbo << "input_text"),
-            (sbo >> "output_text", bto << "input_text"),
-            (bto >> "output_text", compound << "input_text"),
-            (bto >> "output_text", enzyme << "input_bto"),
-            (compound >> "output_text", pathway << "input_text"),
-            (compound >> "output_text", reaction << "input_compound"),
-            (pathway >> "output_text", taxonomy << "input_text"),
-            (taxonomy >> "output_text", protein << "input_text"),
-            (taxonomy >> "output_text", enzyme << "input_taxonomy"),
-            (taxonomy >> "output_text", reaction << "input_taxonomy"),
-            (protein >> "output_text", enzyme << "input_protein"),
-            (enzyme >> "output_text", reaction << "input_enzyme")
-        ])
+        self.add_connectors(
+            [
+                (eco >> "output_text", go << "input_text"),
+                (go >> "output_text", sbo << "input_text"),
+                (sbo >> "output_text", bto << "input_text"),
+                (bto >> "output_text", compound << "input_text"),
+                (bto >> "output_text", enzyme << "input_bto"),
+                (compound >> "output_text", pathway << "input_text"),
+                (compound >> "output_text", reaction << "input_compound"),
+                (pathway >> "output_text", taxonomy << "input_text"),
+                (taxonomy >> "output_text", protein << "input_text"),
+                (taxonomy >> "output_text", enzyme << "input_taxonomy"),
+                (taxonomy >> "output_text", reaction << "input_taxonomy"),
+                (protein >> "output_text", enzyme << "input_protein"),
+                (enzyme >> "output_text", reaction << "input_enzyme"),
+            ]
+        )
+
+        self.add_interface("input_brenda", enzyme, "input_brenda")
