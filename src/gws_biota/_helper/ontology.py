@@ -1,5 +1,3 @@
-
-
 import json
 import os
 import re
@@ -38,18 +36,20 @@ class Onto:
 
         tab = in_file.split("/")
         n = len(tab)
-        path = ("/").join(tab[0:n-1])
+        path = ("/").join(tab[0 : n - 1])
         in_filename = tab[-1]
 
-        out_filename = 'corrected_'+in_filename
+        out_filename = "corrected_" + in_filename
         out_file = os.path.join(path, out_filename)
 
         with open(in_file) as file:
             with open(out_file, "w") as outfile:
                 for line in file.readlines():
-                    if line.startswith('def: '):
+                    if line.startswith("def: "):
                         label, definition = line.split("def: ", 1)
-                        definition = re.sub(r'\[UniProt:[^\]]*\]', lambda x: x.group().replace(" ", "_"), definition)
+                        definition = re.sub(
+                            r"\[UniProt:[^\]]*\]", lambda x: x.group().replace(" ", "_"), definition
+                        )
                         outfile.write(f"{label}def: {definition}")
                     else:
                         outfile.write(line)
@@ -77,17 +77,17 @@ class Onto:
 
         tab = in_file.split("/")
         n = len(tab)
-        path = ("/").join(tab[0:n-1])
+        path = ("/").join(tab[0 : n - 1])
         in_filename = tab[-1]
 
-        out_filename = 'corrected_'+in_filename
+        out_filename = "corrected_" + in_filename
         out_file = os.path.join(path, out_filename)
 
         with open(in_file) as file, open(out_file, "w") as outfile:
             for line in file.readlines():
-                if not line.startswith('property_value'):
-                    if line.startswith('synonym') and ' []' in line:
-                        line = line.replace(' []', ' EXACT []')
+                if not line.startswith("property_value"):
+                    if line.startswith("synonym") and " []" in line:
+                        line = line.replace(" []", " EXACT []")
                     outfile.write(line)
 
         return path, out_filename
@@ -113,15 +113,15 @@ class Onto:
 
         tab = in_file.split("/")
         n = len(tab)
-        path = ("/").join(tab[0:n-1])
+        path = ("/").join(tab[0 : n - 1])
         in_filename = tab[-1]
 
-        out_filename = 'corrected_'+in_filename
+        out_filename = "corrected_" + in_filename
         out_file = os.path.join(path, out_filename)
 
         with open(in_file) as file, open(out_file, "w") as outfile:
             for line in file.readlines():
-                m = re.search(r'\[(.+)\]', line)
+                m = re.search(r"\[(.+)\]", line)
                 if m:
                     text = m.group(1)
                     entries = text.replace(r"\,", "##").split(",")
@@ -151,7 +151,27 @@ class Onto:
         """
         in_file = os.path.join(path, file)
 
-        onto = Ontology(in_file)
+        # Force UTF-8 encoding to work around chardet misdetecting
+        # the chebi.obo file as cp1252, which causes a UnicodeDecodeError.
+        # We must patch the reference in pronto.ontology (not just pronto.utils.io)
+        # because it uses `from .utils.io import decompress` (a direct import).
+        import pronto.ontology as pronto_ontology
+        import pronto.utils.io as pronto_io
+
+        original_decompress = pronto_io.decompress
+
+        def _decompress_utf8(reader, path=None, encoding=None):
+            return original_decompress(reader, path, encoding="utf-8")
+
+        pronto_io.decompress = _decompress_utf8
+        pronto_ontology.decompress = _decompress_utf8
+        try:
+            with open(in_file, "rb") as fh:
+                onto = Ontology(fh)
+        finally:
+            pronto_io.decompress = original_decompress
+            pronto_ontology.decompress = original_decompress
+
         return onto
 
     ##################################################################
@@ -167,16 +187,16 @@ class Onto:
             if not term.name:
                 continue
             # print(term.id)
-            dict_['id'] = term.id
-            dict_['name'] = term.name
-            dict_['definition'] = str(term.definition)
-            dict_['synonyms'] = []
+            dict_["id"] = term.id
+            dict_["name"] = term.name
+            dict_["definition"] = str(term.definition)
+            dict_["synonyms"] = []
             for syn in term.synonyms:
-                dict_['synonyms'].append(str(syn.description))
-            dict_['ancestors'] = [term.id]
+                dict_["synonyms"].append(str(syn.description))
+            dict_["ancestors"] = [term.id]
             ancestors = term.superclasses(distance=1000, with_self=False)
             for sup in ancestors:
-                dict_['ancestors'].append(sup.id)
+                dict_["ancestors"].append(sup.id)
 
             list_bto.append(dict_)
 
@@ -196,18 +216,18 @@ class Onto:
         list_go = []
         for term in ontology.terms():
             dict_go = {}
-            dict_go['id'] = term.id
-            dict_go['name'] = term.name.replace('\r', '')
-            dict_go['namespace'] = term.namespace.replace('\r', '')
-            dict_go['definition'] = str(term.definition)  # str
+            dict_go["id"] = term.id
+            dict_go["name"] = term.name.replace("\r", "")
+            dict_go["namespace"] = term.namespace.replace("\r", "")
+            dict_go["definition"] = str(term.definition)  # str
 
             # ------ get xrefs ------#
             try:
                 xrefs_fro = term.xrefs
                 if len(xrefs_fro) > 0:
-                    dict_go['xrefs'] = []
+                    dict_go["xrefs"] = []
                     for data in xrefs_fro:
-                        dict_go['xrefs'].append(data.id)
+                        dict_go["xrefs"].append(data.id)
             except:
                 pass
 
@@ -216,29 +236,29 @@ class Onto:
                 sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
-                    dict_go['ancestors'] = []
+                    dict_go["ancestors"] = []
                     for data in fro:
-                        dict_go['ancestors'].append(data)
+                        dict_go["ancestors"].append(data)
             except:
                 pass
 
-            if 'xrefs' in dict_go:
-                for data in dict_go['xrefs']:
+            if "xrefs" in dict_go:
+                for data in dict_go["xrefs"]:
                     list_rhea_id = []
-                    if 'RHEA' in data:
+                    if "RHEA" in data:
                         list_rhea_id.append(data)
                     if len(list_rhea_id) > 0:
-                        dict_go['rhea_id'] = []
-                        dict_go['rhea_id'] = list_rhea_id
+                        dict_go["rhea_id"] = []
+                        dict_go["rhea_id"] = list_rhea_id
             # dict_go['synonyms'] = list(term.synonyms)
 
             list_alt_ids = list(term.alternate_ids)
             if len(list_alt_ids) > 0:
-                dict_go['alt_id'] = list_alt_ids
+                dict_go["alt_id"] = list_alt_ids
 
             list_go.append(dict_go)
 
-        return (list_go)
+        return list_go
 
     # BTO
     @staticmethod
@@ -261,15 +281,15 @@ class Onto:
                 if data[key] == {}:
                     pass
                 else:
-                    dict_bto['id'] = data[key]['key']
-                    dict_bto['name'] = data[key]['label']
-                    if ('ancestors' in data[key].keys()):
-                        dict_bto['ancestors'] = data[key]['ancestors']
-                    if ('synonyms' in data[key].keys()):
-                        dict_bto['synonyms'] = data[key]['synonyms']
+                    dict_bto["id"] = data[key]["key"]
+                    dict_bto["name"] = data[key]["label"]
+                    if "ancestors" in data[key].keys():
+                        dict_bto["ancestors"] = data[key]["ancestors"]
+                    if "synonyms" in data[key].keys():
+                        dict_bto["synonyms"] = data[key]["synonyms"]
                 list_bto.append(dict_bto)
 
-        return (list_bto)
+        return list_bto
 
     # ECO
     @staticmethod
@@ -285,22 +305,22 @@ class Onto:
         list_eco = []
         for term in ontology.terms():
             dict_eco = {}
-            dict_eco['id'] = term.id
-            dict_eco['name'] = term.name.replace('\r', '')
-            dict_eco['definition'] = str(term.definition)  # str
+            dict_eco["id"] = term.id
+            dict_eco["name"] = term.name.replace("\r", "")
+            dict_eco["definition"] = str(term.definition)  # str
 
             try:
                 sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
-                    dict_eco['ancestors'] = []
+                    dict_eco["ancestors"] = []
                     for data in fro:
-                        dict_eco['ancestors'].append(data)
+                        dict_eco["ancestors"].append(data)
             except:
                 pass
 
             list_eco.append(dict_eco)
-        return (list_eco)
+        return list_eco
 
     # SBO
     @staticmethod
@@ -316,22 +336,22 @@ class Onto:
         list_sbo = []
         for term in ontology.terms():
             dict_sbo = {}
-            dict_sbo['id'] = term.id
-            dict_sbo['name'] = term.name.replace('\r', '')
+            dict_sbo["id"] = term.id
+            dict_sbo["name"] = term.name.replace("\r", "")
 
             try:
                 sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
-                    dict_sbo['ancestors'] = []
+                    dict_sbo["ancestors"] = []
                     for data in fro:
-                        dict_sbo['ancestors'].append(data)
+                        dict_sbo["ancestors"].append(data)
             except:
                 pass
 
             list_sbo.append(dict_sbo)
 
-        return (list_sbo)
+        return list_sbo
 
     # PWO
     @staticmethod
@@ -347,22 +367,22 @@ class Onto:
         list_pwo = []
         for term in ontology.terms():
             dict_pwo = {}
-            dict_pwo['id'] = term.id
-            dict_pwo['name'] = term.name.replace('\r', '')
-            dict_pwo['definition'] = str(term.definition)  # str
+            dict_pwo["id"] = term.id
+            dict_pwo["name"] = term.name.replace("\r", "")
+            dict_pwo["definition"] = str(term.definition)  # str
 
             try:
                 sup = term.superclasses(distance=1, with_self=False)
                 fro = sup.to_set().ids
                 if len(fro) > 0:
-                    dict_pwo['ancestors'] = []
+                    dict_pwo["ancestors"] = []
                     for data in fro:
-                        dict_pwo['ancestors'].append(data)
+                        dict_pwo["ancestors"].append(data)
             except:
                 pass
 
             list_pwo.append(dict_pwo)
-        return (list_pwo)
+        return list_pwo
 
     # CHEBI
     @staticmethod
@@ -382,63 +402,63 @@ class Onto:
 
         list_chebi_term = []
         for term in ontology.terms():
-            subsets = ''
+            subsets = ""
             if len(term.subsets):
                 subsets = list(term.subsets)[0]
 
             dict_term = {}
-            dict_term['id'] = term.id
-            dict_term['name'] = term.name.replace('\r', '')
-            dict_term['alt_id'] = list(term.alternate_ids)
-            dict_term['subsets'] = subsets
-            dict_term['ancestors'] = []
-            dict_term['inchikey'] = None
-            dict_term['inchi'] = None
-            dict_term['smiles'] = None
-            dict_term['formula'] = None
-            dict_term['charge'] = None
-            dict_term['mass'] = None
-            dict_term['monoisotopic_mass'] = None
+            dict_term["id"] = term.id
+            dict_term["name"] = term.name.replace("\r", "") if term.name else ""
+            dict_term["alt_id"] = list(term.alternate_ids)
+            dict_term["subsets"] = subsets
+            dict_term["ancestors"] = []
+            dict_term["inchikey"] = None
+            dict_term["inchi"] = None
+            dict_term["smiles"] = None
+            dict_term["formula"] = None
+            dict_term["charge"] = None
+            dict_term["mass"] = None
+            dict_term["monoisotopic_mass"] = None
 
             for pv in term.annotations:
-                if '/inchikey' in pv.property:
-                    dict_term['inchikey'] = pv.literal
-                elif '/inchi' in pv.property:
-                    dict_term['inchi'] = pv.literal
-                elif '/smiles' in pv.property:
-                    dict_term['smiles'] = pv.literal
-                elif '/formula' in pv.property:
-                    dict_term['formula'] = pv.literal
-                elif '/monoisotopicmass' in pv.property:
-                    dict_term['monoisotopic_mass'] = pv.literal
-                elif '/mass' in pv.property:
-                    dict_term['mass'] = pv.literal
-                elif '/charge' in pv.property:
-                    dict_term['charge'] = pv.literal
+                if "/inchikey" in pv.property:
+                    dict_term["inchikey"] = pv.literal
+                elif "/inchi" in pv.property:
+                    dict_term["inchi"] = pv.literal
+                elif "/smiles" in pv.property:
+                    dict_term["smiles"] = pv.literal
+                elif "/formula" in pv.property:
+                    dict_term["formula"] = pv.literal
+                elif "/monoisotopicmass" in pv.property:
+                    dict_term["monoisotopic_mass"] = pv.literal
+                elif "/mass" in pv.property:
+                    dict_term["mass"] = pv.literal
+                elif "/charge" in pv.property:
+                    dict_term["charge"] = pv.literal
 
             # ancestors
             for c in term.superclasses():
                 if c.id != term.id:
-                    dict_term['ancestors'].append(c.id)
+                    dict_term["ancestors"].append(c.id)
 
             # synonyms
-            dict_term['synonyms'] = []
+            dict_term["synonyms"] = []
             for syn in term.synonyms:
                 if syn.scope == "EXACT":
-                    if syn.description != dict_term['name']:
-                        dict_term['synonyms'].append(syn.description)
+                    if syn.description != dict_term["name"]:
+                        dict_term["synonyms"].append(syn.description)
 
             # definition
             if term.definition is None:
-                dict_term['definition'] = ""
+                dict_term["definition"] = ""
             else:
-                dict_term['definition'] = term.definition
+                dict_term["definition"] = term.definition
 
-            dict_term['xref'] = {}
+            dict_term["xref"] = {}
             for xref in term.xrefs:
                 xref_id = xref.id.split(":")[0].lower()
-                dict_term['xref'][xref_id] = xref.id.split(":")[1]
+                dict_term["xref"][xref_id] = xref.id.split(":")[1]
 
             list_chebi_term.append(dict_term)
 
-        return (list_chebi_term)
+        return list_chebi_term
