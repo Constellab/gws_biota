@@ -123,7 +123,7 @@ def _header_buttons(state: BiotaChatState) -> list[rx.Component]:
         ),
         rx.button(
             rx.icon("refresh-cw", size=16),
-            state.clear_button_text,
+            "New chat",
             on_click=state.clear_chat,
             variant="ghost",
             size="2",
@@ -136,7 +136,7 @@ def biota_chat_component() -> rx.Component:
     return chat_component(
         ChatConfig(
             state=BiotaChatState,
-            header_buttons=_header_buttons,
+            # header_buttons=_header_buttons,
             custom_chat_messages={  # type: ignore
                 "csv-export": _csv_export_message_content,
                 "function-call": _function_call_message_content,

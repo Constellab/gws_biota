@@ -8,8 +8,7 @@ Custom chat message types for debug mode: function calls and function results.
 import json
 from typing import Literal
 
-from gws_ai_toolkit.models.chat.message.chat_message_base import ChatMessageBase
-from gws_ai_toolkit.models.chat.message.chat_message_text import ChatMessageText
+from gws_ai_toolkit import ChatMessageBase, ChatMessageText
 
 
 class ChatMessageFunctionCall(ChatMessageBase):

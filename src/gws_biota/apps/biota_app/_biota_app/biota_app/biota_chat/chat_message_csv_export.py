@@ -7,7 +7,7 @@ Custom chat message type for displaying a CSV export result with a download butt
 
 from typing import Literal
 
-from gws_ai_toolkit.models.chat.message.chat_message_base import ChatMessageBase
+from gws_ai_toolkit import ChatMessageBase
 
 
 class ChatMessageCsvExport(ChatMessageBase):

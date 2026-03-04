@@ -1,7 +1,9 @@
 {
     "app_dir_path": "",
     "source_ids": [],
-    "params": {},
+    "params": {
+        "chat_app_name": "biota_agent"
+    },
     "env_type": "NONE",
     "env_file_path": "",
     "is_reflex_enterprise": false,

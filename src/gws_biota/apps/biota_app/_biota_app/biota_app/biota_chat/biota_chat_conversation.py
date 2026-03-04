@@ -9,15 +9,15 @@ Follows the AiTableAgentChatConversation pattern.
 import os
 from collections.abc import Generator
 
-from gws_ai_toolkit.models.chat.message.chat_message_error import ChatMessageError
-from gws_ai_toolkit.models.chat.message.chat_message_types import ChatMessage
-from gws_ai_toolkit.models.chat.message.chat_user_message import ChatUserMessageText
-
-from gws_ai_toolkit.models.chat.conversation.base_chat_conversation import (
+from gws_ai_toolkit import (
     BaseChatConversation,
     BaseChatConversationConfig,
+    ChatMessage,
+    ChatMessageError,
+    ChatMessageStreaming,
+    ChatUserMessageText,
+    UserQueryTextEvent,
 )
-from gws_ai_toolkit.core.agents.base_function_agent_events import UserQueryTextEvent
 
 from gws_biota.ai.biota_agent_ai import BiotaAgentAi
 from gws_biota.ai.biota_agent_ai_events import BiotaAgentEvent
@@ -66,6 +66,10 @@ class BiotaChatConversation(BaseChatConversation[ChatUserMessageText]):
         """
         yield user_message
 
+        # Yield an initial streaming message so the UI shows a loading indicator
+        # while the agent processes the request (function calls may take time)
+        yield ChatMessageStreaming(content="▍")
+
         user_query = UserQueryTextEvent(
             query=user_message.content, agent_id=self.biota_agent.id
         )
@@ -98,6 +102,8 @@ class BiotaChatConversation(BaseChatConversation[ChatUserMessageText]):
 
         if event.type == "response_created":
             self._pending_function_call = False
+            # Reset the streaming message so the first text_delta starts fresh
+            self.current_response_message = None
             if event.response_id is not None:
                 self._current_external_response_id = event.response_id
             return []
