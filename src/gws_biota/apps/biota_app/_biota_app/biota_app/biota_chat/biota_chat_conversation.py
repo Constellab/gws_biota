@@ -111,19 +111,17 @@ class BiotaChatConversation(BaseChatConversation[ChatUserMessageText]):
         if event.type == "function_call":
             self._pending_function_call = True
             messages: list[ChatMessage] = []
+            # Close any intermediate reasoning text so it stays visible in the chat
+            closed = self.close_current_message()
+            if closed:
+                messages.append(closed)
             if self.debug_mode:
-                # In debug mode: save the intermediate reasoning text, then show the function call
-                closed = self.close_current_message()
-                if closed:
-                    messages.append(closed)
+                # In debug mode: also show the function call details
                 call_msg = ChatMessageFunctionCall.from_event(
                     function_name=event.function_name,
                     arguments=event.arguments,
                 )
                 messages.append(self.save_message(call_msg))
-            else:
-                # Normal mode: discard intermediate reasoning
-                self.current_response_message = None
             return messages
 
         if event.type == "response_completed":

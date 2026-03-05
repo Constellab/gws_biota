@@ -1,6 +1,11 @@
 import reflex as rx
 from gws_ai_toolkit._app.ai_chat import chat_history_sidebar_list
-from gws_reflex_main import main_component, page_sidebar_component, sidebar_header_component
+from gws_reflex_main import (
+    ReflexTheme,
+    main_component,
+    page_sidebar_component,
+    sidebar_header_component,
+)
 
 from ..custom_states import CustomHistoryState
 
@@ -22,6 +27,21 @@ def page_layout_component(content: rx.Component) -> rx.Component:
             content=content,
             sidebar_width="300px",
         )
+    )
+
+
+def _mode_badge(_: rx.Var[str]) -> rx.Component:
+    """Default mode badge using a plain Radix badge.
+
+    :param mode: Reactive var with the conversation mode string.
+    :return: A soft badge displaying the mode label.
+    """
+    return rx.badge(
+        "Biota agent",
+        size="1",
+        variant="soft",
+        background=f"var(--{ReflexTheme.SECONDARY}-3)",
+        color=f"var(--{ReflexTheme.SECONDARY}-11)",
     )
 
 
@@ -53,7 +73,7 @@ def _sidebar_content() -> rx.Component:
         ),
         # Conversation history list (takes remaining space)
         rx.box(
-            chat_history_sidebar_list(state=CustomHistoryState),
+            chat_history_sidebar_list(state=CustomHistoryState, mode_badge_builder=_mode_badge),
             flex="1",
             min_height="0",
             overflow_y="auto",

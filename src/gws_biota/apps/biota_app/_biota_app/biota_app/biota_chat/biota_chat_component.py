@@ -8,8 +8,11 @@ with custom renderers for CSV export and debug messages.
 
 import reflex as rx
 from gws_ai_toolkit._app.ai_chat import ChatConfig, chat_component
+from gws_reflex_base import ReflexTheme
 
 from .biota_chat_state import BiotaChatState
+from .biota_config_state import BiotaConfigState
+from .biota_empty_chat_component import biota_empty_chat_component
 from .chat_message_csv_export import ChatMessageCsvExport
 from .chat_message_function import ChatMessageFunctionCall, ChatMessageFunctionResult
 
@@ -64,7 +67,7 @@ def _function_call_message_content(message: ChatMessageFunctionCall) -> rx.Compo
             align_items="center",
         ),
         rx.code_block(
-            message.arguments_json,
+            rx.cond(message.arguments_json, message.arguments_json, ""),
             language="json",
             font_size="12px",
         ),
@@ -91,7 +94,7 @@ def _function_result_message_content(message: ChatMessageFunctionResult) -> rx.C
             align_items="center",
         ),
         rx.code_block(
-            message.result_preview,
+            rx.cond(message.result_preview, message.result_preview, ""),
             language="json",
             font_size="12px",
         ),
@@ -103,44 +106,71 @@ def _function_result_message_content(message: ChatMessageFunctionResult) -> rx.C
     )
 
 
-def _header_buttons(state: BiotaChatState) -> list[rx.Component]:
-    """Header buttons including debug toggle and clear chat."""
-    return [
+def _header_buttons() -> rx.Component:
+    """Header buttons including debug toggle and settings, pushed to the right."""
+    return rx.hstack(
         rx.tooltip(
             rx.button(
                 rx.icon("bug", size=16),
                 on_click=BiotaChatState.toggle_debug_mode,
-                variant=rx.cond(state.debug_mode, "solid", "ghost"),
-                color_scheme=rx.cond(state.debug_mode, "amber", "gray"),
+                variant=rx.cond(BiotaChatState.debug_mode, "solid", "ghost"),
+                color_scheme=rx.cond(BiotaChatState.debug_mode, "amber", "gray"),
                 size="2",
                 cursor="pointer",
             ),
             content=rx.cond(
-                state.debug_mode,
+                BiotaChatState.debug_mode,
                 "Debug mode ON",
                 "Debug mode OFF",
             ),
         ),
-        rx.button(
-            rx.icon("refresh-cw", size=16),
-            "New chat",
-            on_click=state.clear_chat,
-            variant="ghost",
-            size="2",
-            cursor="pointer",
+        rx.cond(
+            BiotaConfigState.show_settings_menu,
+            rx.tooltip(
+                rx.button(
+                    rx.icon("settings", size=16),
+                    on_click=rx.redirect("/config"),
+                    variant="ghost",
+                    size="2",
+                    cursor="pointer",
+                    color="var(--gray-11)",
+                ),
+                content="Settings",
+            ),
         ),
-    ]
+        spacing="3",
+        align_items="center",
+    )
+
+
+def _biota_chat_header() -> rx.Component:
+    """Header with Biota agent badge, separator, and action buttons."""
+    return rx.hstack(
+        rx.badge(
+            "Biota agent",
+            size="3",
+            variant="soft",
+            background=f"var(--{ReflexTheme.SECONDARY}-3)",
+            color=f"var(--{ReflexTheme.SECONDARY}-11)",
+        ),
+        rx.spacer(),
+        _header_buttons(),
+        align_items="center",
+        spacing="3",
+        width="100%",
+    )
 
 
 def biota_chat_component() -> rx.Component:
     return chat_component(
         ChatConfig(
             state=BiotaChatState,
-            # header_buttons=_header_buttons,
+            header=_biota_chat_header(),
             custom_chat_messages={  # type: ignore
                 "csv-export": _csv_export_message_content,
                 "function-call": _function_call_message_content,
                 "function-result": _function_result_message_content,
             },
-        )
+        ),
+        empty_chat_component=biota_empty_chat_component,
     )

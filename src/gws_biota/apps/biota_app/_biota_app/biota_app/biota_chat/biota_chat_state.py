@@ -19,6 +19,7 @@ from gws_biota.ai.biota_agent_ai import BiotaAgentAi
 from gws_reflex_main import ReflexMainState
 
 from .biota_chat_conversation import BiotaChatConversation
+from .biota_config_state import BiotaConfigState
 
 
 class BiotaChatState(ConversationChatStateBase, rx.State):
@@ -27,11 +28,6 @@ class BiotaChatState(ConversationChatStateBase, rx.State):
     Provides a chat UI where users can query the Biota biological database
     through an AI agent with function-calling tools.
     """
-
-    # UI configuration
-    title: str = "Biota Database Explorer"
-    placeholder_text: str = "Ask about enzymes, compounds, reactions..."
-    empty_state_message: str = "Ask me anything about the Biota biological database"
 
     # Debug mode: when enabled, intermediate reasoning and function calls are shown in the chat
     debug_mode: bool = False
@@ -46,10 +42,16 @@ class BiotaChatState(ConversationChatStateBase, rx.State):
         if not api_key:
             raise ValueError("OpenAI API key is not set")
 
+        biota_config_state = await self.get_state(BiotaConfigState)
+        biota_config = await biota_config_state.get_config()
+
+        self.placeholder_text = biota_config.placeholder_text
+
         biota_agent = BiotaAgentAi(
             openai_api_key=api_key,
-            model="gpt-4o",
-            temperature=0.3,
+            model=biota_config.model,
+            temperature=biota_config.temperature,
+            system_prompt=biota_config.system_prompt,
         )
 
         main_state = await self.get_state(ReflexMainState)

@@ -57,7 +57,9 @@ class ChatMessageFunctionResult(ChatMessageBase):
     result_preview: str
 
     @staticmethod
-    def from_result(function_name: str, result: str, max_length: int = 500) -> "ChatMessageFunctionResult":
+    def from_result(
+        function_name: str, result: str, max_length: int = 500
+    ) -> "ChatMessageFunctionResult":
         preview = result if len(result) <= max_length else result[:max_length] + "..."
         return ChatMessageFunctionResult(
             function_name=function_name,
