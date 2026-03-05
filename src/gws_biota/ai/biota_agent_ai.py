@@ -9,8 +9,8 @@ Wraps the 4 biota_db_tools functions as OpenAI tools.
 import json
 from collections.abc import Generator
 
-from gws_ai_toolkit.core.agents.base_function_agent_ai import BaseFunctionAgentAi
-from gws_ai_toolkit.core.agents.base_function_agent_events import (
+from gws_ai_toolkit import (
+    BaseFunctionAgentAi,
     FunctionCallEvent,
     FunctionErrorEvent,
     UserQueryTextEvent,
@@ -52,8 +52,9 @@ class ExportToCsvConfig(BaseModelDTO):
     )
     filename: str | None = Field(
         default=None,
-        description="Optional CSV filename (without path). If not provided, one is auto-generated. "
-        "The file is saved to /lab/user/data/.",
+        description=(
+            "Optional CSV filename (without path). If not provided, one is auto-generated. "
+        ),
     )
 
 

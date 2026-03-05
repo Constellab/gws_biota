@@ -8,16 +8,16 @@ with custom renderers for CSV export and debug messages.
 
 import reflex as rx
 from gws_ai_toolkit._app.ai_chat import ChatConfig, chat_component
+from gws_biota.ai.chat_message_csv_export import ChatMessageCsvExportFront
 from gws_reflex_base import ReflexTheme
 
 from .biota_chat_state import BiotaChatState
 from .biota_config_state import BiotaConfigState
 from .biota_empty_chat_component import biota_empty_chat_component
-from .chat_message_csv_export import ChatMessageCsvExport
 from .chat_message_function import ChatMessageFunctionCall, ChatMessageFunctionResult
 
 
-def _csv_export_message_content(message: ChatMessageCsvExport) -> rx.Component:
+def _csv_export_message_content(message: ChatMessageCsvExportFront) -> rx.Component:
     """Render a CSV export message with a download button."""
     return rx.button(
         rx.hstack(
@@ -42,7 +42,7 @@ def _csv_export_message_content(message: ChatMessageCsvExport) -> rx.Component:
             align_items="center",
             width="100%",
         ),
-        on_click=BiotaChatState.download_csv(message.file_path, message.file_name),
+        on_click=BiotaChatState.download_csv(message.id),
         variant="soft",
         size="3",
         width="100%",
@@ -166,10 +166,10 @@ def biota_chat_component() -> rx.Component:
         ChatConfig(
             state=BiotaChatState,
             header=_biota_chat_header(),
-            custom_chat_messages={  # type: ignore
-                "csv-export": _csv_export_message_content,
-                "function-call": _function_call_message_content,
-                "function-result": _function_result_message_content,
+            custom_chat_messages={
+                "csv-export": (ChatMessageCsvExportFront, _csv_export_message_content),
+                "function-call": (ChatMessageFunctionCall, _function_call_message_content),
+                "function-result": (ChatMessageFunctionResult, _function_result_message_content),
             },
         ),
         empty_chat_component=biota_empty_chat_component,

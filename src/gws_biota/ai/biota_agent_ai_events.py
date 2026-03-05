@@ -7,7 +7,7 @@ Event types for the BiotaAgentAi, following the PlotlyAgentAi pattern.
 
 from typing import Literal
 
-from gws_ai_toolkit.core.agents.base_function_agent_events import (
+from gws_ai_toolkit import (
     BaseFunctionAgentEvent,
     FunctionSuccessEvent,
     UserQueryTextEvent,

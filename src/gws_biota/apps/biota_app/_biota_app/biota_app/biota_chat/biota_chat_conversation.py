@@ -18,11 +18,10 @@ from gws_ai_toolkit import (
     ChatUserMessageText,
     UserQueryTextEvent,
 )
-
 from gws_biota.ai.biota_agent_ai import BiotaAgentAi
 from gws_biota.ai.biota_agent_ai_events import BiotaAgentEvent
+from gws_biota.ai.chat_message_csv_export import ChatMessageCsvExport
 
-from .chat_message_csv_export import ChatMessageCsvExport
 from .chat_message_function import ChatMessageFunctionCall, ChatMessageFunctionResult
 
 
@@ -70,9 +69,7 @@ class BiotaChatConversation(BaseChatConversation[ChatUserMessageText]):
         # while the agent processes the request (function calls may take time)
         yield ChatMessageStreaming(content="▍")
 
-        user_query = UserQueryTextEvent(
-            query=user_message.content, agent_id=self.biota_agent.id
-        )
+        user_query = UserQueryTextEvent(query=user_message.content, agent_id=self.biota_agent.id)
 
         for event in self.biota_agent.call_agent(user_query):
             messages = self._handle_biota_agent_event(event)
@@ -147,7 +144,9 @@ class BiotaChatConversation(BaseChatConversation[ChatUserMessageText]):
 
         # In debug mode, show function results for all success events
         if self.debug_mode and event.type in {
-            "schema_result", "query_result", "statistics_result",
+            "schema_result",
+            "query_result",
+            "statistics_result",
         }:
             result_str = getattr(event, "function_response", "")
             result_msg = ChatMessageFunctionResult.from_result(

@@ -282,11 +282,27 @@ def _get_db():
 
 
 def _validate_readonly(sql: str):
-    """Ensure the SQL query is read-only. Raises ValueError if not."""
-    stripped = sql.strip().upper()
+    """Ensure the SQL query is read-only and contains only a single statement.
+
+    Raises ValueError if the query is not safe.
+    """
+    stripped = sql.strip()
+    stripped_upper = stripped.upper()
+
+    # Reject SQL comments that could hide malicious payloads
+    if re.search(r"--|/\*", stripped):
+        raise ValueError("SQL comments (-- and /* */) are not allowed.")
+
+    # Reject multiple statements: strip a single optional trailing semicolon,
+    # then ensure no semicolons remain in the query.
+    body = stripped.rstrip(";")
+    if ";" in body:
+        raise ValueError(
+            "Multiple SQL statements are not allowed. Please provide a single SELECT query."
+        )
 
     allowed_prefixes = ("SELECT", "SHOW", "DESCRIBE", "DESC", "EXPLAIN")
-    if not stripped.startswith(allowed_prefixes):
+    if not stripped_upper.startswith(allowed_prefixes):
         raise ValueError(
             "Only SELECT queries are allowed. "
             "INSERT, UPDATE, DELETE, DROP, ALTER, CREATE, TRUNCATE are forbidden."
@@ -300,7 +316,7 @@ def _validate_readonly(sql: str):
         r"\bSLEEP\b",
     ]
     for pattern in dangerous:
-        if re.search(pattern, stripped):
+        if re.search(pattern, stripped_upper):
             raise ValueError(f"Query contains forbidden pattern: {pattern}")
 
 
@@ -416,11 +432,24 @@ def export_to_csv(sql: str, filename: Optional[str] = None) -> dict:
         if not filename:
             timestamp = int(time.time())
             filename = f"biota_export_{timestamp}.csv"
-
+        else:
+            # Ensure we only use a basename and not a user-supplied path
+            filename = os.path.basename(str(filename))
+        # Basic allowlist: letters, numbers, underscore, hyphen, dot
+        if not filename or not re.match(r"^[A-Za-z0-9_.-]+$", filename):
+            raise ValueError(
+                "Invalid filename; only letters, numbers, '_', '-', and '.' are allowed."
+            )
         if not filename.endswith(".csv"):
             filename += ".csv"
-
         filepath = os.path.join(temp_dir, filename)
+        # Ensure the resolved path stays within temp_dir
+        temp_dir_abs = os.path.abspath(temp_dir)
+        filepath_abs = os.path.abspath(filepath)
+        if os.path.commonpath([temp_dir_abs, filepath_abs]) != temp_dir_abs:
+            raise ValueError(
+                "Invalid filename; path traversal outside the temp directory is not allowed."
+            )
 
         row_count = 0
         with open(filepath, "w", newline="", encoding="utf-8") as f:

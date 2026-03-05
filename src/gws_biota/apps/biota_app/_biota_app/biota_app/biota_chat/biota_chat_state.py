@@ -6,6 +6,7 @@ Reflex state for the Biota database chat, extending ConversationChatStateBase.
 """
 
 import os
+from typing import cast
 
 import reflex as rx
 from gws_ai_toolkit import (
@@ -16,6 +17,7 @@ from gws_ai_toolkit import (
 )
 from gws_ai_toolkit._app.ai_chat import AppConfigState, ConversationChatStateBase, HistoryState
 from gws_biota.ai.biota_agent_ai import BiotaAgentAi
+from gws_biota.ai.chat_message_csv_export import ChatMessageCsvExport
 from gws_reflex_main import ReflexMainState
 
 from .biota_chat_conversation import BiotaChatConversation
@@ -120,16 +122,36 @@ class BiotaChatState(ConversationChatStateBase, rx.State):
             self._conversation.debug_mode = self.debug_mode
 
     @rx.event
-    async def download_csv(self, file_path: str, file_name: str):
+    async def download_csv(self, message_id: str):
         """Trigger a browser download for an exported CSV file.
 
         Args:
-            file_path: Absolute path to the CSV file on disk.
-            file_name: Filename to use for the download.
+            message_id: ID of the ChatMessageCsvExport message in the conversation.
         """
-        if not os.path.isfile(file_path):
+        if not self._conversation:
+            yield rx.toast.error("No active conversation.")
+            return
+
+        message: ChatMessageCsvExport = cast(
+            ChatMessageCsvExport,
+            next(
+                (
+                    msg
+                    for msg in self._conversation.chat_messages
+                    if msg.id == message_id and isinstance(msg, ChatMessageCsvExport)
+                ),
+                None,
+            ),
+        )
+
+        if not message:
+            yield rx.toast.error("CSV export message not found.")
+            return
+
+        if not os.path.isfile(message.file_path):
             yield rx.toast.error("CSV file no longer available.")
             return
-        with open(file_path, "rb") as f:
+
+        with open(message.file_path, "rb") as f:
             file_data = f.read()
-        yield rx.download(data=file_data, filename=file_name)
+        yield rx.download(data=file_data, filename=message.file_name)
