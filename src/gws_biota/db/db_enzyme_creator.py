@@ -22,6 +22,11 @@ from gws_core import (
 )
 
 from gws_biota import Enzyme
+from gws_biota.enzyme.deprecated_enzyme import DeprecatedEnzyme
+from gws_biota.enzyme.enzyme import EnzymeBTO
+from gws_biota.enzyme.enzyme_class import EnzymeClass
+from gws_biota.enzyme.enzyme_ortholog import EnzymeOrtholog
+from gws_biota.enzyme.enzyme_pathway import EnzymePathway
 from gws_biota.enzyme.enzyme_service import EnzymeService
 
 from ..bto.bto import BTO
@@ -62,13 +67,31 @@ class EnzymeDBCreator(Task):
             raise Exception(
                 "No data from the TAXONOMY, BTO or PATHWAY databases available in Biota. Please update these databases before the ENZYME database.")
 
-        # Deleting the database...
+        # Deleting the enzyme database tables...
+        # Order: Drop child tables before parent tables (reverse FK dependencies)
         self.log_info_message("Deleting the ENZYME database...")
-        DbService.drop_biota_tables([Enzyme])
+        enzyme_tables_to_drop = [
+            EnzymeBTO,           # Has FK to Enzyme and BTO
+            Enzyme,              # Has FK to EnzymeOrtholog
+            DeprecatedEnzyme,    # Independent
+            EnzymeOrtholog,      # Has FK to EnzymePathway
+            EnzymePathway,       # Has FK to Pathway (external)
+            EnzymeClass          # Independent
+        ]
+        DbService.drop_biota_tables(enzyme_tables_to_drop, message_dispatcher=self.message_dispatcher)
 
-        # ... to build it from 0
+        # Creating enzyme database tables from scratch...
+        # Order: Create parent tables before child tables (follow FK dependencies)
         self.log_info_message("Creating the ENZYME database...")
-        DbService.create_biota_tables([Enzyme])
+        enzyme_tables_to_create = [
+            EnzymeClass,         # Independent
+            EnzymePathway,       # Depends on Pathway (external)
+            EnzymeOrtholog,      # Depends on EnzymePathway
+            Enzyme,              # Depends on EnzymeOrtholog
+            DeprecatedEnzyme,    # Independent
+            EnzymeBTO            # Depends on Enzyme and BTO
+        ]
+        DbService.create_biota_tables(enzyme_tables_to_create, message_dispatcher=self.message_dispatcher)
 
         # Check that all url exist and work
         for key, url in params.items():

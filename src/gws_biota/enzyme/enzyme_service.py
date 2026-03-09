@@ -61,8 +61,17 @@ class EnzymeService(BaseService):
 
             # CRITICAL: Close DB connection to prevent timeout during long parsing
             message_dispatcher.notify_info_message("✓ Enzyme classes loaded")
-            Logger.info("Closing database connection before long parsing phase...")
-            BiotaDbManager.db.close()
+            Logger.info("Closing and clearing database connection before long parsing phase...")
+            # Force close all connections to prevent timeout issues
+            try:
+                if not BiotaDbManager.db.is_closed():
+                    BiotaDbManager.db.close()
+                # Clear connection pool to force fresh connection later
+                if hasattr(BiotaDbManager.db, '_state'):
+                    BiotaDbManager.db._state.reset()
+            except Exception as e:
+                Logger.warning(f"Error closing connection: {e}")
+                pass
 
             # ==================================================================
             # PHASE 2: PARSING (NO DB CONNECTION - AVOID TIMEOUT)
@@ -199,12 +208,34 @@ class EnzymeService(BaseService):
             message_dispatcher.notify_info_message("SAVING ALL DATA TO DATABASE...")
             message_dispatcher.notify_info_message("=" * 80)
 
-            # CRITICAL: Ensure fresh database connection
-            Logger.info("Reconnecting to database...")
-            if BiotaDbManager.db.is_closed():
-                BiotaDbManager.db.connect()
+            # CRITICAL: Ensure fresh database connection with ping test
+            Logger.info("Reconnecting to database with fresh connection...")
+            message_dispatcher.notify_info_message("Reconnecting to database...")
 
-            # Save core enzyme data (each create_all has its own atomic transaction)
+            # Force close and reconnect
+            try:
+                if not BiotaDbManager.db.is_closed():
+                    BiotaDbManager.db.close()
+            except:
+                pass
+
+            # Open new connection
+            BiotaDbManager.db.connect()
+
+            # Test connection with ping
+            try:
+                BiotaDbManager.db.execute_sql('SELECT 1')
+                Logger.info("✓ Database connection verified")
+                message_dispatcher.notify_info_message("✓ Database connection ready")
+            except Exception as e:
+                Logger.error(f"Connection test failed: {e}")
+                # Try one more time
+                BiotaDbManager.db.close()
+                BiotaDbManager.db.connect()
+                BiotaDbManager.db.execute_sql('SELECT 1')
+                Logger.info("✓ Database connection verified (retry)")
+
+            # Save core enzyme data
             message_dispatcher.notify_info_message("Saving enzyme pathways...")
             EnzymePathway.create_all(list(pathways.values()))
             message_dispatcher.notify_info_message(f"✓ Saved {len(pathways)} enzyme pathways")
@@ -213,49 +244,67 @@ class EnzymeService(BaseService):
             EnzymeOrtholog.create_all(list(enzos.values()))
             message_dispatcher.notify_info_message(f"✓ Saved {len(enzos)} enzyme orthologs")
 
-            # Save enzymes in chunks to avoid MariaDB timeout
-            # Each create_all() call uses db.atomic() which creates a transaction.
-            # For 109K+ enzymes, a single transaction times out after 60 seconds.
-            # Solution: Multiple smaller transactions (30K enzymes each = ~3 batches per transaction)
-            message_dispatcher.notify_info_message(f"Saving {len(enzymes)} enzymes in chunks...")
-            chunk_size = 30000
+            # Save enzymes in SMALL chunks to avoid MariaDB timeout
+            # Each chunk = 1 transaction. 10K was still too big, use 1K instead.
+            # MariaDB timeouts after ~60 sec of transaction, so keep each transaction < 5 sec
+            # Force fresh DB connection before starting saves
+            db = Enzyme.get_db()
+            db.close()
+            db.connect()
+            message_dispatcher.notify_info_message("Reconnected to database for saves")
+
+            message_dispatcher.notify_info_message(f"Saving {len(enzymes)} enzymes in small chunks...")
+            chunk_size = 1000  # Small chunks to keep each transaction under 5 seconds
             num_chunks = (len(enzymes) + chunk_size - 1) // chunk_size
 
-            for i in range(0, len(enzymes), chunk_size):
-                chunk = enzymes[i:i + chunk_size]
-                chunk_num = (i // chunk_size) + 1
-                message_dispatcher.notify_info_message(f"  Chunk {chunk_num}/{num_chunks}: Saving {len(chunk)} enzymes...")
-                Enzyme.create_all(chunk)
-                message_dispatcher.notify_info_message(f"  ✓ Chunk {chunk_num}/{num_chunks} saved")
+            saved_count = 0
+            for chunk in chunked(enzymes, chunk_size):
+                chunk_list = list(chunk)
 
-            message_dispatcher.notify_info_message(f"✓ Saved all {len(enzymes)} enzymes")
+                # Ping DB before each chunk to keep connection alive
+                try:
+                    db.execute_sql('SELECT 1')
+                except Exception:
+                    # Connection lost, reconnect
+                    db.close()
+                    db.connect()
+                    message_dispatcher.notify_info_message("  ⚠ Reconnected to database (connection was lost)")
+
+                # batch_size=100: smaller INSERTs to avoid "MySQL server has gone away"
+                Enzyme.create_all(chunk_list, batch_size=100, use_transaction=False)
+                saved_count += len(chunk_list)
+                if saved_count % (chunk_size * 10) == 0:  # Log every 10 chunks (10K enzymes)
+                    message_dispatcher.notify_info_message(f"  Progress: {saved_count}/{len(enzymes)} enzymes saved...")
+
+            message_dispatcher.notify_info_message(f"✓ Saved {len(enzymes)} enzymes")
 
             if deprecated_enzymes:
                 message_dispatcher.notify_info_message("Saving deprecated enzymes...")
                 DeprecatedEnzyme.create_all(deprecated_enzymes)
                 message_dispatcher.notify_info_message(f"✓ Saved {len(deprecated_enzymes)} deprecated enzymes")
 
-            # Update enzyme taxonomy in chunks (each update_all has its own atomic transaction)
+            # Update taxonomy in chunks to avoid single long transaction
             message_dispatcher.notify_info_message(f"Updating taxonomy for {len(enzymes)} enzymes in chunks...")
-            for i in range(0, len(enzymes), chunk_size):
-                chunk = enzymes[i:i + chunk_size]
-                chunk_num = (i // chunk_size) + 1
-                message_dispatcher.notify_info_message(f"  Chunk {chunk_num}/{num_chunks}: Updating taxonomy...")
-                cls.__update_taxonomy(chunk)
-                message_dispatcher.notify_info_message(f"  ✓ Chunk {chunk_num}/{num_chunks} taxonomy updated")
-            message_dispatcher.notify_info_message("✓ All enzyme taxonomy updated")
+            updated_count = 0
+            for chunk in chunked(enzymes, chunk_size):
+                chunk_list = list(chunk)
+                cls.__update_taxonomy(chunk_list)
+                updated_count += len(chunk_list)
+                if updated_count % (chunk_size * 10) == 0:  # Log every 10 chunks (10K enzymes)
+                    message_dispatcher.notify_info_message(f"  Progress: {updated_count}/{len(enzymes)} taxonomy updated...")
+            message_dispatcher.notify_info_message("✓ Taxonomy updated")
 
-            # Update enzyme tissue locations in chunks (insert_all has its own atomic transaction)
+            # Update BTO in chunks to avoid single long transaction
             message_dispatcher.notify_info_message(f"Updating BTO for {len(enzymes)} enzymes in chunks...")
-            for i in range(0, len(enzymes), chunk_size):
-                chunk = enzymes[i:i + chunk_size]
-                chunk_num = (i // chunk_size) + 1
-                message_dispatcher.notify_info_message(f"  Chunk {chunk_num}/{num_chunks}: Updating BTO...")
-                cls.__update_bto(chunk)
-                message_dispatcher.notify_info_message(f"  ✓ Chunk {chunk_num}/{num_chunks} BTO updated")
-            message_dispatcher.notify_info_message("✓ All enzyme BTO updated")
+            updated_count = 0
+            for chunk in chunked(enzymes, chunk_size):
+                chunk_list = list(chunk)
+                cls.__update_bto(chunk_list)
+                updated_count += len(chunk_list)
+                if updated_count % (chunk_size * 10) == 0:  # Log every 10 chunks (10K enzymes)
+                    message_dispatcher.notify_info_message(f"  Progress: {updated_count}/{len(enzymes)} BTO updated...")
+            message_dispatcher.notify_info_message("✓ BTO updated")
 
-            # BKMS pathway enrichment (update_all has its own atomic transaction)
             if list_of_bkms:
                 message_dispatcher.notify_info_message("Updating enzyme pathways with BKMS data...")
                 cls.__update_pathway_from_bkms(list_of_bkms)

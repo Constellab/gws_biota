@@ -165,3 +165,10 @@ class ReactionDBCreator(Task):
         # Clean Python cache after execution
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        # Count reactions created
+        reaction_count = Reaction.select().count()
+        success_msg = f"✓ Reaction database created successfully: {reaction_count} reactions loaded"
+        self.log_info_message(success_msg)
+
+        return {"output_text": Text(success_msg)}

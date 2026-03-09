@@ -16,7 +16,8 @@ from .reaction import Reaction, ReactionEnzyme, ReactionProduct, ReactionSubstra
 class ReactionService(BaseService):
 
     @classmethod
-    @BiotaDbManager.transaction()
+    # Removed @BiotaDbManager.transaction() to avoid MariaDB timeout
+    # Each operation now has its own short transaction via use_transaction=False
     def create_reaction_db(cls, path, rhea_reaction_text_file, rhea_direction_file, rhea2ecocyc_file,
                            rhea2metacyc_file, rhea2macie_file, rhea2kegg_reaction_file, rhea2ec_file, rhea2reactome_file):
         """
@@ -73,33 +74,83 @@ class ReactionService(BaseService):
 
         rxn_count = len(list_reaction)
         Logger.info(f"Saving {rxn_count} reactions ...")
+
+        # Force fresh DB connection before starting saves
+        db = Reaction.get_db()
+        db.close()
+        db.connect()
+        Logger.info("Reconnected to database for saves")
+
         reactions = [Reaction(data=data) for data in list_reaction]
         for reaction_chunk in chunked(reactions, cls.BATCH_SIZE):
             for react in reaction_chunk:
                 if 'entry' in react.data.keys():
                     react.rhea_id = react.data['entry']
                     del react.data['entry']
-            Reaction.create_all(reaction_chunk)
+
+            # Ping DB before each chunk to keep connection alive
+            try:
+                db.execute_sql('SELECT 1')
+            except Exception:
+                # Connection lost, reconnect
+                db.close()
+                db.connect()
+                Logger.info("⚠ Reconnected to database (connection was lost)")
+
+            # batch_size=100: avoid 'max_allowed_packet' error with large JSON data fields
+            Reaction.create_all(reaction_chunk, batch_size=100, use_transaction=False)
+
+        # Ping DB before substrates insert
+        try:
+            db.execute_sql('SELECT 1')
+        except Exception:
+            db.close()
+            db.connect()
+            Logger.info("⚠ Reconnected to database")
 
         vals = []
         for react in reactions:
             vals.extend(cls._create_substrate_vals_from_data(react))
-        ReactionSubstrate.insert_all(vals)
+        ReactionSubstrate.insert_all(vals, batch_size=500, use_transaction=False)
+
+        # Ping DB before products insert
+        try:
+            db.execute_sql('SELECT 1')
+        except Exception:
+            db.close()
+            db.connect()
+            Logger.info("⚠ Reconnected to database")
 
         vals = []
         for react in reactions:
             vals.extend(cls._create_product_vals_from_data(react))
-        ReactionProduct.insert_all(vals)
+        ReactionProduct.insert_all(vals, batch_size=500, use_transaction=False)
+
+        # Ping DB before enzymes insert
+        try:
+            db.execute_sql('SELECT 1')
+        except Exception:
+            db.close()
+            db.connect()
+            Logger.info("⚠ Reconnected to database")
 
         vals = []
         for react in reactions:
             vals.extend(
                 cls._create_enzymes_vals_and_set_ft_names_from_data(react))
-        ReactionEnzyme.insert_all(vals)
+        ReactionEnzyme.insert_all(vals, batch_size=500, use_transaction=False)
 
-        # update reaction tf_names
+        # Ping DB before ft_names update
+        try:
+            db.execute_sql('SELECT 1')
+        except Exception:
+            db.close()
+            db.connect()
+            Logger.info("⚠ Reconnected to database")
+
+        # update reaction tf_names - use small batch_size to avoid 'max_allowed_packet' error
         Reaction.update_all(reactions, fields=[
-                            'ft_names', 'ft_tax_ids', 'ft_ec_numbers'])
+                            'ft_names', 'ft_tax_ids', 'ft_ec_numbers'], batch_size=100, use_transaction=False)
 
         return reactions
 
@@ -199,7 +250,7 @@ class ReactionService(BaseService):
                 if reaction.rhea_id in biocyc_ids:
                     reaction.append_biocyc_id(biocyc_ids[reaction.rhea_id])
                     reaction_list.append(reaction)
-        Reaction.update_all(reaction_list, fields=['biocyc_ids'])
+        Reaction.update_all(reaction_list, fields=['biocyc_ids'], batch_size=500, use_transaction=False)
 
     @classmethod
     def _update_master_and_biocyc_ids_from_rhea2biocyc(cls, list_reaction_infos):
@@ -235,7 +286,7 @@ class ReactionService(BaseService):
                 if has_changed:
                     reaction_list.append(reaction)
 
-        Reaction.update_all(reaction_list, fields=['master_id', 'biocyc_ids'])
+        Reaction.update_all(reaction_list, fields=['master_id', 'biocyc_ids'], batch_size=500, use_transaction=False)
 
     @classmethod
     def _update_master_and_id_from_rhea2kegg(cls, list_reaction_infos):
@@ -269,7 +320,7 @@ class ReactionService(BaseService):
                     has_changed = True
                 if has_changed:
                     reaction_list.append(reaction)
-        Reaction.update_all(reaction_list, fields=['master_id', 'kegg_id'])
+        Reaction.update_all(reaction_list, fields=['master_id', 'kegg_id'], batch_size=500, use_transaction=False)
 
     @classmethod
     def _update_direction_from_list(cls, list_direction, direction):
@@ -295,4 +346,4 @@ class ReactionService(BaseService):
                 reaction.set_direction(direction)
                 reaction_list.append(reaction)
 
-        Reaction.update_all(reaction_list, fields=['direction'])
+        Reaction.update_all(reaction_list, fields=['direction'], batch_size=500, use_transaction=False)
