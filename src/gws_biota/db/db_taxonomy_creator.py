@@ -35,6 +35,9 @@ class TaxonomyDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+        # Clean Python cache to ensure fresh state
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
         # Deleting the database...
         self.log_info_message("Deleting the TAXONOMY database...")
         DbService.drop_biota_tables([Taxonomy])
@@ -63,3 +66,7 @@ class TaxonomyDBCreator(Task):
             params["taxdump_files"], filename="taxdump.tar.gz", decompress_file=True)
 
         TaxonomyService.create_taxonomy_db(destination_dir, taxdump_files)
+
+        # Clean Python cache after execution to ensure fresh state for next run
+        self.log_info_message("Cleaning cache after execution...")
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)

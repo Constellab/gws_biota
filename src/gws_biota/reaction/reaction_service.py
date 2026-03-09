@@ -74,11 +74,7 @@ class ReactionService(BaseService):
         rxn_count = len(list_reaction)
         Logger.info(f"Saving {rxn_count} reactions ...")
         reactions = [Reaction(data=data) for data in list_reaction]
-        i = 0
         for reaction_chunk in chunked(reactions, cls.BATCH_SIZE):
-            i += 1
-            Logger.info(
-                f"... saving reaction chunk {i}/{int(rxn_count/cls.BATCH_SIZE)+1}")
             for react in reaction_chunk:
                 if 'entry' in react.data.keys():
                     react.rhea_id = react.data['entry']

@@ -7,6 +7,7 @@ from gws_core import (
     FileDownloader,
     InputSpec,
     InputSpecs,
+    Logger,
     OutputSpec,
     OutputSpecs,
     Settings,
@@ -19,6 +20,7 @@ from gws_core import (
 )
 
 from gws_biota import SBO
+from gws_biota.sbo.sbo import SBOAncestor
 from gws_biota.sbo.sbo_service import SBOService
 
 from .db_service import DbService
@@ -34,22 +36,39 @@ class SboDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+        self.log_info_message("=" * 60)
+        self.log_info_message("SBO DATABASE CREATOR - STARTING")
+        self.log_info_message("=" * 60)
+
+        # Clean Python cache to ensure fresh state
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        try:
+            sbo_count = SBO.select().count()
+            ancestor_count = SBOAncestor.select().count()
+            self.log_info_message(f"Current - SBO: {sbo_count}, Ancestor: {ancestor_count}")
+        except:
+            self.log_info_message("Current tables: Don't exist or are empty")
+
         # Deleting the database...
         self.log_info_message("Deleting the SBO database...")
-        DbService.drop_biota_tables([SBO])
+        DbService.drop_biota_tables([SBO, SBOAncestor], self.message_dispatcher)
+        self.log_info_message("✓ Tables dropped")
 
         # ... to build it from 0
-        self.log_info_message("Deleting the SBO database...")
-        DbService.create_biota_tables([SBO])
+        self.log_info_message("Creating the SBO database...")
+        DbService.create_biota_tables([SBO, SBOAncestor], self.message_dispatcher)
+        self.log_info_message("✓ Tables created")
 
         # Check that the url exists and works
         for key, url in params.items():
             try:
                 response = requests.head(url)
                 response.raise_for_status()
-                print(f"{key}: OK - {url}")
+                Logger.info(f"{key}: OK - {url}")
+                self.log_info_message(f"✓ URL validated")
             except requests.exceptions.RequestException as e:
-                print(f"{key}: Error - {url}\n{e}")
+                Logger.error(f"{key}: Error - {url}\n{e}")
 
         self.log_info_message("sbo.obo file found.")
 
@@ -58,7 +77,27 @@ class SboDBCreator(Task):
 
         # ------------- Create SBO ------------- #
         # download file
+        self.log_info_message("Downloading sbo.obo...")
         sbo_file = file_downloader.download_file_if_missing(
             params["sbo_file"], filename="sbo.obo")
+        self.log_info_message("✓ Downloaded")
 
-        SBOService.create_sbo_db(destination_dir, sbo_file)
+        SBOService.create_sbo_db(destination_dir, sbo_file, self.message_dispatcher)
+
+        try:
+            final_sbo = SBO.select().count()
+            final_ancestor = SBOAncestor.select().count()
+            self.log_info_message(f"Final - SBO: {final_sbo}, Ancestor: {final_ancestor}")
+        except Exception as e:
+            self.log_info_message(f"Could not verify: {e}")
+
+        self.log_info_message("=" * 60)
+        self.log_info_message("SBO DATABASE CREATOR - COMPLETED")
+        self.log_info_message("=" * 60)
+
+        # Clean Python cache after execution
+        self.log_info_message("Cleaning cache after execution...")
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+        self.log_info_message("=" * 60)
+
+        return {}

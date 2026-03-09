@@ -35,6 +35,9 @@ class ProteinDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+        # Clean Python cache to ensure fresh state
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
         # Deleting the database...
         self.log_info_message("Deleting the PROTEIN database...")
         DbService.drop_biota_tables([Protein])
@@ -63,3 +66,7 @@ class ProteinDBCreator(Task):
             params["protein_file"], filename="uniprot_sprot.fasta.gz")
 
         ProteinService.create_protein_db(destination_dir, protein_file)
+
+        # Clean Python cache after execution
+        self.log_info_message("Cleaning cache after execution...")
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)

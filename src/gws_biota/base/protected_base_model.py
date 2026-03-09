@@ -39,10 +39,32 @@ class ProtectedBaseModel(BaseModel):
         :return: True if all the model are successfully saved, False otherwise.
         :rtype: bool
         """
+        if not model_list:
+            Logger.warning(f"{cls.__name__}.create_all: No items to create")
+            return model_list
+
+        Logger.info(f"{cls.__name__}.create_all: Creating {len(model_list)} items (batch size: {batch_size})")
+
+        total_created = 0
+        num_batches = (len(model_list) + batch_size - 1) // batch_size
 
         db = cls.get_db()
         with db.atomic():
-            cls.bulk_create(model_list, batch_size=batch_size)
+            for i in range(0, len(model_list), batch_size):
+                batch = model_list[i:i + batch_size]
+                batch_num = (i // batch_size) + 1
+
+                try:
+                    cls.bulk_create(batch, batch_size=batch_size)
+                    total_created += len(batch)
+                except Exception as e:
+                    Logger.error(f"  ✗ Batch {batch_num}/{num_batches}: Error during creation!")
+                    Logger.error(f"    Error: {type(e).__name__}: {str(e)}")
+                    if batch:
+                        Logger.error(f"    First item: {batch[0].__data__}")
+                    raise
+
+        Logger.info(f"{cls.__name__}.create_all: ✓ Completed - {total_created} items created")
 
         return model_list
 
@@ -67,10 +89,45 @@ class ProtectedBaseModel(BaseModel):
 
     @classmethod
     def insert_all(cls, data: list['ProtectedBaseModel'], batch_size=BATCH_SIZE) -> None:
+        """
+        Insert multiple items with detailed logging
+
+        :param data: List of dictionaries to insert
+        :param batch_size: Number of items per batch
+        """
+        if not data:
+            Logger.warning(f"{cls.__name__}.insert_all: No items to insert")
+            return
+
+        Logger.info(f"{cls.__name__}.insert_all: Inserting {len(data)} items (batch size: {batch_size})")
+
+        total_inserted = 0
+        num_batches = (len(data) + batch_size - 1) // batch_size
+
         db = cls.get_db()
         with db.atomic():
-            for batch in chunked(data, batch_size):
-                cls.insert_many(batch).execute()
+            for i in range(0, len(data), batch_size):
+                batch = data[i:i + batch_size]
+                batch_num = (i // batch_size) + 1
+
+                try:
+                    cls.insert_many(batch).execute()
+                    total_inserted += len(batch)
+                except Exception as e:
+                    Logger.error(f"  ✗ Batch {batch_num}/{num_batches}: Error during insertion!")
+                    Logger.error(f"    Error: {type(e).__name__}: {str(e)}")
+                    if batch:
+                        Logger.error(f"    First item: {batch[0] if batch else 'N/A'}")
+                    raise
+
+        Logger.info(f"{cls.__name__}.insert_all: ✓ Completed - {total_inserted} items inserted")
+
+        # Verify insertion
+        try:
+            final_count = cls.select().count()
+            Logger.info(f"{cls.__name__}: Current total records in table: {final_count}")
+        except Exception as e:
+            Logger.debug(f"{cls.__name__}: Could not verify final count: {e}")
 
     @classmethod
     def _is_protected(cls):

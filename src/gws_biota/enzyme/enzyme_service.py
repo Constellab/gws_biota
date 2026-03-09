@@ -1,4 +1,4 @@
-from gws_core import Logger, Settings
+from gws_core import Logger, MessageDispatcher, Settings
 from peewee import chunked
 
 from gws_biota.db.biota_db_manager import BiotaDbManager
@@ -17,70 +17,108 @@ from .enzyme_pathway import EnzymePathway
 
 class EnzymeService(BaseService):
     @classmethod
-    @BiotaDbManager.transaction()
     def create_enzyme_db(
-        cls, brenda_file, bkms_file, expasy_file, taxonomy_file, bto_file, compound_file
+        cls, brenda_file, bkms_file, expasy_file, taxonomy_file, bto_file, compound_file, message_dispatcher=None
     ):
         """
         Creates and fills the `enzyme` database
+        Transaction is delayed until after parsing to avoid MariaDB timeout during long BRENDA parsing
         :param: enzymes files
         :type files: file
+        :param message_dispatcher: Message dispatcher for UI logging
+        :type message_dispatcher: MessageDispatcher
         :returns: None
         :rtype: None
         """
 
+        if message_dispatcher is None:
+            message_dispatcher = MessageDispatcher()
+
         base_biodata_dir = Settings.get_instance().get_variable("gws_biota", "biodata_dir")
 
-        # add enzyme classes
-        Logger.info("Loading BRENDA file ...")
-        EnzymeClass.create_enzyme_class_db(base_biodata_dir, expasy_file)
-        brenda = Brenda(
-            brenda_file=brenda_file,
-            taxonomy_dir=taxonomy_file,
-            bto_file=bto_file,
-            chebi_file=compound_file,
-        )
+        # Force UTF-8 encoding for ChEBI file parsing
+        # This prevents chardet from misdetecting chebi.obo as cp1252
+        # which causes UnicodeDecodeError in pronto.Ontology()
+        Logger.info("Patching pronto to force UTF-8 encoding for ChEBI file...")
+        import pronto.ontology as pronto_ontology
+        import pronto.utils.io as pronto_io
 
-        list_of_enzymes, list_deprecated_ec = brenda.parse_all_enzyme_to_dict()
+        original_decompress = pronto_io.decompress
 
-        # save EnzymePathway
-        Logger.info("Saving enzyme pathways ...")
-        pathways = {}
-        for d in list_of_enzymes:
-            ec = d["ec"]
-            if ec not in pathways:
-                pathways[ec] = EnzymePathway(ec_number=ec)
-        EnzymePathway.create_all(pathways.values())
+        def _decompress_utf8(reader, path=None, encoding=None):
+            return original_decompress(reader, path, encoding="utf-8")
 
-        # save EnzymeOrtholog
-        Logger.info("Saving enzyme orthologs ...")
-        enzos = {}
-        for d in list_of_enzymes:
-            ec = d["ec"]
-            if ec not in enzos:
-                rn = d["RN"]
-                sn = d.get("SN", [])
-                sy = [k.get("data", "") for k in d.get("SY", [])]
-                ft_names = ["EC" + ec.replace(".", ""), *rn, *sn, *sy]
-                enzos[ec] = EnzymeOrtholog(
-                    ec_number=ec,
-                    data={"RN": rn, "SN": sn, "SY": sy},
-                    ft_names=cls.format_ft_names(ft_names),
-                )
-                enzos[ec].set_name(d["RN"][0])
-                enzos[ec].pathway = pathways[ec]
-        EnzymeOrtholog.create_all(enzos.values())
+        pronto_io.decompress = _decompress_utf8
+        pronto_ontology.decompress = original_decompress
 
-        # save Enzymes
-        Logger.info("Saving enzymes ...")
-        enzymes = []
-        enz_count = len(list_of_enzymes)
-        i = 0
-        for chunk in chunked(list_of_enzymes, cls.BATCH_SIZE):
-            i += 1
-            enzyme_chunk = []
-            Logger.info(f"... saving enzyme chunk {i}/{int(enz_count / cls.BATCH_SIZE) + 1}")
-            for d in chunk:
+        try:
+            # ==================================================================
+            # PHASE 1: Quick DB operations (enzyme classes)
+            # ==================================================================
+            message_dispatcher.notify_info_message("Loading enzyme classes...")
+            Logger.info("Loading enzyme classes...")
+            EnzymeClass.create_enzyme_class_db(base_biodata_dir, expasy_file)
+
+            # CRITICAL: Close DB connection to prevent timeout during long parsing
+            message_dispatcher.notify_info_message("✓ Enzyme classes loaded")
+            Logger.info("Closing database connection before long parsing phase...")
+            BiotaDbManager.db.close()
+
+            # ==================================================================
+            # PHASE 2: PARSING (NO DB CONNECTION - AVOID TIMEOUT)
+            # ==================================================================
+            message_dispatcher.notify_info_message("=" * 80)
+            message_dispatcher.notify_info_message("PARSING BRENDA FILE (this may take 30-60 minutes)...")
+            message_dispatcher.notify_info_message("=" * 80)
+            Logger.info("Starting BRENDA parsing...")
+            brenda = Brenda(
+                brenda_file=brenda_file,
+                taxonomy_dir=taxonomy_file,
+                bto_file=bto_file,
+                chebi_file=compound_file,
+            )
+
+            list_of_enzymes, list_deprecated_ec = brenda.parse_all_enzyme_to_dict()
+            message_dispatcher.notify_info_message("=" * 80)
+            message_dispatcher.notify_info_message(f"✓ BRENDA PARSING COMPLETED - {len(list_of_enzymes)} enzymes parsed")
+            message_dispatcher.notify_info_message("=" * 80)
+            Logger.info(f"BRENDA parsing completed - {len(list_of_enzymes)} enzymes")
+
+            # ==================================================================
+            # PHASE 3: PREPARE DATA STRUCTURES (NO DB OPERATIONS)
+            # ==================================================================
+            message_dispatcher.notify_info_message("Preparing data structures for database insertion...")
+            Logger.info("Preparing data structures for database insertion...")
+
+            # Prepare EnzymePathway objects
+            pathways = {}
+            for d in list_of_enzymes:
+                ec = d["ec"]
+                if ec not in pathways:
+                    pathways[ec] = EnzymePathway(ec_number=ec)
+            Logger.info(f"  Prepared {len(pathways)} enzyme pathways")
+
+            # Prepare EnzymeOrtholog objects
+            enzos = {}
+            for d in list_of_enzymes:
+                ec = d["ec"]
+                if ec not in enzos:
+                    rn = d["RN"]
+                    sn = d.get("SN", [])
+                    sy = [k.get("data", "") for k in d.get("SY", [])]
+                    ft_names = ["EC" + ec.replace(".", ""), *rn, *sn, *sy]
+                    enzos[ec] = EnzymeOrtholog(
+                        ec_number=ec,
+                        data={"RN": rn, "SN": sn, "SY": sy},
+                        ft_names=cls.format_ft_names(ft_names),
+                    )
+                    enzos[ec].set_name(d["RN"][0])
+                    enzos[ec].pathway = pathways[ec]
+            Logger.info(f"  Prepared {len(enzos)} enzyme orthologs")
+
+            # Prepare Enzyme objects
+            enzymes = []
+            for d in list_of_enzymes:
                 ec = d["ec"]
                 rn = d["RN"]
                 sn = d.get("SN", [])
@@ -93,75 +131,147 @@ class EnzymeService(BaseService):
                     ft_names=";".join(["EC" + ec.replace(".", ""), *rn, *sn, *sy, organism]),
                 )
                 enz.set_name(d["RN"][0])
-                enzyme_chunk.append(enz)
-            Enzyme.create_all(enzyme_chunk)
-            enzymes.extend(enzyme_chunk)
+                enzymes.append(enz)
+            Logger.info(f"  Prepared {len(enzymes)} enzymes")
 
-        # flatten the list_deprecated_ec
-        all_old_ecs = [elt["old_ec"] for elt in list_deprecated_ec]
-        # list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec if len(elt["new_ec"]) > 0}
-        list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec}
-        is_nested = True
-        while is_nested:
-            is_nested = False
-            for dep_ec in list_deprecated_ec.values():
-                new_list = []
-                for new_ec in dep_ec["new_ec"]:
-                    if new_ec in all_old_ecs:
-                        # follow nested ...
-                        is_nested = True
-                        if new_ec == dep_ec["old_ec"]:
-                            # pathologic cyclic dependency
-                            dep_ec["new_ec"].remove(new_ec)
-                        if new_ec in list_deprecated_ec:
-                            # take the nested relation
-                            next_dep_ec = list_deprecated_ec[new_ec]
-                            # dep_ec["new_ec"] = next_dep_ec["new_ec"]  # follow the next
-                            # follow the next
-                            new_list.extend(next_dep_ec["new_ec"])
-                            new_list = list(set(new_list))
-                            for key, val in next_dep_ec["data"].items():
-                                # concatenate the next data with the current one
-                                dep_ec["data"][key] += ";" + val
+            # Prepare deprecated enzymes - flatten and resolve nested relations
+            all_old_ecs = [elt["old_ec"] for elt in list_deprecated_ec]
+            list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec}
+            is_nested = True
+            while is_nested:
+                is_nested = False
+                for dep_ec in list_deprecated_ec.values():
+                    new_list = []
+                    for new_ec in dep_ec["new_ec"]:
+                        if new_ec in all_old_ecs:
+                            is_nested = True
+                            if new_ec == dep_ec["old_ec"]:
+                                dep_ec["new_ec"].remove(new_ec)
+                            if new_ec in list_deprecated_ec:
+                                next_dep_ec = list_deprecated_ec[new_ec]
+                                new_list.extend(next_dep_ec["new_ec"])
+                                new_list = list(set(new_list))
+                                for key, val in next_dep_ec["data"].items():
+                                    dep_ec["data"][key] += ";" + val
+                            else:
+                                dep_ec["data"]["reason"] += f"; {new_ec} probably deleted"
                         else:
-                            # the next relation does not exist ... this deprecated enzyme was probably deleted
-                            dep_ec["data"]["reason"] += f"; {new_ec} probably deleted"
-                    else:
-                        new_list.append(new_ec)
-                        new_list = list(set(new_list))
-                dep_ec["new_ec"] = new_list
+                            new_list.append(new_ec)
+                            new_list = list(set(new_list))
+                    dep_ec["new_ec"] = new_list
 
-        # list_deprecated_ec = {elt["old_ec"]: elt for elt in list_deprecated_ec.values() if len(elt["new_ec"]) > 0}
+            deprecated_enzymes = []
+            for old_ec, elt in list_deprecated_ec.items():
+                if len(elt["new_ec"]) == 0:
+                    elt["new_ec"] = [None]
+                for new_ec in elt["new_ec"]:
+                    t_enz = DeprecatedEnzyme(
+                        ec_number=old_ec,
+                        new_ec_number=new_ec,
+                        data=elt["data"],
+                    )
+                    deprecated_enzymes.append(t_enz)
+            Logger.info(f"  Prepared {len(deprecated_enzymes)} deprecated enzymes")
 
-        # saved all deprecated enzymes
-        Logger.info("Saving deprecated enzymes ...")
-        deprecated_enzymes = []
-        for old_ec, elt in list_deprecated_ec.items():
-            if len(elt["new_ec"]) == 0:
-                elt["new_ec"] = [None]
+            # Parse BKMS data if available (optional)
+            list_of_bkms = None
+            if bkms_file:
+                Logger.info("Parsing BKMS file...")
+                list_of_bkms = BKMS.parse_csv_from_file(base_biodata_dir, bkms_file)
+                Logger.info(f"  Parsed {len(list_of_bkms)} BKMS entries")
+            else:
+                Logger.info("  BKMS file not available - will skip pathway enrichment")
 
-            for new_ec in elt["new_ec"]:
-                t_enz = DeprecatedEnzyme(
-                    ec_number=old_ec,
-                    new_ec_number=new_ec,
-                    data=elt["data"],
-                )
-                deprecated_enzymes.append(t_enz)
+            message_dispatcher.notify_info_message(
+                f"✓ Data preparation complete: {len(pathways)} pathways, "
+                f"{len(enzos)} orthologs, {len(enzymes)} enzymes, "
+                f"{len(deprecated_enzymes)} deprecated"
+            )
 
-        if deprecated_enzymes:
-            DeprecatedEnzyme.create_all(deprecated_enzymes)
+            # ==================================================================
+            # PHASE 4: SAVE TO DATABASE (NO EXPLICIT TRANSACTIONS)
+            # ==================================================================
+            # Note: create_all(), update_all(), and insert_all() already use
+            # db.atomic() internally for transaction management. Adding explicit
+            # transactions here causes nested transactions that timeout on MariaDB.
+            # ==================================================================
+            message_dispatcher.notify_info_message("=" * 80)
+            message_dispatcher.notify_info_message("SAVING ALL DATA TO DATABASE...")
+            message_dispatcher.notify_info_message("=" * 80)
 
-        # save taxonomy
-        Logger.info("Updating enzyme taxonomy ...")
-        cls.__update_taxonomy(enzymes)
+            # CRITICAL: Ensure fresh database connection
+            Logger.info("Reconnecting to database...")
+            if BiotaDbManager.db.is_closed():
+                BiotaDbManager.db.connect()
 
-        Logger.info("Updating enzyme bto ...")
-        cls.__update_bto(enzymes)
+            # Save core enzyme data (each create_all has its own atomic transaction)
+            message_dispatcher.notify_info_message("Saving enzyme pathways...")
+            EnzymePathway.create_all(list(pathways.values()))
+            message_dispatcher.notify_info_message(f"✓ Saved {len(pathways)} enzyme pathways")
 
-        # save bkms data
-        Logger.info("Updating enzyme BKMS data ...")
-        list_of_bkms = BKMS.parse_csv_from_file(base_biodata_dir, bkms_file)
-        cls.__update_pathway_from_bkms(list_of_bkms)
+            message_dispatcher.notify_info_message("Saving enzyme orthologs...")
+            EnzymeOrtholog.create_all(list(enzos.values()))
+            message_dispatcher.notify_info_message(f"✓ Saved {len(enzos)} enzyme orthologs")
+
+            # Save enzymes in chunks to avoid MariaDB timeout
+            # Each create_all() call uses db.atomic() which creates a transaction.
+            # For 109K+ enzymes, a single transaction times out after 60 seconds.
+            # Solution: Multiple smaller transactions (30K enzymes each = ~3 batches per transaction)
+            message_dispatcher.notify_info_message(f"Saving {len(enzymes)} enzymes in chunks...")
+            chunk_size = 30000
+            num_chunks = (len(enzymes) + chunk_size - 1) // chunk_size
+
+            for i in range(0, len(enzymes), chunk_size):
+                chunk = enzymes[i:i + chunk_size]
+                chunk_num = (i // chunk_size) + 1
+                message_dispatcher.notify_info_message(f"  Chunk {chunk_num}/{num_chunks}: Saving {len(chunk)} enzymes...")
+                Enzyme.create_all(chunk)
+                message_dispatcher.notify_info_message(f"  ✓ Chunk {chunk_num}/{num_chunks} saved")
+
+            message_dispatcher.notify_info_message(f"✓ Saved all {len(enzymes)} enzymes")
+
+            if deprecated_enzymes:
+                message_dispatcher.notify_info_message("Saving deprecated enzymes...")
+                DeprecatedEnzyme.create_all(deprecated_enzymes)
+                message_dispatcher.notify_info_message(f"✓ Saved {len(deprecated_enzymes)} deprecated enzymes")
+
+            # Update enzyme taxonomy in chunks (each update_all has its own atomic transaction)
+            message_dispatcher.notify_info_message(f"Updating taxonomy for {len(enzymes)} enzymes in chunks...")
+            for i in range(0, len(enzymes), chunk_size):
+                chunk = enzymes[i:i + chunk_size]
+                chunk_num = (i // chunk_size) + 1
+                message_dispatcher.notify_info_message(f"  Chunk {chunk_num}/{num_chunks}: Updating taxonomy...")
+                cls.__update_taxonomy(chunk)
+                message_dispatcher.notify_info_message(f"  ✓ Chunk {chunk_num}/{num_chunks} taxonomy updated")
+            message_dispatcher.notify_info_message("✓ All enzyme taxonomy updated")
+
+            # Update enzyme tissue locations in chunks (insert_all has its own atomic transaction)
+            message_dispatcher.notify_info_message(f"Updating BTO for {len(enzymes)} enzymes in chunks...")
+            for i in range(0, len(enzymes), chunk_size):
+                chunk = enzymes[i:i + chunk_size]
+                chunk_num = (i // chunk_size) + 1
+                message_dispatcher.notify_info_message(f"  Chunk {chunk_num}/{num_chunks}: Updating BTO...")
+                cls.__update_bto(chunk)
+                message_dispatcher.notify_info_message(f"  ✓ Chunk {chunk_num}/{num_chunks} BTO updated")
+            message_dispatcher.notify_info_message("✓ All enzyme BTO updated")
+
+            # BKMS pathway enrichment (update_all has its own atomic transaction)
+            if list_of_bkms:
+                message_dispatcher.notify_info_message("Updating enzyme pathways with BKMS data...")
+                cls.__update_pathway_from_bkms(list_of_bkms)
+                message_dispatcher.notify_info_message("✓ BKMS data integrated")
+            else:
+                message_dispatcher.notify_info_message("⚠ BKMS pathway enrichment skipped (no data)")
+
+            message_dispatcher.notify_info_message("=" * 80)
+            message_dispatcher.notify_info_message("✓ ALL ENZYME DATA SAVED SUCCESSFULLY")
+            message_dispatcher.notify_info_message("=" * 80)
+
+        finally:
+            # Restore original pronto decompress function
+            Logger.info("Restoring original pronto decompress function...")
+            pronto_io.decompress = original_decompress
+            pronto_ontology.decompress = original_decompress
 
     # -- U --
 

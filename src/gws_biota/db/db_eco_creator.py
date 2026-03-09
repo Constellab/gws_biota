@@ -7,6 +7,7 @@ from gws_core import (
     FileDownloader,
     InputSpec,
     InputSpecs,
+    Logger,
     OutputSpec,
     OutputSpecs,
     Settings,
@@ -19,6 +20,7 @@ from gws_core import (
 )
 
 from gws_biota import ECO
+from gws_biota.eco.eco import ECOAncestor
 from gws_biota.eco.eco_service import ECOService
 
 from .db_service import DbService
@@ -34,22 +36,39 @@ class EcoDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+        self.log_info_message("=" * 60)
+        self.log_info_message("ECO DATABASE CREATOR - STARTING")
+        self.log_info_message("=" * 60)
+
+        # Clean Python cache to ensure fresh state
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        try:
+            eco_count = ECO.select().count()
+            ancestor_count = ECOAncestor.select().count()
+            self.log_info_message(f"Current - ECO: {eco_count}, Ancestor: {ancestor_count}")
+        except:
+            self.log_info_message("Current tables: Don't exist or are empty")
+
         # Deleting the database...
         self.log_info_message("Deleting the ECO database...")
-        DbService.drop_biota_tables([ECO])
+        DbService.drop_biota_tables([ECO, ECOAncestor], self.message_dispatcher)
+        self.log_info_message("✓ Tables dropped")
 
         # ... to build it from 0
         self.log_info_message("Creating the ECO database...")
-        DbService.create_biota_tables([ECO])
+        DbService.create_biota_tables([ECO, ECOAncestor], self.message_dispatcher)
+        self.log_info_message("✓ Tables created")
 
         # Check that the url exists and works
         for key, url in params.items():
             try:
                 response = requests.head(url)
                 response.raise_for_status()
-                print(f"{key}: OK - {url}")
+                Logger.info(f"{key}: OK - {url}")
+                self.log_info_message(f"✓ URL validated")
             except requests.exceptions.RequestException as e:
-                print(f"{key}: Error - {url}\n{e}")
+                Logger.error(f"{key}: Error - {url}\n{e}")
 
         self.log_info_message("eco.obo file found.")
 
@@ -58,7 +77,27 @@ class EcoDBCreator(Task):
 
         # ------------- Create ECO ------------- #
         # download file
+        self.log_info_message("Downloading eco.obo...")
         eco_file = file_downloader.download_file_if_missing(
             params["eco_file"], filename="eco.obo")
+        self.log_info_message("✓ Downloaded")
 
-        ECOService.create_eco_db(destination_dir, eco_file)
+        ECOService.create_eco_db(destination_dir, eco_file, self.message_dispatcher)
+
+        try:
+            final_eco = ECO.select().count()
+            final_ancestor = ECOAncestor.select().count()
+            self.log_info_message(f"Final - ECO: {final_eco}, Ancestor: {final_ancestor}")
+        except Exception as e:
+            self.log_info_message(f"Could not verify: {e}")
+
+        self.log_info_message("=" * 60)
+        self.log_info_message("ECO DATABASE CREATOR - COMPLETED")
+        self.log_info_message("=" * 60)
+
+        # Clean Python cache after execution
+        self.log_info_message("Cleaning cache after execution...")
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+        self.log_info_message("=" * 60)
+
+        return {}

@@ -49,6 +49,9 @@ class ReactionDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+        # Clean Python cache to ensure fresh state
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
         len_bto = Compound.select().count()
         len_taxonomy = Taxonomy.select().count()
         len_pathway = Enzyme.select().count()
@@ -158,3 +161,7 @@ class ReactionDBCreator(Task):
         ReactionService.create_reaction_db(
             destination_dir, f"{destination_dir}/rhea_reactions.txt", rhea_direction_file, rhea2ecocyc_file,
             rhea2metacyc_file, rhea2macie_file, rhea2kegg_reaction_file, rhea2ec_file, rhea2reactome_file)
+
+        # Clean Python cache after execution
+        self.log_info_message("Cleaning cache after execution...")
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)

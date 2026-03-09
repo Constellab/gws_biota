@@ -7,6 +7,7 @@ from gws_core import (
     FileDownloader,
     InputSpec,
     InputSpecs,
+    Logger,
     OutputSpec,
     OutputSpecs,
     Settings,
@@ -19,6 +20,7 @@ from gws_core import (
 )
 
 from gws_biota import GO
+from gws_biota.go.go import GOAncestor
 from gws_biota.go.go_service import GOService
 
 from .db_service import DbService
@@ -35,22 +37,39 @@ class GoDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+        self.log_info_message("=" * 60)
+        self.log_info_message("GO DATABASE CREATOR - STARTING")
+        self.log_info_message("=" * 60)
+
+        # Clean Python cache to ensure fresh state
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        try:
+            go_count = GO.select().count()
+            ancestor_count = GOAncestor.select().count()
+            self.log_info_message(f"Current - GO: {go_count}, Ancestor: {ancestor_count}")
+        except:
+            self.log_info_message("Current tables: Don't exist or are empty")
+
         # Deleting the database...
         self.log_info_message("Deleting the GO database...")
-        DbService.drop_biota_tables([GO])
+        DbService.drop_biota_tables([GO, GOAncestor], self.message_dispatcher)
+        self.log_info_message("✓ Tables dropped")
 
         # ... to build it from 0
         self.log_info_message("Creating the GO database...")
-        DbService.create_biota_tables([GO])
+        DbService.create_biota_tables([GO, GOAncestor], self.message_dispatcher)
+        self.log_info_message("✓ Tables created")
 
         # Checks that the url exists and works
         for key, url in params.items():
             try:
                 response = requests.head(url)
                 response.raise_for_status()
-                print(f"{key}: OK - {url}")
+                Logger.info(f"{key}: OK - {url}")
+                self.log_info_message(f"✓ URL validated")
             except requests.exceptions.RequestException as e:
-                print(f"{key}: Error - {url}\n{e}")
+                Logger.error(f"{key}: Error - {url}\n{e}")
 
         self.log_info_message("go.obo file found.")
 
@@ -59,7 +78,26 @@ class GoDBCreator(Task):
 
         # ------------- Create GO ------------- #
         # download file
+        self.log_info_message("Downloading go.obo...")
         go_file = file_downloader.download_file_if_missing(
             params["go_file"], filename="go.obo")
+        self.log_info_message("✓ Downloaded")
 
-        GOService.create_go_db(destination_dir, go_file)
+        GOService.create_go_db(destination_dir, go_file, self.message_dispatcher)
+
+        try:
+            final_go = GO.select().count()
+            final_ancestor = GOAncestor.select().count()
+            self.log_info_message(f"Final - GO: {final_go}, Ancestor: {final_ancestor}")
+        except Exception as e:
+            self.log_info_message(f"Could not verify: {e}")
+
+        self.log_info_message("=" * 60)
+        self.log_info_message("GO DATABASE CREATOR - COMPLETED")
+        self.log_info_message("=" * 60)
+
+        # Clean Python cache after execution
+        self.log_info_message("Cleaning cache after execution...")
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        return {}

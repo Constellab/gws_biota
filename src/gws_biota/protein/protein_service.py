@@ -50,7 +50,6 @@ class ProteinService(BaseService):
                 count += 1
                 if count >= cls.BATCH_SIZE:
                     batch += 1
-                    Logger.info(f"Saving batch {batch} ...")
                     Protein.create_all(proteins)
                     proteins = []
                     count = 0

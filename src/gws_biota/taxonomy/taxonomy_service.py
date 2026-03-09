@@ -36,12 +36,8 @@ class TaxonomyService(BaseService):
 
         taxa_count = len(dict_taxons)
         Logger.info(f"Saving {taxa_count} taxa ...")
-        i = 0
         for chunk in chunked(dict_taxons.values(), cls.BATCH_SIZE):
-            i += 1
             taxa = [Taxonomy(data=data) for data in chunk]
-            Logger.info(
-                f"... saving taxa chunk {i}/{int(taxa_count/cls.BATCH_SIZE)+1}")
             for tax in taxa:
                 tax.tax_id = tax.data['tax_id']
                 tax.set_name(tax.data.get('name', 'Unspecified'))
@@ -53,3 +49,5 @@ class TaxonomyService(BaseService):
                 del tax.data['ancestor']
             Taxonomy.create_all(taxa)
         taxa = []
+
+        Logger.info(f"✓ Successfully saved {taxa_count} taxa to database")
