@@ -9,12 +9,7 @@ testdata_path = settings.get_variable("gws_biota", "testdata_dir")
 class TestECO(BaseTestCase):
     def test_db_object(self):
         self.print("ECO")
-        params = dict(
-            biodata_dir=testdata_path,
-            eco_file="eco_test.obo",
-        )
-
-        ECOService.create_eco_db(**params)
+        ECOService.create_eco_db(path=testdata_path, eco_file="eco_test.obo")
         self.assertEqual(
             ECO.get(ECO.eco_id == "ECO:0000001").get_name(),
             "inference from background scientific knowledge",

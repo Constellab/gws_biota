@@ -9,12 +9,7 @@ testdata_path = settings.get_variable("gws_biota", "testdata_dir")
 class TestSBO(BaseTestCase):
     def test_db_object(self):
         self.print("SBO")
-        params = dict(
-            biodata_dir=testdata_path,
-            sbo_file="sbo_test.obo",
-        )
-
-        SBOService.create_sbo_db(**params)
+        SBOService.create_sbo_db(path=testdata_path, sbo_file="sbo_test.obo")
         self.assertEqual(
             SBO.get(SBO.sbo_id == "SBO:0000000").get_name(), "systems biology representation"
         )

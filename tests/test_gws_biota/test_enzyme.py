@@ -1,3 +1,5 @@
+import os
+
 from gws_biota import BTO, DeprecatedEnzyme, Enzyme, EnzymeClass
 from gws_biota.enzyme.enzyme_service import EnzymeService
 from gws_core import BaseTestCase, Settings
@@ -8,16 +10,18 @@ class TestEnzyme(BaseTestCase):
         self.print("Enzyme params")
         settings = Settings.get_instance()
         testdata_path = settings.get_variable("gws_biota", "testdata_dir")
-        params = dict(
-            biodata_dir=testdata_path,
-            brenda_file="brenda_test.txt",
-            bkms_file="bkms_test.csv",
-            expasy_enzclass_file="enzclass_test.txt",
-        )
+
         bto = BTO(bto_id="BTO:0000214")
         bto.save()
 
-        EnzymeService.create_enzyme_db(**params)
+        EnzymeService.create_enzyme_db(
+            brenda_file=os.path.join(testdata_path, "brenda_test.txt"),
+            bkms_file=None,
+            expasy_file=os.path.join(testdata_path, "enzclass_test.txt"),
+            taxonomy_file=testdata_path,
+            bto_file=os.path.join(testdata_path, "bto_test.obo"),
+            compound_file=os.path.join(testdata_path, "chebi_test.obo"),
+        )
         enzymes = Enzyme.select().where(Enzyme.ec_number == "1.4.3.7")
         for enzyme in enzymes:
             if enzyme.organism == "Candida boidinii":
