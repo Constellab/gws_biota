@@ -55,10 +55,32 @@ class SboDBCreator(Task):
         DbService.drop_biota_tables([SBO, SBOAncestor], self.message_dispatcher)
         self.log_info_message("✓ Tables dropped")
 
+        # Verify tables are dropped
+        try:
+            s_after_drop = SBO.select().count()
+            a_after_drop = SBOAncestor.select().count()
+            if s_after_drop > 0 or a_after_drop > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! SBO:{s_after_drop}, Ancestor:{a_after_drop}")
+            else:
+                self.log_info_message("✓ Verified: Tables empty after drop")
+        except:
+            self.log_info_message("✓ Tables don't exist (expected after drop)")
+
         # ... to build it from 0
         self.log_info_message("Creating the SBO database...")
         DbService.create_biota_tables([SBO, SBOAncestor], self.message_dispatcher)
         self.log_info_message("✓ Tables created")
+
+        # Verify tables are empty after creation
+        try:
+            s_after_create = SBO.select().count()
+            a_after_create = SBOAncestor.select().count()
+            if s_after_create > 0 or a_after_create > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after create! SBO:{s_after_create}, Ancestor:{a_after_create}")
+            else:
+                self.log_info_message("✓ Verified: Tables empty and ready for data")
+        except Exception as e:
+            self.log_info_message(f"Could not verify tables: {e}")
 
         # Check that the url exists and works
         for key, url in params.items():
@@ -84,12 +106,20 @@ class SboDBCreator(Task):
 
         SBOService.create_sbo_db(destination_dir, sbo_file, self.message_dispatcher)
 
+        # Final verification
+        self.log_info_message("-" * 60)
+        self.log_info_message("FINAL VERIFICATION")
+        self.log_info_message("-" * 60)
         try:
             final_sbo = SBO.select().count()
             final_ancestor = SBOAncestor.select().count()
-            self.log_info_message(f"Final - SBO: {final_sbo}, Ancestor: {final_ancestor}")
+            self.log_info_message(f"✓ Final counts:")
+            self.log_info_message(f"  - SBO terms: {final_sbo}")
+            self.log_info_message(f"  - Ancestors: {final_ancestor}")
+            success_msg = f"✓ SBO database created successfully:\n  - SBO terms: {final_sbo}\n  - Ancestors: {final_ancestor}"
         except Exception as e:
-            self.log_info_message(f"Could not verify: {e}")
+            self.log_info_message(f"Could not verify final counts: {e}")
+            success_msg = "✓ SBO database created (counts unavailable)"
 
         self.log_info_message("=" * 60)
         self.log_info_message("SBO DATABASE CREATOR - COMPLETED")
@@ -100,4 +130,4 @@ class SboDBCreator(Task):
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
         self.log_info_message("=" * 60)
 
-        return {}
+        return {"output_text": Text(success_msg)}

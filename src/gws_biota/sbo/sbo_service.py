@@ -53,10 +53,18 @@ class SBOService(BaseService):
             sbo.ft_names = cls.format_ft_names(ft_names)
             del sbo.data["id"]
 
-        Logger.info(f"Creating {len(sbos)} SBO records...")
+        expected_sbo_count = len(sbos)
+        Logger.info(f"Creating {expected_sbo_count} SBO records...")
         SBO.create_all(sbos)
-        Logger.info(f"✓ Successfully created {len(sbos)} SBO records")
-        message_dispatcher.notify_info_message(f"✓ Created {len(sbos)} SBO records")
+
+        # Verify actual count in DB
+        actual_sbo_count = SBO.select().count()
+        if actual_sbo_count != expected_sbo_count:
+            Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_sbo_count} SBO records, but DB has {actual_sbo_count}")
+            message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_sbo_count} but inserted {actual_sbo_count} SBO records")
+        else:
+            Logger.info(f"✓ Successfully created {actual_sbo_count} SBO records")
+            message_dispatcher.notify_info_message(f"✓ Created {actual_sbo_count} SBO records")
 
         cls._log_table_states("AFTER SBO INSERTION")
 
@@ -77,10 +85,18 @@ class SBOService(BaseService):
         Logger.info(f"After deduplication: {len(vals)} records to insert")
 
         if vals:
-            Logger.info("Inserting SBO ancestor relationships...")
+            expected_ancestor_count = len(vals)
+            Logger.info(f"Inserting {expected_ancestor_count} SBO ancestor relationships...")
             SBOAncestor.insert_all(vals)
-            Logger.info(f"✓ Successfully inserted {len(vals)} ancestor relationships")
-            message_dispatcher.notify_info_message(f"✓ Inserted {len(vals)} SBO ancestors")
+
+            # Verify actual count in DB
+            actual_ancestor_count = SBOAncestor.select().count()
+            if actual_ancestor_count != expected_ancestor_count:
+                Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_ancestor_count} ancestors, but DB has {actual_ancestor_count}")
+                message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_ancestor_count} but inserted {actual_ancestor_count} SBO ancestors")
+            else:
+                Logger.info(f"✓ Successfully inserted {actual_ancestor_count} ancestor relationships")
+                message_dispatcher.notify_info_message(f"✓ Inserted {actual_ancestor_count} SBO ancestors")
         else:
             Logger.warning("⚠ No ancestor relationships to insert")
 

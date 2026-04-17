@@ -58,10 +58,18 @@ class PathwayService(BaseService):
             pw.ft_names = cls.format_ft_names(ft_names)
             pathways.append(pw)
 
-        Logger.info(f"Creating {len(pathways)} pathway records...")
+        expected_pathway_count = len(pathways)
+        Logger.info(f"Creating {expected_pathway_count} pathway records...")
         Pathway.create_all(pathways)
-        Logger.info(f"✓ Successfully created {len(pathways)} pathway records")
-        message_dispatcher.notify_info_message(f"✓ Created {len(pathways)} pathway records")
+
+        # Verify actual count in DB
+        actual_pathway_count = Pathway.select().count()
+        if actual_pathway_count != expected_pathway_count:
+            Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_pathway_count} pathways, but DB has {actual_pathway_count}")
+            message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_pathway_count} but inserted {actual_pathway_count} pathways")
+        else:
+            Logger.info(f"✓ Successfully created {actual_pathway_count} pathway records")
+            message_dispatcher.notify_info_message(f"✓ Created {actual_pathway_count} pathway records")
 
         cls._log_table_states("AFTER PATHWAY INSERTION")
 
@@ -82,10 +90,18 @@ class PathwayService(BaseService):
         Logger.info(f"After deduplication: {len(vals_deduplicated)} records to insert")
 
         if vals_deduplicated:
-            Logger.info("Inserting pathway ancestor relationships...")
+            expected_ancestor_count = len(vals_deduplicated)
+            Logger.info(f"Inserting {expected_ancestor_count} pathway ancestor relationships...")
             PathwayAncestor.insert_all(vals_deduplicated)
-            Logger.info(f"✓ Successfully inserted {len(vals_deduplicated)} ancestor relationships")
-            message_dispatcher.notify_info_message(f"✓ Inserted {len(vals_deduplicated)} ancestor relationships")
+
+            # Verify actual count in DB
+            actual_ancestor_count = PathwayAncestor.select().count()
+            if actual_ancestor_count != expected_ancestor_count:
+                Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_ancestor_count} ancestors, but DB has {actual_ancestor_count}")
+                message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_ancestor_count} but inserted {actual_ancestor_count} pathway ancestors")
+            else:
+                Logger.info(f"✓ Successfully inserted {actual_ancestor_count} ancestor relationships")
+                message_dispatcher.notify_info_message(f"✓ Inserted {actual_ancestor_count} ancestor relationships")
         else:
             Logger.warning("⚠ No ancestor relationships to insert (all were duplicates or empty)")
             message_dispatcher.notify_info_message("⚠ No ancestor relationships to insert")
@@ -111,10 +127,18 @@ class PathwayService(BaseService):
             )
             pathways_comps.append(pc)
 
-        Logger.info(f"Creating {len(pathways_comps)} pathway-compound records...")
+        expected_compound_count = len(pathways_comps)
+        Logger.info(f"Creating {expected_compound_count} pathway-compound records...")
         PathwayCompound.create_all(pathways_comps)
-        Logger.info(f"✓ Successfully created {len(pathways_comps)} pathway-compound records")
-        message_dispatcher.notify_info_message(f"✓ Created {len(pathways_comps)} pathway-compound records")
+
+        # Verify actual count in DB
+        actual_compound_count = PathwayCompound.select().count()
+        if actual_compound_count != expected_compound_count:
+            Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_compound_count} pathway-compounds, but DB has {actual_compound_count}")
+            message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_compound_count} but inserted {actual_compound_count} pathway-compound records")
+        else:
+            Logger.info(f"✓ Successfully created {actual_compound_count} pathway-compound records")
+            message_dispatcher.notify_info_message(f"✓ Created {actual_compound_count} pathway-compound records")
 
         cls._log_table_states("AFTER COMPOUND INSERTION")
 

@@ -56,10 +56,32 @@ class GoDBCreator(Task):
         DbService.drop_biota_tables([GO, GOAncestor], self.message_dispatcher)
         self.log_info_message("✓ Tables dropped")
 
+        # Verify tables are dropped
+        try:
+            go_after_drop = GO.select().count()
+            ancestor_after_drop = GOAncestor.select().count()
+            if go_after_drop > 0 or ancestor_after_drop > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! GO:{go_after_drop}, Ancestor:{ancestor_after_drop}")
+            else:
+                self.log_info_message("✓ Verified: Tables empty after drop")
+        except:
+            self.log_info_message("✓ Tables don't exist (expected after drop)")
+
         # ... to build it from 0
         self.log_info_message("Creating the GO database...")
         DbService.create_biota_tables([GO, GOAncestor], self.message_dispatcher)
         self.log_info_message("✓ Tables created")
+
+        # Verify tables are empty after creation
+        try:
+            go_after_create = GO.select().count()
+            ancestor_after_create = GOAncestor.select().count()
+            if go_after_create > 0 or ancestor_after_create > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after create! GO:{go_after_create}, Ancestor:{ancestor_after_create}")
+            else:
+                self.log_info_message("✓ Verified: Tables empty and ready for data")
+        except Exception as e:
+            self.log_info_message(f"Could not verify tables: {e}")
 
         # Checks that the url exists and works
         for key, url in params.items():
@@ -85,12 +107,20 @@ class GoDBCreator(Task):
 
         GOService.create_go_db(destination_dir, go_file, self.message_dispatcher)
 
+        # Final verification with detailed counts
+        self.log_info_message("-" * 60)
+        self.log_info_message("FINAL VERIFICATION")
+        self.log_info_message("-" * 60)
         try:
             final_go = GO.select().count()
             final_ancestor = GOAncestor.select().count()
-            self.log_info_message(f"Final - GO: {final_go}, Ancestor: {final_ancestor}")
+            self.log_info_message(f"✓ Final counts:")
+            self.log_info_message(f"  - GO terms: {final_go}")
+            self.log_info_message(f"  - GO ancestors: {final_ancestor}")
+            success_msg = f"✓ GO database created successfully:\n  - GO terms: {final_go}\n  - Ancestors: {final_ancestor}"
         except Exception as e:
-            self.log_info_message(f"Could not verify: {e}")
+            self.log_info_message(f"Could not verify final counts: {e}")
+            success_msg = "✓ GO database created (counts unavailable)"
 
         self.log_info_message("=" * 60)
         self.log_info_message("GO DATABASE CREATOR - COMPLETED")
@@ -100,4 +130,4 @@ class GoDBCreator(Task):
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
 
-        return {}
+        return {"output_text": Text(success_msg)}

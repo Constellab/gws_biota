@@ -64,6 +64,17 @@ class BtoDBCreator(Task):
         DbService.drop_biota_tables([BTO, BTOAncestor], self.message_dispatcher)
         self.log_info_message("✓ Tables dropped successfully")
 
+        # Verify tables are dropped
+        try:
+            b_after_drop = BTO.select().count()
+            a_after_drop = BTOAncestor.select().count()
+            if b_after_drop > 0 or a_after_drop > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! BTO:{b_after_drop}, Ancestor:{a_after_drop}")
+            else:
+                self.log_info_message("✓ Verified: Tables empty after drop")
+        except:
+            self.log_info_message("✓ Tables don't exist (expected after drop)")
+
         # ... to build it from 0
         self.log_info_message("-" * 60)
         self.log_info_message("STEP 2: Creating new tables")
@@ -140,3 +151,13 @@ class BtoDBCreator(Task):
         # Clean Python cache after execution
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        # Construct final summary
+        try:
+            final_bto = BTO.select().count()
+            final_ancestor = BTOAncestor.select().count()
+            success_msg = f"✓ BTO database created successfully:\n  - BTO terms: {final_bto}\n  - BTOAncestors: {final_ancestor}"
+        except Exception as e:
+            success_msg = f"✓ BTO database created (counts unavailable: {e})"
+
+        return {"output_text": Text(success_msg)}

@@ -198,6 +198,35 @@ class EnzymeDBCreator(Task):
             brenda_file=brenda_file_path, bkms_file=bkms_file, expasy_file=expasy_file, taxonomy_file=taxdump_files,
             bto_file=bto_file, compound_file=compound_file, message_dispatcher=self.message_dispatcher)
 
+        # Final verification
+        self.log_info_message("-" * 60)
+        self.log_info_message("FINAL VERIFICATION")
+        self.log_info_message("-" * 60)
+        try:
+            final_enzyme = Enzyme.select().count()
+            final_class = EnzymeClass.select().count()
+            final_pathway = EnzymePathway.select().count()
+            final_ortholog = EnzymeOrtholog.select().count()
+            final_deprecated = DeprecatedEnzyme.select().count()
+            final_bto = EnzymeBTO.select().count()
+            self.log_info_message(f"Final counts:")
+            self.log_info_message(f"  - Enzymes: {final_enzyme}")
+            self.log_info_message(f"  - EnzymeClasses: {final_class}")
+            self.log_info_message(f"  - EnzymePathways: {final_pathway}")
+            self.log_info_message(f"  - EnzymeOrthologs: {final_ortholog}")
+            self.log_info_message(f"  - DeprecatedEnzymes: {final_deprecated}")
+            self.log_info_message(f"  - EnzymeBTO: {final_bto}")
+            success_msg = f"✓ Enzyme database created successfully:\n  - Enzymes: {final_enzyme}\n  - Classes: {final_class}\n  - Pathways: {final_pathway}\n  - Orthologs: {final_ortholog}\n  - Deprecated: {final_deprecated}\n  - BTO: {final_bto}"
+        except Exception as e:
+            self.log_info_message(f"Could not get final counts: {e}")
+            success_msg = f"✓ Enzyme database created (counts unavailable: {e})"
+
+        self.log_info_message("=" * 60)
+        self.log_info_message("ENZYME DATABASE CREATOR - COMPLETED")
+        self.log_info_message("=" * 60)
+
         # Clean Python cache after execution
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        return {"output_text": Text(success_msg)}

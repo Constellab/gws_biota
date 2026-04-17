@@ -64,10 +64,32 @@ class CompoundDBCreator(Task):
         DbService.drop_biota_tables([Compound, CompoundAncestor], self.message_dispatcher)
         self.log_info_message("✓ Tables dropped successfully")
 
+        # Verify tables are dropped
+        try:
+            c_after_drop = Compound.select().count()
+            a_after_drop = CompoundAncestor.select().count()
+            if c_after_drop > 0 or a_after_drop > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! Compound:{c_after_drop}, Ancestor:{a_after_drop}")
+            else:
+                self.log_info_message("✓ Verified: Tables empty after drop")
+        except:
+            self.log_info_message("✓ Tables don't exist (expected after drop)")
+
         # ... to build it from 0
         self.log_info_message("Creating the CHEBI database...")
         DbService.create_biota_tables([Compound, CompoundAncestor], self.message_dispatcher)
         self.log_info_message("✓ Tables created successfully")
+
+        # Verify tables are empty after creation
+        try:
+            c_after_create = Compound.select().count()
+            a_after_create = CompoundAncestor.select().count()
+            if c_after_create > 0 or a_after_create > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after create! Compound:{c_after_create}, Ancestor:{a_after_create}")
+            else:
+                self.log_info_message("✓ Verified: Tables empty and ready for data")
+        except Exception as e:
+            self.log_info_message(f"Could not verify tables: {e}")
 
         # Verify tables are empty
         try:
@@ -103,12 +125,19 @@ class CompoundDBCreator(Task):
         CompoundService.create_compound_db(destination_dir, compound_file_path, self.message_dispatcher)
 
         # Final verification
+        self.log_info_message("-" * 60)
+        self.log_info_message("FINAL VERIFICATION")
+        self.log_info_message("-" * 60)
         try:
             final_compound_count = Compound.select().count()
             final_ancestor_count = CompoundAncestor.select().count()
-            self.log_info_message(f"Final - Compound: {final_compound_count}, Ancestor: {final_ancestor_count}")
+            self.log_info_message(f"✓ Final counts:")
+            self.log_info_message(f"  - Compounds: {final_compound_count}")
+            self.log_info_message(f"  - Ancestors: {final_ancestor_count}")
+            success_msg = f"✓ Compound database created successfully:\n  - Compounds: {final_compound_count}\n  - Ancestors: {final_ancestor_count}"
         except Exception as e:
             self.log_info_message(f"Could not get final counts: {e}")
+            success_msg = "✓ Compound database created (counts unavailable)"
 
         self.log_info_message("=" * 60)
         self.log_info_message("COMPOUND DATABASE CREATOR - COMPLETED")
@@ -118,4 +147,4 @@ class CompoundDBCreator(Task):
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
 
-        return {}
+        return {"output_text": Text(success_msg)}

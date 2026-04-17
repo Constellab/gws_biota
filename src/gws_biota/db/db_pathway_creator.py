@@ -75,6 +75,18 @@ class PathwayDBCreator(Task):
         DbService.drop_biota_tables([Pathway, PathwayAncestor, PathwayCompound], self.message_dispatcher)
         self.log_info_message("✓ Tables dropped successfully")
 
+        # Verify tables are dropped
+        try:
+            p_after_drop = Pathway.select().count()
+            a_after_drop = PathwayAncestor.select().count()
+            c_after_drop = PathwayCompound.select().count()
+            if p_after_drop > 0 or a_after_drop > 0 or c_after_drop > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! Pathway:{p_after_drop}, Ancestor:{a_after_drop}, Compound:{c_after_drop}")
+            else:
+                self.log_info_message("✓ Verified: All tables empty after drop")
+        except:
+            self.log_info_message("✓ Tables don't exist (expected after drop)")
+
         # ... to build it from 0
         self.log_info_message("-" * 60)
         self.log_info_message("STEP 2: Creating new tables")
@@ -82,6 +94,18 @@ class PathwayDBCreator(Task):
         self.log_info_message("Creating the PATHWAY database...")
         DbService.create_biota_tables([Pathway, PathwayAncestor, PathwayCompound], self.message_dispatcher)
         self.log_info_message("✓ Tables created successfully")
+
+        # Verify tables are empty after creation
+        try:
+            p_after_create = Pathway.select().count()
+            a_after_create = PathwayAncestor.select().count()
+            c_after_create = PathwayCompound.select().count()
+            if p_after_create > 0 or a_after_create > 0 or c_after_create > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after create! Pathway:{p_after_create}, Ancestor:{a_after_create}, Compound:{c_after_create}")
+            else:
+                self.log_info_message("✓ Verified: All tables empty and ready for data")
+        except Exception as e:
+            self.log_info_message(f"Could not verify tables: {e}")
 
         # Verify tables are empty
         self.log_info_message("Verifying tables are empty...")
@@ -179,4 +203,24 @@ class PathwayDBCreator(Task):
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
 
-        return {}
+        #  FINAL VERIFICATION
+        self.log_info_message("=" * 60)
+        self.log_info_message("FINAL VERIFICATION - Counting all records")
+        self.log_info_message("=" * 60)
+
+        # Count records created
+        try:
+            pathway_count = Pathway.select().count()
+            ancestor_count = PathwayAncestor.select().count()
+            compound_count = PathwayCompound.select().count()
+            self.log_info_message(f"✓ Final counts:")
+            self.log_info_message(f"  - Pathways: {pathway_count}")
+            self.log_info_message(f"  - Ancestors: {ancestor_count}")
+            self.log_info_message(f"  - Pathway-Compound links: {compound_count}")
+            success_msg = f"✓ Pathway database created successfully:\n  - Pathways: {pathway_count}\n  - Ancestors: {ancestor_count}\n  - Pathway-Compound links: {compound_count}"
+            self.log_info_message(success_msg)
+            return {"output_text": Text(success_msg)}
+        except Exception as e:
+            error_msg = f"Database created but could not count records: {e}"
+            self.log_info_message(error_msg)
+            return {"output_text": Text(error_msg)}

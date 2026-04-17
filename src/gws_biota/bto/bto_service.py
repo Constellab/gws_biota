@@ -44,10 +44,18 @@ class BTOService(BaseService):
             bto.ft_names = cls.format_ft_names(ft_names)
             del bto.data["id"]
 
-        Logger.info(f"Creating {len(btos)} BTO records...")
+        expected_bto_count = len(btos)
+        Logger.info(f"Creating {expected_bto_count} BTO records...")
         BTO.create_all(btos)
-        Logger.info(f"✓ Successfully created {len(btos)} BTO records")
-        message_dispatcher.notify_info_message(f"✓ Created {len(btos)} BTO records")
+
+        # Verify actual count in DB
+        actual_bto_count = BTO.select().count()
+        if actual_bto_count != expected_bto_count:
+            Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_bto_count} BTO records, but DB has {actual_bto_count}")
+            message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_bto_count} but inserted {actual_bto_count} BTO records")
+        else:
+            Logger.info(f"✓ Successfully created {actual_bto_count} BTO records")
+            message_dispatcher.notify_info_message(f"✓ Created {actual_bto_count} BTO records")
 
         cls._log_table_states("AFTER BTO INSERTION")
 
@@ -68,10 +76,18 @@ class BTOService(BaseService):
         Logger.info(f"After deduplication: {len(vals)} records to insert")
 
         if vals:
-            Logger.info("Inserting BTO ancestor relationships...")
+            expected_ancestor_count = len(vals)
+            Logger.info(f"Inserting {expected_ancestor_count} BTO ancestor relationships...")
             BTOAncestor.insert_all(vals)
-            Logger.info(f"✓ Successfully inserted {len(vals)} ancestor relationships")
-            message_dispatcher.notify_info_message(f"✓ Inserted {len(vals)} ancestor relationships")
+
+            # Verify actual count in DB
+            actual_ancestor_count = BTOAncestor.select().count()
+            if actual_ancestor_count != expected_ancestor_count:
+                Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_ancestor_count} ancestors, but DB has {actual_ancestor_count}")
+                message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_ancestor_count} but inserted {actual_ancestor_count} BTO ancestors")
+            else:
+                Logger.info(f"✓ Successfully inserted {actual_ancestor_count} ancestor relationships")
+                message_dispatcher.notify_info_message(f"✓ Inserted {actual_ancestor_count} BTO ancestors")
         else:
             Logger.warning("⚠ No ancestor relationships to insert")
             message_dispatcher.notify_info_message("⚠ No ancestor relationships to insert")

@@ -56,10 +56,18 @@ class GOService(BaseService):
 
             del go.data["id"]
 
-        Logger.info(f"Creating {len(gos)} GO records...")
+        expected_go_count = len(gos)
+        Logger.info(f"Creating {expected_go_count} GO records...")
         GO.create_all(gos)
-        Logger.info(f"✓ Successfully created {len(gos)} GO records")
-        message_dispatcher.notify_info_message(f"✓ Created {len(gos)} GO records")
+
+        # Verify actual count in DB
+        actual_go_count = GO.select().count()
+        if actual_go_count != expected_go_count:
+            Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_go_count} GO records, but DB has {actual_go_count}")
+            message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_go_count} but inserted {actual_go_count} GO records")
+        else:
+            Logger.info(f"✓ Successfully created {actual_go_count} GO records")
+            message_dispatcher.notify_info_message(f"✓ Created {actual_go_count} GO records")
 
         cls._log_table_states("AFTER GO INSERTION")
 
@@ -80,10 +88,18 @@ class GOService(BaseService):
         Logger.info(f"After deduplication: {len(vals)} records to insert")
 
         if vals:
-            Logger.info("Inserting GO ancestor relationships...")
+            expected_ancestor_count = len(vals)
+            Logger.info(f"Inserting {expected_ancestor_count} GO ancestor relationships...")
             GOAncestor.insert_all(vals)
-            Logger.info(f"✓ Successfully inserted {len(vals)} ancestor relationships")
-            message_dispatcher.notify_info_message(f"✓ Inserted {len(vals)} GO ancestors")
+
+            # Verify actual count in DB
+            actual_ancestor_count = GOAncestor.select().count()
+            if actual_ancestor_count != expected_ancestor_count:
+                Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_ancestor_count} ancestors, but DB has {actual_ancestor_count}")
+                message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_ancestor_count} but inserted {actual_ancestor_count} GO ancestors")
+            else:
+                Logger.info(f"✓ Successfully inserted {actual_ancestor_count} ancestor relationships")
+                message_dispatcher.notify_info_message(f"✓ Inserted {actual_ancestor_count} GO ancestors")
         else:
             Logger.warning("⚠ No ancestor relationships to insert")
 

@@ -63,11 +63,33 @@ class ReactionDBCreator(Task):
 
         # Deleting the database...
         self.log_info_message("Deleting the RHEA database...")
-        DbService.drop_biota_tables([Reaction])
+        DbService.drop_biota_tables([Reaction], message_dispatcher=self.message_dispatcher)
+        self.log_info_message("✓ Tables dropped (Reaction + related tables)")
+
+        # Verify tables are dropped (Reaction.drop_table() handles all related tables)
+        try:
+            r_after_drop = Reaction.select().count()
+            if r_after_drop > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! Reaction:{r_after_drop}")
+            else:
+                self.log_info_message("✓ Verified: All tables empty after drop")
+        except:
+            self.log_info_message("✓ Tables don't exist (expected after drop)")
 
         # ... to build it from 0
         self.log_info_message("Creating the RHEA database...")
-        DbService.create_biota_tables([Reaction])
+        DbService.create_biota_tables([Reaction], message_dispatcher=self.message_dispatcher)
+        self.log_info_message("✓ Tables created (Reaction + related tables)")
+
+        # Verify tables are empty after creation
+        try:
+            r_after_create = Reaction.select().count()
+            if r_after_create > 0:
+                self.log_info_message(f"⚠ WARNING: Tables not empty after create! Reaction:{r_after_create}")
+            else:
+                self.log_info_message("✓ Verified: All tables empty and ready for data")
+        except Exception as e:
+            self.log_info_message(f"Could not verify tables: {e}")
 
         # Check that all url exist and work
         for key, url in params.items():
@@ -166,9 +188,31 @@ class ReactionDBCreator(Task):
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
 
+        # Final verification
+        self.log_info_message("-" * 60)
+        self.log_info_message("FINAL VERIFICATION")
+        self.log_info_message("-" * 60)
         # Count reactions created
-        reaction_count = Reaction.select().count()
-        success_msg = f"✓ Reaction database created successfully: {reaction_count} reactions loaded"
+        try:
+            from gws_biota.reaction.reaction import ReactionSubstrate, ReactionProduct, ReactionEnzyme
+            reaction_count = Reaction.select().count()
+            substrate_count = ReactionSubstrate.select().count()
+            product_count = ReactionProduct.select().count()
+            enzyme_count = ReactionEnzyme.select().count()
+            self.log_info_message(f"✓ Final counts:")
+            self.log_info_message(f"  - Reactions: {reaction_count}")
+            self.log_info_message(f"  - Substrates: {substrate_count}")
+            self.log_info_message(f"  - Products: {product_count}")
+            self.log_info_message(f"  - Enzymes: {enzyme_count}")
+            success_msg = f"✓ Reaction database created successfully:\n  - Reactions: {reaction_count}\n  - Substrates: {substrate_count}\n  - Products: {product_count}\n  - Enzymes: {enzyme_count}"
+        except Exception as e:
+            self.log_info_message(f"Could not get complete counts: {e}")
+            try:
+                reaction_count = Reaction.select().count()
+                success_msg = f"✓ Reaction database created successfully: {reaction_count} reactions loaded"
+            except:
+                success_msg = f"✓ Reaction database created (counts unavailable: {e})"
+
         self.log_info_message(success_msg)
 
         return {"output_text": Text(success_msg)}

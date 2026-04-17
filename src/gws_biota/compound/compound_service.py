@@ -119,10 +119,18 @@ class CompoundService(BaseService):
         Logger.info(f"After deduplication: {len(vals)} records to insert")
 
         if vals:
-            Logger.info("Inserting compound ancestor relationships...")
+            expected_ancestor_count = len(vals)
+            Logger.info(f"Inserting {expected_ancestor_count} compound ancestor relationships...")
             CompoundAncestor.insert_all(vals)
-            Logger.info(f"✓ Successfully inserted {len(vals)} ancestor relationships")
-            message_dispatcher.notify_info_message(f"✓ Inserted {len(vals)} compound ancestors")
+
+            # Verify actual count in DB
+            actual_ancestor_count = CompoundAncestor.select().count()
+            if actual_ancestor_count != expected_ancestor_count:
+                Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_ancestor_count} ancestors, but DB has {actual_ancestor_count}")
+                message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_ancestor_count} but inserted {actual_ancestor_count} compound ancestors")
+            else:
+                Logger.info(f"✓ Successfully inserted {actual_ancestor_count} ancestor relationships")
+                message_dispatcher.notify_info_message(f"✓ Inserted {actual_ancestor_count} compound ancestors")
         else:
             Logger.warning("⚠ No ancestor relationships to insert")
 
