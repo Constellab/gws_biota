@@ -1,5 +1,8 @@
 
 
+import os
+import tarfile
+
 import requests
 from gws_core import (
     ConfigParams,
@@ -83,11 +86,21 @@ class TaxonomyDBCreator(Task):
         file_downloader = FileDownloader(destination_dir)
 
         # ------------- Create TAXONOMY ------------- #
-        # download file
-        taxdump_files = file_downloader.download_file_if_missing(
-            params["taxdump_files"], filename="taxdump.tar.gz", decompress_file=True)
+        # Download without decompression to avoid dependency on pigz (not always installed).
+        # We decompress manually with Python's built-in tarfile module.
+        archive_path = file_downloader.download_file_if_missing(
+            params["taxdump_files"], filename="taxdump.tar.gz", decompress_file=False)
 
-        TaxonomyService.create_taxonomy_db(destination_dir, taxdump_files)
+        extract_dir = os.path.join(destination_dir, "taxdump_extracted")
+        os.makedirs(extract_dir, exist_ok=True)
+        self.log_info_message("Extracting taxdump.tar.gz...")
+        with tarfile.open(archive_path, "r:gz") as tar:
+            tar.extractall(path=extract_dir)
+        taxdump_files = extract_dir
+        self.log_info_message("✓ Extraction complete")
+
+        TaxonomyService.create_taxonomy_db(destination_dir, taxdump_files,
+                                           message_dispatcher=self.message_dispatcher)
 
         # Clean Python cache after execution to ensure fresh state for next run
         self.log_info_message("Cleaning cache after execution...")
