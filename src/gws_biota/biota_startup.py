@@ -1,3 +1,5 @@
+import subprocess
+
 from gws_core import (
     AuthenticateUser,
     BrickLogService,
@@ -25,7 +27,26 @@ class GwsCoreDbListener(EventListener):
 
     def handle(self, event: Event) -> None:
         if event.type == "system" and event.action == "started":
+            self._ensure_system_dependencies()
             self.init_database()
+
+    def _ensure_system_dependencies(self) -> None:
+        """Install required system packages if not already present.
+
+        pigz is used by gws_core's tar decompressor (tar_compress.py) and must
+        be available in any environment running taxonomy/enzyme db imports.
+        """
+        try:
+            result = subprocess.run(["which", "pigz"], capture_output=True)
+            if result.returncode != 0:
+                Logger.info("pigz not found — installing via apt-get...")
+                subprocess.run(
+                    ["apt-get", "install", "-y", "--no-install-recommends", "pigz"],
+                    check=True, capture_output=True
+                )
+                Logger.info("✓ pigz installed successfully")
+        except Exception as e:
+            Logger.warning(f"Could not install pigz: {e}")
 
     def init_database(self) -> None:
         """Initialize the database"""

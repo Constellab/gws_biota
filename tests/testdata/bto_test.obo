@@ -122,3 +122,9 @@ def: "One of the cell's in the inner layer of the periosteum that forms osseous 
 [Term]
 id: BTO:0000669
 name: embryonic cell line
+
+[Term]
+id: BTO:0000214
+name: cell culture
+def: "Growth of cells in vitro in defined medium." []
+is_a: BTO:0000216 ! culture condition

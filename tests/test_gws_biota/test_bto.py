@@ -9,11 +9,7 @@ testdata_path = settings.get_variable("gws_biota", "testdata_dir")
 class TestBTO(BaseTestCase):
     def test_db_object(self):
         self.print("BTO")
-        params = dict(
-            biodata_dir=testdata_path,
-            bto_file="bto_test.obo",
-        )
-        BTOService.create_bto_db(**params)
+        BTOService.create_bto_db(destination_dir=testdata_path, bto_file_path="bto_test.obo")
         self.assertEqual(
             BTO.get(BTO.bto_id == "BTO:0000000").get_name(),
             "tissues, cell types and enzyme sources",

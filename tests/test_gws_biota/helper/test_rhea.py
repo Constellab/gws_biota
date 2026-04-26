@@ -9,7 +9,7 @@ class TestModel(unittest.TestCase):
     def test_db_object(self):
         settings = Settings.get_instance()
         testdata_path = os.path.join(
-            settings.get_variable("gws_biota", "testdata_dir"), "../_helper/data/"
+            settings.get_variable("gws_biota", "testdata_dir"), "../test_gws_biota/helper/data/"
         )
 
         list_reactions = Rhea.parse_reaction_from_file(testdata_path, "rhea-reaction.txt")

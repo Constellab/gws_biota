@@ -9,12 +9,12 @@ class TestOntology(unittest.TestCase):
     def test_db_object(self):
         settings = Settings.get_instance()
         testdata_path = os.path.join(
-            settings.get_variable("gws_biota", "testdata_dir"), "../_helper/data/"
+            settings.get_variable("gws_biota", "testdata_dir"), "../test_gws_biota/helper/data/"
         )
 
         #### Test go parser ####
         file = "go_test.obo"
-        ontology = Onto.create_ontology_from_obo(testdata_path, file)
+        ontology = Onto.create_ontology_from_file(testdata_path, file)
         list_go = Onto.parse_obo_from_ontology(ontology)
         self.assertEqual(len(list_go), 14)
         self.assertEqual(list_go[0]["id"], "GO:0000001")
@@ -24,7 +24,7 @@ class TestOntology(unittest.TestCase):
         #### Test sbo parser ####
         file = "sbo_test.obo"
         sbo_path, file_name = Onto.correction_of_sbo_file(testdata_path, file)
-        ontology = Onto.create_ontology_from_obo(sbo_path, file_name)
+        ontology = Onto.create_ontology_from_file(sbo_path, file_name)
         list_sbo_terms = Onto.parse_sbo_terms_from_ontology(ontology)
         self.assertEqual(len(list_sbo_terms), 21)
         self.assertEqual(list_sbo_terms[0]["id"], "SBO:0000000")
@@ -57,7 +57,7 @@ class TestOntology(unittest.TestCase):
 
         #### Test ECO parser ####
         file = "eco_test.obo"
-        ontology = Onto.create_ontology_from_obo(testdata_path, file)
+        ontology = Onto.create_ontology_from_file(testdata_path, file)
         list_eco = Onto.parse_eco_terms_from_ontoloy(ontology)
         self.assertEqual(len(list_eco), 25)
         self.assertEqual(
@@ -82,7 +82,7 @@ class TestOntology(unittest.TestCase):
         #### Test pwo parser ####
         file = "pwo_test.obo"
         pwo_path, file_name = Onto.correction_of_pwo_file(testdata_path, file)
-        ontology = Onto.create_ontology_from_obo(pwo_path, file_name)
+        ontology = Onto.create_ontology_from_file(pwo_path, file_name)
         list_pwo = Onto.parse_pwo_terms_from_ontology(ontology)
         self.assertEqual(len(list_pwo), 34)
         self.assertEqual(

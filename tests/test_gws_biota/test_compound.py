@@ -10,17 +10,13 @@ from gws_core import BaseTestCase, Settings
 #
 ############################################################################################
 settings = Settings.get_instance()
-testdata_path = os.path.join(settings.get_variable("gws_biota", "testdata_dir"), "../_helper/data/")
+testdata_path = settings.get_variable("gws_biota", "testdata_dir")
 
 
 class TestCompound(BaseTestCase):
     def test_db_object(self):
         self.print("Compound")
-        params = dict(
-            biodata_dir=testdata_path,
-            chebi_file="chebi_test.obo",
-        )
-        CompoundService.create_compound_db(**params)
+        CompoundService.create_compound_db(path=testdata_path, compound_file="chebi_test.obo")
         self.assertEqual(
             Compound.get(Compound.chebi_id == "CHEBI:24431").get_name(), "chemical entity"
         )

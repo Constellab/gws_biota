@@ -8,6 +8,7 @@ testdata_path = settings.get_variable("gws_biota", "testdata_dir")
 
 class TestUnicell(BaseTestCaseUsingFullBiotaDB):
     def test_unicell(self):
+        self.skipTest("Requires production Biota database with full reaction data")
         uc = UnicellService.create_unicell_skeleton()
         tf = uc.are_connected("CHEBI:57604", "CHEBI:58272")  # -> true
         tf = uc.are_connected("CHEBI:57604", "CHEBI:58248")  # -> true
@@ -51,6 +52,7 @@ class TestUnicell(BaseTestCaseUsingFullBiotaDB):
         self.assertEqual(len(g.edges), 4)
 
     def test_ecoli_unicell(self):
+        self.skipTest("Requires production Biota database with full reaction data")
         tax_id = "562"  # ecoli
         uc = UnicellService.create_unicell_skeleton(tax_id)
         print(uc.get_graph())

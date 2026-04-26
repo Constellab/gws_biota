@@ -86,7 +86,7 @@ class Taxonomy:
 
         with open(ncbi_names_file) as fh:
             dict_ncbi_names = {}
-            for line in fh.readlines():
+            for line in fh:
                 line = line.replace("\t|\n", "")
                 infos = line.split("\t|\t")
                 if infos[3] == "scientific name":

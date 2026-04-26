@@ -1,5 +1,7 @@
 
 
+from gws_core import Logger, MessageDispatcher
+
 from gws_biota.db.biota_db_manager import BiotaDbManager
 
 from .._helper.ontology import Onto as OntoHelper
@@ -11,7 +13,7 @@ class SBOService(BaseService):
 
     @classmethod
     @BiotaDbManager.transaction()
-    def create_sbo_db(cls, path, sbo_file):
+    def create_sbo_db(cls, path, sbo_file, message_dispatcher: MessageDispatcher = None):
         """
         Creates and fills the `sbo` database
 
@@ -22,12 +24,27 @@ class SBOService(BaseService):
         :returns: None
         :rtype: None
         """
+        if message_dispatcher is None:
+            message_dispatcher = MessageDispatcher()
+
+        Logger.info("=" * 80)
+        Logger.info("STARTING SBO DATABASE CREATION")
+        Logger.info("=" * 80)
+        message_dispatcher.notify_info_message("Starting SBO database creation...")
+
+        cls._log_table_states("BEFORE CREATION")
+
+        Logger.info("-" * 80)
+        Logger.info("STEP 1: Parsing and inserting SBO terms")
+        Logger.info("-" * 80)
 
         data_dir, corrected_file_name = OntoHelper.correction_of_sbo_file(
             path, sbo_file)
         ontology = OntoHelper.create_ontology_from_file(
             data_dir, corrected_file_name)
         list_sbo = OntoHelper.parse_sbo_terms_from_ontology(ontology)
+        Logger.info(f"Parsed {len(list_sbo)} SBO terms from file")
+
         sbos = [SBO(data=dict_) for dict_ in list_sbo]
         for sbo in sbos:
             sbo.set_sbo_id(sbo.data["id"])
@@ -35,18 +52,63 @@ class SBOService(BaseService):
             ft_names = [sbo.data["name"], sbo.data["id"].replace(":", "")]
             sbo.ft_names = cls.format_ft_names(ft_names)
             del sbo.data["id"]
+
+        expected_sbo_count = len(sbos)
+        Logger.info(f"Creating {expected_sbo_count} SBO records...")
         SBO.create_all(sbos)
+
+        # Verify actual count in DB
+        actual_sbo_count = SBO.select().count()
+        if actual_sbo_count != expected_sbo_count:
+            Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_sbo_count} SBO records, but DB has {actual_sbo_count}")
+            message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_sbo_count} but inserted {actual_sbo_count} SBO records")
+        else:
+            Logger.info(f"✓ Successfully created {actual_sbo_count} SBO records")
+            message_dispatcher.notify_info_message(f"✓ Created {actual_sbo_count} SBO records")
+
+        cls._log_table_states("AFTER SBO INSERTION")
+
+        Logger.info("-" * 80)
+        Logger.info("STEP 2: Inserting SBO ancestor relationships")
+        Logger.info("-" * 80)
 
         vals = []
         for sbo in sbos:
-            val = cls.__build_insert_query_vals_of_ancestors(sbo)
+            val = cls._get_ancestors_query(sbo)
             for v in val:
                 vals.append(v)
 
-        SBOAncestor.insert_all(vals)
+        Logger.info(f"Generated {len(vals)} ancestor relationship records")
+
+        # Deduplicate before insertion
+        vals = cls._deduplicate_ancestor_vals(vals, 'sbo', 'ancestor')
+        Logger.info(f"After deduplication: {len(vals)} records to insert")
+
+        if vals:
+            expected_ancestor_count = len(vals)
+            Logger.info(f"Inserting {expected_ancestor_count} SBO ancestor relationships...")
+            SBOAncestor.insert_all(vals)
+
+            # Verify actual count in DB
+            actual_ancestor_count = SBOAncestor.select().count()
+            if actual_ancestor_count != expected_ancestor_count:
+                Logger.warning(f"⚠ COUNT MISMATCH: Expected {expected_ancestor_count} ancestors, but DB has {actual_ancestor_count}")
+                message_dispatcher.notify_info_message(f"⚠ Warning: Expected {expected_ancestor_count} but inserted {actual_ancestor_count} SBO ancestors")
+            else:
+                Logger.info(f"✓ Successfully inserted {actual_ancestor_count} ancestor relationships")
+                message_dispatcher.notify_info_message(f"✓ Inserted {actual_ancestor_count} SBO ancestors")
+        else:
+            Logger.warning("⚠ No ancestor relationships to insert")
+
+        cls._log_table_states("AFTER ANCESTOR INSERTION")
+
+        Logger.info("=" * 80)
+        Logger.info("SBO DATABASE CREATION COMPLETED SUCCESSFULLY")
+        Logger.info("=" * 80)
+        message_dispatcher.notify_info_message("✓ SBO database completed!")
 
     @classmethod
-    def __build_insert_query_vals_of_ancestors(cls, sbo):
+    def _get_ancestors_query(cls, sbo):
         """
         Look for the sbo term ancestors and returns all sbo-sbo_ancestors relations in a list.
 
@@ -62,3 +124,46 @@ class SBOService(BaseService):
                     SBO.sbo_id == ancestor).id}
                 vals.append(val)
         return (vals)
+
+    @classmethod
+    def _deduplicate_ancestor_vals(cls, vals: list[dict], key1: str, key2: str) -> list[dict]:
+        """Remove duplicate ancestor relationships"""
+        Logger.info("Checking for duplicate ancestor relationships...")
+
+        seen = set()
+        unique_vals = []
+        duplicates_count = 0
+
+        for item in vals:
+            key = (item[key1], item[key2])
+            if key not in seen:
+                seen.add(key)
+                unique_vals.append(item)
+            else:
+                duplicates_count += 1
+
+        if duplicates_count > 0:
+            Logger.warning(f"⚠ Found {duplicates_count} DUPLICATE ancestor relationships!")
+        else:
+            Logger.info("✓ No duplicates found in ancestor relationships")
+
+        return unique_vals
+
+    @classmethod
+    def _log_table_states(cls, stage: str):
+        """Log the current state of SBO-related tables"""
+        try:
+            Logger.info(f"--- TABLE STATES: {stage} ---")
+
+            sbo_count = SBO.select().count()
+            Logger.info(f"  SBO table: {sbo_count} records")
+
+            try:
+                ancestor_count = SBOAncestor.select().count()
+                Logger.info(f"  SBOAncestor table: {ancestor_count} records")
+            except Exception as e:
+                Logger.info(f"  SBOAncestor table: Not accessible ({type(e).__name__})")
+
+            Logger.info("-" * 60)
+        except Exception as e:
+            Logger.warning(f"  Could not log table states: {e}")

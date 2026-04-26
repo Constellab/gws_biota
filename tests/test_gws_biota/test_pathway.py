@@ -14,13 +14,13 @@ class TestPatwhays(BaseTestCase):
             c = Compound(chebi_id="CHEBI:" + _id)
             c.save()
 
-        params = dict(
-            biodata_dir=testdata_path,
+        PathwayService.create_pathway_db(
+            path=testdata_path,
+            pwo_file="pwo_test.obo",
             reactome_pathways_file="reactome_pathways.txt",
             reactome_pathway_relations_file="reactome_pathway_relations.txt",
             reactome_chebi_pathways_file="reactome_chebi.txt",
         )
-        PathwayService.create_pathway_db(**params)
 
         p = Pathway.get(Pathway.reactome_pathway_id == "R-BTA-1296025")
         self.assertEqual(p.get_name(), "ATP sensitive Potassium channels")

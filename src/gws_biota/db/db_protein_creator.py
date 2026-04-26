@@ -35,13 +35,38 @@ class ProteinDBCreator(Task):
 
     # only allow admin user to run this process
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
+        # Clean Python cache to ensure fresh state
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
         # Deleting the database...
         self.log_info_message("Deleting the PROTEIN database...")
-        DbService.drop_biota_tables([Protein])
+        DbService.drop_biota_tables([Protein], message_dispatcher=self.message_dispatcher)
+        self.log_info_message("✓ Table dropped")
+
+        # Verify table is dropped
+        try:
+            p_after_drop = Protein.select().count()
+            if p_after_drop > 0:
+                self.log_info_message(f"⚠ WARNING: Table not empty after drop! Protein:{p_after_drop}")
+            else:
+                self.log_info_message("✓ Verified: Table empty after drop")
+        except:
+            self.log_info_message("✓ Table doesn't exist (expected after drop)")
 
         # ... to build it from 0
-        self.log_info_message("Creating the PPROTEIN database...")
-        DbService.create_biota_tables([Protein])
+        self.log_info_message("Creating the PROTEIN database...")
+        DbService.create_biota_tables([Protein], message_dispatcher=self.message_dispatcher)
+        self.log_info_message("✓ Table created")
+
+        # Verify table is empty after creation
+        try:
+            p_after_create = Protein.select().count()
+            if p_after_create > 0:
+                self.log_info_message(f"⚠ WARNING: Table not empty after create! Protein:{p_after_create}")
+            else:
+                self.log_info_message("✓ Verified: Table empty and ready for data")
+        except Exception as e:
+            self.log_info_message(f"Could not verify table: {e}")
 
         # Check that the url exists and works
         for key, url in params.items():
@@ -63,3 +88,23 @@ class ProteinDBCreator(Task):
             params["protein_file"], filename="uniprot_sprot.fasta.gz")
 
         ProteinService.create_protein_db(destination_dir, protein_file)
+
+        # Clean Python cache after execution
+        self.log_info_message("Cleaning cache after execution...")
+        DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
+
+        # Final verification
+        self.log_info_message("-" * 60)
+        self.log_info_message("FINAL VERIFICATION")
+        self.log_info_message("-" * 60)
+        # Count proteins created
+        try:
+            protein_count = Protein.select().count()
+            self.log_info_message(f"✓ Final count: {protein_count} proteins")
+            success_msg = f"✓ Protein database created successfully: {protein_count} proteins loaded"
+            self.log_info_message(success_msg)
+            return {"output_text": Text(success_msg)}
+        except Exception as e:
+            error_msg = f"Database created but could not count records: {e}"
+            self.log_info_message(error_msg)
+            return {"output_text": Text(error_msg)}
