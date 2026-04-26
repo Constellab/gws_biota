@@ -1,6 +1,7 @@
 
 
 import csv
+import json
 import os
 import tempfile
 from datetime import datetime, timezone
@@ -93,6 +94,7 @@ class TaxonomyService(BaseService):
         all_rows = []
         for data in dict_taxons.values():
             name = data.get('name', 'Unspecified')
+            row_data = {k: v for k, v in data.items() if k != 'ancestor'}
             all_rows.append({
                 'id': str(uuid.uuid4()),
                 'tax_id': data['tax_id'],
@@ -101,7 +103,7 @@ class TaxonomyService(BaseService):
                 'division': data['division'],
                 'ancestor_tax_id': data['ancestor'],
                 'ft_names': "TAX" + data['tax_id'] + ";" + name,
-                'data': {},
+                'data': row_data,
             })
         # Sort by UUID → sequential B-tree insertions → constant-time inserts regardless of size
         all_rows.sort(key=lambda r: r['id'])
@@ -129,7 +131,7 @@ class TaxonomyService(BaseService):
                         now_str,              # created_at
                         now_str,              # last_modified_at
                         row['name'],
-                        '{}',                 # data (JSON empty object)
+                        json.dumps(row['data'], ensure_ascii=False),  # data (JSON)
                         row['ft_names'],
                         row['tax_id'],
                         row['rank'],
