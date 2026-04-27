@@ -1,6 +1,7 @@
 
 
-from brendapy import BrendaParser, BrendaSettings
+import brendapy.settings as _brenda_settings
+from brendapy import BrendaParser
 
 
 # =============================================================================
@@ -139,8 +140,11 @@ class Brenda:
     parser = None  # reuse parser
 
     def __init__(self, brenda_file, taxonomy_dir=None, bto_file=None, chebi_file=None):
-        BrendaSettings.initialize_data_dir(
-            brenda_file=brenda_file, taxonomy_dir=taxonomy_dir, bto_file=bto_file, chebi_file=chebi_file)
+        # Override brendapy's default data paths with the provided paths.
+        # (Replaces the removed BrendaSettings.initialize_data_dir call)
+        from pathlib import Path
+        if brenda_file:
+            _brenda_settings.BRENDA_FILE = Path(brenda_file)
         self.parser = BrendaParser(brenda_file=brenda_file)
 
     def parse_all_enzyme_to_dict(self):
