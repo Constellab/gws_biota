@@ -188,19 +188,21 @@ class ProtectedBaseModel(BaseModel):
             return True
 
         db_manager: BiotaDbManager = cls.get_db_manager()
-        # always protect in prod mode
+
+        # If protection is explicitly deactivated (e.g. by a DB creator task), allow in any mode
+        if hasattr(db_manager, "_DEACTIVATE_PROTECTION_") and db_manager._DEACTIVATE_PROTECTION_:
+            cls._print_warning("The BIOTA protection is DEACTIVATED")
+            return False
+
+        # protect in prod mode unless deactivated above
         if db_manager.mode == "prod":
             cls._print_warning("The prod BIOTA db is protected and cannot be altered")
             return True
 
         # check protection in dev mode
         if db_manager.mode == "dev":
-            if hasattr(db_manager, "_DEACTIVATE_PROTECTION_") and db_manager._DEACTIVATE_PROTECTION_:
-                cls._print_warning("The BIOTA protection is DEACTIVATED")
-                return False
-            else:
-                cls._print_warning("The dev BIOTA db is protected and cannot be altered")
-                return True
+            cls._print_warning("The dev BIOTA db is protected and cannot be altered")
+            return True
 
         return False
 
