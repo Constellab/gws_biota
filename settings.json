@@ -49,8 +49,7 @@
         "source": "https://github.com/Constellab",
         "packages": [
           {
-            "name": "brendapy",
-            "version": "0.5.0"
+            "name": "brendapy"
           }
         ]
       }
