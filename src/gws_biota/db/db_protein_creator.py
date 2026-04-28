@@ -44,14 +44,15 @@ class ProteinDBCreator(Task):
         self.log_info_message("✓ Table dropped")
 
         # Verify table is dropped
+        p_after_drop = 0
         try:
             p_after_drop = Protein.select().count()
-            if p_after_drop > 0:
-                self.log_info_message(f"⚠ WARNING: Table not empty after drop! Protein:{p_after_drop}")
-            else:
-                self.log_info_message("✓ Verified: Table empty after drop")
         except:
             self.log_info_message("✓ Table doesn't exist (expected after drop)")
+        if p_after_drop > 0:
+            raise Exception(f"ERROR: Table not empty after drop! Protein:{p_after_drop}. Drop table failed, aborting script.")
+        else:
+            self.log_info_message("✓ Verified: Table empty after drop")
 
         # ... to build it from 0
         self.log_info_message("Creating the PROTEIN database...")

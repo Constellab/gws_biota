@@ -80,6 +80,19 @@ class EnzymeDBCreator(Task):
         ]
         DbService.drop_biota_tables(enzyme_tables_to_drop, message_dispatcher=self.message_dispatcher)
 
+        # Verify tables are dropped
+        ez_after_drop = 0
+        eo_after_drop = 0
+        try:
+            ez_after_drop = Enzyme.select().count()
+            eo_after_drop = EnzymeOrtholog.select().count()
+        except:
+            self.log_info_message("✓ Tables don't exist (expected after drop)")
+        if ez_after_drop > 0 or eo_after_drop > 0:
+            raise Exception(f"ERROR: Tables not empty after drop! Enzyme:{ez_after_drop}, EnzymeOrtholog:{eo_after_drop}. Drop table failed, aborting script.")
+        else:
+            self.log_info_message("✓ Verified: Tables empty after drop")
+
         # Creating enzyme database tables from scratch...
         # Order: Create parent tables before child tables (follow FK dependencies)
         self.log_info_message("Creating the ENZYME database...")

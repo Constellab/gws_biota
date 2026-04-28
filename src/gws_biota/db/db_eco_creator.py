@@ -56,15 +56,17 @@ class EcoDBCreator(Task):
         self.log_info_message("✓ Tables dropped")
 
         # Verify tables are dropped
+        e_after_drop = 0
+        a_after_drop = 0
         try:
             e_after_drop = ECO.select().count()
             a_after_drop = ECOAncestor.select().count()
-            if e_after_drop > 0 or a_after_drop > 0:
-                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! ECO:{e_after_drop}, Ancestor:{a_after_drop}")
-            else:
-                self.log_info_message("✓ Verified: Tables empty after drop")
         except:
             self.log_info_message("✓ Tables don't exist (expected after drop)")
+        if e_after_drop > 0 or a_after_drop > 0:
+            raise Exception(f"ERROR: Tables not empty after drop! ECO:{e_after_drop}, Ancestor:{a_after_drop}. Drop table failed, aborting script.")
+        else:
+            self.log_info_message("✓ Verified: Tables empty after drop")
 
         # ... to build it from 0
         self.log_info_message("Creating the ECO database...")

@@ -65,15 +65,17 @@ class BtoDBCreator(Task):
         self.log_info_message("✓ Tables dropped successfully")
 
         # Verify tables are dropped
+        b_after_drop = 0
+        a_after_drop = 0
         try:
             b_after_drop = BTO.select().count()
             a_after_drop = BTOAncestor.select().count()
-            if b_after_drop > 0 or a_after_drop > 0:
-                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! BTO:{b_after_drop}, Ancestor:{a_after_drop}")
-            else:
-                self.log_info_message("✓ Verified: Tables empty after drop")
         except:
             self.log_info_message("✓ Tables don't exist (expected after drop)")
+        if b_after_drop > 0 or a_after_drop > 0:
+            raise Exception(f"ERROR: Tables not empty after drop! BTO:{b_after_drop}, Ancestor:{a_after_drop}. Drop table failed, aborting script.")
+        else:
+            self.log_info_message("✓ Verified: Tables empty after drop")
 
         # ... to build it from 0
         self.log_info_message("-" * 60)

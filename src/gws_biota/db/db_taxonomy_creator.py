@@ -47,14 +47,15 @@ class TaxonomyDBCreator(Task):
         self.log_info_message("✓ Table dropped")
 
         # Verify table is dropped
+        t_after_drop = 0
         try:
             t_after_drop = Taxonomy.select().count()
-            if t_after_drop > 0:
-                self.log_info_message(f"⚠ WARNING: Table not empty after drop! Taxonomy:{t_after_drop}")
-            else:
-                self.log_info_message("✓ Verified: Table empty after drop")
         except:
             self.log_info_message("✓ Table doesn't exist (expected after drop)")
+        if t_after_drop > 0:
+            raise Exception(f"ERROR: Table not empty after drop! Taxonomy:{t_after_drop}. Drop table failed, aborting script.")
+        else:
+            self.log_info_message("✓ Verified: Table empty after drop")
 
         # ... to build it from 0
         self.log_info_message("Creating the TAXONOMY database...")

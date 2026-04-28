@@ -65,15 +65,17 @@ class CompoundDBCreator(Task):
         self.log_info_message("✓ Tables dropped successfully")
 
         # Verify tables are dropped
+        c_after_drop = 0
+        a_after_drop = 0
         try:
             c_after_drop = Compound.select().count()
             a_after_drop = CompoundAncestor.select().count()
-            if c_after_drop > 0 or a_after_drop > 0:
-                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! Compound:{c_after_drop}, Ancestor:{a_after_drop}")
-            else:
-                self.log_info_message("✓ Verified: Tables empty after drop")
         except:
             self.log_info_message("✓ Tables don't exist (expected after drop)")
+        if c_after_drop > 0 or a_after_drop > 0:
+            raise Exception(f"ERROR: Tables not empty after drop! Compound:{c_after_drop}, Ancestor:{a_after_drop}. Drop table failed, aborting script.")
+        else:
+            self.log_info_message("✓ Verified: Tables empty after drop")
 
         # ... to build it from 0
         self.log_info_message("Creating the CHEBI database...")

@@ -67,14 +67,15 @@ class ReactionDBCreator(Task):
         self.log_info_message("✓ Tables dropped (Reaction + related tables)")
 
         # Verify tables are dropped (Reaction.drop_table() handles all related tables)
+        r_after_drop = 0
         try:
             r_after_drop = Reaction.select().count()
-            if r_after_drop > 0:
-                self.log_info_message(f"⚠ WARNING: Tables not empty after drop! Reaction:{r_after_drop}")
-            else:
-                self.log_info_message("✓ Verified: All tables empty after drop")
         except:
             self.log_info_message("✓ Tables don't exist (expected after drop)")
+        if r_after_drop > 0:
+            raise Exception(f"ERROR: Tables not empty after drop! Reaction:{r_after_drop}. Drop table failed, aborting script.")
+        else:
+            self.log_info_message("✓ Verified: All tables empty after drop")
 
         # ... to build it from 0
         self.log_info_message("Creating the RHEA database...")
