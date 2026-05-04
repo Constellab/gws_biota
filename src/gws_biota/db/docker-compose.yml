@@ -9,6 +9,6 @@ services:
       - BIOTA_DB_URL=${BIOTA_DB_URL} 
     volumes:
       - ${LAB_VOLUME_HOST_NO_BACKUP}:/var/lib/mysql
-    container_name: gws_biota-db
+    container_name: ${CONTAINER_PREFIX}-db
     networks:
       - ${LAB_NETWORK_ALL}
