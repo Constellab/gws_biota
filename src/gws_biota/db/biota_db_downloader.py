@@ -78,7 +78,6 @@ class BiotaDbDownloader(Task):
     - The task waits up to 20 attempts for the database to be ready
     """
 
-    CONTAINER_UNIQUE_NAME = "db"
     DOCKER_COMPOSE_FILE = "docker-compose.yml"
     SERVICE_NAME = "lab-biota-db"
 
@@ -105,7 +104,7 @@ class BiotaDbDownloader(Task):
 
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
         brick_name = self.get_brick_name()
-        unique_name = self.CONTAINER_UNIQUE_NAME
+        unique_name = BiotaDbManager.get_instance().get_name()
         db_url: str = params.get_value("db_url")
 
         if not db_url:
