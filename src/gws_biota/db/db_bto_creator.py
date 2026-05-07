@@ -154,6 +154,11 @@ class BtoDBCreator(Task):
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
 
+        # Check that no critical column is entirely NULL
+        self.log_info_message("Checking for fully-NULL columns...")
+        DbService.check_null_columns(BTO, ["bto_id", "name"], task_name="BtoDBCreator")
+        self.log_info_message("✓ NULL column check passed")
+
         # Construct final summary
         try:
             final_bto = BTO.select().count()

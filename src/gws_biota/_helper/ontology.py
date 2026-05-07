@@ -421,19 +421,22 @@ class Onto:
             dict_term["monoisotopic_mass"] = None
 
             for pv in term.annotations:
-                if "/inchikey" in pv.property:
+                prop = pv.property
+                # Support both old format (http://purl.obolibrary.org/obo/chebi/*)
+                # and new format used since ChEBI v252 (chemrof:*)
+                if "/inchikey" in prop or prop == "chemrof:inchi_key_string":
                     dict_term["inchikey"] = pv.literal
-                elif "/inchi" in pv.property:
+                elif "/inchi" in prop or prop == "chemrof:inchi_string":
                     dict_term["inchi"] = pv.literal
-                elif "/smiles" in pv.property:
+                elif "/smiles" in prop or prop == "chemrof:smiles_string":
                     dict_term["smiles"] = pv.literal
-                elif "/formula" in pv.property:
+                elif "/formula" in prop or prop == "chemrof:generalized_empirical_formula":
                     dict_term["formula"] = pv.literal
-                elif "/monoisotopicmass" in pv.property:
+                elif "/monoisotopicmass" in prop or prop == "chemrof:monoisotopic_mass":
                     dict_term["monoisotopic_mass"] = pv.literal
-                elif "/mass" in pv.property:
+                elif "/mass" in prop or prop == "chemrof:mass":
                     dict_term["mass"] = pv.literal
-                elif "/charge" in pv.property:
+                elif "/charge" in prop or prop == "chemrof:charge":
                     dict_term["charge"] = pv.literal
 
             # ancestors

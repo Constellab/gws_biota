@@ -144,7 +144,14 @@ class CompoundDBCreator(Task):
         self.log_info_message("=" * 60)
         self.log_info_message("COMPOUND DATABASE CREATOR - COMPLETED")
         self.log_info_message("=" * 60)
-
+        # Check that no critical column is entirely NULL
+        self.log_info_message("Checking for fully-NULL columns...")
+        DbService.check_null_columns(
+            Compound,
+            ["chebi_id", "name", "formula", "inchi", "inchikey", "smiles", "mass"],
+            task_name="CompoundDBCreator"
+        )
+        self.log_info_message("✓ NULL column check passed")
         # Clean Python cache after execution
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)

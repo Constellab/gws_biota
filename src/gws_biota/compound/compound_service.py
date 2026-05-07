@@ -5,8 +5,6 @@ import math
 from gws_core import Logger, MessageDispatcher
 from peewee import chunked
 
-from gws_biota.db.biota_db_manager import BiotaDbManager
-
 from .._helper.chebi import Chebi as ChebiHelper
 from .._helper.ontology import Onto as OntoHelper
 from ..base.base_service import BaseService
@@ -26,7 +24,6 @@ class CompoundService(BaseService):
         return val
 
     @classmethod
-    @BiotaDbManager.transaction()
     def create_compound_db(cls, path, compound_file, message_dispatcher: MessageDispatcher = None) -> None:
         """
         Creates and fills the `chebi_ontology` database
@@ -79,9 +76,15 @@ class CompoundService(BaseService):
                 if "kegg" in comp.data["xref"]:
                     comp.kegg_id = comp.data["xref"]["kegg"]
                     del comp.data["xref"]["kegg"]
+                elif "kegg.compound" in comp.data["xref"]:
+                    comp.kegg_id = comp.data["xref"]["kegg.compound"]
+                    del comp.data["xref"]["kegg.compound"]
                 if "metacyc" in comp.data["xref"]:
                     comp.metacyc_id = comp.data["xref"]["metacyc"]
                     del comp.data["xref"]["metacyc"]
+                elif "metacyc.compound" in comp.data["xref"]:
+                    comp.metacyc_id = comp.data["xref"]["metacyc.compound"]
+                    del comp.data["xref"]["metacyc.compound"]
 
                 all_ids = [comp.chebi_id, *comp.alt_chebi_ids]
                 if comp.kegg_id is not None:

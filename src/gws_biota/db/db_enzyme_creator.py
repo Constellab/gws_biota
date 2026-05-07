@@ -58,6 +58,9 @@ class EnzymeDBCreator(Task):
         # Clean Python cache to ensure we start fresh and avoid conflicts/duplicates
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
 
+        # Ensure pigz is installed (required by gws_core FileDownloader for .tar.gz)
+        DbService.ensure_pigz_installed()
+
         # Check that dependent databases are available before downloading enzyme data.
         len_bto = BTO.select().count()
         len_taxonomy = Taxonomy.select().count()
@@ -133,9 +136,14 @@ class EnzymeDBCreator(Task):
         local_bkms_path = "/lab/user/bricks/gws_biota/src/gws_biota/enzyme/Reactions_BKMS.tar.gz"
 
         try:
-            # Try to download from URL first
-            bkms_file = file_downloader.download_file_if_missing(
-                params["bkms_file"], filename="Reactions_BKMS.tar.gz", decompress_file=True)
+            # Try to download from URL first — decompress manually to avoid pigz dependency
+            bkms_archive = file_downloader.download_file_if_missing(
+                params["bkms_file"], filename="Reactions_BKMS.tar.gz", decompress_file=False)
+            bkms_extract_dir = os.path.join(destination_dir, "Reactions_BKMS_extracted")
+            os.makedirs(bkms_extract_dir, exist_ok=True)
+            with tarfile.open(bkms_archive, "r:gz") as tar:
+                tar.extractall(path=bkms_extract_dir)
+            bkms_file = bkms_extract_dir
             self.log_info_message("✓ BKMS file downloaded successfully from URL")
         except Exception as e:
             self.log_warning_message(
@@ -174,9 +182,17 @@ class EnzymeDBCreator(Task):
         expasy_file = file_downloader.download_file_if_missing(
             params["expasy_file"], filename="enzclass.txt")
 
-        # download TAXONOMY file
-        taxdump_files = file_downloader.download_file_if_missing(
-            params["taxdump_files"], filename="taxdump.tar.gz", decompress_file=True)
+        # download TAXONOMY file — decompress manually with tarfile to avoid pigz dependency
+        taxdump_archive = file_downloader.download_file_if_missing(
+            params["taxdump_files"], filename="taxdump.tar.gz", decompress_file=False)
+
+        extract_dir = os.path.join(destination_dir, "taxdump_extracted")
+        os.makedirs(extract_dir, exist_ok=True)
+        self.log_info_message("Extracting taxdump.tar.gz...")
+        with tarfile.open(taxdump_archive, "r:gz") as tar:
+            tar.extractall(path=extract_dir)
+        taxdump_files = extract_dir
+        self.log_info_message("✓ Extraction complete")
 
         # download BTO file
         bto_file = file_downloader.download_file_if_missing(
@@ -237,7 +253,10 @@ class EnzymeDBCreator(Task):
         self.log_info_message("=" * 60)
         self.log_info_message("ENZYME DATABASE CREATOR - COMPLETED")
         self.log_info_message("=" * 60)
-
+        # Check that no critical column is entirely NULL
+        self.log_info_message("Checking for fully-NULL columns...")
+        DbService.check_null_columns(Enzyme, ["ec_number", "name"], task_name="EnzymeDBCreator")
+        self.log_info_message("✓ NULL column check passed")
         # Clean Python cache after execution
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)

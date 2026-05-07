@@ -216,4 +216,9 @@ class ReactionDBCreator(Task):
 
         self.log_info_message(success_msg)
 
+        # Check that no critical column is entirely NULL
+        self.log_info_message("Checking for fully-NULL columns...")
+        DbService.check_null_columns(Reaction, ["rhea_id", "direction"], task_name="ReactionDBCreator")
+        self.log_info_message("✓ NULL column check passed")
+
         return {"output_text": Text(success_msg)}

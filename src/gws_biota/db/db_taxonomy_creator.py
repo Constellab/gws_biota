@@ -41,6 +41,9 @@ class TaxonomyDBCreator(Task):
         # Clean Python cache to ensure fresh state
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
 
+        # Ensure pigz is installed (required by gws_core FileDownloader for .tar.gz)
+        DbService.ensure_pigz_installed()
+
         # Deleting the database...
         self.log_info_message("Deleting the TAXONOMY database...")
         DbService.drop_biota_tables([Taxonomy], message_dispatcher=self.message_dispatcher)
@@ -117,6 +120,14 @@ class TaxonomyDBCreator(Task):
             self.log_info_message(f"✓ Final count: {taxonomy_count} taxonomy entries")
             success_msg = f"✓ Taxonomy database created successfully: {taxonomy_count} taxonomy entries loaded"
             self.log_info_message(success_msg)
+            # Check that no critical column is entirely NULL
+            self.log_info_message("Checking for fully-NULL columns...")
+            DbService.check_null_columns(
+                Taxonomy,
+                ["tax_id", "name", "rank", "division", "ancestor_tax_id"],
+                task_name="TaxonomyDBCreator"
+            )
+            self.log_info_message("✓ NULL column check passed")
             return {"output_text": Text(success_msg)}
         except Exception as e:
             error_msg = f"Database created but could not count records: {e}"

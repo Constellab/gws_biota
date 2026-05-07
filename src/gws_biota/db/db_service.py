@@ -11,6 +11,32 @@ from .biota_db_manager import BiotaDbManager
 
 
 class DbService:
+
+    @staticmethod
+    def ensure_pigz_installed() -> None:
+        """
+        Ensures that pigz is installed on the system.
+        pigz is required by gws_core's FileDownloader to decompress .tar.gz files.
+        If not already installed, installs it automatically via apt-get.
+        """
+        # Check if pigz is already available
+        result = subprocess.run(["which", "pigz"], capture_output=True)
+        if result.returncode == 0:
+            Logger.info("pigz already installed")
+            return
+
+        Logger.info("pigz not found — installing automatically...")
+        try:
+            subprocess.run(
+                ["apt-get", "install", "-y", "pigz"],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            Logger.info("✓ pigz installed successfully")
+        except Exception as e:
+            Logger.warning(f"⚠ Could not install pigz automatically: {e}. Falling back to Python's tarfile module.")
+
     @classmethod
     def clean_python_cache(cls, message_dispatcher: MessageDispatcher = None) -> None:
         """
@@ -174,3 +200,46 @@ class DbService:
         Logger.info("=" * 80)
         Logger.info(f"SUCCESSFULLY CREATED {len(biota_models)} TABLES")
         Logger.info("=" * 80)
+
+    @staticmethod
+    def check_null_columns(model, columns: list, task_name: str = "") -> None:
+        """
+        For each column name in the list, checks if ALL rows in the table have NULL.
+        If any column is entirely NULL, raises an Exception to fail the task.
+        Skips the check if the table is empty (other checks will catch that).
+
+        :param model: Peewee model class
+        :param columns: List of column names (strings) to verify
+        :param task_name: Name of the creator task for error messages
+        """
+        from peewee import fn
+
+        try:
+            total = model.select().count()
+        except Exception as e:
+            Logger.warning(f"check_null_columns: could not count rows in {model.__name__}: {e}")
+            return
+
+        if total == 0:
+            # Table empty — let other checks raise the error
+            return
+
+        all_null_columns = []
+        for col_name in columns:
+            try:
+                field = getattr(model, col_name)
+                non_null_count = model.select(fn.COUNT(field)).scalar()
+                if non_null_count == 0:
+                    Logger.error(f"  ✗ Column '{col_name}' in {model.__name__}: ALL {total} rows are NULL!")
+                    all_null_columns.append(col_name)
+                else:
+                    Logger.info(f"  ✓ Column '{col_name}' in {model.__name__}: {non_null_count}/{total} rows non-NULL")
+            except Exception as e:
+                Logger.warning(f"  Could not check column '{col_name}' in {model.__name__}: {e}")
+
+        if all_null_columns:
+            raise Exception(
+                f"[{task_name}] ERROR: The following columns are entirely NULL in {model.__name__} "
+                f"({total} rows total): {', '.join(all_null_columns)}. "
+                f"This indicates a parsing or format compatibility issue."
+            )

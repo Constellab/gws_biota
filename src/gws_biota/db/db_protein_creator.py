@@ -104,6 +104,14 @@ class ProteinDBCreator(Task):
             self.log_info_message(f"✓ Final count: {protein_count} proteins")
             success_msg = f"✓ Protein database created successfully: {protein_count} proteins loaded"
             self.log_info_message(success_msg)
+            # Check that no critical column is entirely NULL
+            self.log_info_message("Checking for fully-NULL columns...")
+            DbService.check_null_columns(
+                Protein,
+                ["uniprot_id", "uniprot_db", "uniprot_gene", "evidence_score", "tax_id"],
+                task_name="ProteinDBCreator"
+            )
+            self.log_info_message("✓ NULL column check passed")
             return {"output_text": Text(success_msg)}
         except Exception as e:
             error_msg = f"Database created but could not count records: {e}"

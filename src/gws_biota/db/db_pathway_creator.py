@@ -222,6 +222,10 @@ class PathwayDBCreator(Task):
             self.log_info_message(f"  - Pathway-Compound links: {compound_count}")
             success_msg = f"✓ Pathway database created successfully:\n  - Pathways: {pathway_count}\n  - Ancestors: {ancestor_count}\n  - Pathway-Compound links: {compound_count}"
             self.log_info_message(success_msg)
+            # Check that no critical column is entirely NULL
+            self.log_info_message("Checking for fully-NULL columns...")
+            DbService.check_null_columns(Pathway, ["reactome_pathway_id", "name"], task_name="PathwayDBCreator")
+            self.log_info_message("✓ NULL column check passed")
             return {"output_text": Text(success_msg)}
         except Exception as e:
             error_msg = f"Database created but could not count records: {e}"

@@ -126,7 +126,10 @@ class SboDBCreator(Task):
         self.log_info_message("=" * 60)
         self.log_info_message("SBO DATABASE CREATOR - COMPLETED")
         self.log_info_message("=" * 60)
-
+        # Check that no critical column is entirely NULL
+        self.log_info_message("Checking for fully-NULL columns...")
+        DbService.check_null_columns(SBO, ["sbo_id", "name"], task_name="SboDBCreator")
+        self.log_info_message("✓ NULL column check passed")
         # Clean Python cache after execution
         self.log_info_message("Cleaning cache after execution...")
         DbService.clean_python_cache(message_dispatcher=self.message_dispatcher)
