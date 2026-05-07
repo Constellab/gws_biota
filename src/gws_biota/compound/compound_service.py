@@ -13,6 +13,10 @@ from ..compound.compound import Compound, CompoundAncestor
 
 class CompoundService(BaseService):
 
+    # Compounds have large text fields (inchi, smiles, data JSON) — use smaller
+    # batches than the default 50K to avoid 'max_allowed_packet' errors
+    COMPOUND_BATCH_SIZE = 5000
+
     @staticmethod
     def _to_float(val):
         try:
@@ -47,6 +51,14 @@ class CompoundService(BaseService):
         Logger.info("STEP 1: Parsing and inserting compounds")
         Logger.info("-" * 80)
 
+        # Increase max_allowed_packet for this session to handle large INSERT batches
+        # (compounds have long inchi/smiles/JSON fields)
+        try:
+            Compound.get_db().execute_sql("SET SESSION max_allowed_packet = 1073741824")  # 1 GB
+            Logger.info("✓ max_allowed_packet set to 1 GB for this session")
+        except Exception as e:
+            Logger.warning(f"Could not set max_allowed_packet: {e}")
+
         data_dir, corrected_file_name = ChebiHelper.correction_of_chebi_file(
             path, compound_file)
         onto_chebi = OntoHelper.create_ontology_from_file(
@@ -57,7 +69,7 @@ class CompoundService(BaseService):
         comp_count = len(list_chebi)
         Logger.info(f"Saving {comp_count} compounds ...")
         compounds = [Compound(data=data) for data in list_chebi]
-        for compound_chunk in chunked(compounds, cls.BATCH_SIZE):
+        for compound_chunk in chunked(compounds, cls.COMPOUND_BATCH_SIZE):
             for comp in compound_chunk:
                 comp.set_name(comp.data["name"])
                 comp.chebi_id = comp.data["id"]

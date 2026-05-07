@@ -22,6 +22,19 @@ class TestCompound(BaseTestCase):
         )
         self.assertEqual(Compound.get(Compound.chebi_id == "CHEBI:17051").get_name(), "fluoride")
 
+        # Verify critical columns are NOT all NULL (regression test for ChEBI v252 format change)
+        total = Compound.select().count()
+        self.assertGreater(total, 0, "Compound table should not be empty")
+        from peewee import fn
+        non_null_formula = Compound.select(fn.COUNT(Compound.formula)).scalar()
+        non_null_inchi = Compound.select(fn.COUNT(Compound.inchi)).scalar()
+        non_null_inchikey = Compound.select(fn.COUNT(Compound.inchikey)).scalar()
+        non_null_mass = Compound.select(fn.COUNT(Compound.mass)).scalar()
+        self.assertGreater(non_null_formula, 0, "formula column should not be entirely NULL")
+        self.assertGreater(non_null_inchi, 0, "inchi column should not be entirely NULL")
+        self.assertGreater(non_null_inchikey, 0, "inchikey column should not be entirely NULL")
+        self.assertGreater(non_null_mass, 0, "mass column should not be entirely NULL")
+
         comp = Compound.get(Compound.chebi_id == "CHEBI:49499")
         self.assertEqual(comp.get_name(), "beryllium difluoride")
 
