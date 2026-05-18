@@ -90,7 +90,12 @@ class BiotaDbZipper(Task):
         tmp_dir = self.create_tmp_dir()
         zip_file_path = os.path.join(tmp_dir, "biota_db.zip")
 
-        ZipCompress.compress_dir(db_folder_path, zip_file_path)
+        # The Biota DB folder is a Docker volume owned by the container's user,
+        # so reads require root. Run `zip` via sudo to access those files.
+        # Add the folder's content (not the folder itself) at the archive root.
+        compress = ZipCompress(zip_file_path, use_sudo=True)
+        compress.add_dir_content(db_folder_path)
+        compress.close()
 
         self.log_success_message(f"Biota DB folder zipped to '{zip_file_path}'.")
 
