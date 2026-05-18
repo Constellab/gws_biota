@@ -2,12 +2,12 @@
   "name": "gws_biota",
   "author": "Gencovery",
   "author_email": "admin@gencovery.com",
-  "version": "0.12.6",
+  "version": "0.12.7",
   "description": "The Biological and Omics Database for Gencovery Web Services",
   "variables": {
     "biodata_dir": "/data/${CURRENT_BRICK}/biodata/",
     "testdata_dir": "${CURRENT_DIR}/tests/testdata",
-    "BIOTA_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/db/0.6.0/mariadb.zip",
+    "BIOTA_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/db/0.13.0/biota_db.zip",
     "BIOTA_TEST_DB_URL": "https://storage.gra.cloud.ovh.net/v1/AUTH_a0286631d7b24afba3f3cdebed2992aa/gws_biota/test_small_biota.zip",
     "BIOTA_DB_PASSWORD": "gencovery",
     "BIOTA_DB_USER": "gws_biota",
@@ -18,11 +18,11 @@
     "bricks": [
       {
         "name": "gws_core",
-        "version": "0.21.1"
+        "version": "0.22.0-beta.9"
       },
       {
         "name": "gws_ai_toolkit",
-        "version": "0.1.14"
+        "version": "0.2.6"
       }
     ],
     "pip": [
