@@ -2,7 +2,7 @@
   "name": "gws_biota",
   "author": "Gencovery",
   "author_email": "admin@gencovery.com",
-  "version": "0.12.7",
+  "version": "0.12.8",
   "description": "The Biological and Omics Database for Gencovery Web Services",
   "variables": {
     "biodata_dir": "/data/${CURRENT_BRICK}/biodata/",
@@ -18,7 +18,7 @@
     "bricks": [
       {
         "name": "gws_core",
-        "version": "0.22.0-beta.9"
+        "version": "0.22.0"
       },
       {
         "name": "gws_ai_toolkit",
@@ -32,6 +32,10 @@
           {
             "name": "biopython",
             "version": "1.79"
+          },
+          {
+            "name": "networkx",
+            "version": "3.4.2"
           },
           {
             "name": "pronto",

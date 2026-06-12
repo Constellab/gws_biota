@@ -26,6 +26,8 @@ from ..extract_data_ncbi.popset import PopSet
 from ..extract_data_ncbi.protein import Protein
 from ..extract_data_ncbi.pubmed import Pubmed
 
+from gws_core.config.param.select_param import SelectParam
+
 
 @task_decorator("RequestNCBI", human_name="Request NCBI",
                 short_description="Send a request to the NCBI")
@@ -36,10 +38,10 @@ class RequestNCBI(Task):
     config_specs = ConfigSpecs({
         "query": StrParam(
             human_name="Query", short_description="The user query"),
-        "choice_DB": StrParam(
+        "choice_DB": SelectParam(
             default_value="PubMed", human_name="Database",
             short_description="Select the database of interest",
-            allowed_values=["PubMed", "Gene", "GDS", "Popset", "GeoProfiles", "Protein", "ClinVar"])})
+            options=["PubMed", "Gene", "GDS", "Popset", "GeoProfiles", "Protein", "ClinVar"])})
 
 # --------------------- RUN ---------------------
     def run(self, params: ConfigParams, inputs: TaskInputs) -> TaskOutputs:
