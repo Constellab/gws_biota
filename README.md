@@ -5,7 +5,7 @@
 
 <br/>
 
-# 👋 Welcome to GWS Core 
+# 👋 Welcome to GWS Biota
 
 ```gws_biota``` is a [Constellab](https://constellab.io) library (called bricks) developped by [Gencovery](https://gencovery.com/). GWS stands for Gencovery Web Services.
 
@@ -21,6 +21,11 @@
 
 Biota is a unified and structured collection of omics data from official open European biological databases.
 It is dedicated to Gencovery Web Services for the conception and use of digital twins of cell metabolism.
+- A curated reference database of compounds, enzymes, reactions, proteins, pathways, taxonomy and organisms, plus the GO, SBO, ECO and BTO ontologies (see [ENTITIES_OVERVIEW.md](./ENTITIES_OVERVIEW.md))
+- Download and manage the Biota reference database (Biota DB Downloader / Zipper)
+- ETL tasks to build and enrich the database: create enzyme and reaction records, extract NCBI proteome/data, retrieve kcat values, map EC numbers to BiGG model identifiers, build kcat contextualization files
+- Unicell: build a whole-cell reaction network graph for an organism, used notably by `gws_gem` to reconstruct draft genome-scale metabolic models
+- Generate a Bio Navigator app to explore the Biota database interactively, with an integrated AI chat assistant (Ask Biota)
 
 ## 📄 Documentation
 📄  For `gws_biota` brick documentation, click [here](https://constellab.community/bricks/gws_biota/latest/doc/getting-started/b52068ea-05cd-40c3-a6b9-68d06cffcaf4)
@@ -29,11 +34,11 @@ It is dedicated to Gencovery Web Services for the conception and use of digital 
 
 ## 🛠️ Installation
 
-The `gws_biota` brick requires the `gws_core` brick.
+The `gws_biota` brick requires the `gws_core` and `gws_ai_toolkit` bricks.
 
 ### 🔥 Recommended Method
 
-he best way to install a brick is through the Constellab platform. With our Fair Open Access offer, you get a free cloud data lab where you can install bricks directly. [Sign up here](https://constellab.space/)
+The best way to install a brick is through the Constellab platform. With our Fair Open Access offer, you get a free cloud data lab where you can install bricks directly. [Sign up here](https://constellab.space/)
 
 Learn about the data lab here : [Overview](https://constellab.community/bricks/gws_academy/latest/doc/digital-lab/overview/294e86b4-ce9a-4c56-b34e-61c9a9a8260d) and [Data lab management](https://constellab.community/bricks/gws_academy/latest/doc/digital-lab/on-cloud-digital-lab-management/4ab03b1f-a96d-4d7a-a733-ad1edf4fb53c)
 
@@ -45,8 +50,9 @@ We recommend installing using Ubuntu 22.04 with python 3.10.
 
 Required packages are listed in the ```settings.json``` file, for now the packages must be installed manually.
 
-```bash 
-pip install biopython==1.79 pronto==2.5.7 ujson==5.10.0 pyparsing==3.0.6
+```bash
+pip install biopython==1.79 networkx==3.4.2 pronto==2.5.7 pyparsing==3.0.6
+pip install git+https://github.com/Constellab/brendapy.git
 ```
 
 #### Usage
