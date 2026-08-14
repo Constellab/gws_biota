@@ -2,7 +2,16 @@
 import gzip
 import os
 import tarfile
+
 import requests
+
+from gws_biota import Enzyme
+from gws_biota.enzyme.deprecated_enzyme import DeprecatedEnzyme
+from gws_biota.enzyme.enzyme import EnzymeBTO
+from gws_biota.enzyme.enzyme_class import EnzymeClass
+from gws_biota.enzyme.enzyme_ortholog import EnzymeOrtholog
+from gws_biota.enzyme.enzyme_pathway import EnzymePathway
+from gws_biota.enzyme.enzyme_service import EnzymeService
 from gws_core import (
     ConfigParams,
     ConfigSpecs,
@@ -21,14 +30,6 @@ from gws_core import (
     task_decorator,
 )
 
-from gws_biota import Enzyme
-from gws_biota.enzyme.deprecated_enzyme import DeprecatedEnzyme
-from gws_biota.enzyme.enzyme import EnzymeBTO
-from gws_biota.enzyme.enzyme_class import EnzymeClass
-from gws_biota.enzyme.enzyme_ortholog import EnzymeOrtholog
-from gws_biota.enzyme.enzyme_pathway import EnzymePathway
-from gws_biota.enzyme.enzyme_service import EnzymeService
-
 from ..bto.bto import BTO
 from ..pathway.pathway import Pathway
 from ..taxonomy.taxonomy import Taxonomy
@@ -46,7 +47,7 @@ class EnzymeDBCreator(Task):
     output_specs = OutputSpecs(
         {"output_text": OutputSpec(Text, optional=True)})
     config_specs = ConfigSpecs({"bkms_file": StrParam(default_value="https://bkms.brenda-enzymes.org/download/Reactions_BKMS.tar.gz"), "expasy_file": StrParam(
-        default_value="https://raw.githubusercontent.com/google-research/proteinfer/540773f988005cc5ed834210d1477e4db1f141e6/testdata/enzclass.txt"),
+        default_value="https://ftp.expasy.org/databases/enzyme/enzclass.txt"),
         "compound_file": StrParam(default_value="https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"),
         "bto_file": StrParam(default_value="https://raw.githubusercontent.com/BRENDA-Enzymes/BTO/master/bto.owl"),
         "taxdump_files": StrParam(default_value="https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz")})
@@ -166,7 +167,7 @@ class EnzymeDBCreator(Task):
                         bkms_file = extract_dir
                         self.log_info_message(f"✓ Local BKMS file extracted successfully to {extract_dir}")
                     else:
-                        self.log_warning_message(f"⚠ Could not find Reactions_BKMS.csv in extracted archive")
+                        self.log_warning_message("⚠ Could not find Reactions_BKMS.csv in extracted archive")
                         bkms_file = None
                 except Exception as extract_error:
                     self.log_warning_message(f"⚠ Failed to extract local BKMS file: {str(extract_error)}")
@@ -238,7 +239,7 @@ class EnzymeDBCreator(Task):
             final_ortholog = EnzymeOrtholog.select().count()
             final_deprecated = DeprecatedEnzyme.select().count()
             final_bto = EnzymeBTO.select().count()
-            self.log_info_message(f"Final counts:")
+            self.log_info_message("Final counts:")
             self.log_info_message(f"  - Enzymes: {final_enzyme}")
             self.log_info_message(f"  - EnzymeClasses: {final_class}")
             self.log_info_message(f"  - EnzymePathways: {final_pathway}")
